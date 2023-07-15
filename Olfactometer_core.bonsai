@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.7.1"
+<WorkflowBuilder Version="2.7.3"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
+                 xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -17,10 +18,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>41</harp:Address>
-                <harp:PayloadType>Float</harp:PayloadType>
-                <harp:Payload>100</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>41</harp:Address>
+                  <harp:PayloadType>Float</harp:PayloadType>
+                  <harp:Value>100</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -28,10 +31,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>42</harp:Address>
-                <harp:PayloadType>Float</harp:PayloadType>
-                <harp:Payload>100</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>42</harp:Address>
+                  <harp:PayloadType>Float</harp:PayloadType>
+                  <harp:Value>100</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -39,10 +44,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>43</harp:Address>
-                <harp:PayloadType>Float</harp:PayloadType>
-                <harp:Payload>100</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>43</harp:Address>
+                  <harp:PayloadType>Float</harp:PayloadType>
+                  <harp:Value>100</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -50,10 +57,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>44</harp:Address>
-                <harp:PayloadType>Float</harp:PayloadType>
-                <harp:Payload>100</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>44</harp:Address>
+                  <harp:PayloadType>Float</harp:PayloadType>
+                  <harp:Value>100</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -61,10 +70,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>45</harp:Address>
-                <harp:PayloadType>Float</harp:PayloadType>
-                <harp:Payload>900</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>45</harp:Address>
+                  <harp:PayloadType>Float</harp:PayloadType>
+                  <harp:Value>900</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -72,10 +83,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>74</harp:Address>
-                <harp:PayloadType>U16</harp:PayloadType>
-                <harp:Payload>900</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>74</harp:Address>
+                  <harp:PayloadType>U16</harp:PayloadType>
+                  <harp:Value>2000</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -83,10 +96,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>75</harp:Address>
-                <harp:PayloadType>U16</harp:PayloadType>
-                <harp:Payload>900</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>75</harp:Address>
+                  <harp:PayloadType>U16</harp:PayloadType>
+                  <harp:Value>2000</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -94,10 +109,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>65</harp:Address>
-                <harp:PayloadType>U8</harp:PayloadType>
-                <harp:Payload>48</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>65</harp:Address>
+                  <harp:PayloadType>U8</harp:PayloadType>
+                  <harp:Value>48</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -134,10 +151,12 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="harp:CreateMessage">
-          <harp:MessageType>Write</harp:MessageType>
-          <harp:Address>32</harp:Address>
-          <harp:PayloadType>U8</harp:PayloadType>
-          <harp:Payload>1</harp:Payload>
+          <harp:Payload xsi:type="harp:CreateMessagePayload">
+            <harp:MessageType>Write</harp:MessageType>
+            <harp:Address>32</harp:Address>
+            <harp:PayloadType>U8</harp:PayloadType>
+            <harp:Value>1</harp:Value>
+          </harp:Payload>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -148,10 +167,12 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="harp:CreateMessage">
-          <harp:MessageType>Write</harp:MessageType>
-          <harp:Address>32</harp:Address>
-          <harp:PayloadType>U8</harp:PayloadType>
-          <harp:Payload>0</harp:Payload>
+          <harp:Payload xsi:type="harp:CreateMessagePayload">
+            <harp:MessageType>Write</harp:MessageType>
+            <harp:Address>32</harp:Address>
+            <harp:PayloadType>U8</harp:PayloadType>
+            <harp:Value>0</harp:Value>
+          </harp:Payload>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:BehaviorSubject" TypeArguments="harp:HarpMessage">
@@ -162,13 +183,13 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="harp:Device">
-          <harp:DeviceState>Active</harp:DeviceState>
+          <harp:OperationMode>Active</harp:OperationMode>
+          <harp:OperationLed>On</harp:OperationLed>
           <harp:DumpRegisters>true</harp:DumpRegisters>
-          <harp:LedState>On</harp:LedState>
           <harp:VisualIndicators>On</harp:VisualIndicators>
-          <harp:Heartbeat>Disable</harp:Heartbeat>
+          <harp:Heartbeat>Disabled</harp:Heartbeat>
           <harp:IgnoreErrors>false</harp:IgnoreErrors>
-          <harp:PortName>COM11</harp:PortName>
+          <harp:PortName>COM5</harp:PortName>
         </Combinator>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
@@ -180,53 +201,83 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:FilterMessage">
-                <harp:Address>46</harp:Address>
                 <harp:MessageType>Event</harp:MessageType>
+                <harp:Register xsi:type="harp:FilterMessageAddress">
+                  <harp:Address>46</harp:Address>
+                </harp:Register>
               </Combinator>
             </Expression>
             <Expression xsi:type="harp:Parse">
-              <harp:Type>Float</harp:Type>
-              <harp:IsArray>false</harp:IsArray>
+              <harp:Register xsi:type="harp:ParseMessagePayload">
+                <harp:PayloadType>Float</harp:PayloadType>
+                <harp:IsArray>false</harp:IsArray>
+              </harp:Register>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:FilterMessage">
-                <harp:Address>47</harp:Address>
                 <harp:MessageType>Event</harp:MessageType>
+                <harp:Register xsi:type="harp:FilterMessageAddress">
+                  <harp:Address>47</harp:Address>
+                </harp:Register>
               </Combinator>
             </Expression>
             <Expression xsi:type="harp:Parse">
-              <harp:Type>Float</harp:Type>
-              <harp:IsArray>false</harp:IsArray>
+              <harp:Register xsi:type="harp:ParseMessagePayload">
+                <harp:PayloadType>Float</harp:PayloadType>
+                <harp:IsArray>false</harp:IsArray>
+              </harp:Register>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:FilterMessage">
-                <harp:Address>48</harp:Address>
                 <harp:MessageType>Event</harp:MessageType>
+                <harp:Register xsi:type="harp:FilterMessageAddress">
+                  <harp:Address>48</harp:Address>
+                </harp:Register>
               </Combinator>
             </Expression>
             <Expression xsi:type="harp:Parse">
-              <harp:Type>Float</harp:Type>
-              <harp:IsArray>false</harp:IsArray>
+              <harp:Register xsi:type="harp:ParseMessagePayload">
+                <harp:PayloadType>Float</harp:PayloadType>
+                <harp:IsArray>false</harp:IsArray>
+              </harp:Register>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:FilterMessage">
-                <harp:Address>49</harp:Address>
                 <harp:MessageType>Event</harp:MessageType>
+                <harp:Register xsi:type="harp:FilterMessageAddress">
+                  <harp:Address>49</harp:Address>
+                </harp:Register>
               </Combinator>
             </Expression>
             <Expression xsi:type="harp:Parse">
-              <harp:Type>Float</harp:Type>
-              <harp:IsArray>false</harp:IsArray>
+              <harp:Register xsi:type="harp:ParseMessagePayload">
+                <harp:PayloadType>Float</harp:PayloadType>
+                <harp:IsArray>false</harp:IsArray>
+              </harp:Register>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="viz:RollingGraphBuilder">
+              <viz:SymbolType>None</viz:SymbolType>
+              <viz:LineWidth>1</viz:LineWidth>
+              <viz:Capacity xsi:nil="true" />
+              <viz:Min xsi:nil="true" />
+              <viz:Max xsi:nil="true" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:FilterMessage">
-                <harp:Address>50</harp:Address>
                 <harp:MessageType>Event</harp:MessageType>
+                <harp:Register xsi:type="harp:FilterMessageAddress">
+                  <harp:Address>50</harp:Address>
+                </harp:Register>
               </Combinator>
             </Expression>
             <Expression xsi:type="harp:Parse">
-              <harp:Type>Float</harp:Type>
-              <harp:IsArray>false</harp:IsArray>
+              <harp:Register xsi:type="harp:ParseMessagePayload">
+                <harp:PayloadType>Float</harp:PayloadType>
+                <harp:IsArray>false</harp:IsArray>
+              </harp:Register>
             </Expression>
           </Nodes>
           <Edges>
@@ -234,12 +285,17 @@
             <Edge From="0" To="3" Label="Source1" />
             <Edge From="0" To="5" Label="Source1" />
             <Edge From="0" To="7" Label="Source1" />
-            <Edge From="0" To="9" Label="Source1" />
+            <Edge From="0" To="11" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="9" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="9" Label="Source2" />
             <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="9" Label="Source3" />
             <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source4" />
             <Edge From="9" To="10" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -252,13 +308,17 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:FilterMessage">
-                <harp:Address>33</harp:Address>
                 <harp:MessageType>Event</harp:MessageType>
+                <harp:Register xsi:type="harp:FilterMessageAddress">
+                  <harp:Address>33</harp:Address>
+                </harp:Register>
               </Combinator>
             </Expression>
             <Expression xsi:type="harp:Parse">
-              <harp:Type>S16</harp:Type>
-              <harp:IsArray>true</harp:IsArray>
+              <harp:Register xsi:type="harp:ParseMessagePayload">
+                <harp:PayloadType>S16</harp:PayloadType>
+                <harp:IsArray>true</harp:IsArray>
+              </harp:Register>
             </Expression>
             <Expression xsi:type="Index">
               <Operand xsi:type="IntProperty">
@@ -470,7 +530,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Timer">
           <rx:DueTime>PT0S</rx:DueTime>
-          <rx:Period>PT8S</rx:Period>
+          <rx:Period>PT6S</rx:Period>
         </Combinator>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
@@ -482,10 +542,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>69</harp:Address>
-                <harp:PayloadType>U8</harp:PayloadType>
-                <harp:Payload>1</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>69</harp:Address>
+                  <harp:PayloadType>U8</harp:PayloadType>
+                  <harp:Value>2</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -514,10 +576,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>69</harp:Address>
-                <harp:PayloadType>U8</harp:PayloadType>
-                <harp:Payload>49</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>69</harp:Address>
+                  <harp:PayloadType>U8</harp:PayloadType>
+                  <harp:Value>49</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -534,7 +598,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Delay">
-          <rx:DueTime>PT3S</rx:DueTime>
+          <rx:DueTime>PT5S</rx:DueTime>
         </Combinator>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
@@ -546,10 +610,12 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateMessage">
-                <harp:MessageType>Write</harp:MessageType>
-                <harp:Address>69</harp:Address>
-                <harp:PayloadType>U8</harp:PayloadType>
-                <harp:Payload>0</harp:Payload>
+                <harp:Payload xsi:type="harp:CreateMessagePayload">
+                  <harp:MessageType>Write</harp:MessageType>
+                  <harp:Address>69</harp:Address>
+                  <harp:PayloadType>U8</harp:PayloadType>
+                  <harp:Value>0</harp:Value>
+                </harp:Payload>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
