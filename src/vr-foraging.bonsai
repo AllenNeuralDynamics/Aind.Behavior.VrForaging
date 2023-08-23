@@ -3,7 +3,8 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
-                 xmlns:p1="clr-namespace:Bonsai.Harp.CF;assembly=Bonsai.Harp.CF"
+                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
@@ -12,10 +13,8 @@
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
-                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:p2="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
+                 xmlns:p1="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -279,12 +278,14 @@
             <Expression xsi:type="MulticastSubject">
               <Name>Stopped</Name>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>ToggleOutput</p1:Type>
-              <p1:Mask>Poke0Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputTogglePayload">
+                <beh:OutputToggle>SupplyPort0</beh:OutputToggle>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
           </Nodes>
           <Edges>
@@ -539,12 +540,14 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>SetOutput</p1:Type>
-              <p1:Mask>Poke1Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputSetPayload">
+                <beh:OutputSet>SupplyPort1</beh:OutputSet>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>Odor2</Name>
@@ -570,12 +573,14 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>SetOutput</p1:Type>
-              <p1:Mask>Poke2Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputSetPayload">
+                <beh:OutputSet>SupplyPort2</beh:OutputSet>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="BitwiseNot" />
             <Expression xsi:type="rx:Condition">
@@ -624,12 +629,14 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>ClearOutput</p1:Type>
-              <p1:Mask>Poke1Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputClearPayload">
+                <beh:OutputClear>SupplyPort1</beh:OutputClear>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>Odor2</Name>
@@ -655,12 +662,14 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>ClearOutput</p1:Type>
-              <p1:Mask>Poke2Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputClearPayload">
+                <beh:OutputClear>SupplyPort2</beh:OutputClear>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
           </Nodes>
           <Edges>
@@ -3974,19 +3983,6 @@
           <Nodes>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="wie:KeyDown">
-                <wie:Filter>D1</wie:Filter>
-                <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>ClearOutput</p1:Type>
-              <p1:Mask>Poke0Valve</p1:Mask>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="wie:KeyDown">
                 <wie:Filter>L</wie:Filter>
                 <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
               </Combinator>
@@ -3996,16 +3992,33 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="wie:KeyDown">
+                <wie:Filter>D1</wie:Filter>
+                <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputClearPayload">
+                <beh:OutputClear>SupplyPort0</beh:OutputClear>
+              </harp:Payload>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>BehaviorCommands</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="wie:KeyDown">
                 <wie:Filter>D2</wie:Filter>
                 <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>ClearOutput</p1:Type>
-              <p1:Mask>Poke1Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputClearPayload">
+                <beh:OutputClear>SupplyPort1</beh:OutputClear>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="wie:KeyDown">
@@ -4013,12 +4026,14 @@
                 <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>ClearOutput</p1:Type>
-              <p1:Mask>Poke2Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputClearPayload">
+                <beh:OutputClear>SupplyPort2</beh:OutputClear>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="wie:KeyDown">
@@ -4026,12 +4041,14 @@
                 <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>SetOutput</p1:Type>
-              <p1:Mask>Poke0Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputSetPayload">
+                <beh:OutputSet>SupplyPort0</beh:OutputSet>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="wie:KeyDown">
@@ -4039,12 +4056,14 @@
                 <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>SetOutput</p1:Type>
-              <p1:Mask>Poke1Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputSetPayload">
+                <beh:OutputSet>SupplyPort1</beh:OutputSet>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="wie:KeyDown">
@@ -4052,17 +4071,19 @@
                 <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>SetOutput</p1:Type>
-              <p1:Mask>Poke2Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputSetPayload">
+                <beh:OutputSet>SupplyPort2</beh:OutputSet>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
@@ -4082,7 +4103,7 @@
         <Workflow>
           <Nodes>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="harp:HarpMessage">
-              <rx:Name>Commands</rx:Name>
+              <rx:Name>BehaviorCommands</rx:Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:Device">
@@ -4103,19 +4124,38 @@
                 <Value>80</Value>
               </Combinator>
             </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>PulsePeriod</p1:Type>
-              <p1:Mask>Poke0Valve</p1:Mask>
+            <Expression xsi:type="beh:Format">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Register xsi:type="beh:PulseDOPort0" />
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Behavior Events</Name>
             </Expression>
-            <Expression xsi:type="p1:BehaviorEvent">
-              <p1:Type>QuadratureCounter</p1:Type>
-              <p1:Mask>Port2</p1:Mask>
+            <Expression xsi:type="beh:Parse">
+              <harp:Register xsi:type="beh:TimestampedAnalogData" />
+            </Expression>
+            <Expression xsi:type="harp:ConvertTimestamped">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Encoder</Selector>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="dsp:Rescale">
@@ -4136,13 +4176,6 @@
               <Combinator xsi:type="dsp:Difference">
                 <dsp:Order>1</dsp:Order>
               </Combinator>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:DelaySubscription">
-                  <rx:DueTime>PT0.5S</rx:DueTime>
-                </Combinator>
-              </Builder>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>DetectTurnRestart</Name>
@@ -4196,13 +4229,13 @@
               <Name>Odor</Name>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p2:CreateDiscreteUniform">
-                <p2:Lower>1</p2:Lower>
-                <p2:Upper>2</p2:Upper>
+              <Combinator xsi:type="p1:CreateDiscreteUniform">
+                <p1:Lower>1</p1:Lower>
+                <p1:Upper>2</p1:Upper>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p2:Sample" />
+              <Combinator xsi:type="p1:Sample" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -4212,29 +4245,14 @@
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>OdorPatch</Name>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>true</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>ClearOutput</p1:Type>
-              <p1:Mask>Poke1Valve</p1:Mask>
+            <Expression xsi:type="beh:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="beh:CreateOutputClearPayload">
+                <beh:OutputClear>SupplyPort1 SupplyPort2</beh:OutputClear>
+              </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>true</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="p1:BehaviorCommand">
-              <p1:Type>ClearOutput</p1:Type>
-              <p1:Mask>Poke2Valve</p1:Mask>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>Commands</Name>
+              <Name>BehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="BooleanProperty">
@@ -4377,9 +4395,9 @@
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="8" To="10" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="10" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
@@ -4387,40 +4405,38 @@
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
             <Edge From="24" To="25" Label="Source1" />
             <Edge From="25" To="26" Label="Source1" />
-            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
             <Edge From="30" To="31" Label="Source1" />
             <Edge From="31" To="32" Label="Source1" />
             <Edge From="33" To="34" Label="Source1" />
             <Edge From="34" To="35" Label="Source1" />
-            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="35" To="36" Label="Source1" />
             <Edge From="37" To="38" Label="Source1" />
             <Edge From="38" To="39" Label="Source1" />
+            <Edge From="39" To="40" Label="Source1" />
             <Edge From="40" To="41" Label="Source1" />
+            <Edge From="40" To="43" Label="Source1" />
             <Edge From="41" To="42" Label="Source1" />
-            <Edge From="42" To="43" Label="Source1" />
+            <Edge From="42" To="45" Label="Source1" />
             <Edge From="43" To="44" Label="Source1" />
-            <Edge From="43" To="46" Label="Source1" />
-            <Edge From="44" To="45" Label="Source1" />
-            <Edge From="45" To="48" Label="Source1" />
-            <Edge From="46" To="47" Label="Source1" />
-            <Edge From="47" To="48" Label="Source2" />
+            <Edge From="44" To="45" Label="Source2" />
+            <Edge From="45" To="46" Label="Source1" />
+            <Edge From="47" To="48" Label="Source1" />
             <Edge From="48" To="49" Label="Source1" />
             <Edge From="50" To="51" Label="Source1" />
-            <Edge From="51" To="52" Label="Source1" />
-            <Edge From="53" To="54" Label="Source1" />
-            <Edge From="55" To="57" Label="Source1" />
-            <Edge From="56" To="57" Label="Source2" />
+            <Edge From="52" To="54" Label="Source1" />
+            <Edge From="53" To="54" Label="Source2" />
+            <Edge From="54" To="55" Label="Source1" />
+            <Edge From="55" To="56" Label="Source1" />
             <Edge From="57" To="58" Label="Source1" />
-            <Edge From="58" To="59" Label="Source1" />
-            <Edge From="60" To="61" Label="Source1" />
-            <Edge From="62" To="63" Label="Source1" />
-            <Edge From="64" To="65" Label="Source1" />
+            <Edge From="59" To="60" Label="Source1" />
+            <Edge From="61" To="62" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -4431,25 +4447,14 @@
             <Expression xsi:type="SubscribeSubject">
               <Name>Behavior Events</Name>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="harp:FilterMessage">
-                <harp:MessageType>Event</harp:MessageType>
-                <harp:Address xsi:nil="true" />
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="harp:Parse">
-              <harp:Register xsi:type="harp:ParseMessagePayload">
-                <harp:PayloadType>TimestampedS16</harp:PayloadType>
-                <harp:IsArray>true</harp:IsArray>
-              </harp:Register>
+            <Expression xsi:type="beh:Parse">
+              <harp:Register xsi:type="beh:TimestampedAnalogData" />
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Value</Selector>
             </Expression>
-            <Expression xsi:type="Index">
-              <Operand xsi:type="IntProperty">
-                <Value>0</Value>
-              </Operand>
+            <Expression xsi:type="MemberSelector">
+              <Selector>AnalogInput0</Selector>
             </Expression>
             <Expression xsi:type="rx:Sink">
               <Workflow>
@@ -4648,25 +4653,24 @@ Item3 as Seconds)</scr:Expression>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
+            <Edge From="1" To="10" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="2" To="11" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="3" To="8" Label="Source1" />
+            <Edge From="3" To="7" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="12" Label="Source1" />
+            <Edge From="6" To="11" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="12" Label="Source2" />
-            <Edge From="11" To="12" Label="Source3" />
+            <Edge From="9" To="11" Label="Source2" />
+            <Edge From="10" To="11" Label="Source3" />
+            <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="18" Label="Source1" />
+            <Edge From="13" To="17" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="18" Label="Source2" />
-            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="16" To="17" Label="Source2" />
+            <Edge From="17" To="18" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
