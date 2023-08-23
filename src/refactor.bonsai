@@ -6,9 +6,10 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
-                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -109,6 +110,27 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:RenderFrame" />
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="FarClipHorizon" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>100</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>FarClipHorizon</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FarClip" />
+              </PropertyMappings>
+            </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.CubemapView.bonsai">
               <Eye>
                 <X>0</X>
@@ -116,12 +138,30 @@
                 <Z>0</Z>
               </Eye>
               <NearClip>1E-05</NearClip>
-              <FarClip>10000</FarClip>
+              <FarClip>100</FarClip>
               <Light>
                 <X>0</X>
                 <Y>0</Y>
                 <Z>0</Z>
               </Light>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>ViewMatrix</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:RotateY">
+                <gl:Order>Append</gl:Order>
+                <gl:Angle>-3.14159274</gl:Angle>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+Item1 as ViewMatrix,
+Item2.ProjectionMatrix as ProjectionMatrix,
+Item2.Light as Light)</scr:Expression>
             </Expression>
             <Expression xsi:type="rx:PublishSubject">
               <Name>Draw3DStim</Name>
@@ -142,6 +182,26 @@
               <Height>15</Height>
               <Rotation>
                 <X>0</X>
+                <Y>179.99999999999977</Y>
+                <Z>0</Z>
+              </Rotation>
+              <Translation>
+                <X>0</X>
+                <Y>0</Y>
+                <Z>10</Z>
+              </Translation>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
+              <X>0</X>
+              <Y>0</Y>
+              <Width>1</Width>
+              <Height>0.5</Height>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
+              <Width>20</Width>
+              <Height>15</Height>
+              <Rotation>
+                <X>0</X>
                 <Y>0</Y>
                 <Z>0</Z>
               </Rotation>
@@ -153,9 +213,9 @@
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
               <X>0</X>
-              <Y>0</Y>
+              <Y>0.5</Y>
               <Width>1</Width>
-              <Height>1</Height>
+              <Height>0.5</Height>
             </Expression>
           </Nodes>
           <Edges>
@@ -163,11 +223,23 @@
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="5" To="11" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source2" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="11" To="14" Label="Source2" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="17" To="20" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -276,6 +348,16 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
+        <Combinator xsi:type="DoubleProperty">
+          <Value>0</Value>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Take">
+          <rx:Count>1</rx:Count>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
         <Combinator xsi:type="gli:MouseWheel" />
       </Expression>
       <Expression xsi:type="MemberSelector">
@@ -291,6 +373,9 @@
           <dsp:RescaleType>Linear</dsp:RescaleType>
         </Combinator>
       </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Merge" />
+      </Expression>
       <Expression xsi:type="InputMapping">
         <PropertyMappings>
           <Property Name="Z" Selector="it" />
@@ -300,110 +385,122 @@
         <Combinator xsi:type="gl:CreateVector3">
           <gl:X>0</gl:X>
           <gl:Y>3</gl:Y>
-          <gl:Z>55</gl:Z>
+          <gl:Z>82</gl:Z>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:BehaviorSubject">
         <Name>CurrentPosition</Name>
       </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>CorridorWidth</Name>
-        <Text><![CDATA[]]></Text>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="FloatProperty">
-          <Value>10</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>CorridorHeight</Name>
-        <Text><![CDATA[]]></Text>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="FloatProperty">
-          <Value>10</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>CorridorStart</Name>
-        <Text><![CDATA[]]></Text>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="FloatProperty">
-          <Value>0</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>CorridorLength</Name>
-        <Text><![CDATA[]]></Text>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="FloatProperty">
-          <Value>50</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>TextureName</Name>
-        <Text><![CDATA[]]></Text>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="StringProperty">
-          <Value>random_walls_2</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="FloatProperty">
-          <Value>10</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="FloatProperty">
-          <Value>10</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Zip" />
-      </Expression>
-      <Expression xsi:type="scr:ExpressionTransform">
-        <scr:Expression>new(
-Item1 as TextureName,
-Item2 as SizeX,
-Item3 as SizeY)
-</scr:Expression>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Zip" />
-      </Expression>
-      <Expression xsi:type="scr:ExpressionTransform">
-        <scr:Expression>new(
-Item1 as Width,
-Item2 as Height,
-Item4 as Length,
-Item3 as Start,
-Item5 as TextureSettings
-)
-</scr:Expression>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Take">
-          <rx:Count>1</rx:Count>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>CorridorSpecs</Name>
-      </Expression>
-      <Expression xsi:type="SubscribeSubject">
-        <Name>CorridorSpecs</Name>
-      </Expression>
-      <Expression xsi:type="rx:CreateObservable">
-        <Name>DrawSegment</Name>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>CorridorDrawing</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="WorkflowInput">
-              <Name>Source1</Name>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CurrentPosition</Name>
             </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
+            <Expression xsi:type="MemberSelector">
+              <Selector>Z</Selector>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>FarClipHorizon</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="Add" />
+            <Expression xsi:type="Divide">
+              <Operand xsi:type="FloatProperty">
+                <Value>10</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings />
+              <TypeMapping xsi:type="TypeMapping" TypeArguments="sys:Double" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="num:Floor" />
+            </Expression>
+            <Expression xsi:type="Multiply">
+              <Operand xsi:type="DoubleProperty">
+                <Value>10</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:DistinctUntilChanged" />
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="Start" Selector="it" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateCorridorSpecs.bonsai">
+              <Width>10</Width>
+              <Height>10</Height>
+              <Start>300</Start>
+              <Length>10</Length>
+              <TextureName>random_walls_2</TextureName>
+              <TextureSizeX>10</TextureSizeX>
+              <TextureSizeY>10</TextureSizeY>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>CorridorSpecs</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CorridorSpecs</Name>
+            </Expression>
+            <Expression xsi:type="rx:CreateObservable">
+              <Name>DrawSegment</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Z</Selector>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ThisCorridorSpecs</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>CorridorSpecs.Start,CorridorSpecs.Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="Add" />
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="ExtraDrawing" />
+                  </Expression>
+                  <Expression xsi:type="Add">
+                    <Operand xsi:type="FloatProperty">
+                      <Value>100</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="GreaterThan" />
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(
 Width*0.5 as OffsetX,
 Width*-0.5 as NegOffsetX,
 Start + Length*0.5 as CenterZ,
@@ -411,300 +508,330 @@ Height*0.5 as CenterY,
 Width / TextureSettings.SizeX  as TextureScalingX,
 Height / TextureSettings.SizeY  as TextureScalingY
 )</scr:Expression>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(
 Item1 as CorridorSpecs,
 Item2 as PostCorridorSpecs
 )</scr:Expression>
-            </Expression>
-            <Expression xsi:type="rx:AsyncSubject">
-              <Name>ThisCorridorSpecs</Name>
-            </Expression>
-            <Expression xsi:type="Annotation">
-              <Name>Floor</Name>
-              <Text><![CDATA[]]></Text>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Draw3DStim</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
-              <PositionVec3>CurrentPosition</PositionVec3>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
-            <Expression xsi:type="SubscribeSubject">
-              <Name>ThisCorridorSpecs</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>ThisCorridorSpecs</Name>
+                  </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>Floor</Name>
+                    <Text><![CDATA[]]></Text>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Draw3DStim</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
+                    <PositionVec3>CurrentPosition</PositionVec3>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ThisCorridorSpecs</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
+                      <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
+                      <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
+                      <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
+                      <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
+                    <TranslationX>0</TranslationX>
+                    <TranslationY>0</TranslationY>
+                    <TranslationZ>185</TranslationZ>
+                    <RotationZ>0</RotationZ>
+                    <RotationY>0</RotationY>
+                    <RotationX>90</RotationX>
+                    <ScaleX>10</ScaleX>
+                    <ScaleY>10</ScaleY>
+                    <ScaleZ>1.58139539</ScaleZ>
+                    <Ambient>
+                      <X>1</X>
+                      <Y>1</Y>
+                      <Z>1</Z>
+                    </Ambient>
+                    <Diffuse>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Diffuse>
+                    <Specular>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Specular>
+                    <SpecularExponent>1</SpecularExponent>
+                    <TextureScaleX>1</TextureScaleX>
+                    <TextureScaleY>1</TextureScaleY>
+                    <TextureShiftX>0</TextureShiftX>
+                    <TextureShiftY>0</TextureShiftY>
+                    <MeshName>Plane</MeshName>
+                  </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>Ceil</Name>
+                    <Text><![CDATA[]]></Text>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Draw3DStim</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
+                    <PositionVec3>CurrentPosition</PositionVec3>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ThisCorridorSpecs</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
+                      <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
+                      <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
+                      <Property Name="TranslationY" Selector="Item2.CorridorSpecs.Height" />
+                      <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
+                      <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
+                    <TranslationX>0</TranslationX>
+                    <TranslationY>10</TranslationY>
+                    <TranslationZ>185</TranslationZ>
+                    <RotationZ>0</RotationZ>
+                    <RotationY>0</RotationY>
+                    <RotationX>-90</RotationX>
+                    <ScaleX>10</ScaleX>
+                    <ScaleY>10</ScaleY>
+                    <ScaleZ>1.58139539</ScaleZ>
+                    <Ambient>
+                      <X>1</X>
+                      <Y>1</Y>
+                      <Z>1</Z>
+                    </Ambient>
+                    <Diffuse>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Diffuse>
+                    <Specular>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Specular>
+                    <SpecularExponent>1</SpecularExponent>
+                    <TextureScaleX>1</TextureScaleX>
+                    <TextureScaleY>1</TextureScaleY>
+                    <TextureShiftX>0</TextureShiftX>
+                    <TextureShiftY>0</TextureShiftY>
+                    <MeshName>Plane</MeshName>
+                  </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>LeftWall</Name>
+                    <Text><![CDATA[]]></Text>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Draw3DStim</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
+                    <PositionVec3>CurrentPosition</PositionVec3>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ThisCorridorSpecs</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
+                      <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
+                      <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
+                      <Property Name="TranslationY" Selector="Item2.PostCorridorSpecs.CenterY" />
+                      <Property Name="TranslationX" Selector="Item2.PostCorridorSpecs.NegOffsetX" />
+                      <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
+                      <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
+                    <TranslationX>-5</TranslationX>
+                    <TranslationY>5</TranslationY>
+                    <TranslationZ>185</TranslationZ>
+                    <RotationZ>-90</RotationZ>
+                    <RotationY>0</RotationY>
+                    <RotationX>-90</RotationX>
+                    <ScaleX>10</ScaleX>
+                    <ScaleY>10</ScaleY>
+                    <ScaleZ>1.58139539</ScaleZ>
+                    <Ambient>
+                      <X>1</X>
+                      <Y>1</Y>
+                      <Z>1</Z>
+                    </Ambient>
+                    <Diffuse>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Diffuse>
+                    <Specular>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Specular>
+                    <SpecularExponent>1</SpecularExponent>
+                    <TextureScaleX>1</TextureScaleX>
+                    <TextureScaleY>1</TextureScaleY>
+                    <TextureShiftX>0</TextureShiftX>
+                    <TextureShiftY>0</TextureShiftY>
+                    <MeshName>Plane</MeshName>
+                  </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>RightWall</Name>
+                    <Text><![CDATA[]]></Text>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Draw3DStim</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
+                    <PositionVec3>CurrentPosition</PositionVec3>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ThisCorridorSpecs</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
+                      <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
+                      <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
+                      <Property Name="TranslationY" Selector="Item2.PostCorridorSpecs.CenterY" />
+                      <Property Name="TranslationX" Selector="Item2.PostCorridorSpecs.OffsetX" />
+                      <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
+                      <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
+                    <TranslationX>5</TranslationX>
+                    <TranslationY>5</TranslationY>
+                    <TranslationZ>185</TranslationZ>
+                    <RotationZ>90</RotationZ>
+                    <RotationY>0</RotationY>
+                    <RotationX>-90</RotationX>
+                    <ScaleX>10</ScaleX>
+                    <ScaleY>10</ScaleY>
+                    <ScaleZ>1.58139539</ScaleZ>
+                    <Ambient>
+                      <X>1</X>
+                      <Y>1</Y>
+                      <Z>1</Z>
+                    </Ambient>
+                    <Diffuse>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Diffuse>
+                    <Specular>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Specular>
+                    <SpecularExponent>1</SpecularExponent>
+                    <TextureScaleX>1</TextureScaleX>
+                    <TextureScaleY>1</TextureScaleY>
+                    <TextureShiftX>0</TextureShiftX>
+                    <TextureShiftY>0</TextureShiftY>
+                    <MeshName>Plane</MeshName>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="7" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="6" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="12" To="14" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source2" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="22" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source2" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="30" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source2" />
+                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="33" To="34" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source1" />
+                  <Edge From="35" To="36" Label="Source1" />
+                  <Edge From="36" To="38" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source2" />
+                  <Edge From="38" To="39" Label="Source1" />
+                  <Edge From="39" To="40" Label="Source1" />
+                  <Edge From="41" To="42" Label="Source1" />
+                  <Edge From="42" To="43" Label="Source1" />
+                  <Edge From="43" To="44" Label="Source1" />
+                  <Edge From="44" To="46" Label="Source1" />
+                  <Edge From="45" To="46" Label="Source2" />
+                  <Edge From="46" To="47" Label="Source1" />
+                  <Edge From="47" To="48" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:CombineLatest" />
-            </Expression>
-            <Expression xsi:type="InputMapping">
-              <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
-                <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
-                <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
-                <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
-                <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
-              </PropertyMappings>
-              <Selector>Item1</Selector>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
-              <TranslationX>0</TranslationX>
-              <TranslationY>0</TranslationY>
-              <TranslationZ>25</TranslationZ>
-              <RotationZ>0</RotationZ>
-              <RotationY>0</RotationY>
-              <RotationX>90</RotationX>
-              <ScaleX>10</ScaleX>
-              <ScaleY>50</ScaleY>
-              <ScaleZ>1.58139539</ScaleZ>
-              <Ambient>
-                <X>1</X>
-                <Y>1</Y>
-                <Z>1</Z>
-              </Ambient>
-              <Diffuse>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-              </Diffuse>
-              <Specular>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-              </Specular>
-              <SpecularExponent>1</SpecularExponent>
-              <TextureScaleX>1</TextureScaleX>
-              <TextureScaleY>1</TextureScaleY>
-              <TextureShiftX>0</TextureShiftX>
-              <TextureShiftY>0</TextureShiftY>
-              <MeshName>Plane</MeshName>
-            </Expression>
-            <Expression xsi:type="Annotation">
-              <Name>Ceil</Name>
-              <Text><![CDATA[]]></Text>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Draw3DStim</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
-              <PositionVec3>CurrentPosition</PositionVec3>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
-            <Expression xsi:type="SubscribeSubject">
-              <Name>ThisCorridorSpecs</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:CombineLatest" />
-            </Expression>
-            <Expression xsi:type="InputMapping">
-              <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
-                <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
-                <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
-                <Property Name="TranslationY" Selector="Item2.CorridorSpecs.Height" />
-                <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
-                <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
-              </PropertyMappings>
-              <Selector>Item1</Selector>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
-              <TranslationX>0</TranslationX>
-              <TranslationY>10</TranslationY>
-              <TranslationZ>25</TranslationZ>
-              <RotationZ>0</RotationZ>
-              <RotationY>0</RotationY>
-              <RotationX>-90</RotationX>
-              <ScaleX>10</ScaleX>
-              <ScaleY>50</ScaleY>
-              <ScaleZ>1.58139539</ScaleZ>
-              <Ambient>
-                <X>1</X>
-                <Y>1</Y>
-                <Z>1</Z>
-              </Ambient>
-              <Diffuse>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-              </Diffuse>
-              <Specular>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-              </Specular>
-              <SpecularExponent>1</SpecularExponent>
-              <TextureScaleX>1</TextureScaleX>
-              <TextureScaleY>1</TextureScaleY>
-              <TextureShiftX>0</TextureShiftX>
-              <TextureShiftY>0</TextureShiftY>
-              <MeshName>Plane</MeshName>
-            </Expression>
-            <Expression xsi:type="Annotation">
-              <Name>LeftWall</Name>
-              <Text><![CDATA[]]></Text>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Draw3DStim</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
-              <PositionVec3>CurrentPosition</PositionVec3>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
-            <Expression xsi:type="SubscribeSubject">
-              <Name>ThisCorridorSpecs</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:CombineLatest" />
-            </Expression>
-            <Expression xsi:type="InputMapping">
-              <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
-                <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
-                <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
-                <Property Name="TranslationY" Selector="Item2.PostCorridorSpecs.CenterY" />
-                <Property Name="TranslationX" Selector="Item2.PostCorridorSpecs.NegOffsetX" />
-                <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
-                <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
-              </PropertyMappings>
-              <Selector>Item1</Selector>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
-              <TranslationX>-5</TranslationX>
-              <TranslationY>5</TranslationY>
-              <TranslationZ>25</TranslationZ>
-              <RotationZ>-90</RotationZ>
-              <RotationY>0</RotationY>
-              <RotationX>-90</RotationX>
-              <ScaleX>10</ScaleX>
-              <ScaleY>50</ScaleY>
-              <ScaleZ>1.58139539</ScaleZ>
-              <Ambient>
-                <X>1</X>
-                <Y>1</Y>
-                <Z>1</Z>
-              </Ambient>
-              <Diffuse>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-              </Diffuse>
-              <Specular>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-              </Specular>
-              <SpecularExponent>1</SpecularExponent>
-              <TextureScaleX>1</TextureScaleX>
-              <TextureScaleY>1</TextureScaleY>
-              <TextureShiftX>0</TextureShiftX>
-              <TextureShiftY>0</TextureShiftY>
-              <MeshName>Plane</MeshName>
-            </Expression>
-            <Expression xsi:type="Annotation">
-              <Name>RightWall</Name>
-              <Text><![CDATA[]]></Text>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Draw3DStim</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
-              <PositionVec3>CurrentPosition</PositionVec3>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
-            <Expression xsi:type="SubscribeSubject">
-              <Name>ThisCorridorSpecs</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:CombineLatest" />
-            </Expression>
-            <Expression xsi:type="InputMapping">
-              <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
-                <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
-                <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
-                <Property Name="TranslationY" Selector="Item2.PostCorridorSpecs.CenterY" />
-                <Property Name="TranslationX" Selector="Item2.PostCorridorSpecs.OffsetX" />
-                <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
-                <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
-              </PropertyMappings>
-              <Selector>Item1</Selector>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
-              <TranslationX>5</TranslationX>
-              <TranslationY>5</TranslationY>
-              <TranslationZ>25</TranslationZ>
-              <RotationZ>90</RotationZ>
-              <RotationY>0</RotationY>
-              <RotationX>-90</RotationX>
-              <ScaleX>10</ScaleX>
-              <ScaleY>50</ScaleY>
-              <ScaleZ>1.58139539</ScaleZ>
-              <Ambient>
-                <X>1</X>
-                <Y>1</Y>
-                <Z>1</Z>
-              </Ambient>
-              <Diffuse>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-              </Diffuse>
-              <Specular>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>0</Z>
-              </Specular>
-              <SpecularExponent>1</SpecularExponent>
-              <TextureScaleX>1</TextureScaleX>
-              <TextureScaleY>1</TextureScaleY>
-              <TextureShiftX>0</TextureShiftX>
-              <TextureShiftY>0</TextureShiftY>
-              <MeshName>Plane</MeshName>
+              <Combinator xsi:type="rx:Merge" />
             </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="0" To="2" Label="Source1" />
-            <Edge From="1" To="2" Label="Source2" />
-            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="1" To="3" Label="Source1" />
+            <Edge From="2" To="3" Label="Source2" />
             <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="10" Label="Source1" />
-            <Edge From="9" To="10" Label="Source2" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="18" Label="Source1" />
-            <Edge From="17" To="18" Label="Source2" />
-            <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="20" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="26" Label="Source1" />
-            <Edge From="25" To="26" Label="Source2" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
-            <Edge From="31" To="32" Label="Source1" />
-            <Edge From="32" To="34" Label="Source1" />
-            <Edge From="33" To="34" Label="Source2" />
-            <Edge From="34" To="35" Label="Source1" />
-            <Edge From="35" To="36" Label="Source1" />
           </Edges>
         </Workflow>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Merge" />
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>TextureBank</Name>
@@ -715,32 +842,16 @@ Item2 as PostCorridorSpecs
     </Nodes>
     <Edges>
       <Edge From="3" To="4" Label="Source1" />
-      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="4" To="9" Label="Source1" />
       <Edge From="5" To="6" Label="Source1" />
       <Edge From="6" To="7" Label="Source1" />
       <Edge From="7" To="8" Label="Source1" />
-      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="8" To="9" Label="Source2" />
+      <Edge From="9" To="10" Label="Source1" />
       <Edge From="10" To="11" Label="Source1" />
-      <Edge From="11" To="24" Label="Source1" />
-      <Edge From="12" To="13" Label="Source1" />
-      <Edge From="13" To="24" Label="Source2" />
-      <Edge From="14" To="15" Label="Source1" />
-      <Edge From="15" To="24" Label="Source3" />
-      <Edge From="16" To="17" Label="Source1" />
-      <Edge From="17" To="24" Label="Source4" />
-      <Edge From="18" To="19" Label="Source1" />
-      <Edge From="19" To="22" Label="Source1" />
-      <Edge From="20" To="22" Label="Source2" />
-      <Edge From="21" To="22" Label="Source3" />
-      <Edge From="22" To="23" Label="Source1" />
-      <Edge From="23" To="24" Label="Source5" />
-      <Edge From="24" To="25" Label="Source1" />
-      <Edge From="25" To="26" Label="Source1" />
-      <Edge From="26" To="27" Label="Source1" />
-      <Edge From="28" To="29" Label="Source1" />
-      <Edge From="29" To="30" Label="Source1" />
-      <Edge From="30" To="32" Label="Source1" />
-      <Edge From="31" To="32" Label="Source2" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="13" To="15" Label="Source1" />
+      <Edge From="14" To="15" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
