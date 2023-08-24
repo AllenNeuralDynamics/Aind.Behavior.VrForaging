@@ -17,6 +17,7 @@
         <Property Name="TextureName" />
         <Property Name="TextureSizeX" />
         <Property Name="TextureSizeY" />
+        <Property Name="Id" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>CreateCorridorSpecs</Name>
@@ -43,7 +44,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>-10</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -51,7 +52,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>50</Value>
+                <Value>10</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -88,6 +89,19 @@ Item2 as SizeX,
 Item3 as SizeY)
 </scr:Expression>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="Id" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>-1</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+it as Id
+)</scr:Expression>
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Zip" />
             </Expression>
@@ -97,7 +111,8 @@ Item1 as Width,
 Item2 as Height,
 Item4 as Length,
 Item3 as Start,
-Item5 as TextureSettings
+Item5 as TextureSettings,
+Item6 as Metadata
 )
 </scr:Expression>
             </Expression>
@@ -113,13 +128,13 @@ Item5 as TextureSettings
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="16" Label="Source1" />
+            <Edge From="1" To="19" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="16" Label="Source2" />
+            <Edge From="3" To="19" Label="Source2" />
             <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="16" Label="Source3" />
+            <Edge From="5" To="19" Label="Source3" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="16" Label="Source4" />
+            <Edge From="7" To="19" Label="Source4" />
             <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="14" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
@@ -127,11 +142,14 @@ Item5 as TextureSettings
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source3" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source5" />
+            <Edge From="15" To="19" Label="Source5" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="18" To="19" Label="Source6" />
             <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
