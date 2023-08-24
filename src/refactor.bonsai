@@ -9,6 +9,7 @@
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -384,7 +385,7 @@ Item2.Light as Light)</scr:Expression>
         <Combinator xsi:type="gl:CreateVector3">
           <gl:X>0</gl:X>
           <gl:Y>3</gl:Y>
-          <gl:Z>0</gl:Z>
+          <gl:Z>704</gl:Z>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:BehaviorSubject">
@@ -410,6 +411,41 @@ Item2.Light as Light)</scr:Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FarClipHorizon</Name>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CurrentPosition</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:CreateVector3">
+                <gl:X>0</gl:X>
+                <gl:Y>0</gl:Y>
+                <gl:Z>-1</gl:Z>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:Scan">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>Accumulation.Z &gt; Value.Z ? Accumulation : Value</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>MaxPosition</Name>
+            </Expression>
             <Expression xsi:type="Annotation">
               <Text><![CDATA[The distance used to determine whether a segment should be disposed.]]></Text>
             </Expression>
@@ -426,21 +462,232 @@ Item2.Light as Light)</scr:Expression>
             <Expression xsi:type="rx:AsyncSubject">
               <Name>DisposingTreshold</Name>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>CurrentPosition</Name>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Initialize</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>FarClipHorizon</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Z</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Subtract" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SegmentLength</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Divide">
+                    <Operand xsi:type="FloatProperty">
+                      <Value>100</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Count" Selector="it" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Z</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Start" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Range">
+                      <rx:Start>0</rx:Start>
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Rescale">
+                      <dsp:Min>0</dsp:Min>
+                      <dsp:Max>1</dsp:Max>
+                      <dsp:RangeMin>0</dsp:RangeMin>
+                      <dsp:RangeMax>1</dsp:RangeMax>
+                      <dsp:RescaleType>Linear</dsp:RescaleType>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="3" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="7" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="13" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Z</Selector>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Update</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>MaxPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1.Z,Item2.Z</Selector>
+                        </Expression>
+                        <Expression xsi:type="GreaterThanOrEqual" />
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Item1.Z</Selector>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>FarClipHorizon</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Add">
+                    <Operand xsi:type="FloatProperty">
+                      <Value>100</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SegmentLength</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Divide">
+                    <Operand xsi:type="FloatProperty">
+                      <Value>100</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings />
+                    <TypeMapping xsi:type="TypeMapping" TypeArguments="sys:Double" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="num:Floor" />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="7" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source2" />
+                  <Edge From="7" To="10" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Concat" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:DistinctUntilChanged" />
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SegmentLength</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Value" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Multiply">
+              <Operand xsi:type="DoubleProperty">
+                <Value>100</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+Item1 as Id, 
+Item2 as Start
+)
+</scr:Expression>
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="Start" Selector="Start" />
+                <Property Name="Id" Selector="Id" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SegmentLength</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Length" />
+              </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateCorridorSpecs.bonsai">
               <Width>10</Width>
               <Height>10</Height>
-              <Start>-10</Start>
-              <Length>10</Length>
+              <Start>800</Start>
+              <Length>100</Length>
               <TextureName>random_walls_2</TextureName>
               <TextureSizeX>10</TextureSizeX>
               <TextureSizeY>10</TextureSizeY>
-              <Id>-1</Id>
+              <Id>1</Id>
             </Expression>
             <Expression xsi:type="rx:ReplaySubject">
               <Name>CorridorSpecs</Name>
@@ -562,12 +809,12 @@ Item2 as PostCorridorSpecs
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
                     <TranslationX>0</TranslationX>
                     <TranslationY>0</TranslationY>
-                    <TranslationZ>-5</TranslationZ>
+                    <TranslationZ>850</TranslationZ>
                     <RotationZ>0</RotationZ>
                     <RotationY>0</RotationY>
                     <RotationX>90</RotationX>
                     <ScaleX>10</ScaleX>
-                    <ScaleY>10</ScaleY>
+                    <ScaleY>100</ScaleY>
                     <ScaleZ>1.58139539</ScaleZ>
                     <Ambient>
                       <X>1</X>
@@ -622,12 +869,12 @@ Item2 as PostCorridorSpecs
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
                     <TranslationX>0</TranslationX>
                     <TranslationY>10</TranslationY>
-                    <TranslationZ>-5</TranslationZ>
+                    <TranslationZ>850</TranslationZ>
                     <RotationZ>0</RotationZ>
                     <RotationY>0</RotationY>
                     <RotationX>-90</RotationX>
                     <ScaleX>10</ScaleX>
-                    <ScaleY>10</ScaleY>
+                    <ScaleY>100</ScaleY>
                     <ScaleZ>1.58139539</ScaleZ>
                     <Ambient>
                       <X>1</X>
@@ -683,12 +930,12 @@ Item2 as PostCorridorSpecs
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
                     <TranslationX>-5</TranslationX>
                     <TranslationY>5</TranslationY>
-                    <TranslationZ>-5</TranslationZ>
+                    <TranslationZ>850</TranslationZ>
                     <RotationZ>-90</RotationZ>
                     <RotationY>0</RotationY>
                     <RotationX>-90</RotationX>
                     <ScaleX>10</ScaleX>
-                    <ScaleY>10</ScaleY>
+                    <ScaleY>100</ScaleY>
                     <ScaleZ>1.58139539</ScaleZ>
                     <Ambient>
                       <X>1</X>
@@ -744,12 +991,12 @@ Item2 as PostCorridorSpecs
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
                     <TranslationX>5</TranslationX>
                     <TranslationY>5</TranslationY>
-                    <TranslationZ>-5</TranslationZ>
+                    <TranslationZ>850</TranslationZ>
                     <RotationZ>90</RotationZ>
                     <RotationY>0</RotationY>
                     <RotationX>-90</RotationX>
                     <ScaleX>10</ScaleX>
-                    <ScaleY>10</ScaleY>
+                    <ScaleY>100</ScaleY>
                     <ScaleZ>1.58139539</ScaleZ>
                     <Ambient>
                       <X>1</X>
@@ -820,14 +1067,29 @@ Item2 as PostCorridorSpecs
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="4" To="7" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="6" To="7" Label="Source2" />
+            <Edge From="7" To="8" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="13" To="15" Label="Source1" />
+            <Edge From="14" To="15" Label="Source2" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="15" To="20" Label="Source1" />
+            <Edge From="16" To="19" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="18" To="19" Label="Source2" />
+            <Edge From="19" To="20" Label="Source2" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="25" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source2" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
