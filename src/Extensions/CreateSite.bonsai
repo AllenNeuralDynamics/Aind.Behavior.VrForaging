@@ -33,7 +33,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>599</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -41,7 +41,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>30</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -49,7 +49,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
-                <Value>0</Value>
+                <Value>599</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
@@ -127,7 +127,7 @@ Item5 as StopDuration
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
+                <Value>true</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -143,7 +143,7 @@ Item5 as StopDuration
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>1</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -174,9 +174,6 @@ Item6 as OdorControl
               <Combinator xsi:type="rx:Take">
                 <rx:Count>1</rx:Count>
               </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:AsyncSubject">
-              <Name>SiteSpecs</Name>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
@@ -214,7 +211,6 @@ Item6 as OdorControl
             <Edge From="30" To="31" Label="Source1" />
             <Edge From="31" To="32" Label="Source1" />
             <Edge From="32" To="33" Label="Source1" />
-            <Edge From="33" To="34" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
