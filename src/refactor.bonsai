@@ -722,6 +722,17 @@ Item2 as RewardAmout
         </Workflow>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
+        <Name>FeedbackControl</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Boolean">
+              <rx:Name>ChoiceFeedback</rx:Name>
+            </Expression>
+          </Nodes>
+          <Edges />
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
         <Name>CorridorDrawing</Name>
         <Workflow>
           <Nodes>
@@ -1250,6 +1261,30 @@ Item2 as Start
                                   <rx:Count>1</rx:Count>
                                 </Combinator>
                               </Expression>
+                              <Expression xsi:type="rx:Sink">
+                                <Name>LockedChoiceFeedback</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="BooleanProperty">
+                                        <Value>true</Value>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="MulticastSubject">
+                                      <Name>ChoiceFeedback</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>ThisRewardControl</Name>
                               </Expression>
@@ -1354,18 +1389,19 @@ Item2 as Start
                               <Edge From="5" To="6" Label="Source1" />
                               <Edge From="6" To="8" Label="Source1" />
                               <Edge From="7" To="8" Label="Source2" />
-                              <Edge From="8" To="12" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="8" To="9" Label="Source1" />
+                              <Edge From="9" To="13" Label="Source1" />
                               <Edge From="10" To="11" Label="Source1" />
-                              <Edge From="11" To="12" Label="Source2" />
-                              <Edge From="12" To="14" Label="Source1" />
-                              <Edge From="13" To="14" Label="Source2" />
-                              <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="15" To="17" Label="Source1" />
-                              <Edge From="16" To="17" Label="Source2" />
-                              <Edge From="17" To="18" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source1" />
+                              <Edge From="12" To="13" Label="Source2" />
+                              <Edge From="13" To="15" Label="Source1" />
+                              <Edge From="14" To="15" Label="Source2" />
+                              <Edge From="15" To="16" Label="Source1" />
+                              <Edge From="16" To="18" Label="Source1" />
+                              <Edge From="17" To="18" Label="Source2" />
                               <Edge From="18" To="19" Label="Source1" />
                               <Edge From="19" To="20" Label="Source1" />
+                              <Edge From="20" To="21" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1659,12 +1695,12 @@ Item2 as Start
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="6" To="9" Label="Source1" />
-      <Edge From="7" To="8" Label="Source1" />
-      <Edge From="8" To="9" Label="Source2" />
-      <Edge From="10" To="13" Label="Source1" />
-      <Edge From="11" To="12" Label="Source1" />
-      <Edge From="12" To="13" Label="Source2" />
+      <Edge From="7" To="10" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source2" />
+      <Edge From="11" To="14" Label="Source1" />
+      <Edge From="12" To="13" Label="Source1" />
+      <Edge From="13" To="14" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
