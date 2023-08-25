@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
@@ -18,6 +18,19 @@
         <Name>Config</Name>
         <Workflow>
           <Nodes>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>SigmaZ</Name>
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
                 <num:Seed xsi:nil="true" />
@@ -123,19 +136,21 @@
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="11" To="13" Label="Source1" />
-            <Edge From="12" To="13" Label="Source2" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="14" To="16" Label="Source1" />
+            <Edge From="15" To="16" Label="Source2" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -562,7 +577,7 @@ Item2.Light as Light)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>3</gl:Y>
-                <gl:Z>680</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -993,12 +1008,12 @@ Item2 as Start
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateCorridorSpecs.bonsai">
               <Width>10</Width>
               <Height>10</Height>
-              <Start>1600</Start>
+              <Start>1000</Start>
               <Length>100</Length>
               <TextureName>random_walls_2</TextureName>
               <TextureSizeX>10</TextureSizeX>
               <TextureSizeY>10</TextureSizeY>
-              <Id>16</Id>
+              <Id>10</Id>
             </Expression>
             <Expression xsi:type="rx:ReplaySubject">
               <Name>VisCorridorSpecs</Name>
@@ -1327,6 +1342,9 @@ Item2 as Start
                                     <Expression xsi:type="SubscribeSubject">
                                       <Name>RngSeed</Name>
                                     </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>RngSeed</Name>
+                                    </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="p1:CreateContinuousUniform">
                                         <p1:Lower>0</p1:Lower>
@@ -1358,16 +1376,17 @@ Item2 as Start
                                   </Nodes>
                                   <Edges>
                                     <Edge From="0" To="1" Label="Source1" />
-                                    <Edge From="1" To="5" Label="Source1" />
-                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="1" To="6" Label="Source1" />
+                                    <Edge From="2" To="5" Label="Source1" />
                                     <Edge From="3" To="4" Label="Source1" />
                                     <Edge From="4" To="5" Label="Source2" />
-                                    <Edge From="5" To="6" Label="Source1" />
-                                    <Edge From="6" To="9" Label="Source1" />
-                                    <Edge From="7" To="8" Label="Source1" />
-                                    <Edge From="8" To="9" Label="Source2" />
-                                    <Edge From="9" To="10" Label="Source1" />
+                                    <Edge From="5" To="6" Label="Source2" />
+                                    <Edge From="6" To="7" Label="Source1" />
+                                    <Edge From="7" To="10" Label="Source1" />
+                                    <Edge From="8" To="9" Label="Source1" />
+                                    <Edge From="9" To="10" Label="Source2" />
                                     <Edge From="10" To="11" Label="Source1" />
+                                    <Edge From="11" To="12" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -1668,6 +1687,202 @@ Item2 as Start
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>TaskLogic</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:Timer">
+                      <gl:DueTime>PT0S</gl:DueTime>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:SelectMany">
+                    <Name>InterPatch</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>CurrentPosition</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Z</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>SigmaZ</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Value" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Add">
+                          <Operand xsi:type="FloatProperty">
+                            <Value>0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
+                          <Minimum>10</Minimum>
+                          <Maximum>50</Maximum>
+                          <Average>20</Average>
+                          <Count>1</Count>
+                        </Expression>
+                        <Expression xsi:type="InputMapping">
+                          <PropertyMappings />
+                          <TypeMapping xsi:type="TypeMapping" TypeArguments="sys:Double" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="num:Floor" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="InputMapping">
+                          <PropertyMappings>
+                            <Property Name="Start" Selector="Item1" />
+                            <Property Name="Length" Selector="Item2" />
+                            <Property Name="Id" Selector="Item3" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
+                          <Start>0</Start>
+                          <Length>50</Length>
+                          <Id>0</Id>
+                          <Brightness>0.5</Brightness>
+                          <HasRewardLogic>false</HasRewardLogic>
+                          <RewardAmount>0</RewardAmount>
+                          <RewardProbability>0</RewardProbability>
+                          <RewardDelay>PT0S</RewardDelay>
+                          <StopDuration>PT0S</StopDuration>
+                          <HasOdor>false</HasOdor>
+                          <OdorIdentity>0</OdorIdentity>
+                          <OdorConcentration>0</OdorConcentration>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="4" To="6" Label="Source1" />
+                        <Edge From="4" To="8" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source3" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="rx:SelectMany">
+                    <Name>Gap</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>CurrentPosition</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Z</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>SigmaZ</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Value" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Add">
+                          <Operand xsi:type="FloatProperty">
+                            <Value>0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
+                          <Minimum>5</Minimum>
+                          <Maximum>30</Maximum>
+                          <Average>10</Average>
+                          <Count>1</Count>
+                        </Expression>
+                        <Expression xsi:type="InputMapping">
+                          <PropertyMappings />
+                          <TypeMapping xsi:type="TypeMapping" TypeArguments="sys:Double" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="num:Floor" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="InputMapping">
+                          <PropertyMappings>
+                            <Property Name="Start" Selector="Item1" />
+                            <Property Name="Length" Selector="Item2" />
+                            <Property Name="Id" Selector="Item3" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
+                          <Start>0</Start>
+                          <Length>30</Length>
+                          <Id>0</Id>
+                          <Brightness>1</Brightness>
+                          <HasRewardLogic>false</HasRewardLogic>
+                          <RewardAmount>0</RewardAmount>
+                          <RewardProbability>0</RewardProbability>
+                          <RewardDelay>PT0S</RewardDelay>
+                          <StopDuration>PT0S</StopDuration>
+                          <HasOdor>false</HasOdor>
+                          <OdorIdentity>0</OdorIdentity>
+                          <OdorConcentration>0</OdorConcentration>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="4" To="6" Label="Source1" />
+                        <Edge From="4" To="8" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source3" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Repeat" />
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
           </Nodes>
           <Edges>
