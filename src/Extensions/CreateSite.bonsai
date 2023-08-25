@@ -62,7 +62,7 @@ it as Id
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>1</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
@@ -83,7 +83,7 @@ it as Brightness)
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>1</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -91,7 +91,7 @@ it as Brightness)
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>1</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
