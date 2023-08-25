@@ -9,6 +9,20 @@
       <Expression xsi:type="WorkflowInput">
         <Name>Source1</Name>
       </Expression>
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="Start" />
+        <Property Name="Length" />
+        <Property Name="Id" />
+        <Property Name="Brightness" />
+        <Property Name="HasRewardLogic" />
+        <Property Name="RewardAmount" />
+        <Property Name="RewardProbability" />
+        <Property Name="RewardDelay" />
+        <Property Name="StopDuration" />
+        <Property Name="HasOdor" />
+        <Property Name="OdorIdentity" />
+        <Property Name="OdorConcentration" />
+      </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>CreateSite</Name>
         <Description />
@@ -207,8 +221,9 @@ Item6 as OdorControl
       <Expression xsi:type="WorkflowOutput" />
     </Nodes>
     <Edges>
-      <Edge From="0" To="1" Label="Source1" />
-      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="0" To="2" Label="Source1" />
+      <Edge From="1" To="2" Label="Source2" />
+      <Edge From="2" To="3" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
