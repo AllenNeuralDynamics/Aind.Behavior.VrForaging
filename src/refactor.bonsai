@@ -980,6 +980,7 @@ Item2 as Start
               <Name>SiteSpecs</Name>
             </Expression>
             <Expression xsi:type="rx:CreateObservable">
+              <Name>InstantiateSite</Name>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="WorkflowInput">
