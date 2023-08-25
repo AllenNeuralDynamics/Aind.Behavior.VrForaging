@@ -11,10 +11,11 @@
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>CreateSite</Name>
+        <Description />
         <Workflow>
           <Nodes>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Start" />
+              <Property Name="Value" DisplayName="Start" Category="Environment" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
@@ -22,7 +23,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Length" />
+              <Property Name="Value" DisplayName="Length" Category="Environment" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
@@ -30,20 +31,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Brightness" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-it as Brightness)
-</scr:Expression>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Id" />
+              <Property Name="Value" DisplayName="Id" Category="Metadata" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
@@ -56,16 +44,102 @@ it as Id
 )</scr:Expression>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="HasRewardLogic" />
+              <Property Name="Value" DisplayName="Brightness" Category="Environment" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+it as Brightness)
+</scr:Expression>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="HasRewardLogic" Category="Reward" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="BooleanProperty">
                 <Value>false</Value>
               </Combinator>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="RewardAmount" Category="Reward" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>1</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="RewardProbability" Category="Reward" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>1</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="RewardDelay" Category="Reward" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="TimeSpanProperty">
+                <Value>PT0S</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="StopDuration" Category="Reward" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="TimeSpanProperty">
+                <Value>PT0S</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>new(
-it as HasRewardLogic
+Item1 as HasRewardLogic,
+Item2 as RewardAmount,
+Item3 as RewardProbability,
+Item4 as RewardDelay,
+Item5 as StopDuration
+)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="HasOdor" Category="Odor" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>false</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="OdorIdentity" Category="Odor" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="OdorConcentration" Category="Odor" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+Item1 as HasOdor,
+Item2 as OdorIdentity,
+Item3 as OdorConcentration
 )</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -75,9 +149,10 @@ it as HasRewardLogic
               <scr:Expression>new(
 Item1 as Start,
 Item2 as Length,
-Item3 as StimControl,
-Item4 as Metadata,
-Item5 as RewardControl
+Item3 as Metadata,
+Item4 as BrightnessControl,
+Item5 as RewardControl,
+Item6 as OdorControl
 )
 </scr:Expression>
             </Expression>
@@ -93,22 +168,39 @@ Item5 as RewardControl
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="13" Label="Source1" />
+            <Edge From="1" To="30" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="13" Label="Source2" />
+            <Edge From="3" To="30" Label="Source2" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="13" Label="Source3" />
+            <Edge From="6" To="30" Label="Source3" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="13" Label="Source4" />
+            <Edge From="9" To="30" Label="Source4" />
             <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source5" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="11" To="20" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="20" Label="Source2" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="15" To="20" Label="Source3" />
             <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="20" Label="Source4" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source5" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="30" Label="Source5" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="28" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="28" Label="Source2" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="28" Label="Source3" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="30" Label="Source6" />
+            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="34" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
