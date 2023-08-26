@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -702,11 +702,7 @@ Item2 as RewardAmout
         <Name>FeedbackControl</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
-              </Combinator>
-            </Expression>
+            <Expression xsi:type="Unit" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
                 <rx:Count>1</rx:Count>
@@ -1070,6 +1066,13 @@ Item2 as Start
             <Expression xsi:type="SubscribeSubject">
               <Name>SiteSpecs</Name>
             </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>InstantiateSite</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
             <Expression xsi:type="rx:CreateObservable">
               <Name>InstantiateSite</Name>
               <Workflow>
@@ -1238,11 +1241,7 @@ Item2 as Start
                                     <Expression xsi:type="WorkflowInput">
                                       <Name>Source1</Name>
                                     </Expression>
-                                    <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="BooleanProperty">
-                                        <Value>true</Value>
-                                      </Combinator>
-                                    </Expression>
+                                          <Expression xsi:type="Unit" />
                                     <Expression xsi:type="MulticastSubject">
                                       <Name>ChoiceFeedback</Name>
                                     </Expression>
@@ -1642,6 +1641,14 @@ Item2 as Start
                 </Edges>
               </Workflow>
             </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Merge" />
             </Expression>
@@ -1768,10 +1775,9 @@ Item2 as Start
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddInterPatchSite.bonsai">
-                    <Minimum>10</Minimum>
-                    <Maximum>50</Maximum>
-                    <Average>20</Average>
-                    <Count>1</Count>
+                    <Minimum>30</Minimum>
+                    <Maximum>100</Maximum>
+                    <Average>50</Average>
                     <Brightness>0.5</Brightness>
                     <HasRewardLogic>false</HasRewardLogic>
                     <RewardAmount>0</RewardAmount>
@@ -1807,10 +1813,9 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
-                          <Minimum>5</Minimum>
-                          <Maximum>30</Maximum>
-                          <Average>10</Average>
-                          <Count>1</Count>
+                          <Minimum>20</Minimum>
+                          <Maximum>50</Maximum>
+                          <Average>30</Average>
                           <Brightness>1</Brightness>
                           <HasRewardLogic>false</HasRewardLogic>
                           <RewardAmount>0</RewardAmount>
@@ -1923,10 +1928,9 @@ Item2 as Start
                           </Workflow>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddRewardSite.bonsai">
-                          <Minimum>5</Minimum>
-                          <Maximum>30</Maximum>
-                          <Average>10</Average>
-                          <Count>1</Count>
+                          <Minimum>20</Minimum>
+                          <Maximum>50</Maximum>
+                          <Average>30</Average>
                           <Brightness>1</Brightness>
                           <HasRewardLogic>true</HasRewardLogic>
                           <RewardProbability>1</RewardProbability>
@@ -1937,10 +1941,9 @@ Item2 as Start
                           <Label>RewardSite</Label>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
-                          <Minimum>5</Minimum>
-                          <Maximum>30</Maximum>
-                          <Average>10</Average>
-                          <Count>1</Count>
+                          <Minimum>20</Minimum>
+                          <Maximum>50</Maximum>
+                          <Average>30</Average>
                           <Brightness>1</Brightness>
                           <HasRewardLogic>false</HasRewardLogic>
                           <RewardAmount>0</RewardAmount>
