@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.8.1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="WorkflowInput">
+        <Name>Source1</Name>
+      </Expression>
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="Minimum" />
+        <Property Name="Maximum" />
+        <Property Name="Average" />
+        <Property Name="Count" />
+        <Property Name="Brightness" />
+        <Property Name="HasRewardLogic" />
+        <Property Name="RewardProbability" />
+        <Property Name="RewardDelay" />
+        <Property Name="StopDuration" />
+        <Property Name="HasOdor" />
+        <Property Name="OdorConcentration" />
+        <Property Name="Label" />
+      </Expression>
+      <Expression xsi:type="rx:SelectMany">
+        <Name>AddRewardSite</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>PreviousSite</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>PreviousSite</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Length,Start</Selector>
+            </Expression>
+            <Expression xsi:type="Add" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SigmaZ</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Value" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Add">
+              <Operand xsi:type="FloatProperty">
+                <Value>0</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Minimum" />
+              <Property Name="Maximum" />
+              <Property Name="Average" />
+              <Property Name="Count" />
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
+              <Minimum>5</Minimum>
+              <Maximum>30</Maximum>
+              <Average>10</Average>
+              <Count>1</Count>
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings />
+              <TypeMapping xsi:type="TypeMapping" TypeArguments="sys:Double" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="num:Floor" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="Start" Selector="Item1" />
+                <Property Name="Length" Selector="Item2" />
+                <Property Name="Id" Selector="Item3" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ActivePatch</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="OdorIdentity" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RewardDepleted</Name>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>it ? 0 : 1</scr:Name>
+              <scr:Expression>it ? 0 : 1</scr:Expression>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="RewardAmount" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Brightness" />
+              <Property Name="HasRewardLogic" />
+              <Property Name="RewardProbability" />
+              <Property Name="RewardDelay" />
+              <Property Name="StopDuration" />
+              <Property Name="HasOdor" />
+              <Property Name="OdorConcentration" />
+              <Property Name="Label" />
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
+              <Start>1043</Start>
+              <Length>30</Length>
+              <Id>1043</Id>
+              <Brightness>1</Brightness>
+              <HasRewardLogic>true</HasRewardLogic>
+              <RewardAmount>0</RewardAmount>
+              <RewardProbability>1</RewardProbability>
+              <RewardDelay>PT0S</RewardDelay>
+              <StopDuration>PT0.5S</StopDuration>
+              <HasOdor>true</HasOdor>
+              <OdorIdentity>0</OdorIdentity>
+              <OdorConcentration>1</OdorConcentration>
+              <Label>RewardSite</Label>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>SiteSpecs</Name>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="8" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source2" />
+            <Edge From="8" To="10" Label="Source1" />
+            <Edge From="8" To="11" Label="Source1" />
+            <Edge From="8" To="13" Label="Source1" />
+            <Edge From="9" To="10" Label="Source2" />
+            <Edge From="10" To="13" Label="Source2" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source3" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="22" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="22" Label="Source2" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="22" Label="Source3" />
+            <Edge From="21" To="22" Label="Source4" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source2" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="WorkflowOutput" />
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="2" Label="Source1" />
+      <Edge From="1" To="2" Label="Source2" />
+      <Edge From="2" To="3" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
