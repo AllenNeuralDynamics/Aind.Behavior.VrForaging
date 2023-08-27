@@ -1,0 +1,5 @@
+# Bonsai scripting files
+.vs
+.vscode
+src.sln
+*bonsai.layout
