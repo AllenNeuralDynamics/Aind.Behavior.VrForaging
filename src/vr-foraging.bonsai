@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -182,6 +182,15 @@
               <Combinator xsi:type="res:LoadResources" />
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoadAllScreensCalibration.bonsai" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>ScreenCalibration</Name>
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:RenderFrame" />
             </Expression>
@@ -239,29 +248,57 @@ Item2.Light as Light)</scr:Expression>
                 <gl:MagFilter>Linear</gl:MagFilter>
               </Combinator>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ScreenCalibration</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Left</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Width" Selector="DisplayWidth" />
+                <Property Name="Height" Selector="DisplayHeight" />
+                <Property Name="Rotation" Selector="Rotation" />
+                <Property Name="Translation" Selector="Translation" />
+              </PropertyMappings>
+            </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
-              <Width>20</Width>
-              <Height>15</Height>
+              <Width>22</Width>
+              <Height>22</Height>
               <Rotation>
                 <X>0</X>
-                <Y>179.99999999999977</Y>
+                <Y>60.0001403060998</Y>
                 <Z>0</Z>
               </Rotation>
               <Translation>
-                <X>0</X>
-                <Y>0</Y>
-                <Z>10</Z>
+                <X>-20</X>
+                <Y>10</Y>
+                <Z>-8</Z>
               </Translation>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
               <X>0</X>
               <Y>0</Y>
-              <Width>1</Width>
-              <Height>0.5</Height>
+              <Width>0.333333343</Width>
+              <Height>1</Height>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ScreenCalibration</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Center</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Width" Selector="DisplayWidth" />
+                <Property Name="Height" Selector="DisplayHeight" />
+                <Property Name="Rotation" Selector="Rotation" />
+                <Property Name="Translation" Selector="Translation" />
+              </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
-              <Width>20</Width>
-              <Height>15</Height>
+              <Width>22</Width>
+              <Height>22</Height>
               <Rotation>
                 <X>0</X>
                 <Y>0</Y>
@@ -270,14 +307,48 @@ Item2.Light as Light)</scr:Expression>
               <Translation>
                 <X>0</X>
                 <Y>0</Y>
-                <Z>-10</Z>
+                <Z>-12.7</Z>
               </Translation>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
-              <X>0</X>
-              <Y>0.5</Y>
-              <Width>1</Width>
-              <Height>0.5</Height>
+              <X>0.333333343</X>
+              <Y>0</Y>
+              <Width>0.333333343</Width>
+              <Height>1</Height>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ScreenCalibration</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Right</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Width" Selector="DisplayWidth" />
+                <Property Name="Height" Selector="DisplayHeight" />
+                <Property Name="Rotation" Selector="Rotation" />
+                <Property Name="Translation" Selector="Translation" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
+              <Width>22</Width>
+              <Height>22</Height>
+              <Rotation>
+                <X>0</X>
+                <Y>-60.0001403060998</Y>
+                <Z>0</Z>
+              </Rotation>
+              <Translation>
+                <X>20</X>
+                <Y>10</Y>
+                <Z>-8</Z>
+              </Translation>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
+              <X>0.6666667</X>
+              <Y>0</Y>
+              <Width>0.333333</Width>
+              <Height>1</Height>
             </Expression>
             <Expression xsi:type="rx:PublishSubject">
               <Name>PostDrawing</Name>
@@ -337,7 +408,7 @@ Item2.Light as Light)</scr:Expression>
                     <ColorR>0</ColorR>
                     <ColorG>0</ColorG>
                     <ColorB>0</ColorB>
-                    <ColorA>0.5</ColorA>
+                    <ColorA>0</ColorA>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -358,21 +429,34 @@ Item2.Light as Light)</scr:Expression>
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="5" To="8" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source2" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="8" To="11" Label="Source2" />
+            <Edge From="8" To="11" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="10" To="11" Label="Source2" />
             <Edge From="11" To="12" Label="Source1" />
+            <Edge From="11" To="14" Label="Source2" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="14" To="17" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="21" Label="Source1" />
+            <Edge From="17" To="26" Label="Source1" />
+            <Edge From="17" To="31" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source2" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="26" Label="Source2" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="30" To="31" Label="Source2" />
+            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="32" To="33" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -436,7 +520,7 @@ Item2.Light as Light)</scr:Expression>
                       <gl:WrapT>Repeat</gl:WrapT>
                       <gl:MinFilter>Linear</gl:MinFilter>
                       <gl:MagFilter>Linear</gl:MagFilter>
-                      <gl:FileName>Textures\vertGrat.jpg</gl:FileName>
+                      <gl:FileName>Textures\wall_4.jpg</gl:FileName>
                       <gl:ColorType>Unchanged</gl:ColorType>
                       <gl:FlipMode>Vertical</gl:FlipMode>
                     </Combinator>
@@ -505,7 +589,7 @@ Item2.Light as Light)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.5</Value>
+                <Value>0.1</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -537,8 +621,8 @@ Item2.Light as Light)</scr:Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
-                <gl:Y>3</gl:Y>
-                <gl:Z>1566</gl:Z>
+                <gl:Y>4</gl:Y>
+                <gl:Z>503.5215</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -976,14 +1060,14 @@ Item2 as Start
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateCorridorSpecs.bonsai">
-              <Width>10</Width>
-              <Height>10</Height>
-              <Start>2500</Start>
+              <Width>40</Width>
+              <Height>40</Height>
+              <Start>1500</Start>
               <Length>100</Length>
               <TextureName>random_walls_2</TextureName>
-              <TextureSizeX>10</TextureSizeX>
-              <TextureSizeY>10</TextureSizeY>
-              <Id>25</Id>
+              <TextureSizeX>40</TextureSizeX>
+              <TextureSizeY>40</TextureSizeY>
+              <Id>15</Id>
             </Expression>
             <Expression xsi:type="rx:ReplaySubject">
               <Name>VisCorridorSpecs</Name>
@@ -1678,8 +1762,8 @@ Item2 as Start
               <LocationY>0.9</LocationY>
               <Layer>100</Layer>
               <Angle>0</Angle>
-              <ColorR>255</ColorR>
-              <ColorG>0</ColorG>
+              <ColorR>0</ColorR>
+              <ColorG>255</ColorG>
               <ColorB>0</ColorB>
               <ColorA>1</ColorA>
             </Expression>
