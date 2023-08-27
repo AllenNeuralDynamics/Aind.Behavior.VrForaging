@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.8.1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\ScreenCalibration.bonsai">
+        <IntrinsicsFileName>Calibration\Monitors\left_intrinsics.yml</IntrinsicsFileName>
+        <ExtrinsicsFileName>Calibration\Monitors\left_extrinsics.yml</ExtrinsicsFileName>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\ScreenCalibration.bonsai">
+        <IntrinsicsFileName>Calibration\Monitors\center_intrinsics.yml</IntrinsicsFileName>
+        <ExtrinsicsFileName>Calibration\Monitors\center_extrinsics.yml</ExtrinsicsFileName>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\ScreenCalibration.bonsai">
+        <IntrinsicsFileName>Calibration\Monitors\right_intrinsics.yml</IntrinsicsFileName>
+        <ExtrinsicsFileName>Calibration\Monitors\right_extrinsics.yml</ExtrinsicsFileName>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="scr:ExpressionTransform">
+        <scr:Expression>new(
+Item1 as Left,
+Item2 as Center,
+Item3 as Right)</scr:Expression>
+      </Expression>
+      <Expression xsi:type="WorkflowOutput" />
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="3" Label="Source1" />
+      <Edge From="1" To="3" Label="Source2" />
+      <Edge From="2" To="3" Label="Source3" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
