@@ -87,6 +87,11 @@
                   <Expression xsi:type="MemberSelector">
                     <Selector>Rows</Selector>
                   </Expression>
+                  <Expression xsi:type="Subtract">
+                    <Operand xsi:type="IntProperty">
+                      <Value>1</Value>
+                    </Operand>
+                  </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
                       <Property Name="Upper" />
@@ -95,7 +100,7 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p2:CreateDiscreteUniform">
                       <p2:Lower>0</p2:Lower>
-                      <p2:Upper>2</p2:Upper>
+                      <p2:Upper>1</p2:Upper>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -268,17 +273,18 @@
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="12" To="16" Label="Source1" />
+                  <Edge From="12" To="17" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source2" />
-                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source2" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source1" />
                   <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -673,7 +679,7 @@ Item2.Light as Light)</scr:Expression>
                     <ColorR>0</ColorR>
                     <ColorG>0</ColorG>
                     <ColorB>0</ColorB>
-                    <ColorA>0</ColorA>
+                    <ColorA>0.5</ColorA>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -887,7 +893,7 @@ Item2.Light as Light)</scr:Expression>
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>4</gl:Y>
-                <gl:Z>712</gl:Z>
+                <gl:Z>123.5</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1327,12 +1333,12 @@ Item2 as Start
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateCorridorSpecs.bonsai">
               <Width>40</Width>
               <Height>40</Height>
-              <Start>1700</Start>
+              <Start>1100</Start>
               <Length>100</Length>
               <TextureName>random_walls_2</TextureName>
               <TextureSizeX>40</TextureSizeX>
               <TextureSizeY>40</TextureSizeY>
-              <Id>17</Id>
+              <Id>11</Id>
             </Expression>
             <Expression xsi:type="rx:ReplaySubject">
               <Name>VisCorridorSpecs</Name>
@@ -2009,9 +2015,9 @@ Item2 as Start
               <LocationY>0.9</LocationY>
               <Layer>100</Layer>
               <Angle>0</Angle>
-              <ColorR>0</ColorR>
+              <ColorR>255</ColorR>
               <ColorG>0</ColorG>
-              <ColorB>255</ColorB>
+              <ColorB>0</ColorB>
               <ColorA>1</ColorA>
             </Expression>
           </Nodes>
