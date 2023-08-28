@@ -1,5 +1,6 @@
 # Bonsai scripting files
 .vs
+.vscode
 bin
 obj
 Packages
