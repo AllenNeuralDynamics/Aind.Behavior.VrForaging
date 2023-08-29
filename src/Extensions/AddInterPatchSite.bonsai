@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -15,11 +15,6 @@
         <Property Name="Maximum" />
         <Property Name="Average" />
         <Property Name="Brightness" />
-        <Property Name="HasRewardLogic" />
-        <Property Name="RewardAmount" />
-        <Property Name="RewardProbability" />
-        <Property Name="RewardDelay" />
-        <Property Name="StopDuration" />
         <Property Name="HasOdor" />
         <Property Name="OdorIdentity" />
         <Property Name="OdorConcentration" />
@@ -55,9 +50,9 @@
               <Property Name="Count" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
-              <Minimum>10</Minimum>
-              <Maximum>50</Maximum>
-              <Average>20</Average>
+              <Minimum>30</Minimum>
+              <Maximum>100</Maximum>
+              <Average>50</Average>
               <Count>1</Count>
             </Expression>
             <Expression xsi:type="InputMapping">
@@ -88,11 +83,13 @@
               <Property Name="OdorIdentity" />
               <Property Name="OdorConcentration" />
               <Property Name="Label" />
+              <Property Name="TimeToCollectReward" />
+              <Property Name="LickToReward" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
-              <Start>963</Start>
-              <Length>50</Length>
-              <Id>963</Id>
+              <Start>254.5</Start>
+              <Length>77.39261</Length>
+              <Id>254</Id>
               <Brightness>0.5</Brightness>
               <HasRewardLogic>false</HasRewardLogic>
               <RewardAmount>0</RewardAmount>
@@ -103,6 +100,8 @@
               <OdorIdentity>0</OdorIdentity>
               <OdorConcentration>0</OdorConcentration>
               <Label>InterPatch</Label>
+              <TimeToCollectReward>PT0S</TimeToCollectReward>
+              <LickToReward>false</LickToReward>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>SiteSpecs</Name>
