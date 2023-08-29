@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -64,12 +64,11 @@
               <Property Name="Minimum" />
               <Property Name="Maximum" />
               <Property Name="Average" />
-              <Property Name="Count" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
-              <Minimum>5</Minimum>
-              <Maximum>30</Maximum>
-              <Average>10</Average>
+              <Minimum>20</Minimum>
+              <Maximum>50</Maximum>
+              <Average>30</Average>
               <Count>1</Count>
             </Expression>
             <Expression xsi:type="InputMapping">
@@ -105,11 +104,13 @@
               <Property Name="OdorIdentity" />
               <Property Name="OdorConcentration" />
               <Property Name="Label" />
+              <Property Name="TimeToCollectReward" />
+              <Property Name="LickToReward" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
-              <Start>1013</Start>
-              <Length>30</Length>
-              <Id>1013</Id>
+              <Start>388.714722</Start>
+              <Length>20.7234077</Length>
+              <Id>388</Id>
               <Brightness>1</Brightness>
               <HasRewardLogic>false</HasRewardLogic>
               <RewardAmount>0</RewardAmount>
@@ -120,6 +121,8 @@
               <OdorIdentity>0</OdorIdentity>
               <OdorConcentration>0</OdorConcentration>
               <Label>GapSite</Label>
+              <TimeToCollectReward>PT0S</TimeToCollectReward>
+              <LickToReward>false</LickToReward>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>SiteSpecs</Name>
