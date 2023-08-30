@@ -219,12 +219,111 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TransitionMatrix
+    {
+    
+        public System.IObservable<TransitionMatrix> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new TransitionMatrix
+                {
+
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PatchStatistics
+    {
+    
+        private string _label = "";
+    
+        private OdorSpecifications _odorSpecifications;
+    
+        private RewardSpecifications _rewardSpecifications;
+    
+        private int _stateIndex = 0;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
+        public string Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorSpecifications")]
+        public OdorSpecifications OdorSpecifications
+        {
+            get
+            {
+                return _odorSpecifications;
+            }
+            set
+            {
+                _odorSpecifications = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardSpecifications")]
+        public RewardSpecifications RewardSpecifications
+        {
+            get
+            {
+                return _rewardSpecifications;
+            }
+            set
+            {
+                _rewardSpecifications = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stateIndex")]
+        public int StateIndex
+        {
+            get
+            {
+                return _stateIndex;
+            }
+            set
+            {
+                _stateIndex = value;
+            }
+        }
+    
+        public System.IObservable<PatchStatistics> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new PatchStatistics
+                {
+                    Label = _label,
+                    OdorSpecifications = _odorSpecifications,
+                    RewardSpecifications = _rewardSpecifications,
+                    StateIndex = _stateIndex
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingSession
     {
     
         private SessionMetadata _metadata = new SessionMetadata();
     
         private TaskLogicHelper _taskLogicHelper = new TaskLogicHelper();
+    
+        private EnvironmentStatistics _environmentStatistics;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadata")]
@@ -254,13 +353,28 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="environmentStatistics")]
+        public EnvironmentStatistics EnvironmentStatistics
+        {
+            get
+            {
+                return _environmentStatistics;
+            }
+            set
+            {
+                _environmentStatistics = value;
+            }
+        }
+    
         public System.IObservable<AindVrForagingSession> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new AindVrForagingSession
                 {
                     Metadata = _metadata,
-                    TaskLogicHelper = _taskLogicHelper
+                    TaskLogicHelper = _taskLogicHelper,
+                    EnvironmentStatistics = _environmentStatistics
                 }));
         }
     }
@@ -334,6 +448,133 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class OdorSpecifications
+    {
+    
+        private double _concentration = 1D;
+    
+        private int _index;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="concentration")]
+        public double Concentration
+        {
+            get
+            {
+                return _concentration;
+            }
+            set
+            {
+                _concentration = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
+        public int Index
+        {
+            get
+            {
+                return _index;
+            }
+            set
+            {
+                _index = value;
+            }
+        }
+    
+        public System.IObservable<OdorSpecifications> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new OdorSpecifications
+                {
+                    Concentration = _concentration,
+                    Index = _index
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class RewardSpecifications
+    {
+    
+        private double _amount;
+    
+        private double _delay = 0D;
+    
+        private OperantLogic _operantLogic;
+    
+        private double _probability = 1D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="amount")]
+        public double Amount
+        {
+            get
+            {
+                return _amount;
+            }
+            set
+            {
+                _amount = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
+        public double Delay
+        {
+            get
+            {
+                return _delay;
+            }
+            set
+            {
+                _delay = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="operantLogic")]
+        public OperantLogic OperantLogic
+        {
+            get
+            {
+                return _operantLogic;
+            }
+            set
+            {
+                _operantLogic = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="probability")]
+        public double Probability
+        {
+            get
+            {
+                return _probability;
+            }
+            set
+            {
+                _probability = value;
+            }
+        }
+    
+        public System.IObservable<RewardSpecifications> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new RewardSpecifications
+                {
+                    Amount = _amount,
+                    Delay = _delay,
+                    OperantLogic = _operantLogic,
+                    Probability = _probability
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class TaskLogicHelper
     {
     
@@ -359,6 +600,55 @@ namespace AindVrForagingDataSchema
                 new TaskLogicHelper
                 {
                     VirtualSiteDefinition = _virtualSiteDefinition
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class EnvironmentStatistics
+    {
+    
+        private TransitionMatrix _transitionMatrix;
+    
+        private System.Collections.Generic.List<PatchStatistics> _patches = new System.Collections.Generic.List<PatchStatistics>();
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="transitionMatrix")]
+        public TransitionMatrix TransitionMatrix
+        {
+            get
+            {
+                return _transitionMatrix;
+            }
+            set
+            {
+                _transitionMatrix = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patches")]
+        public System.Collections.Generic.List<PatchStatistics> Patches
+        {
+            get
+            {
+                return _patches;
+            }
+            set
+            {
+                _patches = value;
+            }
+        }
+    
+        public System.IObservable<EnvironmentStatistics> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new EnvironmentStatistics
+                {
+                    TransitionMatrix = _transitionMatrix,
+                    Patches = _patches
                 }));
         }
     }
@@ -485,6 +775,69 @@ namespace AindVrForagingDataSchema
                 new Valves
                 {
                     CalibrationDir = _calibrationDir
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class OperantLogic
+    {
+    
+        private bool _isOperant = true;
+    
+        private double _stopDuration = 0D;
+    
+        private double _timeToCollect = 1000000D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="isOperant")]
+        public bool IsOperant
+        {
+            get
+            {
+                return _isOperant;
+            }
+            set
+            {
+                _isOperant = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stopDuration")]
+        public double StopDuration
+        {
+            get
+            {
+                return _stopDuration;
+            }
+            set
+            {
+                _stopDuration = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timeToCollect")]
+        public double TimeToCollect
+        {
+            get
+            {
+                return _timeToCollect;
+            }
+            set
+            {
+                _timeToCollect = value;
+            }
+        }
+    
+        public System.IObservable<OperantLogic> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new OperantLogic
+                {
+                    IsOperant = _isOperant,
+                    StopDuration = _stopDuration,
+                    TimeToCollect = _timeToCollect
                 }));
         }
     }
@@ -743,6 +1096,16 @@ namespace AindVrForagingDataSchema
             return Process<TruncatedExponential>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<TransitionMatrix> source)
+        {
+            return Process<TransitionMatrix>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
+        {
+            return Process<PatchStatistics>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
         {
             return Process<AindVrForagingSession>(source);
@@ -753,9 +1116,24 @@ namespace AindVrForagingDataSchema
             return Process<Hardware>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<OdorSpecifications> source)
+        {
+            return Process<OdorSpecifications>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RewardSpecifications> source)
+        {
+            return Process<RewardSpecifications>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<TaskLogicHelper> source)
         {
             return Process<TaskLogicHelper>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
+        {
+            return Process<EnvironmentStatistics>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Render> source)
@@ -771,6 +1149,11 @@ namespace AindVrForagingDataSchema
         public System.IObservable<string> Process(System.IObservable<Valves> source)
         {
             return Process<Valves>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
+        {
+            return Process<OperantLogic>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<VirtualSiteDefinition> source)
@@ -807,12 +1190,18 @@ namespace AindVrForagingDataSchema
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SessionMetadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TransitionMatrix>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorSpecifications>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicHelper>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteDefinition>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InitialAgentPosition>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]

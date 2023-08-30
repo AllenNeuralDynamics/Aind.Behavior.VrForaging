@@ -28,6 +28,19 @@
         }
       },
       "required": ["virtualSiteDefinition", "rewardSite", "gapSite"]
+    },
+    "environmentStatistics":{
+      "type" : "object",
+      "properties": {
+        "transitionMatrix" : {"$ref": "aind-vr-foraging-common.json#/definitions/transitionMatrix"},
+        "patches": {
+          "default": [],
+          "type":"array",
+          "items": {
+            "$ref": "aind-vr-foraging-common.json#/definitions/patchStatistics"
+          }
+        }
+      }
     }
   },
   "required": ["metadata", "taskLogicHelper"],
