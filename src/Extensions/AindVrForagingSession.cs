@@ -126,6 +126,118 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class CorridorSpecifications
+    {
+    
+        private double _height = 40D;
+    
+        private double _id = 0D;
+    
+        private double _length = 120D;
+    
+        private double _startPosition = 0D;
+    
+        private Texture _texture;
+    
+        private double _width = 40D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="height")]
+        public double Height
+        {
+            get
+            {
+                return _height;
+            }
+            set
+            {
+                _height = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Id")]
+        public double Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length")]
+        public double Length
+        {
+            get
+            {
+                return _length;
+            }
+            set
+            {
+                _length = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startPosition")]
+        public double StartPosition
+        {
+            get
+            {
+                return _startPosition;
+            }
+            set
+            {
+                _startPosition = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="texture")]
+        public Texture Texture
+        {
+            get
+            {
+                return _texture;
+            }
+            set
+            {
+                _texture = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="width")]
+        public double Width
+        {
+            get
+            {
+                return _width;
+            }
+            set
+            {
+                _width = value;
+            }
+        }
+    
+        public System.IObservable<CorridorSpecifications> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new CorridorSpecifications
+                {
+                    Height = _height,
+                    Id = _id,
+                    Length = _length,
+                    StartPosition = _startPosition,
+                    Texture = _texture,
+                    Width = _width
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class SessionMetadata
     {
     
@@ -703,6 +815,54 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Texture
+    {
+    
+        private string _name = "default";
+    
+        private TextureSize _textureSize;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureSize")]
+        public TextureSize TextureSize
+        {
+            get
+            {
+                return _textureSize;
+            }
+            set
+            {
+                _textureSize = value;
+            }
+        }
+    
+        public System.IObservable<Texture> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Texture
+                {
+                    Name = _name,
+                    TextureSize = _textureSize
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Hardware
     {
     
@@ -906,6 +1066,53 @@ namespace AindVrForagingDataSchema
                     IsOperant = _isOperant,
                     StopDuration = _stopDuration,
                     TimeToCollect = _timeToCollect
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TextureSize
+    {
+    
+        private double _x = 40D;
+    
+        private double _y = 40D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        public System.IObservable<TextureSize> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new TextureSize
+                {
+                    X = _x,
+                    Y = _y
                 }));
         }
     }
@@ -1285,6 +1492,11 @@ namespace AindVrForagingDataSchema
             return Process<VirtualSite>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<CorridorSpecifications> source)
+        {
+            return Process<CorridorSpecifications>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<SessionMetadata> source)
         {
             return Process<SessionMetadata>(source);
@@ -1330,6 +1542,11 @@ namespace AindVrForagingDataSchema
             return Process<Reward>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Texture> source)
+        {
+            return Process<Texture>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Hardware> source)
         {
             return Process<Hardware>(source);
@@ -1348,6 +1565,11 @@ namespace AindVrForagingDataSchema
         public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
         {
             return Process<OperantLogic>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TextureSize> source)
+        {
+            return Process<TextureSize>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Screen> source)
@@ -1398,6 +1620,7 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SessionMetadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TransitionMatrix>))]
@@ -1407,10 +1630,12 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Texture>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicHelper>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
