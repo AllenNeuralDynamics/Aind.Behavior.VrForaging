@@ -64,7 +64,7 @@
                     <Name>Session</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Metadata.Hardware.Render.TextureAssetDirectory</Selector>
+                    <Selector>Metadata.Hardware.Screen.TextureAssetDirectory</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -511,7 +511,7 @@
               <Name>Session</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Metadata.Hardware.Render.MonitorCalibrationDirectory</Selector>
+              <Selector>Metadata.Hardware.Screen.MonitorCalibrationDirectory</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -920,7 +920,7 @@ Item2.Light as Light)</scr:Expression>
                     <Name>Session</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Metadata.Hardware.Render.InitialAgentPosition.Z</Selector>
+                    <Selector>Metadata.Hardware.Screen.InitialAgentPosition.Z</Selector>
                   </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
@@ -1012,7 +1012,7 @@ Item2.Light as Light)</scr:Expression>
                     <Name>Session</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Metadata.Hardware.Render.InitialAgentPosition</Selector>
+                    <Selector>Metadata.Hardware.Screen.InitialAgentPosition</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -1162,6 +1162,11 @@ Item3 as OdorConcentration
 )</scr:Expression>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Boolean,p1:OdorSpecifications)">
+                      <rx:Name>OdorControl</rx:Name>
+                    </Builder>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
