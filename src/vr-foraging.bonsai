@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:p1="clr-namespace:;assembly=Extensions"
-                 xmlns:p2="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
+                 xmlns:p2="clr-namespace:;assembly=Extensions"
+                 xmlns:p3="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
@@ -16,6 +17,17 @@
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p1:AindVrForagingSession" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Take">
+          <rx:Count>1</rx:Count>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="rx:AsyncSubject">
+        <Name>Session</Name>
+      </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Config</Name>
         <Workflow>
@@ -24,6 +36,17 @@
               <Name>SessionSettings</Name>
               <Workflow>
                 <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Session</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Metadata.RngSeed</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Seed" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="num:CreateRandom">
                       <num:Seed xsi:nil="true" />
@@ -37,8 +60,16 @@
                   <Expression xsi:type="rx:AsyncSubject">
                     <Name>RngSeed</Name>
                   </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="Path" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Session</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Metadata.Hardware.Render.TextureAssetDirectory</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" />
+                    </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="PropertySource" TypeArguments="io:GetFiles,sys:String">
                     <MemberName>Path</MemberName>
@@ -107,19 +138,24 @@
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="15" To="17" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="20" To="22" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source2" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -128,9 +164,9 @@
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateTransitionMatrix">
-                      <p1:TransitionMatrix>0,1;1,0</p1:TransitionMatrix>
-                      <p1:NormalizeRows>true</p1:NormalizeRows>
+                    <Combinator xsi:type="p2:CreateTransitionMatrix">
+                      <p2:TransitionMatrix>0,1;1,0</p2:TransitionMatrix>
+                      <p2:NormalizeRows>true</p2:NormalizeRows>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -202,13 +238,13 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p2:CreateDiscreteUniform">
-                      <p2:Lower>0</p2:Lower>
-                      <p2:Upper>1</p2:Upper>
+                    <Combinator xsi:type="p3:CreateDiscreteUniform">
+                      <p3:Lower>0</p3:Lower>
+                      <p3:Upper>1</p3:Upper>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p2:Sample" />
+                    <Combinator xsi:type="p3:Sample" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
@@ -498,7 +534,20 @@
               <Combinator xsi:type="res:LoadResources" />
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoadAllScreensCalibration.bonsai" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Session</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata.Hardware.Render.MonitorCalibrationDirectory</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Directory" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoadAllScreensCalibration.bonsai">
+              <Directory xsi:nil="true" />
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
                 <rx:Count>1</rx:Count>
@@ -747,32 +796,35 @@ Item2.Light as Light)</scr:Expression>
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="8" To="11" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source2" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="11" To="14" Label="Source2" />
+            <Edge From="11" To="14" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="13" To="14" Label="Source2" />
             <Edge From="14" To="15" Label="Source1" />
+            <Edge From="14" To="17" Label="Source2" />
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="21" Label="Source1" />
-            <Edge From="17" To="26" Label="Source1" />
-            <Edge From="17" To="31" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source2" />
+            <Edge From="20" To="24" Label="Source1" />
+            <Edge From="20" To="29" Label="Source1" />
+            <Edge From="20" To="34" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source2" />
             <Edge From="24" To="25" Label="Source1" />
-            <Edge From="25" To="26" Label="Source2" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="29" Label="Source2" />
             <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source2" />
             <Edge From="31" To="32" Label="Source1" />
             <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="34" Label="Source2" />
+            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="36" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -891,6 +943,17 @@ Item2.Light as Light)</scr:Expression>
               <Name>PositionControl</Name>
               <Workflow>
                 <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Session</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Metadata.Hardware.Render.InitialAgentPosition.Z</Selector>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" Selector="it" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="DoubleProperty">
                       <Value>0</Value>
@@ -906,6 +969,37 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>EventArgs.DeltaPrecise</Selector>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Combinator">
+                      <Combinator xsi:type="FloatProperty">
+                        <Value>0</Value>
+                      </Combinator>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="SubscribeSubject">
+                      <Name>Session</Name>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MemberSelector">
+                      <Selector>Metadata.Hardware.Treadmill.Gain</Selector>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="PropertyMapping">
+                      <PropertyMappings>
+                        <Property Name="Value" />
+                      </PropertyMappings>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Multiply">
+                      <Operand xsi:type="FloatProperty">
+                        <Value>0</Value>
+                      </Operand>
+                    </Builder>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:UpdateFrame" />
@@ -941,6 +1035,18 @@ Item2.Light as Light)</scr:Expression>
                       <Property Name="Z" Selector="it" />
                     </PropertyMappings>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Session</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Metadata.Hardware.Render.InitialAgentPosition</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="X" Selector="X" />
+                      <Property Name="Y" Selector="Y" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
                       <gl:X>0</gl:X>
@@ -958,7 +1064,7 @@ Item2.Light as Light)</scr:Expression>
                     <Combinator xsi:type="gl:CreateVector3">
                       <gl:X>0</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>-1</gl:Z>
+                      <gl:Z>-100000</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1030,30 +1136,41 @@ Item2.Light as Light)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="10" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="6" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source2" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="18" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="14" Label="Source1" />
+                  <Edge From="7" To="11" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source2" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="14" Label="Source2" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="14" To="17" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source3" />
+                  <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
-                  <Edge From="17" To="19" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="23" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source2" />
                   <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="25" To="27" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="25" To="28" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source2" />
+                  <Edge From="28" To="30" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source2" />
+                  <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="33" To="34" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source1" />
+                  <Edge From="35" To="36" Label="Source1" />
+                  <Edge From="36" To="38" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2011,11 +2128,13 @@ Item2 as Start
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="3" To="4" Label="Source1" />
-      <Edge From="5" To="6" Label="Source1" />
-      <Edge From="6" To="9" Label="Source1" />
-      <Edge From="7" To="8" Label="Source1" />
-      <Edge From="8" To="9" Label="Source2" />
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="12" Label="Source1" />
+      <Edge From="10" To="11" Label="Source1" />
+      <Edge From="11" To="12" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
