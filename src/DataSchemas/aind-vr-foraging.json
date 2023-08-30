@@ -16,13 +16,8 @@
           "type": "integer"
         }
       },
-      "required": [
-        "index"
-      ],
-      "type": [
-        "null",
-        "object"
-      ]
+      "required": ["index"],
+      "type": ["null", "object"]
     },
     "operantLogic": {
       "properties": {
@@ -38,9 +33,7 @@
         "timeToCollect": {
           "default": 1000000,
           "minimum": 0,
-          "type": [
-            "number"
-          ]
+          "type": ["number"]
         }
       },
       "type": "object"
@@ -67,6 +60,9 @@
     },
     "renderingSettings": {
       "properties": {
+        "initialAgentPosition": {
+          "$ref": "#/definitions/Vector3"
+        },
         "monitorCalibrationDirectory": {
           "default": "Calibration\\Monitors\\",
           "type": "string"
@@ -74,9 +70,6 @@
         "textureAssetDirectory": {
           "default": "Textures",
           "type": "string"
-        },
-        "initialAgentPosition": {
-          "$ref": "#/definitions/Vector3"
         }
       },
       "type": "object"
@@ -103,19 +96,13 @@
           "type": "number"
         }
       },
-      "type": [
-        "null",
-        "object"
-      ]
+      "type": ["null", "object"]
     },
     "sessionMetadata": {
       "properties": {
         "commitHash": {
           "default": null,
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": ["null", "string"]
         },
         "experiment": {
           "type": "string"
@@ -139,10 +126,7 @@
           "type": "string"
         },
         "rngSeed": {
-          "type": [
-            "null",
-            "number"
-          ]
+          "type": ["null", "number"]
         },
         "rootPath": {
           "type": "string"
@@ -164,16 +148,12 @@
       "type": "object"
     },
     "transitionMatrix": {
-      "default": [
-        [
-          1
-        ]
-      ],
+      "default": [[1]],
       "items": {
-        "type": "array",
         "items": {
           "type": "number"
-        }
+        },
+        "type": "array"
       },
       "type": "array"
     },
@@ -196,7 +176,7 @@
       },
       "type": "object"
     },
-    "Vector3": {
+    "vector3": {
       "properties": {
         "x": {
           "default": 0,
@@ -213,40 +193,72 @@
       },
       "type": "object"
     },
-    "VisualCorridor":{
-      "properties":{
-        "Id":{
-          "default": 0,
-          "type": "number"
-        },
-        "length":{
+    "virtualSite": {
+      "properties": {
+        "length": {
           "default": 120,
-          "type": "number",
-          "minimum": 0
+          "minimum": 0,
+          "type": "number"
         },
-        "width":{
+        "metadata": {
+          "properties": {
+            "id": {
+              "default": 0,
+              "type": "number"
+            },
+            "label": {
+              "default": "virtualSite",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "odor": {
+          "$ref": "#/definitions/odorSpecifications"
+        },
+        "render": {
+          "brightness": {
+            "default": null,
+            "type": ["null", "number"]
+          }
+        },
+        "reward": {
+          "$ref": "#/definitions/rewardSpecifications"
+        },
+        "startPosition": {
+          "default": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "visualCorridor": {
+      "properties": {
+        "height": {
           "default": 40,
-          "type": "number",
-          "minimum": 0
+          "minimum": 0,
+          "type": "number"
         },
-        "height":{
-          "default": 40,
-          "type": "number",
-          "minimum": 0
-        },
-        "position":{
+        "Id": {
           "default": 0,
           "type": "number"
         },
-        "texture":{
-          "type": "object",
+        "length": {
+          "default": 120,
+          "minimum": 0,
+          "type": "number"
+        },
+        "startPosition": {
+          "default": 0,
+          "type": "number"
+        },
+        "texture": {
           "properties": {
             "name": {
               "default": "default",
               "type": "string"
             },
-            "textureSize":{
-              "type": "object",
+            "textureSize": {
               "properties": {
                 "x": {
                   "default": 40,
@@ -256,9 +268,16 @@
                   "default": 40,
                   "type": "number"
                 }
-              }
+              },
+              "type": "object"
             }
-          }
+          },
+          "type": "object"
+        },
+        "width": {
+          "default": 40,
+          "minimum": 0,
+          "type": "number"
         }
       },
       "type": "object"
