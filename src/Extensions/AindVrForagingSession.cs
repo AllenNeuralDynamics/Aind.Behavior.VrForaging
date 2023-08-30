@@ -20,7 +20,7 @@ namespace AindVrForagingDataSchema
     
         private Odor _odor;
     
-        private object _render;
+        private Render _render;
     
         private Reward _reward;
     
@@ -69,7 +69,7 @@ namespace AindVrForagingDataSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
-        public object Render
+        public Render Render
         {
             get
             {
@@ -274,24 +274,11 @@ namespace AindVrForagingDataSchema
     public partial class TruncatedExponential
     {
     
-        private double _minimum = 0D;
-    
         private double _maximum = 1D;
     
         private double _mean = 0.5D;
     
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="minimum")]
-        public double Minimum
-        {
-            get
-            {
-                return _minimum;
-            }
-            set
-            {
-                _minimum = value;
-            }
-        }
+        private double _minimum = 0D;
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maximum")]
         public double Maximum
@@ -319,14 +306,27 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="minimum")]
+        public double Minimum
+        {
+            get
+            {
+                return _minimum;
+            }
+            set
+            {
+                _minimum = value;
+            }
+        }
+    
         public System.IObservable<TruncatedExponential> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new TruncatedExponential
                 {
-                    Minimum = _minimum,
                     Maximum = _maximum,
-                    Mean = _mean
+                    Mean = _mean,
+                    Minimum = _minimum
                 }));
         }
     }
@@ -591,6 +591,38 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Render
+    {
+    
+        private double? _brightness;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
+        public double? Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                _brightness = value;
+            }
+        }
+    
+        public System.IObservable<Render> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Render
+                {
+                    Brightness = _brightness
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Reward
     {
     
@@ -674,23 +706,23 @@ namespace AindVrForagingDataSchema
     public partial class Hardware
     {
     
-        private Render _render;
+        private Screen _screen;
     
         private Treadmill _treadmill;
     
         private Valves _valves;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
-        public Render Render
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="screen")]
+        public Screen Screen
         {
             get
             {
-                return _render;
+                return _screen;
             }
             set
             {
-                _render = value;
+                _screen = value;
             }
         }
     
@@ -727,7 +759,7 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new Hardware
                 {
-                    Render = _render,
+                    Screen = _screen,
                     Treadmill = _treadmill,
                     Valves = _valves
                 }));
@@ -881,7 +913,7 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Render
+    public partial class Screen
     {
     
         private InitialAgentPosition _initialAgentPosition;
@@ -930,10 +962,10 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Render> Process()
+        public System.IObservable<Screen> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Render
+                new Screen
                 {
                     InitialAgentPosition = _initialAgentPosition,
                     MonitorCalibrationDirectory = _monitorCalibrationDirectory,
@@ -1288,6 +1320,11 @@ namespace AindVrForagingDataSchema
             return Process<Odor>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Render> source)
+        {
+            return Process<Render>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Reward> source)
         {
             return Process<Reward>(source);
@@ -1313,9 +1350,9 @@ namespace AindVrForagingDataSchema
             return Process<OperantLogic>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Render> source)
+        public System.IObservable<string> Process(System.IObservable<Screen> source)
         {
-            return Process<Render>(source);
+            return Process<Screen>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Treadmill> source)
@@ -1368,12 +1405,13 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicHelper>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]

@@ -44,7 +44,7 @@
     }
   },
   "definitions": {
-    "virtualSite": {"$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"},
+    "virtualSite": {"$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"}
   },
   "required": ["metadata", "taskLogicHelper"],
   "title": "AindVrForagingSession",
