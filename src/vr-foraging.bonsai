@@ -1179,7 +1179,7 @@ Item2 as RewardAmout
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>100</Value>
+                      <Value>120</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1217,7 +1217,7 @@ Item2 as RewardAmout
                         </Expression>
                         <Expression xsi:type="Divide">
                           <Operand xsi:type="FloatProperty">
-                            <Value>100</Value>
+                            <Value>120</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -1249,7 +1249,7 @@ Item2 as RewardAmout
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Range">
                             <rx:Start>0</rx:Start>
-                            <rx:Count>10</rx:Count>
+                            <rx:Count>8</rx:Count>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -1343,7 +1343,7 @@ Item2 as RewardAmout
                         </Expression>
                         <Expression xsi:type="Add">
                           <Operand xsi:type="FloatProperty">
-                            <Value>10</Value>
+                            <Value>0</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -1356,7 +1356,7 @@ Item2 as RewardAmout
                         </Expression>
                         <Expression xsi:type="Divide">
                           <Operand xsi:type="FloatProperty">
-                            <Value>100</Value>
+                            <Value>120</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -1404,7 +1404,7 @@ Item2 as RewardAmout
                   </Expression>
                   <Expression xsi:type="Multiply">
                     <Operand xsi:type="DoubleProperty">
-                      <Value>100</Value>
+                      <Value>120</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Combinator">
