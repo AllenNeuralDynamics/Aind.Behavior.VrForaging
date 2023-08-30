@@ -1283,7 +1283,37 @@ Item2 as RewardAmout
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:AsyncSubject">
-                    <Name>VisCorridorLength</Name>
+                    <Name>VisualCorridorLength</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="CorridorSquareDimension" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="FloatProperty">
+                      <Value>120</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>CorridorSquareDimension</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="CorridorTextureName" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>VisualCorridorTextureName</Name>
                   </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>Initialize</Name>
@@ -1303,7 +1333,7 @@ Item2 as RewardAmout
                         </Expression>
                         <Expression xsi:type="Subtract" />
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>VisCorridorLength</Name>
+                          <Name>VisualCorridorLength</Name>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -1442,7 +1472,7 @@ Item2 as RewardAmout
                           </Operand>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>VisCorridorLength</Name>
+                          <Name>VisualCorridorLength</Name>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -1490,7 +1520,7 @@ Item2 as RewardAmout
                     <Combinator xsi:type="rx:DistinctUntilChanged" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>VisCorridorLength</Name>
+                    <Name>VisualCorridorLength</Name>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -1514,34 +1544,78 @@ Item2 as Start
                   </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
-                      <Property Name="Start" Selector="Start" />
+                      <Property Name="StartPosition" Selector="Start" />
                       <Property Name="Id" Selector="Id" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>VisCorridorLength</Name>
+                    <Name>VisualCorridorLength</Name>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
                       <Property Name="Length" />
                     </PropertyMappings>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CorridorSquareDimension</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Height" Selector="it" />
+                      <Property Name="Width" Selector="it" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>VisualCorridorTextureName</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Name" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CorridorSquareDimension</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="X" Selector="it" />
+                      <Property Name="Y" Selector="it" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:TextureSize">
+                      <p1:X>40</p1:X>
+                      <p1:Y>40</p1:Y>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureSize" Selector="it" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:Texture">
+                      <p1:Name>default</p1:Name>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Texture" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateCorridorSpecs.bonsai">
-                    <Width>40</Width>
                     <Height>40</Height>
-                    <Start>1300</Start>
-                    <Length>100</Length>
-                    <TextureName>random_walls_2</TextureName>
-                    <TextureSizeX>40</TextureSizeX>
-                    <TextureSizeY>40</TextureSizeY>
-                    <Id>13</Id>
+                    <Id>0</Id>
+                    <Length>120</Length>
+                    <StartPosition>0</StartPosition>
+                    <Width>40</Width>
                   </Expression>
                   <Expression xsi:type="rx:ReplaySubject">
-                    <Name>VisCorridorSpecs</Name>
+                    <Name>VisualCorridorSpecs</Name>
                     <rx:BufferSize xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>VisCorridorSpecs</Name>
+                    <Name>VisualCorridorSpecs</Name>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawSegment.bonsai" />
                   <Expression xsi:type="Combinator">
@@ -1553,23 +1627,39 @@ Item2 as Start
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="6" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="10" Label="Source1" />
-                  <Edge From="7" To="11" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source2" />
-                  <Edge From="10" To="11" Label="Source2" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="16" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="12" To="14" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source2" />
                   <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source2" />
+                  <Edge From="15" To="18" Label="Source1" />
+                  <Edge From="15" To="19" Label="Source1" />
                   <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="18" To="19" Label="Source2" />
                   <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="34" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="34" Label="Source2" />
+                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="34" Label="Source3" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="32" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source2" />
+                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="33" To="34" Label="Source4" />
+                  <Edge From="34" To="35" Label="Source1" />
+                  <Edge From="36" To="37" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="38" To="39" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>

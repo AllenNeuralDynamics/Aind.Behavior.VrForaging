@@ -20,10 +20,10 @@
               <scr:Expression>new(
 Width*0.5 as OffsetX,
 Width*-0.5 as NegOffsetX,
-Start + Length*0.5 as CenterZ,
+StartPosition + Length*0.5 as CenterZ,
 Height*0.5 as CenterY,
-Width / TextureSettings.SizeX  as TextureScalingX,
-Height / TextureSettings.SizeY  as TextureScalingY
+Width / Texture.TextureSize.X  as TextureScalingX,
+Height / Texture.TextureSize.Y  as TextureScalingY
 )</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -52,7 +52,7 @@ Item2 as PostCorridorSpecs
                     <Name>ThisCorridorSpecs</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>CorridorSpecs.Length,CorridorSpecs.Start</Selector>
+                    <Selector>CorridorSpecs.Length,CorridorSpecs.StartPosition</Selector>
                   </Expression>
                   <Expression xsi:type="Add" />
                   <Expression xsi:type="Combinator">
