@@ -19,7 +19,7 @@
               <Name>TransitionMatrix</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>ActivePatch</Name>
+              <Name>ActiveStateIndex</Name>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -27,7 +27,7 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>ActivePatch</Name>
+              <Name>ActiveStateIndex</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="IntProperty">
@@ -129,7 +129,7 @@
               <scr:Expression>it.Item1 == null ? (it.Item2 - 1) : (it.Item1.Item1.Index)</scr:Expression>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>ActivePatch</Name>
+              <Name>ActiveStateIndex</Name>
             </Expression>
           </Nodes>
           <Edges>
