@@ -1,0 +1,219 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "definitions": {
+    "odorSpecifications": {
+      "default": null,
+      "properties": {
+        "concentration": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "index": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "index"
+      ],
+      "type": [
+        "null",
+        "object"
+      ]
+    },
+    "operantLogic": {
+      "properties": {
+        "isOperant": {
+          "default": true,
+          "type": "boolean"
+        },
+        "stopDuration": {
+          "default": 0,
+          "minimum": 0,
+          "type": "number"
+        },
+        "timeToCollect": {
+          "default": 1000000,
+          "minimum": 0,
+          "type": [
+            "number"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "patchStatistics": {
+      "properties": {
+        "label": {
+          "default": "",
+          "type": "string"
+        },
+        "odorSpecifications": {
+          "$ref": "#/definitions/odorSpecifications"
+        },
+        "rewardSpecifications": {
+          "$ref": "#/definitions/rewardSpecifications"
+        },
+        "stateIndex": {
+          "default": 0,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "renderingSettings": {
+      "properties": {
+        "monitorCalibrationDirectory": {
+          "default": "Calibration\\Monitors\\",
+          "type": "string"
+        },
+        "textureAssetDirectory": {
+          "default": "Textures",
+          "type": "string"
+        },
+        "initialAgentPosition": {
+          "$ref": "#/definitions/Vector3"
+        }
+      },
+      "type": "object"
+    },
+    "rewardSpecifications": {
+      "default": null,
+      "properties": {
+        "amount": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "delay": {
+          "default": 0,
+          "minimum": 0,
+          "type": "number"
+        },
+        "operantLogic": {
+          "$ref": "#/definitions/operantLogic"
+        },
+        "probability": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": [
+        "null",
+        "object"
+      ]
+    },
+    "sessionMetadata": {
+      "properties": {
+        "commitHash": {
+          "default": null,
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "experiment": {
+          "type": "string"
+        },
+        "hardware": {
+          "properties": {
+            "render": {
+              "$ref": "#/definitions/renderingSettings"
+            },
+            "treadmill": {
+              "$ref": "#/definitions/treadmill"
+            },
+            "valves": {
+              "$ref": "#/definitions/valvesCalibration"
+            }
+          },
+          "type": "object"
+        },
+        "notes": {
+          "default": "",
+          "type": "string"
+        },
+        "rngSeed": {
+          "type": [
+            "null",
+            "number"
+          ]
+        },
+        "rootPath": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rootPath",
+        "subject",
+        "experiment",
+        "version",
+        "commitHash"
+      ],
+      "type": "object"
+    },
+    "transitionMatrix": {
+      "default": [
+        [
+          1
+        ]
+      ],
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      },
+      "type": "array"
+    },
+    "treadmillSettings": {
+      "properties": {
+        "gain": {
+          "default": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "valvesCalibration": {
+      "properties": {
+        "calibrationDir": {
+          "default": "Calibration\\Valves\\",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Vector3": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "title": "AindVrForagingSchema",
+  "type": "object"
+}
