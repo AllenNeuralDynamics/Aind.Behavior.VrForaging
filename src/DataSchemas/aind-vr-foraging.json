@@ -126,7 +126,7 @@
               "$ref": "#/definitions/renderingSettings"
             },
             "treadmill": {
-              "$ref": "#/definitions/treadmill"
+              "$ref": "#/definitions/treadmillSettings"
             },
             "valves": {
               "$ref": "#/definitions/valvesCalibration"
