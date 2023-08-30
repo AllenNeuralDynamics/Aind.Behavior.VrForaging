@@ -1,0 +1,36 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "properties": {
+    "metadata": {"$ref": "AindVrForagingCommon#/definitions/sessionMetadata"},
+    "taskLogicHelper": {
+      "type": "object",
+      "properties": {
+        "virtualSiteDefinition": {
+          "type": "object",
+          "properties": {
+            "interPatchSite": {
+              "type": "object",
+              "properties": {
+                "lengthDistribution": {"$ref": "AindVrForagingCommon#/definitions/truncatedExponential"}}
+              },
+            "rewardSite":{
+              "type": "object",
+              "properties": {
+                "lengthDistribution": {"$ref": "AindVrForagingCommon#/definitions/truncatedExponential"}}
+            },
+            "gapSite":{
+              "type": "object",
+              "properties": {
+                "lengthDistribution": {"$ref": "AindVrForagingCommon#/definitions/truncatedExponential"}}
+            }
+          }
+        }
+      },
+      "required": ["virtualSiteDefinition", "rewardSite", "gapSite"]
+    }
+  },
+  "required": ["metadata", "taskLogicHelper"],
+  "title": "AindVrForagingSession",
+  "type": "object"
+}

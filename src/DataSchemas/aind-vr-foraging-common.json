@@ -285,31 +285,6 @@
       },
       "type": "object"
     },
-    "taskLogic": {
-      "type": "object",
-      "properties": {
-        "virtualSiteDefinition": {
-          "type": "object",
-          "properties": {
-            "interPatchSite": {
-              "type": "object",
-              "properties": {
-                "lengthDistribution": {"$ref": "#/definitions/truncatedExponential"}}
-              },
-            "rewardSite":{
-              "type": "object",
-              "properties": {
-                "lengthDistribution": {"$ref": "#/definitions/truncatedExponential"}}
-            },
-            "gapSite":{
-              "type": "object",
-              "properties": {
-                "lengthDistribution": {"$ref": "#/definitions/truncatedExponential"}}
-            }
-          }
-        }
-      }
-    },
     "truncatedExponential:": {
       "type": "object",
       "properties": {
@@ -328,6 +303,6 @@
       }
     }
   },
-  "title": "AindVrForagingSchema",
+  "title": "AindVrForagingCommon",
   "type": "object"
 }
