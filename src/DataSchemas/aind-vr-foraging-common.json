@@ -62,7 +62,7 @@
     "renderingSettings": {
       "properties": {
         "initialAgentPosition": {
-          "$ref": "#/definitions/Vector3"
+          "$ref": "#/definitions/vector3"
         },
         "monitorCalibrationDirectory": {
           "default": "Calibration\\Monitors\\",
@@ -285,7 +285,7 @@
       },
       "type": "object"
     },
-    "truncatedExponential:": {
+    "truncatedExponential": {
       "type": "object",
       "properties": {
         "minimum": {
