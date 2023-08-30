@@ -6,7 +6,7 @@
     "taskLogicHelper": {
       "type": "object",
       "properties": {
-        "virtualSiteDefinition": {
+        "virtualSiteGeneration": {
           "type": "object",
           "properties": {
             "interPatchSite": {
@@ -27,7 +27,7 @@
           }
         }
       },
-      "required": ["virtualSiteDefinition", "rewardSite", "gapSite"]
+      "required": ["virtualSiteGeneration", "rewardSite", "gapSite"]
     },
     "environmentStatistics":{
       "type" : "object",
@@ -42,6 +42,9 @@
         }
       }
     }
+  },
+  "definitions": {
+    "virtualSite": {"$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"},
   },
   "required": ["metadata", "taskLogicHelper"],
   "title": "AindVrForagingSession",
