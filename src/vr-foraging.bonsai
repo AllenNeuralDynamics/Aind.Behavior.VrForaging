@@ -8,9 +8,9 @@
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p2="clr-namespace:;assembly=Extensions"
                  xmlns:p3="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
-                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
@@ -288,10 +288,6 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>GiveReward</Name>
                         </Expression>
-                        <Expression xsi:type="scr:ExpressionTransform">
-                          <scr:Name>ConsumedReward</scr:Name>
-                          <scr:Expression>it.Item1 ? 1 : 0</scr:Expression>
-                        </Expression>
                         <Expression xsi:type="rx:SelectMany">
                           <Name>--RewardsAvailable</Name>
                           <Workflow>
@@ -349,9 +345,8 @@
                         <Edge From="9" To="10" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
                         <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -1151,26 +1146,13 @@ Item2.Light as Light)</scr:Expression>
               <Name>OdorControl</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Boolean,sys:Int32,sys:Single)">
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Odor">
                     <rx:Name>OdorControl</rx:Name>
                   </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
-Item1 as OrdorState,
-Item2 as OdorIdentity,
-Item3 as OdorConcentration
-)</scr:Expression>
-                  </Expression>
                   <Expression xsi:type="WorkflowOutput" />
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Boolean,p1:OdorSpecifications)">
-                      <rx:Name>OdorControl</rx:Name>
-                    </Builder>
-                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1178,17 +1160,8 @@ Item3 as OdorConcentration
               <Name>RewardControl</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="Annotation">
-                    <Text><![CDATA[]]></Text>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Boolean,sys:Single)">
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
                     <rx:Name>GiveReward</rx:Name>
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
-Item1 as RewardEnabled,
-Item2 as RewardAmout
-)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="harp:CreateMessage">
@@ -1223,14 +1196,12 @@ Item2 as RewardAmout
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="2" To="4" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="4" To="6" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1667,48 +1638,16 @@ Item2 as Start
               <Name>PatchGeneration</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
-                    <Start>618</Start>
-                    <Length>10</Length>
-                    <Id>1</Id>
-                    <Brightness>1</Brightness>
-                    <HasRewardLogic>false</HasRewardLogic>
-                    <RewardAmount>1</RewardAmount>
-                    <RewardProbability>1</RewardProbability>
-                    <RewardDelay>PT0S</RewardDelay>
-                    <StopDuration>PT0S</StopDuration>
-                    <HasOdor>false</HasOdor>
-                    <OdorIdentity>0</OdorIdentity>
-                    <OdorConcentration>0</OdorConcentration>
-                    <Label xsi:nil="true" />
-                    <TimeToCollectReward>PT0S</TimeToCollectReward>
-                    <LickToReward>false</LickToReward>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:IgnoreElements" />
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>SiteSpecs</Name>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:VirtualSite">
+                    <rx:Name>SiteSpecs</rx:Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>SiteSpecs</Name>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\InstantiateSite.bonsai" />
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1726,15 +1665,23 @@ Item2 as Start
                       <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Session</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>TaskLogicHelper.VirtualSiteGeneration.InterPatchSite.LengthDistribution</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Minimum" Selector="Minimum" />
+                      <Property Name="Maximum" Selector="Maximum" />
+                      <Property Name="Average" Selector="Mean" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddInterPatchSite.bonsai">
                     <Minimum>30</Minimum>
                     <Maximum>100</Maximum>
                     <Average>50</Average>
-                    <Brightness>0.5</Brightness>
-                    <HasOdor>false</HasOdor>
-                    <OdorIdentity>0</OdorIdentity>
-                    <OdorConcentration>0</OdorConcentration>
-                    <Label>InterPatch</Label>
                   </Expression>
                   <Expression xsi:type="rx:SelectMany">
                     <Name>Patch</Name>
@@ -1774,16 +1721,7 @@ Item2 as Start
                           <Minimum>20</Minimum>
                           <Maximum>50</Maximum>
                           <Average>30</Average>
-                          <Brightness>1</Brightness>
-                          <HasRewardLogic>false</HasRewardLogic>
-                          <RewardAmount>0</RewardAmount>
-                          <RewardProbability>0</RewardProbability>
-                          <RewardDelay>PT0S</RewardDelay>
-                          <StopDuration>PT0S</StopDuration>
-                          <HasOdor>false</HasOdor>
-                          <OdorIdentity>0</OdorIdentity>
-                          <OdorConcentration>0</OdorConcentration>
-                          <Label>InitialGapSite</Label>
+                          <Label>virtualSite</Label>
                         </Expression>
                         <Expression xsi:type="rx:BehaviorSubject">
                           <Name>FirstPatchSite</Name>
@@ -1876,31 +1814,13 @@ Item2 as Start
                           <Minimum>20</Minimum>
                           <Maximum>50</Maximum>
                           <Average>30</Average>
-                          <Brightness>1</Brightness>
-                          <HasRewardLogic>true</HasRewardLogic>
-                          <RewardProbability>1</RewardProbability>
-                          <RewardDelay>PT0S</RewardDelay>
-                          <StopDuration>PT0.5S</StopDuration>
-                          <HasOdor>true</HasOdor>
-                          <OdorConcentration>1</OdorConcentration>
-                          <Label>RewardSite</Label>
-                          <TimeToCollectReward>PT0S</TimeToCollectReward>
-                          <LickToReward>false</LickToReward>
+                          <Label>virtualSite</Label>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
                           <Minimum>20</Minimum>
                           <Maximum>50</Maximum>
                           <Average>30</Average>
-                          <Brightness>1</Brightness>
-                          <HasRewardLogic>false</HasRewardLogic>
-                          <RewardAmount>0</RewardAmount>
-                          <RewardProbability>0</RewardProbability>
-                          <RewardDelay>PT0S</RewardDelay>
-                          <StopDuration>PT0S</StopDuration>
-                          <HasOdor>false</HasOdor>
-                          <OdorIdentity>0</OdorIdentity>
-                          <OdorConcentration>0</OdorConcentration>
-                          <Label>GapSite</Label>
+                          <Label>virtualSite</Label>
                         </Expression>
                         <Expression xsi:type="rx:SelectMany">
                           <Name>WaitForSiteOutcome</Name>
@@ -2047,10 +1967,13 @@ Item2 as Start
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="1" To="5" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2095,6 +2018,9 @@ Item2 as Start
                   <Expression xsi:type="SubscribeSubject">
                     <Name>ActiveSiteLabel</Name>
                   </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Label</Selector>
+                  </Expression>
                   <Expression xsi:type="Equal">
                     <Operand xsi:type="StringProperty">
                       <Value>InterPatch</Value>
@@ -2105,6 +2031,9 @@ Item2 as Start
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>ActiveSiteLabel</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Label</Selector>
                   </Expression>
                   <Expression xsi:type="Equal">
                     <Operand xsi:type="StringProperty">
@@ -2125,6 +2054,9 @@ Item2 as Start
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>ActiveSiteLabel</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Label</Selector>
                   </Expression>
                   <Expression xsi:type="Equal">
                     <Operand xsi:type="StringProperty">
@@ -2161,37 +2093,34 @@ Item2 as Start
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="17" Label="Source1" />
+                  <Edge From="2" To="20" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="15" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="6" To="8" Label="Source1" />
-                  <Edge From="7" To="9" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source2" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="15" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="18" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="8" To="10" Label="Source1" />
+                  <Edge From="9" To="11" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source3" />
+                  <Edge From="13" To="18" Label="Source2" />
+                  <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
-                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source3" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source2" />
+                  <Edge From="20" To="21" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Annotation">
-              <Name>TODO</Name>
-              <Text><![CDATA[This should be replaced by a hook to the first citzen class that it is used to instantiate corridors in the future. Unfortunately, DyncamicClasses cannot be broadcasted in a consistent and flexible way.]]></Text>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:String">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:VirtualSite">
               <rx:Name>ActiveSiteLabel</rx:Name>
             </Expression>
           </Nodes>
-          <Edges>
-            <Edge From="1" To="2" Label="Source1" />
-          </Edges>
+          <Edges />
         </Workflow>
       </Expression>
     </Nodes>

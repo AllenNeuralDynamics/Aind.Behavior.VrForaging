@@ -14,10 +14,19 @@
         "index": {
           "minimum": 0,
           "type": "integer"
+        },
+        "valveState": {
+          "default": true,
+          "type": "boolean"
         }
       },
-      "required": ["index"],
-      "type": ["null", "object"]
+      "required": [
+        "index"
+      ],
+      "type": [
+        "null",
+        "object"
+      ]
     },
     "operantLogic": {
       "default": null,
@@ -34,10 +43,15 @@
         "timeToCollect": {
           "default": 1000000,
           "minimum": 0,
-          "type": ["number"]
+          "type": [
+            "number"
+          ]
         }
       },
-      "type": ["null", "object"]
+      "type": [
+        "null",
+        "object"
+      ]
     },
     "patchStatistics": {
       "properties": {
@@ -97,13 +111,19 @@
           "type": "number"
         }
       },
-      "type": ["null", "object"]
+      "type": [
+        "null",
+        "object"
+      ]
     },
     "sessionMetadata": {
       "properties": {
         "commitHash": {
           "default": null,
-          "type": ["null", "string"]
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "experiment": {
           "type": "string"
@@ -127,7 +147,10 @@
           "type": "string"
         },
         "rngSeed": {
-          "type": ["null", "number"]
+          "type": [
+            "null",
+            "number"
+          ]
         },
         "rootPath": {
           "type": "string"
@@ -149,7 +172,11 @@
       "type": "object"
     },
     "transitionMatrix": {
-      "default": [[1]],
+      "default": [
+        [
+          1
+        ]
+      ],
       "items": {
         "items": {
           "type": "number"
@@ -213,23 +240,18 @@
     },
     "virtualSite": {
       "properties": {
+        "id": {
+          "default": 0,
+          "type": "number"
+        },
+        "label": {
+          "default": "virtualSite",
+          "type": "string"
+        },
         "length": {
           "default": 120,
           "minimum": 0,
           "type": "number"
-        },
-        "metadata": {
-          "properties": {
-            "id": {
-              "default": 0,
-              "type": "number"
-            },
-            "label": {
-              "default": "virtualSite",
-              "type": "string"
-            }
-          },
-          "type": "object"
         },
         "odor": {
           "$ref": "#/definitions/odorSpecifications"
@@ -240,7 +262,10 @@
               "default": null,
               "maximum": 1,
               "minimum": 0,
-              "type": ["null", "number"]
+              "type": [
+                "null",
+                "number"
+              ]
             }
           },
           "type": "object"

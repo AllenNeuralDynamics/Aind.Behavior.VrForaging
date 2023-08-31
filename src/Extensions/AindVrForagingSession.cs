@@ -14,9 +14,11 @@ namespace AindVrForagingDataSchema
     public partial class VirtualSite
     {
     
-        private double _length = 120D;
+        private double _id = 0D;
     
-        private Metadata _metadata;
+        private string _label = "virtualSite";
+    
+        private double _length = 120D;
     
         private Odor _odor;
     
@@ -25,6 +27,32 @@ namespace AindVrForagingDataSchema
         private Reward _reward;
     
         private double _startPosition = 0D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="id")]
+        public double Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
+        public string Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+            }
+        }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length")]
         public double Length
@@ -36,20 +64,6 @@ namespace AindVrForagingDataSchema
             set
             {
                 _length = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadata")]
-        public Metadata Metadata
-        {
-            get
-            {
-                return _metadata;
-            }
-            set
-            {
-                _metadata = value;
             }
         }
     
@@ -113,8 +127,9 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new VirtualSite
                 {
+                    Id = _id,
+                    Label = _label,
                     Length = _length,
-                    Metadata = _metadata,
                     Odor = _odor,
                     Render = _render,
                     Reward = _reward,
@@ -609,59 +624,14 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Metadata
-    {
-    
-        private double _id = 0D;
-    
-        private string _label = "virtualSite";
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="id")]
-        public double Id
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
-        public string Label
-        {
-            get
-            {
-                return _label;
-            }
-            set
-            {
-                _label = value;
-            }
-        }
-    
-        public System.IObservable<Metadata> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Metadata
-                {
-                    Id = _id,
-                    Label = _label
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Odor
     {
     
         private double _concentration = 1D;
     
         private int _index;
+    
+        private bool _valveState = true;
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="concentration")]
         public double Concentration
@@ -689,13 +659,27 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveState")]
+        public bool ValveState
+        {
+            get
+            {
+                return _valveState;
+            }
+            set
+            {
+                _valveState = value;
+            }
+        }
+    
         public System.IObservable<Odor> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new Odor
                 {
                     Concentration = _concentration,
-                    Index = _index
+                    Index = _index,
+                    ValveState = _valveState
                 }));
         }
     }
@@ -1522,11 +1506,6 @@ namespace AindVrForagingDataSchema
             return Process<AindVrForagingSession>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Metadata> source)
-        {
-            return Process<Metadata>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Odor> source)
         {
             return Process<Odor>(source);
@@ -1626,7 +1605,6 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TransitionMatrix>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
