@@ -13,6 +13,10 @@ metadata:
     screen:
       monitorCalibrationDirectory: "Calibration\\Monitors"
       textureAssetDirectory:  "Textures"
+      initialAgentPosition:
+        x: 0
+        y: 4
+        z: 0
     treadmill:
       gain: 1.0
     valves:
