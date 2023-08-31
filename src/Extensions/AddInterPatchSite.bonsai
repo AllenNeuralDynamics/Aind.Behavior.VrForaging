@@ -16,6 +16,7 @@
         <Property Name="Maximum" />
         <Property Name="Average" />
         <Property Name="Brightness" />
+        <Property Name="Label" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>InterPatch</Name>
@@ -82,6 +83,9 @@
                 <Property Name="Render" />
               </PropertyMappings>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Label" />
+            </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
               <Id>0</Id>
               <Label>virtualSite</Label>
@@ -112,13 +116,14 @@
             <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source3" />
             <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="15" Label="Source1" />
+            <Edge From="11" To="16" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="15" Label="Source2" />
-            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="14" To="16" Label="Source2" />
+            <Edge From="15" To="16" Label="Source3" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
