@@ -57,21 +57,14 @@
               "type": "object"
             }
           },
+          "required": ["interPatchSite", "rewardSite", "gapSite"],
           "type": "object"
         }
       },
-      "required": [
-        "virtualSiteGeneration",
-        "rewardSite",
-        "gapSite"
-      ],
       "type": "object"
     }
   },
-  "required": [
-    "metadata",
-    "taskLogicHelper"
-  ],
+  "required": ["metadata", "taskLogicHelper"],
   "title": "AindVrForagingSession",
   "type": "object"
 }

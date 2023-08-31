@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p2="clr-namespace:;assembly=Extensions"
                  xmlns:p3="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
@@ -18,15 +18,15 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:AindVrForagingSession" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Take">
-          <rx:Count>1</rx:Count>
+        <Combinator xsi:type="io:ReadAllText">
+          <io:Path>DataSchemas\ExampleSession.yml</io:Path>
         </Combinator>
       </Expression>
+      <Expression xsi:type="p1:DeserializeFromYaml">
+        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindVrForagingSession" />
+      </Expression>
       <Expression xsi:type="rx:AsyncSubject">
-        <Name>Session</Name>
+        <Name>SessionSchema</Name>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Config</Name>
@@ -37,7 +37,7 @@
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>Session</Name>
+                    <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Metadata.RngSeed</Selector>
@@ -61,7 +61,7 @@
                     <Name>RngSeed</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>Session</Name>
+                    <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Metadata.Hardware.Screen.TextureAssetDirectory</Selector>
@@ -163,22 +163,25 @@
               <Name>PatchStatistics</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p2:CreateTransitionMatrix">
-                      <p2:TransitionMatrix>0,1;1,0</p2:TransitionMatrix>
-                      <p2:NormalizeRows>true</p2:NormalizeRows>
-                    </Combinator>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SessionSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>EnvironmentStatistics.TransitionMatrix</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Data</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
+                    <Combinator xsi:type="p2:FormatTransitionMatrix">
+                      <p2:NormalizeRows>true</p2:NormalizeRows>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>TransitionMatrix</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>Session</Name>
+                    <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>EnvironmentStatistics.Patches</Selector>
@@ -386,23 +389,25 @@
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="9" To="14" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="11" To="16" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source2" />
+                  <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source2" />
                   <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -513,7 +518,7 @@
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
             <Expression xsi:type="SubscribeSubject">
-              <Name>Session</Name>
+              <Name>SessionSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Metadata.Hardware.Screen.MonitorCalibrationDirectory</Selector>
@@ -922,7 +927,7 @@ Item2.Light as Light)</scr:Expression>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>Session</Name>
+                    <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Metadata.Hardware.Screen.InitialAgentPosition.Z</Selector>
@@ -1014,7 +1019,7 @@ Item2.Light as Light)</scr:Expression>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>Session</Name>
+                    <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Metadata.Hardware.Screen.InitialAgentPosition</Selector>
@@ -1676,7 +1681,7 @@ Item2 as Start
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>Session</Name>
+                    <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>TaskLogicHelper.VirtualSiteGeneration.InterPatchSite.LengthDistribution</Selector>
@@ -1729,7 +1734,7 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>Session</Name>
+                          <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>TaskLogicHelper.VirtualSiteGeneration.GapSite.LengthDistribution</Selector>
@@ -1835,7 +1840,7 @@ Item2 as Start
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>Session</Name>
+                          <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>TaskLogicHelper.VirtualSiteGeneration.RewardSite.LengthDistribution</Selector>
@@ -1860,7 +1865,7 @@ Item2 as Start
                           <Label>virtualSite</Label>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>Session</Name>
+                          <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>TaskLogicHelper.VirtualSiteGeneration.GapSite.LengthDistribution</Selector>
