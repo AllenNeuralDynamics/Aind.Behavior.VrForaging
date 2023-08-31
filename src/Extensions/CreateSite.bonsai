@@ -2,7 +2,7 @@
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -10,21 +10,13 @@
         <Name>Source1</Name>
       </Expression>
       <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Start" />
-        <Property Name="Length" />
         <Property Name="Id" />
-        <Property Name="Brightness" />
-        <Property Name="HasRewardLogic" />
-        <Property Name="RewardAmount" />
-        <Property Name="RewardProbability" />
-        <Property Name="RewardDelay" />
-        <Property Name="StopDuration" />
-        <Property Name="HasOdor" />
-        <Property Name="OdorIdentity" />
-        <Property Name="OdorConcentration" />
         <Property Name="Label" />
-        <Property Name="TimeToCollectReward" />
-        <Property Name="LickToReward" />
+        <Property Name="Length" />
+        <Property Name="Odor" />
+        <Property Name="Render" />
+        <Property Name="Reward" />
+        <Property Name="StartPosition" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>CreateSite</Name>
@@ -32,182 +24,21 @@
         <Workflow>
           <Nodes>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Start" Category="Environment" />
+              <Property Name="Id" />
+              <Property Name="Label" />
+              <Property Name="Length" />
+              <Property Name="Odor" />
+              <Property Name="Render" />
+              <Property Name="Reward" />
+              <Property Name="StartPosition" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>618</Value>
+              <Combinator xsi:type="p1:VirtualSite">
+                <p1:Id>0</p1:Id>
+                <p1:Label>virtualSite</p1:Label>
+                <p1:Length>120</p1:Length>
+                <p1:StartPosition>0</p1:StartPosition>
               </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Length" Category="Environment" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>10</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Id" Category="Metadata" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="IntProperty">
-                <Value>1</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Label" Category="Metadata" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-Item1 as Id,
-Item2 as Label
-)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Brightness" Category="Environment" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>1</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-it as Brightness)
-</scr:Expression>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="HasRewardLogic" Category="Reward" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="RewardAmount" Category="Reward" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>1</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="RewardProbability" Category="Reward" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>1</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="RewardDelay" Category="Reward" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="TimeSpanProperty">
-                <Value>PT0S</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="StopDuration" Category="Reward" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="TimeSpanProperty">
-                <Value>PT0S</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="LickToReward" Category="Reward" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="TimeToCollectReward" Category="Reward" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="TimeSpanProperty">
-                <Value>PT0S</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-Item1 as LickToReward,
-Item2 as TimeToCollectReward
-)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-Item1 as HasRewardLogic,
-Item2 as RewardAmount,
-Item3 as RewardProbability,
-Item4 as RewardDelay,
-Item5 as StopDuration,
-Item6 as LickToRewardControl
-)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="HasOdor" Category="Odor" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="OdorIdentity" Category="Odor" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="IntProperty">
-                <Value>0</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="OdorConcentration" Category="Odor" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-Item1 as HasOdor,
-Item2 as OdorIdentity,
-Item3 as OdorConcentration
-)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-Item1 as Start,
-Item2 as Length,
-Item3 as Metadata,
-Item4 as BrightnessControl,
-Item5 as RewardControl,
-Item6 as OdorControl
-)
-</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -218,47 +49,8 @@ Item6 as OdorControl
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="39" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="39" Label="Source2" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="8" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source2" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="39" Label="Source3" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="39" Label="Source4" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="29" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="29" Label="Source2" />
-            <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="29" Label="Source3" />
-            <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="29" Label="Source4" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="29" Label="Source5" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="27" Label="Source1" />
-            <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source2" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="29" Label="Source6" />
-            <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="39" Label="Source5" />
-            <Edge From="31" To="32" Label="Source1" />
-            <Edge From="32" To="37" Label="Source1" />
-            <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="37" Label="Source2" />
-            <Edge From="35" To="36" Label="Source1" />
-            <Edge From="36" To="37" Label="Source3" />
-            <Edge From="37" To="38" Label="Source1" />
-            <Edge From="38" To="39" Label="Source6" />
-            <Edge From="39" To="40" Label="Source1" />
-            <Edge From="40" To="41" Label="Source1" />
-            <Edge From="41" To="42" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
