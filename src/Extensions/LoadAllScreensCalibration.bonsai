@@ -17,7 +17,9 @@
               <Property Name="Value" DisplayName="Directory" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty" />
+              <Combinator xsi:type="StringProperty">
+                <Value>Calibration\Monitors</Value>
+              </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -31,7 +33,7 @@
               <Name>MonitorCalibrationDirectory</Name>
             </Expression>
             <Expression xsi:type="Format">
-              <Format>{0}left_extrinsics.yml</Format>
+              <Format>{0}\left_extrinsics.yml</Format>
               <Selector>it</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -43,7 +45,7 @@
               <Name>MonitorCalibrationDirectory</Name>
             </Expression>
             <Expression xsi:type="Format">
-              <Format>{0}left_intrinsics.yml</Format>
+              <Format>{0}\left_intrinsics.yml</Format>
               <Selector>it</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -52,14 +54,14 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\ScreenCalibration.bonsai">
-              <IntrinsicsFileName>Calibration\Monitors\left_intrinsics.yml</IntrinsicsFileName>
-              <ExtrinsicsFileName>Calibration\Monitors\left_extrinsics.yml</ExtrinsicsFileName>
+              <IntrinsicsFileName>Calibration\Monitorsleft_intrinsics.yml</IntrinsicsFileName>
+              <ExtrinsicsFileName>Calibration\Monitorsleft_extrinsics.yml</ExtrinsicsFileName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>MonitorCalibrationDirectory</Name>
             </Expression>
             <Expression xsi:type="Format">
-              <Format>{0}center_extrinsics.yml</Format>
+              <Format>{0}\center_extrinsics.yml</Format>
               <Selector>it</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -71,7 +73,7 @@
               <Name>MonitorCalibrationDirectory</Name>
             </Expression>
             <Expression xsi:type="Format">
-              <Format>{0}center_intrinsics.yml</Format>
+              <Format>{0}\center_intrinsics.yml</Format>
               <Selector>it</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -80,14 +82,14 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\ScreenCalibration.bonsai">
-              <IntrinsicsFileName>Calibration\Monitors\center_intrinsics.yml</IntrinsicsFileName>
-              <ExtrinsicsFileName>Calibration\Monitors\center_extrinsics.yml</ExtrinsicsFileName>
+              <IntrinsicsFileName>Calibration\Monitorscenter_intrinsics.yml</IntrinsicsFileName>
+              <ExtrinsicsFileName>Calibration\Monitorscenter_extrinsics.yml</ExtrinsicsFileName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>MonitorCalibrationDirectory</Name>
             </Expression>
             <Expression xsi:type="Format">
-              <Format>{0}right_extrinsics.yml</Format>
+              <Format>{0}\right_extrinsics.yml</Format>
               <Selector>it</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -99,7 +101,7 @@
               <Name>MonitorCalibrationDirectory</Name>
             </Expression>
             <Expression xsi:type="Format">
-              <Format>{0}right_intrinsics.yml</Format>
+              <Format>{0}\right_intrinsics.yml</Format>
               <Selector>it</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -108,8 +110,8 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\ScreenCalibration.bonsai">
-              <IntrinsicsFileName>Calibration\Monitors\right_intrinsics.yml</IntrinsicsFileName>
-              <ExtrinsicsFileName>Calibration\Monitors\right_extrinsics.yml</ExtrinsicsFileName>
+              <IntrinsicsFileName>Calibration\Monitorsright_intrinsics.yml</IntrinsicsFileName>
+              <ExtrinsicsFileName>Calibration\Monitorsright_extrinsics.yml</ExtrinsicsFileName>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Zip" />
