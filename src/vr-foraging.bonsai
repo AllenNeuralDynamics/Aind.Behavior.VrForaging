@@ -279,6 +279,12 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>ThisPatch</Name>
                         </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>ActivePatch</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>ThisPatch</Name>
+                        </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>RewardSpecifications.Amount</Selector>
                         </Expression>
@@ -343,15 +349,19 @@
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
                         <Edge From="12" To="13" Label="Source1" />
                         <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source1" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Switch" />
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:PatchStatistics">
+                    <rx:Name>ActivePatch</rx:Name>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
                     <rx:Name>RewardAvailable</rx:Name>
@@ -391,8 +401,8 @@
                   <Edge From="16" To="17" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -409,7 +419,7 @@
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>LickToReward</Name>
+                    <Name>IsOperantMode</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
                     <Property Name="Value" DisplayName="TimeToCollectReward" />
@@ -1682,6 +1692,7 @@ Item2 as Start
                     <Minimum>30</Minimum>
                     <Maximum>100</Maximum>
                     <Average>50</Average>
+                    <Label>virtualSite</Label>
                   </Expression>
                   <Expression xsi:type="rx:SelectMany">
                     <Name>Patch</Name>
@@ -1717,11 +1728,24 @@ Item2 as Start
                             <rx:Count>1</rx:Count>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Session</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>TaskLogicHelper.VirtualSiteGeneration.GapSite.LengthDistribution</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Minimum" Selector="Minimum" />
+                            <Property Name="Maximum" Selector="Maximum" />
+                            <Property Name="Average" Selector="Mean" />
+                          </PropertyMappings>
+                        </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
                           <Minimum>20</Minimum>
                           <Maximum>50</Maximum>
                           <Average>30</Average>
-                          <Label>virtualSite</Label>
+                          <Label>IntroGapSite</Label>
                         </Expression>
                         <Expression xsi:type="rx:BehaviorSubject">
                           <Name>FirstPatchSite</Name>
@@ -1799,28 +1823,60 @@ Item2 as Start
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
-                            <Property Name="TimeToCollectReward" />
+                            <Property Name="TimeToCollect" Selector="TotalSeconds" />
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>LickToReward</Name>
+                          <Name>IsOperantMode</Name>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
-                            <Property Name="LickToReward" />
+                            <Property Name="IsOperant" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Session</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>TaskLogicHelper.VirtualSiteGeneration.RewardSite.LengthDistribution</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Minimum" Selector="Minimum" />
+                            <Property Name="Maximum" Selector="Maximum" />
+                            <Property Name="Average" Selector="Mean" />
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddRewardSite.bonsai">
                           <Minimum>20</Minimum>
                           <Maximum>50</Maximum>
                           <Average>30</Average>
+                          <IsOperant>true</IsOperant>
+                          <StopDuration>0</StopDuration>
+                          <TimeToCollect>1000000</TimeToCollect>
+                          <Amount>0</Amount>
+                          <Delay>0</Delay>
+                          <Probability>1</Probability>
                           <Label>virtualSite</Label>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Session</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>TaskLogicHelper.VirtualSiteGeneration.GapSite.LengthDistribution</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Minimum" Selector="Minimum" />
+                            <Property Name="Maximum" Selector="Maximum" />
+                            <Property Name="Average" Selector="Mean" />
+                          </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
                           <Minimum>20</Minimum>
                           <Maximum>50</Maximum>
                           <Average>30</Average>
-                          <Label>virtualSite</Label>
+                          <Label>GapSite</Label>
                         </Expression>
                         <Expression xsi:type="rx:SelectMany">
                           <Name>WaitForSiteOutcome</Name>
@@ -1847,7 +1903,7 @@ Item2 as Start
                                 <Name>PreviousSite</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>Start,Length</Selector>
+                                <Selector>Length,StartPosition</Selector>
                               </Expression>
                               <Expression xsi:type="Add" />
                               <Expression xsi:type="Combinator">
@@ -1939,24 +1995,33 @@ Item2 as Start
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="7" To="11" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source2" />
                         <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="18" Label="Source1" />
+                        <Edge From="13" To="14" Label="Source1" />
                         <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="18" Label="Source2" />
-                        <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source3" />
-                        <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="15" To="16" Label="Source1" />
+                        <Edge From="16" To="24" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="24" Label="Source2" />
                         <Edge From="19" To="20" Label="Source1" />
-                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="20" To="24" Label="Source3" />
                         <Edge From="21" To="22" Label="Source1" />
                         <Edge From="22" To="23" Label="Source1" />
-                        <Edge From="23" To="24" Label="Source1" />
-                        <Edge From="24" To="25" Label="Source1" />
+                        <Edge From="23" To="24" Label="Source4" />
+                        <Edge From="24" To="28" Label="Source1" />
                         <Edge From="25" To="26" Label="Source1" />
+                        <Edge From="26" To="27" Label="Source1" />
+                        <Edge From="27" To="28" Label="Source2" />
+                        <Edge From="28" To="29" Label="Source1" />
+                        <Edge From="29" To="30" Label="Source1" />
+                        <Edge From="30" To="31" Label="Source1" />
+                        <Edge From="31" To="32" Label="Source1" />
+                        <Edge From="32" To="33" Label="Source1" />
+                        <Edge From="33" To="34" Label="Source1" />
+                        <Edge From="34" To="35" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>

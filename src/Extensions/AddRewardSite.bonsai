@@ -4,7 +4,7 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
-                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -16,15 +16,13 @@
         <Property Name="Maximum" />
         <Property Name="Average" />
         <Property Name="Brightness" />
-        <Property Name="HasRewardLogic" />
-        <Property Name="RewardProbability" />
-        <Property Name="RewardDelay" />
+        <Property Name="IsOperant" />
         <Property Name="StopDuration" />
-        <Property Name="HasOdor" />
-        <Property Name="OdorConcentration" />
+        <Property Name="TimeToCollect" />
+        <Property Name="Amount" />
+        <Property Name="Delay" />
+        <Property Name="Probability" />
         <Property Name="Label" />
-        <Property Name="TimeToCollectReward" />
-        <Property Name="LickToReward" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>AddRewardSite</Name>
@@ -45,7 +43,7 @@
               <Name>PreviousSite</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Length,Start</Selector>
+              <Selector>Length,StartPosition</Selector>
             </Expression>
             <Expression xsi:type="Add" />
             <Expression xsi:type="SubscribeSubject">
@@ -89,75 +87,75 @@
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="Start" Selector="Item1" />
+                <Property Name="StartPosition" Selector="Item1" />
                 <Property Name="Length" Selector="Item2" />
                 <Property Name="Id" Selector="Item3" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>PatchStatistics</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>ActiveStateIndex</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Index">
-              <Operand xsi:type="IntProperty">
-                <Value>0</Value>
-              </Operand>
+              <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>OdorSpecifications.Index</Selector>
+              <Selector>OdorSpecifications</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="OdorIdentity" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RewardDepleted</Name>
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Name>it ? 0 : 1</scr:Name>
-              <scr:Expression>it ? 0 : 1</scr:Expression>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="RewardAmount" />
+                <Property Name="Odor" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Brightness" />
-              <Property Name="HasRewardLogic" />
-              <Property Name="RewardProbability" />
-              <Property Name="RewardDelay" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:Render" />
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Render" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="IsOperant" />
               <Property Name="StopDuration" />
-              <Property Name="HasOdor" />
-              <Property Name="OdorConcentration" />
+              <Property Name="TimeToCollect" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:OperantLogic">
+                <p1:StopDuration>0</p1:StopDuration>
+                <p1:IsOperant>true</p1:IsOperant>
+                <p1:TimeToCollect>1000000</p1:TimeToCollect>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="OperantLogic" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Amount" />
+              <Property Name="Delay" />
+              <Property Name="Probability" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:Reward">
+                <p1:Amount>0</p1:Amount>
+                <p1:Delay>0</p1:Delay>
+                <p1:Probability>1</p1:Probability>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Reward" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
               <Property Name="Label" />
-              <Property Name="TimeToCollectReward" />
-              <Property Name="LickToReward" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
-              <Start>353.5545</Start>
-              <Length>35.1602135</Length>
               <Id>353</Id>
-              <Brightness>1</Brightness>
-              <HasRewardLogic>true</HasRewardLogic>
-              <RewardAmount>0</RewardAmount>
-              <RewardProbability>1</RewardProbability>
-              <RewardDelay>PT0S</RewardDelay>
-              <StopDuration>PT0.5S</StopDuration>
-              <HasOdor>true</HasOdor>
-              <OdorIdentity>1</OdorIdentity>
-              <OdorConcentration>1</OdorConcentration>
               <Label>RewardSite</Label>
-              <TimeToCollectReward>PT0S</TimeToCollectReward>
-              <LickToReward>false</LickToReward>
+              <Length>35.1602135</Length>
+              <StartPosition>0</StartPosition>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>SiteSpecs</Name>
@@ -181,19 +179,22 @@
             <Edge From="12" To="13" Label="Source3" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="26" Label="Source1" />
-            <Edge From="16" To="19" Label="Source1" />
+            <Edge From="15" To="29" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source2" />
+            <Edge From="18" To="29" Label="Source2" />
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="26" Label="Source2" />
+            <Edge From="21" To="29" Label="Source3" />
             <Edge From="22" To="23" Label="Source1" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="26" Label="Source3" />
-            <Edge From="25" To="26" Label="Source4" />
+            <Edge From="24" To="26" Label="Source1" />
+            <Edge From="25" To="26" Label="Source2" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source2" />
+            <Edge From="27" To="29" Label="Source4" />
+            <Edge From="28" To="29" Label="Source5" />
+            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="30" To="31" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>
