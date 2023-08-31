@@ -1,53 +1,77 @@
 {
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
-  "properties": {
-    "metadata": {"$ref": "aind-vr-foraging-common.json#/definitions/sessionMetadata"},
-    "taskLogicHelper": {
-      "type": "object",
-      "properties": {
-        "virtualSiteGeneration": {
-          "type": "object",
-          "properties": {
-            "interPatchSite": {
-              "type": "object",
-              "properties": {
-                "lengthDistribution": {"$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"}}
-              },
-            "rewardSite":{
-              "type": "object",
-              "properties": {
-                "lengthDistribution": {"$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"}}
-            },
-            "gapSite":{
-              "type": "object",
-              "properties": {
-                "lengthDistribution": {"$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"}}
-            }
-          }
-        }
-      },
-      "required": ["virtualSiteGeneration", "rewardSite", "gapSite"]
+  "definitions": {
+    "corridorSpecifications": {
+      "$ref": "aind-vr-foraging-common.json#/definitions/visualCorridor"
     },
-    "environmentStatistics":{
-      "type" : "object",
-      "properties": {
-        "transitionMatrix" : {"$ref": "aind-vr-foraging-common.json#/definitions/transitionMatrix"},
-        "patches": {
-          "default": [],
-          "type":"array",
-          "items": {
-            "$ref": "aind-vr-foraging-common.json#/definitions/patchStatistics"
-          }
-        }
-      }
+    "virtualSite": {
+      "$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"
     }
   },
-  "definitions": {
-    "virtualSite": {"$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"},
-    "corridorSpecifications" :{"$ref": "aind-vr-foraging-common.json#/definitions/visualCorridor"}
+  "properties": {
+    "environmentStatistics": {
+      "properties": {
+        "patches": {
+          "default": [],
+          "items": {
+            "$ref": "aind-vr-foraging-common.json#/definitions/patchStatistics"
+          },
+          "type": "array"
+        },
+        "transitionMatrix": {
+          "$ref": "aind-vr-foraging-common.json#/definitions/matrix2d"
+        }
+      },
+      "type": "object"
+    },
+    "metadata": {
+      "$ref": "aind-vr-foraging-common.json#/definitions/sessionMetadata"
+    },
+    "taskLogicHelper": {
+      "properties": {
+        "virtualSiteGeneration": {
+          "properties": {
+            "gapSite": {
+              "properties": {
+                "lengthDistribution": {
+                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                }
+              },
+              "type": "object"
+            },
+            "interPatchSite": {
+              "properties": {
+                "lengthDistribution": {
+                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                }
+              },
+              "type": "object"
+            },
+            "rewardSite": {
+              "properties": {
+                "lengthDistribution": {
+                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "virtualSiteGeneration",
+        "rewardSite",
+        "gapSite"
+      ],
+      "type": "object"
+    }
   },
-  "required": ["metadata", "taskLogicHelper"],
+  "required": [
+    "metadata",
+    "taskLogicHelper"
+  ],
   "title": "AindVrForagingSession",
   "type": "object"
 }

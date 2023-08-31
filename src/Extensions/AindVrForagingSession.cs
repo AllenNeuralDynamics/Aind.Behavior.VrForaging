@@ -461,15 +461,31 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class TransitionMatrix
+    public partial class Matrix2d
     {
     
-        public System.IObservable<TransitionMatrix> Process()
+        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _data = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="data")]
+        public System.Collections.Generic.List<System.Collections.Generic.List<double>> Data
+        {
+            get
+            {
+                return _data;
+            }
+            set
+            {
+                _data = value;
+            }
+        }
+    
+        public System.IObservable<Matrix2d> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new TransitionMatrix
+                new Matrix2d
                 {
-
+                    Data = _data
                 }));
         }
     }
@@ -948,13 +964,13 @@ namespace AindVrForagingDataSchema
     public partial class EnvironmentStatistics
     {
     
-        private TransitionMatrix _transitionMatrix;
+        private Matrix2d _transitionMatrix;
     
         private System.Collections.Generic.List<PatchStatistics> _patches = new System.Collections.Generic.List<PatchStatistics>();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="transitionMatrix")]
-        public TransitionMatrix TransitionMatrix
+        public Matrix2d TransitionMatrix
         {
             get
             {
@@ -1491,9 +1507,9 @@ namespace AindVrForagingDataSchema
             return Process<TruncatedExponential>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<TransitionMatrix> source)
+        public System.IObservable<string> Process(System.IObservable<Matrix2d> source)
         {
-            return Process<TransitionMatrix>(source);
+            return Process<Matrix2d>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
@@ -1602,7 +1618,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SessionMetadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TransitionMatrix>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]

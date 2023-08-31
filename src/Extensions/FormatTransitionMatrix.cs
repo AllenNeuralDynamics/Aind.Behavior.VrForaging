@@ -7,37 +7,33 @@ using System.Xml.Serialization;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using OpenCV.Net;
+using System.Collections.Generic;
 
 [Description("Instantiates a transition matrix from a 2D array.")]
-[WorkflowElementCategory(ElementCategory.Source)]
-public class CreateTransitionMatrix : Source<Mat>
+[WorkflowElementCategory(ElementCategory.Transform)]
+public class FormatTransitionMatrix : Transform<List<List<double>>, Mat>
 {
-
-    [XmlIgnore]
-    [Description("A 2D array specifying the transition matrix.")]
-    [TypeConverter(typeof(MultidimensionalArrayConverter))]
-    public float[,] TransitionMatrix { get; set; }
-
-    /// <summary>
-    /// Gets or sets an XML representation of the transition matrix.
-    /// </summary>
-    [Browsable(false)]
-    [XmlElement("TransitionMatrix")]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public string MatrixXml
-    {
-        get { return ArrayConvert.ToString(TransitionMatrix, CultureInfo.InvariantCulture); }
-        set {
-            TransitionMatrix = (float[,])ArrayConvert.ToArray(value, 2, typeof(float), CultureInfo.InvariantCulture);}
-    }
-
-    [Description("The rows of the transition matrix. If the matrix is not square, an error will be thrown at runtime.")]
-
     private bool normalizeRows = true;
     public bool NormalizeRows
     {
         get { return normalizeRows; }
         set { normalizeRows = value; }
+    }
+
+    private float[,] Validate(List<List<double>> list){
+        var rowCount = list.Count;
+        foreach(var row in list){
+            if (row.Count != rowCount){
+                throw new ArgumentException("Transition matrix must be square.");
+            }
+        }
+        float[,] arr = new float[rowCount, rowCount];
+        for (int i = 0; i < rowCount; i++){
+            for (int j = 0; j < rowCount; j++){
+                arr[i,j] = (float)list[i][j];
+            }
+        }
+        return Validate(arr);
     }
 
     private float[,] Validate(float[,] arr){
@@ -85,18 +81,22 @@ public class CreateTransitionMatrix : Source<Mat>
                 .ToArray();
     }
 
-
-    public IObservable<Mat> Generate<TSource>(IObservable<TSource> source)
+    public override IObservable<Mat> Process(IObservable<List<List<double>>> source)
     {
         return source.Select(value => {
-            var mat = Validate(TransitionMatrix);
-            return ConvertToMat(Validate(TransitionMatrix));
+            return ConvertToMat(Validate(value));
         });
     }
 
-    public override IObservable<Mat> Generate()
+    public IObservable<Mat> Process(IObservable<IList<IList<double>>> source)
     {
-        return Observable.Return(ConvertToMat(Validate(TransitionMatrix)));
+        return Process(source.Select(value => {
+            List<List<double>> ret = new List<List<double>>();
+            foreach (var row in value){
+                ret.Add((List<double>) row);
+            }
+            return ret;
+        }));
     }
 
 }
