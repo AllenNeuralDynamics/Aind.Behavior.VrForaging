@@ -6,7 +6,7 @@ metadata:
   experiment: "vr-foraging"
   notes: "nothing to report"
   rootPath: "C:\\data\\"
-  subject: "testMouse"
+  subject: "subject"
   version: "0.0.1-preview20230831"
   commitHash: null
   hardware:
