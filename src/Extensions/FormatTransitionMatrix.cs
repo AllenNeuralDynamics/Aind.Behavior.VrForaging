@@ -3,8 +3,6 @@ using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
 using System.Linq;
-using System.Xml.Serialization;
-using System.Globalization;
 using System.Runtime.InteropServices;
 using OpenCV.Net;
 using System.Collections.Generic;
