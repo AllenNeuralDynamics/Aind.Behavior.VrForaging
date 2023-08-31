@@ -1,0 +1,73 @@
+%YAML 1.1
+---
+# yaml-language-server: $schema=aind-vr-foraging-session.json
+
+metadata:
+  experiment: "vr-foraging"
+  notes: "nothing to report"
+  rootPath: "C:\\data\\"
+  subject: "subject"
+  version: "0.0.1-preview20230831"
+  commitHash: null
+  hardware:
+    screen:
+      monitorCalibrationDirectory: "Calibration\\Monitors"
+      textureAssetDirectory:  "Textures"
+      initialAgentPosition:
+        x: 0
+        y: 4
+        z: 0
+    treadmill:
+      gain: 1.0
+    valves:
+      calibrationDir: ""
+  rngSeed: null
+taskLogicHelper:
+ virtualSiteGeneration:
+   gapSite:
+     lengthDistribution:
+       maximum: 30
+       mean: 18
+       minimum: 10
+   rewardSite:
+     lengthDistribution:
+       maximum: 15
+       mean: 15
+       minimum: 15
+   interPatchSite:
+     lengthDistribution:
+       maximum: 50
+       mean: 25
+       minimum: 10
+environmentStatistics:
+  transitionMatrix:
+    data:
+      - [0, 1]
+      - [1, 0]
+  patches:
+    - label: "Berries"
+      stateIndex: 0
+      odorSpecifications:
+        concentration: 1
+        index: 0
+      rewardSpecifications:
+        delay: 0
+        probability: 1
+        amount: 1
+        operantLogic:
+          isOperant: true
+          stopDuration: 1
+          timeToCollect: 1000000
+    - label: "Bananas"
+      stateIndex: 1
+      odorSpecifications:
+        concentration: 1
+        index: 1
+      rewardSpecifications:
+        delay: 0
+        probability: 1
+        amount: 1
+        operantLogic:
+          isOperant: true
+          stopDuration: 1
+          timeToCollect: 1000000
