@@ -8,8 +8,8 @@
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p2="clr-namespace:;assembly=Extensions"
                  xmlns:p3="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
-                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
@@ -455,8 +455,52 @@
       <Expression xsi:type="GroupWorkflow">
         <Name>Logging</Name>
         <Workflow>
-          <Nodes />
-          <Edges />
+          <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata.RootPath</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:StripDirectoryPath" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>LoggingRootPath</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>HarpBehaviorEvents</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="beh:GroupByRegister" />
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="FileName" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="harp:MessageWriter">
+                <harp:Suffix>None</harp:Suffix>
+                <harp:Buffered>true</harp:Buffered>
+                <harp:Overwrite>false</harp:Overwrite>
+                <harp:FilterType>Include</harp:FilterType>
+                <harp:MessageType xsi:nil="true" />
+              </Combinator>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="8" Label="Source1" />
+            <Edge From="7" To="8" Label="Source2" />
+          </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="Annotation">
@@ -1556,7 +1600,7 @@ Item2.Light as Light)</scr:Expression>
                 <Nodes>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="IntProperty">
-                      <Value>0</Value>
+                      <Value>50</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
