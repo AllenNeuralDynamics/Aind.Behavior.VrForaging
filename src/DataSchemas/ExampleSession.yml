@@ -9,32 +9,45 @@ metadata:
   subject: "subject"
   version: "0.0.1-preview20230831"
   commitHash: null
-  hardware:
-    screen:
-      monitorCalibrationDirectory: "Calibration\\Monitors"
-      textureAssetDirectory:  "Textures"
-      initialAgentPosition:
-        x: 0
-        y: 4
-        z: 0
-    treadmill:
-      gain: 1.0
-    valves:
-      calibrationDir: ""
   rngSeed: null
+hardware:
+  screen:
+    monitorCalibrationDirectory: "Calibration\\Monitors"
+    textureAssetDirectory:  "Textures"
+    initialAgentPosition:
+      x: 0
+      y: 4
+      z: 0
+  treadmill:
+    gain: 1.0
+  valves:
+    calibrationDir: ""
+  harpBehaviorBoard:
+    deviceType: behavior
+    portName: COM5
+  mainCamera:
+    frameRate: 30
+    exposure: 1000
+    gain: 0
+    serialNumber: "0"
+    colorProcessing: Default
+    binning: 1
 taskLogicHelper:
  virtualSiteGeneration:
    gapSite:
+     label: Gap
      lengthDistribution:
        maximum: 30
        mean: 18
        minimum: 10
    rewardSite:
+     label: Reward
      lengthDistribution:
        maximum: 15
        mean: 15
        minimum: 15
    interPatchSite:
+     label: "InterPatch"
      lengthDistribution:
        maximum: 50
        mean: 25

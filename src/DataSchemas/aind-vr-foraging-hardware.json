@@ -1,0 +1,56 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "definitions": {
+    "spinnakerCamera": {
+      "type": "object",
+      "properties": {
+        "frameRate": {
+          "type": "integer",
+          "default": 30,
+          "minimum": 1,
+          "maximum": 350
+        },
+        "exposure": {
+          "type": "integer",
+          "default": 1000,
+          "minimum": 1
+        },
+        "gain": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "colorProcessing": {
+          "type": "string",
+          "enum": ["Default", "NoColorProcessing"],
+          "default": "Default"
+        },
+        "binning": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        }
+      },
+      "required": ["serialNumber"]
+    },
+    "harpBoard": {
+      "type": "object",
+      "properties": {
+        "deviceType":{
+          "type": "string",
+          "enum": ["custom", "behavior", "clockSynchronizer"]
+        },
+        "portName":{
+          "type": "string"
+        }
+      },
+      "required": ["deviceType", "portName"]
+    }
+  },
+  "title": "AindVrForagingHardware",
+  "type": "object"
+}
