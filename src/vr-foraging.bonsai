@@ -8,15 +8,14 @@
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p2="clr-namespace:;assembly=Extensions"
                  xmlns:p3="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
-                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
-                 xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -36,6 +35,9 @@
       </Expression>
       <Expression xsi:type="rx:AsyncSubject">
         <Name>SessionSchema</Name>
+      </Expression>
+      <Expression xsi:type="Annotation">
+        <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Config</Name>
@@ -457,139 +459,6 @@
             </Expression>
           </Nodes>
           <Edges />
-        </Workflow>
-      </Expression>
-      <Expression xsi:type="rx:Defer">
-        <Name>Logging</Name>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>SessionSchema</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateRootLoggingPath.bonsai" />
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Take">
-                <rx:Count>1</rx:Count>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:AsyncSubject">
-              <Name>LoggingRootPath</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>HarpBehaviorEvents</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="beh:GroupByRegister" />
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateHarpLoggingPath.bonsai">
-              <LogName>Behavior</LogName>
-              <Extension>bin</Extension>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="FileName" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="harp:MessageWriter">
-                <harp:Suffix>None</harp:Suffix>
-                <harp:Buffered>true</harp:Buffered>
-                <harp:Overwrite>false</harp:Overwrite>
-                <harp:FilterType>Include</harp:FilterType>
-                <harp:MessageType xsi:nil="true" />
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>SessionSchema</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Hardware.MainCamera.FrameRate</Selector>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="EncodingFrameRate" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateSpinnakerLoggingPath.bonsai">
-              <LogName>MainCamera</LogName>
-              <EncodingFrameRate>60</EncodingFrameRate>
-              <VideoExtension>avi</VideoExtension>
-              <MetadataExtension>csv</MetadataExtension>
-              <Codec>FMP4</Codec>
-            </Expression>
-            <Expression xsi:type="rx:AsyncSubject">
-              <Name>MainCameraLoggerPath</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>MainCameraFrameEvent</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>MainCameraLoggerPath</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Metadata</Selector>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="FileName" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="io:CsvWriter">
-              <io:Append>false</io:Append>
-              <io:Overwrite>false</io:Overwrite>
-              <io:Suffix>None</io:Suffix>
-              <io:IncludeHeader>false</io:IncludeHeader>
-              <io:Selector>Seconds,Value.ChunkData.FrameID,Value.ChunkData.Timestamp</io:Selector>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Value.Image</Selector>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>MainCameraLoggerPath</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="FileName" Selector="Video" />
-                <Property Name="FrameRate" Selector="Logger.EncodingFrameRate" />
-                <Property Name="FourCC" Selector="Logger.Codec" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:VideoWriter">
-                <cv:Suffix>None</cv:Suffix>
-                <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
-                <cv:FourCC>FMP4</cv:FourCC>
-                <cv:FrameRate>30</cv:FrameRate>
-                <cv:FrameSize>
-                  <cv:Width>0</cv:Width>
-                  <cv:Height>0</cv:Height>
-                </cv:FrameSize>
-                <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
-              </Combinator>
-            </Expression>
-          </Nodes>
-          <Edges>
-            <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="8" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source2" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="14" To="18" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="18" Label="Source2" />
-            <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="22" Label="Source1" />
-            <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source2" />
-          </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="Annotation">
@@ -1915,6 +1784,142 @@ Item2.Light as Light)</scr:Expression>
         </Workflow>
       </Expression>
       <Expression xsi:type="Annotation">
+        <Text><![CDATA[Defer just to keep the variable polution a bit more contained]]></Text>
+      </Expression>
+      <Expression xsi:type="rx:Defer">
+        <Name>Logging</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSchema</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateRootLoggingPath.bonsai" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>LoggingRootPath</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>HarpBehaviorEvents</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="beh:GroupByRegister" />
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateHarpLoggingPath.bonsai">
+              <LogName>Behavior</LogName>
+              <Extension>bin</Extension>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FileName" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="harp:MessageWriter">
+                <harp:Suffix>None</harp:Suffix>
+                <harp:Buffered>true</harp:Buffered>
+                <harp:Overwrite>false</harp:Overwrite>
+                <harp:FilterType>Include</harp:FilterType>
+                <harp:MessageType xsi:nil="true" />
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Hardware.MainCamera.FrameRate</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="EncodingFrameRate" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateSpinnakerLoggingPath.bonsai">
+              <LogName>MainCamera</LogName>
+              <EncodingFrameRate>60</EncodingFrameRate>
+              <VideoExtension>avi</VideoExtension>
+              <MetadataExtension>csv</MetadataExtension>
+              <Codec>FMP4</Codec>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>MainCameraLoggerPath</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>MainCameraFrameEvent</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>MainCameraLoggerPath</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FileName" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="io:CsvWriter">
+              <io:Append>false</io:Append>
+              <io:Overwrite>false</io:Overwrite>
+              <io:Suffix>None</io:Suffix>
+              <io:IncludeHeader>false</io:IncludeHeader>
+              <io:Selector>Seconds,Value.ChunkData.FrameID,Value.ChunkData.Timestamp</io:Selector>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value.Image</Selector>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>MainCameraLoggerPath</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FileName" Selector="Video" />
+                <Property Name="FrameRate" Selector="Logger.EncodingFrameRate" />
+                <Property Name="FourCC" Selector="Logger.Codec" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:VideoWriter">
+                <cv:Suffix>None</cv:Suffix>
+                <cv:Buffered>true</cv:Buffered>
+                <cv:Overwrite>false</cv:Overwrite>
+                <cv:FourCC>FMP4</cv:FourCC>
+                <cv:FrameRate>30</cv:FrameRate>
+                <cv:FrameSize>
+                  <cv:Width>0</cv:Width>
+                  <cv:Height>0</cv:Height>
+                </cv:FrameSize>
+                <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
+              </Combinator>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="8" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source2" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="14" To="18" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source2" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="22" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source2" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Annotation">
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
@@ -1946,76 +1951,36 @@ Item2.Light as Light)</scr:Expression>
                       <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="gli:MouseWheel" />
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="SubscribeSubject">
+                      <Name>EncoderData</Name>
+                    </Builder>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>EventArgs.DeltaPrecise</Selector>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="rx:Accumulate" />
                   </Expression>
                   <Expression xsi:type="Disable">
                     <Builder xsi:type="Combinator">
-                      <Combinator xsi:type="FloatProperty">
-                        <Value>0</Value>
+                      <Combinator xsi:type="dsp:Rescale">
+                        <dsp:Min>0</dsp:Min>
+                        <dsp:Max>1</dsp:Max>
+                        <dsp:RangeMin>0</dsp:RangeMin>
+                        <dsp:RangeMax>1</dsp:RangeMax>
+                        <dsp:RescaleType>Linear</dsp:RescaleType>
                       </Combinator>
                     </Builder>
                   </Expression>
                   <Expression xsi:type="Disable">
-                    <Builder xsi:type="SubscribeSubject">
-                      <Name>Session</Name>
+                    <Builder xsi:type="Combinator">
+                      <Combinator xsi:type="gl:DelaySubscription">
+                        <gl:DueTime>PT0.1S</gl:DueTime>
+                      </Combinator>
                     </Builder>
                   </Expression>
                   <Expression xsi:type="Disable">
-                    <Builder xsi:type="MemberSelector">
-                      <Selector>Metadata.Hardware.Treadmill.Gain</Selector>
+                    <Builder xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Concat" />
                     </Builder>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="PropertyMapping">
-                      <PropertyMappings>
-                        <Property Name="Value" />
-                      </PropertyMappings>
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Multiply">
-                      <Operand xsi:type="FloatProperty">
-                        <Value>0</Value>
-                      </Operand>
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="gl:UpdateFrame" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="gl:DelaySubscription">
-                      <gl:DueTime>PT2S</gl:DueTime>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>0.5</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="rx:Accumulate" />
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="dsp:Rescale">
-                      <dsp:Min>0</dsp:Min>
-                      <dsp:Max>1</dsp:Max>
-                      <dsp:RangeMin>0</dsp:RangeMin>
-                      <dsp:RangeMax>1</dsp:RangeMax>
-                      <dsp:RescaleType>Linear</dsp:RescaleType>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="gl:DelaySubscription">
-                      <gl:DueTime>PT0.1S</gl:DueTime>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Concat" />
                   </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
@@ -2126,39 +2091,29 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="19" Label="Source1" />
+                  <Edge From="4" To="9" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="15" Label="Source1" />
-                  <Edge From="7" To="11" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source2" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source2" />
-                  <Edge From="11" To="15" Label="Source2" />
+                  <Edge From="10" To="14" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source3" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source2" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="16" To="19" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source2" />
-                  <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="24" Label="Source1" />
-                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="19" To="21" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source2" />
                   <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source2" />
+                  <Edge From="23" To="24" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="26" To="29" Label="Source1" />
-                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="29" Label="Source1" />
                   <Edge From="28" To="29" Label="Source2" />
-                  <Edge From="29" To="31" Label="Source1" />
-                  <Edge From="30" To="31" Label="Source2" />
-                  <Edge From="32" To="33" Label="Source1" />
-                  <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source1" />
-                  <Edge From="35" To="36" Label="Source1" />
-                  <Edge From="36" To="37" Label="Source1" />
-                  <Edge From="37" To="39" Label="Source1" />
-                  <Edge From="38" To="39" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -3134,12 +3089,6 @@ Item2 as Start
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:SubscribeWhen" />
       </Expression>
-      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:VirtualSite">
-        <rx:Name>ActiveSiteLabel</rx:Name>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:SerializeToYaml" />
-      </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Debug</Name>
         <Workflow>
@@ -3266,8 +3215,16 @@ Item2 as Start
                 </Edges>
               </Workflow>
             </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:VirtualSite">
+              <rx:Name>ActiveSiteLabel</rx:Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:SerializeToYaml" />
+            </Expression>
           </Nodes>
-          <Edges />
+          <Edges>
+            <Edge From="1" To="2" Label="Source1" />
+          </Edges>
         </Workflow>
       </Expression>
     </Nodes>
@@ -3275,12 +3232,13 @@ Item2 as Start
       <Edge From="0" To="1" Label="Source1" />
       <Edge From="1" To="2" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
       <Edge From="6" To="7" Label="Source1" />
       <Edge From="8" To="9" Label="Source1" />
-      <Edge From="10" To="13" Label="Source1" />
-      <Edge From="11" To="12" Label="Source1" />
-      <Edge From="12" To="13" Label="Source2" />
-      <Edge From="14" To="15" Label="Source1" />
+      <Edge From="10" To="11" Label="Source1" />
+      <Edge From="12" To="15" Label="Source1" />
+      <Edge From="13" To="14" Label="Source1" />
+      <Edge From="14" To="15" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
