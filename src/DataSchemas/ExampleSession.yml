@@ -26,7 +26,7 @@ hardware:
     deviceType: behavior
     portName: COM5
   mainCamera:
-    fps: 30
+    frameRate: 30
     exposure: 1000
     gain: 0
     serialNumber: "0"
