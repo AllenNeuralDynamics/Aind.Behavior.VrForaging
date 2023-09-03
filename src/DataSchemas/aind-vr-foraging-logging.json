@@ -1,0 +1,47 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "definitions": {
+    "harpLogger":{
+      "type": "object",
+      "properties": {
+        "logName":{
+          "type":"string",
+          "default": "harpDevice"
+        },
+        "extension":{
+          "type":"string",
+          "default": "bin"
+        }
+      }
+    },
+    "spinnakerLogger":{
+      "type": "object",
+      "properties": {
+        "logName":{
+          "type":"string",
+          "default": "camera"
+        },
+        "encodingFrameRate":{
+          "type":"number",
+          "default": 60
+        },
+        "extension":{
+          "type":"string",
+          "default": "bin"
+        },
+        "codec": {
+          "type": "string",
+          "default": "FMP4"
+        }
+        }
+      }
+  },
+  "properties": {
+    "placeholder": {
+      "type": "string"
+    }
+  },
+  "title": "AindVrForagingLogging",
+  "type": "object"
+}
