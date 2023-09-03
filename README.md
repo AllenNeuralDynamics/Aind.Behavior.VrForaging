@@ -36,3 +36,9 @@ These should only need to be installed once on a fresh new system, and are not r
 ```cmd
 bonsai.sgen --schema "src\DataSchemas\aind-vr-foraging-session.json" --namespace AindVrForagingDataSchema --root AindVrForagingSession --output "src\Extensions\AindVrForagingSession.cs"
 ```
+
+To regenerate the loggers, use:
+
+```cmd
+bonsai.sgen --schema "src\DataSchemas\aind-vr-foraging-logging.json" --namespace AindVrForagingDataSchema.Logging --root AindVrForagingLogging --output "src\Extensions\AindVrForagingLogging.cs"
+``
