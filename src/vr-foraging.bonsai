@@ -14,6 +14,7 @@
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns="https://bonsai-rx.org/2018/workflow">
@@ -66,7 +67,7 @@
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Metadata.Hardware.Screen.TextureAssetDirectory</Selector>
+                    <Selector>Hardware.Screen.TextureAssetDirectory</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -1343,7 +1344,7 @@
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Metadata.Hardware.Screen.MonitorCalibrationDirectory</Selector>
+                    <Selector>Hardware.Screen.MonitorCalibrationDirectory</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -1763,6 +1764,16 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="rx:AsyncSubject">
                     <Name>CameraFrameRate</Name>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="spk:SpinnakerCapture">
+                      <spk:Index xsi:nil="true" />
+                      <spk:ColorProcessing>Default</spk:ColorProcessing>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="PropertySource" TypeArguments="spk:SpinnakerCapture,spk:ColorProcessingAlgorithm">
+                    <MemberName>ColorProcessing</MemberName>
+                    <Value>Default</Value>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -1800,7 +1811,7 @@ Item2.Light as Light)</scr:Expression>
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Metadata.Hardware.Screen.InitialAgentPosition.Z</Selector>
+                    <Selector>Hardware.Screen.InitialAgentPosition.Z</Selector>
                   </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
@@ -1897,7 +1908,7 @@ Item2.Light as Light)</scr:Expression>
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Metadata.Hardware.Screen.InitialAgentPosition</Selector>
+                    <Selector>Hardware.Screen.InitialAgentPosition</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>

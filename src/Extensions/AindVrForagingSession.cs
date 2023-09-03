@@ -11,6 +11,118 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class CorridorSpecifications
+    {
+    
+        private double _height = 40D;
+    
+        private double _id = 0D;
+    
+        private double _length = 120D;
+    
+        private double _startPosition = 0D;
+    
+        private Texture _texture;
+    
+        private double _width = 40D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="height")]
+        public double Height
+        {
+            get
+            {
+                return _height;
+            }
+            set
+            {
+                _height = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Id")]
+        public double Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length")]
+        public double Length
+        {
+            get
+            {
+                return _length;
+            }
+            set
+            {
+                _length = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startPosition")]
+        public double StartPosition
+        {
+            get
+            {
+                return _startPosition;
+            }
+            set
+            {
+                _startPosition = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="texture")]
+        public Texture Texture
+        {
+            get
+            {
+                return _texture;
+            }
+            set
+            {
+                _texture = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="width")]
+        public double Width
+        {
+            get
+            {
+                return _width;
+            }
+            set
+            {
+                _width = value;
+            }
+        }
+    
+        public System.IObservable<CorridorSpecifications> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new CorridorSpecifications
+                {
+                    Height = _height,
+                    Id = _id,
+                    Length = _length,
+                    StartPosition = _startPosition,
+                    Texture = _texture,
+                    Width = _width
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class VirtualSite
     {
     
@@ -141,358 +253,6 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class CorridorSpecifications
-    {
-    
-        private double _height = 40D;
-    
-        private double _id = 0D;
-    
-        private double _length = 120D;
-    
-        private double _startPosition = 0D;
-    
-        private Texture _texture;
-    
-        private double _width = 40D;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="height")]
-        public double Height
-        {
-            get
-            {
-                return _height;
-            }
-            set
-            {
-                _height = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Id")]
-        public double Id
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length")]
-        public double Length
-        {
-            get
-            {
-                return _length;
-            }
-            set
-            {
-                _length = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startPosition")]
-        public double StartPosition
-        {
-            get
-            {
-                return _startPosition;
-            }
-            set
-            {
-                _startPosition = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="texture")]
-        public Texture Texture
-        {
-            get
-            {
-                return _texture;
-            }
-            set
-            {
-                _texture = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="width")]
-        public double Width
-        {
-            get
-            {
-                return _width;
-            }
-            set
-            {
-                _width = value;
-            }
-        }
-    
-        public System.IObservable<CorridorSpecifications> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new CorridorSpecifications
-                {
-                    Height = _height,
-                    Id = _id,
-                    Length = _length,
-                    StartPosition = _startPosition,
-                    Texture = _texture,
-                    Width = _width
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class SessionMetadata
-    {
-    
-        private string _commitHash;
-    
-        private string _experiment;
-    
-        private Hardware _hardware;
-    
-        private string _notes = "";
-    
-        private double? _rngSeed;
-    
-        private string _rootPath;
-    
-        private string _subject;
-    
-        private string _version;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commitHash")]
-        public string CommitHash
-        {
-            get
-            {
-                return _commitHash;
-            }
-            set
-            {
-                _commitHash = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="experiment")]
-        public string Experiment
-        {
-            get
-            {
-                return _experiment;
-            }
-            set
-            {
-                _experiment = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="hardware")]
-        public Hardware Hardware
-        {
-            get
-            {
-                return _hardware;
-            }
-            set
-            {
-                _hardware = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="notes")]
-        public string Notes
-        {
-            get
-            {
-                return _notes;
-            }
-            set
-            {
-                _notes = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
-        public double? RngSeed
-        {
-            get
-            {
-                return _rngSeed;
-            }
-            set
-            {
-                _rngSeed = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rootPath")]
-        public string RootPath
-        {
-            get
-            {
-                return _rootPath;
-            }
-            set
-            {
-                _rootPath = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="subject")]
-        public string Subject
-        {
-            get
-            {
-                return _subject;
-            }
-            set
-            {
-                _subject = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
-        public System.IObservable<SessionMetadata> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new SessionMetadata
-                {
-                    CommitHash = _commitHash,
-                    Experiment = _experiment,
-                    Hardware = _hardware,
-                    Notes = _notes,
-                    RngSeed = _rngSeed,
-                    RootPath = _rootPath,
-                    Subject = _subject,
-                    Version = _version
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class TruncatedExponential
-    {
-    
-        private double _maximum = 1D;
-    
-        private double _mean = 0.5D;
-    
-        private double _minimum = 0D;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maximum")]
-        public double Maximum
-        {
-            get
-            {
-                return _maximum;
-            }
-            set
-            {
-                _maximum = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mean")]
-        public double Mean
-        {
-            get
-            {
-                return _mean;
-            }
-            set
-            {
-                _mean = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="minimum")]
-        public double Minimum
-        {
-            get
-            {
-                return _minimum;
-            }
-            set
-            {
-                _minimum = value;
-            }
-        }
-    
-        public System.IObservable<TruncatedExponential> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new TruncatedExponential
-                {
-                    Maximum = _maximum,
-                    Mean = _mean,
-                    Minimum = _minimum
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Matrix2d
-    {
-    
-        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _data = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="data")]
-        public System.Collections.Generic.List<System.Collections.Generic.List<double>> Data
-        {
-            get
-            {
-                return _data;
-            }
-            set
-            {
-                _data = value;
-            }
-        }
-    
-        public System.IObservable<Matrix2d> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Matrix2d
-                {
-                    Data = _data
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class PatchStatistics
     {
     
@@ -574,18 +334,415 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Matrix2d
+    {
+    
+        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _data = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="data")]
+        public System.Collections.Generic.List<System.Collections.Generic.List<double>> Data
+        {
+            get
+            {
+                return _data;
+            }
+            set
+            {
+                _data = value;
+            }
+        }
+    
+        public System.IObservable<Matrix2d> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Matrix2d
+                {
+                    Data = _data
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TruncatedExponential
+    {
+    
+        private double _maximum = 1D;
+    
+        private double _mean = 0.5D;
+    
+        private double _minimum = 0D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maximum")]
+        public double Maximum
+        {
+            get
+            {
+                return _maximum;
+            }
+            set
+            {
+                _maximum = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mean")]
+        public double Mean
+        {
+            get
+            {
+                return _mean;
+            }
+            set
+            {
+                _mean = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="minimum")]
+        public double Minimum
+        {
+            get
+            {
+                return _minimum;
+            }
+            set
+            {
+                _minimum = value;
+            }
+        }
+    
+        public System.IObservable<TruncatedExponential> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new TruncatedExponential
+                {
+                    Maximum = _maximum,
+                    Mean = _mean,
+                    Minimum = _minimum
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class RenderingSettings
+    {
+    
+        private InitialAgentPosition _initialAgentPosition;
+    
+        private string _monitorCalibrationDirectory = "Calibration\\Monitors\\";
+    
+        private string _textureAssetDirectory = "Textures";
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialAgentPosition")]
+        public InitialAgentPosition InitialAgentPosition
+        {
+            get
+            {
+                return _initialAgentPosition;
+            }
+            set
+            {
+                _initialAgentPosition = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="monitorCalibrationDirectory")]
+        public string MonitorCalibrationDirectory
+        {
+            get
+            {
+                return _monitorCalibrationDirectory;
+            }
+            set
+            {
+                _monitorCalibrationDirectory = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureAssetDirectory")]
+        public string TextureAssetDirectory
+        {
+            get
+            {
+                return _textureAssetDirectory;
+            }
+            set
+            {
+                _textureAssetDirectory = value;
+            }
+        }
+    
+        public System.IObservable<RenderingSettings> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new RenderingSettings
+                {
+                    InitialAgentPosition = _initialAgentPosition,
+                    MonitorCalibrationDirectory = _monitorCalibrationDirectory,
+                    TextureAssetDirectory = _textureAssetDirectory
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TreadmillSettings
+    {
+    
+        private double _gain = 1D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
+        public double Gain
+        {
+            get
+            {
+                return _gain;
+            }
+            set
+            {
+                _gain = value;
+            }
+        }
+    
+        public System.IObservable<TreadmillSettings> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new TreadmillSettings
+                {
+                    Gain = _gain
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ValvesCalibration
+    {
+    
+        private string _calibrationDir = "Calibration\\Valves\\";
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibrationDir")]
+        public string CalibrationDir
+        {
+            get
+            {
+                return _calibrationDir;
+            }
+            set
+            {
+                _calibrationDir = value;
+            }
+        }
+    
+        public System.IObservable<ValvesCalibration> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ValvesCalibration
+                {
+                    CalibrationDir = _calibrationDir
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class SpinnakerCamera
+    {
+    
+        private int _fps = 30;
+    
+        private int _exposure = 1000;
+    
+        private double _gain = 0D;
+    
+        private string _serialNumber;
+    
+        private SpinnakerCameraColorProcessing _colorProcessing = AindVrForagingDataSchema.SpinnakerCameraColorProcessing.Default;
+    
+        private int _binning = 1;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fps")]
+        public int Fps
+        {
+            get
+            {
+                return _fps;
+            }
+            set
+            {
+                _fps = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure")]
+        public int Exposure
+        {
+            get
+            {
+                return _exposure;
+            }
+            set
+            {
+                _exposure = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
+        public double Gain
+        {
+            get
+            {
+                return _gain;
+            }
+            set
+            {
+                _gain = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serialNumber")]
+        public string SerialNumber
+        {
+            get
+            {
+                return _serialNumber;
+            }
+            set
+            {
+                _serialNumber = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="colorProcessing")]
+        public SpinnakerCameraColorProcessing ColorProcessing
+        {
+            get
+            {
+                return _colorProcessing;
+            }
+            set
+            {
+                _colorProcessing = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binning")]
+        public int Binning
+        {
+            get
+            {
+                return _binning;
+            }
+            set
+            {
+                _binning = value;
+            }
+        }
+    
+        public System.IObservable<SpinnakerCamera> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new SpinnakerCamera
+                {
+                    Fps = _fps,
+                    Exposure = _exposure,
+                    Gain = _gain,
+                    SerialNumber = _serialNumber,
+                    ColorProcessing = _colorProcessing,
+                    Binning = _binning
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class HarpBoard
+    {
+    
+        private HarpBoardDeviceType _deviceType;
+    
+        private string _portName;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceType")]
+        public HarpBoardDeviceType DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="portName")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        public System.IObservable<HarpBoard> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new HarpBoard
+                {
+                    DeviceType = _deviceType,
+                    PortName = _portName
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingSession
     {
     
-        private SessionMetadata _metadata = new SessionMetadata();
+        private EnvironmentStatistics _environmentStatistics;
+    
+        private Metadata _metadata = new Metadata();
     
         private TaskLogicHelper _taskLogicHelper = new TaskLogicHelper();
     
-        private EnvironmentStatistics _environmentStatistics;
+        private Hardware _hardware;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="environmentStatistics")]
+        public EnvironmentStatistics EnvironmentStatistics
+        {
+            get
+            {
+                return _environmentStatistics;
+            }
+            set
+            {
+                _environmentStatistics = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadata")]
-        public SessionMetadata Metadata
+        public Metadata Metadata
         {
             get
             {
@@ -612,16 +769,16 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="environmentStatistics")]
-        public EnvironmentStatistics EnvironmentStatistics
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="hardware")]
+        public Hardware Hardware
         {
             get
             {
-                return _environmentStatistics;
+                return _hardware;
             }
             set
             {
-                _environmentStatistics = value;
+                _hardware = value;
             }
         }
     
@@ -630,9 +787,58 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new AindVrForagingSession
                 {
+                    EnvironmentStatistics = _environmentStatistics,
                     Metadata = _metadata,
                     TaskLogicHelper = _taskLogicHelper,
-                    EnvironmentStatistics = _environmentStatistics
+                    Hardware = _hardware
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Texture
+    {
+    
+        private string _name = "default";
+    
+        private TextureSize _textureSize;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureSize")]
+        public TextureSize TextureSize
+        {
+            get
+            {
+                return _textureSize;
+            }
+            set
+            {
+                _textureSize = value;
+            }
+        }
+    
+        public System.IObservable<Texture> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Texture
+                {
+                    Name = _name,
+                    TextureSize = _textureSize
                 }));
         }
     }
@@ -815,47 +1021,136 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Texture
+    public partial class InitialAgentPosition
     {
     
-        private string _name = "default";
+        private double _x = 0D;
     
-        private TextureSize _textureSize;
+        private double _y = 0D;
     
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public string Name
+        private double _z = 0D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
+        public double X
         {
             get
             {
-                return _name;
+                return _x;
             }
             set
             {
-                _name = value;
+                _x = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="z")]
+        public double Z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                _z = value;
+            }
+        }
+    
+        public System.IObservable<InitialAgentPosition> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new InitialAgentPosition
+                {
+                    X = _x,
+                    Y = _y,
+                    Z = _z
+                }));
+        }
+    }
+
+
+    public enum SpinnakerCameraColorProcessing
+    {
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Default")]
+        Default = 0,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="NoColorProcessing")]
+        NoColorProcessing = 1,
+    }
+
+
+    public enum HarpBoardDeviceType
+    {
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="custom")]
+        Custom = 0,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behavior")]
+        Behavior = 1,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="clockSynchronizer")]
+        ClockSynchronizer = 2,
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class EnvironmentStatistics
+    {
+    
+        private System.Collections.Generic.List<PatchStatistics> _patches = new System.Collections.Generic.List<PatchStatistics>();
+    
+        private Matrix2d _transitionMatrix;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patches")]
+        public System.Collections.Generic.List<PatchStatistics> Patches
+        {
+            get
+            {
+                return _patches;
+            }
+            set
+            {
+                _patches = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureSize")]
-        public TextureSize TextureSize
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="transitionMatrix")]
+        public Matrix2d TransitionMatrix
         {
             get
             {
-                return _textureSize;
+                return _transitionMatrix;
             }
             set
             {
-                _textureSize = value;
+                _transitionMatrix = value;
             }
         }
     
-        public System.IObservable<Texture> Process()
+        public System.IObservable<EnvironmentStatistics> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Texture
+                new EnvironmentStatistics
                 {
-                    Name = _name,
-                    TextureSize = _textureSize
+                    Patches = _patches,
+                    TransitionMatrix = _transitionMatrix
                 }));
         }
     }
@@ -863,65 +1158,127 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Hardware
+    public partial class Metadata
     {
     
-        private Screen _screen;
+        private string _commitHash;
     
-        private Treadmill _treadmill;
+        private string _experiment;
     
-        private Valves _valves;
+        private string _notes = "";
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="screen")]
-        public Screen Screen
+        private double? _rngSeed;
+    
+        private string _rootPath;
+    
+        private string _subject;
+    
+        private string _version;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commitHash")]
+        public string CommitHash
         {
             get
             {
-                return _screen;
+                return _commitHash;
             }
             set
             {
-                _screen = value;
+                _commitHash = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="experiment")]
+        public string Experiment
+        {
+            get
+            {
+                return _experiment;
+            }
+            set
+            {
+                _experiment = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="notes")]
+        public string Notes
+        {
+            get
+            {
+                return _notes;
+            }
+            set
+            {
+                _notes = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="treadmill")]
-        public Treadmill Treadmill
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
+        public double? RngSeed
         {
             get
             {
-                return _treadmill;
+                return _rngSeed;
             }
             set
             {
-                _treadmill = value;
+                _rngSeed = value;
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valves")]
-        public Valves Valves
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rootPath")]
+        public string RootPath
         {
             get
             {
-                return _valves;
+                return _rootPath;
             }
             set
             {
-                _valves = value;
+                _rootPath = value;
             }
         }
     
-        public System.IObservable<Hardware> Process()
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="subject")]
+        public string Subject
+        {
+            get
+            {
+                return _subject;
+            }
+            set
+            {
+                _subject = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+    
+        public System.IObservable<Metadata> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Hardware
+                new Metadata
                 {
-                    Screen = _screen,
-                    Treadmill = _treadmill,
-                    Valves = _valves
+                    CommitHash = _commitHash,
+                    Experiment = _experiment,
+                    Notes = _notes,
+                    RngSeed = _rngSeed,
+                    RootPath = _rootPath,
+                    Subject = _subject,
+                    Version = _version
                 }));
         }
     }
@@ -932,7 +1289,7 @@ namespace AindVrForagingDataSchema
     public partial class TaskLogicHelper
     {
     
-        private VirtualSiteGeneration _virtualSiteGeneration = new VirtualSiteGeneration();
+        private VirtualSiteGeneration _virtualSiteGeneration;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="virtualSiteGeneration")]
@@ -961,48 +1318,146 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class EnvironmentStatistics
+    public partial class Hardware
     {
     
-        private Matrix2d _transitionMatrix;
+        private RenderingSettings _screen;
     
-        private System.Collections.Generic.List<PatchStatistics> _patches = new System.Collections.Generic.List<PatchStatistics>();
+        private TreadmillSettings _treadmill;
+    
+        private ValvesCalibration _valves;
+    
+        private SpinnakerCamera _mainCamera;
+    
+        private HarpBoard _harpBehaviorBoard;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="transitionMatrix")]
-        public Matrix2d TransitionMatrix
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="screen")]
+        public RenderingSettings Screen
         {
             get
             {
-                return _transitionMatrix;
+                return _screen;
             }
             set
             {
-                _transitionMatrix = value;
+                _screen = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patches")]
-        public System.Collections.Generic.List<PatchStatistics> Patches
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="treadmill")]
+        public TreadmillSettings Treadmill
         {
             get
             {
-                return _patches;
+                return _treadmill;
             }
             set
             {
-                _patches = value;
+                _treadmill = value;
             }
         }
     
-        public System.IObservable<EnvironmentStatistics> Process()
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valves")]
+        public ValvesCalibration Valves
+        {
+            get
+            {
+                return _valves;
+            }
+            set
+            {
+                _valves = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mainCamera")]
+        public SpinnakerCamera MainCamera
+        {
+            get
+            {
+                return _mainCamera;
+            }
+            set
+            {
+                _mainCamera = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehaviorBoard")]
+        public HarpBoard HarpBehaviorBoard
+        {
+            get
+            {
+                return _harpBehaviorBoard;
+            }
+            set
+            {
+                _harpBehaviorBoard = value;
+            }
+        }
+    
+        public System.IObservable<Hardware> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new EnvironmentStatistics
+                new Hardware
                 {
-                    TransitionMatrix = _transitionMatrix,
-                    Patches = _patches
+                    Screen = _screen,
+                    Treadmill = _treadmill,
+                    Valves = _valves,
+                    MainCamera = _mainCamera,
+                    HarpBehaviorBoard = _harpBehaviorBoard
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TextureSize
+    {
+    
+        private double _x = 40D;
+    
+        private double _y = 40D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        public System.IObservable<TextureSize> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new TextureSize
+                {
+                    X = _x,
+                    Y = _y
                 }));
         }
     }
@@ -1073,187 +1528,28 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class TextureSize
-    {
-    
-        private double _x = 40D;
-    
-        private double _y = 40D;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        public System.IObservable<TextureSize> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new TextureSize
-                {
-                    X = _x,
-                    Y = _y
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Screen
-    {
-    
-        private InitialAgentPosition _initialAgentPosition;
-    
-        private string _monitorCalibrationDirectory = "Calibration\\Monitors\\";
-    
-        private string _textureAssetDirectory = "Textures";
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialAgentPosition")]
-        public InitialAgentPosition InitialAgentPosition
-        {
-            get
-            {
-                return _initialAgentPosition;
-            }
-            set
-            {
-                _initialAgentPosition = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="monitorCalibrationDirectory")]
-        public string MonitorCalibrationDirectory
-        {
-            get
-            {
-                return _monitorCalibrationDirectory;
-            }
-            set
-            {
-                _monitorCalibrationDirectory = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureAssetDirectory")]
-        public string TextureAssetDirectory
-        {
-            get
-            {
-                return _textureAssetDirectory;
-            }
-            set
-            {
-                _textureAssetDirectory = value;
-            }
-        }
-    
-        public System.IObservable<Screen> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Screen
-                {
-                    InitialAgentPosition = _initialAgentPosition,
-                    MonitorCalibrationDirectory = _monitorCalibrationDirectory,
-                    TextureAssetDirectory = _textureAssetDirectory
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Treadmill
-    {
-    
-        private double _gain = 1D;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
-        public double Gain
-        {
-            get
-            {
-                return _gain;
-            }
-            set
-            {
-                _gain = value;
-            }
-        }
-    
-        public System.IObservable<Treadmill> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Treadmill
-                {
-                    Gain = _gain
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Valves
-    {
-    
-        private string _calibrationDir = "Calibration\\Valves\\";
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibrationDir")]
-        public string CalibrationDir
-        {
-            get
-            {
-                return _calibrationDir;
-            }
-            set
-            {
-                _calibrationDir = value;
-            }
-        }
-    
-        public System.IObservable<Valves> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Valves
-                {
-                    CalibrationDir = _calibrationDir
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class VirtualSiteGeneration
     {
     
-        private InterPatchSite _interPatchSite;
+        private GapSite _gapSite = new GapSite();
     
-        private RewardSite _rewardSite;
+        private InterPatchSite _interPatchSite = new InterPatchSite();
     
-        private GapSite _gapSite;
+        private RewardSite _rewardSite = new RewardSite();
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gapSite")]
+        public GapSite GapSite
+        {
+            get
+            {
+                return _gapSite;
+            }
+            set
+            {
+                _gapSite = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="interPatchSite")]
@@ -1283,28 +1579,14 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gapSite")]
-        public GapSite GapSite
-        {
-            get
-            {
-                return _gapSite;
-            }
-            set
-            {
-                _gapSite = value;
-            }
-        }
-    
         public System.IObservable<VirtualSiteGeneration> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new VirtualSiteGeneration
                 {
+                    GapSite = _gapSite,
                     InterPatchSite = _interPatchSite,
-                    RewardSite = _rewardSite,
-                    GapSite = _gapSite
+                    RewardSite = _rewardSite
                 }));
         }
     }
@@ -1312,62 +1594,31 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class InitialAgentPosition
+    public partial class GapSite
     {
     
-        private double _x = 0D;
+        private TruncatedExponential _lengthDistribution;
     
-        private double _y = 0D;
-    
-        private double _z = 0D;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
-        public double X
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
+        public TruncatedExponential LengthDistribution
         {
             get
             {
-                return _x;
+                return _lengthDistribution;
             }
             set
             {
-                _x = value;
+                _lengthDistribution = value;
             }
         }
     
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="z")]
-        public double Z
-        {
-            get
-            {
-                return _z;
-            }
-            set
-            {
-                _z = value;
-            }
-        }
-    
-        public System.IObservable<InitialAgentPosition> Process()
+        public System.IObservable<GapSite> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new InitialAgentPosition
+                new GapSite
                 {
-                    X = _x,
-                    Y = _y,
-                    Z = _z
+                    LengthDistribution = _lengthDistribution
                 }));
         }
     }
@@ -1437,38 +1688,6 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class GapSite
-    {
-    
-        private TruncatedExponential _lengthDistribution;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
-        public TruncatedExponential LengthDistribution
-        {
-            get
-            {
-                return _lengthDistribution;
-            }
-            set
-            {
-                _lengthDistribution = value;
-            }
-        }
-    
-        public System.IObservable<GapSite> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new GapSite
-                {
-                    LengthDistribution = _lengthDistribution
-                }));
-        }
-    }
-
-
     /// <summary>
     /// Serializes a sequence of data model objects into YAML strings.
     /// </summary>
@@ -1487,29 +1706,14 @@ namespace AindVrForagingDataSchema
             });
         }
 
-        public System.IObservable<string> Process(System.IObservable<VirtualSite> source)
-        {
-            return Process<VirtualSite>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<CorridorSpecifications> source)
         {
             return Process<CorridorSpecifications>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<SessionMetadata> source)
+        public System.IObservable<string> Process(System.IObservable<VirtualSite> source)
         {
-            return Process<SessionMetadata>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<TruncatedExponential> source)
-        {
-            return Process<TruncatedExponential>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Matrix2d> source)
-        {
-            return Process<Matrix2d>(source);
+            return Process<VirtualSite>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
@@ -1517,9 +1721,49 @@ namespace AindVrForagingDataSchema
             return Process<PatchStatistics>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Matrix2d> source)
+        {
+            return Process<Matrix2d>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TruncatedExponential> source)
+        {
+            return Process<TruncatedExponential>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RenderingSettings> source)
+        {
+            return Process<RenderingSettings>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TreadmillSettings> source)
+        {
+            return Process<TreadmillSettings>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ValvesCalibration> source)
+        {
+            return Process<ValvesCalibration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
+        {
+            return Process<SpinnakerCamera>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
+        {
+            return Process<HarpBoard>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
         {
             return Process<AindVrForagingSession>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Texture> source)
+        {
+            return Process<Texture>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Odor> source)
@@ -1537,19 +1781,9 @@ namespace AindVrForagingDataSchema
             return Process<Reward>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Texture> source)
+        public System.IObservable<string> Process(System.IObservable<InitialAgentPosition> source)
         {
-            return Process<Texture>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Hardware> source)
-        {
-            return Process<Hardware>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<TaskLogicHelper> source)
-        {
-            return Process<TaskLogicHelper>(source);
+            return Process<InitialAgentPosition>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
@@ -1557,9 +1791,19 @@ namespace AindVrForagingDataSchema
             return Process<EnvironmentStatistics>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
+        public System.IObservable<string> Process(System.IObservable<Metadata> source)
         {
-            return Process<OperantLogic>(source);
+            return Process<Metadata>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TaskLogicHelper> source)
+        {
+            return Process<TaskLogicHelper>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Hardware> source)
+        {
+            return Process<Hardware>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<TextureSize> source)
@@ -1567,19 +1811,9 @@ namespace AindVrForagingDataSchema
             return Process<TextureSize>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Screen> source)
+        public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
         {
-            return Process<Screen>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Treadmill> source)
-        {
-            return Process<Treadmill>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Valves> source)
-        {
-            return Process<Valves>(source);
+            return Process<OperantLogic>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<VirtualSiteGeneration> source)
@@ -1587,9 +1821,9 @@ namespace AindVrForagingDataSchema
             return Process<VirtualSiteGeneration>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<InitialAgentPosition> source)
+        public System.IObservable<string> Process(System.IObservable<GapSite> source)
         {
-            return Process<InitialAgentPosition>(source);
+            return Process<GapSite>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<InterPatchSite> source)
@@ -1601,11 +1835,6 @@ namespace AindVrForagingDataSchema
         {
             return Process<RewardSite>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<GapSite> source)
-        {
-            return Process<GapSite>(source);
-        }
     }
 
 
@@ -1614,30 +1843,32 @@ namespace AindVrForagingDataSchema
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SessionMetadata>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ValvesCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Texture>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Texture>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicHelper>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InitialAgentPosition>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicHelper>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSite>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
