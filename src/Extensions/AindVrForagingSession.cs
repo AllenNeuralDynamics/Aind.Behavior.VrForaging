@@ -558,7 +558,7 @@ namespace AindVrForagingDataSchema
     public partial class SpinnakerCamera
     {
     
-        private int _fps = 30;
+        private int _frameRate = 30;
     
         private int _exposure = 1000;
     
@@ -570,16 +570,16 @@ namespace AindVrForagingDataSchema
     
         private int _binning = 1;
     
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fps")]
-        public int Fps
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameRate")]
+        public int FrameRate
         {
             get
             {
-                return _fps;
+                return _frameRate;
             }
             set
             {
-                _fps = value;
+                _frameRate = value;
             }
         }
     
@@ -654,7 +654,7 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new SpinnakerCamera
                 {
-                    Fps = _fps,
+                    FrameRate = _frameRate,
                     Exposure = _exposure,
                     Gain = _gain,
                     SerialNumber = _serialNumber,

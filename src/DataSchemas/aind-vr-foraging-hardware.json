@@ -5,7 +5,7 @@
     "spinnakerCamera": {
       "type": "object",
       "properties": {
-        "fps": {
+        "frameRate": {
           "type": "integer",
           "default": 30,
           "minimum": 1,
