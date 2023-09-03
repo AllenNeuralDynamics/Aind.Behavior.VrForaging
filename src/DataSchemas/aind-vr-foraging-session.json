@@ -7,6 +7,10 @@
     },
     "virtualSite": {
       "$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"
+    },
+    "siteLabel": {
+      "type":"string",
+      "enum": ["Unspecified", "Gap", "InterPatch", "Reward"]
     }
   },
   "properties": {
@@ -68,6 +72,10 @@
               "properties": {
                 "lengthDistribution": {
                   "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                },
+                "label": {
+                  "$ref": "#/definitions/siteLabel",
+                  "default": "Gap"
                 }
               },
               "type": "object"
@@ -76,6 +84,10 @@
               "properties": {
                 "lengthDistribution": {
                   "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                },
+                "label": {
+                  "$ref": "#/definitions/siteLabel",
+                  "default": "InterPatch"
                 }
               },
               "type": "object"
@@ -84,6 +96,10 @@
               "properties": {
                 "lengthDistribution": {
                   "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                },
+                "label": {
+                  "$ref": "#/definitions/siteLabel",
+                  "default": "Reward"
                 }
               },
               "type": "object"
