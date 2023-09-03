@@ -10,7 +10,8 @@
                  xmlns:p3="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
+                 xmlns:p4="clr-namespace:AindVrForagingDataSchema.Logging;assembly=Extensions"
+                 xmlns:p5="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
@@ -465,12 +466,7 @@
             <Expression xsi:type="SubscribeSubject">
               <Name>SessionSchema</Name>
             </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Metadata.RootPath</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p2:StripDirectoryPath" />
-            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateRootLoggingPath.bonsai" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
                 <rx:Count>1</rx:Count>
@@ -505,17 +501,22 @@
                 <harp:MessageType xsi:nil="true" />
               </Combinator>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p4:HarpLogger">
+                <p4:LogName>harpDevice</p4:LogName>
+                <p4:Extension>bin</p4:Extension>
+              </Combinator>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="10" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="9" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source2" />
+            <Edge From="8" To="9" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>
@@ -707,7 +708,7 @@
                               <Expression xsi:type="MulticastSubject">
                                 <Name>HarpBehaviorCommands</Name>
                               </Expression>
-                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p5:Unit">
                                 <rx:Name>TriggerValve</rx:Name>
                               </Expression>
                               <Expression xsi:type="beh:CreateMessage">
@@ -965,7 +966,7 @@
                               <Expression xsi:type="MulticastSubject">
                                 <Name>HarpBehaviorCommands</Name>
                               </Expression>
-                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p5:Unit">
                                 <rx:Name>AudioTrigger</rx:Name>
                               </Expression>
                               <Expression xsi:type="beh:CreateMessage">
