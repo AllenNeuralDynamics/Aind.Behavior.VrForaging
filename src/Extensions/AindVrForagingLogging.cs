@@ -65,7 +65,9 @@ namespace AindVrForagingDataSchema.Logging
     
         private double _encodingFrameRate = 60D;
     
-        private string _extension = "bin";
+        private string _videoExtension = "avi";
+    
+        private string _metadataExtension = "csv";
     
         private string _codec = "FMP4";
     
@@ -95,16 +97,29 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="extension")]
-        public string Extension
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="videoExtension")]
+        public string VideoExtension
         {
             get
             {
-                return _extension;
+                return _videoExtension;
             }
             set
             {
-                _extension = value;
+                _videoExtension = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadataExtension")]
+        public string MetadataExtension
+        {
+            get
+            {
+                return _metadataExtension;
+            }
+            set
+            {
+                _metadataExtension = value;
             }
         }
     
@@ -128,7 +143,8 @@ namespace AindVrForagingDataSchema.Logging
                 {
                     LogName = _logName,
                     EncodingFrameRate = _encodingFrameRate,
-                    Extension = _extension,
+                    VideoExtension = _videoExtension,
+                    MetadataExtension = _metadataExtension,
                     Codec = _codec
                 }));
         }

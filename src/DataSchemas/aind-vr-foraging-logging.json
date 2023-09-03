@@ -26,9 +26,13 @@
           "type":"number",
           "default": 60
         },
-        "extension":{
+        "videoExtension":{
           "type":"string",
-          "default": "bin"
+          "default": "avi"
+        },
+        "metadataExtension":{
+          "type":"string",
+          "default": "csv"
         },
         "codec": {
           "type": "string",
