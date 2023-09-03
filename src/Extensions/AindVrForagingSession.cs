@@ -251,6 +251,23 @@ namespace AindVrForagingDataSchema
     }
 
 
+    public enum SiteLabel
+    {
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Unspecified")]
+        Unspecified = 0,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Gap")]
+        Gap = 1,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="InterPatch")]
+        InterPatch = 2,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Reward")]
+        Reward = 3,
+    }
+
+
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class PatchStatistics
@@ -1599,6 +1616,8 @@ namespace AindVrForagingDataSchema
     
         private TruncatedExponential _lengthDistribution;
     
+        private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.Gap;
+    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
         public TruncatedExponential LengthDistribution
@@ -1613,12 +1632,27 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
+        public SiteLabel Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+            }
+        }
+    
         public System.IObservable<GapSite> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new GapSite
                 {
-                    LengthDistribution = _lengthDistribution
+                    LengthDistribution = _lengthDistribution,
+                    Label = _label
                 }));
         }
     }
@@ -1631,6 +1665,8 @@ namespace AindVrForagingDataSchema
     
         private TruncatedExponential _lengthDistribution;
     
+        private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.InterPatch;
+    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
         public TruncatedExponential LengthDistribution
@@ -1645,12 +1681,27 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
+        public SiteLabel Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+            }
+        }
+    
         public System.IObservable<InterPatchSite> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new InterPatchSite
                 {
-                    LengthDistribution = _lengthDistribution
+                    LengthDistribution = _lengthDistribution,
+                    Label = _label
                 }));
         }
     }
@@ -1663,6 +1714,8 @@ namespace AindVrForagingDataSchema
     
         private TruncatedExponential _lengthDistribution;
     
+        private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.Reward;
+    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
         public TruncatedExponential LengthDistribution
@@ -1677,12 +1730,27 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
+        public SiteLabel Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+            }
+        }
+    
         public System.IObservable<RewardSite> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new RewardSite
                 {
-                    LengthDistribution = _lengthDistribution
+                    LengthDistribution = _lengthDistribution,
+                    Label = _label
                 }));
         }
     }
