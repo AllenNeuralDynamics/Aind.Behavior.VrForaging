@@ -22,14 +22,14 @@
         <Combinator xsi:type="rx:Zip" />
       </Expression>
       <Expression xsi:type="Format">
-        <Format>{0}_{1}</Format>
+        <Format>{0}/{1}</Format>
         <Selector>Item1,Item2</Selector>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Timestamp" />
       </Expression>
       <Expression xsi:type="Format">
-        <Format>{0}_{1:yyyyMMddTHHmmss}</Format>
+        <Format>{0}/{1:yyyyMMddTHHmmss}</Format>
         <Selector>Value,Timestamp</Selector>
       </Expression>
       <Expression xsi:type="WorkflowOutput" />
