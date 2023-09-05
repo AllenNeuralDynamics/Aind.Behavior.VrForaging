@@ -1710,11 +1710,11 @@ namespace AindVrForagingDataSchema
     public partial class Valves
     {
     
-        private Valve _water;
+        private Valve _water = new Valve();
     
-        private Valve _odor1;
+        private Valve _odor1 = new Valve();
     
-        private Valve _odor2;
+        private Valve _odor2 = new Valve();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="water")]
