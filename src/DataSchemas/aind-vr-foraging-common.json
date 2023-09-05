@@ -2,6 +2,25 @@
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
   "definitions": {
+    "matrix2d": {
+      "properties": {
+        "data": {
+          "default": [
+            [
+              1
+            ]
+          ],
+          "items": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "odorSpecifications": {
       "default": null,
       "properties": {
@@ -20,8 +39,13 @@
           "type": "boolean"
         }
       },
-      "required": ["index"],
-      "type": ["null", "object"]
+      "required": [
+        "index"
+      ],
+      "type": [
+        "null",
+        "object"
+      ]
     },
     "operantLogic": {
       "default": null,
@@ -38,10 +62,15 @@
         "timeToCollect": {
           "default": 1000000,
           "minimum": 0,
-          "type": ["number"]
+          "type": [
+            "number"
+          ]
         }
       },
-      "type": ["null", "object"]
+      "type": [
+        "null",
+        "object"
+      ]
     },
     "patchStatistics": {
       "properties": {
@@ -101,22 +130,10 @@
           "type": "number"
         }
       },
-      "type": ["null", "object"]
-    },
-    "matrix2d": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "default": [[1]],
-          "type": "array",
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            }
-          }
-        }
-      }
+      "type": [
+        "null",
+        "object"
+      ]
     },
     "treadmillSettings": {
       "properties": {
@@ -145,10 +162,31 @@
       },
       "type": "object"
     },
-    "valvesCalibration": {
+    "valve": {
       "properties": {
-        "calibrationDir": {
-          "default": "Calibration\\Valves\\",
+        "calibration": {
+          "properties": {
+            "intercept": {
+              "default": 0,
+              "type": "number"
+            },
+            "slope": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "model": {
+          "default": "valve",
+          "type": "string"
+        },
+        "pin": {
+          "default": "SupplyPort0",
+          "type": "string"
+        },
+        "valveType": {
+          "default": "air",
           "type": "string"
         }
       },
@@ -195,7 +233,10 @@
               "default": null,
               "maximum": 1,
               "minimum": 0,
-              "type": ["null", "number"]
+              "type": [
+                "null",
+                "number"
+              ]
             }
           },
           "type": "object"
