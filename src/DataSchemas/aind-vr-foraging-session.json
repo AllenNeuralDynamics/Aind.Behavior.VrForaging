@@ -120,7 +120,18 @@
           "$ref": "aind-vr-foraging-common.json#/definitions/treadmillSettings"
         },
         "valves": {
-          "$ref": "aind-vr-foraging-common.json#/definitions/valvesCalibration"
+          "type":"object",
+          "properties": {
+            "water": {
+              "$ref": "aind-vr-foraging-common.json#/definitions/valve"
+            },
+            "odor1": {
+              "$ref": "aind-vr-foraging-common.json#/definitions/valve"
+            },
+            "odor2": {
+              "$ref": "aind-vr-foraging-common.json#/definitions/valve"
+            }
+          }
         },
         "mainCamera": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"

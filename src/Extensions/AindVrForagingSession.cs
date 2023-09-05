@@ -541,30 +541,79 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ValvesCalibration
+    public partial class Valve
     {
     
-        private string _calibrationDir = "Calibration\\Valves\\";
+        private Calibration _calibration;
     
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibrationDir")]
-        public string CalibrationDir
+        private string _model = "valve";
+    
+        private string _pin = "SupplyPort0";
+    
+        private string _valveType = "air";
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration")]
+        public Calibration Calibration
         {
             get
             {
-                return _calibrationDir;
+                return _calibration;
             }
             set
             {
-                _calibrationDir = value;
+                _calibration = value;
             }
         }
     
-        public System.IObservable<ValvesCalibration> Process()
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
+        public string Model
+        {
+            get
+            {
+                return _model;
+            }
+            set
+            {
+                _model = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pin")]
+        public string Pin
+        {
+            get
+            {
+                return _pin;
+            }
+            set
+            {
+                _pin = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveType")]
+        public string ValveType
+        {
+            get
+            {
+                return _valveType;
+            }
+            set
+            {
+                _valveType = value;
+            }
+        }
+    
+        public System.IObservable<Valve> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new ValvesCalibration
+                new Valve
                 {
-                    CalibrationDir = _calibrationDir
+                    Calibration = _calibration,
+                    Model = _model,
+                    Pin = _pin,
+                    ValveType = _valveType
                 }));
         }
     }
@@ -1099,6 +1148,53 @@ namespace AindVrForagingDataSchema
     }
 
 
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Calibration
+    {
+    
+        private double _intercept = 0D;
+    
+        private double _slope = 1D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="intercept")]
+        public double Intercept
+        {
+            get
+            {
+                return _intercept;
+            }
+            set
+            {
+                _intercept = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="slope")]
+        public double Slope
+        {
+            get
+            {
+                return _slope;
+            }
+            set
+            {
+                _slope = value;
+            }
+        }
+    
+        public System.IObservable<Calibration> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Calibration
+                {
+                    Intercept = _intercept,
+                    Slope = _slope
+                }));
+        }
+    }
+
+
     public enum SpinnakerCameraColorProcessing
     {
     
@@ -1342,7 +1438,7 @@ namespace AindVrForagingDataSchema
     
         private TreadmillSettings _treadmill;
     
-        private ValvesCalibration _valves;
+        private Valves _valves;
     
         private SpinnakerCamera _mainCamera;
     
@@ -1378,7 +1474,7 @@ namespace AindVrForagingDataSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valves")]
-        public ValvesCalibration Valves
+        public Valves Valves
         {
             get
             {
@@ -1611,6 +1707,72 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Valves
+    {
+    
+        private Valve _water;
+    
+        private Valve _odor1;
+    
+        private Valve _odor2;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="water")]
+        public Valve Water
+        {
+            get
+            {
+                return _water;
+            }
+            set
+            {
+                _water = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor1")]
+        public Valve Odor1
+        {
+            get
+            {
+                return _odor1;
+            }
+            set
+            {
+                _odor1 = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor2")]
+        public Valve Odor2
+        {
+            get
+            {
+                return _odor2;
+            }
+            set
+            {
+                _odor2 = value;
+            }
+        }
+    
+        public System.IObservable<Valves> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Valves
+                {
+                    Water = _water,
+                    Odor1 = _odor1,
+                    Odor2 = _odor2
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class GapSite
     {
     
@@ -1809,9 +1971,9 @@ namespace AindVrForagingDataSchema
             return Process<TreadmillSettings>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ValvesCalibration> source)
+        public System.IObservable<string> Process(System.IObservable<Valve> source)
         {
-            return Process<ValvesCalibration>(source);
+            return Process<Valve>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
@@ -1854,6 +2016,11 @@ namespace AindVrForagingDataSchema
             return Process<InitialAgentPosition>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Calibration> source)
+        {
+            return Process<Calibration>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
@@ -1889,6 +2056,11 @@ namespace AindVrForagingDataSchema
             return Process<VirtualSiteGeneration>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Valves> source)
+        {
+            return Process<Valves>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<GapSite> source)
         {
             return Process<GapSite>(source);
@@ -1918,7 +2090,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSettings>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ValvesCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
@@ -1927,6 +2099,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InitialAgentPosition>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicHelper>))]
@@ -1934,6 +2107,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSite>))]
