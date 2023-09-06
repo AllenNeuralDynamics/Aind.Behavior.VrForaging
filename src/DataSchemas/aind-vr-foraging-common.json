@@ -162,36 +162,6 @@
       },
       "type": "object"
     },
-    "valve": {
-      "properties": {
-        "calibration": {
-          "properties": {
-            "intercept": {
-              "default": 0,
-              "type": "number"
-            },
-            "slope": {
-              "default": 1,
-              "type": "number"
-            }
-          },
-          "type": "object"
-        },
-        "model": {
-          "default": "valve",
-          "type": "string"
-        },
-        "pin": {
-          "default": "SupplyPort0",
-          "type": "string"
-        },
-        "valveType": {
-          "default": "air",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "vector3": {
       "properties": {
         "x": {

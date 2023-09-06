@@ -51,6 +51,11 @@ hardware:
     serialNumber: "0"
     colorProcessing: Default
     binning: 1
+  speaker:
+    model: buzzer
+    pin: DO1
+    pwmDefaultPulseDuration: 0.2
+    pwmFrequency: 500
 taskLogicHelper:
  virtualSiteGeneration:
    gapSite:

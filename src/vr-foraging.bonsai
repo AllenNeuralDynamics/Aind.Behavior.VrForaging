@@ -912,12 +912,36 @@
                               </Expression>
                               <Expression xsi:type="beh:CreateMessage">
                                 <harp:MessageType>Write</harp:MessageType>
-                                <harp:Payload xsi:type="beh:CreateOutputSetPayload">
-                                  <beh:OutputSet>DO1</beh:OutputSet>
+                                <harp:Payload xsi:type="beh:CreatePwmStartPayload">
+                                  <beh:PwmStart>PwmDO1</beh:PwmStart>
                                 </harp:Payload>
                               </Expression>
                               <Expression xsi:type="MulticastSubject">
                                 <Name>HarpBehaviorCommands</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>SessionSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Hardware.Speaker</Selector>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>PwmDefaultPulseDuration</Selector>
+                              </Expression>
+                              <Expression xsi:type="MulticastSubject">
+                                <Name>AudioDuration</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>SessionSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Hardware.Speaker</Selector>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>PwmFrequency</Selector>
+                              </Expression>
+                              <Expression xsi:type="MulticastSubject">
+                                <Name>AudioDuration</Name>
                               </Expression>
                             </Nodes>
                             <Edges>
@@ -929,6 +953,12 @@
                               <Edge From="7" To="8" Label="Source1" />
                               <Edge From="9" To="10" Label="Source1" />
                               <Edge From="10" To="11" Label="Source1" />
+                              <Edge From="12" To="13" Label="Source1" />
+                              <Edge From="13" To="14" Label="Source1" />
+                              <Edge From="14" To="15" Label="Source1" />
+                              <Edge From="16" To="17" Label="Source1" />
+                              <Edge From="17" To="18" Label="Source1" />
+                              <Edge From="18" To="19" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1177,9 +1207,9 @@
                       <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
                       <gl:CursorVisible>false</gl:CursorVisible>
                       <gl:Location xsi:nil="true" />
-                      <gl:WindowBorder>Hidden</gl:WindowBorder>
-                      <gl:WindowState>Maximized</gl:WindowState>
-                      <gl:DisplayDevice>Third</gl:DisplayDevice>
+                      <gl:WindowBorder>Resizable</gl:WindowBorder>
+                      <gl:WindowState>Fullscreen</gl:WindowState>
+                      <gl:DisplayDevice>Second</gl:DisplayDevice>
                       <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                       <gl:TargetUpdateFrequency xsi:nil="true" />
                       <gl:RenderState />
@@ -2149,19 +2179,13 @@ Item2.Light as Light)</scr:Expression>
               <Name>FeedbackControl</Name>
               <Workflow>
                 <Nodes>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+                    <rx:Name>ChoiceFeedback</rx:Name>
+                  </Expression>
                   <Expression xsi:type="Unit" />
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>ChoiceFeedback</Name>
-                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -3231,45 +3255,159 @@ Item2 as Start
         <Name>OpControlToBeMerged</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>GiveReward</Name>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Reward</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>GiveReward</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SessionSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Hardware.Valves.Water</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Calibration</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>RewardToTime</scr:Name>
+                    <scr:Expression>Item1 * Item2.Slope + Item2.Intercept</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>ValveOpenTimeMs</Name>
+                  </Expression>
+                  <Expression xsi:type="Unit" />
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>TriggerValve</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="4" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>SessionSchema</Name>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>ChoiceFeedback</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ChoiceFeedback</Name>
+                  </Expression>
+                  <Expression xsi:type="Unit" />
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>AudioTrigger</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Hardware.Valves.Water</Selector>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>OdorControl</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>OdorControl</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>IsIndex?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Index</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>ValveState</Selector>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>OdorValve1</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>IsIndex?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Index</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>1</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>ValveState</Selector>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>OdorValve2</Name>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source2" />
+                  <Edge From="0" To="4" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Calibration</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:WithLatestFrom" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Name>RewardToTime</scr:Name>
-              <scr:Expression>Item1 * Item2.Slope + Item2.Intercept</scr:Expression>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>ValveOpenTimeMs</Name>
-            </Expression>
-            <Expression xsi:type="Unit" />
-            <Expression xsi:type="MulticastSubject">
-              <Name>TriggerValve</Name>
-            </Expression>
-            <Expression xsi:type="WorkflowOutput" />
           </Nodes>
-          <Edges>
-            <Edge From="0" To="4" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source2" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-          </Edges>
+          <Edges />
         </Workflow>
       </Expression>
     </Nodes>

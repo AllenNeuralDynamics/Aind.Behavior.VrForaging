@@ -621,31 +621,124 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PwmBuzzer
+    {
+    
+        private string _model = "buzzer";
+    
+        private string _pin = "DO1";
+    
+        private double _pwmDefaultPulseDuration = 0.2D;
+    
+        private double _pwmFrequency = 1000D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
+        public string Model
+        {
+            get
+            {
+                return _model;
+            }
+            set
+            {
+                _model = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pin")]
+        public string Pin
+        {
+            get
+            {
+                return _pin;
+            }
+            set
+            {
+                _pin = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pwmDefaultPulseDuration")]
+        public double PwmDefaultPulseDuration
+        {
+            get
+            {
+                return _pwmDefaultPulseDuration;
+            }
+            set
+            {
+                _pwmDefaultPulseDuration = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pwmFrequency")]
+        public double PwmFrequency
+        {
+            get
+            {
+                return _pwmFrequency;
+            }
+            set
+            {
+                _pwmFrequency = value;
+            }
+        }
+    
+        public System.IObservable<PwmBuzzer> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new PwmBuzzer
+                {
+                    Model = _model,
+                    Pin = _pin,
+                    PwmDefaultPulseDuration = _pwmDefaultPulseDuration,
+                    PwmFrequency = _pwmFrequency
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class SpinnakerCamera
     {
     
-        private int _frameRate = 30;
+        private int _binning = 1;
+    
+        private SpinnakerCameraColorProcessing _colorProcessing = AindVrForagingDataSchema.SpinnakerCameraColorProcessing.Default;
     
         private int _exposure = 1000;
+    
+        private int _frameRate = 30;
     
         private double _gain = 0D;
     
         private string _serialNumber;
     
-        private SpinnakerCameraColorProcessing _colorProcessing = AindVrForagingDataSchema.SpinnakerCameraColorProcessing.Default;
-    
-        private int _binning = 1;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameRate")]
-        public int FrameRate
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binning")]
+        public int Binning
         {
             get
             {
-                return _frameRate;
+                return _binning;
             }
             set
             {
-                _frameRate = value;
+                _binning = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="colorProcessing")]
+        public SpinnakerCameraColorProcessing ColorProcessing
+        {
+            get
+            {
+                return _colorProcessing;
+            }
+            set
+            {
+                _colorProcessing = value;
             }
         }
     
@@ -659,6 +752,19 @@ namespace AindVrForagingDataSchema
             set
             {
                 _exposure = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameRate")]
+        public int FrameRate
+        {
+            get
+            {
+                return _frameRate;
+            }
+            set
+            {
+                _frameRate = value;
             }
         }
     
@@ -688,44 +794,17 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="colorProcessing")]
-        public SpinnakerCameraColorProcessing ColorProcessing
-        {
-            get
-            {
-                return _colorProcessing;
-            }
-            set
-            {
-                _colorProcessing = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binning")]
-        public int Binning
-        {
-            get
-            {
-                return _binning;
-            }
-            set
-            {
-                _binning = value;
-            }
-        }
-    
         public System.IObservable<SpinnakerCamera> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new SpinnakerCamera
                 {
-                    FrameRate = _frameRate,
-                    Exposure = _exposure,
-                    Gain = _gain,
-                    SerialNumber = _serialNumber,
+                    Binning = _binning,
                     ColorProcessing = _colorProcessing,
-                    Binning = _binning
+                    Exposure = _exposure,
+                    FrameRate = _frameRate,
+                    Gain = _gain,
+                    SerialNumber = _serialNumber
                 }));
         }
     }
@@ -1440,6 +1519,8 @@ namespace AindVrForagingDataSchema
     
         private Valves _valves;
     
+        private PwmBuzzer _speaker;
+    
         private SpinnakerCamera _mainCamera;
     
         private HarpBoard _harpBehaviorBoard;
@@ -1487,6 +1568,20 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="speaker")]
+        public PwmBuzzer Speaker
+        {
+            get
+            {
+                return _speaker;
+            }
+            set
+            {
+                _speaker = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mainCamera")]
         public SpinnakerCamera MainCamera
         {
@@ -1522,6 +1617,7 @@ namespace AindVrForagingDataSchema
                     Screen = _screen,
                     Treadmill = _treadmill,
                     Valves = _valves,
+                    Speaker = _speaker,
                     MainCamera = _mainCamera,
                     HarpBehaviorBoard = _harpBehaviorBoard
                 }));
@@ -1976,6 +2072,11 @@ namespace AindVrForagingDataSchema
             return Process<Valve>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<PwmBuzzer> source)
+        {
+            return Process<PwmBuzzer>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
@@ -2091,6 +2192,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
