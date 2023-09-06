@@ -524,6 +524,15 @@
                         <Expression xsi:type="rx:PublishSubject">
                           <Name>HarpBehaviorEvents</Name>
                         </Expression>
+                        <Expression xsi:type="harp:Parse">
+                          <harp:Register xsi:type="harp:TimestampedTimestampSeconds" />
+                        </Expression>
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>HarpBehaviorHeartBeat</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>HarpBehaviorHeartBeat</Name>
+                        </Expression>
                         <Expression xsi:type="Annotation">
                           <Name>ForceRegisterDump</Name>
                           <Text><![CDATA[]]></Text>
@@ -564,7 +573,7 @@
                           <Name>HarpTimestampSource</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>StartHardware</Name>
+                          <Name>HarpBehaviorHeartBeat</Name>
                         </Expression>
                         <Expression xsi:type="beh:CreateMessage">
                           <harp:MessageType>Write</harp:MessageType>
@@ -585,7 +594,12 @@
                           <Workflow>
                             <Nodes>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>StartHardware</Name>
+                                <Name>HarpBehaviorHeartBeat</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="beh:CreateMessage">
                                 <harp:MessageType>Write</harp:MessageType>
@@ -596,24 +610,11 @@
                               <Expression xsi:type="MulticastSubject">
                                 <Name>HarpBehaviorCommands</Name>
                               </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>StopHardware</Name>
-                              </Expression>
-                              <Expression xsi:type="beh:CreateMessage">
-                                <harp:MessageType>Write</harp:MessageType>
-                                <harp:Payload xsi:type="beh:CreateStopCamerasPayload">
-                                  <beh:StopCameras>None</beh:StopCameras>
-                                </harp:Payload>
-                              </Expression>
-                              <Expression xsi:type="MulticastSubject">
-                                <Name>HarpBehaviorCommands</Name>
-                              </Expression>
                             </Nodes>
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -621,6 +622,9 @@
                           <Name>WaterValve</Name>
                           <Workflow>
                             <Nodes>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>HarpBehaviorHeartBeat</Name>
+                              </Expression>
                               <Expression xsi:type="Annotation">
                                 <Name>Valve+Speaker</Name>
                                 <Text><![CDATA[]]></Text>
@@ -664,14 +668,15 @@
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
                             <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="0" To="2" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source2" />
                               <Edge From="2" To="3" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source1" />
+                              <Edge From="6" To="7" Label="Source1" />
                               <Edge From="8" To="9" Label="Source1" />
                               <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -792,6 +797,9 @@
                               <Expression xsi:type="rx:PublishSubject">
                                 <Name>EncoderData</Name>
                               </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>HarpBehaviorHeartBeat</Name>
+                              </Expression>
                               <Expression xsi:type="beh:CreateMessage">
                                 <harp:MessageType>Write</harp:MessageType>
                                 <harp:Payload xsi:type="beh:CreateEnableEncodersPayload">
@@ -813,6 +821,7 @@
                               <Edge From="2" To="3" Label="Source1" />
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="6" To="7" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -873,20 +882,6 @@
                           <Name>Buzzer</Name>
                           <Workflow>
                             <Nodes>
-                              <Expression xsi:type="beh:CreateMessage">
-                                <harp:MessageType>Write</harp:MessageType>
-                                <harp:Payload xsi:type="beh:CreatePwmDutyCycleDO1Payload">
-                                  <beh:PwmDutyCycleDO1>50</beh:PwmDutyCycleDO1>
-                                </harp:Payload>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="MulticastSubject">
-                                <Name>HarpBehaviorCommands</Name>
-                              </Expression>
                               <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Int32">
                                 <rx:Name>AudioDuration</rx:Name>
                               </Expression>
@@ -919,29 +914,75 @@
                               <Expression xsi:type="MulticastSubject">
                                 <Name>HarpBehaviorCommands</Name>
                               </Expression>
+                              <Expression xsi:type="GroupWorkflow">
+                                <Name>InitialSettings</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>HarpBehaviorHeartBeat</Name>
+                                    </Expression>
+                                    <Expression xsi:type="beh:CreateMessage">
+                                      <harp:MessageType>Write</harp:MessageType>
+                                      <harp:Payload xsi:type="beh:CreatePwmDutyCycleDO1Payload">
+                                        <beh:PwmDutyCycleDO1>50</beh:PwmDutyCycleDO1>
+                                      </harp:Payload>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Take">
+                                        <rx:Count>1</rx:Count>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="MulticastSubject">
+                                      <Name>HarpBehaviorCommands</Name>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>SessionSchema</Name>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Hardware.Speaker</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>PwmDefaultPulseDuration</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="MulticastSubject">
+                                      <Name>AudioDuration</Name>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>SessionSchema</Name>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Hardware.Speaker</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>PwmFrequency</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="MulticastSubject">
+                                      <Name>AudioFrequency</Name>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="4" To="5" Label="Source1" />
+                                    <Edge From="5" To="6" Label="Source1" />
+                                    <Edge From="6" To="7" Label="Source1" />
+                                    <Edge From="8" To="9" Label="Source1" />
+                                    <Edge From="9" To="10" Label="Source1" />
+                                    <Edge From="10" To="11" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>SessionSchema</Name>
+                                <Name>HarpBehaviorHeartBeat</Name>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Hardware.Speaker</Selector>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>PwmDefaultPulseDuration</Selector>
-                              </Expression>
-                              <Expression xsi:type="MulticastSubject">
-                                <Name>AudioDuration</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>SessionSchema</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Hardware.Speaker</Selector>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>PwmFrequency</Selector>
-                              </Expression>
-                              <Expression xsi:type="MulticastSubject">
-                                <Name>AudioDuration</Name>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:SubscribeWhen" />
                               </Expression>
                             </Nodes>
                             <Edges>
@@ -951,14 +992,9 @@
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="6" To="7" Label="Source1" />
                               <Edge From="7" To="8" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="9" To="12" Label="Source1" />
                               <Edge From="10" To="11" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source1" />
-                              <Edge From="13" To="14" Label="Source1" />
-                              <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="16" To="17" Label="Source1" />
-                              <Edge From="17" To="18" Label="Source1" />
-                              <Edge From="18" To="19" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source2" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -966,6 +1002,14 @@
                           <Name>ServoMotor</Name>
                           <Workflow>
                             <Nodes>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>HarpBehaviorHeartBeat</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
+                              </Expression>
                               <Expression xsi:type="beh:CreateMessage">
                                 <harp:MessageType>Write</harp:MessageType>
                                 <harp:Payload xsi:type="beh:CreateDisableServosPayload">
@@ -996,11 +1040,6 @@
                               <Expression xsi:type="MulticastSubject">
                                 <Name>HarpBehaviorCommands</Name>
                               </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
                               <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Int32">
                                 <rx:Name>ServoPosition</rx:Name>
                               </Expression>
@@ -1024,9 +1063,10 @@
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
                               <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="8" To="10" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source2" />
-                              <Edge From="10" To="11" Label="Source1" />
+                              <Edge From="7" To="8" Label="Source1" />
+                              <Edge From="9" To="11" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source2" />
+                              <Edge From="11" To="12" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1034,6 +1074,14 @@
                           <Name>Odor</Name>
                           <Workflow>
                             <Nodes>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>HarpBehaviorHeartBeat</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
+                              </Expression>
                               <Expression xsi:type="beh:CreateMessage">
                                 <harp:MessageType>Write</harp:MessageType>
                                 <harp:Payload xsi:type="beh:CreateOutputClearPayload">
@@ -1148,22 +1196,24 @@
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
                               <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="3" To="6" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
-                              <Edge From="5" To="9" Label="Source1" />
+                              <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="5" To="8" Label="Source1" />
                               <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source1" />
-                              <Edge From="8" To="9" Label="Source2" />
+                              <Edge From="7" To="11" Label="Source1" />
+                              <Edge From="8" To="9" Label="Source1" />
                               <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source2" />
                               <Edge From="11" To="12" Label="Source1" />
-                              <Edge From="11" To="14" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source1" />
-                              <Edge From="13" To="17" Label="Source1" />
+                              <Edge From="13" To="14" Label="Source1" />
+                              <Edge From="13" To="16" Label="Source1" />
                               <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="15" To="16" Label="Source1" />
-                              <Edge From="16" To="17" Label="Source2" />
+                              <Edge From="15" To="19" Label="Source1" />
+                              <Edge From="16" To="17" Label="Source1" />
                               <Edge From="17" To="18" Label="Source1" />
+                              <Edge From="18" To="19" Label="Source2" />
+                              <Edge From="19" To="20" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1175,15 +1225,18 @@
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source2" />
                         <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="9" To="11" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source2" />
                         <Edge From="11" To="12" Label="Source1" />
                         <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
                         <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -3405,6 +3458,74 @@ Item2 as Start
             </Expression>
           </Nodes>
           <Edges />
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>UserInterface</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="Unit" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>StartLogging</Name>
+            </Expression>
+            <Expression xsi:type="Annotation">
+              <Text><![CDATA[]]></Text>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+              <rx:Name>StopLogging</rx:Name>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>QC</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>MainCameraFrameEvent</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value.ChunkData.FrameID</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Difference">
+                      <dsp:Order>1</dsp:Order>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Subtract">
+                    <Operand xsi:type="DoubleProperty">
+                      <Value>1</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="rx:Accumulate" />
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>MainCameraDroppedFrames</Name>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Shortcuts</Name>
+              <Workflow>
+                <Nodes />
+                <Edges />
+              </Workflow>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+          </Edges>
         </Workflow>
       </Expression>
     </Nodes>
