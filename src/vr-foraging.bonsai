@@ -2182,11 +2182,8 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
                     <rx:Name>ChoiceFeedback</rx:Name>
                   </Expression>
-                  <Expression xsi:type="Unit" />
                 </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                </Edges>
+                <Edges />
               </Workflow>
             </Expression>
           </Nodes>
