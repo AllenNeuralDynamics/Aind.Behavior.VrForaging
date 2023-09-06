@@ -2,53 +2,116 @@
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
   "definitions": {
-    "spinnakerCamera": {
-      "type": "object",
+    "harpBoard": {
       "properties": {
-        "frameRate": {
-          "type": "integer",
-          "default": 30,
+        "deviceType": {
+          "enum": [
+            "custom",
+            "behavior",
+            "clockSynchronizer"
+          ],
+          "type": "string"
+        },
+        "portName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "deviceType",
+        "portName"
+      ],
+      "type": "object"
+    },
+    "pwmBuzzer": {
+      "properties": {
+        "model": {
+          "default": "buzzer",
+          "type": "string"
+        },
+        "pin": {
+          "default": "DO1",
+          "type": "string"
+        },
+        "pwmDefaultPulseDuration": {
+          "default": 0.2,
+          "type": "number"
+        },
+        "pwmFrequency": {
+          "default": 1000,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "spinnakerCamera": {
+      "properties": {
+        "binning": {
+          "default": 1,
           "minimum": 1,
-          "maximum": 350
+          "type": "integer"
+        },
+        "colorProcessing": {
+          "default": "Default",
+          "enum": [
+            "Default",
+            "NoColorProcessing"
+          ],
+          "type": "string"
         },
         "exposure": {
-          "type": "integer",
           "default": 1000,
-          "minimum": 1
+          "minimum": 1,
+          "type": "integer"
+        },
+        "frameRate": {
+          "default": 30,
+          "maximum": 350,
+          "minimum": 1,
+          "type": "integer"
         },
         "gain": {
-          "type": "number",
           "default": 0,
-          "minimum": 0
+          "minimum": 0,
+          "type": "number"
         },
         "serialNumber": {
           "type": "string"
-        },
-        "colorProcessing": {
-          "type": "string",
-          "enum": ["Default", "NoColorProcessing"],
-          "default": "Default"
-        },
-        "binning": {
-          "type": "integer",
-          "default": 1,
-          "minimum": 1
         }
       },
-      "required": ["serialNumber"]
+      "required": [
+        "serialNumber"
+      ],
+      "type": "object"
     },
-    "harpBoard": {
-      "type": "object",
+    "valve": {
       "properties": {
-        "deviceType":{
-          "type": "string",
-          "enum": ["custom", "behavior", "clockSynchronizer"]
+        "calibration": {
+          "properties": {
+            "intercept": {
+              "default": 0,
+              "type": "number"
+            },
+            "slope": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          "type": "object"
         },
-        "portName":{
+        "model": {
+          "default": "valve",
+          "type": "string"
+        },
+        "pin": {
+          "default": "SupplyPort0",
+          "type": "string"
+        },
+        "valveType": {
+          "default": "air",
           "type": "string"
         }
       },
-      "required": ["deviceType", "portName"]
+      "type": "object"
     }
   },
   "title": "AindVrForagingHardware",

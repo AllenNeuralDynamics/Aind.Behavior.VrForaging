@@ -120,7 +120,23 @@
           "$ref": "aind-vr-foraging-common.json#/definitions/treadmillSettings"
         },
         "valves": {
-          "$ref": "aind-vr-foraging-common.json#/definitions/valvesCalibration"
+          "type":"object",
+          "properties": {
+            "water": {
+              "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
+            },
+            "odor1": {
+              "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
+            },
+            "odor2": {
+              "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
+            }
+          },
+          "required": ["water", "odor1", "odor2"]
+        },
+        "speaker":
+        {
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/pwmBuzzer"
         },
         "mainCamera": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
