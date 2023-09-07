@@ -4,19 +4,20 @@
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:p2="clr-namespace:;assembly=Extensions"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:p2="clr-namespace:;assembly=Extensions"
                  xmlns:p3="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
+                 xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
-                 xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
-                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -35,6 +36,52 @@
       </Expression>
       <Expression xsi:type="rx:AsyncSubject">
         <Name>SessionSchema</Name>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>ProtocolValidation</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Hardware.MainCamera.FrameRate,Hardware.MainCamera.Exposure</Selector>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>((1.0 / Item1) * 1000000) + 1000 &gt; Item2</scr:Expression>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:ThrowException">
+                <p2:Message>Camera frame rate and exposure settings are not compatible.</p2:Message>
+              </Combinator>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
       <Expression xsi:type="Annotation">
         <Text><![CDATA[]]></Text>
@@ -422,40 +469,11 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>OperationalSettings</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="LickToReward" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>IsOperantMode</Name>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="TimeToCollectReward" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="TimeSpanProperty">
-                      <Value>PT1H</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>TimeToCollectReward</Name>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+              <rx:Name>StartExperiment</rx:Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+              <rx:Name>EndExperiment</rx:Name>
             </Expression>
           </Nodes>
           <Edges />
@@ -1851,19 +1869,8 @@ Item2.Light as Light)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Unit" />
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>StartHardware</Name>
-            </Expression>
-            <Expression xsi:type="Unit" />
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>StopHardware</Name>
-            </Expression>
           </Nodes>
-          <Edges>
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-          </Edges>
+          <Edges />
         </Workflow>
       </Expression>
       <Expression xsi:type="Annotation">
@@ -2009,6 +2016,41 @@ Item2.Light as Light)</scr:Expression>
         <Name>TaskControl</Name>
         <Workflow>
           <Nodes>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>OperationalSettings</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="LickToReward" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>IsOperantMode</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="TimeToCollectReward" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="TimeSpanProperty">
+                      <Value>PT1H</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>TimeToCollectReward</Name>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>PositionControl</Name>
               <Workflow>
@@ -3154,11 +3196,8 @@ Item2 as Start
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="Annotation">
-        <Text><![CDATA[Wait for the textures to load in GPU]]></Text>
-      </Expression>
       <Expression xsi:type="SubscribeSubject">
-        <Name>TextureBank</Name>
+        <Name>StartExperiment</Name>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:SubscribeWhen" />
@@ -3464,25 +3503,60 @@ Item2 as Start
         <Name>UserInterface</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="Unit" />
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Take">
-                <rx:Count>1</rx:Count>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>StartLogging</Name>
-            </Expression>
-            <Expression xsi:type="Annotation">
-              <Text><![CDATA[]]></Text>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
-              <rx:Name>StopLogging</rx:Name>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Shortcuts</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gli:KeyDown">
+                      <gli:Key xsi:nil="true" />
+                      <gli:Modifiers xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Unit" />
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>StartExperimentShortcut</Name>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>QC</Name>
               <Workflow>
                 <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpBehaviorHeartBeat</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ExperimentStatus</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>AverageScreenFps</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>MainCameraDroppedFrames</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Item1.Seconds,Item2.Item1,Item2.Item2,Item2.Item3</Selector>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(
+Item1 as Heartbeat,
+Item2 as ExperimentStatus,
+Item3 as AverageScreenFps,
+Item4 as DroppedFrames)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="SubscribeSubject">
                     <Name>MainCameraFrameEvent</Name>
                   </Expression>
@@ -3503,29 +3577,127 @@ Item2 as Start
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>MainCameraDroppedFrames</Name>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:RenderFrame" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>TimeStep.ElapsedRealTime</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Buffer">
+                      <dsp:Count>60</dsp:Count>
+                      <dsp:Skip>30</dsp:Skip>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Average" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Val0</Selector>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>AverageScreenFps</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>PreExperiment</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>StartExperiment</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>Running</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>EndExperiment</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>Closed</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>ExperimentStatus</Name>
+                  </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="0" To="5" Label="Source1" />
+                  <Edge From="1" To="4" Label="Source1" />
+                  <Edge From="2" To="4" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source3" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="27" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="27" Label="Source2" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source3" />
+                  <Edge From="27" To="28" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
-              <Name>Shortcuts</Name>
+              <Name>OpControl</Name>
               <Workflow>
-                <Nodes />
-                <Edges />
+                <Nodes>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+                    <rx:Name>StartExperimentShortcut</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>TextureBank</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>StartExperiment</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                </Edges>
               </Workflow>
             </Expression>
           </Nodes>
-          <Edges>
-            <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-          </Edges>
+          <Edges />
         </Workflow>
       </Expression>
     </Nodes>
@@ -3533,12 +3705,11 @@ Item2 as Start
       <Edge From="0" To="1" Label="Source1" />
       <Edge From="1" To="2" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
-      <Edge From="4" To="5" Label="Source1" />
-      <Edge From="6" To="7" Label="Source1" />
-      <Edge From="8" To="9" Label="Source1" />
-      <Edge From="10" To="11" Label="Source1" />
-      <Edge From="12" To="15" Label="Source1" />
-      <Edge From="13" To="14" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="13" To="15" Label="Source1" />
       <Edge From="14" To="15" Label="Source2" />
     </Edges>
   </Workflow>
