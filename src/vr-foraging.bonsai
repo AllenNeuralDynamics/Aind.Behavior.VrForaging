@@ -12,11 +12,11 @@
                  xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
+                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -860,6 +860,52 @@
                               <Expression xsi:type="MemberSelector">
                                 <Selector>Value.Encoder,Seconds</Selector>
                               </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>SessionSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Hardware.Treadmill.EncoderResolution</Selector>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>SessionSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Hardware.Treadmill.WheelDiameter</Selector>
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Name>Perimeter</scr:Name>
+                                <scr:Expression>it * Math.Pi</scr:Expression>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Name>BitsPerCm</scr:Name>
+                                <scr:Expression>Item1 / Item2</scr:Expression>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="RangeMax" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="dsp:Rescale">
+                                  <dsp:Min>0</dsp:Min>
+                                  <dsp:Max>1</dsp:Max>
+                                  <dsp:RangeMin>0</dsp:RangeMin>
+                                  <dsp:RangeMax>1</dsp:RangeMax>
+                                  <dsp:RescaleType>Linear</dsp:RescaleType>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
+                              </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="harp:CreateTimestamped" />
                               </Expression>
@@ -887,10 +933,23 @@
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="1" To="12" Label="Source1" />
+                              <Edge From="2" To="11" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source1" />
+                              <Edge From="4" To="8" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
                               <Edge From="6" To="7" Label="Source1" />
+                              <Edge From="7" To="8" Label="Source2" />
+                              <Edge From="8" To="9" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source2" />
+                              <Edge From="11" To="13" Label="Source1" />
+                              <Edge From="12" To="13" Label="Source2" />
+                              <Edge From="13" To="14" Label="Source1" />
+                              <Edge From="14" To="15" Label="Source1" />
+                              <Edge From="16" To="17" Label="Source1" />
+                              <Edge From="17" To="18" Label="Source1" />
+                              <Edge From="18" To="19" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
