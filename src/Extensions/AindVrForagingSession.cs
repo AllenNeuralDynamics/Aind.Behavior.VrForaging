@@ -446,28 +446,75 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class RenderingSettings
+    public partial class Vector3
     {
     
-        private InitialAgentPosition _initialAgentPosition;
+        private double _x = 0D;
+    
+        private double _y = 0D;
+    
+        private double _z = 0D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="z")]
+        public double Z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                _z = value;
+            }
+        }
+    
+        public System.IObservable<Vector3> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Vector3
+                {
+                    X = _x,
+                    Y = _y,
+                    Z = _z
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class RenderingSettings
+    {
     
         private string _monitorCalibrationDirectory = "Calibration\\Monitors\\";
     
         private string _textureAssetDirectory = "Textures";
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialAgentPosition")]
-        public InitialAgentPosition InitialAgentPosition
-        {
-            get
-            {
-                return _initialAgentPosition;
-            }
-            set
-            {
-                _initialAgentPosition = value;
-            }
-        }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="monitorCalibrationDirectory")]
         public string MonitorCalibrationDirectory
@@ -500,7 +547,6 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new RenderingSettings
                 {
-                    InitialAgentPosition = _initialAgentPosition,
                     MonitorCalibrationDirectory = _monitorCalibrationDirectory,
                     TextureAssetDirectory = _textureAssetDirectory
                 }));
@@ -895,13 +941,13 @@ namespace AindVrForagingDataSchema
     public partial class AindVrForagingSession
     {
     
-        private EnvironmentStatistics _environmentStatistics;
+        private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
     
         private Metadata _metadata = new Metadata();
     
-        private TaskLogicHelper _taskLogicHelper = new TaskLogicHelper();
+        private TaskLogicControl _taskLogicControl = new TaskLogicControl();
     
-        private Hardware _hardware;
+        private Hardware _hardware = new Hardware();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="environmentStatistics")]
@@ -932,16 +978,16 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskLogicHelper")]
-        public TaskLogicHelper TaskLogicHelper
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskLogicControl")]
+        public TaskLogicControl TaskLogicControl
         {
             get
             {
-                return _taskLogicHelper;
+                return _taskLogicControl;
             }
             set
             {
-                _taskLogicHelper = value;
+                _taskLogicControl = value;
             }
         }
     
@@ -966,7 +1012,7 @@ namespace AindVrForagingDataSchema
                 {
                     EnvironmentStatistics = _environmentStatistics,
                     Metadata = _metadata,
-                    TaskLogicHelper = _taskLogicHelper,
+                    TaskLogicControl = _taskLogicControl,
                     Hardware = _hardware
                 }));
         }
@@ -1191,69 +1237,6 @@ namespace AindVrForagingDataSchema
                     Delay = _delay,
                     OperantLogic = _operantLogic,
                     Probability = _probability
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class InitialAgentPosition
-    {
-    
-        private double _x = 0D;
-    
-        private double _y = 0D;
-    
-        private double _z = 0D;
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="z")]
-        public double Z
-        {
-            get
-            {
-                return _z;
-            }
-            set
-            {
-                _z = value;
-            }
-        }
-    
-        public System.IObservable<InitialAgentPosition> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new InitialAgentPosition
-                {
-                    X = _x,
-                    Y = _y,
-                    Z = _z
                 }));
         }
     }
@@ -1510,10 +1493,12 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class TaskLogicHelper
+    public partial class TaskLogicControl
     {
     
         private VirtualSiteGeneration _virtualSiteGeneration;
+    
+        private PositionControl _positionControl;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="virtualSiteGeneration")]
@@ -1529,12 +1514,27 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<TaskLogicHelper> Process()
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="positionControl")]
+        public PositionControl PositionControl
+        {
+            get
+            {
+                return _positionControl;
+            }
+            set
+            {
+                _positionControl = value;
+            }
+        }
+    
+        public System.IObservable<TaskLogicControl> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new TaskLogicHelper
+                new TaskLogicControl
                 {
-                    VirtualSiteGeneration = _virtualSiteGeneration
+                    VirtualSiteGeneration = _virtualSiteGeneration,
+                    PositionControl = _positionControl
                 }));
         }
     }
@@ -1835,6 +1835,55 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PositionControl
+    {
+    
+        private Vector3 _gain;
+    
+        private Vector3 _initialPosition;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
+        public Vector3 Gain
+        {
+            get
+            {
+                return _gain;
+            }
+            set
+            {
+                _gain = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialPosition")]
+        public Vector3 InitialPosition
+        {
+            get
+            {
+                return _initialPosition;
+            }
+            set
+            {
+                _initialPosition = value;
+            }
+        }
+    
+        public System.IObservable<PositionControl> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new PositionControl
+                {
+                    Gain = _gain,
+                    InitialPosition = _initialPosition
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Valves
     {
     
@@ -2089,6 +2138,11 @@ namespace AindVrForagingDataSchema
             return Process<TruncatedExponential>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Vector3> source)
+        {
+            return Process<Vector3>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<RenderingSettings> source)
         {
             return Process<RenderingSettings>(source);
@@ -2144,11 +2198,6 @@ namespace AindVrForagingDataSchema
             return Process<Reward>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<InitialAgentPosition> source)
-        {
-            return Process<InitialAgentPosition>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Calibration> source)
         {
             return Process<Calibration>(source);
@@ -2164,9 +2213,9 @@ namespace AindVrForagingDataSchema
             return Process<Metadata>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<TaskLogicHelper> source)
+        public System.IObservable<string> Process(System.IObservable<TaskLogicControl> source)
         {
-            return Process<TaskLogicHelper>(source);
+            return Process<TaskLogicControl>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Hardware> source)
@@ -2187,6 +2236,11 @@ namespace AindVrForagingDataSchema
         public System.IObservable<string> Process(System.IObservable<VirtualSiteGeneration> source)
         {
             return Process<VirtualSiteGeneration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PositionControl> source)
+        {
+            return Process<PositionControl>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Valves> source)
@@ -2221,6 +2275,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
@@ -2232,15 +2287,15 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InitialAgentPosition>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicHelper>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]

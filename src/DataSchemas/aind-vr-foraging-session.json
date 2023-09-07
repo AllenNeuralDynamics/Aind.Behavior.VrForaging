@@ -9,7 +9,7 @@
       "$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"
     },
     "siteLabel": {
-      "type":"string",
+      "type": "string",
       "enum": ["Unspecified", "Gap", "InterPatch", "Reward"]
     }
   },
@@ -64,7 +64,7 @@
       ],
       "type": "object"
     },
-    "taskLogicHelper": {
+    "taskLogicControl": {
       "properties": {
         "virtualSiteGeneration": {
           "properties": {
@@ -107,6 +107,17 @@
           },
           "required": ["interPatchSite", "rewardSite", "gapSite"],
           "type": "object"
+        },
+        "positionControl": {
+          "type": "object",
+          "properties": {
+            "gain": {
+              "$ref": "aind-vr-foraging-common.json#/definitions/vector3"
+            },
+            "initialPosition": {
+              "$ref": "aind-vr-foraging-common.json#/definitions/vector3"
+            }
+          }
         }
       },
       "type": "object"
@@ -120,7 +131,7 @@
           "$ref": "aind-vr-foraging-hardware.json#/definitions/treadmill"
         },
         "valves": {
-          "type":"object",
+          "type": "object",
           "properties": {
             "water": {
               "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
@@ -134,21 +145,20 @@
           },
           "required": ["water", "odor1", "odor2"]
         },
-        "speaker":
-        {
+        "speaker": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/pwmBuzzer"
         },
         "mainCamera": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
         },
-        "harpBehaviorBoard":{
+        "harpBehaviorBoard": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
         }
       },
       "type": "object"
     }
   },
-  "required": ["metadata", "taskLogicHelper"],
+  "required": ["metadata", "taskLogicControl", "hardware", "environmentStatistics"],
   "title": "AindVrForagingSession",
   "type": "object"
 }

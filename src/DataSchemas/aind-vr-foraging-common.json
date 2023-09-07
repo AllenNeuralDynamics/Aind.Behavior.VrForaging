@@ -94,9 +94,6 @@
     },
     "renderingSettings": {
       "properties": {
-        "initialAgentPosition": {
-          "$ref": "#/definitions/vector3"
-        },
         "monitorCalibrationDirectory": {
           "default": "Calibration\\Monitors\\",
           "type": "string"
