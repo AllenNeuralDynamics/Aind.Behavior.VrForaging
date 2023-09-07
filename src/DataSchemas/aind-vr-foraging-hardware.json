@@ -55,8 +55,8 @@
           "minimum": 0,
           "type": "number"
         },
-        "conversionFactor": {
-          "default": 1,
+        "encoderResolution": {
+          "default": 65536,
           "type": "number"
         }
       }

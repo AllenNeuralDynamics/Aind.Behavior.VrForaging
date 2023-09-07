@@ -517,7 +517,7 @@ namespace AindVrForagingDataSchema
     
         private double _wheelDiameter = 15D;
     
-        private double _conversionFactor = 1D;
+        private double _encoderResolution = 65536D;
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
         public string Model
@@ -545,16 +545,16 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="conversionFactor")]
-        public double ConversionFactor
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="encoderResolution")]
+        public double EncoderResolution
         {
             get
             {
-                return _conversionFactor;
+                return _encoderResolution;
             }
             set
             {
-                _conversionFactor = value;
+                _encoderResolution = value;
             }
         }
     
@@ -565,7 +565,7 @@ namespace AindVrForagingDataSchema
                 {
                     Model = _model,
                     WheelDiameter = _wheelDiameter,
-                    ConversionFactor = _conversionFactor
+                    EncoderResolution = _encoderResolution
                 }));
         }
     }
