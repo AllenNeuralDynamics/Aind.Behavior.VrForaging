@@ -135,16 +135,6 @@
         "object"
       ]
     },
-    "treadmillSettings": {
-      "properties": {
-        "gain": {
-          "default": 1,
-          "minimum": 0,
-          "type": "number"
-        }
-      },
-      "type": "object"
-    },
     "truncatedExponential": {
       "properties": {
         "maximum": {

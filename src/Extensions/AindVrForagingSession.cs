@@ -510,30 +510,62 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class TreadmillSettings
+    public partial class Treadmill
     {
     
-        private double _gain = 1D;
+        private string _model = "headfix";
     
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
-        public double Gain
+        private double _wheelDiameter = 15D;
+    
+        private double _conversionFactor = 1D;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
+        public string Model
         {
             get
             {
-                return _gain;
+                return _model;
             }
             set
             {
-                _gain = value;
+                _model = value;
             }
         }
     
-        public System.IObservable<TreadmillSettings> Process()
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="wheelDiameter")]
+        public double WheelDiameter
+        {
+            get
+            {
+                return _wheelDiameter;
+            }
+            set
+            {
+                _wheelDiameter = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="conversionFactor")]
+        public double ConversionFactor
+        {
+            get
+            {
+                return _conversionFactor;
+            }
+            set
+            {
+                _conversionFactor = value;
+            }
+        }
+    
+        public System.IObservable<Treadmill> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new TreadmillSettings
+                new Treadmill
                 {
-                    Gain = _gain
+                    Model = _model,
+                    WheelDiameter = _wheelDiameter,
+                    ConversionFactor = _conversionFactor
                 }));
         }
     }
@@ -1515,7 +1547,7 @@ namespace AindVrForagingDataSchema
     
         private RenderingSettings _screen;
     
-        private TreadmillSettings _treadmill;
+        private Treadmill _treadmill;
     
         private Valves _valves;
     
@@ -1541,7 +1573,7 @@ namespace AindVrForagingDataSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="treadmill")]
-        public TreadmillSettings Treadmill
+        public Treadmill Treadmill
         {
             get
             {
@@ -2062,9 +2094,9 @@ namespace AindVrForagingDataSchema
             return Process<RenderingSettings>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<TreadmillSettings> source)
+        public System.IObservable<string> Process(System.IObservable<Treadmill> source)
         {
-            return Process<TreadmillSettings>(source);
+            return Process<Treadmill>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Valve> source)
@@ -2190,7 +2222,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]

@@ -117,7 +117,7 @@
           "$ref": "aind-vr-foraging-common.json#/definitions/renderingSettings"
         },
         "treadmill": {
-          "$ref": "aind-vr-foraging-common.json#/definitions/treadmillSettings"
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/treadmill"
         },
         "valves": {
           "type":"object",
