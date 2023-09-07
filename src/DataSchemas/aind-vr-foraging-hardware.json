@@ -43,6 +43,24 @@
       },
       "type": "object"
     },
+    "treadmill": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "default": "headfix",
+          "type": "string"
+        },
+        "wheelDiameter": {
+          "default": 15,
+          "minimum": 0,
+          "type": "number"
+        },
+        "conversionFactor": {
+          "default": 1,
+          "type": "number"
+        }
+      }
+    },
     "spinnakerCamera": {
       "properties": {
         "binning": {
