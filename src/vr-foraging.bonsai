@@ -2166,17 +2166,10 @@ Item2.Light as Light)</scr:Expression>
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Hardware.Screen.InitialAgentPosition.Z</Selector>
+                    <Selector>TaskLogicControl.PositionControl.InitialPosition</Selector>
                   </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Value" Selector="it" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="DoubleProperty">
-                      <Value>0</Value>
-                    </Combinator>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Z</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
@@ -2223,7 +2216,7 @@ Item2.Light as Light)</scr:Expression>
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Hardware.Screen.InitialAgentPosition</Selector>
+                    <Selector>TaskLogicControl.PositionControl.InitialPosition</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -2280,72 +2273,27 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>MaxPosition</Name>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="gl:Timer">
-                      <gl:DueTime>PT0S</gl:DueTime>
-                      <gl:Period>PT0.05S</gl:Period>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="dsp:Rescale">
-                      <dsp:Min>0</dsp:Min>
-                      <dsp:Max>1</dsp:Max>
-                      <dsp:RangeMin>0</dsp:RangeMin>
-                      <dsp:RangeMax>0.05</dsp:RangeMax>
-                      <dsp:RescaleType>Linear</dsp:RescaleType>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="num:Sin" />
-                  </Expression>
-                  <Expression xsi:type="Add">
-                    <Operand xsi:type="DoubleProperty">
-                      <Value>1</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="LessThan">
-                    <Operand xsi:type="DoubleProperty">
-                      <Value>0.2</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:DistinctUntilChanged" />
-                  </Expression>
-                  <Expression xsi:type="Annotation">
-                    <Text><![CDATA[[Discussion](https://github.com/AllenNeuralDynamics/aind-vr-foraging/discussions/3)]]></Text>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>IsStopped</Name>
-                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="9" Label="Source1" />
+                  <Edge From="3" To="8" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source2" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="14" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source2" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="13" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source2" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="16" To="19" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source2" />
-                  <Edge From="19" To="21" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source2" />
-                  <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="27" To="29" Label="Source1" />
-                  <Edge From="28" To="29" Label="Source2" />
+                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="15" To="18" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="18" To="20" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2386,6 +2334,231 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                 </Nodes>
                 <Edges />
+              </Workflow>
+            </Expression>
+          </Nodes>
+          <Edges />
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Annotation">
+        <Name>ToBeMerged</Name>
+        <Text><![CDATA[ToBeMerged]]></Text>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>OpControlToBeMerged</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Reward</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>GiveReward</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SessionSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Hardware.Valves.Water</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Calibration</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>RewardToTime</scr:Name>
+                    <scr:Expression>Item1 * Item2.Slope + Item2.Intercept</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>ValveOpenTimeMs</Name>
+                  </Expression>
+                  <Expression xsi:type="Unit" />
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>TriggerValve</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="4" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>ChoiceFeedback</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ChoiceFeedback</Name>
+                  </Expression>
+                  <Expression xsi:type="Unit" />
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>AudioTrigger</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>OdorControl</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>OdorControl</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>IsIndex?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Index</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>ValveState</Selector>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>OdorValve1</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>IsIndex?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Index</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>1</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>ValveState</Selector>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>OdorValve2</Name>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source2" />
+                  <Edge From="0" To="4" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>PositionControl</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:Timer">
+                      <gl:DueTime>PT0S</gl:DueTime>
+                      <gl:Period>PT0.05S</gl:Period>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Rescale">
+                      <dsp:Min>0</dsp:Min>
+                      <dsp:Max>1</dsp:Max>
+                      <dsp:RangeMin>0</dsp:RangeMin>
+                      <dsp:RangeMax>0.05</dsp:RangeMax>
+                      <dsp:RescaleType>Linear</dsp:RescaleType>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="num:Sin" />
+                  </Expression>
+                  <Expression xsi:type="Add">
+                    <Operand xsi:type="DoubleProperty">
+                      <Value>1</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="LessThan">
+                    <Operand xsi:type="DoubleProperty">
+                      <Value>0.2</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:DistinctUntilChanged" />
+                  </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Text><![CDATA[[Discussion](https://github.com/AllenNeuralDynamics/aind-vr-foraging/discussions/3)]]></Text>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>IsStopped</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>EncoderData</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="7" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                </Edges>
               </Workflow>
             </Expression>
           </Nodes>
@@ -2849,7 +3022,7 @@ Item2 as Start
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>TaskLogicHelper.VirtualSiteGeneration.InterPatchSite.LengthDistribution</Selector>
+                    <Selector>TaskLogicControl.VirtualSiteGeneration.InterPatchSite.LengthDistribution</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -2862,7 +3035,7 @@ Item2 as Start
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>TaskLogicHelper.VirtualSiteGeneration.InterPatchSite.Label</Selector>
+                    <Selector>TaskLogicControl.VirtualSiteGeneration.InterPatchSite.Label</Selector>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Expression>it.ToString()</scr:Expression>
@@ -2916,7 +3089,7 @@ Item2 as Start
                           <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>TaskLogicHelper.VirtualSiteGeneration.GapSite.LengthDistribution</Selector>
+                          <Selector>TaskLogicControl.VirtualSiteGeneration.GapSite.LengthDistribution</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -2929,7 +3102,7 @@ Item2 as Start
                           <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>TaskLogicHelper.VirtualSiteGeneration.GapSite.Label</Selector>
+                          <Selector>TaskLogicControl.VirtualSiteGeneration.GapSite.Label</Selector>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Expression>it.ToString()</scr:Expression>
@@ -3048,7 +3221,7 @@ Item2 as Start
                           <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>TaskLogicHelper.VirtualSiteGeneration.RewardSite.LengthDistribution</Selector>
+                          <Selector>TaskLogicControl.VirtualSiteGeneration.RewardSite.LengthDistribution</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -3061,7 +3234,7 @@ Item2 as Start
                           <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>TaskLogicHelper.VirtualSiteGeneration.RewardSite.Label</Selector>
+                          <Selector>TaskLogicControl.VirtualSiteGeneration.RewardSite.Label</Selector>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Expression>it.ToString()</scr:Expression>
@@ -3087,7 +3260,7 @@ Item2 as Start
                           <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>TaskLogicHelper.VirtualSiteGeneration.GapSite.LengthDistribution</Selector>
+                          <Selector>TaskLogicControl.VirtualSiteGeneration.GapSite.LengthDistribution</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -3100,7 +3273,7 @@ Item2 as Start
                           <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>TaskLogicHelper.VirtualSiteGeneration.GapSite.Label</Selector>
+                          <Selector>TaskLogicControl.VirtualSiteGeneration.GapSite.Label</Selector>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Expression>it.ToString()</scr:Expression>
@@ -3448,165 +3621,6 @@ Item2 as Start
         </Workflow>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
-        <Name>OpControlToBeMerged</Name>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>Reward</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>GiveReward</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>SessionSchema</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Hardware.Valves.Water</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Calibration</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Name>RewardToTime</scr:Name>
-                    <scr:Expression>Item1 * Item2.Slope + Item2.Intercept</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>ValveOpenTimeMs</Name>
-                  </Expression>
-                  <Expression xsi:type="Unit" />
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>TriggerValve</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="4" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>ChoiceFeedback</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>ChoiceFeedback</Name>
-                  </Expression>
-                  <Expression xsi:type="Unit" />
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>AudioTrigger</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>OdorControl</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>OdorControl</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>IsIndex?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Index</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>0</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>ValveState</Selector>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>OdorValve1</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>IsIndex?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Index</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>ValveState</Selector>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>OdorValve2</Name>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source2" />
-                  <Edge From="0" To="4" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-          </Nodes>
-          <Edges />
-        </Workflow>
-      </Expression>
-      <Expression xsi:type="GroupWorkflow">
         <Name>UserInterface</Name>
         <Workflow>
           <Nodes>
@@ -3816,8 +3830,9 @@ Item4 as DroppedFrames)</scr:Expression>
       <Edge From="7" To="8" Label="Source1" />
       <Edge From="9" To="10" Label="Source1" />
       <Edge From="11" To="12" Label="Source1" />
-      <Edge From="13" To="15" Label="Source1" />
-      <Edge From="14" To="15" Label="Source2" />
+      <Edge From="13" To="14" Label="Source1" />
+      <Edge From="15" To="17" Label="Source1" />
+      <Edge From="16" To="17" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
