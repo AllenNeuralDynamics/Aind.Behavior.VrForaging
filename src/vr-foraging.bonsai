@@ -1386,8 +1386,20 @@ Item2.Light as Light)</scr:Expression>
                                       <Combinator xsi:type="rx:Zip" />
                                     </Expression>
                                     <Expression xsi:type="scr:ExpressionTransform">
-                                      <scr:Name>BitsPerCm</scr:Name>
-                                      <scr:Expression>Item1 / Item2</scr:Expression>
+                                      <scr:Name>CentimetersPerBit</scr:Name>
+                                      <scr:Expression>Item2 / Item1</scr:Expression>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>SessionSchema</Name>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Hardware.Treadmill.InvertDirection</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="scr:ExpressionTransform">
+                                      <scr:Expression>Item2 ? -1.0 * Item1 : Item1</scr:Expression>
                                     </Expression>
                                     <Expression xsi:type="PropertyMapping">
                                       <PropertyMappings>
@@ -1418,6 +1430,21 @@ Item2.Light as Light)</scr:Expression>
                                     <Expression xsi:type="SubscribeSubject">
                                       <Name>HarpBehaviorHeartBeat</Name>
                                     </Expression>
+                                    <Expression xsi:type="Annotation">
+                                      <Name>Set displacement mode</Name>
+                                      <Text><![CDATA[https://github.com/harp-tech/device.behavior/pull/12]]></Text>
+                                    </Expression>
+                                    <Expression xsi:type="harp:CreateMessage">
+                                      <harp:MessageType>Write</harp:MessageType>
+                                      <harp:Payload xsi:type="harp:CreateMessagePayload">
+                                        <harp:Address>83</harp:Address>
+                                        <harp:PayloadType>U8</harp:PayloadType>
+                                        <harp:Value>1</harp:Value>
+                                      </harp:Payload>
+                                    </Expression>
+                                    <Expression xsi:type="MulticastSubject">
+                                      <Name>HarpBehaviorCommands</Name>
+                                    </Expression>
                                     <Expression xsi:type="beh:CreateMessage">
                                       <harp:MessageType>Write</harp:MessageType>
                                       <harp:Payload xsi:type="beh:CreateEnableEncodersPayload">
@@ -1436,23 +1463,30 @@ Item2.Light as Light)</scr:Expression>
                                   <Edges>
                                     <Edge From="0" To="1" Label="Source1" />
                                     <Edge From="1" To="2" Label="Source1" />
-                                    <Edge From="1" To="12" Label="Source1" />
-                                    <Edge From="2" To="11" Label="Source1" />
+                                    <Edge From="1" To="16" Label="Source1" />
+                                    <Edge From="2" To="15" Label="Source1" />
                                     <Edge From="3" To="4" Label="Source1" />
                                     <Edge From="4" To="8" Label="Source1" />
                                     <Edge From="5" To="6" Label="Source1" />
                                     <Edge From="6" To="7" Label="Source1" />
                                     <Edge From="7" To="8" Label="Source2" />
                                     <Edge From="8" To="9" Label="Source1" />
-                                    <Edge From="9" To="10" Label="Source1" />
-                                    <Edge From="10" To="11" Label="Source2" />
-                                    <Edge From="11" To="13" Label="Source1" />
-                                    <Edge From="12" To="13" Label="Source2" />
+                                    <Edge From="9" To="12" Label="Source1" />
+                                    <Edge From="10" To="11" Label="Source1" />
+                                    <Edge From="11" To="12" Label="Source2" />
+                                    <Edge From="12" To="13" Label="Source1" />
                                     <Edge From="13" To="14" Label="Source1" />
-                                    <Edge From="14" To="15" Label="Source1" />
-                                    <Edge From="16" To="17" Label="Source1" />
+                                    <Edge From="14" To="15" Label="Source2" />
+                                    <Edge From="15" To="17" Label="Source1" />
+                                    <Edge From="16" To="17" Label="Source2" />
                                     <Edge From="17" To="18" Label="Source1" />
                                     <Edge From="18" To="19" Label="Source1" />
+                                    <Edge From="20" To="22" Label="Source1" />
+                                    <Edge From="21" To="22" Label="Source2" />
+                                    <Edge From="22" To="23" Label="Source1" />
+                                    <Edge From="23" To="24" Label="Source1" />
+                                    <Edge From="24" To="25" Label="Source1" />
+                                    <Edge From="25" To="26" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -2464,36 +2498,16 @@ Item2.Light as Light)</scr:Expression>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>EncoderData</Name>
+                    <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="dsp:FrequencyFilter">
-                      <dsp:SampleRate>44100</dsp:SampleRate>
-                      <dsp:Cutoff1>0</dsp:Cutoff1>
-                      <dsp:Cutoff2>0</dsp:Cutoff2>
-                      <dsp:KernelLength>60</dsp:KernelLength>
-                      <dsp:FilterType>LowPass</dsp:FilterType>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="LessThan">
-                    <Operand xsi:type="DoubleProperty">
-                      <Value>0.2</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:DistinctUntilChanged" />
+                    <Selector>TaskLogicControl.PositionControl.StopResponseConfig</Selector>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
+                    <Selector>VelocityThreshold</Selector>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>IsStopped</Name>
+                    <Name>StopVelocityThreshold</Name>
                   </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>InitialPosition</Name>
@@ -2582,6 +2596,60 @@ Item2.Light as Light)</scr:Expression>
                     <Name>CurrentPosition</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
+                    <Name>EncoderData</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SessionSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>TaskLogicControl.PositionControl.StopResponseConfig</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>FrequencyFilterCutoff</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Cutoff1" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:FrequencyFilter">
+                      <dsp:SampleRate>1000</dsp:SampleRate>
+                      <dsp:Cutoff1>0</dsp:Cutoff1>
+                      <dsp:Cutoff2>0</dsp:Cutoff2>
+                      <dsp:KernelLength>60</dsp:KernelLength>
+                      <dsp:FilterType>LowPass</dsp:FilterType>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>StopVelocityThreshold</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="LessThan">
+                    <Operand xsi:type="DoubleProperty">
+                      <Value>0.2</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:DistinctUntilChanged" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>IsStopped</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
                     <Name>CurrentPosition</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
@@ -2626,32 +2694,41 @@ Item2.Light as Light)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="0" To="5" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="6" Label="Source1" />
                   <Edge From="5" To="6" Label="Source2" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="8" To="10" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="7" To="14" Label="Source2" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="13" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="11" To="18" Label="Source2" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="17" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
                   <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="17" To="28" Label="Source1" />
+                  <Edge From="18" To="23" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="25" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source2" />
-                  <Edge From="25" To="27" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="22" To="23" Label="Source2" />
+                  <Edge From="23" To="26" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source2" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="29" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source2" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="32" To="35" Label="Source1" />
+                  <Edge From="33" To="34" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source2" />
+                  <Edge From="35" To="37" Label="Source1" />
+                  <Edge From="36" To="37" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
