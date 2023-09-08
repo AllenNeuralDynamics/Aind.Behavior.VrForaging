@@ -150,6 +150,10 @@
           "properties": {
             "gapSite": {
               "properties": {
+                "brightness":{
+                  "type": ["number", "null"],
+                  "default": null
+                },
                 "label": {
                   "$ref": "#/definitions/siteLabel",
                   "default": "Gap"
@@ -162,6 +166,10 @@
             },
             "interPatchSite": {
               "properties": {
+                "brightness":{
+                  "type": ["number", "null"],
+                  "default": null
+                },
                 "label": {
                   "$ref": "#/definitions/siteLabel",
                   "default": "InterPatch"
@@ -174,6 +182,10 @@
             },
             "rewardSite": {
               "properties": {
+                "brightness":{
+                  "type": ["number", "null"],
+                  "default": null
+                },
                 "label": {
                   "$ref": "#/definitions/siteLabel",
                   "default": "Reward"

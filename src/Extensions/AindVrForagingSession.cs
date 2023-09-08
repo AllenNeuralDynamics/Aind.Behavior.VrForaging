@@ -2130,9 +2130,25 @@ namespace AindVrForagingDataSchema
     public partial class GapSite
     {
     
+        private double? _brightness;
+    
         private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.Gap;
     
         private TruncatedExponential _lengthDistribution;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
+        public double? Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                _brightness = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
@@ -2167,6 +2183,7 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new GapSite
                 {
+                    Brightness = _brightness,
                     Label = _label,
                     LengthDistribution = _lengthDistribution
                 }));
@@ -2179,9 +2196,25 @@ namespace AindVrForagingDataSchema
     public partial class InterPatchSite
     {
     
+        private double? _brightness;
+    
         private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.InterPatch;
     
         private TruncatedExponential _lengthDistribution;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
+        public double? Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                _brightness = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
@@ -2216,6 +2249,7 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new InterPatchSite
                 {
+                    Brightness = _brightness,
                     Label = _label,
                     LengthDistribution = _lengthDistribution
                 }));
@@ -2228,9 +2262,25 @@ namespace AindVrForagingDataSchema
     public partial class RewardSite
     {
     
+        private double? _brightness;
+    
         private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.Reward;
     
         private TruncatedExponential _lengthDistribution;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
+        public double? Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                _brightness = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
@@ -2265,6 +2315,7 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new RewardSite
                 {
+                    Brightness = _brightness,
                     Label = _label,
                     LengthDistribution = _lengthDistribution
                 }));

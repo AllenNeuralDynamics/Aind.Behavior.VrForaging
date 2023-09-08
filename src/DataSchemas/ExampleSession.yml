@@ -74,18 +74,21 @@ taskLogicControl:
       velocityThreshold: 10
   virtualSiteGeneration:
    gapSite:
+     brightness: 0.5
      label: Gap
      lengthDistribution:
        maximum: 30
        mean: 18
        minimum: 10
    rewardSite:
+     brightness: 0.5
      label: Reward
      lengthDistribution:
        maximum: 15
        mean: 15
        minimum: 15
    interPatchSite:
+     brightness: 1
      label: "InterPatch"
      lengthDistribution:
        maximum: 50
