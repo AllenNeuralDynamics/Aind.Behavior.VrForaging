@@ -890,12 +890,47 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class VideoCaptureDevice
+    {
+    
+        private int _index = 0;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
+        public int Index
+        {
+            get
+            {
+                return _index;
+            }
+            set
+            {
+                _index = value;
+            }
+        }
+    
+        public System.IObservable<VideoCaptureDevice> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new VideoCaptureDevice
+                {
+                    Index = _index
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpBoard
     {
     
         private HarpBoardDeviceType _deviceType;
     
         private string _portName;
+    
+        private string _serialNumber;
+    
+        private string _deviceName;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceType")]
@@ -924,13 +959,41 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serialNumber")]
+        public string SerialNumber
+        {
+            get
+            {
+                return _serialNumber;
+            }
+            set
+            {
+                _serialNumber = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceName")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
+            }
+        }
+    
         public System.IObservable<HarpBoard> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new HarpBoard
                 {
                     DeviceType = _deviceType,
-                    PortName = _portName
+                    PortName = _portName,
+                    SerialNumber = _serialNumber,
+                    DeviceName = _deviceName
                 }));
         }
     }
@@ -1555,6 +1618,10 @@ namespace AindVrForagingDataSchema
     
         private SpinnakerCamera _mainCamera;
     
+        private VideoCaptureDevice _auxiliaryCamera0;
+    
+        private VideoCaptureDevice _auxiliaryCamera1;
+    
         private HarpBoard _harpBehaviorBoard;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -1628,6 +1695,34 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliaryCamera0")]
+        public VideoCaptureDevice AuxiliaryCamera0
+        {
+            get
+            {
+                return _auxiliaryCamera0;
+            }
+            set
+            {
+                _auxiliaryCamera0 = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliaryCamera1")]
+        public VideoCaptureDevice AuxiliaryCamera1
+        {
+            get
+            {
+                return _auxiliaryCamera1;
+            }
+            set
+            {
+                _auxiliaryCamera1 = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehaviorBoard")]
         public HarpBoard HarpBehaviorBoard
         {
@@ -1651,6 +1746,8 @@ namespace AindVrForagingDataSchema
                     Valves = _valves,
                     Speaker = _speaker,
                     MainCamera = _mainCamera,
+                    AuxiliaryCamera0 = _auxiliaryCamera0,
+                    AuxiliaryCamera1 = _auxiliaryCamera1,
                     HarpBehaviorBoard = _harpBehaviorBoard
                 }));
         }
@@ -2168,6 +2265,11 @@ namespace AindVrForagingDataSchema
             return Process<SpinnakerCamera>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<VideoCaptureDevice> source)
+        {
+            return Process<VideoCaptureDevice>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
         {
             return Process<HarpBoard>(source);
@@ -2281,6 +2383,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoCaptureDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Texture>))]

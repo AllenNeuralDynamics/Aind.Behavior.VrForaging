@@ -14,6 +14,12 @@
         },
         "portName": {
           "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "deviceName": {
+          "type": "string"
         }
       },
       "required": [
@@ -58,6 +64,16 @@
         "encoderResolution": {
           "default": 65536,
           "type": "number"
+        }
+      }
+    },
+    "videoCaptureDevice":{
+      "type":"object",
+      "properties": {
+        "index" : {
+          "minimum": 0,
+          "default": 0,
+          "type": "integer"
         }
       }
     },

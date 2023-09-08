@@ -151,6 +151,12 @@
         "mainCamera": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
         },
+        "auxiliaryCamera0": {
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/videoCaptureDevice"
+        },
+        "auxiliaryCamera1": {
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/videoCaptureDevice"
+        },
         "harpBehaviorBoard": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
         }
