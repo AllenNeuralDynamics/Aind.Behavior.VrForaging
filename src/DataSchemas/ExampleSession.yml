@@ -14,12 +14,11 @@ hardware:
   screen:
     monitorCalibrationDirectory: "Calibration\\Monitors"
     textureAssetDirectory:  "Textures"
-    initialAgentPosition:
-      x: 0
-      y: 4
-      z: 0
   treadmill:
-    gain: 1.0
+    model: headfix
+    wheelDiameter: 15
+    encoderResolution: 65536
+    invertDirection: true
   valves:
     water:
       model: Leeblahblah
@@ -51,32 +50,65 @@ hardware:
     serialNumber: "0"
     colorProcessing: Default
     binning: 1
+  auxiliaryCamera0:
+    index: 0
+  auxiliaryCamera1:
+    index: 1
   speaker:
     model: buzzer
     pin: DO1
     pwmDefaultPulseDuration: 0.2
     pwmFrequency: 500
-taskLogicHelper:
- virtualSiteGeneration:
+taskLogicControl:
+  taskStage: Habituation
+  habituationSettings:
+    distanceToReward: 10
+    reward:
+      delay: 0
+      probability: 1
+      amount: 50
+      operantLogic:
+        isOperant: true
+        stopDuration: 0
+        timeToCollect: 1000000
+  positionControl:
+    gain:
+      x: 1
+      y: 1
+      z: 1
+    initialPosition:
+      x: 0
+      y: 4
+      z: -1
+    stopResponseConfig:
+      frequencyFilterCutoff: 5
+      velocityThreshold: 10
+  odorControl:
+    valveMaxOpenTime: 5.0
+  virtualSiteGeneration:
    gapSite:
+     brightness: 0.5
      label: Gap
      lengthDistribution:
        maximum: 30
        mean: 18
        minimum: 10
    rewardSite:
+     brightness: 0.5
      label: Reward
      lengthDistribution:
        maximum: 15
        mean: 15
        minimum: 15
    interPatchSite:
+     brightness: 1
      label: "InterPatch"
      lengthDistribution:
        maximum: 50
        mean: 25
        minimum: 10
 environmentStatistics:
+  firstState: 0
   transitionMatrix:
     data:
       - [0, 1]
