@@ -122,6 +122,15 @@
     },
     "taskLogicControl": {
       "properties": {
+        "odorControl":{
+          "type": "object",
+          "properties": {
+            "valveMaxOpenTime": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
         "positionControl": {
           "properties": {
             "gain": {

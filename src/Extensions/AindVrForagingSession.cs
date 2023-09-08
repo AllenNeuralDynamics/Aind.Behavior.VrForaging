@@ -1726,9 +1726,25 @@ namespace AindVrForagingDataSchema
     public partial class TaskLogicControl
     {
     
+        private OdorControl _odorControl;
+    
         private PositionControl _positionControl;
     
         private VirtualSiteGeneration _virtualSiteGeneration;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorControl")]
+        public OdorControl OdorControl
+        {
+            get
+            {
+                return _odorControl;
+            }
+            set
+            {
+                _odorControl = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="positionControl")]
@@ -1763,6 +1779,7 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new TaskLogicControl
                 {
+                    OdorControl = _odorControl,
                     PositionControl = _positionControl,
                     VirtualSiteGeneration = _virtualSiteGeneration
                 }));
@@ -1941,6 +1958,37 @@ namespace AindVrForagingDataSchema
                     Odor1 = _odor1,
                     Odor2 = _odor2,
                     Water = _water
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class OdorControl
+    {
+    
+        private double _valveMaxOpenTime;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveMaxOpenTime")]
+        public double ValveMaxOpenTime
+        {
+            get
+            {
+                return _valveMaxOpenTime;
+            }
+            set
+            {
+                _valveMaxOpenTime = value;
+            }
+        }
+    
+        public System.IObservable<OdorControl> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new OdorControl
+                {
+                    ValveMaxOpenTime = _valveMaxOpenTime
                 }));
         }
     }
@@ -2471,6 +2519,11 @@ namespace AindVrForagingDataSchema
             return Process<Valves>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<OdorControl> source)
+        {
+            return Process<OdorControl>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PositionControl> source)
         {
             return Process<PositionControl>(source);
@@ -2534,6 +2587,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<StopResponseConfig>))]
