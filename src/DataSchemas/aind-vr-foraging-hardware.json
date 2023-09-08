@@ -14,6 +14,12 @@
         },
         "portName": {
           "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "deviceName": {
+          "type": "string"
         }
       },
       "required": [
@@ -42,6 +48,38 @@
         }
       },
       "type": "object"
+    },
+    "treadmill": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "default": "headfix",
+          "type": "string"
+        },
+        "wheelDiameter": {
+          "default": 15,
+          "minimum": 0,
+          "type": "number"
+        },
+        "encoderResolution": {
+          "default": 65536,
+          "type": "number"
+        },
+        "invertDirection": {
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "videoCaptureDevice":{
+      "type":"object",
+      "properties": {
+        "index" : {
+          "minimum": 0,
+          "default": 0,
+          "type": "integer"
+        }
+      }
     },
     "spinnakerCamera": {
       "properties": {
