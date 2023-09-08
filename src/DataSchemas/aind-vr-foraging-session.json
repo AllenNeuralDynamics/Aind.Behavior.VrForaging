@@ -6,16 +6,19 @@
       "$ref": "aind-vr-foraging-common.json#/definitions/visualCorridor"
     },
     "siteLabel": {
-      "enum": [
-        "Unspecified",
-        "Gap",
-        "InterPatch",
-        "Reward"
-      ],
+      "enum": ["Unspecified", "Gap", "InterPatch", "Reward"],
       "type": "string"
     },
     "virtualSite": {
       "$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"
+    },
+    "reward": {
+      "$ref": "aind-vr-foraging-common.json#/definitions/rewardSpecifications"
+    },
+    "taskStage": {
+      "enum": ["Habituation", "Foraging"],
+      "default": "Habituation",
+      "type": "string"
     }
   },
   "properties": {
@@ -30,6 +33,10 @@
         },
         "transitionMatrix": {
           "$ref": "aind-vr-foraging-common.json#/definitions/matrix2d"
+        },
+        "firstState": {
+          "type": ["null", "integer"],
+          "default": null
         }
       },
       "type": "object"
@@ -69,11 +76,7 @@
               "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
             }
           },
-          "required": [
-            "water",
-            "odor1",
-            "odor2"
-          ],
+          "required": ["water", "odor1", "odor2"],
           "type": "object"
         }
       },
@@ -83,10 +86,7 @@
       "properties": {
         "commitHash": {
           "default": null,
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": ["null", "string"]
         },
         "experiment": {
           "type": "string"
@@ -96,10 +96,7 @@
           "type": "string"
         },
         "rngSeed": {
-          "type": [
-            "null",
-            "number"
-          ]
+          "type": ["null", "number"]
         },
         "rootPath": {
           "type": "string"
@@ -122,7 +119,7 @@
     },
     "taskLogicControl": {
       "properties": {
-        "odorControl":{
+        "odorControl": {
           "type": "object",
           "properties": {
             "valveMaxOpenTime": {
@@ -155,11 +152,28 @@
           },
           "type": "object"
         },
+        "taskStage": {
+          "$ref": "#/definitions/taskStage"
+        },
+        "habituationSettings": {
+          "type": ["null", "object"],
+          "properties": {
+            "distanceToReward": {
+              "type": "number",
+              "minimum": 0
+            },
+            "reward": {
+              "$ref": "#/definitions/reward"
+            }
+          },
+          "default": null,
+          "required": ["distanceToReward", "reward"]
+        },
         "virtualSiteGeneration": {
           "properties": {
             "gapSite": {
               "properties": {
-                "brightness":{
+                "brightness": {
                   "type": ["number", "null"],
                   "default": null
                 },
@@ -175,7 +189,7 @@
             },
             "interPatchSite": {
               "properties": {
-                "brightness":{
+                "brightness": {
                   "type": ["number", "null"],
                   "default": null
                 },
@@ -191,7 +205,7 @@
             },
             "rewardSite": {
               "properties": {
-                "brightness":{
+                "brightness": {
                   "type": ["number", "null"],
                   "default": null
                 },
@@ -206,15 +220,13 @@
               "type": "object"
             }
           },
-          "required": [
-            "interPatchSite",
-            "rewardSite",
-            "gapSite"
-          ],
-          "type": "object"
+          "required": ["interPatchSite", "rewardSite", "gapSite"],
+          "default": null,
+          "type": ["null", "object"]
         }
       },
-      "type": "object"
+      "type": "object",
+      "required": ["taskStage", "positionControl", "odorControl"]
     }
   },
   "required": [
