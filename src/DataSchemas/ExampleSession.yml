@@ -60,6 +60,17 @@ hardware:
     pwmDefaultPulseDuration: 0.2
     pwmFrequency: 500
 taskLogicControl:
+  taskStage: Habituation
+  habituationSettings:
+    distanceToReward: 10
+    reward:
+      delay: 0
+      probability: 1
+      amount: 50
+      operantLogic:
+        isOperant: true
+        stopDuration: 0
+        timeToCollect: 1000000
   positionControl:
     gain:
       x: 1
@@ -97,6 +108,7 @@ taskLogicControl:
        mean: 25
        minimum: 10
 environmentStatistics:
+  firstState: 0
   transitionMatrix:
     data:
       - [0, 1]
