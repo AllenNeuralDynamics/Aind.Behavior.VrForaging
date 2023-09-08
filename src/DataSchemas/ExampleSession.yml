@@ -72,6 +72,8 @@ taskLogicControl:
     stopResponseConfig:
       frequencyFilterCutoff: 5
       velocityThreshold: 10
+  odorControl:
+    valveMaxOpenTime: 5.0
   virtualSiteGeneration:
    gapSite:
      brightness: 0.5
