@@ -53,6 +53,10 @@ hardware:
     serialNumber: "0"
     colorProcessing: Default
     binning: 1
+  auxiliaryCamera0:
+    index: 0
+  auxiliaryCamera1:
+    index: 1
   speaker:
     model: buzzer
     pin: DO1
