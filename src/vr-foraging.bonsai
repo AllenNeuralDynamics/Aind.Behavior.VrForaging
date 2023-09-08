@@ -487,16 +487,34 @@
                           <Name>ThisPatch</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>RewardSpecifications.OperantLogic.IsOperant</Selector>
+                          <Selector>RewardSpecifications</Selector>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>OperantLogic</Selector>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:AsyncSubject">
+                          <Name>OperantLogic</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>OperantLogic</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>IsOperant</Selector>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>IsOperantMode</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisPatch</Name>
+                          <Name>OperantLogic</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>RewardSpecifications.OperantLogic.TimeToCollect</Selector>
+                          <Selector>TimeToCollect</Selector>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
@@ -505,10 +523,10 @@
                           <Name>TimeToCollectReward</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisPatch</Name>
+                          <Name>OperantLogic</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>RewardSpecifications.OperantLogic.StopDuration</Selector>
+                          <Selector>StopDuration</Selector>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
@@ -533,12 +551,17 @@
                         <Edge From="17" To="18" Label="Source1" />
                         <Edge From="19" To="20" Label="Source1" />
                         <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
                         <Edge From="22" To="23" Label="Source1" />
                         <Edge From="23" To="24" Label="Source1" />
-                        <Edge From="24" To="25" Label="Source1" />
+                        <Edge From="25" To="26" Label="Source1" />
                         <Edge From="26" To="27" Label="Source1" />
-                        <Edge From="27" To="28" Label="Source1" />
                         <Edge From="28" To="29" Label="Source1" />
+                        <Edge From="29" To="30" Label="Source1" />
+                        <Edge From="30" To="31" Label="Source1" />
+                        <Edge From="32" To="33" Label="Source1" />
+                        <Edge From="33" To="34" Label="Source1" />
+                        <Edge From="34" To="35" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -4094,6 +4117,9 @@ Item4 as DroppedFrames)</scr:Expression>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>StopVelocityThreshold</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>StopDuration</Name>
             </Expression>
           </Nodes>
           <Edges />
