@@ -64,6 +64,10 @@
         "encoderResolution": {
           "default": 65536,
           "type": "number"
+        },
+        "invertDirection": {
+          "default": false,
+          "type": "boolean"
         }
       }
     },
