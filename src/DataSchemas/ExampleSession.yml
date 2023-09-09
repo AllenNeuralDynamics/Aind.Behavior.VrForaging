@@ -42,12 +42,12 @@ hardware:
         slope: 1
   harpBehaviorBoard:
     deviceType: behavior
-    portName: COM5
+    portName: COM3
   mainCamera:
     frameRate: 30
     exposure: 1000
     gain: 0
-    serialNumber: "0"
+    serialNumber: "23113702"
     colorProcessing: Default
     binning: 1
   auxiliaryCamera0:

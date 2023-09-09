@@ -49,7 +49,7 @@
               <Selector>Hardware.MainCamera.FrameRate,Hardware.MainCamera.Exposure</Selector>
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>((1.0 / Item1) * 1000000) + 1000 &gt; Item2</scr:Expression>
+              <scr:Expression>((1.0 / Item1) * 1000000) &lt; Item2 + 1000</scr:Expression>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Workflow>
@@ -577,7 +577,7 @@
                         </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
+                            <Value>0</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -1298,7 +1298,7 @@ Item2.Light as Light)</scr:Expression>
                                   <harp:VisualIndicators>On</harp:VisualIndicators>
                                   <harp:Heartbeat>Enabled</harp:Heartbeat>
                                   <harp:IgnoreErrors>false</harp:IgnoreErrors>
-                                  <harp:PortName>COM5</harp:PortName>
+                                  <harp:PortName>COM3</harp:PortName>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="rx:PublishSubject">
@@ -1423,8 +1423,13 @@ Item2.Light as Light)</scr:Expression>
                                     <Expression xsi:type="MulticastSubject">
                                       <Name>HarpBehaviorCommands</Name>
                                     </Expression>
-                                    <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Int32">
-                                      <rx:Name>ValveOpenTimeMs</rx:Name>
+                                    <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
+                                      <rx:Name>ValveOpenTime</rx:Name>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>1000</Value>
+                                      </Operand>
                                     </Expression>
                                     <Expression xsi:type="beh:Format">
                                       <harp:MessageType>Write</harp:MessageType>
@@ -1454,9 +1459,10 @@ Item2.Light as Light)</scr:Expression>
                                     <Edge From="3" To="4" Label="Source1" />
                                     <Edge From="5" To="6" Label="Source1" />
                                     <Edge From="6" To="7" Label="Source1" />
-                                    <Edge From="8" To="9" Label="Source1" />
+                                    <Edge From="7" To="8" Label="Source1" />
                                     <Edge From="9" To="10" Label="Source1" />
                                     <Edge From="10" To="11" Label="Source1" />
+                                    <Edge From="11" To="12" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -1619,7 +1625,7 @@ Item2.Light as Light)</scr:Expression>
                                         <dsp:Min>0</dsp:Min>
                                         <dsp:Max>1</dsp:Max>
                                         <dsp:RangeMin>0</dsp:RangeMin>
-                                        <dsp:RangeMax>1</dsp:RangeMax>
+                                        <dsp:RangeMax>-0.00071905349432139424</dsp:RangeMax>
                                         <dsp:RescaleType>Linear</dsp:RescaleType>
                                       </Combinator>
                                     </Expression>
@@ -1755,8 +1761,13 @@ Item2.Light as Light)</scr:Expression>
                                 <Name>Buzzer</Name>
                                 <Workflow>
                                   <Nodes>
-                                    <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Int32">
+                                    <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
                                       <rx:Name>AudioDuration</rx:Name>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>1000</Value>
+                                      </Operand>
                                     </Expression>
                                     <Expression xsi:type="beh:Format">
                                       <harp:MessageType>Write</harp:MessageType>
@@ -1861,13 +1872,14 @@ Item2.Light as Light)</scr:Expression>
                                   <Edges>
                                     <Edge From="0" To="1" Label="Source1" />
                                     <Edge From="1" To="2" Label="Source1" />
-                                    <Edge From="3" To="4" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
                                     <Edge From="4" To="5" Label="Source1" />
-                                    <Edge From="6" To="7" Label="Source1" />
+                                    <Edge From="5" To="6" Label="Source1" />
                                     <Edge From="7" To="8" Label="Source1" />
-                                    <Edge From="9" To="12" Label="Source1" />
-                                    <Edge From="10" To="11" Label="Source1" />
-                                    <Edge From="11" To="12" Label="Source2" />
+                                    <Edge From="8" To="9" Label="Source1" />
+                                    <Edge From="10" To="13" Label="Source1" />
+                                    <Edge From="11" To="12" Label="Source1" />
+                                    <Edge From="12" To="13" Label="Source2" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -2300,7 +2312,7 @@ Item2.Light as Light)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="vid:VideoCaptureDevice">
-                                  <vid:Index>0</vid:Index>
+                                  <vid:Index>1</vid:Index>
                                   <vid:CaptureProperties />
                                 </Combinator>
                               </Expression>
@@ -2574,7 +2586,7 @@ Item2.Light as Light)</scr:Expression>
                     <scr:Expression>Item1 * Item2.Slope + Item2.Intercept</scr:Expression>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>ValveOpenTimeMs</Name>
+                    <Name>ValveOpenTime</Name>
                   </Expression>
                   <Expression xsi:type="Unit" />
                   <Expression xsi:type="MulticastSubject">
@@ -2662,6 +2674,9 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>TaskLogicControl.OdorControl.ValveMaxOpenTime</Selector>
                   </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                  </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
                       <Property Name="MaxOpenTime" />
@@ -2713,6 +2728,9 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>TaskLogicControl.OdorControl.ValveMaxOpenTime</Selector>
                   </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                  </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
                       <Property Name="MaxOpenTime" />
@@ -2727,21 +2745,23 @@ Item2.Light as Light)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source2" />
-                  <Edge From="0" To="9" Label="Source1" />
+                  <Edge From="0" To="10" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="7" Label="Source1" />
+                  <Edge From="3" To="8" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source2" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source2" />
+                  <Edge From="8" To="9" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="15" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="17" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source2" />
+                  <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source2" />
+                  <Edge From="17" To="18" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2811,7 +2831,7 @@ Item2.Light as Light)</scr:Expression>
                     <Combinator xsi:type="rx:Concat" />
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Seconds</Selector>
+                    <Selector>Value</Selector>
                   </Expression>
                   <Expression xsi:type="rx:Accumulate" />
                   <Expression xsi:type="InputMapping">
@@ -2835,14 +2855,20 @@ Item2.Light as Light)</scr:Expression>
                     <Combinator xsi:type="gl:CreateVector3">
                       <gl:X>0</gl:X>
                       <gl:Y>4</gl:Y>
-                      <gl:Z>106</gl:Z>
+                      <gl:Z>54.7439041</gl:Z>
                     </Combinator>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Seconds</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Zip" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:SampleOnUpdateFrame" />
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>CurrentPosition</Name>
@@ -2870,7 +2896,7 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="dsp:FrequencyFilter">
                       <dsp:SampleRate>1000</dsp:SampleRate>
-                      <dsp:Cutoff1>0</dsp:Cutoff1>
+                      <dsp:Cutoff1>5</dsp:Cutoff1>
                       <dsp:Cutoff2>0</dsp:Cutoff2>
                       <dsp:KernelLength>60</dsp:KernelLength>
                       <dsp:FilterType>LowPass</dsp:FilterType>
@@ -2886,17 +2912,23 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="LessThan">
                     <Operand xsi:type="DoubleProperty">
-                      <Value>0.2</Value>
+                      <Value>10</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:DistinctUntilChanged" />
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
+                    <Selector>Seconds</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:SampleOnUpdateFrame" />
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>IsStopped</Name>
@@ -2951,36 +2983,40 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="4" To="6" Label="Source1" />
                   <Edge From="5" To="6" Label="Source2" />
                   <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="6" To="14" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="7" To="14" Label="Source2" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="13" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source2" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="13" To="15" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source2" />
                   <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="17" To="28" Label="Source1" />
-                  <Edge From="18" To="23" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="19" To="30" Label="Source1" />
+                  <Edge From="20" To="25" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source2" />
-                  <Edge From="23" To="26" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source2" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source2" />
+                  <Edge From="25" To="28" Label="Source1" />
                   <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="27" To="29" Label="Source1" />
-                  <Edge From="28" To="29" Label="Source2" />
-                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source2" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="31" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source2" />
                   <Edge From="31" To="32" Label="Source1" />
-                  <Edge From="32" To="35" Label="Source1" />
+                  <Edge From="32" To="33" Label="Source1" />
                   <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source2" />
-                  <Edge From="35" To="37" Label="Source1" />
-                  <Edge From="36" To="37" Label="Source2" />
+                  <Edge From="35" To="36" Label="Source1" />
+                  <Edge From="36" To="39" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="38" To="39" Label="Source2" />
+                  <Edge From="39" To="41" Label="Source1" />
+                  <Edge From="40" To="41" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -4447,6 +4483,16 @@ Item2 as Start
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:SubscribeWhen" />
       </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="gli:KeyDown">
+          <gli:Key>Keypad0</gli:Key>
+          <gli:Modifiers>Control</gli:Modifiers>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Unit" />
+      <Expression xsi:type="MulticastSubject">
+        <Name>StartExperiment</Name>
+      </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Debug</Name>
         <Workflow>
@@ -4803,6 +4849,8 @@ Item4 as DroppedFrames)</scr:Expression>
       <Edge From="11" To="12" Label="Source1" />
       <Edge From="13" To="15" Label="Source1" />
       <Edge From="14" To="15" Label="Source2" />
+      <Edge From="16" To="17" Label="Source1" />
+      <Edge From="17" To="18" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
