@@ -1424,12 +1424,7 @@ Item2.Light as Light)</scr:Expression>
                                       <Name>HarpBehaviorCommands</Name>
                                     </Expression>
                                     <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
-                                      <rx:Name>ValveOpenTime</rx:Name>
-                                    </Expression>
-                                    <Expression xsi:type="Multiply">
-                                      <Operand xsi:type="IntProperty">
-                                        <Value>1000</Value>
-                                      </Operand>
+                                      <rx:Name>ValveOpenTimeMs</rx:Name>
                                     </Expression>
                                     <Expression xsi:type="beh:Format">
                                       <harp:MessageType>Write</harp:MessageType>
@@ -1459,10 +1454,9 @@ Item2.Light as Light)</scr:Expression>
                                     <Edge From="3" To="4" Label="Source1" />
                                     <Edge From="5" To="6" Label="Source1" />
                                     <Edge From="6" To="7" Label="Source1" />
-                                    <Edge From="7" To="8" Label="Source1" />
+                                    <Edge From="8" To="9" Label="Source1" />
                                     <Edge From="9" To="10" Label="Source1" />
                                     <Edge From="10" To="11" Label="Source1" />
-                                    <Edge From="11" To="12" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -2581,8 +2575,43 @@ Item2.Light as Light)</scr:Expression>
                     <scr:Name>RewardToTime</scr:Name>
                     <scr:Expression>Item1 * Item2.Slope + Item2.Intercept</scr:Expression>
                   </Expression>
+                  <Expression xsi:type="Multiply">
+                    <Operand xsi:type="DoubleProperty">
+                      <Value>1000</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" Selector="it" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="IntProperty">
+                      <Value>0</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>GreaterThan0</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="GreaterThan">
+                          <Operand xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>ValveOpenTime</Name>
+                    <Name>ValveOpenTimeMs</Name>
                   </Expression>
                   <Expression xsi:type="Unit" />
                   <Expression xsi:type="MulticastSubject">
@@ -2600,6 +2629,10 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2822,7 +2855,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Disable">
                     <Builder xsi:type="SubscribeSubject">
-                    <Name>EncoderData</Name>
+                      <Name>EncoderData</Name>
                     </Builder>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -3176,26 +3209,26 @@ Item2.Light as Light)</scr:Expression>
                                     </Expression>
                                     <Expression xsi:type="rx:AsyncSubject">
                                       <Name>Count</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
                                       <Name>InitPosition</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Value</Selector>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Z</Selector>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Start" />
-                                </PropertyMappings>
-                              </Expression>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Value</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Z</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Take">
+                                        <rx:Count>1</rx:Count>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="PropertyMapping">
+                                      <PropertyMappings>
+                                        <Property Name="Start" />
+                                      </PropertyMappings>
+                                    </Expression>
                                     <Expression xsi:type="SubscribeSubject">
                                       <Name>Count</Name>
                                     </Expression>
@@ -3204,12 +3237,12 @@ Item2.Light as Light)</scr:Expression>
                                         <Property Name="Count" />
                                       </PropertyMappings>
                                     </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Range">
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Range">
                                         <rx:Start>-1</rx:Start>
                                         <rx:Count>9</rx:Count>
-                                </Combinator>
-                              </Expression>
+                                      </Combinator>
+                                    </Expression>
                                     <Expression xsi:type="WorkflowOutput" />
                                   </Nodes>
                                   <Edges>
