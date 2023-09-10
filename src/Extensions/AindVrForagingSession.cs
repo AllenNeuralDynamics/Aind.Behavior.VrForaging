@@ -2131,6 +2131,8 @@ namespace AindVrForagingDataSchema
     
         private Reward _reward;
     
+        private double? _brightness;
+    
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distanceToReward")]
         public double DistanceToReward
         {
@@ -2158,13 +2160,28 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
+        public double? Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                _brightness = value;
+            }
+        }
+    
         public System.IObservable<HabituationSettings> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new HabituationSettings
                 {
                     DistanceToReward = _distanceToReward,
-                    Reward = _reward
+                    Reward = _reward,
+                    Brightness = _brightness
                 }));
         }
     }
