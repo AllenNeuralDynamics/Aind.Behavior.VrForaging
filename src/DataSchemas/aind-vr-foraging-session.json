@@ -164,6 +164,10 @@
             },
             "reward": {
               "$ref": "#/definitions/reward"
+            },
+            "brightness": {
+              "type": ["number", "null"],
+              "default": null
             }
           },
           "default": null,

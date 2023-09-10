@@ -63,6 +63,7 @@ taskLogicControl:
   taskStage: Habituation
   habituationSettings:
     distanceToReward: 10
+    brightness: 0.5
     reward:
       delay: 0
       probability: 1
