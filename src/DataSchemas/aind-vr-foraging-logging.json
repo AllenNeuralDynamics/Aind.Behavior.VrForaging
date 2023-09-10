@@ -2,6 +2,33 @@
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
   "definitions": {
+    "softwareEvent":{
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "number"
+        },
+        "timestampSource": {
+          "type": "string",
+          "enum": ["harp", "render"],
+          "default": "harp"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "name":{
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        },
+        "dataType":{
+          "type": "string",
+          "enum": ["string", "number", "boolean", "object", "array", "null"]
+        }
+      }
+    },
     "harpLogger":{
       "type": "object",
       "properties": {
