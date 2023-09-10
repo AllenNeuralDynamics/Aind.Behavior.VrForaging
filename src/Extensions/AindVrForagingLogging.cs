@@ -11,6 +11,120 @@ namespace AindVrForagingDataSchema.Logging
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class SoftwareEvent
+    {
+    
+        private double _timestamp;
+    
+        private SoftwareEventTimestampSource _timestampSource = AindVrForagingDataSchema.Logging.SoftwareEventTimestampSource.Harp;
+    
+        private int _index;
+    
+        private string _name;
+    
+        private object _data;
+    
+        private SoftwareEventDataType _dataType;
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timestamp")]
+        public double Timestamp
+        {
+            get
+            {
+                return _timestamp;
+            }
+            set
+            {
+                _timestamp = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timestampSource")]
+        public SoftwareEventTimestampSource TimestampSource
+        {
+            get
+            {
+                return _timestampSource;
+            }
+            set
+            {
+                _timestampSource = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
+        public int Index
+        {
+            get
+            {
+                return _index;
+            }
+            set
+            {
+                _index = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="data")]
+        public object Data
+        {
+            get
+            {
+                return _data;
+            }
+            set
+            {
+                _data = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="dataType")]
+        public SoftwareEventDataType DataType
+        {
+            get
+            {
+                return _dataType;
+            }
+            set
+            {
+                _dataType = value;
+            }
+        }
+    
+        public System.IObservable<SoftwareEvent> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new SoftwareEvent
+                {
+                    Timestamp = _timestamp,
+                    TimestampSource = _timestampSource,
+                    Index = _index,
+                    Name = _name,
+                    Data = _data,
+                    DataType = _dataType
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpLogger
     {
     
@@ -182,6 +296,40 @@ namespace AindVrForagingDataSchema.Logging
     }
 
 
+    public enum SoftwareEventTimestampSource
+    {
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp")]
+        Harp = 0,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
+        Render = 1,
+    }
+
+
+    public enum SoftwareEventDataType
+    {
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="string")]
+        String = 0,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number")]
+        Number = 1,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="boolean")]
+        Boolean = 2,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="object")]
+        Object = 3,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="array")]
+        Array = 4,
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="null")]
+        Null = 5,
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into YAML strings.
     /// </summary>
@@ -198,6 +346,11 @@ namespace AindVrForagingDataSchema.Logging
                 var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
                 return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
             });
+        }
+
+        public System.IObservable<string> Process(System.IObservable<SoftwareEvent> source)
+        {
+            return Process<SoftwareEvent>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<HarpLogger> source)
@@ -222,6 +375,7 @@ namespace AindVrForagingDataSchema.Logging
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SoftwareEvent>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingLogging>))]
