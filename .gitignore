@@ -12,3 +12,4 @@ Bonsai.exe.WebView2
 *.exe.settings
 *.bonsai.layout
 local
+.venv
