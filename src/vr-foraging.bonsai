@@ -18,6 +18,7 @@
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:p5="clr-namespace:AindVrForagingDataSchema.Logging;assembly=Extensions"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -2469,6 +2470,29 @@ Item2.Light as Light)</scr:Expression>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSchema</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:SerializeToYaml" />
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>LoggingRootPath</Name>
+            </Expression>
+            <Expression xsi:type="Format">
+              <Format>{0}\config.yml</Format>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Path" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p5:YamlWriter">
+                <p5:Suffix>None</p5:Suffix>
+                <p5:Overwrite>false</p5:Overwrite>
+              </Combinator>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -2492,6 +2516,11 @@ Item2.Light as Light)</scr:Expression>
             <Edge From="21" To="24" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
             <Edge From="23" To="24" Label="Source2" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="30" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="30" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>
