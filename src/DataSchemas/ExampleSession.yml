@@ -79,8 +79,8 @@ taskLogicControl:
       z: 1
     initialPosition:
       x: 0
-      y: 4
-      z: -1
+      y: 2.56
+      z: 0
     stopResponseConfig:
       frequencyFilterCutoff: 5
       velocityThreshold: 10
