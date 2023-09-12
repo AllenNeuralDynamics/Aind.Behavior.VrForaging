@@ -20,6 +20,9 @@
                  xmlns:p5="clr-namespace:AindVrForagingDataSchema.Logging;assembly=Extensions"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
+                 xmlns:p6="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
+                 xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
+                 xmlns:p7="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -5380,25 +5383,107 @@ Item4 as DroppedFrames)</scr:Expression>
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
-              <Name>QCDiagnosis</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
               <Name>MainCameraFrameEvent</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value.Image</Selector>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p6:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera0</Name>
             </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value</Selector>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p6:IplImageVisualizer" />
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera1</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value</Selector>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p6:IplImageVisualizer" />
+            </Expression>
+            <Expression xsi:type="viz:TableLayoutPanelBuilder">
+              <viz:ColumnCount>3</viz:ColumnCount>
+              <viz:RowCount>1</viz:RowCount>
+              <viz:ColumnStyles />
+              <viz:RowStyles />
+              <viz:CellSpans />
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>QCDiagnosis</Name>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>CurrentPosition</Name>
             </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value.Z</Selector>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:ObjectTextVisualizer" />
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>LickEvent</Name>
             </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:ObjectTextVisualizer" />
+            </Expression>
+            <Expression xsi:type="viz:TableLayoutPanelBuilder">
+              <viz:ColumnCount>2</viz:ColumnCount>
+              <viz:RowCount>2</viz:RowCount>
+              <viz:ColumnStyles />
+              <viz:RowStyles />
+              <viz:CellSpans>
+                <viz:CellSpan ColumnSpan="2" RowSpan="1" />
+                <viz:CellSpan ColumnSpan="1" RowSpan="1" />
+                <viz:CellSpan ColumnSpan="1" RowSpan="1" />
+              </viz:CellSpans>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
+            </Expression>
+            <Expression xsi:type="viz:TableLayoutPanelBuilder">
+              <viz:ColumnCount>1</viz:ColumnCount>
+              <viz:RowCount>2</viz:RowCount>
+              <viz:ColumnStyles />
+              <viz:RowStyles />
+              <viz:CellSpans />
+            </Expression>
           </Nodes>
-          <Edges />
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="9" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="9" Label="Source2" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source3" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="20" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="18" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="18" Label="Source2" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source3" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source2" />
+          </Edges>
         </Workflow>
       </Expression>
     </Nodes>
