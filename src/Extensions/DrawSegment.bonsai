@@ -115,6 +115,7 @@ Item2 as PostCorridorSpecs
               <scr:Expression>new(
 CorridorSpecs.Width as Width,
 CorridorSpecs.Length as Length,
+CorridorSpecs.Height as Height,
 CorridorSpecs.Width / CorridorSpecs.Textures.Floor.TextureSize.X  as TextureScalingX,
 CorridorSpecs.Height / CorridorSpecs.Textures.Floor.TextureSize.Y  as TextureScalingY,
 PostCorridorSpecs.CenterZ as CenterZ)</scr:Expression>
@@ -185,6 +186,7 @@ PostCorridorSpecs.CenterZ as CenterZ)</scr:Expression>
               <scr:Expression>new(
 CorridorSpecs.Width as Width,
 CorridorSpecs.Length as Length,
+CorridorSpecs.Height as Height,
 CorridorSpecs.Width / CorridorSpecs.Textures.Ceiling.TextureSize.X  as TextureScalingX,
 CorridorSpecs.Height / CorridorSpecs.Textures.Ceiling.TextureSize.Y  as TextureScalingY,
 PostCorridorSpecs.CenterZ as CenterZ,
@@ -257,19 +259,19 @@ CorridorSpecs.Height as TranslationY)</scr:Expression>
               <scr:Expression>new(
 CorridorSpecs.Width as Width,
 CorridorSpecs.Length as Length,
+CorridorSpecs.Height as Height,
 CorridorSpecs.Width / CorridorSpecs.Textures.LeftWall.TextureSize.X  as TextureScalingX,
 CorridorSpecs.Height / CorridorSpecs.Textures.LeftWall.TextureSize.Y  as TextureScalingY,
 PostCorridorSpecs.CenterZ as CenterZ,
 PostCorridorSpecs.CenterY as CenterY,
-PostCorridorSpecs.NegOffsetX as NegOffsetX,
-CorridorSpecs.Height as TranslationY)</scr:Expression>
+PostCorridorSpecs.NegOffsetX as NegOffsetX)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.Width" />
+                <Property Name="ScaleX" Selector="Item2.Height" />
                 <Property Name="ScaleY" Selector="Item2.Length" />
                 <Property Name="TranslationZ" Selector="Item2.CenterZ" />
                 <Property Name="TranslationY" Selector="Item2.CenterY" />
@@ -332,6 +334,7 @@ CorridorSpecs.Height as TranslationY)</scr:Expression>
               <scr:Expression>new(
 CorridorSpecs.Width as Width,
 CorridorSpecs.Length as Length,
+CorridorSpecs.Height as Height,
 CorridorSpecs.Width / CorridorSpecs.Textures.RightWall.TextureSize.X  as TextureScalingX,
 CorridorSpecs.Height / CorridorSpecs.Textures.RightWall.TextureSize.Y  as TextureScalingY,
 PostCorridorSpecs.CenterZ as CenterZ,
@@ -344,7 +347,7 @@ CorridorSpecs.Height as TranslationY)</scr:Expression>
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.Width" />
+                <Property Name="ScaleX" Selector="Item2.Height" />
                 <Property Name="ScaleY" Selector="Item2.Length" />
                 <Property Name="TranslationZ" Selector="Item2.CenterZ" />
                 <Property Name="TranslationY" Selector="Item2.CenterY" />
