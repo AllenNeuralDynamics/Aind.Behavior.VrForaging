@@ -2528,7 +2528,7 @@ Item2.Light as Light)</scr:Expression>
               <Name>SessionSchema</Name>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:SerializeToYaml" />
+              <Combinator xsi:type="p1:SerializeToJson" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>LoggingRootPath</Name>

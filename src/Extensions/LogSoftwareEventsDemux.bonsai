@@ -34,7 +34,7 @@
               <Combinator xsi:type="rx:Merge" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:SerializeToYaml" />
+              <Combinator xsi:type="p1:SerializeToJson" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>LoggingRootPath</Name>
