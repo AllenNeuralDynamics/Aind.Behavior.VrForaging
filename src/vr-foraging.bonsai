@@ -5467,15 +5467,48 @@ Item4 as DroppedFrames)</scr:Expression>
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
             </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
+              <Value>-1</Value>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
+              <Value>0</Value>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
+              <Value>2</Value>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
+              <Value>1</Value>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="viz:RollingGraphBuilder">
+              <viz:IndexSelector>Item2.StartPosition</viz:IndexSelector>
+              <viz:ValueSelector>Item1</viz:ValueSelector>
+              <viz:SymbolType>Square</viz:SymbolType>
+              <viz:LineWidth>0</viz:LineWidth>
+              <viz:Capacity>10</viz:Capacity>
+              <viz:Min>0</viz:Min>
+              <viz:Max>3</viz:Max>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
+            </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:ColumnCount>2</viz:ColumnCount>
-              <viz:RowCount>2</viz:RowCount>
+              <viz:RowCount>3</viz:RowCount>
               <viz:ColumnStyles />
-              <viz:RowStyles />
+              <viz:RowStyles>
+                <viz:RowStyle>
+                  <viz:SizeType>Percent</viz:SizeType>
+                  <viz:Height>0.2</viz:Height>
+                </viz:RowStyle>
+              </viz:RowStyles>
               <viz:CellSpans>
                 <viz:CellSpan ColumnSpan="2" RowSpan="1" />
                 <viz:CellSpan ColumnSpan="1" RowSpan="1" />
                 <viz:CellSpan ColumnSpan="1" RowSpan="1" />
+                <viz:CellSpan ColumnSpan="2" RowSpan="1" />
               </viz:CellSpans>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
@@ -5501,21 +5534,28 @@ Item4 as DroppedFrames)</scr:Expression>
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source3" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="23" Label="Source1" />
+            <Edge From="10" To="30" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="21" Label="Source1" />
+            <Edge From="12" To="28" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="21" Label="Source2" />
+            <Edge From="15" To="28" Label="Source2" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="16" To="18" Label="Source2" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source3" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source2" />
-            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="20" To="28" Label="Source3" />
+            <Edge From="21" To="25" Label="Source1" />
+            <Edge From="22" To="25" Label="Source2" />
+            <Edge From="23" To="25" Label="Source3" />
+            <Edge From="24" To="25" Label="Source4" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="28" Label="Source4" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="30" Label="Source2" />
+            <Edge From="30" To="31" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
