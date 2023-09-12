@@ -2851,6 +2851,12 @@ Item2.Light as Light)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>StartExperiment</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:SubscribeWhen" />
+            </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>OdorControl</Name>
               <Workflow>
@@ -3105,7 +3111,10 @@ Item2.Light as Light)</scr:Expression>
               </Workflow>
             </Expression>
           </Nodes>
-          <Edges />
+          <Edges>
+            <Edge From="0" To="2" Label="Source1" />
+            <Edge From="1" To="2" Label="Source2" />
+          </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
@@ -5013,6 +5022,9 @@ Item2 as Start
                 <gl:DueTime>PT2S</gl:DueTime>
               </Combinator>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:SampleOnUpdateFrame" />
+            </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>StartExperiment</Name>
             </Expression>
@@ -5028,6 +5040,7 @@ Item2 as Start
             <Edge From="6" To="7" Label="Source2" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
