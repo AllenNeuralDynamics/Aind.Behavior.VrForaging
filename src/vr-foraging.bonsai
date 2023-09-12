@@ -17,8 +17,8 @@
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p5="clr-namespace:AindVrForagingDataSchema.Logging;assembly=Extensions"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -2353,6 +2353,9 @@ Item2.Light as Light)</scr:Expression>
                 <Edges />
               </Workflow>
             </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p5:SoftwareEvent">
+              <rx:Name>SoftwaveEvents</rx:Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="4" To="5" Label="Source1" />
@@ -2503,6 +2506,12 @@ Item2.Light as Light)</scr:Expression>
                 <p5:Overwrite>false</p5:Overwrite>
               </Combinator>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SoftwaveEvents</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogSoftwareEventsDemux.bonsai">
+              <LoggerName>SoftwareEvents</LoggerName>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -2531,6 +2540,7 @@ Item2.Light as Light)</scr:Expression>
             <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
             <Edge From="29" To="30" Label="Source2" />
+            <Edge From="31" To="32" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -5208,6 +5218,9 @@ Item4 as DroppedFrames)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>QCDiagnosis</Name>
+            </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>OpControl</Name>
               <Workflow>
@@ -5357,8 +5370,35 @@ Item4 as DroppedFrames)</scr:Expression>
             </Expression>
           </Nodes>
           <Edges>
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
           </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>Visualizer</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>QCDiagnosis</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>MainCameraFrameEvent</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>AuxiliaryCamera0</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>AuxiliaryCamera1</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CurrentPosition</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>LickEvent</Name>
+            </Expression>
+          </Nodes>
+          <Edges />
         </Workflow>
       </Expression>
     </Nodes>
