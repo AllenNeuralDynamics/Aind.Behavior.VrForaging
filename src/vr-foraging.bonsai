@@ -3139,7 +3139,7 @@ Item2.Light as Light)</scr:Expression>
                     <rx:Name>DistanceToRewardAvailable</rx:Name>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
-                    <rx:Name>HabitualRewardAmount</rx:Name>
+                    <rx:Name>HabituationRewardAmount</rx:Name>
                   </Expression>
                 </Nodes>
                 <Edges />
@@ -4506,7 +4506,7 @@ Item2 as Start
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>HabitualRewardAmount</Name>
+                    <Name>HabituationRewardAmount</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
@@ -5331,17 +5331,15 @@ Item4 as DroppedFrames)</scr:Expression>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="DistanceToRewardAvailable" />
-              <Property Name="HabitualRewardAmount" />
+              <Property Name="HabituationRewardAmount" />
               <Property Name="IsOperantMode" />
-              <Property Name="StopVelocityTreshold" />
-              <Property Name="StopDuration" />
             </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>OnlineVariableSetting</Name>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="DistanceToRewardAvailable" Category="Shapping" />
+                    <Property Name="Value" DisplayName="DistanceToRewardAvailable" Category="Habituation" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="DoubleProperty">
@@ -5357,7 +5355,7 @@ Item4 as DroppedFrames)</scr:Expression>
                     <Name>DistanceToRewardAvailable</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="HabitualRewardAmount" Category="Shapping" />
+                    <Property Name="Value" DisplayName="HabituationRewardAmount" Category="Habituation" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="DoubleProperty">
@@ -5370,7 +5368,7 @@ Item4 as DroppedFrames)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>HabitualRewardAmount</Name>
+                    <Name>HabituationRewardAmount</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
                     <Property Name="Value" DisplayName="IsOperantMode" Category="Global" />
@@ -5388,38 +5386,6 @@ Item4 as DroppedFrames)</scr:Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>IsOperantMode</Name>
                   </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="StopVelocityTreshold" Category="Foraging" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="DoubleProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Skip">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>StopVelocityThreshold</Name>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="StopDuration" Category="Foraging" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="TimeSpanProperty">
-                      <Value>PT0S</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Skip">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>StopDuration</Name>
-                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -5431,12 +5397,6 @@ Item4 as DroppedFrames)</scr:Expression>
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -5530,6 +5490,7 @@ Item4 as DroppedFrames)</scr:Expression>
               <viz:RowStyles />
               <viz:CellSpans />
             </Expression>
+            <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -5552,6 +5513,7 @@ Item4 as DroppedFrames)</scr:Expression>
             <Edge From="17" To="18" Label="Source3" />
             <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source2" />
+            <Edge From="20" To="21" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
