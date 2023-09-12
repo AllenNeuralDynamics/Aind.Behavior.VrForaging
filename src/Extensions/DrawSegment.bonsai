@@ -21,9 +21,7 @@
 Width*0.5 as OffsetX,
 Width*-0.5 as NegOffsetX,
 StartPosition + Length*0.5 as CenterZ,
-Height*0.5 as CenterY,
-Width / Texture.TextureSize.X  as TextureScalingX,
-Height / Texture.TextureSize.Y  as TextureScalingY
+Height*0.5 as CenterY
 )</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -106,20 +104,31 @@ Item2 as PostCorridorSpecs
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
               <PositionVec3>CurrentPosition</PositionVec3>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai">
+              <Selector>Floor</Selector>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ThisCorridorSpecs</Name>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>Floor</scr:Name>
+              <scr:Expression>new(
+CorridorSpecs.Width as Width,
+CorridorSpecs.Length as Length,
+CorridorSpecs.Width / CorridorSpecs.Textures.Floor.TextureSize.X  as TextureScalingX,
+CorridorSpecs.Height / CorridorSpecs.Textures.Floor.TextureSize.Y  as TextureScalingY,
+PostCorridorSpecs.CenterZ as CenterZ)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
-                <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
-                <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
-                <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
-                <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
+                <Property Name="ScaleX" Selector="Item2.Width" />
+                <Property Name="ScaleY" Selector="Item2.Length" />
+                <Property Name="TranslationZ" Selector="Item2.CenterZ" />
+                <Property Name="TextureScaleX" Selector="Item2.TextureScalingX" />
+                <Property Name="TextureScaleY" Selector="Item2.TextureScalingY" />
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
@@ -165,21 +174,33 @@ Item2 as PostCorridorSpecs
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
               <PositionVec3>CurrentPosition</PositionVec3>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai">
+              <Selector>Ceiling</Selector>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ThisCorridorSpecs</Name>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>Ceiling</scr:Name>
+              <scr:Expression>new(
+CorridorSpecs.Width as Width,
+CorridorSpecs.Length as Length,
+CorridorSpecs.Width / CorridorSpecs.Textures.Ceiling.TextureSize.X  as TextureScalingX,
+CorridorSpecs.Height / CorridorSpecs.Textures.Ceiling.TextureSize.Y  as TextureScalingY,
+PostCorridorSpecs.CenterZ as CenterZ,
+CorridorSpecs.Height as TranslationY)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
-                <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
-                <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
-                <Property Name="TranslationY" Selector="Item2.CorridorSpecs.Height" />
-                <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
-                <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
+                <Property Name="ScaleX" Selector="Item2.Width" />
+                <Property Name="ScaleY" Selector="Item2.Length" />
+                <Property Name="TranslationZ" Selector="Item2.CenterZ" />
+                <Property Name="TranslationY" Selector="Item2.TranslationY" />
+                <Property Name="TextureScaleX" Selector="Item2.TextureScalingX" />
+                <Property Name="TextureScaleY" Selector="Item2.TextureScalingY" />
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
@@ -225,22 +246,36 @@ Item2 as PostCorridorSpecs
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
               <PositionVec3>CurrentPosition</PositionVec3>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai">
+              <Selector>LeftWall</Selector>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ThisCorridorSpecs</Name>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>LeftWall</scr:Name>
+              <scr:Expression>new(
+CorridorSpecs.Width as Width,
+CorridorSpecs.Length as Length,
+CorridorSpecs.Width / CorridorSpecs.Textures.LeftWall.TextureSize.X  as TextureScalingX,
+CorridorSpecs.Height / CorridorSpecs.Textures.LeftWall.TextureSize.Y  as TextureScalingY,
+PostCorridorSpecs.CenterZ as CenterZ,
+PostCorridorSpecs.CenterY as CenterY,
+PostCorridorSpecs.NegOffsetX as NegOffsetX,
+CorridorSpecs.Height as TranslationY)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
-                <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
-                <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
-                <Property Name="TranslationY" Selector="Item2.PostCorridorSpecs.CenterY" />
-                <Property Name="TranslationX" Selector="Item2.PostCorridorSpecs.NegOffsetX" />
-                <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
-                <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
+                <Property Name="ScaleX" Selector="Item2.Width" />
+                <Property Name="ScaleY" Selector="Item2.Length" />
+                <Property Name="TranslationZ" Selector="Item2.CenterZ" />
+                <Property Name="TranslationY" Selector="Item2.CenterY" />
+                <Property Name="TranslationX" Selector="Item2.NegOffsetX" />
+                <Property Name="TextureScaleX" Selector="Item2.TextureScalingX" />
+                <Property Name="TextureScaleY" Selector="Item2.TextureScalingY" />
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
@@ -286,22 +321,36 @@ Item2 as PostCorridorSpecs
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\TranslateView.bonsai">
               <PositionVec3>CurrentPosition</PositionVec3>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai">
+              <Selector>RightWall</Selector>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ThisCorridorSpecs</Name>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>RightWall</scr:Name>
+              <scr:Expression>new(
+CorridorSpecs.Width as Width,
+CorridorSpecs.Length as Length,
+CorridorSpecs.Width / CorridorSpecs.Textures.RightWall.TextureSize.X  as TextureScalingX,
+CorridorSpecs.Height / CorridorSpecs.Textures.RightWall.TextureSize.Y  as TextureScalingY,
+PostCorridorSpecs.CenterZ as CenterZ,
+PostCorridorSpecs.CenterY as CenterY,
+PostCorridorSpecs.OffsetX as OffsetX,
+CorridorSpecs.Height as TranslationY)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="ScaleX" Selector="Item2.CorridorSpecs.Width" />
-                <Property Name="ScaleY" Selector="Item2.CorridorSpecs.Length" />
-                <Property Name="TranslationZ" Selector="Item2.PostCorridorSpecs.CenterZ" />
-                <Property Name="TranslationY" Selector="Item2.PostCorridorSpecs.CenterY" />
-                <Property Name="TranslationX" Selector="Item2.PostCorridorSpecs.OffsetX" />
-                <Property Name="TextureScaleX" Selector="Item2.PostCorridorSpecs.TextureScalingX" />
-                <Property Name="TextureScaleY" Selector="Item2.PostCorridorSpecs.TextureScalingY" />
+                <Property Name="ScaleX" Selector="Item2.Width" />
+                <Property Name="ScaleY" Selector="Item2.Length" />
+                <Property Name="TranslationZ" Selector="Item2.CenterZ" />
+                <Property Name="TranslationY" Selector="Item2.CenterY" />
+                <Property Name="TranslationX" Selector="Item2.OffsetX" />
+                <Property Name="TextureScaleX" Selector="Item2.TextureScalingX" />
+                <Property Name="TextureScaleY" Selector="Item2.TextureScalingY" />
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
@@ -349,31 +398,35 @@ Item2 as PostCorridorSpecs
             <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="13" Label="Source1" />
-            <Edge From="12" To="13" Label="Source2" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="11" To="14" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source2" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="21" Label="Source1" />
-            <Edge From="20" To="21" Label="Source2" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="23" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="22" To="23" Label="Source2" />
+            <Edge From="23" To="24" Label="Source1" />
             <Edge From="24" To="25" Label="Source1" />
-            <Edge From="25" To="26" Label="Source1" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="29" Label="Source1" />
-            <Edge From="28" To="29" Label="Source2" />
-            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="32" Label="Source1" />
             <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="32" Label="Source2" />
             <Edge From="32" To="33" Label="Source1" />
             <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="35" Label="Source1" />
-            <Edge From="35" To="37" Label="Source1" />
-            <Edge From="36" To="37" Label="Source2" />
+            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="36" To="37" Label="Source1" />
             <Edge From="37" To="38" Label="Source1" />
-            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="38" To="41" Label="Source1" />
+            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="40" To="41" Label="Source2" />
+            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="42" To="43" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>

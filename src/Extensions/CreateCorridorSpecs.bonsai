@@ -14,8 +14,8 @@
         <Property Name="Id" />
         <Property Name="Length" />
         <Property Name="StartPosition" />
-        <Property Name="Texture" />
         <Property Name="Width" />
+        <Property Name="Textures" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>CreateCorridorSpecs</Name>
@@ -26,16 +26,16 @@
               <Property Name="Id" />
               <Property Name="Length" />
               <Property Name="StartPosition" />
-              <Property Name="Texture" />
               <Property Name="Width" />
+              <Property Name="Textures" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:CorridorSpecifications">
-                <p1:Height>40</p1:Height>
-                <p1:Id>0</p1:Id>
+                <p1:Height>120</p1:Height>
+                <p1:Id>8</p1:Id>
                 <p1:Length>120</p1:Length>
-                <p1:StartPosition>0</p1:StartPosition>
-                <p1:Width>40</p1:Width>
+                <p1:StartPosition>960</p1:StartPosition>
+                <p1:Width>120</p1:Width>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
