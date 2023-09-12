@@ -26,6 +26,7 @@ namespace AindVrForagingDataSchema
     
         private double _width = 40D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("height")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="height")]
         public double Height
         {
@@ -39,6 +40,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("Id")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Id")]
         public double Id
         {
@@ -52,6 +54,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("length")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length")]
         public double Length
         {
@@ -65,6 +68,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("startPosition")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startPosition")]
         public double StartPosition
         {
@@ -79,6 +83,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("textures")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textures")]
         public Textures Textures
         {
@@ -92,6 +97,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("width")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="width")]
         public double Width
         {
@@ -124,15 +130,19 @@ namespace AindVrForagingDataSchema
     public enum SiteLabel
     {
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Unspecified")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Unspecified")]
         Unspecified = 0,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Gap")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Gap")]
         Gap = 1,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="InterPatch")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="InterPatch")]
         InterPatch = 2,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Reward")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Reward")]
         Reward = 3,
     }
@@ -157,6 +167,7 @@ namespace AindVrForagingDataSchema
     
         private double _startPosition = 0D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("id")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="id")]
         public double Id
         {
@@ -170,6 +181,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
         public string Label
         {
@@ -183,6 +195,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("length")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length")]
         public double Length
         {
@@ -197,6 +210,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("odor")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor")]
         public Odor Odor
         {
@@ -211,6 +225,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("render")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
         public Render Render
         {
@@ -225,6 +240,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("reward")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward")]
         public Reward Reward
         {
@@ -238,6 +254,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("startPosition")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startPosition")]
         public double StartPosition
         {
@@ -281,6 +298,7 @@ namespace AindVrForagingDataSchema
     
         private double _probability = 1D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("amount")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="amount")]
         public double Amount
         {
@@ -294,6 +312,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("delay")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
         public double Delay
         {
@@ -308,6 +327,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("operantLogic")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="operantLogic")]
         public OperantLogic OperantLogic
         {
@@ -321,6 +341,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("probability")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="probability")]
         public double Probability
         {
@@ -351,9 +372,11 @@ namespace AindVrForagingDataSchema
     public enum TaskStage
     {
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Habituation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Habituation")]
         Habituation = 0,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Foraging")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Foraging")]
         Foraging = 1,
     }
@@ -372,6 +395,7 @@ namespace AindVrForagingDataSchema
     
         private int _stateIndex = 0;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
         public string Label
         {
@@ -386,6 +410,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("odorSpecifications")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorSpecifications")]
         public Odor OdorSpecifications
         {
@@ -400,6 +425,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rewardSpecifications")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardSpecifications")]
         public Reward RewardSpecifications
         {
@@ -413,6 +439,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("stateIndex")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stateIndex")]
         public int StateIndex
         {
@@ -448,6 +475,7 @@ namespace AindVrForagingDataSchema
         private System.Collections.Generic.List<System.Collections.Generic.List<double>> _data = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("data")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="data")]
         public System.Collections.Generic.List<System.Collections.Generic.List<double>> Data
         {
@@ -479,6 +507,7 @@ namespace AindVrForagingDataSchema
     
         private int _index = 0;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
         public int Index
         {
@@ -517,6 +546,7 @@ namespace AindVrForagingDataSchema
         private string _deviceName;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceType", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceType")]
         public HarpBoardDeviceType DeviceType
         {
@@ -530,6 +560,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("portName", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="portName")]
         public string PortName
         {
@@ -543,6 +574,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("serialNumber")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serialNumber")]
         public string SerialNumber
         {
@@ -556,6 +588,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceName")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceName")]
         public string DeviceName
         {
@@ -600,6 +633,7 @@ namespace AindVrForagingDataSchema
     
         private string _serialNumber;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("binning")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binning")]
         public int Binning
         {
@@ -614,6 +648,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("colorProcessing")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="colorProcessing")]
         public SpinnakerCameraColorProcessing ColorProcessing
         {
@@ -627,6 +662,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("exposure")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure")]
         public int Exposure
         {
@@ -640,6 +676,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("frameRate")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameRate")]
         public int FrameRate
         {
@@ -653,6 +690,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
         public double Gain
         {
@@ -666,6 +704,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("serialNumber", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serialNumber")]
         public string SerialNumber
         {
@@ -704,6 +743,7 @@ namespace AindVrForagingDataSchema
     
         private string _textureAssetDirectory = "Textures";
     
+        [Newtonsoft.Json.JsonPropertyAttribute("monitorCalibrationDirectory")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="monitorCalibrationDirectory")]
         public string MonitorCalibrationDirectory
         {
@@ -717,6 +757,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("textureAssetDirectory")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureAssetDirectory")]
         public string TextureAssetDirectory
         {
@@ -755,6 +796,7 @@ namespace AindVrForagingDataSchema
     
         private double _pwmFrequency = 1000D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("model")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
         public string Model
         {
@@ -768,6 +810,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("pin")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pin")]
         public string Pin
         {
@@ -781,6 +824,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("pwmDefaultPulseDuration")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pwmDefaultPulseDuration")]
         public double PwmDefaultPulseDuration
         {
@@ -794,6 +838,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("pwmFrequency")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pwmFrequency")]
         public double PwmFrequency
         {
@@ -834,6 +879,7 @@ namespace AindVrForagingDataSchema
     
         private bool _invertDirection = false;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("model")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
         public string Model
         {
@@ -847,6 +893,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("wheelDiameter")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="wheelDiameter")]
         public double WheelDiameter
         {
@@ -860,6 +907,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("encoderResolution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="encoderResolution")]
         public double EncoderResolution
         {
@@ -873,6 +921,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("invertDirection")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="invertDirection")]
         public bool InvertDirection
         {
@@ -914,6 +963,7 @@ namespace AindVrForagingDataSchema
         private string _valveType = "air";
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration")]
         public Calibration Calibration
         {
@@ -927,6 +977,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("model")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
         public string Model
         {
@@ -940,6 +991,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("pin")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pin")]
         public string Pin
         {
@@ -953,6 +1005,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("valveType")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveType")]
         public string ValveType
         {
@@ -991,6 +1044,7 @@ namespace AindVrForagingDataSchema
     
         private double _z = 0D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
         public double X
         {
@@ -1004,6 +1058,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
         public double Y
         {
@@ -1017,6 +1072,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("z")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="z")]
         public double Z
         {
@@ -1054,6 +1110,7 @@ namespace AindVrForagingDataSchema
     
         private double _minimum = 0D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("maximum")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maximum")]
         public double Maximum
         {
@@ -1067,6 +1124,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("mean")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mean")]
         public double Mean
         {
@@ -1080,6 +1138,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="minimum")]
         public double Minimum
         {
@@ -1120,6 +1179,7 @@ namespace AindVrForagingDataSchema
         private TaskLogicControl _taskLogicControl = new TaskLogicControl();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("environmentStatistics", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="environmentStatistics")]
         public EnvironmentStatistics EnvironmentStatistics
         {
@@ -1134,6 +1194,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("hardware", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="hardware")]
         public Hardware Hardware
         {
@@ -1148,6 +1209,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("metadata", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadata")]
         public Metadata Metadata
         {
@@ -1162,6 +1224,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("taskLogicControl", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskLogicControl")]
         public TaskLogicControl TaskLogicControl
         {
@@ -1203,6 +1266,7 @@ namespace AindVrForagingDataSchema
         private Floor _ceiling = new Floor();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("floor", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="floor")]
         public Floor Floor
         {
@@ -1217,6 +1281,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rightWall", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rightWall")]
         public Floor RightWall
         {
@@ -1231,6 +1296,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("leftWall", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="leftWall")]
         public Floor LeftWall
         {
@@ -1245,6 +1311,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("ceiling", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ceiling")]
         public Floor Ceiling
         {
@@ -1283,6 +1350,7 @@ namespace AindVrForagingDataSchema
     
         private bool _valveState = true;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("concentration")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="concentration")]
         public double Concentration
         {
@@ -1296,6 +1364,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("index", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
         public int Index
         {
@@ -1309,6 +1378,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("valveState")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveState")]
         public bool ValveState
         {
@@ -1343,6 +1413,7 @@ namespace AindVrForagingDataSchema
         private double? _brightness;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
         public double? Brightness
         {
@@ -1378,6 +1449,7 @@ namespace AindVrForagingDataSchema
     
         private double _timeToCollect = 1000000D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("isOperant")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="isOperant")]
         public bool IsOperant
         {
@@ -1391,6 +1463,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("stopDuration")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stopDuration")]
         public double StopDuration
         {
@@ -1404,6 +1477,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("timeToCollect")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timeToCollect")]
         public double TimeToCollect
         {
@@ -1433,12 +1507,15 @@ namespace AindVrForagingDataSchema
     public enum HarpBoardDeviceType
     {
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="custom")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="custom")]
         Custom = 0,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="behavior")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behavior")]
         Behavior = 1,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="clockSynchronizer")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="clockSynchronizer")]
         ClockSynchronizer = 2,
     }
@@ -1447,9 +1524,11 @@ namespace AindVrForagingDataSchema
     public enum SpinnakerCameraColorProcessing
     {
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Default")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Default")]
         Default = 0,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="NoColorProcessing")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="NoColorProcessing")]
         NoColorProcessing = 1,
     }
@@ -1464,6 +1543,7 @@ namespace AindVrForagingDataSchema
     
         private double _slope = 1D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("intercept")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="intercept")]
         public double Intercept
         {
@@ -1477,6 +1557,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("slope")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="slope")]
         public double Slope
         {
@@ -1514,6 +1595,7 @@ namespace AindVrForagingDataSchema
         private int? _firstState;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("patches")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patches")]
         public System.Collections.Generic.List<PatchStatistics> Patches
         {
@@ -1528,6 +1610,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("transitionMatrix")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="transitionMatrix")]
         public Matrix2d TransitionMatrix
         {
@@ -1542,6 +1625,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("firstState")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="firstState")]
         public int? FirstState
         {
@@ -1590,6 +1674,7 @@ namespace AindVrForagingDataSchema
         private Valves _valves;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera0")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliaryCamera0")]
         public VideoCaptureDevice AuxiliaryCamera0
         {
@@ -1604,6 +1689,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera1")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliaryCamera1")]
         public VideoCaptureDevice AuxiliaryCamera1
         {
@@ -1618,6 +1704,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harpBehaviorBoard")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehaviorBoard")]
         public HarpBoard HarpBehaviorBoard
         {
@@ -1632,6 +1719,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("mainCamera")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mainCamera")]
         public SpinnakerCamera MainCamera
         {
@@ -1646,6 +1734,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("screen")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="screen")]
         public RenderingSettings Screen
         {
@@ -1660,6 +1749,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("speaker")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="speaker")]
         public PwmBuzzer Speaker
         {
@@ -1674,6 +1764,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("treadmill")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="treadmill")]
         public Treadmill Treadmill
         {
@@ -1688,6 +1779,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("valves")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valves")]
         public Valves Valves
         {
@@ -1738,6 +1830,7 @@ namespace AindVrForagingDataSchema
     
         private string _version;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("commitHash", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commitHash")]
         public string CommitHash
         {
@@ -1751,6 +1844,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("experiment", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="experiment")]
         public string Experiment
         {
@@ -1764,6 +1858,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="notes")]
         public string Notes
         {
@@ -1778,6 +1873,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rngSeed")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
         public double? RngSeed
         {
@@ -1791,6 +1887,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("rootPath", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rootPath")]
         public string RootPath
         {
@@ -1804,6 +1901,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("subject", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="subject")]
         public string Subject
         {
@@ -1817,6 +1915,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("version", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="version")]
         public string Version
         {
@@ -1863,6 +1962,7 @@ namespace AindVrForagingDataSchema
         private VirtualSiteGeneration _virtualSiteGeneration;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("odorControl", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorControl")]
         public OdorControl OdorControl
         {
@@ -1877,6 +1977,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("positionControl", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="positionControl")]
         public PositionControl PositionControl
         {
@@ -1891,6 +1992,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("taskStage", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskStage")]
         public TaskStage TaskStage
         {
@@ -1905,6 +2007,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("habituationSettings")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="habituationSettings")]
         public HabituationSettings HabituationSettings
         {
@@ -1919,6 +2022,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("virtualSiteGeneration")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="virtualSiteGeneration")]
         public VirtualSiteGeneration VirtualSiteGeneration
         {
@@ -1956,6 +2060,7 @@ namespace AindVrForagingDataSchema
     
         private TextureSize _textureSize;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
         public string Name
         {
@@ -1970,6 +2075,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("textureSize")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureSize")]
         public TextureSize TextureSize
         {
@@ -2007,6 +2113,7 @@ namespace AindVrForagingDataSchema
         private Valve _water = new Valve();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("odor1", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor1")]
         public Valve Odor1
         {
@@ -2021,6 +2128,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("odor2", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor2")]
         public Valve Odor2
         {
@@ -2035,6 +2143,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("water", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="water")]
         public Valve Water
         {
@@ -2068,6 +2177,7 @@ namespace AindVrForagingDataSchema
     
         private double _valveMaxOpenTime;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("valveMaxOpenTime")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveMaxOpenTime")]
         public double ValveMaxOpenTime
         {
@@ -2104,6 +2214,7 @@ namespace AindVrForagingDataSchema
         private StopResponseConfig _stopResponseConfig;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
         public Vector3 Gain
         {
@@ -2118,6 +2229,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("initialPosition")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialPosition")]
         public Vector3 InitialPosition
         {
@@ -2132,6 +2244,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("stopResponseConfig")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stopResponseConfig")]
         public StopResponseConfig StopResponseConfig
         {
@@ -2169,6 +2282,7 @@ namespace AindVrForagingDataSchema
     
         private double? _brightness;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("distanceToReward", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distanceToReward")]
         public double DistanceToReward
         {
@@ -2183,6 +2297,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("reward", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward")]
         public Reward Reward
         {
@@ -2197,6 +2312,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
         public double? Brightness
         {
@@ -2235,6 +2351,7 @@ namespace AindVrForagingDataSchema
         private RewardSite _rewardSite = new RewardSite();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("gapSite", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gapSite")]
         public GapSite GapSite
         {
@@ -2249,6 +2366,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("interPatchSite", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="interPatchSite")]
         public InterPatchSite InterPatchSite
         {
@@ -2263,6 +2381,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rewardSite", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardSite")]
         public RewardSite RewardSite
         {
@@ -2298,6 +2417,7 @@ namespace AindVrForagingDataSchema
     
         private double _y = 40D;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
         public double X
         {
@@ -2311,6 +2431,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
         public double Y
         {
@@ -2345,6 +2466,7 @@ namespace AindVrForagingDataSchema
     
         private double _velocityThreshold;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("frequencyFilterCutoff")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frequencyFilterCutoff")]
         public double FrequencyFilterCutoff
         {
@@ -2358,6 +2480,7 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("velocityThreshold")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="velocityThreshold")]
         public double VelocityThreshold
         {
@@ -2395,6 +2518,7 @@ namespace AindVrForagingDataSchema
         private TruncatedExponential _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
         public double? Brightness
         {
@@ -2409,6 +2533,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
         public SiteLabel Label
         {
@@ -2423,6 +2548,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
         public TruncatedExponential LengthDistribution
         {
@@ -2461,6 +2587,7 @@ namespace AindVrForagingDataSchema
         private TruncatedExponential _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
         public double? Brightness
         {
@@ -2475,6 +2602,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
         public SiteLabel Label
         {
@@ -2489,6 +2617,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
         public TruncatedExponential LengthDistribution
         {
@@ -2527,6 +2656,7 @@ namespace AindVrForagingDataSchema
         private TruncatedExponential _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
         public double? Brightness
         {
@@ -2541,6 +2671,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
         public SiteLabel Label
         {
@@ -2555,6 +2686,7 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
         public TruncatedExponential LengthDistribution
         {
@@ -2577,6 +2709,266 @@ namespace AindVrForagingDataSchema
                     Label = _label,
                     LengthDistribution = _lengthDistribution
                 }));
+        }
+    }
+
+
+    /// <summary>
+    /// Serializes a sequence of data model objects into JSON strings.
+    /// </summary>
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into JSON strings.")]
+    public partial class SerializeToJson
+    {
+    
+        private System.IObservable<string> Process<T>(System.IObservable<T> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
+        }
+
+        public System.IObservable<string> Process(System.IObservable<CorridorSpecifications> source)
+        {
+            return Process<CorridorSpecifications>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<VirtualSite> source)
+        {
+            return Process<VirtualSite>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Reward> source)
+        {
+            return Process<Reward>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
+        {
+            return Process<PatchStatistics>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Matrix2d> source)
+        {
+            return Process<Matrix2d>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<VideoCaptureDevice> source)
+        {
+            return Process<VideoCaptureDevice>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
+        {
+            return Process<HarpBoard>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
+        {
+            return Process<SpinnakerCamera>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RenderingSettings> source)
+        {
+            return Process<RenderingSettings>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PwmBuzzer> source)
+        {
+            return Process<PwmBuzzer>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Treadmill> source)
+        {
+            return Process<Treadmill>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Valve> source)
+        {
+            return Process<Valve>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Vector3> source)
+        {
+            return Process<Vector3>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TruncatedExponential> source)
+        {
+            return Process<TruncatedExponential>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
+        {
+            return Process<AindVrForagingSession>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Textures> source)
+        {
+            return Process<Textures>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Odor> source)
+        {
+            return Process<Odor>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Render> source)
+        {
+            return Process<Render>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
+        {
+            return Process<OperantLogic>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Calibration> source)
+        {
+            return Process<Calibration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
+        {
+            return Process<EnvironmentStatistics>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Hardware> source)
+        {
+            return Process<Hardware>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Metadata> source)
+        {
+            return Process<Metadata>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TaskLogicControl> source)
+        {
+            return Process<TaskLogicControl>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Floor> source)
+        {
+            return Process<Floor>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Valves> source)
+        {
+            return Process<Valves>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<OdorControl> source)
+        {
+            return Process<OdorControl>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PositionControl> source)
+        {
+            return Process<PositionControl>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<HabituationSettings> source)
+        {
+            return Process<HabituationSettings>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<VirtualSiteGeneration> source)
+        {
+            return Process<VirtualSiteGeneration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TextureSize> source)
+        {
+            return Process<TextureSize>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<StopResponseConfig> source)
+        {
+            return Process<StopResponseConfig>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<GapSite> source)
+        {
+            return Process<GapSite>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<InterPatchSite> source)
+        {
+            return Process<InterPatchSite>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RewardSite> source)
+        {
+            return Process<RewardSite>(source);
+        }
+    }
+
+
+    /// <summary>
+    /// Deserializes a sequence of JSON strings into data model objects.
+    /// </summary>
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoCaptureDevice>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Textures>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicControl>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<StopResponseConfig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSite>))]
+    [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
+    public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public DeserializeFromJson()
+        {
+            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingSession>();
+        }
+
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = (Bonsai.Expressions.TypeMapping)Type;
+            var returnType = typeMapping.GetType().GetGenericArguments()[0];
+            return System.Linq.Expressions.Expression.Call(
+                typeof(DeserializeFromJson),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+        private static System.IObservable<T> Process<T>(System.IObservable<string> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.DeserializeObject<T>(value));
         }
     }
 
