@@ -26,6 +26,7 @@ namespace AindVrForagingDataSchema.Logging
     
         private SoftwareEventDataType _dataType;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("timestamp")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timestamp")]
         public double Timestamp
         {
@@ -40,6 +41,7 @@ namespace AindVrForagingDataSchema.Logging
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("timestampSource")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timestampSource")]
         public SoftwareEventTimestampSource TimestampSource
         {
@@ -53,6 +55,7 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
         public int Index
         {
@@ -66,6 +69,7 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
         public string Name
         {
@@ -80,6 +84,7 @@ namespace AindVrForagingDataSchema.Logging
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("data")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="data")]
         public object Data
         {
@@ -94,6 +99,7 @@ namespace AindVrForagingDataSchema.Logging
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("dataType")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="dataType")]
         public SoftwareEventDataType DataType
         {
@@ -132,6 +138,7 @@ namespace AindVrForagingDataSchema.Logging
     
         private string _extension = "bin";
     
+        [Newtonsoft.Json.JsonPropertyAttribute("logName")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="logName")]
         public string LogName
         {
@@ -145,6 +152,7 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("extension")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="extension")]
         public string Extension
         {
@@ -185,6 +193,7 @@ namespace AindVrForagingDataSchema.Logging
     
         private string _codec = "FMP4";
     
+        [Newtonsoft.Json.JsonPropertyAttribute("logName")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="logName")]
         public string LogName
         {
@@ -198,6 +207,7 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("encodingFrameRate")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="encodingFrameRate")]
         public double EncodingFrameRate
         {
@@ -211,6 +221,7 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("videoExtension")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="videoExtension")]
         public string VideoExtension
         {
@@ -224,6 +235,7 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("metadataExtension")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadataExtension")]
         public string MetadataExtension
         {
@@ -237,6 +249,7 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("codec")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="codec")]
         public string Codec
         {
@@ -272,6 +285,7 @@ namespace AindVrForagingDataSchema.Logging
     
         private string _placeholder;
     
+        [Newtonsoft.Json.JsonPropertyAttribute("placeholder")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="placeholder")]
         public string Placeholder
         {
@@ -299,9 +313,11 @@ namespace AindVrForagingDataSchema.Logging
     public enum SoftwareEventTimestampSource
     {
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="harp")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp")]
         Harp = 0,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="render")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
         Render = 1,
     }
@@ -310,23 +326,103 @@ namespace AindVrForagingDataSchema.Logging
     public enum SoftwareEventDataType
     {
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="string")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="string")]
         String = 0,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="number")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number")]
         Number = 1,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="boolean")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="boolean")]
         Boolean = 2,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="object")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="object")]
         Object = 3,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="array")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="array")]
         Array = 4,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="null")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="null")]
         Null = 5,
+    }
+
+
+    /// <summary>
+    /// Serializes a sequence of data model objects into JSON strings.
+    /// </summary>
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into JSON strings.")]
+    public partial class SerializeToJson
+    {
+    
+        private System.IObservable<string> Process<T>(System.IObservable<T> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
+        }
+
+        public System.IObservable<string> Process(System.IObservable<SoftwareEvent> source)
+        {
+            return Process<SoftwareEvent>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<HarpLogger> source)
+        {
+            return Process<HarpLogger>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<SpinnakerLogger> source)
+        {
+            return Process<SpinnakerLogger>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<AindVrForagingLogging> source)
+        {
+            return Process<AindVrForagingLogging>(source);
+        }
+    }
+
+
+    /// <summary>
+    /// Deserializes a sequence of JSON strings into data model objects.
+    /// </summary>
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SoftwareEvent>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLogger>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerLogger>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingLogging>))]
+    [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
+    public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public DeserializeFromJson()
+        {
+            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingLogging>();
+        }
+
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = (Bonsai.Expressions.TypeMapping)Type;
+            var returnType = typeMapping.GetType().GetGenericArguments()[0];
+            return System.Linq.Expressions.Expression.Call(
+                typeof(DeserializeFromJson),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+        private static System.IObservable<T> Process<T>(System.IObservable<string> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.DeserializeObject<T>(value));
+        }
     }
 
 
