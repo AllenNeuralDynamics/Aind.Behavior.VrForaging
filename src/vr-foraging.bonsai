@@ -5498,12 +5498,7 @@ Item4 as DroppedFrames)</scr:Expression>
               <viz:ColumnCount>2</viz:ColumnCount>
               <viz:RowCount>3</viz:RowCount>
               <viz:ColumnStyles />
-              <viz:RowStyles>
-                <viz:RowStyle>
-                  <viz:SizeType>Percent</viz:SizeType>
-                  <viz:Height>0.2</viz:Height>
-                </viz:RowStyle>
-              </viz:RowStyles>
+              <viz:RowStyles />
               <viz:CellSpans>
                 <viz:CellSpan ColumnSpan="2" RowSpan="1" />
                 <viz:CellSpan ColumnSpan="1" RowSpan="1" />
