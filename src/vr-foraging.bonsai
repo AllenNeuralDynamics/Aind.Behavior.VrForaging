@@ -2504,7 +2504,7 @@ Item2.Light as Light)</scr:Expression>
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p5:YamlWriter">
+              <Combinator xsi:type="p5:JsonWriter">
                 <p5:Suffix>None</p5:Suffix>
                 <p5:Overwrite>false</p5:Overwrite>
               </Combinator>
