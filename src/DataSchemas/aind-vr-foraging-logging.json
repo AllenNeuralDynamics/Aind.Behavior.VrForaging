@@ -14,7 +14,7 @@
           "default": "harp"
         },
         "index": {
-          "type": "integer",
+          "type": ["null","integer"],
           "minimum": 0
         },
         "name":{

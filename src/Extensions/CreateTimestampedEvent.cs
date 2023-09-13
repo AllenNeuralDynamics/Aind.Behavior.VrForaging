@@ -1,16 +1,13 @@
 using Bonsai;
 using System;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using AindVrForagingDataSchema.Logging;
 using Bonsai.Harp;
-using SpinnakerNET;
-using System.Drawing.Text;
 
 [Combinator]
-[Description("")]
+[Description("Creates a fully populated SoftwareEvent from a Harp.Timestamped<T> generic object.")]
 [WorkflowElementCategory(ElementCategory.Transform)]
 public class CreateTimestampedEvent
 {
@@ -21,7 +18,6 @@ public class CreateTimestampedEvent
         set { eventName = value; }
     }
 
-    private int eventCounter = 0;
     public IObservable<SoftwareEvent> Process<TSource>(IObservable<Timestamped<TSource>> source)
     {
         var thisName = EventName;
@@ -30,7 +26,7 @@ public class CreateTimestampedEvent
                 Data = value.Value,
                 Timestamp = value.Seconds,
                 TimestampSource = SoftwareEventTimestampSource.Harp,
-                Index = eventCounter++,
+                Index = null,
                 Name = thisName,
                 DataType = getDataType(value.Value)
             };

@@ -18,7 +18,7 @@ namespace AindVrForagingDataSchema.Logging
     
         private SoftwareEventTimestampSource _timestampSource = AindVrForagingDataSchema.Logging.SoftwareEventTimestampSource.Harp;
     
-        private int _index;
+        private int? _index;
     
         private string _name;
     
@@ -55,9 +55,10 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("index")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
-        public int Index
+        public int? Index
         {
             get
             {
