@@ -337,22 +337,6 @@
               <Name>HarpBehaviorCommands</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>HarpBehaviorEvents</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="harp:FilterMessageType">
-                <harp:FilterType>Include</harp:FilterType>
-                <harp:MessageType>Event</harp:MessageType>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="beh:FilterRegister">
-              <harp:FilterType>Include</harp:FilterType>
-              <harp:Register xsi:type="beh:AnalogData" />
-            </Expression>
-            <Expression xsi:type="rx:PublishSubject">
-              <Name>HarpTimestampSource</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
               <Name>HarpBehaviorHeartBeat</Name>
             </Expression>
             <Expression xsi:type="beh:CreateMessage">
@@ -1131,11 +1115,24 @@
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
           </Edges>
         </Workflow>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>HarpBehaviorEvents</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="harp:FilterMessageType">
+          <harp:FilterType>Include</harp:FilterType>
+          <harp:MessageType>Event</harp:MessageType>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="beh:FilterRegister">
+        <harp:FilterType>Include</harp:FilterType>
+        <harp:Register xsi:type="beh:AnalogData" />
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>HarpTimestampSource</Name>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>InitVariables</Name>
@@ -5698,12 +5695,15 @@ Item4 as DroppedFrames)</scr:Expression>
       <Edge From="1" To="2" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
       <Edge From="5" To="6" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
       <Edge From="9" To="10" Label="Source1" />
-      <Edge From="10" To="12" Label="Source1" />
-      <Edge From="11" To="12" Label="Source2" />
       <Edge From="13" To="14" Label="Source1" />
-      <Edge From="15" To="17" Label="Source1" />
-      <Edge From="16" To="17" Label="Source2" />
+      <Edge From="14" To="16" Label="Source1" />
+      <Edge From="15" To="16" Label="Source2" />
+      <Edge From="17" To="18" Label="Source1" />
+      <Edge From="19" To="21" Label="Source1" />
+      <Edge From="20" To="21" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
