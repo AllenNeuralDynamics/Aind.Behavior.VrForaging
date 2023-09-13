@@ -1681,7 +1681,8 @@
                           <Combinator xsi:type="gl:CreateWindow">
                             <gl:Width>1000</gl:Width>
                             <gl:Height>1000</gl:Height>
-                            <gl:VSync>On</gl:VSync>
+                            <gl:Title>VrForaging</gl:Title>
+                            <gl:VSync>Off</gl:VSync>
                             <gl:SwapSync>false</gl:SwapSync>
                             <gl:ClearColor>Gray</gl:ClearColor>
                             <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
@@ -1691,7 +1692,7 @@
                             <gl:WindowState>Fullscreen</gl:WindowState>
                             <gl:DisplayDevice>Second</gl:DisplayDevice>
                             <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
-                            <gl:TargetUpdateFrequency xsi:nil="true" />
+                            <gl:TargetUpdateFrequency>120</gl:TargetUpdateFrequency>
                             <gl:RenderState />
                             <gl:GraphicsMode>
                               <gl:ColorFormat>
