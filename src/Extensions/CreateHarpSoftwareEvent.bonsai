@@ -14,7 +14,7 @@
         <Name>HarpTimestampSource</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:WithLatestFrom" />
+        <Combinator xsi:type="rx:Zip" />
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="harp:CreateTimestamped" />
