@@ -2575,6 +2575,18 @@ Item2.Light as Light)</scr:Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SoftwaveEvents</Name>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>HarpTimestampSource</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="harp:CreateTimestamped" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:TimestampSoftwareEvent" />
+            </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogSoftwareEventsDemux.bonsai">
               <LoggerName>SoftwareEvents</LoggerName>
             </Expression>
@@ -2588,7 +2600,11 @@ Item2.Light as Light)</scr:Expression>
             <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source2" />
-            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="12" To="14" Label="Source1" />
+            <Edge From="13" To="14" Label="Source2" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
