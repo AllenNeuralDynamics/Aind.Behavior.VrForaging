@@ -11,7 +11,7 @@ using Bonsai.Harp;
 [WorkflowElementCategory(ElementCategory.Transform)]
 public class TimestampSoftwareEvent
 {
-    public IObservable<SoftwareEvent> Process<TSource>(IObservable<Timestamped<SoftwareEvent>> source)
+    public IObservable<SoftwareEvent> Process(IObservable<Timestamped<SoftwareEvent>> source)
     {
         return source.Select(value => {
             var msg = value.Value;
@@ -26,7 +26,7 @@ public class TimestampSoftwareEvent
         });
     }
 
-    public IObservable<SoftwareEvent> Process<TSource>(IObservable<Tuple<SoftwareEvent, double>> source)
+    public IObservable<SoftwareEvent> Process(IObservable<Tuple<SoftwareEvent, double>> source)
     {
         return source.Select(value => {
             var msg = value.Item1;
@@ -41,7 +41,7 @@ public class TimestampSoftwareEvent
         });
     }
 
-    public IObservable<SoftwareEvent> Process<TSource>(IObservable<Tuple<SoftwareEvent, HarpMessage>> source)
+    public IObservable<SoftwareEvent> Process(IObservable<Tuple<SoftwareEvent, HarpMessage>> source)
     {
         return source.Select(value => {
             var msg = value.Item1;
