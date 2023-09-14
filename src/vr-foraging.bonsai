@@ -5641,8 +5641,8 @@ Item4 as DroppedFrames)</scr:Expression>
               <viz:IndexSelector>Seconds</viz:IndexSelector>
               <viz:ValueSelector>Value</viz:ValueSelector>
               <viz:SymbolType>None</viz:SymbolType>
-              <viz:LineWidth>1</viz:LineWidth>
-              <viz:Capacity xsi:nil="true" />
+              <viz:LineWidth>2</viz:LineWidth>
+              <viz:Capacity>2000</viz:Capacity>
               <viz:Min xsi:nil="true" />
               <viz:Max xsi:nil="true" />
             </Expression>
