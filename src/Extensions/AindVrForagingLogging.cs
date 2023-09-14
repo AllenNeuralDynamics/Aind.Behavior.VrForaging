@@ -14,9 +14,9 @@ namespace AindVrForagingDataSchema.Logging
     public partial class SoftwareEvent
     {
     
-        private double _timestamp;
+        private double? _timestamp;
     
-        private SoftwareEventTimestampSource _timestampSource = AindVrForagingDataSchema.Logging.SoftwareEventTimestampSource.Harp;
+        private SoftwareEventTimestampSource _timestampSource = AindVrForagingDataSchema.Logging.SoftwareEventTimestampSource.None;
     
         private int? _index;
     
@@ -26,9 +26,10 @@ namespace AindVrForagingDataSchema.Logging
     
         private SoftwareEventDataType _dataType;
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("timestamp")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timestamp")]
-        public double Timestamp
+        public double? Timestamp
         {
             get
             {
@@ -314,13 +315,17 @@ namespace AindVrForagingDataSchema.Logging
     public enum SoftwareEventTimestampSource
     {
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="none")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="none")]
+        None = 0,
+    
         [System.Runtime.Serialization.EnumMemberAttribute(Value="harp")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp")]
-        Harp = 0,
+        Harp = 1,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="render")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
-        Render = 1,
+        Render = 2,
     }
 
 

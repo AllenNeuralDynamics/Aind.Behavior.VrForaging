@@ -9,7 +9,7 @@ using Bonsai.Harp;
 [Combinator]
 [Description("Creates a fully populated SoftwareEvent from a Harp.Timestamped<T> generic object.")]
 [WorkflowElementCategory(ElementCategory.Transform)]
-public class CreateTimestampedEvent
+public class CreateSoftwareEvent
 {
     private string eventName = "SoftwareEvent";
     public string EventName
@@ -29,6 +29,21 @@ public class CreateTimestampedEvent
                 Index = null,
                 Name = thisName,
                 DataType = getDataType(value.Value)
+            };
+        });
+    }
+
+    public IObservable<SoftwareEvent> Process<TSource>(IObservable<TSource> source)
+    {
+        var thisName = EventName;
+        return source.Select(value => {
+            return new SoftwareEvent{
+                Data = value,
+                Timestamp = null,
+                TimestampSource = SoftwareEventTimestampSource.None,
+                Index = null,
+                Name = thisName,
+                DataType = getDataType(value)
             };
         });
     }
