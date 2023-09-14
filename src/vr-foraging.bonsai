@@ -5193,8 +5193,8 @@ Item2 as Start
                             <Nodes>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="gli:KeyDown">
-                                  <gli:Key xsi:nil="true" />
-                                  <gli:Modifiers xsi:nil="true" />
+                                  <gli:Key>Q</gli:Key>
+                                  <gli:Modifiers>Control</gli:Modifiers>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -5244,7 +5244,7 @@ Item2 as Start
                                     </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="gli:KeyDown">
-                                        <gli:Key>Number1</gli:Key>
+                                        <gli:Key>Q</gli:Key>
                                         <gli:Modifiers>Shift</gli:Modifiers>
                                       </Combinator>
                                     </Expression>
