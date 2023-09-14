@@ -5623,8 +5623,8 @@ Item4 as DroppedFrames)</scr:Expression>
             </Expression>
             <Expression xsi:type="viz:LineGraphBuilder">
               <viz:ValueSelector>Item2,Item1</viz:ValueSelector>
-              <viz:SymbolType>None</viz:SymbolType>
-              <viz:LineWidth>1</viz:LineWidth>
+              <viz:SymbolType>Diamond</viz:SymbolType>
+              <viz:LineWidth>0</viz:LineWidth>
               <viz:Capacity>20</viz:Capacity>
               <viz:XMin xsi:nil="true" />
               <viz:XMax xsi:nil="true" />
