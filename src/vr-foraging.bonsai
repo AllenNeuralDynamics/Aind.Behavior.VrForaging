@@ -3147,10 +3147,10 @@ Item2.Light as Light)</scr:Expression>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
-                    <rx:Name>DistanceToRewardAvailable</rx:Name>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
                     <rx:Name>HabituationRewardAmount</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:TruncatedExponential">
+                    <rx:Name>DistanceToRewardAvailable</rx:Name>
                   </Expression>
                 </Nodes>
                 <Edges />
@@ -4474,6 +4474,20 @@ Item2 as Start
                       <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Minimum" Selector="Minimum" />
+                      <Property Name="Maximum" Selector="Maximum" />
+                      <Property Name="Average" Selector="Mean" />
+                    </PropertyMappings>
+                    <Selector>it</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
+                    <Minimum>0</Minimum>
+                    <Maximum>0</Maximum>
+                    <Average>0</Average>
+                    <Count>1</Count>
+                  </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
                       <Property Name="DistanceToRewardAvailable" />
@@ -4823,18 +4837,20 @@ Item2 as Start
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="20" To="24" Label="Source1" />
+                  <Edge From="20" To="26" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source2" />
-                  <Edge From="24" To="31" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="27" To="31" Label="Source2" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source2" />
+                  <Edge From="26" To="33" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
-                  <Edge From="30" To="31" Label="Source3" />
+                  <Edge From="29" To="33" Label="Source2" />
+                  <Edge From="30" To="31" Label="Source1" />
                   <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="32" To="33" Label="Source3" />
+                  <Edge From="33" To="34" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -5548,26 +5564,88 @@ Item5 as TotalReward)</scr:Expression>
               <Name>QCDiagnosis</Name>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="DistanceToRewardAvailable" />
               <Property Name="HabituationRewardAmount" />
               <Property Name="IsOperantMode" />
+              <Property Name="MinDistanceToRwd" />
+              <Property Name="MaxDistanceToRwd" />
+              <Property Name="MeanDistanceToRwd" />
             </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>OnlineVariableSetting</Name>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="DistanceToRewardAvailable" Category="Habituation" />
+                    <Property Name="Value" DisplayName="MinDistanceToRwd" Category="Habituation" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="DoubleProperty">
-                      <Value>0</Value>
+                      <Value>10</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Skip">
                       <rx:Count>1</rx:Count>
                     </Combinator>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="MaxDistanceToRwd" Category="Habituation" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="DoubleProperty">
+                      <Value>10</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Skip">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="MeanDistanceToRwd" Category="Habituation" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="DoubleProperty">
+                      <Value>10</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Skip">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Minimum" Selector="Item1" />
+                      <Property Name="Maximum" Selector="Item2" />
+                      <Property Name="Mean" Selector="Item3" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="rx:SelectMany">
+                    <Name>CreateTruncatedExp</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Minimum" />
+                          <Property Name="Maximum" />
+                          <Property Name="Mean" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:TruncatedExponential">
+                            <p1:Minimum>0</p1:Minimum>
+                            <p1:Maximum>1</p1:Maximum>
+                            <p1:Mean>0.5</p1:Mean>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>DistanceToRewardAvailable</Name>
@@ -5608,13 +5686,22 @@ Item5 as TotalReward)</scr:Expression>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="2" To="9" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="5" To="9" Label="Source2" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source3" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
