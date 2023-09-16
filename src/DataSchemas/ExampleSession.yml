@@ -62,7 +62,10 @@ hardware:
 taskLogicControl:
   taskStage: Habituation
   habituationSettings:
-    distanceToReward: 10
+    distanceToReward:
+      maximum: 10
+      mean: 10
+      minimum: 10
     brightness: 0.5
     reward:
       delay: 0

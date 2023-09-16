@@ -2276,15 +2276,16 @@ namespace AindVrForagingDataSchema
     public partial class HabituationSettings
     {
     
-        private double _distanceToReward;
+        private TruncatedExponential _distanceToReward = new TruncatedExponential();
     
         private Reward _reward;
     
         private double? _brightness;
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("distanceToReward", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distanceToReward")]
-        public double DistanceToReward
+        public TruncatedExponential DistanceToReward
         {
             get
             {
