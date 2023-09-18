@@ -1432,6 +1432,8 @@ namespace AindVrForagingDataSchema
     
         private double _timeToCollect = 1000000D;
     
+        private double _choiceGracePeriod = 0.1D;
+    
         [Newtonsoft.Json.JsonPropertyAttribute("isOperant")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="isOperant")]
         public bool IsOperant
@@ -1474,6 +1476,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("choiceGracePeriod")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="choiceGracePeriod")]
+        public double ChoiceGracePeriod
+        {
+            get
+            {
+                return _choiceGracePeriod;
+            }
+            set
+            {
+                _choiceGracePeriod = value;
+            }
+        }
+    
         public System.IObservable<OperantLogic> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -1481,7 +1497,8 @@ namespace AindVrForagingDataSchema
                 {
                     IsOperant = _isOperant,
                     StopDuration = _stopDuration,
-                    TimeToCollect = _timeToCollect
+                    TimeToCollect = _timeToCollect,
+                    ChoiceGracePeriod = _choiceGracePeriod
                 }));
         }
     }
