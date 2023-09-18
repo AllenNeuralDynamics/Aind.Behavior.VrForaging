@@ -20,7 +20,6 @@
         <Property Name="StopDuration" />
         <Property Name="TimeToCollect" />
         <Property Name="Amount" />
-        <Property Name="Delay" />
         <Property Name="Probability" />
         <Property Name="Label" />
       </Expression>
@@ -65,9 +64,9 @@
               <Property Name="Average" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
-              <Minimum>20</Minimum>
-              <Maximum>50</Maximum>
-              <Average>30</Average>
+              <Minimum>15</Minimum>
+              <Maximum>15</Maximum>
+              <Average>15</Average>
               <Count>1</Count>
             </Expression>
             <Expression xsi:type="InputMapping">
@@ -121,9 +120,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:OperantLogic">
-                <p1:StopDuration>0</p1:StopDuration>
                 <p1:IsOperant>true</p1:IsOperant>
-                <p1:TimeToCollect>1000000</p1:TimeToCollect>
+                <p1:StopDuration>0</p1:StopDuration>
+                <p1:TimeToCollect>3600</p1:TimeToCollect>
               </Combinator>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -133,13 +132,11 @@
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Amount" />
-              <Property Name="Delay" />
               <Property Name="Probability" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:Reward">
                 <p1:Amount>0</p1:Amount>
-                <p1:Delay>0</p1:Delay>
                 <p1:Probability>1</p1:Probability>
               </Combinator>
             </Expression>

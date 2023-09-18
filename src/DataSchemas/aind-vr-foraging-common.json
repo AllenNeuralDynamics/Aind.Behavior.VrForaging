@@ -134,11 +134,6 @@
           "minimum": 0,
           "type": "number"
         },
-        "delay": {
-          "default": 0,
-          "minimum": 0,
-          "type": "number"
-        },
         "operantLogic": {
           "$ref": "#/definitions/operantLogic"
         },

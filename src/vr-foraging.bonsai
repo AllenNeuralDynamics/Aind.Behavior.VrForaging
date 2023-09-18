@@ -4079,7 +4079,6 @@ Item2 as Start
                           <StopDuration>0</StopDuration>
                           <TimeToCollect>3600</TimeToCollect>
                           <Amount>0</Amount>
-                          <Delay>0</Delay>
                           <Probability>1</Probability>
                           <Label>RewardSite</Label>
                         </Expression>
