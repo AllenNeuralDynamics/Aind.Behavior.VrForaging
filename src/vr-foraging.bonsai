@@ -590,24 +590,24 @@
                     <Name>SessionSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Hardware.Treadmill.EncoderResolution</Selector>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>SessionSchema</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
                     <Selector>Hardware.Treadmill.WheelDiameter</Selector>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Name>Perimeter</scr:Name>
                     <scr:Expression>it * Math.Pi</scr:Expression>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SessionSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Hardware.Treadmill.PulsesPerRevolution</Selector>
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Zip" />
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Name>CentimetersPerBit</scr:Name>
-                    <scr:Expression>Item2 / Item1</scr:Expression>
+                    <scr:Name>CentimetersPerTick</scr:Name>
+                    <scr:Expression>Item1 / Item2</scr:Expression>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>SessionSchema</Name>
@@ -686,8 +686,8 @@
                   <Edge From="1" To="16" Label="Source1" />
                   <Edge From="2" To="15" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="8" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="8" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source2" />
                   <Edge From="8" To="9" Label="Source1" />

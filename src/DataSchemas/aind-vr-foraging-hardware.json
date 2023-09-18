@@ -61,8 +61,8 @@
           "minimum": 0,
           "type": "number"
         },
-        "encoderResolution": {
-          "default": 65536,
+        "pulsesPerRevolution": {
+          "default": 2880,
           "type": "number"
         },
         "invertDirection": {
