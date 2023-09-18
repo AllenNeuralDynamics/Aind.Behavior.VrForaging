@@ -4054,22 +4054,6 @@ Item2 as Start
                           </Workflow>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TimeToCollectReward</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="TimeToCollect" Selector="TotalSeconds" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>IsOperantMode</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="IsOperant" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
                           <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
@@ -4097,17 +4081,6 @@ Item2 as Start
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>StopDuration</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>TotalSeconds</Selector>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="StopDuration" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
                           <Name>SessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
@@ -4122,11 +4095,6 @@ Item2 as Start
                           <Minimum>15</Minimum>
                           <Maximum>15</Maximum>
                           <Average>15</Average>
-                          <IsOperant>true</IsOperant>
-                          <StopDuration>0</StopDuration>
-                          <TimeToCollect>3600</TimeToCollect>
-                          <Amount>0</Amount>
-                          <Probability>1</Probability>
                           <Label>RewardSite</Label>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -4311,42 +4279,35 @@ Item2 as Start
                         <Edge From="23" To="24" Label="Source1" />
                         <Edge From="24" To="25" Label="Source1" />
                         <Edge From="25" To="26" Label="Source1" />
-                        <Edge From="26" To="44" Label="Source1" />
+                        <Edge From="26" To="37" Label="Source1" />
                         <Edge From="27" To="28" Label="Source1" />
-                        <Edge From="28" To="44" Label="Source2" />
-                        <Edge From="29" To="30" Label="Source1" />
-                        <Edge From="30" To="44" Label="Source3" />
+                        <Edge From="28" To="29" Label="Source1" />
+                        <Edge From="29" To="37" Label="Source2" />
+                        <Edge From="30" To="31" Label="Source1" />
                         <Edge From="31" To="32" Label="Source1" />
                         <Edge From="32" To="33" Label="Source1" />
-                        <Edge From="33" To="44" Label="Source4" />
+                        <Edge From="33" To="37" Label="Source3" />
                         <Edge From="34" To="35" Label="Source1" />
                         <Edge From="35" To="36" Label="Source1" />
-                        <Edge From="36" To="37" Label="Source1" />
-                        <Edge From="37" To="44" Label="Source5" />
+                        <Edge From="36" To="37" Label="Source4" />
+                        <Edge From="37" To="48" Label="Source1" />
                         <Edge From="38" To="39" Label="Source1" />
                         <Edge From="39" To="40" Label="Source1" />
-                        <Edge From="40" To="44" Label="Source6" />
+                        <Edge From="40" To="48" Label="Source2" />
                         <Edge From="41" To="42" Label="Source1" />
                         <Edge From="42" To="43" Label="Source1" />
-                        <Edge From="43" To="44" Label="Source7" />
-                        <Edge From="44" To="55" Label="Source1" />
+                        <Edge From="43" To="44" Label="Source1" />
+                        <Edge From="44" To="48" Label="Source3" />
                         <Edge From="45" To="46" Label="Source1" />
                         <Edge From="46" To="47" Label="Source1" />
-                        <Edge From="47" To="55" Label="Source2" />
+                        <Edge From="47" To="48" Label="Source4" />
                         <Edge From="48" To="49" Label="Source1" />
                         <Edge From="49" To="50" Label="Source1" />
                         <Edge From="50" To="51" Label="Source1" />
-                        <Edge From="51" To="55" Label="Source3" />
+                        <Edge From="51" To="52" Label="Source1" />
                         <Edge From="52" To="53" Label="Source1" />
                         <Edge From="53" To="54" Label="Source1" />
-                        <Edge From="54" To="55" Label="Source4" />
-                        <Edge From="55" To="56" Label="Source1" />
-                        <Edge From="56" To="57" Label="Source1" />
-                        <Edge From="57" To="58" Label="Source1" />
-                        <Edge From="58" To="59" Label="Source1" />
-                        <Edge From="59" To="60" Label="Source1" />
-                        <Edge From="60" To="61" Label="Source1" />
-                        <Edge From="61" To="62" Label="Source1" />
+                        <Edge From="54" To="55" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
