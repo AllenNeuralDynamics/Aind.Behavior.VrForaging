@@ -52,7 +52,7 @@
               <Combinator xsi:type="rx:CombineLatest" />
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>(Item1 &gt;= Item2) &amp;&amp; (Item1 &lt;= Item3)</scr:Expression>
+              <scr:Expression>(Item1 &gt;= Item2) &amp;&amp; (Item1 &lt; Item3)</scr:Expression>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>IsInSite</Name>
