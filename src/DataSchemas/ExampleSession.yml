@@ -129,6 +129,7 @@ environmentStatistics:
           isOperant: true
           stopDuration: 1
           timeToCollect: 1000000
+          choiceGracePeriod: 0.1
     - label: "Bananas"
       stateIndex: 1
       odorSpecifications:
@@ -141,3 +142,4 @@ environmentStatistics:
           isOperant: true
           stopDuration: 1
           timeToCollect: 1000000
+          choiceGracePeriod: 0.1
