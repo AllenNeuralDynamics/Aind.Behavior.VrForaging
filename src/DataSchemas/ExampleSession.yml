@@ -17,7 +17,7 @@ hardware:
   treadmill:
     model: headfix
     wheelDiameter: 15
-    pulsesPerRevolution: 2880
+    pulsesPerRevolution: 8192
     invertDirection: true
   valves:
     water:
