@@ -292,8 +292,6 @@ namespace AindVrForagingDataSchema
     
         private double _amount;
     
-        private double _delay = 0D;
-    
         private OperantLogic _operantLogic;
     
         private double _probability = 1D;
@@ -309,20 +307,6 @@ namespace AindVrForagingDataSchema
             set
             {
                 _amount = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("delay")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
-        public double Delay
-        {
-            get
-            {
-                return _delay;
-            }
-            set
-            {
-                _delay = value;
             }
         }
     
@@ -361,7 +345,6 @@ namespace AindVrForagingDataSchema
                 new Reward
                 {
                     Amount = _amount,
-                    Delay = _delay,
                     OperantLogic = _operantLogic,
                     Probability = _probability
                 }));

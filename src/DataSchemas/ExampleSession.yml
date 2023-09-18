@@ -68,7 +68,6 @@ taskLogicControl:
       minimum: 10
     brightness: 0.5
     reward:
-      delay: 0
       probability: 1
       amount: 50
       operantLogic:
@@ -124,7 +123,6 @@ environmentStatistics:
         concentration: 1
         index: 0
       rewardSpecifications:
-        delay: 0
         probability: 1
         amount: 1
         operantLogic:
@@ -137,7 +135,6 @@ environmentStatistics:
         concentration: 1
         index: 1
       rewardSpecifications:
-        delay: 0
         probability: 1
         amount: 1
         operantLogic:
