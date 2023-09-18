@@ -875,7 +875,7 @@ namespace AindVrForagingDataSchema
     
         private double _wheelDiameter = 15D;
     
-        private double _encoderResolution = 65536D;
+        private double _pulsesPerRevolution = 2880D;
     
         private bool _invertDirection = false;
     
@@ -907,17 +907,17 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("encoderResolution")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="encoderResolution")]
-        public double EncoderResolution
+        [Newtonsoft.Json.JsonPropertyAttribute("pulsesPerRevolution")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulsesPerRevolution")]
+        public double PulsesPerRevolution
         {
             get
             {
-                return _encoderResolution;
+                return _pulsesPerRevolution;
             }
             set
             {
-                _encoderResolution = value;
+                _pulsesPerRevolution = value;
             }
         }
     
@@ -942,7 +942,7 @@ namespace AindVrForagingDataSchema
                 {
                     Model = _model,
                     WheelDiameter = _wheelDiameter,
-                    EncoderResolution = _encoderResolution,
+                    PulsesPerRevolution = _pulsesPerRevolution,
                     InvertDirection = _invertDirection
                 }));
         }
