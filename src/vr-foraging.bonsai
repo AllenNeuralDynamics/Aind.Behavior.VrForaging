@@ -124,6 +124,23 @@
               <Name>SessionSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
+              <Selector>Hardware.Valves.Water</Selector>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Calibration</Selector>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>it == null</scr:Expression>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:ThrowException">
+                <p2:Message>No water valve calibration settings found!</p2:Message>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
               <Selector>TaskLogicControl.TaskStage</Selector>
             </Expression>
             <Expression xsi:type="Equal">
@@ -227,25 +244,29 @@
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="16" To="19" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="21" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source2" />
             <Edge From="21" To="22" Label="Source1" />
+            <Edge From="21" To="24" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="23" To="26" Label="Source1" />
             <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="26" Label="Source2" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="26" To="29" Label="Source1" />
             <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="31" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
             <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source2" />
             <Edge From="31" To="32" Label="Source1" />
+            <Edge From="31" To="34" Label="Source1" />
             <Edge From="32" To="33" Label="Source1" />
-            <Edge From="33" To="34" Label="Source1" />
+            <Edge From="33" To="36" Label="Source1" />
             <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="36" Label="Source2" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="39" To="40" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -5634,9 +5655,9 @@ Item5 as TotalReward)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p1:TruncatedExponential">
-                            <p1:Minimum>0</p1:Minimum>
                             <p1:Maximum>1</p1:Maximum>
                             <p1:Mean>0.5</p1:Mean>
+                            <p1:Minimum>0</p1:Minimum>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
