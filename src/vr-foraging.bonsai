@@ -27,7 +27,10 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:EnumerateSessions" />
+        <Combinator xsi:type="p1:EnumerateSessions">
+          <p1:FileFilter>YAML</p1:FileFilter>
+          <p1:Directory>.</p1:Directory>
+        </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
         <PropertyMappings>
@@ -2732,6 +2735,9 @@ Item2.Light as Light)</scr:Expression>
                     <scr:Name>cm/second</scr:Name>
                     <scr:Expression>it * 1000</scr:Expression>
                   </Expression>
+                  <Expression xsi:type="rx:PublishSubject">
+                    <Name>CurrentVelocity</Name>
+                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>StopVelocityThreshold</Name>
                   </Expression>
@@ -2832,29 +2838,30 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="19" To="31" Label="Source1" />
+                  <Edge From="19" To="32" Label="Source1" />
                   <Edge From="20" To="25" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
                   <Edge From="23" To="24" Label="Source1" />
                   <Edge From="24" To="25" Label="Source2" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="29" Label="Source1" />
-                  <Edge From="27" To="28" Label="Source1" />
-                  <Edge From="28" To="29" Label="Source2" />
-                  <Edge From="29" To="30" Label="Source1" />
-                  <Edge From="30" To="32" Label="Source1" />
-                  <Edge From="31" To="32" Label="Source2" />
-                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="30" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source2" />
+                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="33" Label="Source1" />
+                  <Edge From="32" To="33" Label="Source2" />
                   <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="35" To="36" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source1" />
                   <Edge From="36" To="37" Label="Source1" />
-                  <Edge From="38" To="39" Label="Source1" />
-                  <Edge From="39" To="42" Label="Source1" />
-                  <Edge From="40" To="41" Label="Source1" />
-                  <Edge From="41" To="42" Label="Source2" />
-                  <Edge From="42" To="44" Label="Source1" />
-                  <Edge From="43" To="44" Label="Source2" />
+                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="39" To="40" Label="Source1" />
+                  <Edge From="40" To="43" Label="Source1" />
+                  <Edge From="41" To="42" Label="Source1" />
+                  <Edge From="42" To="43" Label="Source2" />
+                  <Edge From="43" To="45" Label="Source1" />
+                  <Edge From="44" To="45" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -5709,10 +5716,24 @@ Item5 as TotalReward)</scr:Expression>
               <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>CurrentPosition</Name>
+              <Name>CurrentVelocity</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Value.Z</Selector>
+              <Selector>TaskLogicControl.PositionControl.StopResponseConfig.VelocityThreshold</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:CombineLatest" />
+            </Expression>
+            <Expression xsi:type="viz:RollingGraphBuilder">
+              <viz:ValueSelector>Item1,Item2</viz:ValueSelector>
+              <viz:SymbolType>None</viz:SymbolType>
+              <viz:LineWidth>2</viz:LineWidth>
+              <viz:Capacity xsi:nil="true" />
+              <viz:Min>0</viz:Min>
+              <viz:Max xsi:nil="true" />
             </Expression>
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
@@ -5760,11 +5781,38 @@ Item5 as TotalReward)</scr:Expression>
               <Name>ForagingStage</Name>
               <Workflow>
                 <Nodes>
+                  <Expression xsi:type="PropertySource" TypeArguments="p2:GapSite,p2:SiteLabel">
+                    <MemberName>Label</MemberName>
+                    <Value>InterPatch</Value>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Label" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
                     <Value>1</Value>
                   </Expression>
+                  <Expression xsi:type="PropertySource" TypeArguments="p2:GapSite,p2:SiteLabel">
+                    <MemberName>Label</MemberName>
+                    <Value>Gap</Value>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Label" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
                     <Value>2</Value>
+                  </Expression>
+                  <Expression xsi:type="PropertySource" TypeArguments="p2:GapSite,p2:SiteLabel">
+                    <MemberName>Label</MemberName>
+                    <Value>Reward</Value>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Label" />
+                    </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
                     <Value>3</Value>
@@ -5778,11 +5826,17 @@ Item5 as TotalReward)</scr:Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="4" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source2" />
-                  <Edge From="2" To="4" Label="Source3" />
-                  <Edge From="3" To="4" Label="Source4" />
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="10" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="10" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="10" Label="Source3" />
+                  <Edge From="9" To="10" Label="Source4" />
+                  <Edge From="10" To="11" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -5882,36 +5936,39 @@ Item5 as TotalReward)</scr:Expression>
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source3" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="38" Label="Source1" />
+            <Edge From="10" To="41" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="36" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="12" To="39" Label="Source1" />
+            <Edge From="13" To="16" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="36" Label="Source2" />
+            <Edge From="15" To="16" Label="Source2" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="16" To="18" Label="Source2" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="18" To="39" Label="Source2" />
             <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="36" Label="Source3" />
+            <Edge From="19" To="21" Label="Source2" />
+            <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="36" Label="Source4" />
-            <Edge From="24" To="26" Label="Source1" />
-            <Edge From="25" To="26" Label="Source2" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="36" Label="Source5" />
+            <Edge From="23" To="39" Label="Source3" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="39" Label="Source4" />
+            <Edge From="27" To="29" Label="Source1" />
+            <Edge From="28" To="29" Label="Source2" />
             <Edge From="29" To="30" Label="Source1" />
             <Edge From="30" To="31" Label="Source1" />
-            <Edge From="31" To="32" Label="Source1" />
-            <Edge From="32" To="34" Label="Source1" />
-            <Edge From="33" To="34" Label="Source2" />
+            <Edge From="31" To="39" Label="Source5" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="34" Label="Source1" />
             <Edge From="34" To="35" Label="Source1" />
-            <Edge From="35" To="36" Label="Source6" />
-            <Edge From="36" To="37" Label="Source1" />
-            <Edge From="37" To="38" Label="Source2" />
-            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="35" To="37" Label="Source1" />
+            <Edge From="36" To="37" Label="Source2" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="39" Label="Source6" />
+            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="40" To="41" Label="Source2" />
+            <Edge From="41" To="42" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
