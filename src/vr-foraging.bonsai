@@ -5736,7 +5736,7 @@ Item5 as TotalReward)</scr:Expression>
               <viz:Max xsi:nil="true" />
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>LickEvent</Name>
