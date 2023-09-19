@@ -1,6 +1,6 @@
 %YAML 1.1
 ---
-# yaml-language-server: $schema=aind-vr-foraging-session.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/AllenNeuralDynamics/aind-vr-foraging/main/src/DataSchemas/aind-vr-foraging-session.json
 
 metadata:
   experiment: "vr-foraging"
