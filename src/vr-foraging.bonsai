@@ -5732,7 +5732,7 @@ Item5 as TotalReward)</scr:Expression>
               <viz:SymbolType>None</viz:SymbolType>
               <viz:LineWidth>2</viz:LineWidth>
               <viz:Capacity xsi:nil="true" />
-              <viz:Min>0</viz:Min>
+              <viz:Min xsi:nil="true" />
               <viz:Max xsi:nil="true" />
             </Expression>
             <Expression xsi:type="VisualizerMapping">
