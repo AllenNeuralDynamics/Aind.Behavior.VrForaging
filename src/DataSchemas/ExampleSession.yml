@@ -119,6 +119,8 @@ environmentStatistics:
   patches:
     - label: "Berries"
       stateIndex: 0
+      patchRewardFunction:
+        initialRewardAmount: 10000
       odorSpecifications:
         concentration: 1
         index: 0
@@ -132,6 +134,8 @@ environmentStatistics:
           choiceGracePeriod: 0.1
     - label: "Bananas"
       stateIndex: 1
+      patchRewardFunction:
+        initialRewardAmount: 10000
       odorSpecifications:
         concentration: 1
         index: 1
