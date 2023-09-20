@@ -372,6 +372,8 @@ namespace AindVrForagingDataSchema
     
         private string _label = "";
     
+        private PatchRewardFunction _patchRewardFunction;
+    
         private Odor _odorSpecifications;
     
         private Reward _rewardSpecifications;
@@ -389,6 +391,21 @@ namespace AindVrForagingDataSchema
             set
             {
                 _label = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("patchRewardFunction")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patchRewardFunction")]
+        public PatchRewardFunction PatchRewardFunction
+        {
+            get
+            {
+                return _patchRewardFunction;
+            }
+            set
+            {
+                _patchRewardFunction = value;
             }
         }
     
@@ -442,6 +459,7 @@ namespace AindVrForagingDataSchema
                 new PatchStatistics
                 {
                     Label = _label,
+                    PatchRewardFunction = _patchRewardFunction,
                     OdorSpecifications = _odorSpecifications,
                     RewardSpecifications = _rewardSpecifications,
                     StateIndex = _stateIndex
@@ -1499,6 +1517,38 @@ namespace AindVrForagingDataSchema
                     StopDuration = _stopDuration,
                     TimeToCollect = _timeToCollect,
                     ChoiceGracePeriod = _choiceGracePeriod
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PatchRewardFunction
+    {
+    
+        private double _initialRewardAmount = 0D;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("initialRewardAmount")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialRewardAmount")]
+        public double InitialRewardAmount
+        {
+            get
+            {
+                return _initialRewardAmount;
+            }
+            set
+            {
+                _initialRewardAmount = value;
+            }
+        }
+    
+        public System.IObservable<PatchRewardFunction> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new PatchRewardFunction
+                {
+                    InitialRewardAmount = _initialRewardAmount
                 }));
         }
     }
@@ -2823,6 +2873,11 @@ namespace AindVrForagingDataSchema
             return Process<OperantLogic>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<PatchRewardFunction> source)
+        {
+            return Process<PatchRewardFunction>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Calibration> source)
         {
             return Process<Calibration>(source);
@@ -2929,6 +2984,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
@@ -3087,6 +3143,11 @@ namespace AindVrForagingDataSchema
             return Process<OperantLogic>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<PatchRewardFunction> source)
+        {
+            return Process<PatchRewardFunction>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Calibration> source)
         {
             return Process<Calibration>(source);
@@ -3193,6 +3254,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]

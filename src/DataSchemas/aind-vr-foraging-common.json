@@ -102,6 +102,9 @@
           "default": "",
           "type": "string"
         },
+        "patchRewardFunction":{
+          "$ref": "#/definitions/patchRewardFunction"
+        },
         "odorSpecifications": {
           "$ref": "#/definitions/odorSpecifications"
         },
@@ -128,6 +131,16 @@
         }
       },
       "type": "object"
+    },
+    "patchRewardFunction":{
+      "type": "object",
+      "properties": {
+        "initialRewardAmount": {
+          "default": 0,
+          "minimum": 0,
+          "type": "number"
+        }
+      }
     },
     "rewardSpecifications": {
       "default": null,
