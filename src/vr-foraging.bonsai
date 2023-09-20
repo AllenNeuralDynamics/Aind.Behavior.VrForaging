@@ -2373,17 +2373,8 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpBehaviorEvents</Name>
                   </Expression>
-                  <Expression xsi:type="Annotation">
-                    <Name>Issue</Name>
-                    <Text><![CDATA[https://github.com/bonsai-rx/harp/issues/72]]></Text>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Combinator">
-                      <Combinator xsi:type="beh:GroupByRegister" />
-                    </Builder>
-                  </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="harp:GroupByRegister" />
+                    <Combinator xsi:type="beh:GroupByRegister" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateHarpLoggingPath.bonsai">
                     <LogName>Behavior</LogName>
@@ -2406,13 +2397,11 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="2" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="4" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="6" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source2" />
-                  <Edge From="6" To="7" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
