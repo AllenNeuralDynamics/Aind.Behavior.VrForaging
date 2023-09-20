@@ -1645,7 +1645,7 @@
                             <gl:Title>VrForaging</gl:Title>
                             <gl:VSync>Off</gl:VSync>
                             <gl:SwapSync>false</gl:SwapSync>
-                            <gl:ClearColor>Gray</gl:ClearColor>
+                            <gl:ClearColor>Black</gl:ClearColor>
                             <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
                             <gl:CursorVisible>false</gl:CursorVisible>
                             <gl:Location xsi:nil="true" />
