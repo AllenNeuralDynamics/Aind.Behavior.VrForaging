@@ -12,6 +12,7 @@
     <PackageReference Include="Bonsai.Spinnaker" Version="0.7.1" />
     <PackageReference Include="Bonsai.Harp" Version="3.5.0" />
 	<PackageReference Include="Harp.Behavior" Version="0.1.0" />
+	<PackageReference Include="LibGit2Sharp" Version="0.27.2" />
   </ItemGroup>
 
 </Project>
