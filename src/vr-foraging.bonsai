@@ -2536,6 +2536,24 @@ Item2.Light as Light)</scr:Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogSoftwareEventsDemux.bonsai">
               <LoggerName>SoftwareEvents</LoggerName>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CurrentPosition</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Seconds,Value.Z</Selector>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+Item1 as Seconds,
+Item2 as Position)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
+              <LogName>CurrentPosition</LogName>
+              <DeviceName>OperationControl</DeviceName>
+              <Extension>csv</Extension>
+              <OmitHeader>false</OmitHeader>
+              <Delimiter xsi:nil="true" />
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -2551,6 +2569,9 @@ Item2.Light as Light)</scr:Expression>
             <Edge From="14" To="15" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
