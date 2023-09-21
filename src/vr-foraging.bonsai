@@ -18,18 +18,19 @@
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
+                 xmlns:p6="clr-namespace:Harp.Behavior;assembly=Extensions"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
-                 xmlns:p6="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
+                 xmlns:p7="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:p7="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
+                 xmlns:p8="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:EnumerateSessions">
-          <p1:FileFilter>YAML</p1:FileFilter>
-          <p1:Directory>.</p1:Directory>
+          <p1:FileFilter>YML</p1:FileFilter>
+          <p1:Directory>../local</p1:Directory>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -2374,6 +2375,9 @@ Item2.Light as Light)</scr:Expression>
                     <Name>HarpBehaviorEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p6:FilterVisibility" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
                     <Combinator xsi:type="beh:GroupByRegister" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateHarpLoggingPath.bonsai">
@@ -2398,10 +2402,11 @@ Item2.Light as Light)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="5" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -5805,7 +5810,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value.Image</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p6:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera0</Name>
@@ -5814,7 +5819,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p6:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera1</Name>
@@ -5823,7 +5828,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p6:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:ColumnCount>3</viz:ColumnCount>
@@ -5839,7 +5844,7 @@ Item5 as TotalReward)</scr:Expression>
               <Name>QCDiagnosis</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p8:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>CurrentVelocity</Name>
@@ -6026,7 +6031,7 @@ Item5 as TotalReward)</scr:Expression>
               <Combinator xsi:type="rx:SubscribeWhen" />
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p7:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p8:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:ColumnCount>4</viz:ColumnCount>
