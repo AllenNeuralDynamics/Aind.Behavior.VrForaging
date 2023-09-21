@@ -2,7 +2,7 @@
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
   "definitions": {
-    "softwareEvent":{
+    "softwareEvent": {
       "type": "object",
       "properties": {
         "timestamp": {
@@ -15,61 +15,86 @@
           "default": "none"
         },
         "index": {
-          "type": ["null","integer"],
+          "type": ["null", "integer"],
           "minimum": null
         },
-        "name":{
+        "name": {
           "type": "string"
         },
         "data": {
           "type": ["null", "object"],
           "default": null
         },
-        "dataType":{
+        "dataType": {
           "type": "string",
           "enum": ["string", "number", "boolean", "object", "array", "null"],
           "default": null
         }
       }
     },
-    "harpLogger":{
+    "harpLogger": {
       "type": "object",
       "properties": {
-        "logName":{
-          "type":"string",
+        "logName": {
+          "type": "string",
           "default": "harpDevice"
         },
-        "extension":{
-          "type":"string",
+        "extension": {
+          "type": "string",
           "default": "bin"
         }
       }
     },
-    "spinnakerLogger":{
+    "spinnakerLogger": {
       "type": "object",
       "properties": {
-        "logName":{
-          "type":"string",
+        "logName": {
+          "type": "string",
           "default": "camera"
         },
-        "encodingFrameRate":{
-          "type":"number",
+        "encodingFrameRate": {
+          "type": "number",
           "default": 60
         },
-        "videoExtension":{
-          "type":"string",
+        "videoExtension": {
+          "type": "string",
           "default": "avi"
         },
-        "metadataExtension":{
-          "type":"string",
+        "metadataExtension": {
+          "type": "string",
           "default": "csv"
         },
         "codec": {
           "type": "string",
           "default": "FMP4"
         }
+      }
+    },
+    "genericCsvLogger": {
+      "type": "object",
+      "required": ["logName"],
+      "properties": {
+        "logName": {
+          "type": "string"
+        },
+        "deviceName": {
+          "type": ["string", "null"],
+          "default": "generic"
+        },
+        "extension": {
+          "type": "string",
+          "default": "csv"
+        },
+        "omitHeader": {
+          "type": "boolean",
+          "default": false
+        },
+        "Delimiter": {
+          "type": ["null", "string"],
+          "default": null
         }
       }
+    }
   },
   "properties": {
     "placeholder": {

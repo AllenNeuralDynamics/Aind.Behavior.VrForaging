@@ -282,6 +282,106 @@ namespace AindVrForagingDataSchema.Logging
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class GenericCsvLogger
+    {
+    
+        private string _logName;
+    
+        private string _deviceName = "generic";
+    
+        private string _extension = "csv";
+    
+        private bool _omitHeader = false;
+    
+        private string _delimiter;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("logName", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="logName")]
+        public string LogName
+        {
+            get
+            {
+                return _logName;
+            }
+            set
+            {
+                _logName = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceName")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceName")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extension")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="extension")]
+        public string Extension
+        {
+            get
+            {
+                return _extension;
+            }
+            set
+            {
+                _extension = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("omitHeader")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="omitHeader")]
+        public bool OmitHeader
+        {
+            get
+            {
+                return _omitHeader;
+            }
+            set
+            {
+                _omitHeader = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("Delimiter")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Delimiter")]
+        public string Delimiter
+        {
+            get
+            {
+                return _delimiter;
+            }
+            set
+            {
+                _delimiter = value;
+            }
+        }
+    
+        public System.IObservable<GenericCsvLogger> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new GenericCsvLogger
+                {
+                    LogName = _logName,
+                    DeviceName = _deviceName,
+                    Extension = _extension,
+                    OmitHeader = _omitHeader,
+                    Delimiter = _delimiter
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingLogging
     {
     
@@ -387,6 +487,11 @@ namespace AindVrForagingDataSchema.Logging
             return Process<SpinnakerLogger>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<GenericCsvLogger> source)
+        {
+            return Process<GenericCsvLogger>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingLogging> source)
         {
             return Process<AindVrForagingLogging>(source);
@@ -402,6 +507,7 @@ namespace AindVrForagingDataSchema.Logging
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SoftwareEvent>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerLogger>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GenericCsvLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingLogging>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -465,6 +571,11 @@ namespace AindVrForagingDataSchema.Logging
             return Process<SpinnakerLogger>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<GenericCsvLogger> source)
+        {
+            return Process<GenericCsvLogger>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingLogging> source)
         {
             return Process<AindVrForagingLogging>(source);
@@ -480,6 +591,7 @@ namespace AindVrForagingDataSchema.Logging
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SoftwareEvent>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerLogger>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GenericCsvLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingLogging>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
