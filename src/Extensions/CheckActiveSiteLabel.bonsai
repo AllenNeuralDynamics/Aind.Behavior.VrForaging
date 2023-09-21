@@ -8,7 +8,7 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="SubscribeSubject">
-        <Name>ActiveSiteLabel</Name>
+        <Name>ActiveSite</Name>
       </Expression>
       <Expression xsi:type="MemberSelector">
         <Selector>Label</Selector>

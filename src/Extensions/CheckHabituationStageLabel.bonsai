@@ -6,7 +6,7 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="SubscribeSubject">
-        <Name>ActiveSiteLabel</Name>
+        <Name>ActiveSite</Name>
       </Expression>
       <Expression xsi:type="MemberSelector">
         <Selector>Label</Selector>
@@ -16,7 +16,7 @@
       </Expression>
       <Expression xsi:type="Equal">
         <Operand xsi:type="StringProperty">
-          <Value>RewardAvailable</Value>
+          <Value>RunToReward</Value>
         </Operand>
       </Expression>
       <Expression xsi:type="rx:Condition">
@@ -37,7 +37,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="IntProperty">
-          <Value>2</Value>
+          <Value>1</Value>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
