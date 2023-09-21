@@ -1778,7 +1778,7 @@ Item2.Light as Light)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="gl:RenderCubemap">
                                   <gl:RenderState />
-                                  <gl:ClearColor>DimGray</gl:ClearColor>
+                                  <gl:ClearColor>Black</gl:ClearColor>
                                   <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
                                   <gl:FaceSize xsi:nil="true" />
                                   <gl:InternalFormat>Rgb</gl:InternalFormat>
