@@ -646,7 +646,7 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DebugActiveSite.bonsai" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\ActiveSiteEvent.bonsai" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
                 <rx:Count>1</rx:Count>

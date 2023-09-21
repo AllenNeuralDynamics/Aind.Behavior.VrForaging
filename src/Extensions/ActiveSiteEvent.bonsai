@@ -24,7 +24,7 @@
               <Selector>Item2</Selector>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>ActiveSiteLabel</Name>
+              <Name>ActiveSite</Name>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
