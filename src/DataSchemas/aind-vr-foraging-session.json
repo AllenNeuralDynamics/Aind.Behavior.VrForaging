@@ -22,6 +22,9 @@
     }
   },
   "properties": {
+    "behaviorSession": {
+      "$ref": "behavior_session_schema.json#"
+    },
     "environmentStatistics": {
       "properties": {
         "patches": {
