@@ -11,9 +11,14 @@ metadata:
   commitHash: null
   rngSeed: null
 hardware:
-  screen:
-    monitorCalibrationDirectory: "Calibration\\Monitors"
-    textureAssetDirectory:  "Textures"
+  graphics:
+    display:
+      displayDevice: 1
+      targetRenderFrequency: 60
+      targetUpdateFrequency: 120
+    render:
+      monitorCalibrationDirectory: "Calibration\\Monitors"
+      textureAssetDirectory:  "Textures"
   treadmill:
     model: headfix
     wheelDiameter: 15
