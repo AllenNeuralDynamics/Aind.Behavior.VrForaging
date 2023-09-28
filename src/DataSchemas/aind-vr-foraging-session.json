@@ -55,8 +55,16 @@
         "mainCamera": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
         },
-        "screen": {
-          "$ref": "aind-vr-foraging-common.json#/definitions/renderingSettings"
+        "graphics": {
+          "type": "object",
+          "properties": {
+            "render": {
+              "$ref": "aind-vr-foraging-common.json#/definitions/renderingSettings"
+            },
+            "display": {
+              "$ref": "aind-vr-foraging-hardware.json#/definitions/display"
+            }
+          }
         },
         "speaker": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/pwmBuzzer"
@@ -159,7 +167,7 @@
           "type": ["null", "object"],
           "properties": {
             "distanceToReward": {
-                "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+              "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
             },
             "reward": {
               "$ref": "#/definitions/reward"

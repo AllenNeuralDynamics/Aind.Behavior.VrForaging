@@ -786,6 +786,72 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Display
+    {
+    
+        private int _displayDevice = 1;
+    
+        private int _targetRenderFrequency = 60;
+    
+        private int _targetUpdateFrequency = 120;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("displayDevice")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="displayDevice")]
+        public int DisplayDevice
+        {
+            get
+            {
+                return _displayDevice;
+            }
+            set
+            {
+                _displayDevice = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("targetRenderFrequency")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targetRenderFrequency")]
+        public int TargetRenderFrequency
+        {
+            get
+            {
+                return _targetRenderFrequency;
+            }
+            set
+            {
+                _targetRenderFrequency = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("targetUpdateFrequency")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targetUpdateFrequency")]
+        public int TargetUpdateFrequency
+        {
+            get
+            {
+                return _targetUpdateFrequency;
+            }
+            set
+            {
+                _targetUpdateFrequency = value;
+            }
+        }
+    
+        public System.IObservable<Display> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Display
+                {
+                    DisplayDevice = _displayDevice,
+                    TargetRenderFrequency = _targetRenderFrequency,
+                    TargetUpdateFrequency = _targetUpdateFrequency
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class PwmBuzzer
     {
     
@@ -1715,7 +1781,7 @@ namespace AindVrForagingDataSchema
     
         private SpinnakerCamera _mainCamera;
     
-        private RenderingSettings _screen;
+        private Graphics _graphics;
     
         private PwmBuzzer _speaker;
     
@@ -1784,17 +1850,17 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("screen")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="screen")]
-        public RenderingSettings Screen
+        [Newtonsoft.Json.JsonPropertyAttribute("graphics")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="graphics")]
+        public Graphics Graphics
         {
             get
             {
-                return _screen;
+                return _graphics;
             }
             set
             {
-                _screen = value;
+                _graphics = value;
             }
         }
     
@@ -1852,7 +1918,7 @@ namespace AindVrForagingDataSchema
                     AuxiliaryCamera1 = _auxiliaryCamera1,
                     HarpBehaviorBoard = _harpBehaviorBoard,
                     MainCamera = _mainCamera,
-                    Screen = _screen,
+                    Graphics = _graphics,
                     Speaker = _speaker,
                     Treadmill = _treadmill,
                     Valves = _valves
@@ -2146,6 +2212,57 @@ namespace AindVrForagingDataSchema
                 {
                     Name = _name,
                     TextureSize = _textureSize
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Graphics
+    {
+    
+        private RenderingSettings _render;
+    
+        private Display _display;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("render")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
+        public RenderingSettings Render
+        {
+            get
+            {
+                return _render;
+            }
+            set
+            {
+                _render = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("display")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="display")]
+        public Display Display
+        {
+            get
+            {
+                return _display;
+            }
+            set
+            {
+                _display = value;
+            }
+        }
+    
+        public System.IObservable<Graphics> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Graphics
+                {
+                    Render = _render,
+                    Display = _display
                 }));
         }
     }
@@ -2823,6 +2940,11 @@ namespace AindVrForagingDataSchema
             return Process<RenderingSettings>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Display> source)
+        {
+            return Process<Display>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PwmBuzzer> source)
         {
             return Process<PwmBuzzer>(source);
@@ -2908,6 +3030,11 @@ namespace AindVrForagingDataSchema
             return Process<Floor>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Graphics> source)
+        {
+            return Process<Graphics>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Valves> source)
         {
             return Process<Valves>(source);
@@ -2974,6 +3101,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Display>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
@@ -2991,6 +3119,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Graphics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
@@ -3093,6 +3222,11 @@ namespace AindVrForagingDataSchema
             return Process<RenderingSettings>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Display> source)
+        {
+            return Process<Display>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PwmBuzzer> source)
         {
             return Process<PwmBuzzer>(source);
@@ -3178,6 +3312,11 @@ namespace AindVrForagingDataSchema
             return Process<Floor>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Graphics> source)
+        {
+            return Process<Graphics>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Valves> source)
         {
             return Process<Valves>(source);
@@ -3244,6 +3383,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Display>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
@@ -3261,6 +3401,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Graphics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
