@@ -1226,7 +1226,7 @@
               <rx:Name>ActiveSite</rx:Name>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p5:SoftwareEvent">
-              <rx:Name>SoftwaveEvents</rx:Name>
+              <rx:Name>SoftwareEvents</rx:Name>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
               <rx:Name>EndExperiment</rx:Name>
@@ -1691,6 +1691,17 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Switch" />
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ActivePatch</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:CreateSoftwareEvent">
+                      <p1:EventName>ActivePatch</p1:EventName>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>SoftwareEvents</Name>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="4" To="5" Label="Source1" />
@@ -1713,6 +1724,8 @@
                   <Edge From="22" To="23" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2628,7 +2641,7 @@ Item2.Light as Light)</scr:Expression>
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>SoftwaveEvents</Name>
+              <Name>SoftwareEvents</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>HarpTimestampSource</Name>
@@ -2881,13 +2894,15 @@ Item2 as Position)</scr:Expression>
                     <Name>IsStopped</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>SessionSchema</Name>
+                    <Name>StopVelocityThreshold</Name>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>TaskLogicControl.PositionControl.StopResponseConfig</Selector>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:CreateSoftwareEvent">
+                      <p1:EventName>StopVelocityThreshold</p1:EventName>
+                    </Combinator>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>FrequencyFilterCutoff</Selector>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>SoftwareEvents</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>CurrentPosition</Name>
@@ -3113,7 +3128,7 @@ Item2 as Position)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>SoftwaveEvents</Name>
+                    <Name>SoftwareEvents</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -3254,7 +3269,7 @@ Item2 as Position)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>SoftwaveEvents</Name>
+                    <Name>SoftwareEvents</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -3305,7 +3320,7 @@ Item2 as Position)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>SoftwaveEvents</Name>
+                    <Name>SoftwareEvents</Name>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Boolean">
                     <rx:Name>SpoutAvailable</rx:Name>
@@ -3956,7 +3971,7 @@ Item2 as Start
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>SoftwaveEvents</Name>
+                    <Name>SoftwareEvents</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>VisualCorridorSpecs</Name>
@@ -3967,7 +3982,7 @@ Item2 as Start
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>SoftwaveEvents</Name>
+                    <Name>SoftwareEvents</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -4617,7 +4632,7 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwaveEvents</Name>
+                          <Name>SoftwareEvents</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>IsOperantMode</Name>
@@ -4628,7 +4643,7 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwaveEvents</Name>
+                          <Name>SoftwareEvents</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>ScreenBrightness</Name>
@@ -4639,7 +4654,7 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwaveEvents</Name>
+                          <Name>SoftwareEvents</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>RewardAmount</Name>
@@ -4650,7 +4665,7 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwaveEvents</Name>
+                          <Name>SoftwareEvents</Name>
                         </Expression>
                       </Nodes>
                       <Edges>
@@ -4745,7 +4760,7 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwaveEvents</Name>
+                          <Name>SoftwareEvents</Name>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                         <Expression xsi:type="SubscribeSubject">
@@ -4959,7 +4974,7 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwaveEvents</Name>
+                          <Name>SoftwareEvents</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">
@@ -6005,6 +6020,14 @@ Item5 as TotalReward)</scr:Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>OperantLogic.StopDuration</Name>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:CreateSoftwareEvent">
+                      <p1:EventName>OperantLogic.StopDuration</p1:EventName>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>SoftwareEvents</Name>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -6015,6 +6038,8 @@ Item5 as TotalReward)</scr:Expression>
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
