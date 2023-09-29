@@ -6160,7 +6160,7 @@ Item5 as TotalReward)</scr:Expression>
               <viz:ValueSelector>Item1,Item2</viz:ValueSelector>
               <viz:SymbolType>None</viz:SymbolType>
               <viz:LineWidth>2</viz:LineWidth>
-              <viz:Capacity xsi:nil="true" />
+              <viz:Capacity>2000</viz:Capacity>
               <viz:Min xsi:nil="true" />
               <viz:Max xsi:nil="true" />
             </Expression>
@@ -6281,11 +6281,11 @@ Item5 as TotalReward)</scr:Expression>
               <viz:ValueSelector>Item2.StartPosition,Item1</viz:ValueSelector>
               <viz:SymbolType>Diamond</viz:SymbolType>
               <viz:LineWidth>3</viz:LineWidth>
-              <viz:Capacity>10</viz:Capacity>
+              <viz:Capacity>30</viz:Capacity>
               <viz:XMin xsi:nil="true" />
               <viz:XMax xsi:nil="true" />
-              <viz:YMin xsi:nil="true" />
-              <viz:YMax xsi:nil="true" />
+              <viz:YMin>-1</viz:YMin>
+              <viz:YMax>4</viz:YMax>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:LineGraphVisualizer" />
@@ -6315,8 +6315,8 @@ Item5 as TotalReward)</scr:Expression>
               <viz:Capacity>6</viz:Capacity>
               <viz:XMin xsi:nil="true" />
               <viz:XMax xsi:nil="true" />
-              <viz:YMin xsi:nil="true" />
-              <viz:YMax xsi:nil="true" />
+              <viz:YMin>-1</viz:YMin>
+              <viz:YMax>2</viz:YMax>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:LineGraphVisualizer" />
