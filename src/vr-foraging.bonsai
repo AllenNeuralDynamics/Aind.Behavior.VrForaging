@@ -32,7 +32,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:EnumerateSessions">
           <p1:FileFilter>YML</p1:FileFilter>
-          <p1:Directory>../local</p1:Directory>
+          <p1:Directory>../local/Subjects</p1:Directory>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -59,7 +59,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:EnumerateSessions">
           <p1:FileFilter>YML</p1:FileFilter>
-          <p1:Directory>../local</p1:Directory>
+          <p1:Directory>../local/Rigs</p1:Directory>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -86,7 +86,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:EnumerateSessions">
           <p1:FileFilter>YML</p1:FileFilter>
-          <p1:Directory>../local</p1:Directory>
+          <p1:Directory>../local/TaskLogic</p1:Directory>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
