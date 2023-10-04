@@ -2,88 +2,10 @@
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
   "definitions": {
-    "corridorSpecifications": {
-      "$ref": "aind-vr-foraging-common.json#/definitions/visualCorridor"
-    },
-    "siteLabel": {
-      "enum": ["Unspecified", "Gap", "InterPatch", "Reward"],
-      "type": "string"
-    },
-    "virtualSite": {
-      "$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"
-    },
-    "reward": {
-      "$ref": "aind-vr-foraging-common.json#/definitions/rewardSpecifications"
-    },
-    "taskStage": {
-      "enum": ["Habituation", "Foraging"],
-      "default": "Habituation",
-      "type": "string"
-    }
   },
   "properties": {
     "behaviorSession": {
       "$ref": "behavior_session_schema.json#"
-    },
-    "environmentStatistics": {
-      "properties": {
-        "patches": {
-          "default": [],
-          "items": {
-            "$ref": "aind-vr-foraging-common.json#/definitions/patchStatistics"
-          },
-          "type": "array"
-        },
-        "transitionMatrix": {
-          "$ref": "aind-vr-foraging-common.json#/definitions/matrix2d"
-        },
-        "firstState": {
-          "type": ["null", "integer"],
-          "default": null
-        }
-      },
-      "type": "object"
-    },
-    "hardware": {
-      "properties": {
-        "auxiliaryCamera0": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/videoCaptureDevice"
-        },
-        "auxiliaryCamera1": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/videoCaptureDevice"
-        },
-        "harpBehaviorBoard": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
-        },
-        "mainCamera": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
-        },
-        "screen": {
-          "$ref": "aind-vr-foraging-common.json#/definitions/renderingSettings"
-        },
-        "speaker": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/pwmBuzzer"
-        },
-        "treadmill": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/treadmill"
-        },
-        "valves": {
-          "properties": {
-            "odor1": {
-              "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
-            },
-            "odor2": {
-              "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
-            },
-            "water": {
-              "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
-            }
-          },
-          "required": ["water", "odor1", "odor2"],
-          "type": "object"
-        }
-      },
-      "type": "object"
     },
     "metadata": {
       "properties": {
@@ -119,127 +41,11 @@
         "commitHash"
       ],
       "type": "object"
-    },
-    "taskLogicControl": {
-      "properties": {
-        "odorControl": {
-          "type": "object",
-          "properties": {
-            "valveMaxOpenTime": {
-              "type": "number",
-              "minimum": 0
-            }
-          }
-        },
-        "positionControl": {
-          "properties": {
-            "gain": {
-              "$ref": "aind-vr-foraging-common.json#/definitions/vector3"
-            },
-            "initialPosition": {
-              "$ref": "aind-vr-foraging-common.json#/definitions/vector3"
-            },
-            "stopResponseConfig": {
-              "properties": {
-                "frequencyFilterCutoff": {
-                  "maximum": 100,
-                  "type": "number"
-                },
-                "velocityThreshold": {
-                  "minimum": 1,
-                  "type": "number"
-                }
-              },
-              "type": "object"
-            }
-          },
-          "type": "object"
-        },
-        "taskStage": {
-          "$ref": "#/definitions/taskStage"
-        },
-        "habituationSettings": {
-          "type": ["null", "object"],
-          "properties": {
-            "distanceToReward": {
-                "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
-            },
-            "reward": {
-              "$ref": "#/definitions/reward"
-            },
-            "brightness": {
-              "type": ["number", "null"],
-              "default": null
-            }
-          },
-          "default": null,
-          "required": ["distanceToReward", "reward"]
-        },
-        "virtualSiteGeneration": {
-          "properties": {
-            "gapSite": {
-              "properties": {
-                "brightness": {
-                  "type": ["number", "null"],
-                  "default": null
-                },
-                "label": {
-                  "$ref": "#/definitions/siteLabel",
-                  "default": "Gap"
-                },
-                "lengthDistribution": {
-                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
-                }
-              },
-              "type": "object"
-            },
-            "interPatchSite": {
-              "properties": {
-                "brightness": {
-                  "type": ["number", "null"],
-                  "default": null
-                },
-                "label": {
-                  "$ref": "#/definitions/siteLabel",
-                  "default": "InterPatch"
-                },
-                "lengthDistribution": {
-                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
-                }
-              },
-              "type": "object"
-            },
-            "rewardSite": {
-              "properties": {
-                "brightness": {
-                  "type": ["number", "null"],
-                  "default": null
-                },
-                "label": {
-                  "$ref": "#/definitions/siteLabel",
-                  "default": "Reward"
-                },
-                "lengthDistribution": {
-                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
-                }
-              },
-              "type": "object"
-            }
-          },
-          "required": ["interPatchSite", "rewardSite", "gapSite"],
-          "default": null,
-          "type": ["null", "object"]
-        }
-      },
-      "type": "object",
-      "required": ["taskStage", "positionControl", "odorControl"]
     }
   },
   "required": [
     "metadata",
-    "taskLogicControl",
-    "hardware",
-    "environmentStatistics"
+    "behaviorSession"
   ],
   "title": "AindVrForagingSession",
   "type": "object"

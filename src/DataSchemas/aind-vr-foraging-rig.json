@@ -1,0 +1,59 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "definitions": {},
+  "properties": {
+    "auxiliaryCamera0": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/videoCaptureDevice"
+    },
+    "auxiliaryCamera1": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/videoCaptureDevice"
+    },
+    "harpBehaviorBoard": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
+    },
+    "mainCamera": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
+    },
+    "screen": {
+      "$ref": "aind-vr-foraging-common.json#/definitions/renderingSettings"
+    },
+    "speaker": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/pwmBuzzer"
+    },
+    "treadmill": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/treadmill"
+    },
+    "valves": {
+      "properties": {
+        "odor1": {
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
+        },
+        "odor2": {
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
+        },
+        "water": {
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
+        }
+      },
+      "required": [
+        "water",
+        "odor1",
+        "odor2"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "mainCamera",
+    "auxiliaryCamera0",
+    "auxiliaryCamera1",
+    "harpBehaviorBoard",
+    "screen",
+    "speaker",
+    "treadmill",
+    "valves"
+  ],
+  "title": "AindVrForagingRig",
+  "type": "object"
+}
