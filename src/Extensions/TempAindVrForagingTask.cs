@@ -5,7 +5,7 @@
 //----------------------
 
 
-namespace AindVrForagingDataSchema
+namespace AindVrForagingDataSchema.Task
 {
     #pragma warning disable // Disable all warnings
 
@@ -503,539 +503,6 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class VideoCaptureDevice
-    {
-    
-        private int _index = 0;
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("index")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
-        public int Index
-        {
-            get
-            {
-                return _index;
-            }
-            set
-            {
-                _index = value;
-            }
-        }
-    
-        public System.IObservable<VideoCaptureDevice> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new VideoCaptureDevice
-                {
-                    Index = _index
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpBoard
-    {
-    
-        private HarpBoardDeviceType _deviceType;
-    
-        private string _portName;
-    
-        private string _serialNumber;
-    
-        private string _deviceName;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("deviceType", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceType")]
-        public HarpBoardDeviceType DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("portName", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="portName")]
-        public string PortName
-        {
-            get
-            {
-                return _portName;
-            }
-            set
-            {
-                _portName = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("serialNumber")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serialNumber")]
-        public string SerialNumber
-        {
-            get
-            {
-                return _serialNumber;
-            }
-            set
-            {
-                _serialNumber = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("deviceName")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceName")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        public System.IObservable<HarpBoard> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new HarpBoard
-                {
-                    DeviceType = _deviceType,
-                    PortName = _portName,
-                    SerialNumber = _serialNumber,
-                    DeviceName = _deviceName
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class SpinnakerCamera
-    {
-    
-        private int _binning = 1;
-    
-        private SpinnakerCameraColorProcessing _colorProcessing = AindVrForagingDataSchema.SpinnakerCameraColorProcessing.Default;
-    
-        private int _exposure = 1000;
-    
-        private int _frameRate = 30;
-    
-        private double _gain = 0D;
-    
-        private string _serialNumber;
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("binning")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binning")]
-        public int Binning
-        {
-            get
-            {
-                return _binning;
-            }
-            set
-            {
-                _binning = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("colorProcessing")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="colorProcessing")]
-        public SpinnakerCameraColorProcessing ColorProcessing
-        {
-            get
-            {
-                return _colorProcessing;
-            }
-            set
-            {
-                _colorProcessing = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("exposure")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure")]
-        public int Exposure
-        {
-            get
-            {
-                return _exposure;
-            }
-            set
-            {
-                _exposure = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("frameRate")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameRate")]
-        public int FrameRate
-        {
-            get
-            {
-                return _frameRate;
-            }
-            set
-            {
-                _frameRate = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
-        public double Gain
-        {
-            get
-            {
-                return _gain;
-            }
-            set
-            {
-                _gain = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("serialNumber", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serialNumber")]
-        public string SerialNumber
-        {
-            get
-            {
-                return _serialNumber;
-            }
-            set
-            {
-                _serialNumber = value;
-            }
-        }
-    
-        public System.IObservable<SpinnakerCamera> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new SpinnakerCamera
-                {
-                    Binning = _binning,
-                    ColorProcessing = _colorProcessing,
-                    Exposure = _exposure,
-                    FrameRate = _frameRate,
-                    Gain = _gain,
-                    SerialNumber = _serialNumber
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class RenderingSettings
-    {
-    
-        private string _monitorCalibrationDirectory = "Calibration\\Monitors\\";
-    
-        private string _textureAssetDirectory = "Textures";
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("monitorCalibrationDirectory")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="monitorCalibrationDirectory")]
-        public string MonitorCalibrationDirectory
-        {
-            get
-            {
-                return _monitorCalibrationDirectory;
-            }
-            set
-            {
-                _monitorCalibrationDirectory = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("textureAssetDirectory")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="textureAssetDirectory")]
-        public string TextureAssetDirectory
-        {
-            get
-            {
-                return _textureAssetDirectory;
-            }
-            set
-            {
-                _textureAssetDirectory = value;
-            }
-        }
-    
-        public System.IObservable<RenderingSettings> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new RenderingSettings
-                {
-                    MonitorCalibrationDirectory = _monitorCalibrationDirectory,
-                    TextureAssetDirectory = _textureAssetDirectory
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class PwmBuzzer
-    {
-    
-        private string _model = "buzzer";
-    
-        private string _pin = "DO1";
-    
-        private double _pwmDefaultPulseDuration = 0.2D;
-    
-        private double _pwmFrequency = 1000D;
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("model")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
-        public string Model
-        {
-            get
-            {
-                return _model;
-            }
-            set
-            {
-                _model = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("pin")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pin")]
-        public string Pin
-        {
-            get
-            {
-                return _pin;
-            }
-            set
-            {
-                _pin = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("pwmDefaultPulseDuration")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pwmDefaultPulseDuration")]
-        public double PwmDefaultPulseDuration
-        {
-            get
-            {
-                return _pwmDefaultPulseDuration;
-            }
-            set
-            {
-                _pwmDefaultPulseDuration = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("pwmFrequency")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pwmFrequency")]
-        public double PwmFrequency
-        {
-            get
-            {
-                return _pwmFrequency;
-            }
-            set
-            {
-                _pwmFrequency = value;
-            }
-        }
-    
-        public System.IObservable<PwmBuzzer> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new PwmBuzzer
-                {
-                    Model = _model,
-                    Pin = _pin,
-                    PwmDefaultPulseDuration = _pwmDefaultPulseDuration,
-                    PwmFrequency = _pwmFrequency
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Treadmill
-    {
-    
-        private string _model = "headfix";
-    
-        private double _wheelDiameter = 15D;
-    
-        private double _pulsesPerRevolution = 2880D;
-    
-        private bool _invertDirection = false;
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("model")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
-        public string Model
-        {
-            get
-            {
-                return _model;
-            }
-            set
-            {
-                _model = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("wheelDiameter")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="wheelDiameter")]
-        public double WheelDiameter
-        {
-            get
-            {
-                return _wheelDiameter;
-            }
-            set
-            {
-                _wheelDiameter = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("pulsesPerRevolution")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulsesPerRevolution")]
-        public double PulsesPerRevolution
-        {
-            get
-            {
-                return _pulsesPerRevolution;
-            }
-            set
-            {
-                _pulsesPerRevolution = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("invertDirection")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="invertDirection")]
-        public bool InvertDirection
-        {
-            get
-            {
-                return _invertDirection;
-            }
-            set
-            {
-                _invertDirection = value;
-            }
-        }
-    
-        public System.IObservable<Treadmill> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Treadmill
-                {
-                    Model = _model,
-                    WheelDiameter = _wheelDiameter,
-                    PulsesPerRevolution = _pulsesPerRevolution,
-                    InvertDirection = _invertDirection
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Valve
-    {
-    
-        private Calibration _calibration;
-    
-        private string _model = "valve";
-    
-        private string _pin = "SupplyPort0";
-    
-        private string _valveType = "air";
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration")]
-        public Calibration Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("model")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
-        public string Model
-        {
-            get
-            {
-                return _model;
-            }
-            set
-            {
-                _model = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("pin")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pin")]
-        public string Pin
-        {
-            get
-            {
-                return _pin;
-            }
-            set
-            {
-                _pin = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("valveType")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveType")]
-        public string ValveType
-        {
-            get
-            {
-                return _valveType;
-            }
-            set
-            {
-                _valveType = value;
-            }
-        }
-    
-        public System.IObservable<Valve> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Valve
-                {
-                    Calibration = _calibration,
-                    Model = _model,
-                    Pin = _pin,
-                    ValveType = _valveType
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Vector3
     {
     
@@ -1168,16 +635,12 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class AindVrForagingSession
+    public partial class AindVrForagingTask
     {
     
         private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
     
-        private Hardware _hardware = new Hardware();
-    
-        private Metadata _metadata = new Metadata();
-    
-        private TaskLogicControl _taskLogicControl = new TaskLogicControl();
+        private OperationControl _operationControl = new OperationControl();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("environmentStatistics", Required=Newtonsoft.Json.Required.Always)]
@@ -1195,59 +658,27 @@ namespace AindVrForagingDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("hardware", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="hardware")]
-        public Hardware Hardware
+        [Newtonsoft.Json.JsonPropertyAttribute("operationControl", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="operationControl")]
+        public OperationControl OperationControl
         {
             get
             {
-                return _hardware;
+                return _operationControl;
             }
             set
             {
-                _hardware = value;
+                _operationControl = value;
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("metadata", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadata")]
-        public Metadata Metadata
-        {
-            get
-            {
-                return _metadata;
-            }
-            set
-            {
-                _metadata = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("taskLogicControl", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskLogicControl")]
-        public TaskLogicControl TaskLogicControl
-        {
-            get
-            {
-                return _taskLogicControl;
-            }
-            set
-            {
-                _taskLogicControl = value;
-            }
-        }
-    
-        public System.IObservable<AindVrForagingSession> Process()
+        public System.IObservable<AindVrForagingTask> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new AindVrForagingSession
+                new AindVrForagingTask
                 {
                     EnvironmentStatistics = _environmentStatistics,
-                    Hardware = _hardware,
-                    Metadata = _metadata,
-                    TaskLogicControl = _taskLogicControl
+                    OperationControl = _operationControl
                 }));
         }
     }
@@ -1554,85 +985,6 @@ namespace AindVrForagingDataSchema
     }
 
 
-    public enum HarpBoardDeviceType
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="custom")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="custom")]
-        Custom = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="behavior")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behavior")]
-        Behavior = 1,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="clockSynchronizer")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="clockSynchronizer")]
-        ClockSynchronizer = 2,
-    }
-
-
-    public enum SpinnakerCameraColorProcessing
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Default")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Default")]
-        Default = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="NoColorProcessing")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="NoColorProcessing")]
-        NoColorProcessing = 1,
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Calibration
-    {
-    
-        private double _intercept = 0D;
-    
-        private double _slope = 1D;
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("intercept")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="intercept")]
-        public double Intercept
-        {
-            get
-            {
-                return _intercept;
-            }
-            set
-            {
-                _intercept = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("slope")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="slope")]
-        public double Slope
-        {
-            get
-            {
-                return _slope;
-            }
-            set
-            {
-                _slope = value;
-            }
-        }
-    
-        public System.IObservable<Calibration> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Calibration
-                {
-                    Intercept = _intercept,
-                    Slope = _slope
-                }));
-        }
-    }
-
-
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class EnvironmentStatistics
@@ -1704,301 +1056,7 @@ namespace AindVrForagingDataSchema
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Hardware
-    {
-    
-        private VideoCaptureDevice _auxiliaryCamera0;
-    
-        private VideoCaptureDevice _auxiliaryCamera1;
-    
-        private HarpBoard _harpBehaviorBoard;
-    
-        private SpinnakerCamera _mainCamera;
-    
-        private RenderingSettings _screen;
-    
-        private PwmBuzzer _speaker;
-    
-        private Treadmill _treadmill;
-    
-        private Valves _valves;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera0")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliaryCamera0")]
-        public VideoCaptureDevice AuxiliaryCamera0
-        {
-            get
-            {
-                return _auxiliaryCamera0;
-            }
-            set
-            {
-                _auxiliaryCamera0 = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera1")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliaryCamera1")]
-        public VideoCaptureDevice AuxiliaryCamera1
-        {
-            get
-            {
-                return _auxiliaryCamera1;
-            }
-            set
-            {
-                _auxiliaryCamera1 = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harpBehaviorBoard")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehaviorBoard")]
-        public HarpBoard HarpBehaviorBoard
-        {
-            get
-            {
-                return _harpBehaviorBoard;
-            }
-            set
-            {
-                _harpBehaviorBoard = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("mainCamera")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mainCamera")]
-        public SpinnakerCamera MainCamera
-        {
-            get
-            {
-                return _mainCamera;
-            }
-            set
-            {
-                _mainCamera = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("screen")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="screen")]
-        public RenderingSettings Screen
-        {
-            get
-            {
-                return _screen;
-            }
-            set
-            {
-                _screen = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("speaker")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="speaker")]
-        public PwmBuzzer Speaker
-        {
-            get
-            {
-                return _speaker;
-            }
-            set
-            {
-                _speaker = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("treadmill")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="treadmill")]
-        public Treadmill Treadmill
-        {
-            get
-            {
-                return _treadmill;
-            }
-            set
-            {
-                _treadmill = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("valves")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valves")]
-        public Valves Valves
-        {
-            get
-            {
-                return _valves;
-            }
-            set
-            {
-                _valves = value;
-            }
-        }
-    
-        public System.IObservable<Hardware> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Hardware
-                {
-                    AuxiliaryCamera0 = _auxiliaryCamera0,
-                    AuxiliaryCamera1 = _auxiliaryCamera1,
-                    HarpBehaviorBoard = _harpBehaviorBoard,
-                    MainCamera = _mainCamera,
-                    Screen = _screen,
-                    Speaker = _speaker,
-                    Treadmill = _treadmill,
-                    Valves = _valves
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Metadata
-    {
-    
-        private string _commitHash;
-    
-        private string _experiment;
-    
-        private string _notes = "";
-    
-        private double? _rngSeed;
-    
-        private string _rootPath;
-    
-        private string _subject;
-    
-        private string _version;
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("commitHash", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commitHash")]
-        public string CommitHash
-        {
-            get
-            {
-                return _commitHash;
-            }
-            set
-            {
-                _commitHash = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("experiment", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="experiment")]
-        public string Experiment
-        {
-            get
-            {
-                return _experiment;
-            }
-            set
-            {
-                _experiment = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="notes")]
-        public string Notes
-        {
-            get
-            {
-                return _notes;
-            }
-            set
-            {
-                _notes = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("rngSeed")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
-        public double? RngSeed
-        {
-            get
-            {
-                return _rngSeed;
-            }
-            set
-            {
-                _rngSeed = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("rootPath", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rootPath")]
-        public string RootPath
-        {
-            get
-            {
-                return _rootPath;
-            }
-            set
-            {
-                _rootPath = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("subject", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="subject")]
-        public string Subject
-        {
-            get
-            {
-                return _subject;
-            }
-            set
-            {
-                _subject = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("version", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
-        public System.IObservable<Metadata> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Metadata
-                {
-                    CommitHash = _commitHash,
-                    Experiment = _experiment,
-                    Notes = _notes,
-                    RngSeed = _rngSeed,
-                    RootPath = _rootPath,
-                    Subject = _subject,
-                    Version = _version
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class TaskLogicControl
+    public partial class OperationControl
     {
     
         private OdorControl _odorControl = new OdorControl();
@@ -2086,10 +1144,10 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<TaskLogicControl> Process()
+        public System.IObservable<OperationControl> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new TaskLogicControl
+                new OperationControl
                 {
                     OdorControl = _odorControl,
                     PositionControl = _positionControl,
@@ -2146,75 +1204,6 @@ namespace AindVrForagingDataSchema
                 {
                     Name = _name,
                     TextureSize = _textureSize
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Valves
-    {
-    
-        private Valve _odor1 = new Valve();
-    
-        private Valve _odor2 = new Valve();
-    
-        private Valve _water = new Valve();
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor1", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor1")]
-        public Valve Odor1
-        {
-            get
-            {
-                return _odor1;
-            }
-            set
-            {
-                _odor1 = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor2", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor2")]
-        public Valve Odor2
-        {
-            get
-            {
-                return _odor2;
-            }
-            set
-            {
-                _odor2 = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("water", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="water")]
-        public Valve Water
-        {
-            get
-            {
-                return _water;
-            }
-            set
-            {
-                _water = value;
-            }
-        }
-    
-        public System.IObservable<Valves> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Valves
-                {
-                    Odor1 = _odor1,
-                    Odor2 = _odor2,
-                    Water = _water
                 }));
         }
     }
@@ -2564,7 +1553,7 @@ namespace AindVrForagingDataSchema
     
         private double? _brightness;
     
-        private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.Gap;
+        private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.Gap;
     
         private TruncatedExponential _lengthDistribution;
     
@@ -2633,7 +1622,7 @@ namespace AindVrForagingDataSchema
     
         private double? _brightness;
     
-        private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.InterPatch;
+        private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.InterPatch;
     
         private TruncatedExponential _lengthDistribution;
     
@@ -2702,7 +1691,7 @@ namespace AindVrForagingDataSchema
     
         private double? _brightness;
     
-        private SiteLabel _label = AindVrForagingDataSchema.SiteLabel.Reward;
+        private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.Reward;
     
         private TruncatedExponential _lengthDistribution;
     
@@ -2803,41 +1792,6 @@ namespace AindVrForagingDataSchema
             return Process<Matrix2d>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<VideoCaptureDevice> source)
-        {
-            return Process<VideoCaptureDevice>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
-        {
-            return Process<HarpBoard>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
-        {
-            return Process<SpinnakerCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<RenderingSettings> source)
-        {
-            return Process<RenderingSettings>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<PwmBuzzer> source)
-        {
-            return Process<PwmBuzzer>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Treadmill> source)
-        {
-            return Process<Treadmill>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Valve> source)
-        {
-            return Process<Valve>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
         {
             return Process<Vector3>(source);
@@ -2848,9 +1802,9 @@ namespace AindVrForagingDataSchema
             return Process<TruncatedExponential>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
+        public System.IObservable<string> Process(System.IObservable<AindVrForagingTask> source)
         {
-            return Process<AindVrForagingSession>(source);
+            return Process<AindVrForagingTask>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Textures> source)
@@ -2878,39 +1832,19 @@ namespace AindVrForagingDataSchema
             return Process<PatchRewardFunction>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Calibration> source)
-        {
-            return Process<Calibration>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Hardware> source)
+        public System.IObservable<string> Process(System.IObservable<OperationControl> source)
         {
-            return Process<Hardware>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Metadata> source)
-        {
-            return Process<Metadata>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<TaskLogicControl> source)
-        {
-            return Process<TaskLogicControl>(source);
+            return Process<OperationControl>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Floor> source)
         {
             return Process<Floor>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Valves> source)
-        {
-            return Process<Valves>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<OdorControl> source)
@@ -2970,28 +1904,17 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoCaptureDevice>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTask>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Textures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicControl>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
@@ -3007,7 +1930,7 @@ namespace AindVrForagingDataSchema
     
         public DeserializeFromJson()
         {
-            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingSession>();
+            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingTask>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
@@ -3073,41 +1996,6 @@ namespace AindVrForagingDataSchema
             return Process<Matrix2d>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<VideoCaptureDevice> source)
-        {
-            return Process<VideoCaptureDevice>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
-        {
-            return Process<HarpBoard>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
-        {
-            return Process<SpinnakerCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<RenderingSettings> source)
-        {
-            return Process<RenderingSettings>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<PwmBuzzer> source)
-        {
-            return Process<PwmBuzzer>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Treadmill> source)
-        {
-            return Process<Treadmill>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Valve> source)
-        {
-            return Process<Valve>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
         {
             return Process<Vector3>(source);
@@ -3118,9 +2006,9 @@ namespace AindVrForagingDataSchema
             return Process<TruncatedExponential>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
+        public System.IObservable<string> Process(System.IObservable<AindVrForagingTask> source)
         {
-            return Process<AindVrForagingSession>(source);
+            return Process<AindVrForagingTask>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Textures> source)
@@ -3148,39 +2036,19 @@ namespace AindVrForagingDataSchema
             return Process<PatchRewardFunction>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Calibration> source)
-        {
-            return Process<Calibration>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Hardware> source)
+        public System.IObservable<string> Process(System.IObservable<OperationControl> source)
         {
-            return Process<Hardware>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Metadata> source)
-        {
-            return Process<Metadata>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<TaskLogicControl> source)
-        {
-            return Process<TaskLogicControl>(source);
+            return Process<OperationControl>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Floor> source)
         {
             return Process<Floor>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Valves> source)
-        {
-            return Process<Valves>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<OdorControl> source)
@@ -3240,28 +2108,17 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoCaptureDevice>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderingSettings>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTask>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Textures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Hardware>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogicControl>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valves>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
@@ -3277,7 +2134,7 @@ namespace AindVrForagingDataSchema
     
         public DeserializeFromYaml()
         {
-            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingSession>();
+            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingTask>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
