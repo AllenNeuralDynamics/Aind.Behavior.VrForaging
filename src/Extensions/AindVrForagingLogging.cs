@@ -382,6 +382,72 @@ namespace AindVrForagingDataSchema.Logging
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class DataSchemaLogger
+    {
+    
+        private string _logName;
+    
+        private string _deviceName = "config";
+    
+        private string _extension = "json";
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("logName", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="logName")]
+        public string LogName
+        {
+            get
+            {
+                return _logName;
+            }
+            set
+            {
+                _logName = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceName")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceName")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extension")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="extension")]
+        public string Extension
+        {
+            get
+            {
+                return _extension;
+            }
+            set
+            {
+                _extension = value;
+            }
+        }
+    
+        public System.IObservable<DataSchemaLogger> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new DataSchemaLogger
+                {
+                    LogName = _logName,
+                    DeviceName = _deviceName,
+                    Extension = _extension
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingLogging
     {
     
@@ -492,6 +558,11 @@ namespace AindVrForagingDataSchema.Logging
             return Process<GenericCsvLogger>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<DataSchemaLogger> source)
+        {
+            return Process<DataSchemaLogger>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingLogging> source)
         {
             return Process<AindVrForagingLogging>(source);
@@ -508,6 +579,7 @@ namespace AindVrForagingDataSchema.Logging
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GenericCsvLogger>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DataSchemaLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingLogging>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -576,6 +648,11 @@ namespace AindVrForagingDataSchema.Logging
             return Process<GenericCsvLogger>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<DataSchemaLogger> source)
+        {
+            return Process<DataSchemaLogger>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingLogging> source)
         {
             return Process<AindVrForagingLogging>(source);
@@ -592,6 +669,7 @@ namespace AindVrForagingDataSchema.Logging
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GenericCsvLogger>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DataSchemaLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingLogging>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
