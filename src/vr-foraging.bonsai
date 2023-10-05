@@ -3611,7 +3611,7 @@ Item2 as Position)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p4:Floor">
-                                  <p4:Name>default</p4:Name>
+                                  <p4:Name>floor</p4:Name>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
@@ -3632,7 +3632,7 @@ Item2 as Position)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p4:Floor">
-                                  <p4:Name>default</p4:Name>
+                                  <p4:Name>RightWall</p4:Name>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
@@ -3653,7 +3653,7 @@ Item2 as Position)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p4:Floor">
-                                  <p4:Name>default</p4:Name>
+                                  <p4:Name>LeftWall</p4:Name>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
@@ -3674,7 +3674,7 @@ Item2 as Position)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p4:Floor">
-                                  <p4:Name>default</p4:Name>
+                                  <p4:Name>Ceiling</p4:Name>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
