@@ -1,70 +1,8 @@
 %YAML 1.1
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/AllenNeuralDynamics/aind-vr-foraging/main/src/DataSchemas/aind-vr-foraging-session.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/AllenNeuralDynamics/aind-vr-foraging/main/src/DataSchemas/aind-vr-foraging-task.json
 
-metadata:
-  experiment: "vr-foraging"
-  notes: "nothing to report"
-  rootPath: "C:\\data\\"
-  subject: "subject"
-  version: "0.0.1-preview20230831"
-  commitHash: null
-  rngSeed: null
-hardware:
-  graphics:
-    display:
-      displayDevice: 1
-      targetRenderFrequency: 60
-      targetUpdateFrequency: 120
-    render:
-      monitorCalibrationDirectory: "Calibration\\Monitors"
-      textureAssetDirectory:  "Textures"
-  treadmill:
-    model: headfix
-    wheelDiameter: 15
-    pulsesPerRevolution: 8192
-    invertDirection: true
-  valves:
-    water:
-      model: Leeblahblah
-      pin: Port0Supply
-      valveType: water
-      calibration:
-        intercept: 0
-        slope: 1
-    odor1: &odorvalve
-      model: Leeblahblah
-      pin: Port1Supply
-      valveType: odor
-      calibration:
-        intercept: 0
-        slope: 1
-    odor2:
-      <<: *odorvalve
-      pin: Port2Supply
-      calibration:
-        intercept: 0
-        slope: 1
-  harpBehaviorBoard:
-    deviceType: behavior
-    portName: COM3
-  mainCamera:
-    frameRate: 30
-    exposure: 1000
-    gain: 0
-    serialNumber: "23113702"
-    colorProcessing: Default
-    binning: 1
-  auxiliaryCamera0:
-    index: 0
-  auxiliaryCamera1:
-    index: 1
-  speaker:
-    model: buzzer
-    pin: DO1
-    pwmDefaultPulseDuration: 0.2
-    pwmFrequency: 500
-taskLogicControl:
+operationControl:
   taskStage: Habituation
   habituationSettings:
     distanceToReward:
