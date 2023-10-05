@@ -28,6 +28,14 @@
       ],
       "type": "object"
     },
+    "display":{
+      "type":"object",
+      "properties": {
+        "displayDevice": {"type": "integer", "default": 1},
+        "targetRenderFrequency": {"type": "integer", "default": 60},
+        "targetUpdateFrequency": {"type": "integer", "default": 120}
+      }
+    },
     "pwmBuzzer": {
       "properties": {
         "model": {
