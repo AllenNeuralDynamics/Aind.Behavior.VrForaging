@@ -32,7 +32,7 @@
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:EnumerateDataSchemas">
-          <p1:FileFilter>YAML</p1:FileFilter>
+          <p1:FileFilter>YML</p1:FileFilter>
           <p1:Directory>../local/Subjects</p1:Directory>
         </Combinator>
       </Expression>
@@ -59,7 +59,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="StringProperty">
-          <Value>rig.json</Value>
+          <Value>rig.yml</Value>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -69,7 +69,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:EnumerateDataSchemas">
-          <p1:FileFilter>YAML</p1:FileFilter>
+          <p1:FileFilter>YML</p1:FileFilter>
           <p1:Directory>../local/Rigs</p1:Directory>
         </Combinator>
       </Expression>
@@ -96,7 +96,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:EnumerateDataSchemas">
-          <p1:FileFilter>YAML</p1:FileFilter>
+          <p1:FileFilter>YML</p1:FileFilter>
           <p1:Directory>../local/TaskLogic</p1:Directory>
         </Combinator>
       </Expression>
