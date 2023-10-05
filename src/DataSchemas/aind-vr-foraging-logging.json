@@ -94,6 +94,23 @@
           "default": null
         }
       }
+    },
+    "dataSchemaLogger": {
+      "type": "object",
+      "required": ["logName"],
+      "properties": {
+        "logName": {
+          "type": "string"
+        },
+        "deviceName": {
+          "type": ["string", "null"],
+          "default": "config"
+        },
+        "extension": {
+          "type": "string",
+          "default": "json"
+        }
+      }
     }
   },
   "properties": {
