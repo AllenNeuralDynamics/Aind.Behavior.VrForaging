@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 
-public class EnumerateSessions: Source<string>
+public class EnumerateDataSchemas: Source<string>
 {
 
     private FileTypes fileFilter = FileTypes.YAML;
@@ -24,12 +24,12 @@ public class EnumerateSessions: Source<string>
         set { directory = value; }
     }
 
-    private string subject;
-    [TypeConverter(typeof(EnumeratedSubjectsConverter))]
-    public string Subject
+    private string dataSchema;
+    [TypeConverter(typeof(EnumeratedDataSchemasConverter))]
+    public string DataSchema
     {
-        get { return subject; }
-        set { subject = value; }
+        get { return dataSchema; }
+        set { dataSchema = value; }
     }
 
     private static string BuildFullPath(string dir, string file){
@@ -38,25 +38,25 @@ public class EnumerateSessions: Source<string>
 
     public override IObservable<string> Generate()
     {
-        return Observable.Return(BuildFullPath(Directory, Subject));
+        return Observable.Return(BuildFullPath(Directory, DataSchema));
     }
 
     public IObservable<string> Generate<TSource>(IObservable<TSource> source)
     {
         return source.Select(x => {
-            return Path.Combine(BuildFullPath(Directory, Subject));
+            return Path.Combine(BuildFullPath(Directory, DataSchema));
             }
             );
     }
 
-    class EnumeratedSubjectsConverter : StringConverter
+    class EnumeratedDataSchemasConverter : StringConverter
     {
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            EnumerateSessions outer = (EnumerateSessions) context.Instance;
+            EnumerateDataSchemas outer = (EnumerateDataSchemas) context.Instance;
             var filterString = getFilterString(outer.FileFilter);
-            var subjectFiles = System.IO.Directory.GetFiles(outer.Directory, filterString).ToList();
-            var filenames = subjectFiles.Select(x => Path.GetFileName(x)).ToList();
+            var schemaFiles = System.IO.Directory.GetFiles(outer.Directory, filterString).ToList();
+            var filenames = schemaFiles.Select(x => Path.GetFileName(x)).ToList();
 
             return new StandardValuesCollection(filenames);
         }

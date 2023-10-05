@@ -1,0 +1,773 @@
+{
+  "title": "BehaviorSession",
+  "description": "Description of a behavior session",
+  "type": "object",
+  "properties": {
+    "describedBy": {
+      "title": "Describedby",
+      "default": "https://raw.githubusercontent.com/AllenNeuralDynamics/aind-data-schema/main/src/aind_data_schema/behavior/behavior_session.py",
+      "const": "https://raw.githubusercontent.com/AllenNeuralDynamics/aind-data-schema/main/src/aind_data_schema/behavior/behavior_session.py",
+      "type": "string"
+    },
+    "schema_version": {
+      "title": "Schema Version",
+      "description": "Schema version",
+      "default": "0.0.7",
+      "const": "0.0.7",
+      "type": "string"
+    },
+    "experimenter_full_name": {
+      "title": "Experimenter full name",
+      "description": "First and last name of the experimenter.",
+      "type": "string"
+    },
+    "session_start_time": {
+      "title": "Session start time",
+      "type": "string",
+      "format": "date-time"
+    },
+    "session_end_time": {
+      "title": "Session end time",
+      "type": "string",
+      "format": "date-time"
+    },
+    "rig_id": {
+      "title": "Rig ID",
+      "type": "string"
+    },
+    "calibrations": {
+      "title": "Calibrations",
+      "description": "Calibrations of rig devices prior to session",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Calibration"
+      }
+    },
+    "maintenance": {
+      "title": "Maintenance",
+      "description": "Maintenance of rig devices prior to session",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Maintenance"
+      }
+    },
+    "subject_id": {
+      "title": "Subject ID",
+      "type": "integer"
+    },
+    "animal_weight_prior": {
+      "title": "Animal weight (g)",
+      "description": "Animal weight before procedure",
+      "units": "g",
+      "type": "number"
+    },
+    "animal_weight_post": {
+      "title": "Animal weight (g)",
+      "description": "Animal weight after procedure",
+      "units": "g",
+      "type": "number"
+    },
+    "weight_unit": {
+      "title": "Weight unit",
+      "default": "gram",
+      "allOf": [
+        {
+          "$ref": "#/definitions/MassUnit"
+        }
+      ]
+    },
+    "behavior_type": {
+      "title": "Behavior type",
+      "description": "Name of the behavior session",
+      "type": "string"
+    },
+    "stimulus_epochs": {
+      "title": "Stimulus",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/StimulusEpoch"
+      }
+    },
+    "session_number": {
+      "title": "Session number",
+      "type": "integer"
+    },
+    "output_parameters": {
+      "title": "Performance parameters",
+      "description": "Performance metrics from session",
+      "type": "object"
+    },
+    "reward_consumed_during_training": {
+      "title": "Reward consumed during training (uL)",
+      "type": "number"
+    },
+    "reward_consumed_total": {
+      "title": "Total reward consumed (uL)",
+      "type": "number"
+    },
+    "reward_consumed_unit": {
+      "title": "Reward consumed unit",
+      "default": "microliter",
+      "allOf": [
+        {
+          "$ref": "#/definitions/VolumeUnit"
+        }
+      ]
+    },
+    "trials_total": {
+      "title": "Total trials",
+      "type": "integer"
+    },
+    "trials_finished": {
+      "title": "Finished trials",
+      "type": "integer"
+    },
+    "trials_rewarded": {
+      "title": "Rewarded trials",
+      "type": "integer"
+    },
+    "notes": {
+      "title": "Notes",
+      "type": "string"
+    }
+  },
+  "required": [
+    "experimenter_full_name",
+    "session_start_time",
+    "session_end_time",
+    "rig_id",
+    "subject_id",
+    "behavior_type",
+    "session_number",
+    "output_parameters",
+    "reward_consumed_during_training",
+    "reward_consumed_total",
+    "trials_total",
+    "trials_finished",
+    "trials_rewarded"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Calibration": {
+      "title": "Calibration",
+      "description": "Generic calibration class",
+      "type": "object",
+      "properties": {
+        "date_of_calibration": {
+          "title": "Date and time of calibration",
+          "type": "string",
+          "format": "date-time"
+        },
+        "device_name": {
+          "title": "Device name",
+          "description": "Must match a device name in rig/instrument",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Brief decsription of what is being calibrated",
+          "type": "string"
+        },
+        "input": {
+          "title": "inputs",
+          "description": "Calibration input",
+          "default": {},
+          "type": "object"
+        },
+        "output": {
+          "title": "outputs",
+          "description": "Calibration output",
+          "default": {},
+          "type": "object"
+        },
+        "notes": {
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "date_of_calibration",
+        "device_name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "BaseName": {
+      "title": "BaseName",
+      "description": "A simple model associating a name with an abbreviation",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "abbreviation": {
+          "title": "Abbreviation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "PIDName": {
+      "title": "PIDName",
+      "description": "Model for associate a name with a persistent identifier (PID),\nthe registry for that PID, and abbreviation for that registry",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "abbreviation": {
+          "title": "Abbreviation",
+          "type": "string"
+        },
+        "registry": {
+          "title": "Registry",
+          "allOf": [
+            {
+              "$ref": "#/definitions/BaseName"
+            }
+          ]
+        },
+        "registry_identifier": {
+          "title": "Registry identifier",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Reagent": {
+      "title": "Reagent",
+      "description": "Description of reagents used in procedure",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "rrid": {
+          "title": "Research Resource ID",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PIDName"
+            }
+          ]
+        },
+        "lot_number": {
+          "title": "Lot number",
+          "type": "string"
+        },
+        "expiration_date": {
+          "title": "Lot expiration date",
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "name",
+        "source",
+        "lot_number"
+      ],
+      "additionalProperties": false
+    },
+    "Maintenance": {
+      "title": "Maintenance",
+      "description": "Generic maintenance class",
+      "type": "object",
+      "properties": {
+        "date_of_maintenance": {
+          "title": "Date and time of maintenance",
+          "type": "string",
+          "format": "date-time"
+        },
+        "device_name": {
+          "title": "Device name",
+          "description": "Must match a device name in rig/instrument",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Description on maintenance procedure",
+          "type": "string"
+        },
+        "protocol_id": {
+          "title": "Protocol ID",
+          "type": "string"
+        },
+        "reagents": {
+          "title": "Reagents",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reagent"
+          }
+        },
+        "notes": {
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "date_of_maintenance",
+        "device_name",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "MassUnit": {
+      "title": "MassUnit",
+      "description": "Enumeration of Mass Measurements",
+      "enum": [
+        "kilogram",
+        "gram",
+        "milligram",
+        "microgram",
+        "nanogram"
+      ]
+    },
+    "PulseShape": {
+      "title": "PulseShape",
+      "description": "Types of Opto stim pulse shapes",
+      "enum": [
+        "Square",
+        "Ramp",
+        "Sinusoidal"
+      ]
+    },
+    "FrequencyUnit": {
+      "title": "FrequencyUnit",
+      "description": "Enumeration of Frequency Measurements",
+      "enum": [
+        "kilohertz",
+        "hertz",
+        "millihertz"
+      ]
+    },
+    "TimeUnit": {
+      "title": "TimeUnit",
+      "description": "Enumeration of Time Measurements",
+      "enum": [
+        "hour",
+        "minute",
+        "second",
+        "millisecond",
+        "microsecond",
+        "nanosecond"
+      ]
+    },
+    "OptoStimulation": {
+      "title": "OptoStimulation",
+      "description": "Description of opto stimulation parameters",
+      "type": "object",
+      "properties": {
+        "stimulus_name": {
+          "title": "Stimulus name",
+          "type": "string"
+        },
+        "pulse_shape": {
+          "title": "Pulse shape",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PulseShape"
+            }
+          ]
+        },
+        "pulse_frequency": {
+          "title": "Pulse frequency (Hz)",
+          "type": "integer"
+        },
+        "pulse_frequency_unit": {
+          "title": "Pulse frequency unit",
+          "default": "hertz",
+          "allOf": [
+            {
+              "$ref": "#/definitions/FrequencyUnit"
+            }
+          ]
+        },
+        "number_pulse_trains": {
+          "title": "Number of pulse trains",
+          "type": "integer"
+        },
+        "pulse_width": {
+          "title": "Pulse width (ms)",
+          "type": "integer"
+        },
+        "pulse_width_unit": {
+          "title": "Pulse width unit",
+          "default": "millisecond",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TimeUnit"
+            }
+          ]
+        },
+        "pulse_train_duration": {
+          "title": "Pulse train duration (s)",
+          "type": "number"
+        },
+        "pulse_train_duration_unit": {
+          "title": "Pulse train duration unit",
+          "default": "second",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TimeUnit"
+            }
+          ]
+        },
+        "fixed_pulse_train_interval": {
+          "title": "Fixed pulse train interval",
+          "type": "boolean"
+        },
+        "pulse_train_interval": {
+          "title": "Pulse train interval (s)",
+          "description": "Time between pulse trains",
+          "type": "number"
+        },
+        "pulse_train_interval_unit": {
+          "title": "Pulse train interval unit",
+          "default": "second",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TimeUnit"
+            }
+          ]
+        },
+        "baseline_duration": {
+          "title": "Baseline duration (s)",
+          "description": "Duration of baseline recording prior to first pulse train",
+          "type": "number"
+        },
+        "baseline_duration_unit": {
+          "title": "Baseline duration unit",
+          "default": "second",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TimeUnit"
+            }
+          ]
+        },
+        "other_parameters": {
+          "title": "Other Parameters",
+          "type": "object"
+        },
+        "notes": {
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stimulus_name",
+        "pulse_shape",
+        "pulse_frequency",
+        "number_pulse_trains",
+        "pulse_width",
+        "pulse_train_duration",
+        "fixed_pulse_train_interval",
+        "baseline_duration"
+      ],
+      "additionalProperties": false
+    },
+    "VisualStimulation": {
+      "title": "VisualStimulation",
+      "description": "Description of visual stimulus parameters. Provides a high level description of stimulus.",
+      "type": "object",
+      "properties": {
+        "stimulus_name": {
+          "title": "Stimulus name",
+          "type": "string"
+        },
+        "stimulus_parameters": {
+          "title": "Stimulus parameters",
+          "description": "Define and list the parameter values used (e.g. all TF or orientation values)",
+          "type": "object"
+        },
+        "stimulus_template_name": {
+          "title": "Stimulus template name",
+          "description": "Name of image set or movie displayed",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stimulus_software": {
+          "title": "Stimulus software",
+          "description": "The software used to control the stimulus (e.g. Bonsai)",
+          "type": "string"
+        },
+        "stimulus_software_version": {
+          "title": "Stimulus software version",
+          "type": "string"
+        },
+        "stimulus_script": {
+          "title": "Stimulus script",
+          "description": "The specific code for this stimulus instance",
+          "type": "string"
+        },
+        "stimulus_script_version": {
+          "title": "Stimulus script version",
+          "type": "string"
+        },
+        "notes": {
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stimulus_name",
+        "stimulus_software",
+        "stimulus_software_version",
+        "stimulus_script",
+        "stimulus_script_version"
+      ],
+      "additionalProperties": false
+    },
+    "BehaviorStimulation": {
+      "title": "BehaviorStimulation",
+      "description": "Description of behavior parameters. Provides a high level description of stimulus.",
+      "type": "object",
+      "properties": {
+        "behavior_name": {
+          "title": "Behavior name",
+          "type": "string"
+        },
+        "behavior_software": {
+          "title": "Behavior software",
+          "description": "The software used to control the behavior (e.g. Bonsai)",
+          "type": "string"
+        },
+        "behavior_software_version": {
+          "title": "Behavior software version",
+          "type": "string"
+        },
+        "behavior_script": {
+          "title": "Behavior script",
+          "description": "URL for the commit of the code used to run the behavior",
+          "type": "string"
+        },
+        "behavior_script_version": {
+          "title": "Behavior script version",
+          "type": "string"
+        },
+        "input_parameters": {
+          "title": "Input parameters",
+          "description": "Parameters used in behavior session",
+          "type": "object"
+        },
+        "notes": {
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "behavior_name",
+        "behavior_software",
+        "behavior_software_version",
+        "behavior_script",
+        "behavior_script_version",
+        "input_parameters"
+      ],
+      "additionalProperties": false
+    },
+    "PowerUnit": {
+      "title": "PowerUnit",
+      "description": "Unit for power, set or measured",
+      "enum": [
+        "microwatt",
+        "milliwatt",
+        "percent"
+      ]
+    },
+    "PhotoStimulationGroup": {
+      "title": "PhotoStimulationGroup",
+      "description": "Description of a photostimulation group",
+      "type": "object",
+      "properties": {
+        "group_index": {
+          "title": "Group index",
+          "type": "integer"
+        },
+        "number_of_neurons": {
+          "title": "Number of neurons",
+          "type": "integer"
+        },
+        "stimulation_laser_power": {
+          "title": "Stimulation laser power (mW)",
+          "type": "number"
+        },
+        "stimulation_laser_power_unit": {
+          "title": "Stimulation laser power unit",
+          "default": "milliwatt",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PowerUnit"
+            }
+          ]
+        },
+        "number_trials": {
+          "title": "Number of trials",
+          "type": "integer"
+        },
+        "number_spirals": {
+          "title": "Number of spirals",
+          "type": "integer"
+        },
+        "spiral_duration": {
+          "title": "Spiral duration (s)",
+          "type": "number"
+        },
+        "spiral_duration_unit": {
+          "title": "Spiral duration unit",
+          "default": "second",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TimeUnit"
+            }
+          ]
+        },
+        "inter_spiral_interval": {
+          "title": "Inter trial interval (s)",
+          "type": "number"
+        },
+        "inter_spiral_interval_unit": {
+          "title": "Inter trial interval unit",
+          "default": "second",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TimeUnit"
+            }
+          ]
+        },
+        "other_parameters": {
+          "title": "Other Parameters",
+          "type": "object"
+        },
+        "notes": {
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "group_index",
+        "number_of_neurons",
+        "stimulation_laser_power",
+        "number_trials",
+        "number_spirals",
+        "spiral_duration",
+        "inter_spiral_interval"
+      ],
+      "additionalProperties": false
+    },
+    "PhotoStimulation": {
+      "title": "PhotoStimulation",
+      "description": "Description of a photostimulation session",
+      "type": "object",
+      "properties": {
+        "stimulus_name": {
+          "title": "Stimulus name",
+          "type": "string"
+        },
+        "number_groups": {
+          "title": "Number of groups",
+          "type": "integer"
+        },
+        "groups": {
+          "title": "Groups",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PhotoStimulationGroup"
+          }
+        },
+        "inter_trial_interval": {
+          "title": "Inter trial interval (s)",
+          "type": "number"
+        },
+        "inter_trial_interval_unit": {
+          "title": "Inter trial interval unit",
+          "default": "second",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TimeUnit"
+            }
+          ]
+        },
+        "other_parameters": {
+          "title": "Other Parameters",
+          "type": "object"
+        },
+        "notes": {
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stimulus_name",
+        "number_groups",
+        "groups",
+        "inter_trial_interval"
+      ],
+      "additionalProperties": false
+    },
+    "StimulusEpoch": {
+      "title": "StimulusEpoch",
+      "description": "Description of stimulus used during session",
+      "type": "object",
+      "properties": {
+        "stimulus": {
+          "title": "Stimulus",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/OptoStimulation"
+            },
+            {
+              "$ref": "#/definitions/VisualStimulation"
+            },
+            {
+              "$ref": "#/definitions/BehaviorStimulation"
+            },
+            {
+              "$ref": "#/definitions/PhotoStimulation"
+            }
+          ]
+        },
+        "stimulus_start_time": {
+          "title": "Stimulus start time",
+          "description": "When a specific stimulus begins. This might be the same as the session start time.",
+          "type": "string",
+          "format": "time"
+        },
+        "stimulus_end_time": {
+          "title": "Stimulus end time",
+          "description": "When a specific stimulus ends. This might be the same as the session end time.",
+          "type": "string",
+          "format": "time"
+        }
+      },
+      "required": [
+        "stimulus",
+        "stimulus_start_time",
+        "stimulus_end_time"
+      ],
+      "additionalProperties": false
+    },
+    "VolumeUnit": {
+      "title": "VolumeUnit",
+      "description": "Enumeration of Volume Measurements",
+      "enum": [
+        "liter",
+        "milliliter",
+        "microliter",
+        "nanoliter"
+      ]
+    }
+  }
+}
