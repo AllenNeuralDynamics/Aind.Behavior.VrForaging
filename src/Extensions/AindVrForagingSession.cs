@@ -5,8 +5,6 @@
 //----------------------
 
 
-using System.Linq;
-
 namespace AindVrForagingDataSchema.Session
 {
     #pragma warning disable // Disable all warnings
@@ -1523,7 +1521,7 @@ namespace AindVrForagingDataSchema.Session
     
         private int _number_groups;
     
-        private System.Collections.Generic.List<PhotoStimulationGroup> _groups = new System.Collections.ObjectModel.Collection<PhotoStimulationGroup>().ToList();
+        private System.Collections.Generic.List<PhotoStimulationGroup> _groups = new System.Collections.Generic.List<PhotoStimulationGroup>();
     
         private double _inter_trial_interval;
     
