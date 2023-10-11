@@ -2668,6 +2668,43 @@ Value as IsStopped)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Logs</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="io:ReadLine" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
+                    <LogName>BonsaiConsole</LogName>
+                    <DeviceName>.logs</DeviceName>
+                    <Extension>txt</Extension>
+                    <OmitHeader>true</OmitHeader>
+                    <Delimiter xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>EndExperiment</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>ExperimentCompleted</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
+                    <LogName>ExperimentCompleted</LogName>
+                    <DeviceName>.logs</DeviceName>
+                    <Extension>txt</Extension>
+                    <OmitHeader>true</OmitHeader>
+                    <Delimiter xsi:nil="true" />
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -3248,21 +3285,24 @@ Value as IsStopped)</scr:Expression>
                           <Name>--RewardsAvailable</Name>
                           <Workflow>
                             <Nodes>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>RewardAvailableInPatch</Name>
-                              </Expression>
                               <Expression xsi:type="WorkflowInput">
                                 <Name>Source1</Name>
                               </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RewardAvailableInPatch</Name>
+                              </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Zip" />
+                                <Combinator xsi:type="rx:WithLatestFrom" />
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Name>Reward--</scr:Name>
+                                <scr:Expression>Item2 - Item1</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Take">
                                   <rx:Count>1</rx:Count>
                                 </Combinator>
                               </Expression>
-                              <Expression xsi:type="Subtract" />
                               <Expression xsi:type="MulticastSubject">
                                 <Name>RewardAvailableInPatch</Name>
                               </Expression>
