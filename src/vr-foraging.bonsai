@@ -2565,24 +2565,6 @@ Item2 as QuadColor)</scr:Expression>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>CurrentPosition</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Seconds,Value.Z</Selector>
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
-Item1 as Seconds,
-Item2 as Position)</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
-                    <LogName>CurrentPosition</LogName>
-                    <DeviceName>OperationControl</DeviceName>
-                    <Extension>csv</Extension>
-                    <OmitHeader>false</OmitHeader>
-                    <Delimiter xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
                     <Name>RendererSynchState</Name>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
@@ -2602,9 +2584,6 @@ Convert.ToByte(QuadColor) as QuadState)</scr:Expression>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2637,6 +2616,53 @@ Convert.ToByte(QuadColor) as QuadState)</scr:Expression>
                   <Edge From="1" To="2" Label="Source2" />
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>OperationControl</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Seconds,Value.Z</Selector>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(
+Item1 as Seconds,
+Item2 as Position)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
+                    <LogName>CurrentPosition</LogName>
+                    <DeviceName>OperationControl</DeviceName>
+                    <Extension>csv</Extension>
+                    <OmitHeader>false</OmitHeader>
+                    <Delimiter xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>IsStopped</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(
+Seconds as Seconds,
+Value as IsStopped)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
+                    <LogName>IsStopped</LogName>
+                    <DeviceName>OperationControl</DeviceName>
+                    <Extension>csv</Extension>
+                    <OmitHeader>false</OmitHeader>
+                    <Delimiter xsi:nil="true" />
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                 </Edges>
