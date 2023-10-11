@@ -3281,6 +3281,11 @@ Value as IsStopped)</scr:Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>GiveReward</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Skip">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="rx:SelectMany">
                           <Name>--RewardsAvailable</Name>
                           <Workflow>
@@ -3335,6 +3340,7 @@ Value as IsStopped)</scr:Expression>
                         <Edge From="16" To="17" Label="Source1" />
                         <Edge From="17" To="18" Label="Source1" />
                         <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
