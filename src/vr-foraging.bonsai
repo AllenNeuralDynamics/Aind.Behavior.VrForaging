@@ -2571,7 +2571,7 @@ Item2 as QuadColor)</scr:Expression>
                     <scr:Expression>new(
 ElapsedTime as Seconds,
 FrameIndex as FrameNumber, 
-Convert.ToByte(QuadColor) as QuadState)</scr:Expression>
+QuadColor as QuadState)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
                     <LogName>RendererSynchState</LogName>
