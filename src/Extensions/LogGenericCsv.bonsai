@@ -30,7 +30,8 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:GenericCsvLogger">
-                <p1:DeviceName>generic</p1:DeviceName>
+                <p1:LogName>LogName</p1:LogName>
+                <p1:DeviceName>DeviceName</p1:DeviceName>
                 <p1:Extension>csv</p1:Extension>
                 <p1:OmitHeader>false</p1:OmitHeader>
               </Combinator>
@@ -91,7 +92,7 @@
               <io:Append>false</io:Append>
               <io:Overwrite>false</io:Overwrite>
               <io:Suffix>None</io:Suffix>
-              <io:IncludeHeader>false</io:IncludeHeader>
+              <io:IncludeHeader>true</io:IncludeHeader>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
