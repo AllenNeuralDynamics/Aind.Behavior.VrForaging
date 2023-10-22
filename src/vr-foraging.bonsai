@@ -1786,7 +1786,7 @@ Item2.Light as Light)</scr:Expression>
                                 <Combinator xsi:type="rx:ElementIndex" />
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>Value</Selector>
+                                <Selector>Index</Selector>
                               </Expression>
                               <Expression xsi:type="Mod">
                                 <Operand xsi:type="IntProperty">
