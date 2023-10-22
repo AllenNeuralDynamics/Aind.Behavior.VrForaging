@@ -1786,7 +1786,7 @@ Item2.Light as Light)</scr:Expression>
                                 <Combinator xsi:type="rx:ElementIndex" />
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>Value</Selector>
+                                <Selector>Index</Selector>
                               </Expression>
                               <Expression xsi:type="Mod">
                                 <Operand xsi:type="IntProperty">
@@ -1843,23 +1843,55 @@ Item2.Light as Light)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:WithLatestFrom" />
                               </Expression>
-                              <Expression xsi:type="scr:ExpressionTransform">
-                                <scr:Expression>new(
-Item1.Item1 as ProjectionMatrix,
-Item1.Item2.Value as ElapsedTime,
-Item1.Item2.Index as FrameIndex,
-Item2 as QuadColor)</scr:Expression>
+                              <Expression xsi:type="InputMapping">
+                                <PropertyMappings>
+                                  <Property Name="SynchQuadValue" Selector="Item2" />
+                                  <Property Name="FrameIndex" Selector="Item1.Item2.Index" />
+                                  <Property Name="FrameTimestamp" Selector="Item1.Item2.Value" />
+                                </PropertyMappings>
                               </Expression>
-                              <Expression xsi:type="rx:PublishSubject">
+                              <Expression xsi:type="rx:SelectMany">
+                                <Name>CreateRenderSynchState</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="ExternalizedMapping">
+                                      <Property Name="SynchQuadValue" />
+                                      <Property Name="FrameIndex" />
+                                      <Property Name="FrameTimestamp" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="p7:RenderSynchState" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Take">
+                                        <rx:Count>1</rx:Count>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="rx:BehaviorSubject">
                                 <Name>RendererSynchState</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item1.Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
                               </Expression>
                               <Expression xsi:type="InputMapping">
                                 <PropertyMappings>
-                                  <Property Name="ColorG" Selector="QuadColor" />
-                                  <Property Name="ColorR" Selector="QuadColor" />
-                                  <Property Name="ColorB" Selector="QuadColor" />
+                                  <Property Name="ColorG" Selector="Item1.SynchQuadValue" />
+                                  <Property Name="ColorR" Selector="Item1.SynchQuadValue" />
+                                  <Property Name="ColorB" Selector="Item1.SynchQuadValue" />
                                 </PropertyMappings>
-                                <Selector>ProjectionMatrix</Selector>
+                                <Selector>Item2</Selector>
                               </Expression>
                               <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
                                 <ExtentX>0.1</ExtentX>
@@ -1925,9 +1957,13 @@ Item2 as QuadColor)</scr:Expression>
                               <Edge From="46" To="47" Label="Source1" />
                               <Edge From="47" To="48" Label="Source2" />
                               <Edge From="48" To="49" Label="Source1" />
+                              <Edge From="48" To="52" Label="Source1" />
                               <Edge From="49" To="50" Label="Source1" />
                               <Edge From="50" To="51" Label="Source1" />
-                              <Edge From="51" To="52" Label="Source1" />
+                              <Edge From="51" To="53" Label="Source1" />
+                              <Edge From="52" To="53" Label="Source2" />
+                              <Edge From="53" To="54" Label="Source1" />
+                              <Edge From="54" To="55" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -2567,12 +2603,6 @@ Item2 as QuadColor)</scr:Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RendererSynchState</Name>
                   </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
-ElapsedTime as Seconds,
-FrameIndex as FrameNumber, 
-QuadColor as QuadState)</scr:Expression>
-                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
                     <LogName>RendererSynchState</LogName>
                     <DeviceName>Renderer</DeviceName>
@@ -2583,7 +2613,6 @@ QuadColor as QuadState)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2593,6 +2622,15 @@ QuadColor as QuadState)</scr:Expression>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>SoftwareEvent</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RendererSynchState</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:FramestampSoftwareEvent" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpTimestampSource</Name>
@@ -2615,9 +2653,12 @@ QuadColor as QuadState)</scr:Expression>
                   <Edge From="0" To="2" Label="Source1" />
                   <Edge From="1" To="2" Label="Source2" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="3" To="5" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
                   <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>

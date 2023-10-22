@@ -26,7 +26,8 @@ public class CreateSoftwareEvent
                 Data = value.Value,
                 Timestamp = value.Seconds,
                 TimestampSource = SoftwareEventTimestampSource.Harp,
-                Index = null,
+                FrameIndex = null,
+                FrameTimestamp = null,
                 Name = thisName,
                 DataType = getDataType(value.Value)
             };
@@ -41,7 +42,8 @@ public class CreateSoftwareEvent
                 Data = value,
                 Timestamp = null,
                 TimestampSource = SoftwareEventTimestampSource.None,
-                Index = null,
+                FrameIndex = null,
+                FrameTimestamp = null,
                 Name = thisName,
                 DataType = getDataType(value)
             };

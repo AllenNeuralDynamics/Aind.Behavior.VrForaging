@@ -19,7 +19,8 @@ public class TimestampSoftwareEvent
                 Data = msg.Data,
                 Timestamp = value.Seconds,
                 TimestampSource = SoftwareEventTimestampSource.Harp,
-                Index = null,
+                FrameIndex = msg.FrameIndex,
+                FrameTimestamp = msg.FrameTimestamp,
                 Name = msg.Name,
                 DataType = msg.DataType
             };
@@ -34,7 +35,8 @@ public class TimestampSoftwareEvent
                 Data = msg.Data,
                 Timestamp = value.Item2,
                 TimestampSource = SoftwareEventTimestampSource.Harp,
-                Index = null,
+                FrameIndex = msg.FrameIndex,
+                FrameTimestamp = msg.FrameTimestamp,
                 Name = msg.Name,
                 DataType = msg.DataType
             };
@@ -49,7 +51,8 @@ public class TimestampSoftwareEvent
                 Data = msg.Data,
                 Timestamp = value.Item2.IsTimestamped ? value.Item2.GetTimestamp() : (double?)null,
                 TimestampSource = SoftwareEventTimestampSource.Harp,
-                Index = null,
+                FrameIndex = msg.FrameIndex,
+                FrameTimestamp = msg.FrameTimestamp,
                 Name = msg.Name,
                 DataType = msg.DataType
             };
