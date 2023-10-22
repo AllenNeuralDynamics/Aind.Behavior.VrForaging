@@ -2,6 +2,27 @@
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
   "definitions": {
+    "renderSynchState": {
+      "type": "object",
+      "properties": {
+        "synchQuadValue": {
+          "type": ["null", "number"],
+          "default": null,
+          "maximum": 1,
+          "minimum": 0
+        },
+        "frameIndex": {
+          "type": ["null", "integer"],
+          "default": null,
+          "minimum": 0
+        },
+        "frameTimestamp": {
+          "type": ["null", "number"],
+          "default": null,
+          "minimum": 0
+        }
+      }
+    },
     "softwareEvent": {
       "type": "object",
       "properties": {
@@ -14,9 +35,13 @@
           "enum": ["none", "harp", "render"],
           "default": "none"
         },
-        "index": {
+        "frameIndex": {
           "type": ["null", "integer"],
-          "minimum": null
+          "minimum": 0
+        },
+        "frameTimestamp":{
+          "type": ["null", "number"],
+          "default": null
         },
         "name": {
           "type": "string"
