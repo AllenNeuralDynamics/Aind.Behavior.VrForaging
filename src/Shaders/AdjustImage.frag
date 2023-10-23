@@ -2,12 +2,10 @@
 
 uniform float brightness = 0.0;
 uniform float contrast = 1.0;
-uniform vec2 shift;
-uniform vec2 scale = vec2(1, 1);
 
-uniform sampler2D tex;
-in vec2 texCoord;
+uniform samplerCube tex;
 
+in vec4 texCoord;
 out vec4 fragColor;
 
 mat4 brightnessMatrix(float brightness)
@@ -29,8 +27,8 @@ mat4 contrastMatrix(float contrast)
 
 void main()
 {
-    vec4 color = texture(tex, texCoord * scale + shift);
+  vec4 texel = texture(tex, texCoord.xyz);
 	fragColor = brightnessMatrix(brightness) *
         		contrastMatrix(contrast) *
-        		color;
+        		texel;
 }
