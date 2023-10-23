@@ -2589,6 +2589,13 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RendererSynchState</Name>
                   </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>Label</scr:Name>
+                    <scr:Expression>new(
+it.FrameIndex.Value as FrameIndex,
+it.FrameTimestamp.Value as FrameTimestamp,
+it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
+                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
                     <LogName>RendererSynchState</LogName>
                     <DeviceName>Renderer</DeviceName>
@@ -2599,6 +2606,7 @@ Item2.Light as Light)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
