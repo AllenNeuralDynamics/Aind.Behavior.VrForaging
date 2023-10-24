@@ -623,7 +623,7 @@
                     <Selector>Value</Selector>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>ScreenBrightness</Name>
+                    <Name>ScreenContrast</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
