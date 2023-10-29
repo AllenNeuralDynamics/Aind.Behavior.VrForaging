@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:p1="clr-namespace:;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:p2="clr-namespace:AindVrForagingDataSchema.Session;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -14,7 +14,7 @@
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p6="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
-                 xmlns:p7="clr-namespace:AindVrForagingDataSchema.Logging;assembly=Extensions"
+                 xmlns:p7="clr-namespace:AllenNeuralDynamics.Core.Logging;assembly=AllenNeuralDynamics.Core"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
@@ -23,15 +23,16 @@
                  xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
                  xmlns:p9="clr-namespace:Harp.Behavior;assembly=Extensions"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:p10="clr-namespace:;assembly=Extensions"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
-                 xmlns:p10="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
+                 xmlns:p11="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:p11="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
+                 xmlns:p12="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:EnumerateDataSchemas">
+        <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
           <p1:FileFilter>YML</p1:FileFilter>
           <p1:Directory>../local/Subjects</p1:Directory>
         </Combinator>
@@ -68,7 +69,7 @@
         </PropertyMappings>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:EnumerateDataSchemas">
+        <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
           <p1:FileFilter>YML</p1:FileFilter>
           <p1:Directory>../local/Rigs</p1:Directory>
         </Combinator>
@@ -95,7 +96,7 @@
         <Name>RigSchema</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:EnumerateDataSchemas">
+        <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
           <p1:FileFilter>YML</p1:FileFilter>
           <p1:Directory>../local/TaskLogic</p1:Directory>
         </Combinator>
@@ -2535,14 +2536,16 @@ Item2.Light as Light)</scr:Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SubjectSchema</Name>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateRootLoggingPath.bonsai" />
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Take">
-                <rx:Count>1</rx:Count>
-              </Combinator>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="RootFolder" Selector="Metadata.RootPath" />
+                <Property Name="Subject" Selector="Metadata.Subject" />
+              </PropertyMappings>
             </Expression>
-            <Expression xsi:type="rx:AsyncSubject">
-              <Name>LoggingRootPath</Name>
+            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
+              <RootFolder xsi:nil="true" />
+              <Subject xsi:nil="true" />
+              <SubjectName>LoggingRootPath</SubjectName>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>HarpLogging</Name>
@@ -2557,8 +2560,9 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="beh:GroupByRegister" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateHarpLoggingPath.bonsai">
-                    <LogName>Behavior</LogName>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName>Behavior.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -2602,7 +2606,8 @@ Item2.Light as Light)</scr:Expression>
                       <Property Name="EncodingFrameRate" />
                     </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\GenerateSpinnakerLoggingPath.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateSpinnakerLoggingPath.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
                     <LogName>MainCamera</LogName>
                     <EncodingFrameRate>60</EncodingFrameRate>
                     <VideoExtension>avi</VideoExtension>
@@ -2687,9 +2692,10 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p2:SerializeToJson" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogDataSchema.bonsai">
-                    <LogName>Subject</LogName>
-                    <DeviceName>Config</DeviceName>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName xsi:nil="true" />
+                    <DeviceName>config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -2698,9 +2704,10 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p4:SerializeToJson" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogDataSchema.bonsai">
-                    <LogName>TaskLogic</LogName>
-                    <DeviceName>Config</DeviceName>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName xsi:nil="true" />
+                    <DeviceName>config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -2709,9 +2716,10 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p3:SerializeToJson" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogDataSchema.bonsai">
-                    <LogName>Rig</LogName>
-                    <DeviceName>Config</DeviceName>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName xsi:nil="true" />
+                    <DeviceName>config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
                 </Nodes>
@@ -2739,12 +2747,13 @@ it.FrameIndex.Value as FrameIndex,
 it.FrameTimestamp.Value as FrameTimestamp,
 it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogCsv.bonsai">
                     <LogName>RendererSynchState</LogName>
                     <DeviceName>Renderer</DeviceName>
                     <Extension>csv</Extension>
                     <OmitHeader>false</OmitHeader>
                     <Delimiter xsi:nil="true" />
+                    <SubjectName>LoggingRootPath</SubjectName>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -2767,7 +2776,7 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:FramestampSoftwareEvent" />
+                    <Combinator xsi:type="p7:FramestampSoftwareEvent" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpTimestampSource</Name>
@@ -2779,10 +2788,11 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                     <Combinator xsi:type="harp:CreateTimestamped" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:TimestampSoftwareEvent" />
+                    <Combinator xsi:type="p7:TimestampSoftwareEvent" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogSoftwareEventsDemux.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSoftwareEventsDemux.bonsai">
                     <LoggerName>SoftwareEvents</LoggerName>
+                    <SubjectName>LoggingRootPath</SubjectName>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
@@ -2814,12 +2824,28 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
 Item1 as Seconds,
 Item2 as Position)</scr:Expression>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
-                    <LogName>CurrentPosition</LogName>
-                    <DeviceName>OperationControl</DeviceName>
-                    <Extension>csv</Extension>
-                    <OmitHeader>false</OmitHeader>
-                    <Delimiter xsi:nil="true" />
+                  <Expression xsi:type="rx:Defer">
+                    <Name>LogCsv</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogCsv.bonsai">
+                          <LogName>CurrentPosition</LogName>
+                          <DeviceName>OperationControl</DeviceName>
+                          <Extension>csv</Extension>
+                          <OmitHeader>false</OmitHeader>
+                          <Delimiter xsi:nil="true" />
+                          <SubjectName>LoggingRootPath</SubjectName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>IsStopped</Name>
@@ -2829,12 +2855,28 @@ Item2 as Position)</scr:Expression>
 Seconds as Seconds,
 Value as IsStopped)</scr:Expression>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGenericCsv.bonsai">
-                    <LogName>IsStopped</LogName>
-                    <DeviceName>OperationControl</DeviceName>
-                    <Extension>csv</Extension>
-                    <OmitHeader>false</OmitHeader>
-                    <Delimiter xsi:nil="true" />
+                  <Expression xsi:type="rx:Defer">
+                    <Name>LogCsv</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogCsv.bonsai">
+                          <LogName>IsStopped</LogName>
+                          <DeviceName>OperationControl</DeviceName>
+                          <Extension>csv</Extension>
+                          <OmitHeader>false</OmitHeader>
+                          <Delimiter xsi:nil="true" />
+                          <SubjectName>LoggingRootPath</SubjectName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -2859,16 +2901,17 @@ Value as IsStopped)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>SoftwareEvent</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>SoftwareEvent</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p7:SerializeToJson" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogDataSchema.bonsai">
-                    <LogName>EndSession</LogName>
-                    <DeviceName>Log</DeviceName>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName xsi:nil="true" />
+                    <DeviceName>config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
                 </Nodes>
@@ -2884,7 +2927,6 @@ Value as IsStopped)</scr:Expression>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2932,8 +2974,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>StopVelocityThreshold</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>StopVelocityTreshold</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>StopVelocityTreshold</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3217,8 +3259,8 @@ Value as IsStopped)</scr:Expression>
                     <Selector>Data</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:FormatTransitionMatrix">
-                      <p1:NormalizeRows>true</p1:NormalizeRows>
+                    <Combinator xsi:type="p10:FormatTransitionMatrix">
+                      <p10:NormalizeRows>true</p10:NormalizeRows>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -3526,8 +3568,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>ActivePatch</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>ActivePatch</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>ActivePatch</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3537,8 +3579,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>OperantLogic.StopDuration</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>OperantLogic.StopDuration</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>OperantLogic.StopDuration</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3548,8 +3590,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>RewardAvailableInPatch</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>RewardAvailableInPatch</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>RewardAvailableInPatch</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3715,8 +3757,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>OdorControl</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>OdorControl</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>OdorControl</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3865,8 +3907,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>GiveReward</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>GiveReward</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>GiveReward</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3917,8 +3959,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>ChoiceFeedback</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>ChoiceFeedback</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>ChoiceFeedback</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -4570,8 +4612,8 @@ Item2 as Start
                     <Name>ActiveSite</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>ActiveSite</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>ActiveSite</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -4581,8 +4623,8 @@ Item2 as Start
                     <Name>VisualCorridorSpecs</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:CreateSoftwareEvent">
-                      <p1:EventName>VisualCorridorSpecs</p1:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>VisualCorridorSpecs</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -5227,8 +5269,8 @@ Item2 as Start
                           <Name>DistanceToRewardAvailable</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:CreateSoftwareEvent">
-                            <p1:EventName>DistanceToRewardAvailable</p1:EventName>
+                          <Combinator xsi:type="p7:CreateSoftwareEvent">
+                            <p7:EventName>DistanceToRewardAvailable</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5238,8 +5280,8 @@ Item2 as Start
                           <Name>IsOperantMode</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:CreateSoftwareEvent">
-                            <p1:EventName>IsOperantMode</p1:EventName>
+                          <Combinator xsi:type="p7:CreateSoftwareEvent">
+                            <p7:EventName>IsOperantMode</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5249,8 +5291,8 @@ Item2 as Start
                           <Name>ScreenContrast</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:CreateSoftwareEvent">
-                            <p1:EventName>ScreenBrightness</p1:EventName>
+                          <Combinator xsi:type="p7:CreateSoftwareEvent">
+                            <p7:EventName>ScreenBrightness</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5260,8 +5302,8 @@ Item2 as Start
                           <Name>RewardAmount</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:CreateSoftwareEvent">
-                            <p1:EventName>RewardAmount</p1:EventName>
+                          <Combinator xsi:type="p7:CreateSoftwareEvent">
+                            <p7:EventName>RewardAmount</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5355,8 +5397,8 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:CreateSoftwareEvent">
-                            <p1:EventName>TaskLogic_RewardAvailable</p1:EventName>
+                          <Combinator xsi:type="p7:CreateSoftwareEvent">
+                            <p7:EventName>TaskLogic_RewardAvailable</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5569,8 +5611,8 @@ Item2 as Start
                           <Name>GiveReward</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:CreateSoftwareEvent">
-                            <p1:EventName>TaskLogic_RewardDelivery</p1:EventName>
+                          <Combinator xsi:type="p7:CreateSoftwareEvent">
+                            <p7:EventName>TaskLogic_RewardDelivery</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -6648,7 +6690,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value.Image</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p10:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p11:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera0</Name>
@@ -6657,7 +6699,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p10:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p11:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera1</Name>
@@ -6666,7 +6708,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p10:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p11:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:ColumnCount>3</viz:ColumnCount>
@@ -6682,7 +6724,7 @@ Item5 as TotalReward)</scr:Expression>
               <Name>QCDiagnosis</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p11:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p12:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateFrame" />
@@ -6701,7 +6743,7 @@ Item5 as TotalReward)</scr:Expression>
               <Combinator xsi:type="rx:SubscribeWhen" />
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p11:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p12:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>LickEvent</Name>
