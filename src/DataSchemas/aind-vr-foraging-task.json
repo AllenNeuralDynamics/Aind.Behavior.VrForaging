@@ -49,6 +49,10 @@
             "enabled": {
               "type": "boolean",
               "default": false
+            },
+            "timeToCollectAfterReward": {
+              "type": "number",
+              "default": 1
             }
           }
         },
