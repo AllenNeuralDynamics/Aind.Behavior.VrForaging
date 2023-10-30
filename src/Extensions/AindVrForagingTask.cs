@@ -1234,6 +1234,8 @@ namespace AindVrForagingDataSchema.Task
     
         private bool _enabled = false;
     
+        private double _timeToCollectAfterReward = 1D;
+    
         [Newtonsoft.Json.JsonPropertyAttribute("enabled")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="enabled")]
         public bool Enabled
@@ -1248,12 +1250,27 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("timeToCollectAfterReward")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timeToCollectAfterReward")]
+        public double TimeToCollectAfterReward
+        {
+            get
+            {
+                return _timeToCollectAfterReward;
+            }
+            set
+            {
+                _timeToCollectAfterReward = value;
+            }
+        }
+    
         public System.IObservable<MovableSpoutControl> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new MovableSpoutControl
                 {
-                    Enabled = _enabled
+                    Enabled = _enabled,
+                    TimeToCollectAfterReward = _timeToCollectAfterReward
                 }));
         }
     }
