@@ -610,6 +610,123 @@ namespace AindVrForagingDataSchema.Rig
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ServoMotor
+    {
+    
+        private string _model = "servoMotor";
+    
+        private string _pin = "DO2";
+    
+        private int _period = 20000;
+    
+        private int _pulseDurationUsMin = 1000;
+    
+        private int _pulseDurationUsMax = 2000;
+    
+        private int _pulseDurationUsDefault = 2000;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("model")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="model")]
+        public string Model
+        {
+            get
+            {
+                return _model;
+            }
+            set
+            {
+                _model = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("pin")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pin")]
+        public string Pin
+        {
+            get
+            {
+                return _pin;
+            }
+            set
+            {
+                _pin = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("period")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="period")]
+        public int Period
+        {
+            get
+            {
+                return _period;
+            }
+            set
+            {
+                _period = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("pulseDurationUsMin")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulseDurationUsMin")]
+        public int PulseDurationUsMin
+        {
+            get
+            {
+                return _pulseDurationUsMin;
+            }
+            set
+            {
+                _pulseDurationUsMin = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("pulseDurationUsMax")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulseDurationUsMax")]
+        public int PulseDurationUsMax
+        {
+            get
+            {
+                return _pulseDurationUsMax;
+            }
+            set
+            {
+                _pulseDurationUsMax = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("pulseDurationUsDefault")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulseDurationUsDefault")]
+        public int PulseDurationUsDefault
+        {
+            get
+            {
+                return _pulseDurationUsDefault;
+            }
+            set
+            {
+                _pulseDurationUsDefault = value;
+            }
+        }
+    
+        public System.IObservable<ServoMotor> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ServoMotor
+                {
+                    Model = _model,
+                    Pin = _pin,
+                    Period = _period,
+                    PulseDurationUsMin = _pulseDurationUsMin,
+                    PulseDurationUsMax = _pulseDurationUsMax,
+                    PulseDurationUsDefault = _pulseDurationUsDefault
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingRig
     {
     
@@ -628,6 +745,8 @@ namespace AindVrForagingDataSchema.Rig
         private Treadmill _treadmill = new Treadmill();
     
         private Valves _valves = new Valves();
+    
+        private ServoMotor _movableSpout = new ServoMotor();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera0", Required=Newtonsoft.Json.Required.Always)]
@@ -749,6 +868,21 @@ namespace AindVrForagingDataSchema.Rig
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("movableSpout", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="movableSpout")]
+        public ServoMotor MovableSpout
+        {
+            get
+            {
+                return _movableSpout;
+            }
+            set
+            {
+                _movableSpout = value;
+            }
+        }
+    
         public System.IObservable<AindVrForagingRig> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -761,7 +895,8 @@ namespace AindVrForagingDataSchema.Rig
                     Graphics = _graphics,
                     Speaker = _speaker,
                     Treadmill = _treadmill,
-                    Valves = _valves
+                    Valves = _valves,
+                    MovableSpout = _movableSpout
                 }));
         }
     }
@@ -1020,6 +1155,11 @@ namespace AindVrForagingDataSchema.Rig
             return Process<Valve>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ServoMotor> source)
+        {
+            return Process<ServoMotor>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingRig> source)
         {
             return Process<AindVrForagingRig>(source);
@@ -1055,6 +1195,7 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ServoMotor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Graphics>))]
@@ -1146,6 +1287,11 @@ namespace AindVrForagingDataSchema.Rig
             return Process<Valve>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ServoMotor> source)
+        {
+            return Process<ServoMotor>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingRig> source)
         {
             return Process<AindVrForagingRig>(source);
@@ -1181,6 +1327,7 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ServoMotor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Calibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Graphics>))]
