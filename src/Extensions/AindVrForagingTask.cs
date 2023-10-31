@@ -1059,6 +1059,8 @@ namespace AindVrForagingDataSchema.Task
     public partial class OperationControl
     {
     
+        private MovableSpoutControl _movableSpoutControl;
+    
         private OdorControl _odorControl = new OdorControl();
     
         private PositionControl _positionControl = new PositionControl();
@@ -1068,6 +1070,21 @@ namespace AindVrForagingDataSchema.Task
         private HabituationSettings _habituationSettings;
     
         private VirtualSiteGeneration _virtualSiteGeneration;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("movableSpoutControl")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="movableSpoutControl")]
+        public MovableSpoutControl MovableSpoutControl
+        {
+            get
+            {
+                return _movableSpoutControl;
+            }
+            set
+            {
+                _movableSpoutControl = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("odorControl", Required=Newtonsoft.Json.Required.Always)]
@@ -1149,6 +1166,7 @@ namespace AindVrForagingDataSchema.Task
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new OperationControl
                 {
+                    MovableSpoutControl = _movableSpoutControl,
                     OdorControl = _odorControl,
                     PositionControl = _positionControl,
                     TaskStage = _taskStage,
@@ -1204,6 +1222,55 @@ namespace AindVrForagingDataSchema.Task
                 {
                     Name = _name,
                     TextureSize = _textureSize
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class MovableSpoutControl
+    {
+    
+        private bool _enabled = false;
+    
+        private double _timeToCollectAfterReward = 1D;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("enabled")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="enabled")]
+        public bool Enabled
+        {
+            get
+            {
+                return _enabled;
+            }
+            set
+            {
+                _enabled = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("timeToCollectAfterReward")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timeToCollectAfterReward")]
+        public double TimeToCollectAfterReward
+        {
+            get
+            {
+                return _timeToCollectAfterReward;
+            }
+            set
+            {
+                _timeToCollectAfterReward = value;
+            }
+        }
+    
+        public System.IObservable<MovableSpoutControl> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new MovableSpoutControl
+                {
+                    Enabled = _enabled,
+                    TimeToCollectAfterReward = _timeToCollectAfterReward
                 }));
         }
     }
@@ -1847,6 +1914,11 @@ namespace AindVrForagingDataSchema.Task
             return Process<Floor>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
+        {
+            return Process<MovableSpoutControl>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<OdorControl> source)
         {
             return Process<OdorControl>(source);
@@ -1915,6 +1987,7 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
@@ -2051,6 +2124,11 @@ namespace AindVrForagingDataSchema.Task
             return Process<Floor>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
+        {
+            return Process<MovableSpoutControl>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<OdorControl> source)
         {
             return Process<OdorControl>(source);
@@ -2119,6 +2197,7 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]

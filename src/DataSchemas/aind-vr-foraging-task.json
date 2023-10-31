@@ -43,6 +43,19 @@
     },
     "operationControl": {
       "properties": {
+        "movableSpoutControl":{
+          "type":"object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false
+            },
+            "timeToCollectAfterReward": {
+              "type": "number",
+              "default": 1
+            }
+          }
+        },
         "odorControl": {
           "type": "object",
           "properties": {

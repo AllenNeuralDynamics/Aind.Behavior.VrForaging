@@ -36,6 +36,39 @@
         "targetUpdateFrequency": {"type": "integer", "default": 120}
       }
     },
+    "servoMotor": {
+      "properties": {
+        "model": {
+          "default": "servoMotor",
+          "type": "string"
+        },
+        "pin": {
+          "default": "DO2",
+          "type": "string"
+        },
+        "period": {
+          "default": 20000,
+          "type": "integer",
+          "minimum": 0
+        },
+        "pulseDurationUsMin": {
+          "default": 1000,
+          "type": "integer",
+          "minimum": 1
+        },
+        "pulseDurationUsMax": {
+          "default": 2000,
+          "type": "integer",
+          "minimum": 1
+        },
+        "pulseDurationUsDefault": {
+          "default": 2000,
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "type": "object"
+    },
     "pwmBuzzer": {
       "properties": {
         "model": {
