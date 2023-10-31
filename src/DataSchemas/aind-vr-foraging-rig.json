@@ -46,6 +46,9 @@
       },
       "required": ["water", "odor1", "odor2"],
       "type": "object"
+    },
+    "movableSpout": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/servoMotor"
     }
   },
   "required": [
@@ -56,7 +59,8 @@
     "screen",
     "speaker",
     "treadmill",
-    "valves"
+    "valves",
+    "movableSpout"
   ],
   "title": "AindVrForagingRig",
   "type": "object"
