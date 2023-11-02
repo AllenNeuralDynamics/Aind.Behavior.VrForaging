@@ -15,7 +15,7 @@
         <Property Name="Minimum" />
         <Property Name="Maximum" />
         <Property Name="Average" />
-        <Property Name="Brightness" />
+        <Property Name="Contrast" />
         <Property Name="Label" />
         <Property Name="Odor" />
         <Property Name="Reward" />
@@ -61,9 +61,9 @@
               <Property Name="Average" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
-              <Minimum>20</Minimum>
-              <Maximum>50</Maximum>
-              <Average>30</Average>
+              <Minimum>10</Minimum>
+              <Maximum>30</Maximum>
+              <Average>18</Average>
               <Count>1</Count>
             </Expression>
             <Expression xsi:type="InputMapping">
@@ -89,7 +89,7 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Brightness" />
+              <Property Name="Contrast" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:Render" />
