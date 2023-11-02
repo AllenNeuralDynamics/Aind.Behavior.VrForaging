@@ -624,7 +624,7 @@
                     <Name>ThisSiteSpecs</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Render.Brightness</Selector>
+                    <Selector>Render.Contrast</Selector>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
                     <Workflow>

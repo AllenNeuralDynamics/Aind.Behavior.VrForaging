@@ -101,7 +101,7 @@
             "reward": {
               "$ref": "#/definitions/reward"
             },
-            "brightness": {
+            "contrast": {
               "type": ["number", "null"],
               "default": null
             }
@@ -113,7 +113,7 @@
           "properties": {
             "gapSite": {
               "properties": {
-                "brightness": {
+                "contrast": {
                   "type": ["number", "null"],
                   "default": null
                 },
@@ -129,7 +129,7 @@
             },
             "interPatchSite": {
               "properties": {
-                "brightness": {
+                "contrast": {
                   "type": ["number", "null"],
                   "default": null
                 },
@@ -145,7 +145,7 @@
             },
             "rewardSite": {
               "properties": {
-                "brightness": {
+                "contrast": {
                   "type": ["number", "null"],
                   "default": null
                 },

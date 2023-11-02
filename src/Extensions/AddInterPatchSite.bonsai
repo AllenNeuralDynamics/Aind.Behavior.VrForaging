@@ -15,7 +15,7 @@
         <Property Name="Minimum" />
         <Property Name="Maximum" />
         <Property Name="Average" />
-        <Property Name="Brightness" />
+        <Property Name="Contrast" />
         <Property Name="Label" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
@@ -76,7 +76,7 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Brightness" />
+              <Property Name="Contrast" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:Render" />
