@@ -2929,7 +2929,7 @@ Value as IsStopped)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <LogName xsi:nil="true" />
+                    <LogName>EndSession</LogName>
                     <DeviceName>config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
