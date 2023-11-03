@@ -86,10 +86,11 @@
           "minimum": 0,
           "type": "number"
         },
-        "choiceGracePeriod": {
-          "default": 0.1,
+        "distanceThresholdToBeStatic": {
+          "default": 10,
           "minimum": 0,
-          "type":"number"}
+          "type": "number"
+        }
       },
       "type": [
         "null",
@@ -146,6 +147,11 @@
       "default": null,
       "properties": {
         "amount": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "delay": {
+          "default": 0,
           "minimum": 0,
           "type": "number"
         },
@@ -218,7 +224,7 @@
         },
         "render": {
           "properties": {
-            "brightness": {
+            "contrast": {
               "default": null,
               "maximum": 1,
               "minimum": 0,
