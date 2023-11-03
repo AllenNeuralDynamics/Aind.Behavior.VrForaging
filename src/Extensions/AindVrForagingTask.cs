@@ -292,6 +292,8 @@ namespace AindVrForagingDataSchema.Task
     
         private double _amount;
     
+        private double _delay = 0D;
+    
         private OperantLogic _operantLogic;
     
         private double _probability = 1D;
@@ -307,6 +309,20 @@ namespace AindVrForagingDataSchema.Task
             set
             {
                 _amount = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("delay")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
+        public double Delay
+        {
+            get
+            {
+                return _delay;
+            }
+            set
+            {
+                _delay = value;
             }
         }
     
@@ -345,6 +361,7 @@ namespace AindVrForagingDataSchema.Task
                 new Reward
                 {
                     Amount = _amount,
+                    Delay = _delay,
                     OperantLogic = _operantLogic,
                     Probability = _probability
                 }));
@@ -842,20 +859,20 @@ namespace AindVrForagingDataSchema.Task
     public partial class Render
     {
     
-        private double? _brightness;
+        private double? _contrast;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
-        public double? Brightness
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
+        public double? Contrast
         {
             get
             {
-                return _brightness;
+                return _contrast;
             }
             set
             {
-                _brightness = value;
+                _contrast = value;
             }
         }
     
@@ -864,7 +881,7 @@ namespace AindVrForagingDataSchema.Task
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new Render
                 {
-                    Brightness = _brightness
+                    Contrast = _contrast
                 }));
         }
     }
@@ -881,7 +898,7 @@ namespace AindVrForagingDataSchema.Task
     
         private double _timeToCollect = 1000000D;
     
-        private double _choiceGracePeriod = 0.1D;
+        private double _distanceThresholdToBeStatic = 10D;
     
         [Newtonsoft.Json.JsonPropertyAttribute("isOperant")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="isOperant")]
@@ -925,17 +942,17 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("choiceGracePeriod")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="choiceGracePeriod")]
-        public double ChoiceGracePeriod
+        [Newtonsoft.Json.JsonPropertyAttribute("distanceThresholdToBeStatic")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distanceThresholdToBeStatic")]
+        public double DistanceThresholdToBeStatic
         {
             get
             {
-                return _choiceGracePeriod;
+                return _distanceThresholdToBeStatic;
             }
             set
             {
-                _choiceGracePeriod = value;
+                _distanceThresholdToBeStatic = value;
             }
         }
     
@@ -947,7 +964,7 @@ namespace AindVrForagingDataSchema.Task
                     IsOperant = _isOperant,
                     StopDuration = _stopDuration,
                     TimeToCollect = _timeToCollect,
-                    ChoiceGracePeriod = _choiceGracePeriod
+                    DistanceThresholdToBeStatic = _distanceThresholdToBeStatic
                 }));
         }
     }
@@ -1386,7 +1403,7 @@ namespace AindVrForagingDataSchema.Task
     
         private Reward _reward;
     
-        private double? _brightness;
+        private double? _contrast;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("distanceToReward", Required=Newtonsoft.Json.Required.Always)]
@@ -1419,17 +1436,17 @@ namespace AindVrForagingDataSchema.Task
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
-        public double? Brightness
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
+        public double? Contrast
         {
             get
             {
-                return _brightness;
+                return _contrast;
             }
             set
             {
-                _brightness = value;
+                _contrast = value;
             }
         }
     
@@ -1440,7 +1457,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     DistanceToReward = _distanceToReward,
                     Reward = _reward,
-                    Brightness = _brightness
+                    Contrast = _contrast
                 }));
         }
     }
@@ -1618,24 +1635,24 @@ namespace AindVrForagingDataSchema.Task
     public partial class GapSite
     {
     
-        private double? _brightness;
+        private double? _contrast;
     
         private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.Gap;
     
         private TruncatedExponential _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
-        public double? Brightness
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
+        public double? Contrast
         {
             get
             {
-                return _brightness;
+                return _contrast;
             }
             set
             {
-                _brightness = value;
+                _contrast = value;
             }
         }
     
@@ -1674,7 +1691,7 @@ namespace AindVrForagingDataSchema.Task
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new GapSite
                 {
-                    Brightness = _brightness,
+                    Contrast = _contrast,
                     Label = _label,
                     LengthDistribution = _lengthDistribution
                 }));
@@ -1687,24 +1704,24 @@ namespace AindVrForagingDataSchema.Task
     public partial class InterPatchSite
     {
     
-        private double? _brightness;
+        private double? _contrast;
     
         private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.InterPatch;
     
         private TruncatedExponential _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
-        public double? Brightness
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
+        public double? Contrast
         {
             get
             {
-                return _brightness;
+                return _contrast;
             }
             set
             {
-                _brightness = value;
+                _contrast = value;
             }
         }
     
@@ -1743,7 +1760,7 @@ namespace AindVrForagingDataSchema.Task
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new InterPatchSite
                 {
-                    Brightness = _brightness,
+                    Contrast = _contrast,
                     Label = _label,
                     LengthDistribution = _lengthDistribution
                 }));
@@ -1756,24 +1773,24 @@ namespace AindVrForagingDataSchema.Task
     public partial class RewardSite
     {
     
-        private double? _brightness;
+        private double? _contrast;
     
         private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.Reward;
     
         private TruncatedExponential _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="brightness")]
-        public double? Brightness
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
+        public double? Contrast
         {
             get
             {
-                return _brightness;
+                return _contrast;
             }
             set
             {
-                _brightness = value;
+                _contrast = value;
             }
         }
     
@@ -1812,7 +1829,7 @@ namespace AindVrForagingDataSchema.Task
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new RewardSite
                 {
-                    Brightness = _brightness,
+                    Contrast = _contrast,
                     Label = _label,
                     LengthDistribution = _lengthDistribution
                 }));
