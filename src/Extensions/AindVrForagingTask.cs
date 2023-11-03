@@ -292,6 +292,8 @@ namespace AindVrForagingDataSchema.Task
     
         private double _amount;
     
+        private double _delay = 0D;
+    
         private OperantLogic _operantLogic;
     
         private double _probability = 1D;
@@ -307,6 +309,20 @@ namespace AindVrForagingDataSchema.Task
             set
             {
                 _amount = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("delay")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
+        public double Delay
+        {
+            get
+            {
+                return _delay;
+            }
+            set
+            {
+                _delay = value;
             }
         }
     
@@ -345,6 +361,7 @@ namespace AindVrForagingDataSchema.Task
                 new Reward
                 {
                     Amount = _amount,
+                    Delay = _delay,
                     OperantLogic = _operantLogic,
                     Probability = _probability
                 }));
@@ -881,7 +898,7 @@ namespace AindVrForagingDataSchema.Task
     
         private double _timeToCollect = 1000000D;
     
-        private double _choiceGracePeriod = 0.1D;
+        private double _distanceThresholdToBeStatic = 10D;
     
         [Newtonsoft.Json.JsonPropertyAttribute("isOperant")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="isOperant")]
@@ -925,17 +942,17 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("choiceGracePeriod")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="choiceGracePeriod")]
-        public double ChoiceGracePeriod
+        [Newtonsoft.Json.JsonPropertyAttribute("distanceThresholdToBeStatic")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distanceThresholdToBeStatic")]
+        public double DistanceThresholdToBeStatic
         {
             get
             {
-                return _choiceGracePeriod;
+                return _distanceThresholdToBeStatic;
             }
             set
             {
-                _choiceGracePeriod = value;
+                _distanceThresholdToBeStatic = value;
             }
         }
     
@@ -947,7 +964,7 @@ namespace AindVrForagingDataSchema.Task
                     IsOperant = _isOperant,
                     StopDuration = _stopDuration,
                     TimeToCollect = _timeToCollect,
-                    ChoiceGracePeriod = _choiceGracePeriod
+                    DistanceThresholdToBeStatic = _distanceThresholdToBeStatic
                 }));
         }
     }
