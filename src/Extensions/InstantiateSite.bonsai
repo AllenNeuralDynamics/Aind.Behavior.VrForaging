@@ -344,7 +344,13 @@
                                 <Combinator xsi:type="rx:WithLatestFrom" />
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>Item1,Item2.Value</Selector>
+                                <Selector>Item1,Item2.Value.Z</Selector>
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Name>LabelOutcome</scr:Name>
+                                <scr:Expression>new(
+it.Item1 as IsSuccessfulWait,
+it.Item2 as EntryPosition)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>Item2.Seconds</Selector>
@@ -358,16 +364,13 @@
                               <Expression xsi:type="IncludeWorkflow" Path="Extensions\SinkSoftwareEvent.bonsai">
                                 <EventName>WaitRewardOutcome</EventName>
                               </Expression>
-                              <Expression xsi:type="scr:ExpressionTransform">
-                                <scr:Name>LabelOutcome</scr:Name>
-                                <scr:Expression>new(
-it.Value.Item1 as IsSuccessfulWait,
-it.Value.Item2 as EntryPosition)</scr:Expression>
-                              </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Take">
                                   <rx:Count>1</rx:Count>
                                 </Combinator>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Value</Selector>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
@@ -386,14 +389,15 @@ it.Value.Item2 as EntryPosition)</scr:Expression>
                               <Edge From="12" To="14" Label="Source1" />
                               <Edge From="13" To="14" Label="Source2" />
                               <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="14" To="16" Label="Source1" />
-                              <Edge From="15" To="17" Label="Source1" />
-                              <Edge From="16" To="17" Label="Source2" />
-                              <Edge From="17" To="18" Label="Source1" />
+                              <Edge From="14" To="17" Label="Source1" />
+                              <Edge From="15" To="16" Label="Source1" />
+                              <Edge From="16" To="18" Label="Source1" />
+                              <Edge From="17" To="18" Label="Source2" />
                               <Edge From="18" To="19" Label="Source1" />
                               <Edge From="19" To="20" Label="Source1" />
                               <Edge From="20" To="21" Label="Source1" />
                               <Edge From="21" To="22" Label="Source1" />
+                              <Edge From="22" To="23" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -473,9 +477,6 @@ it.Value.Item2 as EntryPosition)</scr:Expression>
                                     <Expression xsi:type="MemberSelector">
                                       <Selector>EntryPosition</Selector>
                                     </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Z</Selector>
-                                    </Expression>
                                     <Expression xsi:type="SubscribeSubject">
                                       <Name>CurrentPosition</Name>
                                     </Expression>
@@ -512,18 +513,17 @@ it.Value.Item2 as EntryPosition)</scr:Expression>
                                   </Nodes>
                                   <Edges>
                                     <Edge From="0" To="1" Label="Source1" />
-                                    <Edge From="1" To="2" Label="Source1" />
-                                    <Edge From="2" To="6" Label="Source1" />
+                                    <Edge From="1" To="5" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
                                     <Edge From="3" To="4" Label="Source1" />
-                                    <Edge From="4" To="5" Label="Source1" />
-                                    <Edge From="5" To="6" Label="Source2" />
+                                    <Edge From="4" To="5" Label="Source2" />
+                                    <Edge From="5" To="6" Label="Source1" />
                                     <Edge From="6" To="7" Label="Source1" />
-                                    <Edge From="7" To="8" Label="Source1" />
-                                    <Edge From="8" To="12" Label="Source1" />
+                                    <Edge From="7" To="11" Label="Source1" />
+                                    <Edge From="8" To="9" Label="Source1" />
                                     <Edge From="9" To="10" Label="Source1" />
-                                    <Edge From="10" To="11" Label="Source1" />
-                                    <Edge From="11" To="12" Label="Source2" />
-                                    <Edge From="12" To="13" Label="Source1" />
+                                    <Edge From="10" To="11" Label="Source2" />
+                                    <Edge From="11" To="12" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -562,6 +562,11 @@ it.Value.Item2 as EntryPosition)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Merge" />
                               </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
+                              </Expression>
                               <Expression xsi:type="IncludeWorkflow" Path="Extensions\SinkSoftwareEvent.bonsai">
                                 <EventName>WaitLickOutcome</EventName>
                               </Expression>
@@ -595,6 +600,7 @@ it.Value.Item2 as EntryPosition)</scr:Expression>
                               <Edge From="20" To="21" Label="Source1" />
                               <Edge From="21" To="22" Label="Source1" />
                               <Edge From="22" To="23" Label="Source1" />
+                              <Edge From="23" To="24" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -673,7 +679,7 @@ it.Value.Item2 as EntryPosition)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="gl:Delay">
-                            <gl:DueTime>PT0S</gl:DueTime>
+                            <gl:DueTime>PT3S</gl:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Unit" />
