@@ -11,8 +11,7 @@
       </Expression>
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="Concentration" />
-        <Property Name="Index" />
-        <Property Name="ValveState" />
+        <Property Name="OdorIndex" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>GenerateOdorControl</Name>
@@ -20,14 +19,12 @@
           <Nodes>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Concentration" />
-              <Property Name="Index" />
-              <Property Name="ValveState" />
+              <Property Name="OdorIndex" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:Odor">
                 <p1:Concentration>1</p1:Concentration>
-                <p1:Index>0</p1:Index>
-                <p1:ValveState>true</p1:ValveState>
+                <p1:OdorIndex>0</p1:OdorIndex>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
