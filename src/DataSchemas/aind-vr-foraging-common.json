@@ -52,13 +52,10 @@
           "minimum": 0,
           "type": "number"
         },
-        "index": {
+        "odorIndex": {
           "minimum": 0,
+          "maximum": 3,
           "type": "integer"
-        },
-        "valveState": {
-          "default": true,
-          "type": "boolean"
         }
       },
       "required": [

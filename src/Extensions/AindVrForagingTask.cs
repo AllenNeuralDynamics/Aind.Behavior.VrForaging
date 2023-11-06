@@ -795,9 +795,7 @@ namespace AindVrForagingDataSchema.Task
     
         private double _concentration = 1D;
     
-        private int _index;
-    
-        private bool _valveState = true;
+        private int _odorIndex;
     
         [Newtonsoft.Json.JsonPropertyAttribute("concentration")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="concentration")]
@@ -813,31 +811,17 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("index", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
-        public int Index
+        [Newtonsoft.Json.JsonPropertyAttribute("odorIndex")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorIndex")]
+        public int OdorIndex
         {
             get
             {
-                return _index;
+                return _odorIndex;
             }
             set
             {
-                _index = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("valveState")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveState")]
-        public bool ValveState
-        {
-            get
-            {
-                return _valveState;
-            }
-            set
-            {
-                _valveState = value;
+                _odorIndex = value;
             }
         }
     
@@ -847,8 +831,7 @@ namespace AindVrForagingDataSchema.Task
                 new Odor
                 {
                     Concentration = _concentration,
-                    Index = _index,
-                    ValveState = _valveState
+                    OdorIndex = _odorIndex
                 }));
         }
     }
@@ -1300,6 +1283,12 @@ namespace AindVrForagingDataSchema.Task
     
         private double _valveMaxOpenTime;
     
+        private double _targetTotalFlow = 1000D;
+    
+        private bool _useChannel3AsCarrier = true;
+    
+        private double _targetOdorFlow = 100D;
+    
         [Newtonsoft.Json.JsonPropertyAttribute("valveMaxOpenTime")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveMaxOpenTime")]
         public double ValveMaxOpenTime
@@ -1314,12 +1303,57 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("targetTotalFlow")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targetTotalFlow")]
+        public double TargetTotalFlow
+        {
+            get
+            {
+                return _targetTotalFlow;
+            }
+            set
+            {
+                _targetTotalFlow = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("useChannel3AsCarrier")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="useChannel3AsCarrier")]
+        public bool UseChannel3AsCarrier
+        {
+            get
+            {
+                return _useChannel3AsCarrier;
+            }
+            set
+            {
+                _useChannel3AsCarrier = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("targetOdorFlow")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targetOdorFlow")]
+        public double TargetOdorFlow
+        {
+            get
+            {
+                return _targetOdorFlow;
+            }
+            set
+            {
+                _targetOdorFlow = value;
+            }
+        }
+    
         public System.IObservable<OdorControl> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new OdorControl
                 {
-                    ValveMaxOpenTime = _valveMaxOpenTime
+                    ValveMaxOpenTime = _valveMaxOpenTime,
+                    TargetTotalFlow = _targetTotalFlow,
+                    UseChannel3AsCarrier = _useChannel3AsCarrier,
+                    TargetOdorFlow = _targetOdorFlow
                 }));
         }
     }
