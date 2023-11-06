@@ -13,6 +13,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
     private float channel0 = 0;
     [Range(0, 1)]
     [Editor(DesignTypes.SliderEditor, DesignTypes.UITypeEditor)]
+    [Description("Odor dilution percentage for channel 0.")]
     public float PercentageChannel0
     {
         get { return channel0; }
@@ -22,6 +23,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
     private float channel1 = 0;
     [Range(0, 1)]
     [Editor(DesignTypes.SliderEditor, DesignTypes.UITypeEditor)]
+    [Description("Odor dilution percentage for channel 1.")]
     public float PercentageChannel1
     {
         get { return channel1; }
@@ -31,6 +33,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
     private float channel2 = 0;
     [Range(0, 1)]
     [Editor(DesignTypes.SliderEditor, DesignTypes.UITypeEditor)]
+    [Description("Odor dilution percentage for channel 2.")]
     public float PercentageChannel2
     {
         get { return channel2; }
@@ -40,6 +43,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
 
     [Range(0, 1)]
     [Editor(DesignTypes.SliderEditor, DesignTypes.UITypeEditor)]
+    [Description("Odor dilution percentage for channel 3. This Value will be ignored if Channel3AsCarrier is set to True.")]
     public float PercentageChannel3
     {
         get { return channel3; }
@@ -47,6 +51,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
     }
 
     public bool channel3AsCarrier = false;
+    [Description("Specifies if Channel3 should be used as an odor or carrier channel. If True, the flow value value of Channel3 will be set to TotalFlow.")]
     public bool Channel3AsCarrier
     {
         get { return channel3AsCarrier; }
@@ -59,6 +64,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
     private int targetOdorFlow = 100;
     [Range(0, 100)]
     [Editor(DesignTypes.SliderEditor, DesignTypes.UITypeEditor)]
+    [Description("The target odor flow for each channel, assuming PercentageChannelX = 1.")]
     public int TargetOdorFlow
     {
         get { return targetOdorFlow; }
@@ -69,6 +75,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
     private int totalFlow = 1000;
     [Range(0, 1000)]
     [Editor(DesignTypes.SliderEditor, DesignTypes.UITypeEditor)]
+    [Description("The total desired flow at the end of the manifold. This value will be used to automatically calculate the carrier(s) flow.")]
     public int TotalFlow
     {
         get { return totalFlow; }
