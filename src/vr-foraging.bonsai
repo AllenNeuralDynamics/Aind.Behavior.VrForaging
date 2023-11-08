@@ -6523,7 +6523,7 @@ Item2 as Start
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="gli:KeyDown">
                             <gli:Key>Keypad7</gli:Key>
-                            <gli:Modifiers xsi:nil="true" />
+                            <gli:Modifiers>Control</gli:Modifiers>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
