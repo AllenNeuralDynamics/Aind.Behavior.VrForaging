@@ -736,6 +736,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private HarpBoard _harpBehaviorBoard = new HarpBoard();
     
+        private HarpBoard _harpOlfactometer;
+    
         private SpinnakerCamera _mainCamera = new SpinnakerCamera();
     
         private Graphics _graphics;
@@ -790,6 +792,21 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _harpBehaviorBoard = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harpOlfactometer")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpOlfactometer")]
+        public HarpBoard HarpOlfactometer
+        {
+            get
+            {
+                return _harpOlfactometer;
+            }
+            set
+            {
+                _harpOlfactometer = value;
             }
         }
     
@@ -891,6 +908,7 @@ namespace AindVrForagingDataSchema.Rig
                     AuxiliaryCamera0 = _auxiliaryCamera0,
                     AuxiliaryCamera1 = _auxiliaryCamera1,
                     HarpBehaviorBoard = _harpBehaviorBoard,
+                    HarpOlfactometer = _harpOlfactometer,
                     MainCamera = _mainCamera,
                     Graphics = _graphics,
                     Speaker = _speaker,
