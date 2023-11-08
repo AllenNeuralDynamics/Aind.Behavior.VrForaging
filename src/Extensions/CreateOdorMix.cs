@@ -174,7 +174,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
         return Observable.Return(ConstructMessage());
     }
 
-    public IObservable<OdorMixMessages> Process(IObservable<AindVrForagingDataSchema.Task.Odor> source)
+    public IObservable<OdorMixMessages> Generate(IObservable<AindVrForagingDataSchema.Task.Odor> source)
     {
         return source.Select(value => ConstructMessage(value.OdorIndex, value.Concentration));
     }
