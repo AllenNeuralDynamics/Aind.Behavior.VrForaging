@@ -12,6 +12,9 @@
     "harpBehaviorBoard": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
     },
+    "harpOlfactometer": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
+    },
     "mainCamera": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
     },
