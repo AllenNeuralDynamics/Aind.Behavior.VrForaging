@@ -4395,7 +4395,7 @@ Value as IsStopped)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p4:Floor">
-                                  <p4:Name>floor</p4:Name>
+                                  <p4:Name>Floor</p4:Name>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
