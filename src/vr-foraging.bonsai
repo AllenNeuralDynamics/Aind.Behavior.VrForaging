@@ -14,20 +14,22 @@
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p6="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
-                 xmlns:p7="clr-namespace:AllenNeuralDynamics.Core.Logging;assembly=AllenNeuralDynamics.Core"
+                 xmlns:p7="clr-namespace:Harp.Olfactometer;assembly=Harp.Olfactometer"
+                 xmlns:p8="clr-namespace:AllenNeuralDynamics.Core.Logging;assembly=AllenNeuralDynamics.Core"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
-                 xmlns:p8="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
+                 xmlns:p9="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
-                 xmlns:p9="clr-namespace:Harp.Behavior;assembly=Extensions"
+                 xmlns:p10="clr-namespace:Harp.Behavior;assembly=Extensions"
+                 xmlns:p11="clr-namespace:Harp.Olfactometer;assembly=Extensions"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:p10="clr-namespace:;assembly=Extensions"
+                 xmlns:p12="clr-namespace:;assembly=Extensions"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
-                 xmlns:p11="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
+                 xmlns:p13="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:p12="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
+                 xmlns:p14="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -1185,124 +1187,12 @@
                   <Expression xsi:type="MulticastSubject">
                     <Name>HarpBehaviorCommands</Name>
                   </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Boolean">
-                    <rx:Name>OdorValve1</rx:Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="beh:CreateMessage">
-                    <harp:MessageType>Write</harp:MessageType>
-                    <harp:Payload xsi:type="beh:CreateOutputSetPayload">
-                      <beh:OutputSet>SupplyPort1</beh:OutputSet>
-                    </harp:Payload>
-                  </Expression>
-                  <Expression xsi:type="BitwiseNot" />
-                  <Expression xsi:type="rx:Condition">
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="beh:CreateMessage">
-                    <harp:MessageType>Write</harp:MessageType>
-                    <harp:Payload xsi:type="beh:CreateOutputClearPayload">
-                      <beh:OutputClear>SupplyPort1</beh:OutputClear>
-                    </harp:Payload>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>HarpBehaviorCommands</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Boolean">
-                    <rx:Name>OdorValve2</rx:Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="beh:CreateMessage">
-                    <harp:MessageType>Write</harp:MessageType>
-                    <harp:Payload xsi:type="beh:CreateOutputSetPayload">
-                      <beh:OutputSet>SupplyPort2</beh:OutputSet>
-                    </harp:Payload>
-                  </Expression>
-                  <Expression xsi:type="BitwiseNot" />
-                  <Expression xsi:type="rx:Condition">
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="beh:CreateMessage">
-                    <harp:MessageType>Write</harp:MessageType>
-                    <harp:Payload xsi:type="beh:CreateOutputClearPayload">
-                      <beh:OutputClear>SupplyPort2</beh:OutputClear>
-                    </harp:Payload>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>HarpBehaviorCommands</Name>
-                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="5" To="8" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="11" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source2" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="13" To="16" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="19" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source2" />
-                  <Edge From="19" To="20" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1324,6 +1214,246 @@
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Annotation">
+        <Name>PinOut</Name>
+        <Text><![CDATA[]]></Text>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>Olfactometer</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="harp:HarpMessage">
+              <rx:Name>OlfactometerCommands</rx:Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RigSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>HarpOlfactometer.PortName</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="PortName" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p7:Device">
+                <harp:OperationMode>Active</harp:OperationMode>
+                <harp:OperationLed>On</harp:OperationLed>
+                <harp:DumpRegisters>true</harp:DumpRegisters>
+                <harp:VisualIndicators>On</harp:VisualIndicators>
+                <harp:Heartbeat>Disabled</harp:Heartbeat>
+                <harp:IgnoreErrors>false</harp:IgnoreErrors>
+                <harp:PortName>COM6</harp:PortName>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:PublishSubject">
+              <Name>OlfactometerEvents</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>OlfactometerEvents</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Channel3Setting</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>TaskLogicSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>OperationControl.OdorControl</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>UseChannel3AsCarrier</Selector>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="PropertySource" TypeArguments="p7:CreateChannel3RangePayload,p7:Channel3RangeConfig">
+                    <MemberName>Channel3Range</MemberName>
+                    <Value>FlowRate1000</Value>
+                  </Expression>
+                  <Expression xsi:type="BitwiseNot" />
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="PropertySource" TypeArguments="p7:CreateChannel3RangePayload,p7:Channel3RangeConfig">
+                    <MemberName>Channel3Range</MemberName>
+                    <Value>FlowRate100</Value>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="2" To="5" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="8" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source2" />
+                  <Edge From="8" To="9" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Channel3Range" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="p7:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="p7:CreateChannel3RangePayload">
+                <p7:Channel3Range>FlowRate1000</p7:Channel3Range>
+              </harp:Payload>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>OlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="p7:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="p7:CreateEnableEventsPayload">
+                <p7:EnableEvents>Flowmeter DI0Trigger ChannelActualFlow</p7:EnableEvents>
+              </harp:Payload>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>OlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="p7:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="p7:CreateEnableFlowPayload">
+                <p7:EnableFlow>Enabled</p7:EnableFlow>
+              </harp:Payload>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>OlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>OlfactometerEvents</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>false</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>OdorEndValveState</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>OdorEndValveState</Name>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Name>OdorPath</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="PropertySource" TypeArguments="p7:CreateEndValvesStatePayload,p7:EndValves">
+              <MemberName>EndValvesState</MemberName>
+              <Value>EndValve0</Value>
+            </Expression>
+            <Expression xsi:type="BitwiseNot" />
+            <Expression xsi:type="rx:Condition">
+              <Name>CarrierPath</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="PropertySource" TypeArguments="p7:CreateEndValvesStatePayload,p7:EndValves">
+              <MemberName>EndValvesState</MemberName>
+              <Value>None</Value>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="p7:Format">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Register xsi:type="p7:EndValvesState" />
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>OlfactometerCommands</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="4" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="10" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source2" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="20" To="23" Label="Source1" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="26" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="26" Label="Source2" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -1353,7 +1483,7 @@
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:VirtualSite">
               <rx:Name>ActiveSite</rx:Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p7:SoftwareEvent">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:SoftwareEvent">
               <rx:Name>SoftwareEvent</rx:Name>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p6:Unit">
@@ -1926,13 +2056,13 @@ Item2.Light as Light)</scr:Expression>
                                             <Property Name="Upper" />
                                           </Expression>
                                           <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="p8:CreateContinuousUniform">
-                                              <p8:Lower>2</p8:Lower>
-                                              <p8:Upper>6</p8:Upper>
+                                            <Combinator xsi:type="p9:CreateContinuousUniform">
+                                              <p9:Lower>2</p9:Lower>
+                                              <p9:Upper>6</p9:Upper>
                                             </Combinator>
                                           </Expression>
                                           <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="p8:Sample" />
+                                            <Combinator xsi:type="p9:Sample" />
                                           </Expression>
                                           <Expression xsi:type="scr:ExpressionTransform">
                                             <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
@@ -2047,7 +2177,7 @@ Item2.Light as Light)</scr:Expression>
                                             <Property Name="FrameTimestamp" />
                                           </Expression>
                                           <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="p7:RenderSynchState" />
+                                            <Combinator xsi:type="p8:RenderSynchState" />
                                           </Expression>
                                           <Expression xsi:type="Combinator">
                                             <Combinator xsi:type="rx:Take">
@@ -2562,7 +2692,7 @@ Item2.Light as Light)</scr:Expression>
                     <Name>HarpBehaviorEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p9:FilterVisibility" />
+                    <Combinator xsi:type="p10:FilterVisibility" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="beh:GroupByRegister" />
@@ -2587,6 +2717,34 @@ Item2.Light as Light)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>OlfactometerEvents</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p11:FilterVisibility" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p7:GroupByRegister" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName>Olfactometer.harp</LogName>
+                    <Extension>bin</Extension>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="FileName" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:MessageWriter">
+                      <harp:Suffix>None</harp:Suffix>
+                      <harp:Buffered>true</harp:Buffered>
+                      <harp:Overwrite>false</harp:Overwrite>
+                      <harp:FilterType>Include</harp:FilterType>
+                      <harp:MessageType xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -2595,6 +2753,11 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source2" />
                   <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="12" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2783,7 +2946,7 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:FramestampSoftwareEvent" />
+                    <Combinator xsi:type="p8:FramestampSoftwareEvent" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpTimestampSource</Name>
@@ -2795,7 +2958,7 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                     <Combinator xsi:type="harp:CreateTimestamped" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:TimestampSoftwareEvent" />
+                    <Combinator xsi:type="p8:TimestampSoftwareEvent" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSoftwareEventsDemux.bonsai">
                     <LoggerName>SoftwareEvents</LoggerName>
@@ -2908,8 +3071,8 @@ Value as IsStopped)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>SoftwareEvent</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>SoftwareEvent</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -2922,10 +3085,10 @@ Value as IsStopped)</scr:Expression>
                     <Combinator xsi:type="harp:CreateTimestamped" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:TimestampSoftwareEvent" />
+                    <Combinator xsi:type="p8:TimestampSoftwareEvent" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:SerializeToJson" />
+                    <Combinator xsi:type="p8:SerializeToJson" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
@@ -2997,8 +3160,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>StopVelocityThreshold</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>StopVelocityTreshold</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>StopVelocityTreshold</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3282,8 +3445,8 @@ Value as IsStopped)</scr:Expression>
                     <Selector>Data</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p10:FormatTransitionMatrix">
-                      <p10:NormalizeRows>true</p10:NormalizeRows>
+                    <Combinator xsi:type="p12:FormatTransitionMatrix">
+                      <p12:NormalizeRows>true</p12:NormalizeRows>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -3379,13 +3542,13 @@ Value as IsStopped)</scr:Expression>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p8:CreateDiscreteUniform">
-                            <p8:Lower>0</p8:Lower>
-                            <p8:Upper>1</p8:Upper>
+                          <Combinator xsi:type="p9:CreateDiscreteUniform">
+                            <p9:Lower>0</p9:Lower>
+                            <p9:Upper>1</p9:Upper>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p8:Sample" />
+                          <Combinator xsi:type="p9:Sample" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">
@@ -3591,8 +3754,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>ActivePatch</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>ActivePatch</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>ActivePatch</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3602,8 +3765,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>OperantLogic.StopDuration</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>OperantLogic.StopDuration</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>OperantLogic.StopDuration</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3613,8 +3776,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>RewardAvailableInPatch</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>RewardAvailableInPatch</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>RewardAvailableInPatch</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3662,154 +3825,142 @@ Value as IsStopped)</scr:Expression>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Odor">
-                    <rx:Name>OdorControl</rx:Name>
+                    <rx:Name>ArmOdor</rx:Name>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>OdorControl</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>IsIndex?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Index</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>0</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>ValveState</Selector>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>OdorValve1</Name>
+                    <Name>ArmOdor</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TaskLogicSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>OperationControl.OdorControl.ValveMaxOpenTime</Selector>
+                    <Selector>OperationControl.OdorControl</Selector>
                   </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>UseChannel3AsCarrier</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
-                      <Property Name="MaxOpenTime" />
+                      <Property Name="Channel3AsCarrier" />
                     </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\WaitForMaxOpenTime.bonsai">
-                    <MaxOpenTime>PT5S</MaxOpenTime>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>OdorValve1</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>IsIndex?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Index</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>ValveState</Selector>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>OdorValve2</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TaskLogicSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>OperationControl.OdorControl.ValveMaxOpenTime</Selector>
+                    <Selector>OperationControl.OdorControl</Selector>
                   </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>TargetOdorFlow</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
-                      <Property Name="MaxOpenTime" />
+                      <Property Name="TargetOdorFlow" />
                     </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\WaitForMaxOpenTime.bonsai">
-                    <MaxOpenTime>PT5S</MaxOpenTime>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>OdorValve2</Name>
-                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>OdorControl</Name>
+                    <Name>TaskLogicSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>OperationControl.OdorControl</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>TargetTotalFlow</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="TotalFlow" />
+                    </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>OdorControl</p7:EventName>
+                    <Combinator xsi:type="p12:CreateOdorMix">
+                      <p12:channel3AsCarrier>false</p12:channel3AsCarrier>
+                      <p12:PercentageChannel0>0</p12:PercentageChannel0>
+                      <p12:PercentageChannel1>0</p12:PercentageChannel1>
+                      <p12:PercentageChannel2>0</p12:PercentageChannel2>
+                      <p12:PercentageChannel3>0</p12:PercentageChannel3>
+                      <p12:Channel3AsCarrier>false</p12:Channel3AsCarrier>
+                      <p12:TargetOdorFlow>100</p12:TargetOdorFlow>
+                      <p12:TotalFlow>1000</p12:TotalFlow>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>ChannelsTargetFlow</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>OdorValvesState</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>OlfactometerCommands</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ArmOdor</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>ArmOdor</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>SoftwareEvent</Name>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>OdorEndValveState</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>TaskLogicSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>OperationControl.OdorControl.ValveMaxOpenTime</Selector>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>ToSeconds</scr:Name>
+                    <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="MaxOpenTime" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\WaitForMaxOpenTime.bonsai">
+                    <MaxOpenTime>PT5S</MaxOpenTime>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>OdorEndValveState</Name>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source2" />
-                  <Edge From="2" To="12" Label="Source1" />
+                  <Edge From="2" To="15" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="10" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="15" Label="Source2" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source2" />
-                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="15" Label="Source3" />
+                  <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="19" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source4" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source2" />
-                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="15" To="17" Label="Source1" />
+                  <Edge From="16" To="18" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="28" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source2" />
+                  <Edge From="28" To="29" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -3930,8 +4081,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>GiveReward</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>GiveReward</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>GiveReward</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3982,8 +4133,8 @@ Value as IsStopped)</scr:Expression>
                     <Name>ChoiceFeedback</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>ChoiceFeedback</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>ChoiceFeedback</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -4897,8 +5048,8 @@ Item2 as Start
                     <Name>ActiveSite</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>ActiveSite</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>ActiveSite</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -4908,8 +5059,8 @@ Item2 as Start
                     <Name>VisualCorridorSpecs</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p7:CreateSoftwareEvent">
-                      <p7:EventName>VisualCorridorSpecs</p7:EventName>
+                    <Combinator xsi:type="p8:CreateSoftwareEvent">
+                      <p8:EventName>VisualCorridorSpecs</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -5558,8 +5709,8 @@ Item2 as Start
                           <Name>DistanceToRewardAvailable</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p7:CreateSoftwareEvent">
-                            <p7:EventName>DistanceToRewardAvailable</p7:EventName>
+                          <Combinator xsi:type="p8:CreateSoftwareEvent">
+                            <p8:EventName>DistanceToRewardAvailable</p8:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5569,8 +5720,8 @@ Item2 as Start
                           <Name>IsOperantMode</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p7:CreateSoftwareEvent">
-                            <p7:EventName>IsOperantMode</p7:EventName>
+                          <Combinator xsi:type="p8:CreateSoftwareEvent">
+                            <p8:EventName>IsOperantMode</p8:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5580,8 +5731,8 @@ Item2 as Start
                           <Name>ScreenContrast</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p7:CreateSoftwareEvent">
-                            <p7:EventName>ScreenBrightness</p7:EventName>
+                          <Combinator xsi:type="p8:CreateSoftwareEvent">
+                            <p8:EventName>ScreenBrightness</p8:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5591,8 +5742,8 @@ Item2 as Start
                           <Name>RewardAmount</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p7:CreateSoftwareEvent">
-                            <p7:EventName>RewardAmount</p7:EventName>
+                          <Combinator xsi:type="p8:CreateSoftwareEvent">
+                            <p8:EventName>RewardAmount</p8:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5686,8 +5837,8 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p7:CreateSoftwareEvent">
-                            <p7:EventName>TaskLogic_RewardAvailable</p7:EventName>
+                          <Combinator xsi:type="p8:CreateSoftwareEvent">
+                            <p8:EventName>TaskLogic_RewardAvailable</p8:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5851,13 +6002,13 @@ Item2 as Start
                                 <Name>RngSeed</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p8:CreateContinuousUniform">
-                                  <p8:Lower>0</p8:Lower>
-                                  <p8:Upper>1</p8:Upper>
+                                <Combinator xsi:type="p9:CreateContinuousUniform">
+                                  <p9:Lower>0</p9:Lower>
+                                  <p9:Upper>1</p9:Upper>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p8:Sample" />
+                                <Combinator xsi:type="p9:Sample" />
                               </Expression>
                               <Expression xsi:type="ExternalizedMapping">
                                 <Property Name="Value" />
@@ -5900,8 +6051,8 @@ Item2 as Start
                           <Name>GiveReward</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p7:CreateSoftwareEvent">
-                            <p7:EventName>TaskLogic_RewardDelivery</p7:EventName>
+                          <Combinator xsi:type="p8:CreateSoftwareEvent">
+                            <p8:EventName>TaskLogic_RewardDelivery</p8:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -6270,52 +6421,6 @@ Item2 as Start
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="gli:KeyDown">
-                            <gli:Key>Keypad1</gli:Key>
-                            <gli:Modifiers>Control</gli:Modifiers>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>OdorValve1</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="gl:Delay">
-                            <gl:DueTime>PT5S</gl:DueTime>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="BitwiseNot" />
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>OdorValve1</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="gli:KeyDown">
-                            <gli:Key>Keypad2</gli:Key>
-                            <gli:Modifiers>Control</gli:Modifiers>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>OdorValve2</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="gl:Delay">
-                            <gl:DueTime>PT5S</gl:DueTime>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="BitwiseNot" />
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>OdorValve2</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="gli:KeyDown">
                             <gli:Key>Keypad5</gli:Key>
                             <gli:Modifiers>Control</gli:Modifiers>
                           </Combinator>
@@ -6552,28 +6657,18 @@ Item2 as Start
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
+                        <Edge From="10" To="12" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source2" />
                         <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="14" To="17" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="18" To="19" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source1" />
-                        <Edge From="20" To="21" Label="Source1" />
-                        <Edge From="22" To="24" Label="Source1" />
-                        <Edge From="23" To="24" Label="Source2" />
-                        <Edge From="25" To="26" Label="Source1" />
-                        <Edge From="26" To="29" Label="Source1" />
-                        <Edge From="27" To="28" Label="Source1" />
-                        <Edge From="28" To="29" Label="Source2" />
-                        <Edge From="29" To="30" Label="Source1" />
+                        <Edge From="16" To="17" Label="Source2" />
+                        <Edge From="17" To="18" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7012,7 +7107,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value.Image</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p11:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p13:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera0</Name>
@@ -7021,7 +7116,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p11:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p13:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera1</Name>
@@ -7030,7 +7125,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p11:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p13:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:ColumnCount>3</viz:ColumnCount>
@@ -7046,7 +7141,7 @@ Item5 as TotalReward)</scr:Expression>
               <Name>QCDiagnosis</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p12:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p14:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateFrame" />
@@ -7065,7 +7160,7 @@ Item5 as TotalReward)</scr:Expression>
               <Combinator xsi:type="rx:SubscribeWhen" />
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p12:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p14:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>LickEvent</Name>
@@ -7363,28 +7458,58 @@ Item5 as TotalReward)</scr:Expression>
         <Workflow>
           <Nodes>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
+              <Combinator xsi:type="p12:CreateOdorMix">
+                <p12:channel3AsCarrier>true</p12:channel3AsCarrier>
+                <p12:PercentageChannel0>0</p12:PercentageChannel0>
+                <p12:PercentageChannel1>0</p12:PercentageChannel1>
+                <p12:PercentageChannel2>0</p12:PercentageChannel2>
+                <p12:PercentageChannel3>NaN</p12:PercentageChannel3>
+                <p12:Channel3AsCarrier>true</p12:Channel3AsCarrier>
+                <p12:TargetOdorFlow>100</p12:TargetOdorFlow>
+                <p12:TotalFlow>1000</p12:TotalFlow>
               </Combinator>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>OdorValve1</Name>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>OdorValve2</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
                 <rx:Count>1</rx:Count>
               </Combinator>
             </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>ChannelsTargetFlow</Selector>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>OdorValvesState</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>OlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Last" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>false</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>OdorEndValveState</Name>
+            </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="1" To="3" Label="Source1" />
+            <Edge From="2" To="4" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -7420,24 +7545,25 @@ Item5 as TotalReward)</scr:Expression>
       <Edge From="18" To="19" Label="Source1" />
       <Edge From="21" To="22" Label="Source1" />
       <Edge From="23" To="24" Label="Source1" />
-      <Edge From="24" To="25" Label="Source1" />
       <Edge From="25" To="26" Label="Source1" />
-      <Edge From="29" To="30" Label="Source1" />
-      <Edge From="30" To="33" Label="Source1" />
+      <Edge From="26" To="27" Label="Source1" />
+      <Edge From="27" To="28" Label="Source1" />
       <Edge From="31" To="32" Label="Source1" />
-      <Edge From="32" To="33" Label="Source2" />
-      <Edge From="33" To="35" Label="Source1" />
+      <Edge From="32" To="35" Label="Source1" />
+      <Edge From="33" To="34" Label="Source1" />
       <Edge From="34" To="35" Label="Source2" />
-      <Edge From="36" To="37" Label="Source1" />
-      <Edge From="38" To="40" Label="Source1" />
-      <Edge From="39" To="40" Label="Source2" />
+      <Edge From="35" To="37" Label="Source1" />
+      <Edge From="36" To="37" Label="Source2" />
+      <Edge From="38" To="39" Label="Source1" />
       <Edge From="40" To="42" Label="Source1" />
       <Edge From="41" To="42" Label="Source2" />
-      <Edge From="47" To="48" Label="Source1" />
-      <Edge From="48" To="49" Label="Source1" />
+      <Edge From="42" To="44" Label="Source1" />
+      <Edge From="43" To="44" Label="Source2" />
       <Edge From="49" To="50" Label="Source1" />
       <Edge From="50" To="51" Label="Source1" />
       <Edge From="51" To="52" Label="Source1" />
+      <Edge From="52" To="53" Label="Source1" />
+      <Edge From="53" To="54" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
