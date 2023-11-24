@@ -1,0 +1,1440 @@
+{
+  "title": "Session",
+  "description": "Description of a physiology and/or behavior session",
+  "type": "object",
+  "properties": {
+    "describedBy": {
+      "title": "Describedby",
+      "default": "https://raw.githubusercontent.com/AllenNeuralDynamics/aind-data-schema/main/src/aind_data_schema/session.py",
+      "const": "https://raw.githubusercontent.com/AllenNeuralDynamics/aind-data-schema/main/src/aind_data_schema/session.py",
+      "type": "string"
+    },
+    "schema_version": {
+      "title": "Schema Version",
+      "description": "schema version",
+      "default": "0.0.1",
+      "const": "0.0.1",
+      "type": "string"
+    },
+    "experimenter_full_name": {
+      "title": "Experimenter(s) full name",
+      "description": "First and last name of the experimenter(s).",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "session_start_time": {
+      "title": "Session start time",
+      "type": "string",
+      "format": "date-time"
+    },
+    "session_end_time": {
+      "title": "Session end time",
+      "type": "string",
+      "format": "date-time"
+    },
+    "session_type": { "title": "Session type", "type": "string" },
+    "iacuc_protocol": { "title": "IACUC protocol", "type": "string" },
+    "rig_id": { "title": "Rig ID", "type": "string" },
+    "calibrations": {
+      "title": "Calibrations",
+      "description": "Calibrations of rig devices prior to session",
+      "type": "array",
+      "items": { "$ref": "#/definitions/Calibration" }
+    },
+    "maintenance": {
+      "title": "Maintenance",
+      "description": "Maintenance of rig devices prior to session",
+      "type": "array",
+      "items": { "$ref": "#/definitions/Maintenance" }
+    },
+    "subject_id": { "title": "Subject ID", "type": "integer" },
+    "animal_weight_prior": {
+      "title": "Animal weight (g)",
+      "description": "Animal weight before procedure",
+      "units": "g",
+      "type": "number"
+    },
+    "animal_weight_post": {
+      "title": "Animal weight (g)",
+      "description": "Animal weight after procedure",
+      "units": "g",
+      "type": "number"
+    },
+    "weight_unit": {
+      "title": "Weight unit",
+      "default": "gram",
+      "allOf": [{ "$ref": "#/definitions/MassUnit" }]
+    },
+    "data_streams": {
+      "title": "Data streams",
+      "description": "A data stream is a collection of devices that are recorded simultaneously. Each session can include multiple streams (e.g., if the manipulators are moved to a new location)",
+      "uniqueItems": true,
+      "type": "array",
+      "items": { "$ref": "#/definitions/Stream" }
+    },
+    "stimulus_epochs": {
+      "title": "Stimulus",
+      "type": "array",
+      "items": { "$ref": "#/definitions/StimulusEpoch" }
+    },
+    "reward_delivery": {
+      "title": "Reward delivery",
+      "allOf": [{ "$ref": "#/definitions/RewardDelivery" }]
+    },
+    "stick_microscopes": {
+      "title": "Stick microscopes",
+      "description": "Must match stick microscope assemblies in rig file",
+      "type": "array",
+      "items": { "$ref": "#/definitions/DomeModule" }
+    },
+    "notes": { "title": "Notes", "type": "string" }
+  },
+  "required": [
+    "experimenter_full_name",
+    "session_start_time",
+    "session_type",
+    "rig_id",
+    "subject_id",
+    "data_streams"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Calibration": {
+      "title": "Calibration",
+      "description": "Generic calibration class",
+      "type": "object",
+      "properties": {
+        "calibration_date": {
+          "title": "Date and time of calibration",
+          "type": "string",
+          "format": "date-time"
+        },
+        "device_name": {
+          "title": "Device name",
+          "description": "Must match a device name in rig/instrument",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Brief description of what is being calibrated",
+          "type": "string"
+        },
+        "input": {
+          "title": "inputs",
+          "description": "Calibration input",
+          "default": {},
+          "type": "object"
+        },
+        "output": {
+          "title": "outputs",
+          "description": "Calibration output",
+          "default": {},
+          "type": "object"
+        },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": ["calibration_date", "device_name", "description"],
+      "additionalProperties": false
+    },
+    "BaseName": {
+      "title": "BaseName",
+      "description": "A simple model associating a name with an abbreviation",
+      "type": "object",
+      "properties": {
+        "name": { "title": "Name", "type": "string" },
+        "abbreviation": { "title": "Abbreviation", "type": "string" }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "PIDName": {
+      "title": "PIDName",
+      "description": "Model for associate a name with a persistent identifier (PID),\nthe registry for that PID, and abbreviation for that registry",
+      "type": "object",
+      "properties": {
+        "name": { "title": "Name", "type": "string" },
+        "abbreviation": { "title": "Abbreviation", "type": "string" },
+        "registry": {
+          "title": "Registry",
+          "allOf": [{ "$ref": "#/definitions/BaseName" }]
+        },
+        "registry_identifier": {
+          "title": "Registry identifier",
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "Reagent": {
+      "title": "Reagent",
+      "description": "Description of reagents used in procedure",
+      "type": "object",
+      "properties": {
+        "name": { "title": "Name", "type": "string" },
+        "source": { "title": "Source", "type": "string" },
+        "rrid": {
+          "title": "Research Resource ID",
+          "allOf": [{ "$ref": "#/definitions/PIDName" }]
+        },
+        "lot_number": { "title": "Lot number", "type": "string" },
+        "expiration_date": {
+          "title": "Lot expiration date",
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": ["name", "source", "lot_number"],
+      "additionalProperties": false
+    },
+    "Maintenance": {
+      "title": "Maintenance",
+      "description": "Generic maintenance class",
+      "type": "object",
+      "properties": {
+        "maintenance_date": {
+          "title": "Date and time of maintenance",
+          "type": "string",
+          "format": "date-time"
+        },
+        "device_name": {
+          "title": "Device name",
+          "description": "Must match a device name in rig/instrument",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Description on maintenance procedure",
+          "type": "string"
+        },
+        "protocol_id": { "title": "Protocol ID", "type": "string" },
+        "reagents": {
+          "title": "Reagents",
+          "type": "array",
+          "items": { "$ref": "#/definitions/Reagent" }
+        },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": ["maintenance_date", "device_name", "description"],
+      "additionalProperties": false
+    },
+    "MassUnit": {
+      "title": "MassUnit",
+      "description": "Enumeration of Mass Measurements",
+      "enum": ["kilogram", "gram", "milligram", "microgram", "nanogram"]
+    },
+    "Modality": {
+      "title": "Modality",
+      "description": "Data collection modality name",
+      "enum": [
+        { "name": "Behavior videos", "abbreviation": "behavior-videos" },
+        { "name": "Confocal microscopy", "abbreviation": "confocal" },
+        {
+          "name": "Extracellular electrophysiology",
+          "abbreviation": "ecephys"
+        },
+        {
+          "name": "Fluorescence micro-optical sectioning tomography",
+          "abbreviation": "fMOST"
+        },
+        {
+          "name": "Intracellular electrophysiology",
+          "abbreviation": "icephys"
+        },
+        { "name": "Fiber photometry", "abbreviation": "fib" },
+        {
+          "name": "Multiplexed error-robust fluorescence in situ hybridization",
+          "abbreviation": "merfish"
+        },
+        { "name": "Magnetic resonance imaging", "abbreviation": "MRI" },
+        { "name": "Planar optical physiology", "abbreviation": "ophys" },
+        { "name": "Scanned line projection imaging", "abbreviation": "slap" },
+        {
+          "name": "Selective plane illumination microscopy",
+          "abbreviation": "SPIM"
+        },
+        { "name": "Trained behavior", "abbreviation": "trained-behavior" }
+      ],
+      "enumNames": [
+        "Behavior videos",
+        "Confocal microscopy",
+        "Extracellular electrophysiology",
+        "Fluorescence micro-optical sectioning tomography",
+        "Intracellular electrophysiology",
+        "Fiber photometry",
+        "Multiplexed error-robust fluorescence in situ hybridization",
+        "Magnetic resonance imaging",
+        "Planar optical physiology",
+        "Scanned line projection imaging",
+        "Selective plane illumination microscopy",
+        "Trained behavior"
+      ]
+    },
+    "SizeUnit": {
+      "title": "SizeUnit",
+      "description": "Enumeration of Length Measurements",
+      "enum": [
+        "meter",
+        "centimeter",
+        "millimeter",
+        "micrometer",
+        "nanometer",
+        "inch",
+        "pixel"
+      ]
+    },
+    "PowerUnit": {
+      "title": "PowerUnit",
+      "description": "Unit for power, set or measured",
+      "enum": ["microwatt", "milliwatt", "percent"]
+    },
+    "Laser": {
+      "title": "Laser",
+      "description": "Description of laser settings in a session",
+      "type": "object",
+      "properties": {
+        "device_type": {
+          "title": "Device Type",
+          "default": "Laser",
+          "const": "Laser",
+          "readOnly": true,
+          "enum": ["Laser"],
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "description": "Must match rig json",
+          "type": "string"
+        },
+        "wavelength": { "title": "Wavelength (nm)", "type": "integer" },
+        "wavelength_unit": {
+          "title": "Wavelength unit",
+          "default": "nanometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "excitation_power": {
+          "title": "Excitation power (mW)",
+          "type": "number"
+        },
+        "excitation_power_unit": {
+          "title": "Excitation power unit",
+          "default": "milliwatt",
+          "allOf": [{ "$ref": "#/definitions/PowerUnit" }]
+        }
+      },
+      "required": ["name", "wavelength"],
+      "additionalProperties": false
+    },
+    "LightEmittingDiode": {
+      "title": "LightEmittingDiode",
+      "description": "Description of LED settings",
+      "type": "object",
+      "properties": {
+        "device_type": {
+          "title": "Device Type",
+          "default": "LightEmittingDiode",
+          "const": "LightEmittingDiode",
+          "readOnly": true,
+          "enum": ["LightEmittingDiode"],
+          "type": "string"
+        },
+        "name": { "title": "Name", "type": "string" },
+        "excitation_power": {
+          "title": "Excitation power (mW)",
+          "type": "number"
+        },
+        "excitation_power_unit": {
+          "title": "Excitation power unit",
+          "default": "milliwatt",
+          "allOf": [{ "$ref": "#/definitions/PowerUnit" }]
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "AngleUnit": {
+      "title": "AngleUnit",
+      "description": "Enumeration of Angle Measurements",
+      "enum": ["radians", "degrees"]
+    },
+    "CcfVersion": {
+      "title": "CcfVersion",
+      "description": "CCF version",
+      "enum": ["CCFv3"]
+    },
+    "CcfCoords": {
+      "title": "CcfCoords",
+      "description": "Coordinates in CCF template space",
+      "type": "object",
+      "properties": {
+        "ml": { "title": "ML", "type": "number" },
+        "ap": { "title": "AP", "type": "number" },
+        "dv": { "title": "DV", "type": "number" },
+        "unit": {
+          "title": "Coordinate unit",
+          "default": "micrometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "ccf_version": {
+          "title": "CCF version",
+          "default": "CCFv3",
+          "allOf": [{ "$ref": "#/definitions/CcfVersion" }]
+        }
+      },
+      "required": ["ml", "ap", "dv"],
+      "additionalProperties": false
+    },
+    "Coordinates3d": {
+      "title": "Coordinates3d",
+      "description": "Coordinates in a 3D grid",
+      "type": "object",
+      "properties": {
+        "x": { "title": "Position X", "type": "number" },
+        "y": { "title": "Position Y", "type": "number" },
+        "z": { "title": "Position Z", "type": "number" },
+        "unit": {
+          "title": "Position unit",
+          "default": "micrometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        }
+      },
+      "required": ["x", "y", "z"],
+      "additionalProperties": false
+    },
+    "EphysProbe": {
+      "title": "EphysProbe",
+      "description": "Probes in a EphysProbeModule",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Ephys probe name (must match rig JSON)",
+          "type": "string"
+        },
+        "other_targeted_structures": {
+          "title": "Other Targeted Structures",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "EphysModule": {
+      "title": "EphysModule",
+      "description": "Probe recorded in a Stream",
+      "type": "object",
+      "properties": {
+        "assembly_name": { "title": "Assembly name", "type": "string" },
+        "arc_angle": {
+          "title": "Arc Angle",
+          "units": "degrees",
+          "type": "number"
+        },
+        "module_angle": {
+          "title": "Module Angle",
+          "units": "degrees",
+          "type": "number"
+        },
+        "angle_unit": {
+          "title": "Angle unit",
+          "default": "degrees",
+          "allOf": [{ "$ref": "#/definitions/AngleUnit" }]
+        },
+        "rotation_angle": {
+          "title": "Rotation Angle",
+          "default": 0.0,
+          "units": "degrees",
+          "type": "number"
+        },
+        "coordinate_transform": {
+          "title": "Transform from local manipulator axes to rig",
+          "description": "Path to coordinate transform",
+          "type": "string"
+        },
+        "calibration_date": {
+          "title": "Date on which coordinate transform was last calibrated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": { "title": "Notes", "type": "string" },
+        "primary_targeted_structure": {
+          "title": "Targeted structure",
+          "type": "string"
+        },
+        "targeted_ccf_coordinates": {
+          "title": "Targeted CCF coordinates",
+          "type": "array",
+          "items": { "$ref": "#/definitions/CcfCoords" }
+        },
+        "manipulator_coordinates": {
+          "title": "Manipulator coordinates",
+          "allOf": [{ "$ref": "#/definitions/Coordinates3d" }]
+        },
+        "ephys_probes": {
+          "title": "Ephys probes used in this module",
+          "type": "array",
+          "items": { "$ref": "#/definitions/EphysProbe" }
+        }
+      },
+      "required": [
+        "assembly_name",
+        "arc_angle",
+        "module_angle",
+        "primary_targeted_structure",
+        "manipulator_coordinates",
+        "ephys_probes"
+      ],
+      "additionalProperties": false
+    },
+    "ManipulatorModule": {
+      "title": "ManipulatorModule",
+      "description": "A dome module connected to a 3-axis manipulator",
+      "type": "object",
+      "properties": {
+        "assembly_name": { "title": "Assembly name", "type": "string" },
+        "arc_angle": {
+          "title": "Arc Angle",
+          "units": "degrees",
+          "type": "number"
+        },
+        "module_angle": {
+          "title": "Module Angle",
+          "units": "degrees",
+          "type": "number"
+        },
+        "angle_unit": {
+          "title": "Angle unit",
+          "default": "degrees",
+          "allOf": [{ "$ref": "#/definitions/AngleUnit" }]
+        },
+        "rotation_angle": {
+          "title": "Rotation Angle",
+          "default": 0.0,
+          "units": "degrees",
+          "type": "number"
+        },
+        "coordinate_transform": {
+          "title": "Transform from local manipulator axes to rig",
+          "description": "Path to coordinate transform",
+          "type": "string"
+        },
+        "calibration_date": {
+          "title": "Date on which coordinate transform was last calibrated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": { "title": "Notes", "type": "string" },
+        "primary_targeted_structure": {
+          "title": "Targeted structure",
+          "type": "string"
+        },
+        "targeted_ccf_coordinates": {
+          "title": "Targeted CCF coordinates",
+          "type": "array",
+          "items": { "$ref": "#/definitions/CcfCoords" }
+        },
+        "manipulator_coordinates": {
+          "title": "Manipulator coordinates",
+          "allOf": [{ "$ref": "#/definitions/Coordinates3d" }]
+        }
+      },
+      "required": [
+        "assembly_name",
+        "arc_angle",
+        "module_angle",
+        "primary_targeted_structure",
+        "manipulator_coordinates"
+      ],
+      "additionalProperties": false
+    },
+    "TimeUnit": {
+      "title": "TimeUnit",
+      "description": "Enumeration of Time Measurements",
+      "enum": [
+        "hour",
+        "minute",
+        "second",
+        "millisecond",
+        "microsecond",
+        "nanosecond"
+      ]
+    },
+    "TriggerType": {
+      "title": "TriggerType",
+      "description": "Types of detector triggers",
+      "enum": ["Internal", "External"]
+    },
+    "Detector": {
+      "title": "Detector",
+      "description": "Description of detector settings",
+      "type": "object",
+      "properties": {
+        "name": { "title": "Name", "type": "string" },
+        "exposure_time": { "title": "Exposure time (ms)", "type": "number" },
+        "exposure_time_unit": {
+          "title": "Exposure time unit",
+          "default": "millisecond",
+          "allOf": [{ "$ref": "#/definitions/TimeUnit" }]
+        },
+        "trigger_type": {
+          "title": "Trigger type",
+          "allOf": [{ "$ref": "#/definitions/TriggerType" }]
+        }
+      },
+      "required": ["name", "exposure_time", "trigger_type"],
+      "additionalProperties": false
+    },
+    "PatchCordName": {
+      "title": "PatchCordName",
+      "description": "Patch cord name",
+      "enum": ["Patch Cord A", "Patch Cord B", "Patch Cord C", "Patch Cord D"]
+    },
+    "FiberName": {
+      "title": "FiberName",
+      "description": "Fiber name",
+      "enum": ["Fiber A", "Fiber B", "Fiber C", "Fiber D", "Fiber E"]
+    },
+    "FiberPhotometryAssembly": {
+      "title": "FiberPhotometryAssembly",
+      "description": "Description of a fiber photometry configuration",
+      "type": "object",
+      "properties": {
+        "patch_cord_name": {
+          "title": "Name",
+          "allOf": [{ "$ref": "#/definitions/PatchCordName" }]
+        },
+        "patch_cord_output_power": {
+          "title": "Output power (uW)",
+          "type": "number"
+        },
+        "output_power_unit": {
+          "title": "Output power unit",
+          "default": "microwatt",
+          "allOf": [{ "$ref": "#/definitions/PowerUnit" }]
+        },
+        "fiber_name": {
+          "title": "Fiber name",
+          "allOf": [{ "$ref": "#/definitions/FiberName" }]
+        }
+      },
+      "required": ["patch_cord_name", "patch_cord_output_power", "fiber_name"],
+      "additionalProperties": false
+    },
+    "FrequencyUnit": {
+      "title": "FrequencyUnit",
+      "description": "Enumeration of Frequency Measurements",
+      "enum": ["kilohertz", "hertz", "millihertz"]
+    },
+    "FieldOfView": {
+      "title": "FieldOfView",
+      "description": "Description of an imaging field of view",
+      "type": "object",
+      "properties": {
+        "index": { "title": "Index", "type": "integer" },
+        "imaging_depth": { "title": "Imaging depth (um)", "type": "integer" },
+        "imaging_depth_unit": {
+          "title": "Imaging depth unit",
+          "default": "micrometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "targeted_structure": {
+          "title": "Targeted structure",
+          "type": "string"
+        },
+        "fov_coordinate_ml": { "title": "FOV coordinate ML", "type": "number" },
+        "fov_coordinate_ap": { "title": "FOV coordinate AP", "type": "number" },
+        "fov_coordinate_unit": {
+          "title": "FOV coordinate unit",
+          "default": "micrometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "fov_reference": {
+          "title": "FOV reference",
+          "description": "Reference for ML/AP coordinates",
+          "type": "string"
+        },
+        "fov_width": { "title": "FOV width (pixels)", "type": "integer" },
+        "fov_height": { "title": "FOV height (pixels)", "type": "integer" },
+        "fov_size_unit": {
+          "title": "FOV size unit",
+          "default": "pixel",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "magnification": { "title": "Magnification", "type": "string" },
+        "fov_scale_factor": {
+          "title": "FOV scale factor (um/pixel)",
+          "type": "number"
+        },
+        "fov_scale_factor_unit": {
+          "title": "FOV scale factor unit",
+          "default": "um/pixel",
+          "type": "string"
+        },
+        "frame_rate": { "title": "Frame rate (Hz)", "type": "number" },
+        "frame_rate_unit": {
+          "title": "Frame rate unit",
+          "default": "hertz",
+          "allOf": [{ "$ref": "#/definitions/FrequencyUnit" }]
+        }
+      },
+      "required": [
+        "index",
+        "imaging_depth",
+        "targeted_structure",
+        "fov_coordinate_ml",
+        "fov_coordinate_ap",
+        "fov_reference",
+        "fov_width",
+        "fov_height",
+        "magnification",
+        "fov_scale_factor",
+        "frame_rate"
+      ],
+      "additionalProperties": false
+    },
+    "StackChannel": {
+      "title": "StackChannel",
+      "description": "Description of a Channel used in a Stack",
+      "type": "object",
+      "properties": {
+        "channel_name": { "title": "Channel", "type": "string" },
+        "light_source_name": {
+          "title": "Light source name",
+          "description": "Must match device name",
+          "type": "string"
+        },
+        "filter_names": {
+          "title": "Filter names",
+          "description": "Must match device names",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "detector_name": {
+          "title": "Detector name",
+          "description": "Must match device name",
+          "type": "string"
+        },
+        "additional_device_names": {
+          "title": "Additional device names",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "excitation_wavelength": {
+          "title": "Wavelength",
+          "minimum": 300,
+          "maximum": 1000,
+          "type": "integer"
+        },
+        "excitation_wavelength_unit": {
+          "title": "Laser wavelength unit",
+          "default": "nanometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "excitation_power": {
+          "title": "Laser power",
+          "maximum": 2000,
+          "type": "number"
+        },
+        "excitation_power_unit": {
+          "title": "Laser power unit",
+          "default": "milliwatt",
+          "allOf": [{ "$ref": "#/definitions/PowerUnit" }]
+        },
+        "filter_wheel_index": {
+          "title": "Filter wheel index",
+          "type": "integer"
+        },
+        "dilation": { "title": "Dilation (pixels)", "type": "integer" },
+        "dilation_unit": {
+          "title": "Dilation unit",
+          "default": "pixel",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "description": { "title": "Description", "type": "string" },
+        "start_depth": { "title": "Starting depth (um)", "type": "integer" },
+        "end_depth": { "title": "Ending depth (um)", "type": "integer" },
+        "depth_unit": {
+          "title": "Depth unit",
+          "default": "micrometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        }
+      },
+      "required": [
+        "channel_name",
+        "light_source_name",
+        "filter_names",
+        "detector_name",
+        "excitation_wavelength",
+        "excitation_power",
+        "filter_wheel_index",
+        "start_depth",
+        "end_depth"
+      ],
+      "additionalProperties": false
+    },
+    "Stack": {
+      "title": "Stack",
+      "description": "Description of a two photon stack",
+      "type": "object",
+      "properties": {
+        "channels": {
+          "title": "Channels",
+          "type": "array",
+          "items": { "$ref": "#/definitions/StackChannel" }
+        },
+        "number_of_planes": { "title": "Number of planes", "type": "integer" },
+        "step_size": { "title": "Step size (um)", "type": "number" },
+        "step_size_unit": {
+          "title": "Step size unit",
+          "default": "micrometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "number_of_plane_repeats_per_volume": {
+          "title": "Number of repeats per volume",
+          "type": "integer"
+        },
+        "number_of_volume_repeats": {
+          "title": "Number of volume repeats",
+          "type": "integer"
+        },
+        "fov_coordinate_ml": { "title": "FOV coordinate ML", "type": "number" },
+        "fov_coordinate_ap": { "title": "FOV coordinate AP", "type": "number" },
+        "fov_coordinate_unit": {
+          "title": "FOV coordinate unit",
+          "default": "micrometer",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "fov_reference": {
+          "title": "FOV reference",
+          "description": "Reference for ML/AP coordinates",
+          "type": "string"
+        },
+        "fov_width": { "title": "FOV width (pixels)", "type": "integer" },
+        "fov_height": { "title": "FOV height (pixels)", "type": "integer" },
+        "fov_size_unit": {
+          "title": "FOV size unit",
+          "default": "pixel",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "magnification": { "title": "Magnification", "type": "string" },
+        "fov_scale_factor": {
+          "title": "FOV scale factor (um/pixel)",
+          "type": "number"
+        },
+        "fov_scale_factor_unit": {
+          "title": "FOV scale factor unit",
+          "default": "um/pixel",
+          "type": "string"
+        },
+        "frame_rate": { "title": "Frame rate (Hz)", "type": "number" },
+        "frame_rate_unit": {
+          "title": "Frame rate unit",
+          "default": "hertz",
+          "allOf": [{ "$ref": "#/definitions/FrequencyUnit" }]
+        },
+        "targeted_structure": {
+          "title": "Targeted structure",
+          "type": "string"
+        }
+      },
+      "required": [
+        "channels",
+        "number_of_planes",
+        "step_size",
+        "number_of_plane_repeats_per_volume",
+        "number_of_volume_repeats",
+        "fov_coordinate_ml",
+        "fov_coordinate_ap",
+        "fov_reference",
+        "fov_width",
+        "fov_height",
+        "fov_scale_factor",
+        "frame_rate"
+      ],
+      "additionalProperties": false
+    },
+    "Stream": {
+      "title": "Stream",
+      "description": "Data streams with a start and stop time",
+      "type": "object",
+      "properties": {
+        "stream_start_time": {
+          "title": "Stream start time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "stream_end_time": {
+          "title": "Stream stop time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "stream_modalities": {
+          "title": "Modalities",
+          "type": "array",
+          "items": { "$ref": "#/definitions/Modality" }
+        },
+        "daq_names": {
+          "title": "DAQ devices",
+          "uniqueItems": true,
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "camera_names": {
+          "title": "Cameras",
+          "uniqueItems": true,
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "light_sources": {
+          "title": "Light Sources",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/Laser" },
+              { "$ref": "#/definitions/LightEmittingDiode" }
+            ]
+          }
+        },
+        "ephys_modules": {
+          "title": "Ephys modules",
+          "uniqueItems": true,
+          "type": "array",
+          "items": { "$ref": "#/definitions/EphysModule" }
+        },
+        "manipulator_modules": {
+          "title": "Manipulator modules",
+          "uniqueItems": true,
+          "type": "array",
+          "items": { "$ref": "#/definitions/ManipulatorModule" }
+        },
+        "detectors": {
+          "title": "Detectors",
+          "uniqueItems": true,
+          "type": "array",
+          "items": { "$ref": "#/definitions/Detector" }
+        },
+        "fiber_photometry_assemblies": {
+          "title": "Fiber photometry devices",
+          "type": "array",
+          "items": { "$ref": "#/definitions/FiberPhotometryAssembly" }
+        },
+        "ophys_fovs": {
+          "title": "Fields of view",
+          "uniqueItems": true,
+          "type": "array",
+          "items": { "$ref": "#/definitions/FieldOfView" }
+        },
+        "stack_parameters": {
+          "title": "Stack parameters",
+          "allOf": [{ "$ref": "#/definitions/Stack" }]
+        },
+        "stimulus_device_names": {
+          "title": "Stimulus devices",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": ["stream_start_time", "stream_end_time", "stream_modalities"],
+      "additionalProperties": false
+    },
+    "PulseShape": {
+      "title": "PulseShape",
+      "description": "Types of Opto stim pulse shapes",
+      "enum": ["Square", "Ramp", "Sinusoidal"]
+    },
+    "OptoStimulation": {
+      "title": "OptoStimulation",
+      "description": "Description of opto stimulation parameters",
+      "type": "object",
+      "properties": {
+        "stimulus_type": {
+          "title": "OptoStimulation",
+          "default": "OptoStimulation",
+          "const": "OptoStimulation",
+          "readOnly": true,
+          "enum": ["OptoStimulation"],
+          "type": "string"
+        },
+        "stimulus_name": { "title": "Stimulus name", "type": "string" },
+        "pulse_shape": {
+          "title": "Pulse shape",
+          "allOf": [{ "$ref": "#/definitions/PulseShape" }]
+        },
+        "pulse_frequency": {
+          "title": "Pulse frequency (Hz)",
+          "type": "integer"
+        },
+        "pulse_frequency_unit": {
+          "title": "Pulse frequency unit",
+          "default": "hertz",
+          "allOf": [{ "$ref": "#/definitions/FrequencyUnit" }]
+        },
+        "number_pulse_trains": {
+          "title": "Number of pulse trains",
+          "type": "integer"
+        },
+        "pulse_width": { "title": "Pulse width (ms)", "type": "integer" },
+        "pulse_width_unit": {
+          "title": "Pulse width unit",
+          "default": "millisecond",
+          "allOf": [{ "$ref": "#/definitions/TimeUnit" }]
+        },
+        "pulse_train_duration": {
+          "title": "Pulse train duration (s)",
+          "type": "number"
+        },
+        "pulse_train_duration_unit": {
+          "title": "Pulse train duration unit",
+          "default": "second",
+          "allOf": [{ "$ref": "#/definitions/TimeUnit" }]
+        },
+        "fixed_pulse_train_interval": {
+          "title": "Fixed pulse train interval",
+          "type": "boolean"
+        },
+        "pulse_train_interval": {
+          "title": "Pulse train interval (s)",
+          "description": "Time between pulse trains",
+          "type": "number"
+        },
+        "pulse_train_interval_unit": {
+          "title": "Pulse train interval unit",
+          "default": "second",
+          "allOf": [{ "$ref": "#/definitions/TimeUnit" }]
+        },
+        "baseline_duration": {
+          "title": "Baseline duration (s)",
+          "description": "Duration of baseline recording prior to first pulse train",
+          "type": "number"
+        },
+        "baseline_duration_unit": {
+          "title": "Baseline duration unit",
+          "default": "second",
+          "allOf": [{ "$ref": "#/definitions/TimeUnit" }]
+        },
+        "other_parameters": { "title": "Other Parameters", "type": "object" },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": [
+        "stimulus_name",
+        "pulse_shape",
+        "pulse_frequency",
+        "number_pulse_trains",
+        "pulse_width",
+        "pulse_train_duration",
+        "fixed_pulse_train_interval",
+        "baseline_duration"
+      ],
+      "additionalProperties": false
+    },
+    "VisualStimulation": {
+      "title": "VisualStimulation",
+      "description": "Description of visual stimulus parameters. Provides a high level description of stimulus.",
+      "type": "object",
+      "properties": {
+        "stimulus_type": {
+          "title": "VisualStimulation",
+          "default": "VisualStimulation",
+          "const": "VisualStimulation",
+          "readOnly": true,
+          "enum": ["VisualStimulation"],
+          "type": "string"
+        },
+        "stimulus_name": { "title": "Stimulus name", "type": "string" },
+        "stimulus_parameters": {
+          "title": "Stimulus parameters",
+          "description": "Define and list the parameter values used (e.g. all TF or orientation values)",
+          "type": "object"
+        },
+        "stimulus_template_name": {
+          "title": "Stimulus template name",
+          "description": "Name of image set or movie displayed",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "stimulus_software": {
+          "title": "Stimulus software",
+          "description": "The software used to control the stimulus (e.g. Bonsai)",
+          "type": "string"
+        },
+        "stimulus_software_version": {
+          "title": "Stimulus software version",
+          "type": "string"
+        },
+        "stimulus_script": {
+          "title": "Stimulus script",
+          "description": "The specific code for this stimulus instance",
+          "type": "string"
+        },
+        "stimulus_script_version": {
+          "title": "Stimulus script version",
+          "type": "string"
+        },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": [
+        "stimulus_name",
+        "stimulus_software",
+        "stimulus_software_version",
+        "stimulus_script",
+        "stimulus_script_version"
+      ],
+      "additionalProperties": false
+    },
+    "VolumeUnit": {
+      "title": "VolumeUnit",
+      "description": "Enumeration of Volume Measurements",
+      "enum": ["liter", "milliliter", "microliter", "nanoliter"]
+    },
+    "BehaviorStimulation": {
+      "title": "BehaviorStimulation",
+      "description": "Description of behavior parameters. Provides a high level description of stimulus.",
+      "type": "object",
+      "properties": {
+        "stimulus_type": {
+          "title": "BehaviorStimulation",
+          "default": "BehaviorStimulation",
+          "const": "BehaviorStimulation",
+          "readOnly": true,
+          "enum": ["BehaviorStimulation"],
+          "type": "string"
+        },
+        "behavior_name": { "title": "Behavior name", "type": "string" },
+        "session_number": { "title": "Session number", "type": "integer" },
+        "behavior_software": {
+          "title": "Behavior software",
+          "description": "The software used to control the behavior (e.g. Bonsai)",
+          "type": "string"
+        },
+        "behavior_software_version": {
+          "title": "Behavior software version",
+          "type": "string"
+        },
+        "behavior_script": {
+          "title": "Behavior script",
+          "description": "URL for the commit of the code used to run the behavior",
+          "type": "string"
+        },
+        "behavior_script_version": {
+          "title": "Behavior script version",
+          "type": "string"
+        },
+        "input_parameters": {
+          "title": "Input parameters",
+          "description": "Parameters used in behavior session",
+          "type": "object"
+        },
+        "output_parameters": {
+          "title": "Performance parameters",
+          "description": "Performance metrics from session",
+          "type": "object"
+        },
+        "reward_consumed_during_training": {
+          "title": "Reward consumed during training (uL)",
+          "type": "number"
+        },
+        "reward_consumed_total": {
+          "title": "Total reward consumed (uL)",
+          "type": "number"
+        },
+        "reward_consumed_unit": {
+          "title": "Reward consumed unit",
+          "default": "microliter",
+          "allOf": [{ "$ref": "#/definitions/VolumeUnit" }]
+        },
+        "trials_total": { "title": "Total trials", "type": "integer" },
+        "trials_finished": { "title": "Finished trials", "type": "integer" },
+        "trials_rewarded": { "title": "Rewarded trials", "type": "integer" },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": [
+        "behavior_name",
+        "session_number",
+        "behavior_software",
+        "behavior_software_version",
+        "behavior_script",
+        "behavior_script_version",
+        "input_parameters",
+        "output_parameters",
+        "reward_consumed_during_training",
+        "reward_consumed_total",
+        "trials_total",
+        "trials_finished",
+        "trials_rewarded"
+      ],
+      "additionalProperties": false
+    },
+    "PhotoStimulationGroup": {
+      "title": "PhotoStimulationGroup",
+      "description": "Description of a photostimulation group",
+      "type": "object",
+      "properties": {
+        "group_index": { "title": "Group index", "type": "integer" },
+        "number_of_neurons": {
+          "title": "Number of neurons",
+          "type": "integer"
+        },
+        "stimulation_laser_power": {
+          "title": "Stimulation laser power (mW)",
+          "type": "number"
+        },
+        "stimulation_laser_power_unit": {
+          "title": "Stimulation laser power unit",
+          "default": "milliwatt",
+          "allOf": [{ "$ref": "#/definitions/PowerUnit" }]
+        },
+        "number_trials": { "title": "Number of trials", "type": "integer" },
+        "number_spirals": { "title": "Number of spirals", "type": "integer" },
+        "spiral_duration": { "title": "Spiral duration (s)", "type": "number" },
+        "spiral_duration_unit": {
+          "title": "Spiral duration unit",
+          "default": "second",
+          "allOf": [{ "$ref": "#/definitions/TimeUnit" }]
+        },
+        "inter_spiral_interval": {
+          "title": "Inter trial interval (s)",
+          "type": "number"
+        },
+        "inter_spiral_interval_unit": {
+          "title": "Inter trial interval unit",
+          "default": "second",
+          "allOf": [{ "$ref": "#/definitions/TimeUnit" }]
+        },
+        "other_parameters": { "title": "Other Parameters", "type": "object" },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": [
+        "group_index",
+        "number_of_neurons",
+        "stimulation_laser_power",
+        "number_trials",
+        "number_spirals",
+        "spiral_duration",
+        "inter_spiral_interval"
+      ],
+      "additionalProperties": false
+    },
+    "PhotoStimulation": {
+      "title": "PhotoStimulation",
+      "description": "Description of a photostimulation session",
+      "type": "object",
+      "properties": {
+        "stimulus_type": {
+          "title": "PhotoStimulation",
+          "default": "PhotoStimulation",
+          "const": "PhotoStimulation",
+          "readOnly": true,
+          "enum": ["PhotoStimulation"],
+          "type": "string"
+        },
+        "stimulus_name": { "title": "Stimulus name", "type": "string" },
+        "number_groups": { "title": "Number of groups", "type": "integer" },
+        "groups": {
+          "title": "Groups",
+          "type": "array",
+          "items": { "$ref": "#/definitions/PhotoStimulationGroup" }
+        },
+        "inter_trial_interval": {
+          "title": "Inter trial interval (s)",
+          "type": "number"
+        },
+        "inter_trial_interval_unit": {
+          "title": "Inter trial interval unit",
+          "default": "second",
+          "allOf": [{ "$ref": "#/definitions/TimeUnit" }]
+        },
+        "other_parameters": { "title": "Other Parameters", "type": "object" },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": [
+        "stimulus_name",
+        "number_groups",
+        "groups",
+        "inter_trial_interval"
+      ],
+      "additionalProperties": false
+    },
+    "StimulusEpoch": {
+      "title": "StimulusEpoch",
+      "description": "Description of stimulus used during session",
+      "type": "object",
+      "properties": {
+        "stimulus": {
+          "title": "Stimulus",
+          "discriminator": {
+            "propertyName": "stimulus_type",
+            "mapping": {
+              "OptoStimulation": "#/definitions/OptoStimulation",
+              "VisualStimulation": "#/definitions/VisualStimulation",
+              "BehaviorStimulation": "#/definitions/BehaviorStimulation",
+              "PhotoStimulation": "#/definitions/PhotoStimulation"
+            }
+          },
+          "oneOf": [
+            { "$ref": "#/definitions/OptoStimulation" },
+            { "$ref": "#/definitions/VisualStimulation" },
+            { "$ref": "#/definitions/BehaviorStimulation" },
+            { "$ref": "#/definitions/PhotoStimulation" }
+          ]
+        },
+        "stimulus_start_time": {
+          "title": "Stimulus start time",
+          "description": "When a specific stimulus begins. This might be the same as the session start time.",
+          "type": "string",
+          "format": "time"
+        },
+        "stimulus_end_time": {
+          "title": "Stimulus end time",
+          "description": "When a specific stimulus ends. This might be the same as the session end time.",
+          "type": "string",
+          "format": "time"
+        }
+      },
+      "required": ["stimulus", "stimulus_start_time", "stimulus_end_time"],
+      "additionalProperties": false
+    },
+    "RewardSolution": {
+      "title": "RewardSolution",
+      "description": "Reward solution name",
+      "enum": ["Water", "Other"]
+    },
+    "SpoutSide": {
+      "title": "SpoutSide",
+      "description": "Spout sides",
+      "enum": ["Left", "Right", "Center", "Other"]
+    },
+    "RelativePosition": {
+      "title": "RelativePosition",
+      "description": "Set of 6 values describing relative position on a rig",
+      "type": "object",
+      "properties": {
+        "pitch": {
+          "title": "Angle pitch (deg)",
+          "minimum": 0,
+          "maximum": 360,
+          "units": "deg",
+          "type": "number"
+        },
+        "yaw": {
+          "title": "Angle yaw (deg)",
+          "minimum": 0,
+          "maximum": 360,
+          "units": "deg",
+          "type": "number"
+        },
+        "roll": {
+          "title": "Angle roll (deg)",
+          "minimum": 0,
+          "maximum": 360,
+          "units": "deg",
+          "type": "number"
+        },
+        "angle_unit": {
+          "title": "Angle unit",
+          "default": "degrees",
+          "allOf": [{ "$ref": "#/definitions/AngleUnit" }]
+        },
+        "x": { "title": "Position X (mm)", "units": "mm", "type": "number" },
+        "y": { "title": "Position Y (mm)", "units": "mm", "type": "number" },
+        "z": { "title": "Position Z (mm)", "units": "mm", "type": "number" },
+        "position_unit": {
+          "title": "Position unit",
+          "default": "millimeter",
+          "allOf": [{ "$ref": "#/definitions/SizeUnit" }]
+        },
+        "coordinate_system": {
+          "title": "Description of the coordinate system used",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RewardSpout": {
+      "title": "RewardSpout",
+      "description": "Reward spout session information",
+      "type": "object",
+      "properties": {
+        "side": {
+          "title": "Spout side",
+          "description": "Must match rig",
+          "allOf": [{ "$ref": "#/definitions/SpoutSide" }]
+        },
+        "starting_position": {
+          "title": "Starting position",
+          "allOf": [{ "$ref": "#/definitions/RelativePosition" }]
+        },
+        "variable_position": {
+          "title": "Variable position",
+          "description": "True if spout position changes during session as tracked in data",
+          "type": "boolean"
+        }
+      },
+      "required": ["side", "starting_position", "variable_position"],
+      "additionalProperties": false
+    },
+    "RewardDelivery": {
+      "title": "RewardDelivery",
+      "description": "Description of reward delivery configuration",
+      "type": "object",
+      "properties": {
+        "reward_solution": {
+          "title": "Reward solution",
+          "description": "If Other use notes",
+          "allOf": [{ "$ref": "#/definitions/RewardSolution" }]
+        },
+        "reward_spouts": {
+          "title": "Reward spouts",
+          "uniqueItems": true,
+          "type": "array",
+          "items": { "$ref": "#/definitions/RewardSpout" }
+        },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": ["reward_solution", "reward_spouts"],
+      "additionalProperties": false
+    },
+    "DomeModule": {
+      "title": "DomeModule",
+      "description": "Movable module that is mounted on the ephys dome insertion system",
+      "type": "object",
+      "properties": {
+        "assembly_name": { "title": "Assembly name", "type": "string" },
+        "arc_angle": {
+          "title": "Arc Angle",
+          "units": "degrees",
+          "type": "number"
+        },
+        "module_angle": {
+          "title": "Module Angle",
+          "units": "degrees",
+          "type": "number"
+        },
+        "angle_unit": {
+          "title": "Angle unit",
+          "default": "degrees",
+          "allOf": [{ "$ref": "#/definitions/AngleUnit" }]
+        },
+        "rotation_angle": {
+          "title": "Rotation Angle",
+          "default": 0.0,
+          "units": "degrees",
+          "type": "number"
+        },
+        "coordinate_transform": {
+          "title": "Transform from local manipulator axes to rig",
+          "description": "Path to coordinate transform",
+          "type": "string"
+        },
+        "calibration_date": {
+          "title": "Date on which coordinate transform was last calibrated",
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": { "title": "Notes", "type": "string" }
+      },
+      "required": ["assembly_name", "arc_angle", "module_angle"],
+      "additionalProperties": false
+    }
+  }
+}
