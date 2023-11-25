@@ -736,7 +736,9 @@ namespace AindVrForagingDataSchema.Rig
     
         private HarpBoard _harpBehaviorBoard = new HarpBoard();
     
-        private HarpBoard _harpOlfactometer;
+        private HarpBoard _harpOlfactometer = new HarpBoard();
+    
+        private HarpBoard _harpLickometer = new HarpBoard();
     
         private SpinnakerCamera _mainCamera = new SpinnakerCamera();
     
@@ -796,7 +798,7 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harpOlfactometer")]
+        [Newtonsoft.Json.JsonPropertyAttribute("harpOlfactometer", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpOlfactometer")]
         public HarpBoard HarpOlfactometer
         {
@@ -807,6 +809,21 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _harpOlfactometer = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harpLickometer", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpLickometer")]
+        public HarpBoard HarpLickometer
+        {
+            get
+            {
+                return _harpLickometer;
+            }
+            set
+            {
+                _harpLickometer = value;
             }
         }
     
@@ -909,6 +926,7 @@ namespace AindVrForagingDataSchema.Rig
                     AuxiliaryCamera1 = _auxiliaryCamera1,
                     HarpBehaviorBoard = _harpBehaviorBoard,
                     HarpOlfactometer = _harpOlfactometer,
+                    HarpLickometer = _harpLickometer,
                     MainCamera = _mainCamera,
                     Graphics = _graphics,
                     Speaker = _speaker,
