@@ -1169,7 +1169,7 @@
         <Workflow>
           <Nodes>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="harp:HarpMessage">
-              <rx:Name>OlfactometerCommands</rx:Name>
+              <rx:Name>HarpOlfactometerCommands</rx:Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RigSchema</Name>
@@ -1194,10 +1194,10 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:PublishSubject">
-              <Name>OlfactometerEvents</Name>
+              <Name>HarpOlfactometerEvents</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>OlfactometerEvents</Name>
+              <Name>HarpOlfactometerEvents</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -1283,7 +1283,7 @@
               </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>OlfactometerCommands</Name>
+              <Name>HarpOlfactometerCommands</Name>
             </Expression>
             <Expression xsi:type="p7:CreateMessage">
               <harp:MessageType>Write</harp:MessageType>
@@ -1292,7 +1292,7 @@
               </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>OlfactometerCommands</Name>
+              <Name>HarpOlfactometerCommands</Name>
             </Expression>
             <Expression xsi:type="p7:CreateMessage">
               <harp:MessageType>Write</harp:MessageType>
@@ -1301,10 +1301,10 @@
               </harp:Payload>
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>OlfactometerCommands</Name>
+              <Name>HarpOlfactometerCommands</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>OlfactometerEvents</Name>
+              <Name>HarpOlfactometerEvents</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -1367,7 +1367,7 @@
               <harp:Register xsi:type="p7:EndValvesState" />
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>OlfactometerCommands</Name>
+              <Name>HarpOlfactometerCommands</Name>
             </Expression>
           </Nodes>
           <Edges>
@@ -2812,7 +2812,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>OlfactometerEvents</Name>
+                    <Name>HarpOlfactometerEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:FilterVisibility" />
@@ -2823,6 +2823,31 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
                     <LogName>Olfactometer.harp</LogName>
+                    <Extension>bin</Extension>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="FileName" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:MessageWriter">
+                      <harp:Suffix>None</harp:Suffix>
+                      <harp:Buffered>true</harp:Buffered>
+                      <harp:Overwrite>false</harp:Overwrite>
+                      <harp:FilterType>Include</harp:FilterType>
+                      <harp:MessageType xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpLickometerEvents</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p8:GroupByRegister" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName>Lickometer.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -2852,6 +2877,10 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="9" To="12" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source2" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="17" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -4011,7 +4040,7 @@ Value as IsStopped)</scr:Expression>
                     <Combinator xsi:type="rx:Merge" />
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>OlfactometerCommands</Name>
+                    <Name>HarpOlfactometerCommands</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>ArmOdor</Name>
@@ -7600,7 +7629,7 @@ Item5 as TotalReward)</scr:Expression>
               <Combinator xsi:type="rx:Merge" />
             </Expression>
             <Expression xsi:type="MulticastSubject">
-              <Name>OlfactometerCommands</Name>
+              <Name>HarpOlfactometerCommands</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Last" />
