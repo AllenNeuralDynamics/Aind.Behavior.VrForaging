@@ -1,10 +1,15 @@
 %YAML 1.1
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/AllenNeuralDynamics/aind-vr-foraging/main/src/DataSchemas/aind-vr-foraging-rig.json
+# yaml-language-server: $schema=aind-vr-foraging-rig.json
 
-screen:
-  monitorCalibrationDirectory: "Calibration\\Monitors"
-  textureAssetDirectory:  "Textures"
+graphics:
+  display:
+    displayDevice: 1
+    targetRenderFrequency: 60
+    targetUpdateFrequency: 120
+  render:
+    monitorCalibrationDirectory: "Calibration\\Monitors"
+    textureAssetDirectory:  "Textures"
 treadmill:
   model: headfix
   wheelDiameter: 15
@@ -31,9 +36,22 @@ valves:
     calibration:
       intercept: 0
       slope: 1
-harpBehaviorBoard:
+harpBehavior:
   deviceType: behavior
   portName: COM3
+harpOlfactometer:
+  deviceType: behavior
+  portName: COM6
+harpLickometer:
+  deviceType: behavior
+  portName: COM7
+movableSpout:
+  model: servoMotor
+  pin: DO2
+  period: 20000
+  pulseDurationUsMin: 1000
+  pulseDurationUsMax: 2000
+  pulseDurationUsDefault: 2000
 mainCamera:
   frameRate: 30
   exposure: 1000
