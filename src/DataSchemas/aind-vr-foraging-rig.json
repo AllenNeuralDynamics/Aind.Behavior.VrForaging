@@ -18,6 +18,9 @@
     "harpLickometer": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
     },
+    "harpSynchronizer": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
+    },
     "mainCamera": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
     },
@@ -64,6 +67,7 @@
     "harpBehavior",
     "harpOlfactometer",
     "harpLickometer",
+    "harpSynchronizer",
     "graphics",
     "speaker",
     "treadmill",

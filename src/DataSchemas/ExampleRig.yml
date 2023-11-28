@@ -40,11 +40,14 @@ harpBehavior:
   deviceType: behavior
   portName: COM3
 harpOlfactometer:
-  deviceType: behavior
+  deviceType: olfactometer
   portName: COM6
 harpLickometer:
-  deviceType: behavior
+  deviceType: lickometer
   portName: COM7
+harpSynchronizer:
+  deviceType: clockSynchronizer
+  portName: COM4
 movableSpout:
   model: servoMotor
   pin: DO2
