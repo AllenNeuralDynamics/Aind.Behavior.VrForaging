@@ -734,7 +734,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private VideoCaptureDevice _auxiliaryCamera1 = new VideoCaptureDevice();
     
-        private HarpBoard _harpBehaviorBoard = new HarpBoard();
+        private HarpBoard _harpBehavior = new HarpBoard();
     
         private HarpBoard _harpOlfactometer = new HarpBoard();
     
@@ -783,17 +783,17 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harpBehaviorBoard", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehaviorBoard")]
-        public HarpBoard HarpBehaviorBoard
+        [Newtonsoft.Json.JsonPropertyAttribute("harpBehavior", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehavior")]
+        public HarpBoard HarpBehavior
         {
             get
             {
-                return _harpBehaviorBoard;
+                return _harpBehavior;
             }
             set
             {
-                _harpBehaviorBoard = value;
+                _harpBehavior = value;
             }
         }
     
@@ -924,7 +924,7 @@ namespace AindVrForagingDataSchema.Rig
                 {
                     AuxiliaryCamera0 = _auxiliaryCamera0,
                     AuxiliaryCamera1 = _auxiliaryCamera1,
-                    HarpBehaviorBoard = _harpBehaviorBoard,
+                    HarpBehavior = _harpBehavior,
                     HarpOlfactometer = _harpOlfactometer,
                     HarpLickometer = _harpLickometer,
                     MainCamera = _mainCamera,
@@ -952,6 +952,14 @@ namespace AindVrForagingDataSchema.Rig
         [System.Runtime.Serialization.EnumMemberAttribute(Value="clockSynchronizer")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="clockSynchronizer")]
         ClockSynchronizer = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="lickometer")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lickometer")]
+        Lickometer = 3,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="olfactometer")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="olfactometer")]
+        Olfactometer = 4,
     }
 
 
