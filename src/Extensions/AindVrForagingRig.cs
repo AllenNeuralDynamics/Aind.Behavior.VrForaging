@@ -742,7 +742,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private SpinnakerCamera _mainCamera = new SpinnakerCamera();
     
-        private Graphics _graphics;
+        private Graphics _graphics = new Graphics();
     
         private PwmBuzzer _speaker = new PwmBuzzer();
     
@@ -843,7 +843,7 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("graphics")]
+        [Newtonsoft.Json.JsonPropertyAttribute("graphics", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="graphics")]
         public Graphics Graphics
         {
