@@ -8,7 +8,9 @@
           "enum": [
             "custom",
             "behavior",
-            "clockSynchronizer"
+            "clockSynchronizer",
+            "lickometer",
+            "olfactometer"
           ],
           "type": "string"
         },

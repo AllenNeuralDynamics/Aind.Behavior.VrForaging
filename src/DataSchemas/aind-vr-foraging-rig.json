@@ -9,7 +9,7 @@
     "auxiliaryCamera1": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/videoCaptureDevice"
     },
-    "harpBehaviorBoard": {
+    "harpBehavior": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
     },
     "harpOlfactometer": {
@@ -61,7 +61,7 @@
     "mainCamera",
     "auxiliaryCamera0",
     "auxiliaryCamera1",
-    "harpBehaviorBoard",
+    "harpBehavior",
     "harpOlfactometer",
     "harpLickometer",
     "screen",

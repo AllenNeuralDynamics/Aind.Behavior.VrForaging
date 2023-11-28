@@ -59,7 +59,7 @@
         }
       },
       "required": [
-        "index"
+        "odorIndex"
       ],
       "type": [
         "null",
