@@ -2632,6 +2632,11 @@ Item2.Light as Light)</scr:Expression>
                       </Edges>
                     </Workflow>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:DelaySubscription">
+                      <rx:DueTime>PT1S</rx:DueTime>
+                    </Combinator>
+                  </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>HarpDevices</Name>
                     <Workflow>
@@ -2860,7 +2865,9 @@ Item2.Light as Light)</scr:Expression>
                     </Workflow>
                   </Expression>
                 </Nodes>
-                <Edges />
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
               </Workflow>
             </Expression>
           </Nodes>
