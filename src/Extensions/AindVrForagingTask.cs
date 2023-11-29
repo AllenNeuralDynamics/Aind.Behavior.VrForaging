@@ -811,7 +811,7 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("odorIndex")]
+        [Newtonsoft.Json.JsonPropertyAttribute("odorIndex", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorIndex")]
         public int OdorIndex
         {
