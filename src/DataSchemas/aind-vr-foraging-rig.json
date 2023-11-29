@@ -9,10 +9,16 @@
     "auxiliaryCamera1": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/videoCaptureDevice"
     },
-    "harpBehaviorBoard": {
+    "harpBehavior": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
     },
     "harpOlfactometer": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
+    },
+    "harpLickometer": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
+    },
+    "harpSynchronizer": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
     },
     "mainCamera": {
@@ -58,8 +64,11 @@
     "mainCamera",
     "auxiliaryCamera0",
     "auxiliaryCamera1",
-    "harpBehaviorBoard",
-    "screen",
+    "harpBehavior",
+    "harpOlfactometer",
+    "harpLickometer",
+    "harpSynchronizer",
+    "graphics",
     "speaker",
     "treadmill",
     "valves",

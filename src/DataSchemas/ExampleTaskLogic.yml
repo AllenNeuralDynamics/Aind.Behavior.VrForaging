@@ -1,15 +1,18 @@
 %YAML 1.1
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/AllenNeuralDynamics/aind-vr-foraging/main/src/DataSchemas/aind-vr-foraging-task.json
+# yaml-language-server: $schema=aind-vr-foraging-task.json
 
 operationControl:
+  movableSpoutControl:
+    enabled: true
+    timeToCollectAfterReward: 1
   taskStage: Habituation
   habituationSettings:
     distanceToReward:
       maximum: 10
       mean: 10
       minimum: 10
-    brightness: 0.5
+    contrast: 0.5
     reward:
       probability: 1
       amount: 50
@@ -33,21 +36,21 @@ operationControl:
     valveMaxOpenTime: 5.0
   virtualSiteGeneration:
    gapSite:
-     brightness: 0.5
+     contrast: 0.5
      label: Gap
      lengthDistribution:
        maximum: 30
        mean: 18
        minimum: 10
    rewardSite:
-     brightness: 0.5
+     contrast: 0.5
      label: Reward
      lengthDistribution:
        maximum: 15
        mean: 15
        minimum: 15
    interPatchSite:
-     brightness: 1
+     contrast: 1
      label: "InterPatch"
      lengthDistribution:
        maximum: 50
@@ -66,7 +69,7 @@ environmentStatistics:
         initialRewardAmount: 10000
       odorSpecifications:
         concentration: 1
-        index: 0
+        odorIndex: 0
       rewardSpecifications:
         probability: 1
         amount: 1
@@ -74,14 +77,14 @@ environmentStatistics:
           isOperant: true
           stopDuration: 1
           timeToCollect: 1000000
-          choiceGracePeriod: 0.1
+          distanceThresholdToBeStatic: 0.1
     - label: "Bananas"
       stateIndex: 1
       patchRewardFunction:
         initialRewardAmount: 10000
       odorSpecifications:
         concentration: 1
-        index: 1
+        odorIndex: 1
       rewardSpecifications:
         probability: 1
         amount: 1
@@ -89,4 +92,4 @@ environmentStatistics:
           isOperant: true
           stopDuration: 1
           timeToCollect: 1000000
-          choiceGracePeriod: 0.1
+          distanceThresholdToBeStatic: 0.1

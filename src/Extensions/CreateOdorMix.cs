@@ -96,7 +96,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
             carrierFlow));
 
         adjustedOdorFlow3 = channel3AsCarrier ? totalFlow : adjustedOdorFlow3;
-        var odorValvesState = OdorValvesState.FromPayload(MessageType.Write,
+        var odorValveState = OdorValveState.FromPayload(MessageType.Write,
         (
             (adjustedOdorFlow0 > 0 ? OdorValves.Valve0 : OdorValves.None) |
             (adjustedOdorFlow1 > 0 ? OdorValves.Valve1 : OdorValves.None) |
@@ -107,7 +107,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
         return new OdorMixMessages()
             {
             ChannelsTargetFlow = channelsTargetFlow,
-            OdorValvesState = odorValvesState
+            OdorValveState = odorValveState
             };
     }
 
@@ -149,7 +149,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
             carrierFlow));
 
         adjustedOdorFlow3 = channel3AsCarrier ? totalFlow : adjustedOdorFlow3;
-        var odorValvesState = OdorValvesState.FromPayload(MessageType.Write,
+        var odorValveState = OdorValveState.FromPayload(MessageType.Write,
         (
             (adjustedOdorFlow0 > 0 ? OdorValves.Valve0 : OdorValves.None) |
             (adjustedOdorFlow1 > 0 ? OdorValves.Valve1 : OdorValves.None) |
@@ -160,7 +160,7 @@ public class CreateOdorMix:Source<OdorMixMessages>
         return new OdorMixMessages()
             {
             ChannelsTargetFlow = channelsTargetFlow,
-            OdorValvesState = odorValvesState
+            OdorValveState = odorValveState
             };
     }
 
@@ -182,5 +182,5 @@ public class CreateOdorMix:Source<OdorMixMessages>
 
 public class OdorMixMessages{
     public HarpMessage ChannelsTargetFlow {get; set;}
-    public HarpMessage OdorValvesState {get; set;}
+    public HarpMessage OdorValveState {get; set;}
 }

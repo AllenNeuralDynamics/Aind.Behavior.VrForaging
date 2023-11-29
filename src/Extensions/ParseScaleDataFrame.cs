@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-
+using System.Globalization;
 
 [Combinator]
 [Description("")]
@@ -46,7 +46,7 @@ public class ScaleMessage
             {
                 DataFrame = new ScaleDataFrame()
                 {
-                    Weight = double.Parse(Message.Substring(0, 10).Trim()),
+                    Weight = double.Parse(Message.Substring(0, 11).Trim(), CultureInfo.InvariantCulture),
                     Unit = Message.Substring(12, 5).Trim(),
                     IsStable = Message.Substring(17, 1) != "?"
                 };

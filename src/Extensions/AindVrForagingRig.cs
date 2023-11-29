@@ -734,13 +734,17 @@ namespace AindVrForagingDataSchema.Rig
     
         private VideoCaptureDevice _auxiliaryCamera1 = new VideoCaptureDevice();
     
-        private HarpBoard _harpBehaviorBoard = new HarpBoard();
+        private HarpBoard _harpBehavior = new HarpBoard();
     
-        private HarpBoard _harpOlfactometer;
+        private HarpBoard _harpOlfactometer = new HarpBoard();
+    
+        private HarpBoard _harpLickometer = new HarpBoard();
+    
+        private HarpBoard _harpSynchronizer = new HarpBoard();
     
         private SpinnakerCamera _mainCamera = new SpinnakerCamera();
     
-        private Graphics _graphics;
+        private Graphics _graphics = new Graphics();
     
         private PwmBuzzer _speaker = new PwmBuzzer();
     
@@ -781,22 +785,22 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harpBehaviorBoard", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehaviorBoard")]
-        public HarpBoard HarpBehaviorBoard
+        [Newtonsoft.Json.JsonPropertyAttribute("harpBehavior", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehavior")]
+        public HarpBoard HarpBehavior
         {
             get
             {
-                return _harpBehaviorBoard;
+                return _harpBehavior;
             }
             set
             {
-                _harpBehaviorBoard = value;
+                _harpBehavior = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harpOlfactometer")]
+        [Newtonsoft.Json.JsonPropertyAttribute("harpOlfactometer", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpOlfactometer")]
         public HarpBoard HarpOlfactometer
         {
@@ -807,6 +811,36 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _harpOlfactometer = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harpLickometer", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpLickometer")]
+        public HarpBoard HarpLickometer
+        {
+            get
+            {
+                return _harpLickometer;
+            }
+            set
+            {
+                _harpLickometer = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harpSynchronizer", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpSynchronizer")]
+        public HarpBoard HarpSynchronizer
+        {
+            get
+            {
+                return _harpSynchronizer;
+            }
+            set
+            {
+                _harpSynchronizer = value;
             }
         }
     
@@ -826,7 +860,7 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("graphics")]
+        [Newtonsoft.Json.JsonPropertyAttribute("graphics", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="graphics")]
         public Graphics Graphics
         {
@@ -907,8 +941,10 @@ namespace AindVrForagingDataSchema.Rig
                 {
                     AuxiliaryCamera0 = _auxiliaryCamera0,
                     AuxiliaryCamera1 = _auxiliaryCamera1,
-                    HarpBehaviorBoard = _harpBehaviorBoard,
+                    HarpBehavior = _harpBehavior,
                     HarpOlfactometer = _harpOlfactometer,
+                    HarpLickometer = _harpLickometer,
+                    HarpSynchronizer = _harpSynchronizer,
                     MainCamera = _mainCamera,
                     Graphics = _graphics,
                     Speaker = _speaker,
@@ -934,6 +970,14 @@ namespace AindVrForagingDataSchema.Rig
         [System.Runtime.Serialization.EnumMemberAttribute(Value="clockSynchronizer")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="clockSynchronizer")]
         ClockSynchronizer = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="lickometer")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lickometer")]
+        Lickometer = 3,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="olfactometer")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="olfactometer")]
+        Olfactometer = 4,
     }
 
 
