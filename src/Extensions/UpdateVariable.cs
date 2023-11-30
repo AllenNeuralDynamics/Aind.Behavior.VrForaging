@@ -11,12 +11,13 @@ using AindVrForagingDataSchema.Task;
 public class UpdateVariable
 {
 
-    private UpdateDirection updateMode = UpdateDirection.Increment;
-    public UpdateDirection UpdateMode
+    private bool isIncrement = true;
+    public bool IsIncrement
     {
-        get { return updateMode; }
-        set { updateMode = value; }
+        get { return isIncrement; }
+        set { isIncrement = value; }
     }
+
 
     private NumericalUpdater updater;
     public NumericalUpdater Updater
@@ -35,22 +36,25 @@ public class UpdateVariable
 
     private double Update(double value, NumericalUpdater updater)
     {
-        var updateParams = updater.NumericalUpdaterParameters;
-        bool updateDirection = UpdateMode == UpdateDirection.Increment;
-        var updateValue = updateDirection ? updateParams.Increment : updateParams.Decrement;
-        double updated_value;
-        switch (updater.UpdateOperation)
+        if (updater.NumericalUpdaterOperation == NumericalUpdaterOperation.None)
         {
-            case NumericalUpdaterUpdateOperation.Offset:
+            return value;
+        }
+        var updateParams = updater.NumericalUpdaterParameters;
+        var updateValue = IsIncrement ? updateParams.Increment : updateParams.Decrement;
+        double updated_value;
+        switch (updater.NumericalUpdaterOperation)
+        {
+            case NumericalUpdaterOperation.Offset:
                 updated_value =  value + updateValue;
                 break;
-            case NumericalUpdaterUpdateOperation.Set:
+            case NumericalUpdaterOperation.Set:
                 updated_value = updateParams.InitialValue;
                 break;
-            case NumericalUpdaterUpdateOperation.OffsetPercentage:
+            case NumericalUpdaterOperation.OffsetPercentage:
                 updated_value = value + (value * updateValue);
                 break;
-            case NumericalUpdaterUpdateOperation.Gain:
+            case NumericalUpdaterOperation.Gain:
                 updated_value = value * updateValue;
                 break;
             default:
@@ -63,8 +67,4 @@ public class UpdateVariable
         return updated_value;
     }
 
-    public enum UpdateDirection{
-        Increment,
-        Decrement
-    }
 }

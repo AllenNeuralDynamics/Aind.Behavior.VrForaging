@@ -5,9 +5,10 @@
     "numericalUpdater":{
       "type": "object",
       "properties": {
-        "updateOperation": {
+        "numericalUpdaterOperation": {
           "type": "string",
-          "enum": ["offset", "gain", "set", "offsetPercentage"]
+          "enum": ["none", "offset", "gain", "set", "offsetPercentage"],
+          "default": "none"
         },
         "numericalUpdaterParameters": {
           "type": "object",
