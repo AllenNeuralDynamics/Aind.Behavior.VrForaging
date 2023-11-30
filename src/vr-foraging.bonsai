@@ -4722,9 +4722,35 @@ Value as IsStopped)</scr:Expression>
                 <Value>true</Value>
               </Combinator>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\UpdateVariable.bonsai" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\UpdateVariable.bonsai">
+              <UpdaterKey>StopDurationOffset</UpdaterKey>
+              <DefaultValue>0</DefaultValue>
+            </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>StopDurationOffset</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>GiveReward</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>true</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>StopVelocityThreshold</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="DefaultValue" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\UpdateVariable.bonsai">
+              <UpdaterKey>StopVelocityThreshold</UpdaterKey>
+              <DefaultValue>0</DefaultValue>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>StopVelocityThreshold</Name>
             </Expression>
           </Nodes>
           <Edges>
@@ -4734,6 +4760,11 @@ Value as IsStopped)</scr:Expression>
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="12" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source2" />
+            <Edge From="12" To="13" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -7282,42 +7313,10 @@ Item5 as TotalReward)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="StopVelocityThreshold" Category="ForagingSettings" />
-            </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>ForagingSettings</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="StopVelocityThreshold" Category="Foraging" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="DoubleProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Skip">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>StopVelocityThreshold</Name>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
           </Nodes>
           <Edges>
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
