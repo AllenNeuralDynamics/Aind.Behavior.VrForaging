@@ -387,22 +387,22 @@ namespace AindVrForagingDataSchema.Task
     public partial class NumericalUpdater
     {
     
-        private NumericalUpdaterUpdateOperation _updateOperation;
+        private NumericalUpdaterOperation _numericalUpdaterOperation = AindVrForagingDataSchema.Task.NumericalUpdaterOperation.None;
     
         private NumericalUpdaterParameters _numericalUpdaterParameters;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("updateOperation")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="updateOperation")]
-        public NumericalUpdaterUpdateOperation UpdateOperation
+        [Newtonsoft.Json.JsonPropertyAttribute("numericalUpdaterOperation")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="numericalUpdaterOperation")]
+        public NumericalUpdaterOperation NumericalUpdaterOperation
         {
             get
             {
-                return _updateOperation;
+                return _numericalUpdaterOperation;
             }
             set
             {
-                _updateOperation = value;
+                _numericalUpdaterOperation = value;
             }
         }
     
@@ -426,7 +426,7 @@ namespace AindVrForagingDataSchema.Task
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new NumericalUpdater
                 {
-                    UpdateOperation = _updateOperation,
+                    NumericalUpdaterOperation = _numericalUpdaterOperation,
                     NumericalUpdaterParameters = _numericalUpdaterParameters
                 }));
         }
@@ -1022,24 +1022,28 @@ namespace AindVrForagingDataSchema.Task
     }
 
 
-    public enum NumericalUpdaterUpdateOperation
+    public enum NumericalUpdaterOperation
     {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="none")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="none")]
+        None = 0,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="offset")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="offset")]
-        Offset = 0,
+        Offset = 1,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="gain")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
-        Gain = 1,
+        Gain = 2,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="set")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="set")]
-        Set = 2,
+        Set = 3,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="offsetPercentage")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="offsetPercentage")]
-        OffsetPercentage = 3,
+        OffsetPercentage = 4,
     }
 
 
