@@ -2,6 +2,41 @@
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
   "definitions": {
+    "numericalUpdater":{
+      "type": "object",
+      "properties": {
+        "numericalUpdaterOperation": {
+          "type": "string",
+          "enum": ["none", "offset", "gain", "set", "offsetPercentage"],
+          "default": "none"
+        },
+        "numericalUpdaterParameters": {
+          "type": "object",
+          "properties": {
+            "initialValue": {
+              "type": "number",
+              "default": 0
+            },
+            "increment": {
+              "type": "number",
+              "default": 0
+            },
+            "decrement": {
+              "type": "number",
+              "default": 0
+            },
+            "minimum": {
+              "type": "number",
+              "default": 0
+            },
+            "maximum": {
+              "type": "number",
+              "default": 0
+            }
+          }
+        }
+      }
+    },
     "texture": {
       "properties": {
         "name": {
