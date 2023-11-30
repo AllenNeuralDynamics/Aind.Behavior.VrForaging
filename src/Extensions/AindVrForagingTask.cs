@@ -384,6 +384,57 @@ namespace AindVrForagingDataSchema.Task
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class NumericalUpdater
+    {
+    
+        private NumericalUpdaterUpdateOperation _updateOperation;
+    
+        private NumericalUpdaterParameters _numericalUpdaterParameters;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("updateOperation")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="updateOperation")]
+        public NumericalUpdaterUpdateOperation UpdateOperation
+        {
+            get
+            {
+                return _updateOperation;
+            }
+            set
+            {
+                _updateOperation = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("numericalUpdaterParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="numericalUpdaterParameters")]
+        public NumericalUpdaterParameters NumericalUpdaterParameters
+        {
+            get
+            {
+                return _numericalUpdaterParameters;
+            }
+            set
+            {
+                _numericalUpdaterParameters = value;
+            }
+        }
+    
+        public System.IObservable<NumericalUpdater> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new NumericalUpdater
+                {
+                    UpdateOperation = _updateOperation,
+                    NumericalUpdaterParameters = _numericalUpdaterParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class PatchStatistics
     {
     
@@ -655,9 +706,26 @@ namespace AindVrForagingDataSchema.Task
     public partial class AindVrForagingTask
     {
     
+        private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
+    
         private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
     
         private OperationControl _operationControl = new OperationControl();
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("updaters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="updaters")]
+        public System.Collections.Generic.IDictionary<string, NumericalUpdater> Updaters
+        {
+            get
+            {
+                return _updaters;
+            }
+            set
+            {
+                _updaters = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("environmentStatistics", Required=Newtonsoft.Json.Required.Always)]
@@ -694,6 +762,7 @@ namespace AindVrForagingDataSchema.Task
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new AindVrForagingTask
                 {
+                    Updaters = _updaters,
                     EnvironmentStatistics = _environmentStatistics,
                     OperationControl = _operationControl
                 }));
@@ -948,6 +1017,127 @@ namespace AindVrForagingDataSchema.Task
                     StopDuration = _stopDuration,
                     TimeToCollect = _timeToCollect,
                     DistanceThresholdToBeStatic = _distanceThresholdToBeStatic
+                }));
+        }
+    }
+
+
+    public enum NumericalUpdaterUpdateOperation
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="offset")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="offset")]
+        Offset = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="gain")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
+        Gain = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="set")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="set")]
+        Set = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="offsetPercentage")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="offsetPercentage")]
+        OffsetPercentage = 3,
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class NumericalUpdaterParameters
+    {
+    
+        private double _initialValue = 0D;
+    
+        private double _increment = 0D;
+    
+        private double _decrement = 0D;
+    
+        private double _minimum = 0D;
+    
+        private double _maximum = 0D;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("initialValue")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialValue")]
+        public double InitialValue
+        {
+            get
+            {
+                return _initialValue;
+            }
+            set
+            {
+                _initialValue = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("increment")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="increment")]
+        public double Increment
+        {
+            get
+            {
+                return _increment;
+            }
+            set
+            {
+                _increment = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("decrement")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="decrement")]
+        public double Decrement
+        {
+            get
+            {
+                return _decrement;
+            }
+            set
+            {
+                _decrement = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="minimum")]
+        public double Minimum
+        {
+            get
+            {
+                return _minimum;
+            }
+            set
+            {
+                _minimum = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("maximum")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maximum")]
+        public double Maximum
+        {
+            get
+            {
+                return _maximum;
+            }
+            set
+            {
+                _maximum = value;
+            }
+        }
+    
+        public System.IObservable<NumericalUpdaterParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new NumericalUpdaterParameters
+                {
+                    InitialValue = _initialValue,
+                    Increment = _increment,
+                    Decrement = _decrement,
+                    Minimum = _minimum,
+                    Maximum = _maximum
                 }));
         }
     }
@@ -1900,6 +2090,11 @@ namespace AindVrForagingDataSchema.Task
             return Process<Reward>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<NumericalUpdater> source)
+        {
+            return Process<NumericalUpdater>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
         {
             return Process<PatchStatistics>(source);
@@ -1943,6 +2138,11 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
         {
             return Process<OperantLogic>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<NumericalUpdaterParameters> source)
+        {
+            return Process<NumericalUpdaterParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<PatchRewardFunction> source)
@@ -2025,6 +2225,7 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
@@ -2034,6 +2235,7 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
@@ -2110,6 +2312,11 @@ namespace AindVrForagingDataSchema.Task
             return Process<Reward>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<NumericalUpdater> source)
+        {
+            return Process<NumericalUpdater>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
         {
             return Process<PatchStatistics>(source);
@@ -2153,6 +2360,11 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
         {
             return Process<OperantLogic>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<NumericalUpdaterParameters> source)
+        {
+            return Process<NumericalUpdaterParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<PatchRewardFunction> source)
@@ -2235,6 +2447,7 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
@@ -2244,6 +2457,7 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
