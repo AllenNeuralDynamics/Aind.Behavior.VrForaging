@@ -22,6 +22,10 @@
     }
   },
   "properties": {
+    "updaters": {
+      "type": "object",
+      "additionalProperties": { "$ref": "aind-vr-foraging-common.json#/definitions/numericalUpdater"}
+    },
     "environmentStatistics": {
       "properties": {
         "patches": {
