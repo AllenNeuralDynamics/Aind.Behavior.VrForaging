@@ -730,9 +730,9 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private VideoCaptureDevice _auxiliaryCamera0 = new VideoCaptureDevice();
+        private VideoCaptureDevice _auxiliaryCamera0;
     
-        private VideoCaptureDevice _auxiliaryCamera1 = new VideoCaptureDevice();
+        private VideoCaptureDevice _auxiliaryCamera1;
     
         private HarpBoard _harpBehavior = new HarpBoard();
     
@@ -742,7 +742,11 @@ namespace AindVrForagingDataSchema.Rig
     
         private HarpBoard _harpSynchronizer = new HarpBoard();
     
-        private SpinnakerCamera _mainCamera = new SpinnakerCamera();
+        private SpinnakerCamera _faceCamera = new SpinnakerCamera();
+    
+        private SpinnakerCamera _topBodyCamera;
+    
+        private SpinnakerCamera _sideBodyCamera;
     
         private Graphics _graphics = new Graphics();
     
@@ -755,7 +759,7 @@ namespace AindVrForagingDataSchema.Rig
         private ServoMotor _movableSpout = new ServoMotor();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera0", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera0")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliaryCamera0")]
         public VideoCaptureDevice AuxiliaryCamera0
         {
@@ -770,7 +774,7 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera1", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("auxiliaryCamera1")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliaryCamera1")]
         public VideoCaptureDevice AuxiliaryCamera1
         {
@@ -845,17 +849,47 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("mainCamera", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mainCamera")]
-        public SpinnakerCamera MainCamera
+        [Newtonsoft.Json.JsonPropertyAttribute("faceCamera", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="faceCamera")]
+        public SpinnakerCamera FaceCamera
         {
             get
             {
-                return _mainCamera;
+                return _faceCamera;
             }
             set
             {
-                _mainCamera = value;
+                _faceCamera = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("topBodyCamera")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="topBodyCamera")]
+        public SpinnakerCamera TopBodyCamera
+        {
+            get
+            {
+                return _topBodyCamera;
+            }
+            set
+            {
+                _topBodyCamera = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("sideBodyCamera")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="sideBodyCamera")]
+        public SpinnakerCamera SideBodyCamera
+        {
+            get
+            {
+                return _sideBodyCamera;
+            }
+            set
+            {
+                _sideBodyCamera = value;
             }
         }
     
@@ -945,7 +979,9 @@ namespace AindVrForagingDataSchema.Rig
                     HarpOlfactometer = _harpOlfactometer,
                     HarpLickometer = _harpLickometer,
                     HarpSynchronizer = _harpSynchronizer,
-                    MainCamera = _mainCamera,
+                    FaceCamera = _faceCamera,
+                    TopBodyCamera = _topBodyCamera,
+                    SideBodyCamera = _sideBodyCamera,
                     Graphics = _graphics,
                     Speaker = _speaker,
                     Treadmill = _treadmill,
