@@ -10,6 +10,10 @@
       <Expression xsi:type="WorkflowInput">
         <Name>Source1</Name>
       </Expression>
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="UpdaterKey" />
+        <Property Name="DefaultValue" />
+      </Expression>
       <Expression xsi:type="rx:Defer">
         <Name>Updater</Name>
         <Workflow>
@@ -220,8 +224,9 @@
       <Expression xsi:type="WorkflowOutput" />
     </Nodes>
     <Edges>
-      <Edge From="0" To="1" Label="Source1" />
-      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="0" To="2" Label="Source1" />
+      <Edge From="1" To="2" Label="Source2" />
+      <Edge From="2" To="3" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
