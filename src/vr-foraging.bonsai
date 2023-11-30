@@ -787,59 +787,6 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
-              <Name>Photodiode</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>HarpBehaviorEvents</Name>
-                  </Expression>
-                  <Expression xsi:type="beh:Parse">
-                    <harp:Register xsi:type="beh:TimestampedDigitalInputState" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
-                  </Expression>
-                  <Expression xsi:type="BitwiseAnd">
-                    <Operand xsi:type="WorkflowProperty" TypeArguments="beh:DigitalInputs">
-                      <Value>DI3</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="GreaterThan">
-                    <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Byte">
-                      <Value>0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:DistinctUntilChanged" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Seconds</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="harp:CreateTimestamped" />
-                  </Expression>
-                  <Expression xsi:type="rx:PublishSubject">
-                    <Name>PhotodiodeEvent</Name>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="1" To="6" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="7" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source2" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="GroupWorkflow">
               <Name>Buzzer</Name>
               <Workflow>
                 <Nodes>
@@ -2459,6 +2406,42 @@ Item2.Light as Light)</scr:Expression>
                                       <ColorB>1</ColorB>
                                       <ColorA>1</ColorA>
                                     </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Item1.FrameIndex</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="scr:ExpressionTransform">
+                                      <scr:Name>Mod2</scr:Name>
+                                      <scr:Expression>(it % 2).Value</scr:Expression>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="InputMapping">
+                                      <PropertyMappings>
+                                        <Property Name="ColorG" Selector="Item1" />
+                                        <Property Name="ColorR" Selector="Item1" />
+                                        <Property Name="ColorB" Selector="Item1" />
+                                      </PropertyMappings>
+                                      <Selector>Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
+                                      <ExtentX>0.1</ExtentX>
+                                      <ExtentY>0.1</ExtentY>
+                                      <LocationX>0</LocationX>
+                                      <LocationY>0.1</LocationY>
+                                      <Layer>10</Layer>
+                                      <Angle>0</Angle>
+                                      <ColorR>1</ColorR>
+                                      <ColorG>1</ColorG>
+                                      <ColorB>1</ColorB>
+                                      <ColorA>1</ColorA>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Zip" />
+                                    </Expression>
                                   </Nodes>
                                   <Edges>
                                     <Edge From="0" To="1" Label="Source1" />
@@ -2487,7 +2470,16 @@ Item2.Light as Light)</scr:Expression>
                                     <Edge From="23" To="25" Label="Source1" />
                                     <Edge From="24" To="25" Label="Source2" />
                                     <Edge From="25" To="26" Label="Source1" />
+                                    <Edge From="25" To="28" Label="Source1" />
+                                    <Edge From="25" To="30" Label="Source1" />
                                     <Edge From="26" To="27" Label="Source1" />
+                                    <Edge From="27" To="34" Label="Source1" />
+                                    <Edge From="28" To="29" Label="Source1" />
+                                    <Edge From="29" To="31" Label="Source1" />
+                                    <Edge From="30" To="31" Label="Source2" />
+                                    <Edge From="31" To="32" Label="Source1" />
+                                    <Edge From="32" To="33" Label="Source1" />
+                                    <Edge From="33" To="34" Label="Source2" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
