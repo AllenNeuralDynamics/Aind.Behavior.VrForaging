@@ -26,7 +26,6 @@
                  xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
                  xmlns:p12="clr-namespace:Harp.Behavior;assembly=Extensions"
                  xmlns:p13="clr-namespace:Harp.Olfactometer;assembly=Extensions"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p14="clr-namespace:;assembly=Extensions"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:p15="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
@@ -2708,30 +2707,6 @@ Item2.Light as Light)</scr:Expression>
                                 <Name>HarpBehaviorCommands</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>RigSchema</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>FaceCamera</Selector>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="SerialNumber" Selector="SerialNumber" />
-                                  <Property Name="ExposureTime" Selector="Exposure" />
-                                  <Property Name="Gain" Selector="Gain" />
-                                  <Property Name="Binning" Selector="Binning" />
-                                  <Property Name="ColorProcessing" Selector="ColorProcessing" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p1:AindSpinnakerCapture">
-                                  <spk:Index xsi:nil="true" />
-                                  <spk:ColorProcessing>Default</spk:ColorProcessing>
-                                  <p1:ExposureTime>19000</p1:ExposureTime>
-                                  <p1:Gain>0</p1:Gain>
-                                  <p1:Binning>1</p1:Binning>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
                                 <Name>HarpBehaviorEvents</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -2775,6 +2750,36 @@ Item2.Light as Light)</scr:Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>Item2.Seconds</Selector>
                               </Expression>
+                              <Expression xsi:type="rx:PublishSubject">
+                                <Name>FrameEvent</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>FaceCamera</Selector>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="SerialNumber" Selector="SerialNumber" />
+                                  <Property Name="ExposureTime" Selector="Exposure" />
+                                  <Property Name="Gain" Selector="Gain" />
+                                  <Property Name="Binning" Selector="Binning" />
+                                  <Property Name="ColorProcessing" Selector="ColorProcessing" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p1:AindSpinnakerCapture">
+                                  <spk:Index xsi:nil="true" />
+                                  <spk:ColorProcessing>Default</spk:ColorProcessing>
+                                  <p1:ExposureTime>19000</p1:ExposureTime>
+                                  <p1:Gain>0</p1:Gain>
+                                  <p1:Binning>1</p1:Binning>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>FrameEvent</Name>
+                              </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Zip" />
                               </Expression>
@@ -2782,7 +2787,99 @@ Item2.Light as Light)</scr:Expression>
                                 <Combinator xsi:type="harp:CreateTimestamped" />
                               </Expression>
                               <Expression xsi:type="rx:PublishSubject">
-                                <Name>MainCameraFrameEvent</Name>
+                                <Name>FaceCameraFrameEvent</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>TopBodyCamera</Selector>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="SerialNumber" Selector="SerialNumber" />
+                                  <Property Name="ExposureTime" Selector="Exposure" />
+                                  <Property Name="Gain" Selector="Gain" />
+                                  <Property Name="Binning" Selector="Binning" />
+                                  <Property Name="ColorProcessing" Selector="ColorProcessing" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p1:AindSpinnakerCapture">
+                                  <spk:Index xsi:nil="true" />
+                                  <spk:ColorProcessing>Default</spk:ColorProcessing>
+                                  <p1:ExposureTime>19000</p1:ExposureTime>
+                                  <p1:Gain>0</p1:Gain>
+                                  <p1:Binning>1</p1:Binning>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>FrameEvent</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="harp:CreateTimestamped" />
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>TopBodyCamera</Selector>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:SubscribeWhen" />
+                              </Expression>
+                              <Expression xsi:type="rx:PublishSubject">
+                                <Name>TopBodyCameraFrameEvent</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>SideBodyCamera</Selector>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="SerialNumber" Selector="SerialNumber" />
+                                  <Property Name="ExposureTime" Selector="Exposure" />
+                                  <Property Name="Gain" Selector="Gain" />
+                                  <Property Name="Binning" Selector="Binning" />
+                                  <Property Name="ColorProcessing" Selector="ColorProcessing" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p1:AindSpinnakerCapture">
+                                  <spk:Index xsi:nil="true" />
+                                  <spk:ColorProcessing>Default</spk:ColorProcessing>
+                                  <p1:ExposureTime>19000</p1:ExposureTime>
+                                  <p1:Gain>0</p1:Gain>
+                                  <p1:Binning>1</p1:Binning>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>FrameEvent</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="harp:CreateTimestamped" />
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>SideBodyCamera</Selector>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:SubscribeWhen" />
+                              </Expression>
+                              <Expression xsi:type="rx:PublishSubject">
+                                <Name>SideBodyCameraFrameEvent</Name>
                               </Expression>
                             </Nodes>
                             <Edges>
@@ -2794,19 +2891,42 @@ Item2.Light as Light)</scr:Expression>
                               <Edge From="7" To="8" Label="Source1" />
                               <Edge From="8" To="9" Label="Source1" />
                               <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="10" To="20" Label="Source1" />
+                              <Edge From="9" To="14" Label="Source2" />
+                              <Edge From="10" To="11" Label="Source1" />
                               <Edge From="11" To="12" Label="Source1" />
                               <Edge From="12" To="13" Label="Source1" />
                               <Edge From="13" To="14" Label="Source1" />
-                              <Edge From="13" To="18" Label="Source2" />
                               <Edge From="14" To="15" Label="Source1" />
                               <Edge From="15" To="16" Label="Source1" />
-                              <Edge From="16" To="17" Label="Source1" />
                               <Edge From="17" To="18" Label="Source1" />
                               <Edge From="18" To="19" Label="Source1" />
-                              <Edge From="19" To="20" Label="Source2" />
-                              <Edge From="20" To="21" Label="Source1" />
-                              <Edge From="21" To="22" Label="Source1" />
+                              <Edge From="19" To="20" Label="Source1" />
+                              <Edge From="20" To="22" Label="Source1" />
+                              <Edge From="21" To="22" Label="Source2" />
+                              <Edge From="22" To="23" Label="Source1" />
+                              <Edge From="23" To="24" Label="Source1" />
+                              <Edge From="25" To="26" Label="Source1" />
+                              <Edge From="26" To="27" Label="Source1" />
+                              <Edge From="27" To="28" Label="Source1" />
+                              <Edge From="28" To="30" Label="Source1" />
+                              <Edge From="29" To="30" Label="Source2" />
+                              <Edge From="30" To="31" Label="Source1" />
+                              <Edge From="31" To="35" Label="Source1" />
+                              <Edge From="32" To="33" Label="Source1" />
+                              <Edge From="33" To="34" Label="Source1" />
+                              <Edge From="34" To="35" Label="Source2" />
+                              <Edge From="35" To="36" Label="Source1" />
+                              <Edge From="37" To="38" Label="Source1" />
+                              <Edge From="38" To="39" Label="Source1" />
+                              <Edge From="39" To="40" Label="Source1" />
+                              <Edge From="40" To="42" Label="Source1" />
+                              <Edge From="41" To="42" Label="Source2" />
+                              <Edge From="42" To="43" Label="Source1" />
+                              <Edge From="43" To="47" Label="Source1" />
+                              <Edge From="44" To="45" Label="Source1" />
+                              <Edge From="45" To="46" Label="Source1" />
+                              <Edge From="46" To="47" Label="Source2" />
+                              <Edge From="47" To="48" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -2840,6 +2960,16 @@ Item2.Light as Light)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="harp:CreateTimestamped" />
                               </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>AuxiliaryCamera0</Selector>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:SubscribeWhen" />
+                              </Expression>
                               <Expression xsi:type="rx:PublishSubject">
                                 <Name>AuxiliaryCamera0</Name>
                               </Expression>
@@ -2869,6 +2999,16 @@ Item2.Light as Light)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="harp:CreateTimestamped" />
                               </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>AuxiliaryCamera1</Selector>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:SubscribeWhen" />
+                              </Expression>
                               <Expression xsi:type="rx:PublishSubject">
                                 <Name>AuxiliaryCamera1</Name>
                               </Expression>
@@ -2880,14 +3020,22 @@ Item2.Light as Light)</scr:Expression>
                               <Edge From="3" To="5" Label="Source1" />
                               <Edge From="4" To="5" Label="Source2" />
                               <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="6" To="7" Label="Source1" />
+                              <Edge From="6" To="10" Label="Source1" />
+                              <Edge From="7" To="8" Label="Source1" />
                               <Edge From="8" To="9" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source2" />
                               <Edge From="10" To="11" Label="Source1" />
-                              <Edge From="11" To="13" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source2" />
+                              <Edge From="12" To="13" Label="Source1" />
                               <Edge From="13" To="14" Label="Source1" />
                               <Edge From="14" To="15" Label="Source1" />
+                              <Edge From="15" To="17" Label="Source1" />
+                              <Edge From="16" To="17" Label="Source2" />
+                              <Edge From="17" To="18" Label="Source1" />
+                              <Edge From="18" To="22" Label="Source1" />
+                              <Edge From="19" To="20" Label="Source1" />
+                              <Edge From="20" To="21" Label="Source1" />
+                              <Edge From="21" To="22" Label="Source2" />
+                              <Edge From="22" To="23" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -3068,91 +3216,20 @@ Item2.Light as Light)</scr:Expression>
               <Name>Camera</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RigSchema</Name>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
+                    <LogName>FaceCamera</LogName>
+                    <Name>FaceCameraFrameEvent</Name>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>FaceCamera.FrameRate</Selector>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
+                    <LogName>TopBodyCamera</LogName>
+                    <Name>TopBodyCameraFrameEvent</Name>
                   </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="EncodingFrameRate" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateSpinnakerLoggingPath.bonsai">
-                    <SubjectName>LoggingRootPath</SubjectName>
-                    <LogName>MainCamera</LogName>
-                    <EncodingFrameRate>60</EncodingFrameRate>
-                    <VideoExtension>avi</VideoExtension>
-                    <MetadataExtension>csv</MetadataExtension>
-                    <Codec>FMP4</Codec>
-                  </Expression>
-                  <Expression xsi:type="rx:AsyncSubject">
-                    <Name>MainCameraLoggerPath</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>MainCameraFrameEvent</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>MainCameraLoggerPath</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Metadata</Selector>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="FileName" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="io:CsvWriter">
-                    <io:Append>false</io:Append>
-                    <io:Overwrite>false</io:Overwrite>
-                    <io:Suffix>None</io:Suffix>
-                    <io:IncludeHeader>false</io:IncludeHeader>
-                    <io:Selector>Seconds,Value.ChunkData.FrameID,Value.ChunkData.Timestamp</io:Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value.Image</Selector>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>MainCameraLoggerPath</Name>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="FileName" Selector="Video" />
-                      <Property Name="FrameRate" Selector="Logger.EncodingFrameRate" />
-                      <Property Name="FourCC" Selector="Logger.Codec" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="cv:VideoWriter">
-                      <cv:Suffix>None</cv:Suffix>
-                      <cv:Buffered>true</cv:Buffered>
-                      <cv:Overwrite>false</cv:Overwrite>
-                      <cv:FourCC>FMP4</cv:FourCC>
-                      <cv:FrameRate>30</cv:FrameRate>
-                      <cv:FrameSize>
-                        <cv:Width>0</cv:Width>
-                        <cv:Height>0</cv:Height>
-                      </cv:FrameSize>
-                      <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
-                    </Combinator>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
+                    <LogName>SideBodyCamera</LogName>
+                    <Name>SideBodyCameraFrameEvent</Name>
                   </Expression>
                 </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="5" To="9" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source2" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="13" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source2" />
-                </Edges>
+                <Edges />
               </Workflow>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
@@ -7131,7 +7208,7 @@ Item5 as TotalReward)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>MainCameraFrameEvent</Name>
+                    <Name>FaceCameraFrameEvent</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Value.ChunkData.FrameID</Selector>
@@ -7417,7 +7494,7 @@ Item5 as TotalReward)</scr:Expression>
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
-              <Name>MainCameraFrameEvent</Name>
+              <Name>FaceCameraFrameEvent</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Value.Image</Selector>
