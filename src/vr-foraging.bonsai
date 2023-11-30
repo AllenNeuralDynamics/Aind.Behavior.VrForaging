@@ -166,7 +166,7 @@
               <Name>RigSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>MainCamera.FrameRate,MainCamera.Exposure</Selector>
+              <Selector>FaceCamera.FrameRate,FaceCamera.Exposure</Selector>
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>((1.0 / Item1) * 1000000) &lt; Item2 + 1000</scr:Expression>
@@ -2687,7 +2687,7 @@ Item2.Light as Light)</scr:Expression>
                                 <Name>RigSchema</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>MainCamera.FrameRate</Selector>
+                                <Selector>FaceCamera.FrameRate</Selector>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Take">
@@ -2711,7 +2711,7 @@ Item2.Light as Light)</scr:Expression>
                                 <Name>RigSchema</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>MainCamera</Selector>
+                                <Selector>FaceCamera</Selector>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
                                 <PropertyMappings>
@@ -3072,7 +3072,7 @@ Item2.Light as Light)</scr:Expression>
                     <Name>RigSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>MainCamera.FrameRate</Selector>
+                    <Selector>FaceCamera.FrameRate</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>

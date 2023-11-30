@@ -21,7 +21,13 @@
     "harpSynchronizer": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
     },
-    "mainCamera": {
+    "faceCamera": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
+    },
+    "topBodyCamera": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
+    },
+    "sideBodyCamera": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
     },
     "graphics": {
@@ -61,9 +67,7 @@
     }
   },
   "required": [
-    "mainCamera",
-    "auxiliaryCamera0",
-    "auxiliaryCamera1",
+    "faceCamera",
     "harpBehavior",
     "harpOlfactometer",
     "harpLickometer",
