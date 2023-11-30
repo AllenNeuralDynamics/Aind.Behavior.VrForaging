@@ -2,6 +2,23 @@
 ---
 # yaml-language-server: $schema=aind-vr-foraging-task.json
 
+updaters:
+  StopDurationOffset:
+    numericalUpdaterOperation: offset
+    numericalUpdaterParameters:
+      initialValue: 0
+      increment: 5
+      decrement: -2
+      minimum: 0
+      maximum: 200
+  StopVelocityThreshold:
+    numericalUpdaterOperation: offsetPercentage
+    numericalUpdaterParameters:
+      initialValue: 20
+      increment: 0.1
+      decrement: -0.2
+      minimum: 1
+      maximum: 2
 operationControl:
   movableSpoutControl:
     enabled: true
