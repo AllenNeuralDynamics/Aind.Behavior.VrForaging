@@ -292,7 +292,7 @@ namespace AindVrForagingDataSchema.Task
     
         private double _amount;
     
-        private double _delay = 0D;
+        private NormalDistribution _delay;
     
         private OperantLogic _operantLogic;
     
@@ -312,9 +312,10 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("delay")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
-        public double Delay
+        public NormalDistribution Delay
         {
             get
             {
@@ -379,6 +380,571 @@ namespace AindVrForagingDataSchema.Task
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Foraging")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Foraging")]
         Foraging = 1,
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TruncationParameters
+    {
+    
+        private bool _isTruncated = false;
+    
+        private double _min;
+    
+        private double _max;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("isTruncated")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="isTruncated")]
+        public bool IsTruncated
+        {
+            get
+            {
+                return _isTruncated;
+            }
+            set
+            {
+                _isTruncated = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("min")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="min")]
+        public double Min
+        {
+            get
+            {
+                return _min;
+            }
+            set
+            {
+                _min = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("max")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="max")]
+        public double Max
+        {
+            get
+            {
+                return _max;
+            }
+            set
+            {
+                _max = value;
+            }
+        }
+    
+        public System.IObservable<TruncationParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new TruncationParameters
+                {
+                    IsTruncated = _isTruncated,
+                    Min = _min,
+                    Max = _max
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ScalingParameters
+    {
+    
+        private double _scalingParametersScale = 1D;
+    
+        private double _scalingParametersShift;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("scalingParameters.scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scalingParameters.scale")]
+        public double ScalingParametersScale
+        {
+            get
+            {
+                return _scalingParametersScale;
+            }
+            set
+            {
+                _scalingParametersScale = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("scalingParameters.shift")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scalingParameters.shift")]
+        public double ScalingParametersShift
+        {
+            get
+            {
+                return _scalingParametersShift;
+            }
+            set
+            {
+                _scalingParametersShift = value;
+            }
+        }
+    
+        public System.IObservable<ScalingParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ScalingParameters
+                {
+                    ScalingParametersScale = _scalingParametersScale,
+                    ScalingParametersShift = _scalingParametersShift
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class NormalDistribution
+    {
+    
+        private string _family = "normal";
+    
+        private NormalParameters _normalParameters;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("normalParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="normalParameters")]
+        public NormalParameters NormalParameters
+        {
+            get
+            {
+                return _normalParameters;
+            }
+            set
+            {
+                _normalParameters = value;
+            }
+        }
+    
+        public System.IObservable<NormalDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new NormalDistribution
+                {
+                    Family = _family,
+                    NormalParameters = _normalParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class LogNormalDistribution
+    {
+    
+        private string _family = "logNormal";
+    
+        private LogNormalParameters _logNormalParameters;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("logNormalParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="logNormalParameters")]
+        public LogNormalParameters LogNormalParameters
+        {
+            get
+            {
+                return _logNormalParameters;
+            }
+            set
+            {
+                _logNormalParameters = value;
+            }
+        }
+    
+        public System.IObservable<LogNormalDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new LogNormalDistribution
+                {
+                    Family = _family,
+                    LogNormalParameters = _logNormalParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class UniformDistribution
+    {
+    
+        private string _family = "uniform";
+    
+        private UniformParameters _uniformParameters;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("uniformParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="uniformParameters")]
+        public UniformParameters UniformParameters
+        {
+            get
+            {
+                return _uniformParameters;
+            }
+            set
+            {
+                _uniformParameters = value;
+            }
+        }
+    
+        public System.IObservable<UniformDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new UniformDistribution
+                {
+                    Family = _family,
+                    UniformParameters = _uniformParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ExponentialDistribution
+    {
+    
+        private string _family = "exponential";
+    
+        private ExponentialParameters _exponentialParameters;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("exponentialParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exponentialParameters")]
+        public ExponentialParameters ExponentialParameters
+        {
+            get
+            {
+                return _exponentialParameters;
+            }
+            set
+            {
+                _exponentialParameters = value;
+            }
+        }
+    
+        public System.IObservable<ExponentialDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ExponentialDistribution
+                {
+                    Family = _family,
+                    ExponentialParameters = _exponentialParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class GammaDistribution
+    {
+    
+        private string _family = "gamma";
+    
+        private GammaParameters _gammaParameters;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("gammaParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gammaParameters")]
+        public GammaParameters GammaParameters
+        {
+            get
+            {
+                return _gammaParameters;
+            }
+            set
+            {
+                _gammaParameters = value;
+            }
+        }
+    
+        public System.IObservable<GammaDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new GammaDistribution
+                {
+                    Family = _family,
+                    GammaParameters = _gammaParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BinomialDistribution
+    {
+    
+        private string _family = "binomial";
+    
+        private BinomialParameters _binomialParameters;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("binomialParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binomialParameters")]
+        public BinomialParameters BinomialParameters
+        {
+            get
+            {
+                return _binomialParameters;
+            }
+            set
+            {
+                _binomialParameters = value;
+            }
+        }
+    
+        public System.IObservable<BinomialDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new BinomialDistribution
+                {
+                    Family = _family,
+                    BinomialParameters = _binomialParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BetaDistribution
+    {
+    
+        private string _family = "beta";
+    
+        private BetaParameters _betaParameters;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("betaParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="betaParameters")]
+        public BetaParameters BetaParameters
+        {
+            get
+            {
+                return _betaParameters;
+            }
+            set
+            {
+                _betaParameters = value;
+            }
+        }
+    
+        public System.IObservable<BetaDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new BetaDistribution
+                {
+                    Family = _family,
+                    BetaParameters = _betaParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PoissonDistribution
+    {
+    
+        private string _family = "poisson";
+    
+        private PoissonParameters _poissonParameters;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("poissonParameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="poissonParameters")]
+        public PoissonParameters PoissonParameters
+        {
+            get
+            {
+                return _poissonParameters;
+            }
+            set
+            {
+                _poissonParameters = value;
+            }
+        }
+    
+        public System.IObservable<PoissonDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new PoissonDistribution
+                {
+                    Family = _family,
+                    PoissonParameters = _poissonParameters
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class DistributionsPackage
+    {
+    
+        private string _version = "0.1.0";
+    
+        private System.Collections.Generic.List<NormalDistribution> _distributions = new System.Collections.Generic.List<NormalDistribution>();
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("Version")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("distributions")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distributions")]
+        public System.Collections.Generic.List<NormalDistribution> Distributions
+        {
+            get
+            {
+                return _distributions;
+            }
+            set
+            {
+                _distributions = value;
+            }
+        }
+    
+        public System.IObservable<DistributionsPackage> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new DistributionsPackage
+                {
+                    Version = _version,
+                    Distributions = _distributions
+                }));
+        }
     }
 
 
@@ -1017,6 +1583,652 @@ namespace AindVrForagingDataSchema.Task
                     StopDuration = _stopDuration,
                     TimeToCollect = _timeToCollect,
                     DistanceThresholdToBeStatic = _distanceThresholdToBeStatic
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class NormalParameters
+    {
+    
+        private double _mean = 0D;
+    
+        private double _std = 1D;
+    
+        private TruncationParameters _truncate;
+    
+        private ScalingParameters _scale;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("mean")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mean")]
+        public double Mean
+        {
+            get
+            {
+                return _mean;
+            }
+            set
+            {
+                _mean = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("std")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="std")]
+        public double Std
+        {
+            get
+            {
+                return _std;
+            }
+            set
+            {
+                _std = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncate")]
+        public TruncationParameters Truncate
+        {
+            get
+            {
+                return _truncate;
+            }
+            set
+            {
+                _truncate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scale")]
+        public ScalingParameters Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        public System.IObservable<NormalParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new NormalParameters
+                {
+                    Mean = _mean,
+                    Std = _std,
+                    Truncate = _truncate,
+                    Scale = _scale
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class LogNormalParameters
+    {
+    
+        private double _mean = 0D;
+    
+        private double _std = 1D;
+    
+        private TruncationParameters _truncate;
+    
+        private ScalingParameters _scale;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("mean")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mean")]
+        public double Mean
+        {
+            get
+            {
+                return _mean;
+            }
+            set
+            {
+                _mean = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("std")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="std")]
+        public double Std
+        {
+            get
+            {
+                return _std;
+            }
+            set
+            {
+                _std = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncate")]
+        public TruncationParameters Truncate
+        {
+            get
+            {
+                return _truncate;
+            }
+            set
+            {
+                _truncate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scale")]
+        public ScalingParameters Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        public System.IObservable<LogNormalParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new LogNormalParameters
+                {
+                    Mean = _mean,
+                    Std = _std,
+                    Truncate = _truncate,
+                    Scale = _scale
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class UniformParameters
+    {
+    
+        private double _min = 0D;
+    
+        private double _max = 1D;
+    
+        private TruncationParameters _truncate;
+    
+        private ScalingParameters _scale;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("min")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="min")]
+        public double Min
+        {
+            get
+            {
+                return _min;
+            }
+            set
+            {
+                _min = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("max")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="max")]
+        public double Max
+        {
+            get
+            {
+                return _max;
+            }
+            set
+            {
+                _max = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncate")]
+        public TruncationParameters Truncate
+        {
+            get
+            {
+                return _truncate;
+            }
+            set
+            {
+                _truncate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scale")]
+        public ScalingParameters Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        public System.IObservable<UniformParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new UniformParameters
+                {
+                    Min = _min,
+                    Max = _max,
+                    Truncate = _truncate,
+                    Scale = _scale
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ExponentialParameters
+    {
+    
+        private double _rate = 1D;
+    
+        private TruncationParameters _truncate;
+    
+        private ScalingParameters _scale;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("rate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rate")]
+        public double Rate
+        {
+            get
+            {
+                return _rate;
+            }
+            set
+            {
+                _rate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncate")]
+        public TruncationParameters Truncate
+        {
+            get
+            {
+                return _truncate;
+            }
+            set
+            {
+                _truncate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scale")]
+        public ScalingParameters Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        public System.IObservable<ExponentialParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ExponentialParameters
+                {
+                    Rate = _rate,
+                    Truncate = _truncate,
+                    Scale = _scale
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class GammaParameters
+    {
+    
+        private double _shape = 1D;
+    
+        private double _rate = 1D;
+    
+        private TruncationParameters _truncate;
+    
+        private ScalingParameters _scale;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("shape")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="shape")]
+        public double Shape
+        {
+            get
+            {
+                return _shape;
+            }
+            set
+            {
+                _shape = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("rate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rate")]
+        public double Rate
+        {
+            get
+            {
+                return _rate;
+            }
+            set
+            {
+                _rate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncate")]
+        public TruncationParameters Truncate
+        {
+            get
+            {
+                return _truncate;
+            }
+            set
+            {
+                _truncate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scale")]
+        public ScalingParameters Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        public System.IObservable<GammaParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new GammaParameters
+                {
+                    Shape = _shape,
+                    Rate = _rate,
+                    Truncate = _truncate,
+                    Scale = _scale
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BinomialParameters
+    {
+    
+        private double _successProbability = 0.5D;
+    
+        private double _count = 1D;
+    
+        private TruncationParameters _truncate;
+    
+        private ScalingParameters _scale;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("successProbability")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="successProbability")]
+        public double SuccessProbability
+        {
+            get
+            {
+                return _successProbability;
+            }
+            set
+            {
+                _successProbability = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("count")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="count")]
+        public double Count
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                _count = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncate")]
+        public TruncationParameters Truncate
+        {
+            get
+            {
+                return _truncate;
+            }
+            set
+            {
+                _truncate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scale")]
+        public ScalingParameters Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        public System.IObservable<BinomialParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new BinomialParameters
+                {
+                    SuccessProbability = _successProbability,
+                    Count = _count,
+                    Truncate = _truncate,
+                    Scale = _scale
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BetaParameters
+    {
+    
+        private double _alpha = 5D;
+    
+        private double _beta = 5D;
+    
+        private TruncationParameters _truncate;
+    
+        private ScalingParameters _scale;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("alpha")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="alpha")]
+        public double Alpha
+        {
+            get
+            {
+                return _alpha;
+            }
+            set
+            {
+                _alpha = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("beta")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="beta")]
+        public double Beta
+        {
+            get
+            {
+                return _beta;
+            }
+            set
+            {
+                _beta = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncate")]
+        public TruncationParameters Truncate
+        {
+            get
+            {
+                return _truncate;
+            }
+            set
+            {
+                _truncate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scale")]
+        public ScalingParameters Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        public System.IObservable<BetaParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new BetaParameters
+                {
+                    Alpha = _alpha,
+                    Beta = _beta,
+                    Truncate = _truncate,
+                    Scale = _scale
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PoissonParameters
+    {
+    
+        private double _rate = 1D;
+    
+        private TruncationParameters _truncate;
+    
+        private ScalingParameters _scale;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("rate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rate")]
+        public double Rate
+        {
+            get
+            {
+                return _rate;
+            }
+            set
+            {
+                _rate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncate")]
+        public TruncationParameters Truncate
+        {
+            get
+            {
+                return _truncate;
+            }
+            set
+            {
+                _truncate = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scale")]
+        public ScalingParameters Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        public System.IObservable<PoissonParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new PoissonParameters
+                {
+                    Rate = _rate,
+                    Truncate = _truncate,
+                    Scale = _scale
                 }));
         }
     }
@@ -2094,6 +3306,61 @@ namespace AindVrForagingDataSchema.Task
             return Process<Reward>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<TruncationParameters> source)
+        {
+            return Process<TruncationParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ScalingParameters> source)
+        {
+            return Process<ScalingParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<NormalDistribution> source)
+        {
+            return Process<NormalDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<LogNormalDistribution> source)
+        {
+            return Process<LogNormalDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<UniformDistribution> source)
+        {
+            return Process<UniformDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ExponentialDistribution> source)
+        {
+            return Process<ExponentialDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<GammaDistribution> source)
+        {
+            return Process<GammaDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BinomialDistribution> source)
+        {
+            return Process<BinomialDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BetaDistribution> source)
+        {
+            return Process<BetaDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PoissonDistribution> source)
+        {
+            return Process<PoissonDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<DistributionsPackage> source)
+        {
+            return Process<DistributionsPackage>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<NumericalUpdater> source)
         {
             return Process<NumericalUpdater>(source);
@@ -2142,6 +3409,46 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
         {
             return Process<OperantLogic>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<NormalParameters> source)
+        {
+            return Process<NormalParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<LogNormalParameters> source)
+        {
+            return Process<LogNormalParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<UniformParameters> source)
+        {
+            return Process<UniformParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ExponentialParameters> source)
+        {
+            return Process<ExponentialParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<GammaParameters> source)
+        {
+            return Process<GammaParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BinomialParameters> source)
+        {
+            return Process<BinomialParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BetaParameters> source)
+        {
+            return Process<BetaParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PoissonParameters> source)
+        {
+            return Process<PoissonParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<NumericalUpdaterParameters> source)
@@ -2229,6 +3536,17 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DistributionsPackage>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
@@ -2239,6 +3557,14 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
@@ -2316,6 +3642,61 @@ namespace AindVrForagingDataSchema.Task
             return Process<Reward>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<TruncationParameters> source)
+        {
+            return Process<TruncationParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ScalingParameters> source)
+        {
+            return Process<ScalingParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<NormalDistribution> source)
+        {
+            return Process<NormalDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<LogNormalDistribution> source)
+        {
+            return Process<LogNormalDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<UniformDistribution> source)
+        {
+            return Process<UniformDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ExponentialDistribution> source)
+        {
+            return Process<ExponentialDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<GammaDistribution> source)
+        {
+            return Process<GammaDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BinomialDistribution> source)
+        {
+            return Process<BinomialDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BetaDistribution> source)
+        {
+            return Process<BetaDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PoissonDistribution> source)
+        {
+            return Process<PoissonDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<DistributionsPackage> source)
+        {
+            return Process<DistributionsPackage>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<NumericalUpdater> source)
         {
             return Process<NumericalUpdater>(source);
@@ -2364,6 +3745,46 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
         {
             return Process<OperantLogic>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<NormalParameters> source)
+        {
+            return Process<NormalParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<LogNormalParameters> source)
+        {
+            return Process<LogNormalParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<UniformParameters> source)
+        {
+            return Process<UniformParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ExponentialParameters> source)
+        {
+            return Process<ExponentialParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<GammaParameters> source)
+        {
+            return Process<GammaParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BinomialParameters> source)
+        {
+            return Process<BinomialParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BetaParameters> source)
+        {
+            return Process<BetaParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PoissonParameters> source)
+        {
+            return Process<PoissonParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<NumericalUpdaterParameters> source)
@@ -2451,6 +3872,17 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DistributionsPackage>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
@@ -2461,6 +3893,14 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Render>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]

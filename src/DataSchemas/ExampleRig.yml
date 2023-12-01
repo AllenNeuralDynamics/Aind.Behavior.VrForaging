@@ -6,7 +6,7 @@ graphics:
   display:
     displayDevice: 1
     targetRenderFrequency: 60
-    targetUpdateFrequency: 120
+    targetUpdateFrequency: 240
   render:
     monitorCalibrationDirectory: "Calibration\\Monitors"
     textureAssetDirectory:  "Textures"
@@ -20,19 +20,6 @@ valves:
     model: Leeblahblah
     pin: Port0Supply
     valveType: water
-    calibration:
-      intercept: 0
-      slope: 1
-  odor1: &odorvalve
-    model: Leeblahblah
-    pin: Port1Supply
-    valveType: odor
-    calibration:
-      intercept: 0
-      slope: 1
-  odor2:
-    <<: *odorvalve
-    pin: Port2Supply
     calibration:
       intercept: 0
       slope: 1
@@ -55,7 +42,7 @@ movableSpout:
   pulseDurationUsMin: 1000
   pulseDurationUsMax: 2000
   pulseDurationUsDefault: 2000
-mainCamera:
+faceCamera:
   frameRate: 30
   exposure: 1000
   gain: 0
