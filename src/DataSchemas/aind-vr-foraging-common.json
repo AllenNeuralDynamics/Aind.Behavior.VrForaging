@@ -170,7 +170,7 @@
           "type": "number"
         },
         "delay": {
-          "$ref": "dataclasses-distributions.json#/definitions/exponentialDistribution"
+          "$ref": "dataclasses-distributions.json#/definitions/normalDistribution"
         },
         "operantLogic": {
           "$ref": "#/definitions/operantLogic"
