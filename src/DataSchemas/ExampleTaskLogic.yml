@@ -3,6 +3,14 @@
 # yaml-language-server: $schema=aind-vr-foraging-task.json
 
 updaters:
+  RewardDelayOffset:
+    numericalUpdaterOperation: offset
+    numericalUpdaterParameters:
+      initialValue: 0
+      increment: 5
+      decrement: -2
+      minimum: 0
+      maximum: 200
   StopDurationOffset:
     numericalUpdaterOperation: offset
     numericalUpdaterParameters:
@@ -90,6 +98,18 @@ environmentStatistics:
       rewardSpecifications:
         probability: 1
         amount: 1
+        delay:
+          family: normal
+          normalParameters:
+            mean: 0
+            std: 0.15
+            truncate:
+              isTruncated: true
+              max: 0.3
+              min: 0
+            scale:
+              scalingParameters.scale: 1
+              scalingParameters.shift: 0
         operantLogic:
           isOperant: true
           stopDuration: 1
@@ -105,6 +125,18 @@ environmentStatistics:
       rewardSpecifications:
         probability: 1
         amount: 1
+        delay:
+          family: normal
+          normalParameters:
+            mean: 0
+            std: 0.15
+            truncate:
+              isTruncated: true
+              max: 0.3
+              min: 0
+            scale:
+              scalingParameters.scale: 1
+              scalingParameters.shift: 0
         operantLogic:
           isOperant: true
           stopDuration: 1

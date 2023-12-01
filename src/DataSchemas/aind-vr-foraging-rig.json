@@ -1,6 +1,6 @@
 {
-  "$id": "h...",
-  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "aind-vr-foraging-rig",
+  "$schema": "https://json-schema.org/draft-09/schema",
   "definitions": {},
   "properties": {
     "auxiliaryCamera0": {
@@ -34,7 +34,7 @@
       "type": "object",
       "properties": {
         "render": {
-          "$ref": "aind-vr-foraging-common.json#/definitions/renderingSettings"
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/renderingSettings"
         },
         "display": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/display"
@@ -49,17 +49,11 @@
     },
     "valves": {
       "properties": {
-        "odor1": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
-        },
-        "odor2": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
-        },
         "water": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
         }
       },
-      "required": ["water", "odor1", "odor2"],
+      "required": ["water"],
       "type": "object"
     },
     "movableSpout": {
