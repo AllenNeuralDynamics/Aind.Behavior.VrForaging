@@ -1,6 +1,6 @@
 {
-  "$id": "h...",
-  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "aind-vr-foraging-task",
+  "$schema": "https://json-schema.org/draft-09/schema",
   "definitions": {
     "corridorSpecifications": {
       "$ref": "aind-vr-foraging-common.json#/definitions/visualCorridor"
