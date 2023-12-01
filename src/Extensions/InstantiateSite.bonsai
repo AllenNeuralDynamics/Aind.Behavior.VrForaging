@@ -1021,6 +1021,9 @@ it.Item2 as EntryPosition)</scr:Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>IsInSite</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:DistinctUntilChanged" />
+                        </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>OdorEndValveState</Name>
                         </Expression>
@@ -1030,6 +1033,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
