@@ -1135,41 +1135,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class Valves
     {
     
-        private Valve _odor1 = new Valve();
-    
-        private Valve _odor2 = new Valve();
-    
         private Valve _water = new Valve();
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor1", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor1")]
-        public Valve Odor1
-        {
-            get
-            {
-                return _odor1;
-            }
-            set
-            {
-                _odor1 = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor2", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor2")]
-        public Valve Odor2
-        {
-            get
-            {
-                return _odor2;
-            }
-            set
-            {
-                _odor2 = value;
-            }
-        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("water", Required=Newtonsoft.Json.Required.Always)]
@@ -1191,8 +1157,6 @@ namespace AindVrForagingDataSchema.Rig
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new Valves
                 {
-                    Odor1 = _odor1,
-                    Odor2 = _odor2,
                     Water = _water
                 }));
         }
