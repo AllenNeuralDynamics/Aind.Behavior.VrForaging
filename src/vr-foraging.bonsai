@@ -19,9 +19,9 @@
                  xmlns:p9="clr-namespace:Harp.TimestampGeneratorGen3;assembly=Harp.TimestampGeneratorGen3"
                  xmlns:p10="clr-namespace:AllenNeuralDynamics.Core.Logging;assembly=AllenNeuralDynamics.Core"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns:p11="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
-                 xmlns:p11="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
                  xmlns:p12="clr-namespace:Harp.Behavior;assembly=Extensions"
@@ -1668,15 +1668,18 @@
                     <Selector>Metadata.RngSeed</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="IntProperty">
-                      <Value>0</Value>
+                    <Combinator xsi:type="num:CreateRandom">
+                      <num:Seed xsi:nil="true" />
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Timestamp" />
+                    <Combinator xsi:type="p11:CreateContinuousUniform">
+                      <p11:Lower>0</p11:Lower>
+                      <p11:Upper>10</p11:Upper>
+                    </Combinator>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Timestamp.Ticks</Selector>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p11:Sample" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Zip" />
@@ -1684,6 +1687,11 @@
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Name>CheckNull</scr:Name>
                     <scr:Expression>Item1.HasValue ? Item1.Value : Item2</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:AsyncSubject">
                     <Name>RngSeedValue</Name>
@@ -1793,21 +1801,22 @@
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
                   <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
                   <Edge From="23" To="24" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="26" To="28" Label="Source1" />
-                  <Edge From="27" To="28" Label="Source2" />
-                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="27" To="29" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source2" />
                   <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
