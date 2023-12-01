@@ -34,7 +34,7 @@
       "type": "object",
       "properties": {
         "render": {
-          "$ref": "aind-vr-foraging-common.json#/definitions/renderingSettings"
+          "$ref": "aind-vr-foraging-hardware.json#/definitions/renderingSettings"
         },
         "display": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/display"
@@ -49,12 +49,6 @@
     },
     "valves": {
       "properties": {
-        "odor1": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
-        },
-        "odor2": {
-          "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
-        },
         "water": {
           "$ref": "aind-vr-foraging-hardware.json#/definitions/valve"
         }

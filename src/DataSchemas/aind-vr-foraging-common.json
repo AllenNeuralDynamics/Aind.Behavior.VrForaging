@@ -152,19 +152,6 @@
       },
       "type": "object"
     },
-    "renderingSettings": {
-      "properties": {
-        "monitorCalibrationDirectory": {
-          "default": "Calibration\\Monitors\\",
-          "type": "string"
-        },
-        "textureAssetDirectory": {
-          "default": "Textures",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "patchRewardFunction":{
       "type": "object",
       "properties": {
@@ -183,9 +170,7 @@
           "type": "number"
         },
         "delay": {
-          "default": 0,
-          "minimum": 0,
-          "type": "number"
+          "$ref": "dataclasses-distributions.json#/definitions/exponentialDistribution"
         },
         "operantLogic": {
           "$ref": "#/definitions/operantLogic"
