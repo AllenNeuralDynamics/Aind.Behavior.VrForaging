@@ -35,7 +35,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples, truncationParameters, scalingParameters);
+                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples, truncationParameters, scalingParameters);
+                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
                 else
                 {
@@ -79,7 +79,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples, truncationParameters, scalingParameters);
+                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples, truncationParameters, scalingParameters);
+                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples, truncationParameters, scalingParameters);
+                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples, truncationParameters, scalingParameters);
+                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples, truncationParameters, scalingParameters);
+                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
                 else
                 {
@@ -189,7 +189,7 @@ namespace AindVrForagingDataSchema.Task
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples, truncationParameters, scalingParameters);
+                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
                 else
                 {
@@ -213,45 +213,47 @@ namespace AindVrForagingDataSchema.Task
             return applyScaleAndOffset(distribution.Sample(), scalingParameters);
         }
 
-        private double[] sampleFromDistribution(IContinuousDistribution distribution, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
+        private Tuple<double[], double> sampleFromDistribution(IContinuousDistribution distribution, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
         {
             double[] samples = new double[SampleSize];
             distribution.Samples(samples);
             var scaledSamples = samples.Select(x => applyScaleAndOffset(x, scalingParameters));
+            var average = scaledSamples.Average();
             var truncatedSamples = scaledSamples.Where(x => x >= truncationParameters.Min && x <= truncationParameters.Max);
-            return truncatedSamples.ToArray();
+            return Tuple.Create(truncatedSamples.ToArray(), average);
         }
-        
-        private double[] sampleFromDistribution(IDiscreteDistribution distribution, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
+
+        private Tuple<double[], double> sampleFromDistribution(IDiscreteDistribution distribution, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
         {
             int[] samples = new int[SampleSize];
             distribution.Samples(samples);
             var scaledSamples = samples.Select(x => applyScaleAndOffset(x, scalingParameters));
+            var average = scaledSamples.Average();
             var truncatedSamples = scaledSamples.Where(x => x >= truncationParameters.Min && x <= truncationParameters.Max);
-            return truncatedSamples.ToArray();
+            return Tuple.Create(truncatedSamples.ToArray(), average);
         }
 
-        private static double validateSamples(double[] drawnSamples, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
+        private static double validateSamples(double[] drawnSamples, double preTruncatedAverage, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
         {
-            if (drawnSamples.Count() < 0)
+            double outValue;
+            if (drawnSamples.Count() <= 0)
             {
-                var mean = drawnSamples.Average();
-                var scaled_min = applyScaleAndOffset(truncationParameters.Min, scalingParameters);
-                var scaled_max = applyScaleAndOffset(truncationParameters.Max, scalingParameters);
-                if (mean <= scaled_min)
+                if (preTruncatedAverage <= truncationParameters.Min)
                 {
-                    return scaled_min;
+                    outValue = truncationParameters.Min;
                 }
-                else if (mean >= scaled_max)
+                else if (preTruncatedAverage >= truncationParameters.Max)
                 {
-                    return scaled_max;
+                    outValue = truncationParameters.Max;
                 }
                 else
                 {
                     throw new ArgumentException("Truncation heuristic has failed. Please check your truncation parameters.");
                 }
             }
-            else { return drawnSamples.First(); }
+            else {
+                outValue = drawnSamples.First(); }
+            return outValue;
         }
 
         private void validateTruncationParameters(TruncationParameters truncationParameters, ScalingParameters scalingParameters)
@@ -259,10 +261,6 @@ namespace AindVrForagingDataSchema.Task
             if (truncationParameters.Min >= truncationParameters.Max)
             {
                 throw new ArgumentException("Invalid truncation parameters. Min must be lower than Max");
-            }
-            if (applyScaleAndOffset(truncationParameters.Min, scalingParameters) >= applyScaleAndOffset(truncationParameters.Max, scalingParameters))
-            {
-                throw new ArgumentException("Invalid truncation parameters. Scaled Min must be lower than scaled Max");
             }
         }
 
