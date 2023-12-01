@@ -507,7 +507,7 @@ namespace AindVrForagingDataSchema.Task
     
         private NormalParameters _normalParameters;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
         public string Family
         {
@@ -557,7 +557,7 @@ namespace AindVrForagingDataSchema.Task
     
         private LogNormalParameters _logNormalParameters;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
         public string Family
         {
@@ -607,7 +607,7 @@ namespace AindVrForagingDataSchema.Task
     
         private UniformParameters _uniformParameters;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
         public string Family
         {
@@ -657,7 +657,7 @@ namespace AindVrForagingDataSchema.Task
     
         private ExponentialParameters _exponentialParameters;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
         public string Family
         {
@@ -707,7 +707,7 @@ namespace AindVrForagingDataSchema.Task
     
         private GammaParameters _gammaParameters;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
         public string Family
         {
@@ -757,7 +757,7 @@ namespace AindVrForagingDataSchema.Task
     
         private BinomialParameters _binomialParameters;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
         public string Family
         {
@@ -807,7 +807,7 @@ namespace AindVrForagingDataSchema.Task
     
         private BetaParameters _betaParameters;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
         public string Family
         {
@@ -857,7 +857,7 @@ namespace AindVrForagingDataSchema.Task
     
         private PoissonParameters _poissonParameters;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
         public string Family
         {
