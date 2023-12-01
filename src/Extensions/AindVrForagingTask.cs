@@ -292,7 +292,7 @@ namespace AindVrForagingDataSchema.Task
     
         private double _amount;
     
-        private ExponentialDistribution _delay;
+        private NormalDistribution _delay;
     
         private OperantLogic _operantLogic;
     
@@ -315,7 +315,7 @@ namespace AindVrForagingDataSchema.Task
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("delay")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
-        public ExponentialDistribution Delay
+        public NormalDistribution Delay
         {
             get
             {
