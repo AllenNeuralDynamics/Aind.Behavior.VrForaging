@@ -19,6 +19,9 @@
       "enum": ["Habituation", "Foraging"],
       "default": "Habituation",
       "type": "string"
+    },
+    "distributionsPackage": {
+      "$ref": "dataclasses-distributions.json"
     }
   },
   "properties": {
