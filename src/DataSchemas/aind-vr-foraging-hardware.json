@@ -164,6 +164,19 @@
       ],
       "type": "object"
     },
+    "renderingSettings": {
+      "properties": {
+        "monitorCalibrationDirectory": {
+          "default": "Calibration\\Monitors\\",
+          "type": "string"
+        },
+        "textureAssetDirectory": {
+          "default": "Textures",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "valve": {
       "properties": {
         "calibration": {
