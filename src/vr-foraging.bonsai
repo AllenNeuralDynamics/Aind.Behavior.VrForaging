@@ -4913,6 +4913,21 @@ Value as IsStopped)</scr:Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>StopVelocityThreshold</Name>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>GiveReward</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>true</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\UpdateVariable.bonsai">
+              <UpdaterKey>RewardDelayOffset</UpdaterKey>
+              <DefaultValue>0</DefaultValue>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>RewardDelayOffset</Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -4926,6 +4941,9 @@ Value as IsStopped)</scr:Expression>
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source2" />
             <Edge From="12" To="13" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -5496,22 +5514,7 @@ Item2 as Start
                         <Expression xsi:type="SubscribeSubject">
                           <Name>SiteSpecs</Name>
                         </Expression>
-                        <Expression xsi:type="GroupWorkflow">
-                          <Name>InstantiateSite</Name>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\InstantiateSite.bonsai" />
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\InstantiateSite.bonsai" />
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
                         </Expression>
