@@ -2404,10 +2404,10 @@ Item2.Light as Light)</scr:Expression>
                                       <Selector>Item2</Selector>
                                     </Expression>
                                     <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
-                                      <ExtentX>0.1</ExtentX>
-                                      <ExtentY>0.1</ExtentY>
-                                      <LocationX>0</LocationX>
-                                      <LocationY>0</LocationY>
+                                      <ExtentX>0.045</ExtentX>
+                                      <ExtentY>0.08</ExtentY>
+                                      <LocationX>2.925</LocationX>
+                                      <LocationY>0.03</LocationY>
                                       <Layer>10</Layer>
                                       <Angle>0</Angle>
                                       <ColorR>1</ColorR>
@@ -2437,10 +2437,10 @@ Item2.Light as Light)</scr:Expression>
                                       <Selector>Item2</Selector>
                                     </Expression>
                                     <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
-                                      <ExtentX>0.1</ExtentX>
-                                      <ExtentY>0.1</ExtentY>
-                                      <LocationX>0</LocationX>
-                                      <LocationY>0.1</LocationY>
+                                      <ExtentX>0.045</ExtentX>
+                                      <ExtentY>0.045</ExtentY>
+                                      <LocationX>2.925</LocationX>
+                                      <LocationY>0.15</LocationY>
                                       <Layer>10</Layer>
                                       <Angle>0</Angle>
                                       <ColorR>1</ColorR>
