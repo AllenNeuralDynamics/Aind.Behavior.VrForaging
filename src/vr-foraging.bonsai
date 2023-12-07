@@ -1427,9 +1427,9 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p8:Device">
                       <harp:OperationMode>Active</harp:OperationMode>
-                      <harp:OperationLed>On</harp:OperationLed>
+                      <harp:OperationLed>Off</harp:OperationLed>
                       <harp:DumpRegisters>true</harp:DumpRegisters>
-                      <harp:VisualIndicators>On</harp:VisualIndicators>
+                      <harp:VisualIndicators>Off</harp:VisualIndicators>
                       <harp:Heartbeat>Enabled</harp:Heartbeat>
                       <harp:IgnoreErrors>false</harp:IgnoreErrors>
                       <harp:PortName>COMx</harp:PortName>
