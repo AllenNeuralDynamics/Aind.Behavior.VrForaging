@@ -278,7 +278,7 @@
               <Name>RigSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>HarpBehaviorBoard.PortName</Selector>
+              <Selector>HarpBehavior.PortName</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
