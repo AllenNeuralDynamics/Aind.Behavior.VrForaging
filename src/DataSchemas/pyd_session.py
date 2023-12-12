@@ -1,5 +1,5 @@
 # Import core types
-from typing import Optional
+from typing import Optional, Annotated
 from pydantic import Field
 
 # Import aind-datas-schema types
@@ -18,6 +18,7 @@ class Metadata(AindCoreModel):
 
 
 class AindVrForagingSession(AindCoreModel):
-    metadata: Metadata = Field(description="Metadata of the session")
-    session: Session = Field(description="Session data")
+    metadata: Annotated[Metadata, Field(description="Metadata of the session")]
+    session: Annotated[Session, Field(description="Session data")]
+
 
