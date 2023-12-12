@@ -27,8 +27,6 @@ class Matrix2D(AindCoreModel):
     data: List[List[float]] = Field(default=[[1]], description="Defines a 2D matrix")
 
 # Updaters
-
-
 class NumericalUpdaterOperation(str, Enum):
     NONE = "None"
     OFFSET = "Offset"
