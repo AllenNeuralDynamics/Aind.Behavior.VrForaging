@@ -1,5 +1,5 @@
 # Import core types
-from typing import List, Literal, Optional
+from typing import List, Literal, Optional, Annotated
 from pydantic import Field
 from enum import Enum
 
@@ -24,7 +24,8 @@ class Vector3(AindCoreModel):
 
 
 class Matrix2D(AindCoreModel):
-    data: List[List[float]] = Field(default=[[1]], description="Defines a 2D matrix")
+    data: Annotated[List[List[float]], Field(description="Defines a 2D matrix")] = [[1]]
+
 
 # Updaters
 class NumericalUpdaterOperation(str, Enum):
@@ -44,17 +45,17 @@ class NumericalUpdaterParameters(AindCoreModel):
 
 
 class NumericalUpdater(AindCoreModel):
-    operation: NumericalUpdaterOperation = NumericalUpdaterOperation.NONE
-    parameters: NumericalUpdaterParameters = NumericalUpdaterParameters()
+    operation: Annotated[NumericalUpdaterOperation, Field(description="Operation to perform on the parameter")] = NumericalUpdaterOperation.NONE
+    parameters: Annotated[NumericalUpdaterParameters, Field(description="Parameters of the updater")] = NumericalUpdaterParameters()
 
 
 class Texture(AindCoreModel):
     name: str = Field(default="default", description="Name of the texture")
-    size: Size = Field(Size(width=40, height=40), description="Size of the texture")
+    size: Size = Field(default=Size(width=40, height=40), description="Size of the texture")
 
 
 class OdorSpecifications(AindCoreModel):
-    index: Literal[0, 1, 2, 3] = Field(description="Index of the odor to be used")
+    index: Annotated[Literal[0, 1, 2, 3], Field(description="Index of the odor to be used")]
     concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
 
 
@@ -76,7 +77,7 @@ class Distribution(AindCoreModel):
 
 class RewardSpecifications(AindCoreModel):
     amount: float = Field(ge=0, description="Amount of reward (a.u.)")
-    operantLogic = Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
+    operantLogic: Annotated[Optional[OperantLogic], Field(description="The optional operant logic of the reward")] = None
     probability: float = Field(default=1, ge=0, le=1, description="Probability of the reward")
     delay: Distribution
 
@@ -84,8 +85,8 @@ class RewardSpecifications(AindCoreModel):
 class PatchStatistics(AindCoreModel):
     label: str = Field(default="", description="Label of the patch")
     stateIndex = int = Field(default=0, ge=0, description="Index of the state")
-    odorSpecifications: Optional[OdorSpecifications] = Field(None, description="The optional odor specifications of the patch")
-    rewardSpecifications: Optional[RewardSpecifications] = Field(None, description="The optional reward specifications of the patch")
+    odorSpecifications: Annotated[Optional[OdorSpecifications], Field(description="The optional odor specifications of the patch")] = None
+    rewardSpecifications: Annotated[Optional[RewardSpecifications], Field(description="The optional reward specifications of the patch")] = None
 
 
 class RenderSpecifications(AindCoreModel):
@@ -97,22 +98,22 @@ class VirtualSite(AindCoreModel):
     label: str = Field(default="VirtualSite", description="Label of the virtual site")
     length: float = Field(default=120, ge=0, description="Length of the virtual site (cm)")
     startPosition: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
-    odor: Optional[OdorSpecifications] = Field(None, description="The optional odor specifications of the virtual site")
-    reward: Optional[RewardSpecifications] = Field(None, description="The optional reward specifications of the virtual site")
-    render: RenderSpecifications = Field(RenderSpecifications(), description="The optional render specifications of the virtual site")
+    odor: Annotated[Optional[OdorSpecifications], Field(None, description="The optional odor specifications of the virtual site")] = None
+    reward: Annotated[Optional[RewardSpecifications], Field(description="The optional reward specifications of the virtual site")] = None
+    render: Annotated[RenderSpecifications, Field(description="The optional render specifications of the virtual site")] = RenderSpecifications()
 
 
 class WallTextures(AindCoreModel):
-    floor: Texture = Field(..., description="The texture of the floor")
-    ceiling: Texture = Field(..., description="The texture of the ceiling")
-    left: Texture = Field(..., description="The texture of the left wall")
-    right: Texture = Field(..., description="The texture of the right wall")
+    floor: Annotated[Texture, Field(description="The texture of the floor")]
+    ceiling: Annotated[Texture, Field(description="The texture of the ceiling")]
+    left: Annotated[Texture, Field(description="The texture of the left")]
+    right: Annotated[Texture, Field(description="The texture of the right")]
 
 
 class VisualCorridor(AindCoreModel):
     id: int = Field(default=0, ge=0, description="Id of the visual corridor object")
-    size: Size = Field(Size(width=40, height=40), description="Size of the corridor (cm)")
+    size: Annotated[Size, Field(description="Size of the corridor (cm)")] = Size(width=40, height=40)
     startPosition: float = Field(default=0, ge=0, description="Start position of the corridor (cm)")
     length: float = Field(default=120, ge=0, description="Length of the corridor site (cm)")
-    textures: WallTextures = Field(..., description="The textures of the corridor")
+    textures: Annotated[WallTextures, Field(description="The textures of the corridor")]
 
