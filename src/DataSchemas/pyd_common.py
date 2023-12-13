@@ -40,11 +40,11 @@ class NumericalUpdaterOperation(str, Enum):
 
 
 class NumericalUpdaterParameters(AindModel):
-    initialValue: Field(default=0.0, description="Initial value of the parameter")
-    increment: Field(default=0.0, description="Value to increment the parameter by")
-    decrement: Field(default=0.0, description="Value to decrement the parameter by")
-    minimum: Field(default=0.0, description="Minimum value of the parameter")
-    maximum: Field(default=0.0, description="Minimum value of the parameter")
+    initialValue: float = Field(default=0.0, description="Initial value of the parameter")
+    increment: float = Field(default=0.0, description="Value to increment the parameter by")
+    decrement: float = Field(default=0.0, description="Value to decrement the parameter by")
+    minimum: float = Field(default=0.0, description="Minimum value of the parameter")
+    maximum: float = Field(default=0.0, description="Minimum value of the parameter")
 
 
 class NumericalUpdater(AindModel):
@@ -82,7 +82,7 @@ class RewardSpecifications(AindModel):
 
 class PatchStatistics(AindModel):
     label: str = Field(default="", description="Label of the patch")
-    stateIndex = int = Field(default=0, ge=0, description="Index of the state")
+    stateIndex: int = Field(default=0, ge=0, description="Index of the state")
     odorSpecifications: Annotated[Optional[OdorSpecifications], Field(description="The optional odor specifications of the patch")] = None
     rewardSpecifications: Annotated[Optional[RewardSpecifications], Field(description="The optional reward specifications of the patch")] = None
 
