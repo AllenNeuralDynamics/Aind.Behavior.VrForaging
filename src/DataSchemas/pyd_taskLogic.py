@@ -91,6 +91,6 @@ class AindVrForagingTask(AindCoreModel):
     environementStatistics: EnvironementStatistics = Field(..., description="Statistics of the environement")
     taskStageSettings: Annotated[TaskStageSettings, Field(description="Settings of the task stage")]
     virtualSiteGeneration: Annotated[VirtualSiteGeneration, Field(description="Generation of the virtual sites")]
-
+    operationControl: Annotated[OperationControl, Field(description="Control of the operation")]
 
 AindVrForagingTask.write_standard_model()
