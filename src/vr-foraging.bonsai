@@ -3180,9 +3180,39 @@ Item2.Light as Light)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SubjectSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Subject" Selector="Subject" />
+                <Property Name="RootFolder" Selector="RootPath" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
+              <RootFolder>C:\data\</RootFolder>
+              <Subject>672102</Subject>
+              <SubjectName>LoggingRootPath</SubjectName>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>CompoundRootPath</Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="1" To="2" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3194,20 +3224,6 @@ Item2.Light as Light)</scr:Expression>
         <Name>Logging</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>SubjectSchema</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="RootFolder" Selector="Metadata.RootPath" />
-                <Property Name="Subject" Selector="Metadata.Subject" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
-              <RootFolder xsi:nil="true" />
-              <Subject xsi:nil="true" />
-              <SubjectName>LoggingRootPath</SubjectName>
-            </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>HarpLogging</Name>
               <Workflow>
@@ -3754,10 +3770,7 @@ Value as IsStopped)</scr:Expression>
               </Workflow>
             </Expression>
           </Nodes>
-          <Edges>
-            <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-          </Edges>
+          <Edges />
         </Workflow>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
@@ -8158,6 +8171,105 @@ Item5 as TotalReward)</scr:Expression>
               <Name>OdorEndValveState</Name>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>LoggingRootPath</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Source" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SubjectSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata</Selector>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>RemoteDataPath</Selector>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Name>NotNull</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>NullOrEmpty</scr:Name>
+                    <scr:Expression>String.IsNullOrEmpty(it)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="BitwiseNot" />
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:StripDirectoryPath" />
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CompoundRootPath</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>SessionPath</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="Format">
+              <Format>{0}/{1}</Format>
+              <Selector>Item1, Item2</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Destination" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:StartRobocopy">
+                <p1:CreateLog>true</p1:CreateLog>
+                <p1:Arguments>/E /DCOPY:DAT /R:100 /W:3 /tee</p1:Arguments>
+                <p1:ProcessWindowStyle>Normal</p1:ProcessWindowStyle>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SubjectSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata</Selector>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>RemoteDataPath</Selector>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Name>NotNull</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>NullOrEmpty</scr:Name>
+                    <scr:Expression>String.IsNullOrEmpty(it)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="BitwiseNot" />
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:SubscribeWhen" />
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -8170,6 +8282,23 @@ Item5 as TotalReward)</scr:Expression>
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="22" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="19" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="18" To="19" Label="Source2" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source2" />
+            <Edge From="22" To="27" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>
