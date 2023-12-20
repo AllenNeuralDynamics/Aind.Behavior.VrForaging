@@ -31,6 +31,18 @@
         },
         "version": {
           "type": "string"
+        },
+        "skipProtocolValidation": {
+          "type": "boolean",
+          "default": false
+        },
+        "remoteDataPath": {
+          "type": ["null", "string"],
+          "default": null
+        },
+        "allowDirty": {
+          "type": "boolean",
+          "default": false
         }
       },
       "required": [

@@ -2291,6 +2291,12 @@ namespace AindVrForagingDataSchema.Session
     
         private string _version;
     
+        private bool _skipProtocolValidation = false;
+    
+        private string _remoteDataPath;
+    
+        private bool _allowDirty = false;
+    
         [Newtonsoft.Json.JsonPropertyAttribute("commitHash", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commitHash")]
         public string CommitHash
@@ -2390,6 +2396,48 @@ namespace AindVrForagingDataSchema.Session
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("skipProtocolValidation")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="skipProtocolValidation")]
+        public bool SkipProtocolValidation
+        {
+            get
+            {
+                return _skipProtocolValidation;
+            }
+            set
+            {
+                _skipProtocolValidation = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("remoteDataPath")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="remoteDataPath")]
+        public string RemoteDataPath
+        {
+            get
+            {
+                return _remoteDataPath;
+            }
+            set
+            {
+                _remoteDataPath = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("allowDirty")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="allowDirty")]
+        public bool AllowDirty
+        {
+            get
+            {
+                return _allowDirty;
+            }
+            set
+            {
+                _allowDirty = value;
+            }
+        }
+    
         public System.IObservable<Metadata> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -2401,7 +2449,10 @@ namespace AindVrForagingDataSchema.Session
                     RngSeed = _rngSeed,
                     RootPath = _rootPath,
                     Subject = _subject,
-                    Version = _version
+                    Version = _version,
+                    SkipProtocolValidation = _skipProtocolValidation,
+                    RemoteDataPath = _remoteDataPath,
+                    AllowDirty = _allowDirty
                 }));
         }
     }
