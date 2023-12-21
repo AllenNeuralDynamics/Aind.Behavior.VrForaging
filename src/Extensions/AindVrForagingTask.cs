@@ -163,7 +163,7 @@ namespace AindVrForagingDataSchema.Task
     
         private Render _render;
     
-        private Reward _reward;
+        private RewardSpecifications _reward;
     
         private double _startPosition = 0D;
     
@@ -242,7 +242,7 @@ namespace AindVrForagingDataSchema.Task
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward")]
-        public Reward Reward
+        public RewardSpecifications Reward
         {
             get
             {
@@ -287,7 +287,7 @@ namespace AindVrForagingDataSchema.Task
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Reward
+    public partial class RewardSpecifications
     {
     
         private double _amount;
@@ -356,10 +356,10 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
-        public System.IObservable<Reward> Process()
+        public System.IObservable<RewardSpecifications> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Reward
+                new RewardSpecifications
                 {
                     Amount = _amount,
                     Delay = _delay,
@@ -1010,7 +1010,7 @@ namespace AindVrForagingDataSchema.Task
     
         private Odor _odorSpecifications;
     
-        private Reward _rewardSpecifications;
+        private RewardSpecifications _rewardSpecifications;
     
         private int _stateIndex = 0;
     
@@ -1061,7 +1061,7 @@ namespace AindVrForagingDataSchema.Task
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rewardSpecifications")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardSpecifications")]
-        public Reward RewardSpecifications
+        public RewardSpecifications RewardSpecifications
         {
             get
             {
@@ -2841,7 +2841,7 @@ namespace AindVrForagingDataSchema.Task
     
         private TruncatedExponential _distanceToReward = new TruncatedExponential();
     
-        private Reward _reward;
+        private RewardSpecifications _reward;
     
         private double? _contrast;
     
@@ -2863,7 +2863,7 @@ namespace AindVrForagingDataSchema.Task
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward")]
-        public Reward Reward
+        public RewardSpecifications Reward
         {
             get
             {
@@ -3301,9 +3301,9 @@ namespace AindVrForagingDataSchema.Task
             return Process<VirtualSite>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Reward> source)
+        public System.IObservable<string> Process(System.IObservable<RewardSpecifications> source)
         {
-            return Process<Reward>(source);
+            return Process<RewardSpecifications>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<TruncationParameters> source)
@@ -3535,7 +3535,7 @@ namespace AindVrForagingDataSchema.Task
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
@@ -3637,9 +3637,9 @@ namespace AindVrForagingDataSchema.Task
             return Process<VirtualSite>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Reward> source)
+        public System.IObservable<string> Process(System.IObservable<RewardSpecifications> source)
         {
-            return Process<Reward>(source);
+            return Process<RewardSpecifications>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<TruncationParameters> source)
@@ -3871,7 +3871,7 @@ namespace AindVrForagingDataSchema.Task
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CorridorSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSpecifications>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]

@@ -177,10 +177,9 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:Reward">
-                <p1:Amount>0</p1:Amount>
-                <p1:Delay>0</p1:Delay>
+              <Combinator xsi:type="p1:RewardSpecifications">
                 <p1:Probability>1</p1:Probability>
+                <p1:Amount>0</p1:Amount>
               </Combinator>
             </Expression>
             <Expression xsi:type="PropertyMapping">
