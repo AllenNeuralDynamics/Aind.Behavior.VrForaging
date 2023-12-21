@@ -21,6 +21,9 @@
     "harpSynchronizer": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
     },
+    "harpAnalogInput": {
+      "$ref": "aind-vr-foraging-hardware.json#/definitions/harpBoard"
+    },
     "faceCamera": {
       "$ref": "aind-vr-foraging-hardware.json#/definitions/spinnakerCamera"
     },
