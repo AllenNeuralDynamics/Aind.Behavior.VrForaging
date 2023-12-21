@@ -5829,9 +5829,7 @@ Item2 as Start
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
-                      <Property Name="Minimum" Selector="Minimum" />
-                      <Property Name="Maximum" Selector="Maximum" />
-                      <Property Name="Average" Selector="Mean" />
+                      <Property Name="LengthDistribution" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -5863,9 +5861,6 @@ Item2 as Start
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddInterPatchSite.bonsai">
-                    <Minimum>10</Minimum>
-                    <Maximum>50</Maximum>
-                    <Average>25</Average>
                     <Label>InterPatchSite</Label>
                   </Expression>
                   <Expression xsi:type="rx:SelectMany">
@@ -5923,9 +5918,7 @@ Item2 as Start
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
-                            <Property Name="Minimum" Selector="Minimum" />
-                            <Property Name="Maximum" Selector="Maximum" />
-                            <Property Name="Average" Selector="Mean" />
+                            <Property Name="LengthDistribution" />
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -5954,9 +5947,6 @@ Item2 as Start
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
-                          <Minimum>10</Minimum>
-                          <Maximum>30</Maximum>
-                          <Average>18</Average>
                           <Label>GapSite</Label>
                         </Expression>
                         <Expression xsi:type="rx:BehaviorSubject">
@@ -6050,9 +6040,7 @@ Item2 as Start
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
-                            <Property Name="Minimum" Selector="Minimum" />
-                            <Property Name="Maximum" Selector="Maximum" />
-                            <Property Name="Average" Selector="Mean" />
+                            <Property Name="LengthDistribution" />
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -6081,9 +6069,6 @@ Item2 as Start
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddRewardSite.bonsai">
-                          <Minimum>15</Minimum>
-                          <Maximum>15</Maximum>
-                          <Average>15</Average>
                           <Label>RewardSite</Label>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -6094,9 +6079,7 @@ Item2 as Start
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
-                            <Property Name="Minimum" Selector="Minimum" />
-                            <Property Name="Maximum" Selector="Maximum" />
-                            <Property Name="Average" Selector="Mean" />
+                            <Property Name="LengthDistribution" />
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -6125,9 +6108,6 @@ Item2 as Start
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
-                          <Minimum>10</Minimum>
-                          <Maximum>30</Maximum>
-                          <Average>18</Average>
                           <Label>GapSite</Label>
                         </Expression>
                         <Expression xsi:type="rx:SelectMany">
