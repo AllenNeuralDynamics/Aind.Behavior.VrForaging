@@ -12,7 +12,7 @@
     "virtualSite": {
       "$ref": "aind-vr-foraging-common.json#/definitions/virtualSite"
     },
-    "reward": {
+    "rewardSpecifications": {
       "$ref": "aind-vr-foraging-common.json#/definitions/rewardSpecifications"
     },
     "taskStage": {
@@ -122,7 +122,7 @@
                 "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
             },
             "reward": {
-              "$ref": "#/definitions/reward"
+              "$ref": "#/definitions/rewardSpecifications"
             },
             "contrast": {
               "type": ["number", "null"],
