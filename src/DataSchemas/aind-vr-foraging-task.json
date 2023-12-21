@@ -145,7 +145,7 @@
                   "default": "Gap"
                 },
                 "lengthDistribution": {
-                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                  "$ref": "#/definitions/distributionsPackage/definitions/exponentialDistribution"
                 }
               },
               "type": "object"
@@ -161,7 +161,7 @@
                   "default": "InterPatch"
                 },
                 "lengthDistribution": {
-                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                  "$ref": "#/definitions/distributionsPackage/definitions/exponentialDistribution"
                 }
               },
               "type": "object"
@@ -177,7 +177,7 @@
                   "default": "Reward"
                 },
                 "lengthDistribution": {
-                  "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                  "$ref": "#/definitions/distributionsPackage/definitions/exponentialDistribution"
                 }
               },
               "type": "object"

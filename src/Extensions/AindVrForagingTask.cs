@@ -1203,72 +1203,6 @@ namespace AindVrForagingDataSchema.Task
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class TruncatedExponential
-    {
-    
-        private double _maximum = 1D;
-    
-        private double _mean = 0.5D;
-    
-        private double _minimum = 0D;
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("maximum")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maximum")]
-        public double Maximum
-        {
-            get
-            {
-                return _maximum;
-            }
-            set
-            {
-                _maximum = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("mean")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mean")]
-        public double Mean
-        {
-            get
-            {
-                return _mean;
-            }
-            set
-            {
-                _mean = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="minimum")]
-        public double Minimum
-        {
-            get
-            {
-                return _minimum;
-            }
-            set
-            {
-                _minimum = value;
-            }
-        }
-    
-        public System.IObservable<TruncatedExponential> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new TruncatedExponential
-                {
-                    Maximum = _maximum,
-                    Mean = _mean,
-                    Minimum = _minimum
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingTask
     {
     
@@ -3079,7 +3013,7 @@ namespace AindVrForagingDataSchema.Task
     
         private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.Gap;
     
-        private TruncatedExponential _lengthDistribution;
+        private ExponentialDistribution _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
@@ -3114,7 +3048,7 @@ namespace AindVrForagingDataSchema.Task
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
-        public TruncatedExponential LengthDistribution
+        public ExponentialDistribution LengthDistribution
         {
             get
             {
@@ -3148,7 +3082,7 @@ namespace AindVrForagingDataSchema.Task
     
         private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.InterPatch;
     
-        private TruncatedExponential _lengthDistribution;
+        private ExponentialDistribution _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
@@ -3183,7 +3117,7 @@ namespace AindVrForagingDataSchema.Task
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
-        public TruncatedExponential LengthDistribution
+        public ExponentialDistribution LengthDistribution
         {
             get
             {
@@ -3217,7 +3151,7 @@ namespace AindVrForagingDataSchema.Task
     
         private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.Reward;
     
-        private TruncatedExponential _lengthDistribution;
+        private ExponentialDistribution _lengthDistribution;
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
@@ -3252,7 +3186,7 @@ namespace AindVrForagingDataSchema.Task
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
-        public TruncatedExponential LengthDistribution
+        public ExponentialDistribution LengthDistribution
         {
             get
             {
@@ -3379,11 +3313,6 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
         {
             return Process<Vector3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<TruncatedExponential> source)
-        {
-            return Process<TruncatedExponential>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<AindVrForagingTask> source)
@@ -3551,7 +3480,6 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTask>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Textures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
@@ -3715,11 +3643,6 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
         {
             return Process<Vector3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<TruncatedExponential> source)
-        {
-            return Process<TruncatedExponential>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<AindVrForagingTask> source)
@@ -3887,7 +3810,6 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncatedExponential>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTask>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Textures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odor>))]
