@@ -2839,7 +2839,7 @@ namespace AindVrForagingDataSchema.Task
     public partial class HabituationSettings
     {
     
-        private TruncatedExponential _distanceToReward = new TruncatedExponential();
+        private ExponentialDistribution _distanceToReward = new ExponentialDistribution();
     
         private RewardSpecifications _reward;
     
@@ -2848,7 +2848,7 @@ namespace AindVrForagingDataSchema.Task
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("distanceToReward", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distanceToReward")]
-        public TruncatedExponential DistanceToReward
+        public ExponentialDistribution DistanceToReward
         {
             get
             {

@@ -119,7 +119,7 @@
           "type": ["null", "object"],
           "properties": {
             "distanceToReward": {
-                "$ref": "aind-vr-foraging-common.json#/definitions/truncatedExponential"
+                "$ref": "#/definitions/distributionsPackage/definitions/exponentialDistribution"
             },
             "reward": {
               "$ref": "#/definitions/rewardSpecifications"
