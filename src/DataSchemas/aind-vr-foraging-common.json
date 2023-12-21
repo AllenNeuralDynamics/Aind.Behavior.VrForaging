@@ -2,6 +2,65 @@
   "$id": "aind-vr-foraging-common",
   "$schema": "https://json-schema.org/draft-09/schema",
   "definitions": {
+    "siteLabel": {
+      "enum": ["Unspecified", "Gap", "InterPatch", "Reward"],
+      "type": "string"
+    },
+    "virtualSiteGeneration": {
+      "properties": {
+        "gapSite": {
+          "properties": {
+            "contrast": {
+              "type": ["number", "null"],
+              "default": null
+            },
+            "label": {
+              "$ref": "#/definitions/siteLabel",
+              "default": "Gap"
+            },
+            "lengthDistribution": {
+              "$ref": "dataclasses-distributions.json#/definitions/exponentialDistribution"
+            }
+          },
+          "type": "object"
+        },
+        "interPatchSite": {
+          "properties": {
+            "contrast": {
+              "type": ["number", "null"],
+              "default": null
+            },
+            "label": {
+              "$ref": "#/definitions/siteLabel",
+              "default": "InterPatch"
+            },
+            "lengthDistribution": {
+              "$ref": "dataclasses-distributions.json#/definitions/exponentialDistribution"
+            }
+          },
+          "type": "object"
+        },
+        "rewardSite": {
+          "properties": {
+            "contrast": {
+              "type": ["number", "null"],
+              "default": null
+            },
+            "label": {
+              "$ref": "#/definitions/siteLabel",
+              "default": "Reward"
+            },
+            "lengthDistribution": {
+              "$ref": "dataclasses-distributions.json#/definitions/exponentialDistribution"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": ["interPatchSite", "rewardSite", "gapSite"],
+      "default": null,
+      "type": ["null", "object"]
+    },
     "numericalUpdater":{
       "type": "object",
       "properties": {
@@ -148,6 +207,9 @@
           "default": 0,
           "minimum": 0,
           "type": "integer"
+        },
+        "virtualSiteGeneration": {
+          "$ref": "#/definitions/virtualSiteGeneration"
         }
       },
       "type": "object"

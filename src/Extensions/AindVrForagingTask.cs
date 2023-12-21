@@ -1014,6 +1014,8 @@ namespace AindVrForagingDataSchema.Task
     
         private int _stateIndex = 0;
     
+        private VirtualSiteGeneration _virtualSiteGeneration;
+    
         [Newtonsoft.Json.JsonPropertyAttribute("label")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
         public string Label
@@ -1087,6 +1089,21 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("virtualSiteGeneration")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="virtualSiteGeneration")]
+        public VirtualSiteGeneration VirtualSiteGeneration
+        {
+            get
+            {
+                return _virtualSiteGeneration;
+            }
+            set
+            {
+                _virtualSiteGeneration = value;
+            }
+        }
+    
         public System.IObservable<PatchStatistics> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -1096,7 +1113,8 @@ namespace AindVrForagingDataSchema.Task
                     PatchRewardFunction = _patchRewardFunction,
                     OdorSpecifications = _odorSpecifications,
                     RewardSpecifications = _rewardSpecifications,
-                    StateIndex = _stateIndex
+                    StateIndex = _stateIndex,
+                    VirtualSiteGeneration = _virtualSiteGeneration
                 }));
         }
     }
@@ -2327,6 +2345,75 @@ namespace AindVrForagingDataSchema.Task
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class VirtualSiteGeneration
+    {
+    
+        private GapSite _gapSite = new GapSite();
+    
+        private InterPatchSite _interPatchSite = new InterPatchSite();
+    
+        private RewardSite _rewardSite = new RewardSite();
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("gapSite", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gapSite")]
+        public GapSite GapSite
+        {
+            get
+            {
+                return _gapSite;
+            }
+            set
+            {
+                _gapSite = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("interPatchSite", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="interPatchSite")]
+        public InterPatchSite InterPatchSite
+        {
+            get
+            {
+                return _interPatchSite;
+            }
+            set
+            {
+                _interPatchSite = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rewardSite", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardSite")]
+        public RewardSite RewardSite
+        {
+            get
+            {
+                return _rewardSite;
+            }
+            set
+            {
+                _rewardSite = value;
+            }
+        }
+    
+        public System.IObservable<VirtualSiteGeneration> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new VirtualSiteGeneration
+                {
+                    GapSite = _gapSite,
+                    InterPatchSite = _interPatchSite,
+                    RewardSite = _rewardSite
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class EnvironmentStatistics
     {
     
@@ -2409,8 +2496,6 @@ namespace AindVrForagingDataSchema.Task
     
         private HabituationSettings _habituationSettings;
     
-        private VirtualSiteGeneration _virtualSiteGeneration;
-    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("movableSpoutControl")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="movableSpoutControl")]
@@ -2486,21 +2571,6 @@ namespace AindVrForagingDataSchema.Task
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("virtualSiteGeneration")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="virtualSiteGeneration")]
-        public VirtualSiteGeneration VirtualSiteGeneration
-        {
-            get
-            {
-                return _virtualSiteGeneration;
-            }
-            set
-            {
-                _virtualSiteGeneration = value;
-            }
-        }
-    
         public System.IObservable<OperationControl> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -2510,8 +2580,7 @@ namespace AindVrForagingDataSchema.Task
                     OdorControl = _odorControl,
                     PositionControl = _positionControl,
                     TaskStage = _taskStage,
-                    HabituationSettings = _habituationSettings,
-                    VirtualSiteGeneration = _virtualSiteGeneration
+                    HabituationSettings = _habituationSettings
                 }));
         }
     }
@@ -2562,6 +2631,213 @@ namespace AindVrForagingDataSchema.Task
                 {
                     Name = _name,
                     TextureSize = _textureSize
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class GapSite
+    {
+    
+        private double? _contrast;
+    
+        private Label _label = AindVrForagingDataSchema.Task.Label.Gap;
+    
+        private ExponentialDistribution _lengthDistribution;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
+        public double? Contrast
+        {
+            get
+            {
+                return _contrast;
+            }
+            set
+            {
+                _contrast = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
+        public Label Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
+        public ExponentialDistribution LengthDistribution
+        {
+            get
+            {
+                return _lengthDistribution;
+            }
+            set
+            {
+                _lengthDistribution = value;
+            }
+        }
+    
+        public System.IObservable<GapSite> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new GapSite
+                {
+                    Contrast = _contrast,
+                    Label = _label,
+                    LengthDistribution = _lengthDistribution
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class InterPatchSite
+    {
+    
+        private double? _contrast;
+    
+        private Label _label = AindVrForagingDataSchema.Task.Label.InterPatch;
+    
+        private ExponentialDistribution _lengthDistribution;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
+        public double? Contrast
+        {
+            get
+            {
+                return _contrast;
+            }
+            set
+            {
+                _contrast = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
+        public Label Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
+        public ExponentialDistribution LengthDistribution
+        {
+            get
+            {
+                return _lengthDistribution;
+            }
+            set
+            {
+                _lengthDistribution = value;
+            }
+        }
+    
+        public System.IObservable<InterPatchSite> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new InterPatchSite
+                {
+                    Contrast = _contrast,
+                    Label = _label,
+                    LengthDistribution = _lengthDistribution
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class RewardSite
+    {
+    
+        private double? _contrast;
+    
+        private Label _label = AindVrForagingDataSchema.Task.Label.Reward;
+    
+        private ExponentialDistribution _lengthDistribution;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
+        public double? Contrast
+        {
+            get
+            {
+                return _contrast;
+            }
+            set
+            {
+                _contrast = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
+        public Label Label
+        {
+            get
+            {
+                return _label;
+            }
+            set
+            {
+                _label = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
+        public ExponentialDistribution LengthDistribution
+        {
+            get
+            {
+                return _lengthDistribution;
+            }
+            set
+            {
+                _lengthDistribution = value;
+            }
+        }
+    
+        public System.IObservable<RewardSite> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new RewardSite
+                {
+                    Contrast = _contrast,
+                    Label = _label,
+                    LengthDistribution = _lengthDistribution
                 }));
         }
     }
@@ -2775,7 +3051,7 @@ namespace AindVrForagingDataSchema.Task
     
         private ExponentialDistribution _distanceToReward = new ExponentialDistribution();
     
-        private RewardSpecifications _reward;
+        private RewardSpecifications _rewardSpecifications;
     
         private double? _contrast;
     
@@ -2795,17 +3071,17 @@ namespace AindVrForagingDataSchema.Task
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("reward", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward")]
-        public RewardSpecifications Reward
+        [Newtonsoft.Json.JsonPropertyAttribute("rewardSpecifications")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardSpecifications")]
+        public RewardSpecifications RewardSpecifications
         {
             get
             {
-                return _reward;
+                return _rewardSpecifications;
             }
             set
             {
-                _reward = value;
+                _rewardSpecifications = value;
             }
         }
     
@@ -2830,77 +3106,8 @@ namespace AindVrForagingDataSchema.Task
                 new HabituationSettings
                 {
                     DistanceToReward = _distanceToReward,
-                    Reward = _reward,
+                    RewardSpecifications = _rewardSpecifications,
                     Contrast = _contrast
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class VirtualSiteGeneration
-    {
-    
-        private GapSite _gapSite = new GapSite();
-    
-        private InterPatchSite _interPatchSite = new InterPatchSite();
-    
-        private RewardSite _rewardSite = new RewardSite();
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("gapSite", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gapSite")]
-        public GapSite GapSite
-        {
-            get
-            {
-                return _gapSite;
-            }
-            set
-            {
-                _gapSite = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("interPatchSite", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="interPatchSite")]
-        public InterPatchSite InterPatchSite
-        {
-            get
-            {
-                return _interPatchSite;
-            }
-            set
-            {
-                _interPatchSite = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("rewardSite", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardSite")]
-        public RewardSite RewardSite
-        {
-            get
-            {
-                return _rewardSite;
-            }
-            set
-            {
-                _rewardSite = value;
-            }
-        }
-    
-        public System.IObservable<VirtualSiteGeneration> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new VirtualSiteGeneration
-                {
-                    GapSite = _gapSite,
-                    InterPatchSite = _interPatchSite,
-                    RewardSite = _rewardSite
                 }));
         }
     }
@@ -2955,6 +3162,27 @@ namespace AindVrForagingDataSchema.Task
     }
 
 
+    public enum Label
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Unspecified")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Unspecified")]
+        Unspecified = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Gap")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Gap")]
+        Gap = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="InterPatch")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="InterPatch")]
+        InterPatch = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Reward")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Reward")]
+        Reward = 3,
+    }
+
+
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class StopResponseConfig
@@ -2999,213 +3227,6 @@ namespace AindVrForagingDataSchema.Task
                 {
                     FrequencyFilterCutoff = _frequencyFilterCutoff,
                     VelocityThreshold = _velocityThreshold
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class GapSite
-    {
-    
-        private double? _contrast;
-    
-        private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.Gap;
-    
-        private ExponentialDistribution _lengthDistribution;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
-        public double? Contrast
-        {
-            get
-            {
-                return _contrast;
-            }
-            set
-            {
-                _contrast = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("label")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
-        public SiteLabel Label
-        {
-            get
-            {
-                return _label;
-            }
-            set
-            {
-                _label = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
-        public ExponentialDistribution LengthDistribution
-        {
-            get
-            {
-                return _lengthDistribution;
-            }
-            set
-            {
-                _lengthDistribution = value;
-            }
-        }
-    
-        public System.IObservable<GapSite> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new GapSite
-                {
-                    Contrast = _contrast,
-                    Label = _label,
-                    LengthDistribution = _lengthDistribution
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class InterPatchSite
-    {
-    
-        private double? _contrast;
-    
-        private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.InterPatch;
-    
-        private ExponentialDistribution _lengthDistribution;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
-        public double? Contrast
-        {
-            get
-            {
-                return _contrast;
-            }
-            set
-            {
-                _contrast = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("label")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
-        public SiteLabel Label
-        {
-            get
-            {
-                return _label;
-            }
-            set
-            {
-                _label = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
-        public ExponentialDistribution LengthDistribution
-        {
-            get
-            {
-                return _lengthDistribution;
-            }
-            set
-            {
-                _lengthDistribution = value;
-            }
-        }
-    
-        public System.IObservable<InterPatchSite> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new InterPatchSite
-                {
-                    Contrast = _contrast,
-                    Label = _label,
-                    LengthDistribution = _lengthDistribution
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class RewardSite
-    {
-    
-        private double? _contrast;
-    
-        private SiteLabel _label = AindVrForagingDataSchema.Task.SiteLabel.Reward;
-    
-        private ExponentialDistribution _lengthDistribution;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="contrast")]
-        public double? Contrast
-        {
-            get
-            {
-                return _contrast;
-            }
-            set
-            {
-                _contrast = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("label")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
-        public SiteLabel Label
-        {
-            get
-            {
-                return _label;
-            }
-            set
-            {
-                _label = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("lengthDistribution")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lengthDistribution")]
-        public ExponentialDistribution LengthDistribution
-        {
-            get
-            {
-                return _lengthDistribution;
-            }
-            set
-            {
-                _lengthDistribution = value;
-            }
-        }
-    
-        public System.IObservable<RewardSite> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new RewardSite
-                {
-                    Contrast = _contrast,
-                    Label = _label,
-                    LengthDistribution = _lengthDistribution
                 }));
         }
     }
@@ -3390,6 +3411,11 @@ namespace AindVrForagingDataSchema.Task
             return Process<PatchRewardFunction>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<VirtualSiteGeneration> source)
+        {
+            return Process<VirtualSiteGeneration>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
@@ -3403,6 +3429,21 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<Floor> source)
         {
             return Process<Floor>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<GapSite> source)
+        {
+            return Process<GapSite>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<InterPatchSite> source)
+        {
+            return Process<InterPatchSite>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RewardSite> source)
+        {
+            return Process<RewardSite>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
@@ -3425,11 +3466,6 @@ namespace AindVrForagingDataSchema.Task
             return Process<HabituationSettings>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<VirtualSiteGeneration> source)
-        {
-            return Process<VirtualSiteGeneration>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<TextureSize> source)
         {
             return Process<TextureSize>(source);
@@ -3438,21 +3474,6 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<StopResponseConfig> source)
         {
             return Process<StopResponseConfig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<GapSite> source)
-        {
-            return Process<GapSite>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<InterPatchSite> source)
-        {
-            return Process<InterPatchSite>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<RewardSite> source)
-        {
-            return Process<RewardSite>(source);
         }
     }
 
@@ -3495,19 +3516,19 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<StopResponseConfig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSite>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -3720,6 +3741,11 @@ namespace AindVrForagingDataSchema.Task
             return Process<PatchRewardFunction>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<VirtualSiteGeneration> source)
+        {
+            return Process<VirtualSiteGeneration>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
@@ -3733,6 +3759,21 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<Floor> source)
         {
             return Process<Floor>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<GapSite> source)
+        {
+            return Process<GapSite>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<InterPatchSite> source)
+        {
+            return Process<InterPatchSite>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RewardSite> source)
+        {
+            return Process<RewardSite>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
@@ -3755,11 +3796,6 @@ namespace AindVrForagingDataSchema.Task
             return Process<HabituationSettings>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<VirtualSiteGeneration> source)
-        {
-            return Process<VirtualSiteGeneration>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<TextureSize> source)
         {
             return Process<TextureSize>(source);
@@ -3768,21 +3804,6 @@ namespace AindVrForagingDataSchema.Task
         public System.IObservable<string> Process(System.IObservable<StopResponseConfig> source)
         {
             return Process<StopResponseConfig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<GapSite> source)
-        {
-            return Process<GapSite>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<InterPatchSite> source)
-        {
-            return Process<InterPatchSite>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<RewardSite> source)
-        {
-            return Process<RewardSite>(source);
         }
     }
 
@@ -3825,19 +3846,19 @@ namespace AindVrForagingDataSchema.Task
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Floor>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGeneration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TextureSize>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<StopResponseConfig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GapSite>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterPatchSite>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSite>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

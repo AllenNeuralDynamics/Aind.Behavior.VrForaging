@@ -121,7 +121,7 @@
             "distanceToReward": {
                 "$ref": "#/definitions/distributionsPackage/definitions/exponentialDistribution"
             },
-            "reward": {
+            "rewardSpecifications": {
               "$ref": "#/definitions/rewardSpecifications"
             },
             "contrast": {
@@ -131,61 +131,6 @@
           },
           "default": null,
           "required": ["distanceToReward", "reward"]
-        },
-        "virtualSiteGeneration": {
-          "properties": {
-            "gapSite": {
-              "properties": {
-                "contrast": {
-                  "type": ["number", "null"],
-                  "default": null
-                },
-                "label": {
-                  "$ref": "#/definitions/siteLabel",
-                  "default": "Gap"
-                },
-                "lengthDistribution": {
-                  "$ref": "#/definitions/distributionsPackage/definitions/exponentialDistribution"
-                }
-              },
-              "type": "object"
-            },
-            "interPatchSite": {
-              "properties": {
-                "contrast": {
-                  "type": ["number", "null"],
-                  "default": null
-                },
-                "label": {
-                  "$ref": "#/definitions/siteLabel",
-                  "default": "InterPatch"
-                },
-                "lengthDistribution": {
-                  "$ref": "#/definitions/distributionsPackage/definitions/exponentialDistribution"
-                }
-              },
-              "type": "object"
-            },
-            "rewardSite": {
-              "properties": {
-                "contrast": {
-                  "type": ["number", "null"],
-                  "default": null
-                },
-                "label": {
-                  "$ref": "#/definitions/siteLabel",
-                  "default": "Reward"
-                },
-                "lengthDistribution": {
-                  "$ref": "#/definitions/distributionsPackage/definitions/exponentialDistribution"
-                }
-              },
-              "type": "object"
-            }
-          },
-          "required": ["interPatchSite", "rewardSite", "gapSite"],
-          "default": null,
-          "type": ["null", "object"]
         }
       },
       "type": "object",
