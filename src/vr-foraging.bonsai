@@ -7988,11 +7988,15 @@ Item5 as TotalReward)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="viz:TableLayoutPanelBuilder">
                     <viz:Name>LauncherControl</viz:Name>
-                    <viz:ColumnCount>3</viz:ColumnCount>
-                    <viz:RowCount>1</viz:RowCount>
+                    <viz:ColumnCount>2</viz:ColumnCount>
+                    <viz:RowCount>2</viz:RowCount>
                     <viz:ColumnStyles />
                     <viz:RowStyles />
-                    <viz:CellSpans />
+                    <viz:CellSpans>
+                      <viz:CellSpan ColumnSpan="1" RowSpan="2" />
+                      <viz:CellSpan ColumnSpan="1" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="1" RowSpan="1" />
+                    </viz:CellSpans>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="Combinator">
@@ -8208,18 +8212,18 @@ Item5 as TotalReward)</scr:Expression>
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p17:PropertyGridSource" />
+                        </Expression>
+                        <Expression xsi:type="VisualizerMapping">
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:PropertyGridVisualizer" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p17:PushButton">
                             <p17:Label>Calibrate</p17:Label>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
                           <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p17:PropertyGridSource" />
-                        </Expression>
-                        <Expression xsi:type="VisualizerMapping">
-                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:PropertyGridVisualizer" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p17:ToggleButton">
@@ -8229,22 +8233,17 @@ Item5 as TotalReward)</scr:Expression>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
-                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:ToggleButtonVisualizer" />
                         </Expression>
                         <Expression xsi:type="viz:TableLayoutPanelBuilder">
                           <viz:Name>ValveCalibration</viz:Name>
                           <viz:ColumnCount>2</viz:ColumnCount>
                           <viz:RowCount>2</viz:RowCount>
-                          <viz:ColumnStyles>
-                            <viz:ColumnStyle>
-                              <viz:SizeType>Percent</viz:SizeType>
-                              <viz:Width>0.25</viz:Width>
-                            </viz:ColumnStyle>
-                          </viz:ColumnStyles>
+                          <viz:ColumnStyles />
                           <viz:RowStyles />
                           <viz:CellSpans>
-                            <viz:CellSpan ColumnSpan="1" RowSpan="1" />
                             <viz:CellSpan ColumnSpan="1" RowSpan="2" />
+                            <viz:CellSpan ColumnSpan="1" RowSpan="1" />
                             <viz:CellSpan ColumnSpan="1" RowSpan="1" />
                           </viz:CellSpans>
                         </Expression>
@@ -8403,9 +8402,9 @@ Item5 as TotalReward)</scr:Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="0" To="9" Label="Source1" />
                         <Edge From="1" To="6" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="2" To="9" Label="Source1" />
                         <Edge From="3" To="6" Label="Source2" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="4" To="8" Label="Source1" />
@@ -8459,7 +8458,7 @@ Item5 as TotalReward)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="viz:TableLayoutPanelBuilder">
                     <viz:Name>PreSessionGui</viz:Name>
-                    <viz:ColumnCount>2</viz:ColumnCount>
+                    <viz:ColumnCount>1</viz:ColumnCount>
                     <viz:RowCount>2</viz:RowCount>
                     <viz:ColumnStyles>
                       <viz:ColumnStyle>
@@ -8467,7 +8466,16 @@ Item5 as TotalReward)</scr:Expression>
                         <viz:Width>0.25</viz:Width>
                       </viz:ColumnStyle>
                     </viz:ColumnStyles>
-                    <viz:RowStyles />
+                    <viz:RowStyles>
+                      <viz:RowStyle>
+                        <viz:SizeType>Percent</viz:SizeType>
+                        <viz:Height>0.8</viz:Height>
+                      </viz:RowStyle>
+                      <viz:RowStyle>
+                        <viz:SizeType>Percent</viz:SizeType>
+                        <viz:Height>0.2</viz:Height>
+                      </viz:RowStyle>
+                    </viz:RowStyles>
                     <viz:CellSpans>
                       <viz:CellSpan ColumnSpan="1" RowSpan="1" />
                       <viz:CellSpan ColumnSpan="1" RowSpan="2" />
