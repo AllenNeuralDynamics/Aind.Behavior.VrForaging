@@ -34,11 +34,18 @@ operationControl:
   taskStage: Habituation
   habituationSettings:
     distanceToReward:
-      maximum: 10
-      mean: 10
-      minimum: 10
+      family: exponential
+      exponentialParameters:
+        rate: 1
+        truncate:
+          isTruncated: true
+          max: 100
+          min: 0
+        scale:
+          scalingParameters.scale: 1
+          scalingParameters.shift: 0
     contrast: 0.5
-    reward:
+    rewardSpecifications:
       probability: 1
       amount: 50
       operantLogic:
@@ -59,28 +66,6 @@ operationControl:
       velocityThreshold: 10
   odorControl:
     valveMaxOpenTime: 5.0
-  virtualSiteGeneration:
-   gapSite:
-     contrast: 0.5
-     label: Gap
-     lengthDistribution:
-       maximum: 30
-       mean: 18
-       minimum: 10
-   rewardSite:
-     contrast: 0.5
-     label: Reward
-     lengthDistribution:
-       maximum: 15
-       mean: 15
-       minimum: 15
-   interPatchSite:
-     contrast: 1
-     label: "InterPatch"
-     lengthDistribution:
-       maximum: 50
-       mean: 25
-       minimum: 10
 environmentStatistics:
   firstState: 0
   transitionMatrix:
@@ -115,6 +100,49 @@ environmentStatistics:
           stopDuration: 1
           timeToCollect: 1000000
           distanceThresholdToBeStatic: 0.1
+      virtualSiteGeneration:
+        gapSite:
+          contrast: 0.5
+          label: Gap
+          lengthDistribution:
+            family: exponential
+            exponentialParameters:
+              rate: 1
+              truncate:
+                isTruncated: true
+                max: 100
+                min: 0
+              scale:
+                scalingParameters.scale: 1
+                scalingParameters.shift: 0
+        rewardSite:
+          contrast: 0.5
+          label: Reward
+          lengthDistribution:
+            family: exponential
+            exponentialParameters:
+              rate: 1
+              truncate:
+                isTruncated: true
+                max: 100
+                min: 0
+              scale:
+                scalingParameters.scale: 1
+                scalingParameters.shift: 0
+        interPatchSite:
+          contrast: 1
+          label: "InterPatch"
+          lengthDistribution:
+            family: exponential
+            exponentialParameters:
+              rate: 1
+              truncate:
+                isTruncated: true
+                max: 100
+                min: 0
+              scale:
+                scalingParameters.scale: 1
+                scalingParameters.shift: 0
     - label: "Bananas"
       stateIndex: 1
       patchRewardFunction:
@@ -142,3 +170,46 @@ environmentStatistics:
           stopDuration: 1
           timeToCollect: 1000000
           distanceThresholdToBeStatic: 0.1
+      virtualSiteGeneration:
+        gapSite:
+          contrast: 0.5
+          label: Gap
+          lengthDistribution:
+            family: exponential
+            exponentialParameters:
+              rate: 1
+              truncate:
+                isTruncated: true
+                max: 100
+                min: 0
+              scale:
+                scalingParameters.scale: 1
+                scalingParameters.shift: 0
+        rewardSite:
+          contrast: 0.5
+          label: Reward
+          lengthDistribution:
+            family: exponential
+            exponentialParameters:
+              rate: 1
+              truncate:
+                isTruncated: true
+                max: 100
+                min: 0
+              scale:
+                scalingParameters.scale: 1
+                scalingParameters.shift: 0
+        interPatchSite:
+          contrast: 1
+          label: "InterPatch"
+          lengthDistribution:
+            family: exponential
+            exponentialParameters:
+              rate: 1
+              truncate:
+                isTruncated: true
+                max: 100
+                min: 0
+              scale:
+                scalingParameters.scale: 1
+                scalingParameters.shift: 0
