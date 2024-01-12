@@ -10,6 +10,9 @@ metadata:
   version: "0.0.1-preview20230831"
   commitHash: ""
   rngSeed: null
+  allowDirty: false
+  remoteDataPath: null
+  skipProtocolValidation: false
 behaviorSession:
   describedBy: https://raw.githubusercontent.com/AllenNeuralDynamics/aind-data-schema/main/src/aind_data_schema/behavior/behavior_session.py
   schema_version: "0.0.7"
