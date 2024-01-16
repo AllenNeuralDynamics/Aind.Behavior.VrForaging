@@ -1,4 +1,6 @@
 # Import core types
+from __future__ import annotations
+
 from enum import Enum
 from typing import Annotated, Literal, Optional, Union
 
@@ -8,7 +10,7 @@ from pydantic import Field
 
 
 class TruncationParameters(AindModel):
-    isTruncated: bool = Field(default=False, description="Whether the distribution is truncated")
+    is_truncated: bool = Field(default=False, description="Whether the distribution is truncated")
     min: float = Field(default=0, description="Minimum value of the sampled distribution")
     max: float = Field(default=0, description="Maximum value of the sampled distribution")
 
@@ -30,121 +32,130 @@ class DistributionFamily(str, Enum):
     POISSON = "Poisson"
 
 
-class DistributionParameters(AindModel):
-    pass
+class DistributionParametersBase(AindModel):
+    family: Annotated[DistributionFamily, Field(description="Family of the distribution")]
 
 
 class DistributionBase(AindModel):
     family: Annotated[DistributionFamily, Field(description="Family of the distribution")]
-    distributionParameters: Annotated[DistributionParameters, Field(description="Parameters of the distribution")]
-    truncationParameters: Annotated[
+    distribution_parameters: Annotated[DistributionParameters, Field(description="Parameters of the distribution")]
+    truncation_parameters: Annotated[
         Optional[TruncationParameters], Field(description="Truncation parameters of the distribution")
     ] = None
-    scalingParameters: Annotated[
+    scaling_parameters: Annotated[
         Optional[ScalingParameters], Field(description="Scaling parameters of the distribution")
     ] = None
 
 
-class ScalarDistributionParameter(DistributionParameters):
+class ScalarDistributionParameter(DistributionParametersBase):
+    family: Literal[DistributionFamily.SCALAR] = DistributionFamily.SCALAR
     value: float = Field(default=0, description="The static value of the distribution")
 
 
 class Scalar(DistributionBase):
     family: Literal[DistributionFamily.SCALAR] = DistributionFamily.SCALAR
-    distributionParameters: ScalarDistributionParameter = Field(
+    distribution_parameters: ScalarDistributionParameter = Field(
         ScalarDistributionParameter(), description="Parameters of the distribution"
     )
 
 
-class NormalDistributionParameters(DistributionParameters):
+class NormalDistributionParameters(DistributionParametersBase):
+    family: Literal[DistributionFamily.NORMAL] = DistributionFamily.NORMAL
     mean: float = Field(default=0, description="Mean of the distribution")
     std: float = Field(default=0, description="Standard deviation of the distribution")
 
 
 class NormalDistribution(DistributionBase):
     family: Literal[DistributionFamily.NORMAL] = DistributionFamily.NORMAL
-    distributionParameters: Annotated[
+    distribution_parameters: Annotated[
         NormalDistributionParameters,
         Field(NormalDistributionParameters(), description="Parameters of the distribution"),
     ]
 
 
-class LogNormalDistributionParameters(DistributionParameters):
+class LogNormalDistributionParameters(DistributionParametersBase):
+    family: Literal[DistributionFamily.LOGNORMAL] = DistributionFamily.LOGNORMAL
     mean: float = Field(default=0, description="Mean of the distribution")
     std: float = Field(default=0, description="Standard deviation of the distribution")
 
 
-class LogNormalDistribution(DistributionParameters):
+class LogNormalDistribution(DistributionParametersBase):
     family: Literal[DistributionFamily.LOGNORMAL] = DistributionFamily.LOGNORMAL
-    distributionParameters: Annotated[
+    distribution_parameters: Annotated[
         LogNormalDistributionParameters,
         Field(LogNormalDistributionParameters(), description="Parameters of the distribution"),
     ]
 
 
-class UniformDistributionParameters(DistributionParameters):
+class UniformDistributionParameters(DistributionParametersBase):
+    family: Literal[DistributionFamily.UNIFORM] = DistributionFamily.UNIFORM
     min: float = Field(default=0, description="Minimum value of the distribution")
     max: float = Field(default=0, description="Maximum value of the distribution")
 
 
 class UniformDistribution(DistributionBase):
     family: Literal[DistributionFamily.UNIFORM] = DistributionFamily.UNIFORM
-    distributionParameters: Annotated[
+    distribution_parameters: Annotated[
         UniformDistributionParameters,
         Field(UniformDistributionParameters(), description="Parameters of the distribution"),
     ]
 
 
-class ExponentialDistributionParameters(DistributionParameters):
+class ExponentialDistributionParameters(DistributionParametersBase):
+    family: Literal[DistributionFamily.EXPONENTIAL] = DistributionFamily.EXPONENTIAL
     rate: float = Field(default=0, ge=0, description="Rate parameter of the distribution")
 
 
 class ExponentialDistribution(DistributionBase):
     family: Literal[DistributionFamily.EXPONENTIAL] = DistributionFamily.EXPONENTIAL
-    distributionParameters: Annotated[
+    distribution_parameters: Annotated[
         ExponentialDistributionParameters,
         Field(ExponentialDistributionParameters(), description="Parameters of the distribution"),
     ]
 
 
-class GammaDistributionParameters(DistributionParameters):
+class GammaDistributionParameters(DistributionParametersBase):
+    family: Literal[DistributionFamily.GAMMA] = DistributionFamily.GAMMA
     shape: float = Field(default=1, ge=0, description="Shape parameter of the distribution")
     rate: float = Field(default=1, ge=0, description="Rate parameter of the distribution")
 
 
 class GammaDistribution(DistributionBase):
     family: Literal[DistributionFamily.GAMMA] = DistributionFamily.GAMMA
-    distributionParameters: Annotated[
+    distribution_parameters: Annotated[
         GammaDistributionParameters, Field(GammaDistributionParameters(), description="Parameters of the distribution")
     ]
 
 
-class BinomialDistributionParameters(DistributionParameters):
+class BinomialDistributionParameters(DistributionParametersBase):
+    family: Literal[DistributionFamily.BINOMIAL] = DistributionFamily.BINOMIAL
     n: int = Field(default=1, ge=0, description="Number of trials")
     p: float = Field(default=0.5, ge=0, le=1, description="Probability of success")
 
 
 class BinomialDistribution(DistributionBase):
     family: Literal[DistributionFamily.BINOMIAL] = DistributionFamily.BINOMIAL
-    distributionParameters: Annotated[
+    distribution_parameters: Annotated[
         BinomialDistributionParameters,
         Field(BinomialDistributionParameters(), description="Parameters of the distribution"),
     ]
 
 
-class BetaDistributionParameters(DistributionParameters):
+class BetaDistributionParameters(DistributionParametersBase):
+    family: Literal[DistributionFamily.BETA] = DistributionFamily.BETA
     alpha: float = Field(default=5, ge=0, description="Alpha parameter of the distribution")
     beta: float = Field(default=5, ge=0, description="Beta parameter of the distribution")
 
 
 class BetaDistribution(DistributionBase):
     family: Literal[DistributionFamily.BETA] = DistributionFamily.BETA
-    distributionParameters: Annotated[
+    distribution_parameters: Annotated[
         BetaDistributionParameters, Field(BetaDistributionParameters(), description="Parameters of the distribution")
     ]
 
 
-class PoissonDistributionParameters(DistributionParameters):
+class PoissonDistributionParameters(DistributionParametersBase):
+    family: Literal[DistributionFamily.POISSON] = DistributionFamily.POISSON
     rate: float = Field(
         default=1, ge=0, description="Rate parameter of the Poisson process that generates the distribution"
     )
@@ -152,7 +163,7 @@ class PoissonDistributionParameters(DistributionParameters):
 
 class PoissonDistribution(DistributionBase):
     family: Literal[DistributionFamily.POISSON] = DistributionFamily.POISSON
-    distributionParameters: Annotated[
+    distribution_parameters: Annotated[
         PoissonDistributionParameters,
         Field(PoissonDistributionParameters(), description="Parameters of the distribution"),
     ]
@@ -168,6 +179,20 @@ Distribution = Annotated[
         BinomialDistribution,
         BetaDistribution,
         GammaDistribution,
+    ],
+    Field(discriminator="family"),
+]
+
+DistributionParameters = Annotated[
+    Union[
+        ScalarDistributionParameter,
+        NormalDistributionParameters,
+        LogNormalDistributionParameters,
+        ExponentialDistributionParameters,
+        PoissonDistributionParameters,
+        BinomialDistributionParameters,
+        BetaDistributionParameters,
+        GammaDistributionParameters,
     ],
     Field(discriminator="family"),
 ]
