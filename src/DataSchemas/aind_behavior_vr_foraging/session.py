@@ -15,17 +15,14 @@ class Size(AindModel):
 
 class Metadata(AindModel):
     experiment: str = Field(..., description="Name of the experiment")
-    rootPath: str = Field(..., description="Root path of the experiment")
+    root_path: str = Field(..., description="Root path of the experiment")
     subject: str = Field(..., description="Name of the subject")
     version: str = Field(..., description="Version of the experiment")
-    rngSeed: Optional[float] = Field(None, description="Seed of the random number generator")
+    rng_seed: Optional[float] = Field(None, description="Seed of the random number generator")
     notes: Optional[str] = Field(None, description="Notes about the experiment")
-    commitHash: Optional[str] = Field(None, description="Commit hash of the repository")
+    commit_hash: Optional[str] = Field(None, description="Commit hash of the repository")
 
 
 class AindVrForagingSession(AindModel):
     metadata: Annotated[Metadata, Field(description="Metadata of the session")]
     session: Annotated[Session, Field(description="Session data")]
-
-
-AindVrForagingSession.write_standard_model("test.json")
