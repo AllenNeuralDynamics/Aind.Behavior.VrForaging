@@ -243,13 +243,9 @@ class TaskLogic(AindCoreModel):
     operation_control: OperationControl = Field(description="Control of the operation")
 
 
-# class Root(BaseModel):
-#    taskLogic: TaskLogic = Field(description="Task logic")
-#    add_refs: List[VisualCorridor, VirtualSite] = Field(None, description="Additional references")
+class Root(BaseModel):
+    taskLogic: TaskLogic = Field(description="Task logic")
+    add_refs: None | VisualCorridor | VirtualSite = Field(None, description="Additional references")
 
-# class Config:
-#    json_schema_extra = {"x-abstract": "True"}
-
-
-# def build():
-#    return Root.model_json_schema()
+    class Config:
+        json_schema_extra = {"x-abstract": "True"}
