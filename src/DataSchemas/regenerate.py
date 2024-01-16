@@ -20,7 +20,7 @@ def main():
     }
     for output_model_name, model in models.items():
         with open(SCHEMA_ROOT / f"{output_model_name}.json", "w") as f:
-            json_model = json.dumps(export_schema(model), indent=2)
+            json_model = json.dumps(export_schema(model, GenerateJsonSchema), indent=2)
             json_model = json_model.replace("$defs", "definitions")
             f.write(json_model)
         cmd_return = bonsai_sgen(
