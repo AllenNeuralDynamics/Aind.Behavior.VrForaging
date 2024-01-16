@@ -1,9 +1,0 @@
-aind-data-schema==0.19.0
-jupyter
-streamlit-pydantic @ git+https://github.com/LukasMasuch/streamlit-pydantic.git
-datamodel-code-generator==0.25.1
-matplotlib
-numpy
-pandas
-Pillow==10.0.1
-erdantic==0.6.0

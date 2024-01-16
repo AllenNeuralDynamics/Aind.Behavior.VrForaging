@@ -15,6 +15,11 @@ dynamic = ["version"]
 
 dependencies = [
   "aind_behavior_rig@git+<https://github.com/AllenNeuralDynamics/Aind.Behavior.RigCalibration>#egg=main",
+  "jupyter",
+  "numpy",
+  "pandas",
+  "matplotlib",
+  "Pillow",
 ]
 
 [project.optional-dependencies]
