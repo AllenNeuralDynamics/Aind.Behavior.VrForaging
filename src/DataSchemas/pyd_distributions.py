@@ -21,6 +21,7 @@ class ScalingParameters(AindModel):
 
 
 class DistributionFamily(str, Enum):
+    SCALAR = "Scalar"
     NORMAL = "Normal"
     LOGNORMAL = "LogNormal"
     UNIFORM = "Uniform"
@@ -41,6 +42,13 @@ class Distribution(AindModel):
     truncationParameters: Annotated[Optional[TruncationParameters], Field(description="Truncation parameters of the distribution")] = None
     scalingParameters: Annotated[Optional[ScalingParameters], Field(description="Scaling parameters of the distribution")] = None
 
+
+class ScalarDistributionParameter(DistributionParameters):
+    value: float = Field(default=0, description="The static value of the distribution")
+
+class Scalar(Distribution):
+    family: Literal[DistributionFamily.SCALAR] = DistributionFamily.SCALAR
+    distributionParameters: ScalarDistributionParameter = Field(ScalarDistributionParameter(), description="Parameters of the distribution")
 
 class NormalDistributionParameters(DistributionParameters):
     mean: float = Field(default=0, description="Mean of the distribution")
