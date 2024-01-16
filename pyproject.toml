@@ -3,8 +3,8 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "aind-behavior-rig"
-description = "A library that defines AIND data schema and validates JSON files for behavior rig models."
+name = "aind-behavior-vr-foraging"
+description = "A library that defines AIND data schema for the Aind Behavior VR Foraing experiment."
 license = {text = "MIT"}
 requires-python = ">=3.11"
 classifiers = [
@@ -14,19 +14,15 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_rig@git+<https://github.com/AllenNeuralDynamics/Aind.Behavior.RigCalibration>#egg=main",
+  "aind_behavior_rig@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.RigCalibration@main",
   "jupyter",
   "numpy",
   "pandas",
   "matplotlib",
-  "Pillow",
+  "Pillow"
 ]
 
 [project.optional-dependencies]
-dev = [
-    'aind_behavior_vr_foraging[docs]',
-    'aind_behavior_vr_foraging[linters]'
-]
 
 linters = [
     'codespell',
@@ -37,11 +33,6 @@ linters = [
     'isort'
 ]
 
-docs = [
-    'Sphinx',
-    'sphinx-jinja',
-    'furo'
-]
 
 [tool.setuptools.packages.find]
 where = ["src/DataSchemas"]
