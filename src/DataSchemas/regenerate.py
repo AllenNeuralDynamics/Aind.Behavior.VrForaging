@@ -3,7 +3,7 @@ from pathlib import Path
 
 import aind_behavior_vr_foraging.task_logic
 from aind_behavior_rig.base.json_schema import export_schema
-from aind_behavior_rig.utils import BonsaiSgenSerializers, bonsai_sgen, snake_to_pascale_case
+from aind_behavior_rig.utils import BonsaiSgenSerializers, bonsai_sgen, snake_to_pascal_case
 from aind_behavior_vr_foraging.session import AindVrForagingSession
 from pydantic.json_schema import GenerateJsonSchema
 
@@ -25,8 +25,8 @@ def main():
             f.write(json_model)
         cmd_return = bonsai_sgen(
             schema_path=SCHEMA_ROOT / f"{output_model_name}.json",
-            output_path=EXTENSIONS_ROOT / f"{snake_to_pascale_case(output_model_name)}.cs",
-            namespace=f"{NAMESPACE_PREFIX}.{snake_to_pascale_case(output_model_name)}",
+            output_path=EXTENSIONS_ROOT / f"{snake_to_pascal_case(output_model_name)}.cs",
+            namespace=f"{NAMESPACE_PREFIX}.{snake_to_pascal_case(output_model_name)}",
             serializer=SGEN_SERIALIZERS,
         )
         print(cmd_return.stdout)
