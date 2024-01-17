@@ -14,7 +14,7 @@
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="Contrast" />
         <Property Name="Label" />
-        <Property Name="LengthDistribution" />
+        <Property Name="Length_distribution" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>InterPatch</Name>
@@ -43,10 +43,10 @@
               </Operand>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="LengthDistribution" />
+              <Property Name="Value" DisplayName="Length_distribution" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p1:GapSite,p1:ExponentialDistribution">
-              <MemberName>LengthDistribution</MemberName>
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Scalar">
+              <MemberName>Length_distribution</MemberName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RngSeed</Name>
@@ -74,7 +74,7 @@
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="StartPosition" Selector="Item1" />
+                <Property Name="Start_position" Selector="Item1" />
                 <Property Name="Length" Selector="Item2" />
                 <Property Name="Id" Selector="Item3" />
               </PropertyMappings>
@@ -83,7 +83,7 @@
               <Property Name="Contrast" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:Render" />
+              <Combinator xsi:type="p1:RenderSpecification" />
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -97,7 +97,7 @@
               <Id>0</Id>
               <Label>InterPatchSite</Label>
               <Length>120</Length>
-              <StartPosition>0</StartPosition>
+              <Start_position>0</Start_position>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>SiteSpecs</Name>

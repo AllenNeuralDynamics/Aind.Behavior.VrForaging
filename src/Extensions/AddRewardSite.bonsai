@@ -14,7 +14,7 @@
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="Contrast" />
         <Property Name="Label" />
-        <Property Name="LengthDistribution" />
+        <Property Name="Length_distribution" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>AddRewardSite</Name>
@@ -35,7 +35,7 @@
               <Name>PreviousSite</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Length,StartPosition</Selector>
+              <Selector>Length,Start_position</Selector>
             </Expression>
             <Expression xsi:type="Add" />
             <Expression xsi:type="SubscribeSubject">
@@ -52,10 +52,10 @@
               </Operand>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="LengthDistribution" />
+              <Property Name="Value" DisplayName="Length_distribution" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p1:GapSite,p1:ExponentialDistribution">
-              <MemberName>LengthDistribution</MemberName>
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Scalar">
+              <MemberName>Length_distribution</MemberName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RngSeed</Name>
@@ -85,7 +85,7 @@
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="StartPosition" Selector="Item1" />
+                <Property Name="Start_position" Selector="Item1" />
                 <Property Name="Length" Selector="Item2" />
                 <Property Name="Id" Selector="Item3" />
               </PropertyMappings>
@@ -94,7 +94,7 @@
               <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>OdorSpecifications</Selector>
+              <Selector>Odor_specification</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -105,7 +105,7 @@
               <Property Name="Contrast" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:Render" />
+              <Combinator xsi:type="p1:RenderSpecification" />
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -116,7 +116,7 @@
               <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>RewardSpecifications</Selector>
+              <Selector>Reward_specification</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -129,26 +129,23 @@
               <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>RewardSpecifications</Selector>
+              <Selector>Reward_specification</Selector>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>OperantLogic</Selector>
+              <Selector>Operant_logic</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="IsOperant" Selector="IsOperant" />
-                <Property Name="TimeToCollect" Selector="TimeToCollect" />
-                <Property Name="DistanceThresholdToBeStatic" Selector="DistanceThresholdToBeStatic" />
+                <Property Name="Is_operant" Selector="Is_operant" />
+                <Property Name="Time_to_collect_reward" Selector="Time_to_collect_reward" />
+                <Property Name="Grace_distance_threshold" Selector="Grace_distance_threshold" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>RewardSpecifications.OperantLogic</Selector>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>StopDuration</Selector>
+              <Selector>Reward_specification.Operant_logic.Stop_duration</Selector>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>StopDurationOffset</Name>
@@ -164,24 +161,24 @@
             <Expression xsi:type="Add" />
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="StopDuration" />
+                <Property Name="Stop_duration" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:OperantLogic">
-                <p1:IsOperant>true</p1:IsOperant>
-                <p1:StopDuration>0</p1:StopDuration>
-                <p1:TimeToCollect>1000000</p1:TimeToCollect>
-                <p1:DistanceThresholdToBeStatic>10</p1:DistanceThresholdToBeStatic>
+                <p1:Is_operant>true</p1:Is_operant>
+                <p1:Stop_duration>0</p1:Stop_duration>
+                <p1:Time_to_collect_reward>100000</p1:Time_to_collect_reward>
+                <p1:Grace_distance_threshold>10</p1:Grace_distance_threshold>
               </Combinator>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="OperantLogic" />
+                <Property Name="Operant_logic" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:RewardSpecifications">
+              <Combinator xsi:type="p1:RewardSpecification">
                 <p1:Amount>0</p1:Amount>
                 <p1:Probability>1</p1:Probability>
               </Combinator>
@@ -198,7 +195,7 @@
               <Id>353</Id>
               <Label>RewardSite</Label>
               <Length>35.1602135</Length>
-              <StartPosition>0</StartPosition>
+              <Start_position>0</Start_position>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>SiteSpecs</Name>
@@ -213,10 +210,10 @@
             <Edge From="5" To="8" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source2" />
-            <Edge From="8" To="10" Label="Source2" />
+            <Edge From="8" To="10" Label="Source1" />
             <Edge From="8" To="14" Label="Source1" />
             <Edge From="8" To="16" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="9" To="10" Label="Source2" />
             <Edge From="10" To="13" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source2" />
@@ -225,35 +222,34 @@
             <Edge From="15" To="16" Label="Source4" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="45" Label="Source1" />
+            <Edge From="18" To="44" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="45" Label="Source2" />
+            <Edge From="21" To="44" Label="Source2" />
             <Edge From="22" To="23" Label="Source1" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="45" Label="Source3" />
+            <Edge From="24" To="44" Label="Source3" />
             <Edge From="25" To="26" Label="Source1" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="42" Label="Source1" />
+            <Edge From="27" To="41" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
             <Edge From="29" To="30" Label="Source1" />
             <Edge From="30" To="31" Label="Source1" />
-            <Edge From="31" To="40" Label="Source1" />
+            <Edge From="31" To="39" Label="Source1" />
             <Edge From="32" To="33" Label="Source1" />
-            <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="36" Label="Source1" />
-            <Edge From="35" To="36" Label="Source2" />
+            <Edge From="33" To="35" Label="Source1" />
+            <Edge From="34" To="35" Label="Source2" />
+            <Edge From="35" To="36" Label="Source1" />
             <Edge From="36" To="37" Label="Source1" />
             <Edge From="37" To="38" Label="Source1" />
-            <Edge From="38" To="39" Label="Source1" />
-            <Edge From="39" To="40" Label="Source2" />
-            <Edge From="40" To="41" Label="Source1" />
-            <Edge From="41" To="42" Label="Source2" />
-            <Edge From="42" To="43" Label="Source1" />
-            <Edge From="43" To="45" Label="Source4" />
-            <Edge From="44" To="45" Label="Source5" />
-            <Edge From="45" To="46" Label="Source1" />
-            <Edge From="46" To="47" Label="Source2" />
+            <Edge From="38" To="39" Label="Source2" />
+            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="40" To="41" Label="Source2" />
+            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="42" To="44" Label="Source4" />
+            <Edge From="43" To="44" Label="Source5" />
+            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="45" To="46" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>

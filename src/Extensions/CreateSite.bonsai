@@ -16,7 +16,7 @@
         <Property Name="Odor" />
         <Property Name="Render" />
         <Property Name="Reward" />
-        <Property Name="StartPosition" />
+        <Property Name="Start_position" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>CreateSite</Name>
@@ -30,14 +30,14 @@
               <Property Name="Odor" />
               <Property Name="Render" />
               <Property Name="Reward" />
-              <Property Name="StartPosition" />
+              <Property Name="Start_position" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:VirtualSite">
-                <p1:Id>0</p1:Id>
-                <p1:Label>virtualSite</p1:Label>
-                <p1:Length>120</p1:Length>
-                <p1:StartPosition>0</p1:StartPosition>
+                <p1:Id>353</p1:Id>
+                <p1:Label>RewardSite</p1:Label>
+                <p1:Length>35.1602135</p1:Length>
+                <p1:Start_position>0</p1:Start_position>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">

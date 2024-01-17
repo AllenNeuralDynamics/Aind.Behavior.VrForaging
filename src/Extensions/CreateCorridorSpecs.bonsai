@@ -13,7 +13,7 @@
         <Property Name="Height" />
         <Property Name="Id" />
         <Property Name="Length" />
-        <Property Name="StartPosition" />
+        <Property Name="Start_position" />
         <Property Name="Width" />
         <Property Name="Textures" />
       </Expression>
@@ -22,20 +22,31 @@
         <Workflow>
           <Nodes>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Height" />
               <Property Name="Id" />
               <Property Name="Length" />
-              <Property Name="StartPosition" />
-              <Property Name="Width" />
+              <Property Name="Start_position" />
               <Property Name="Textures" />
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Width" />
+              <Property Name="Height" />
+            </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:CorridorSpecifications">
-                <p1:Height>120</p1:Height>
-                <p1:Id>8</p1:Id>
+              <Combinator xsi:type="p1:Size">
+                <p1:Width>0</p1:Width>
+                <p1:Height>0</p1:Height>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Size" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:VisualCorridor">
+                <p1:Id>0</p1:Id>
+                <p1:Start_position>0</p1:Start_position>
                 <p1:Length>120</p1:Length>
-                <p1:StartPosition>960</p1:StartPosition>
-                <p1:Width>120</p1:Width>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -46,9 +57,12 @@
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
-            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="0" To="4" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>

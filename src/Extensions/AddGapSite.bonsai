@@ -16,7 +16,7 @@
         <Property Name="Label" />
         <Property Name="Odor" />
         <Property Name="Reward" />
-        <Property Name="LengthDistribution" />
+        <Property Name="Length_distribution" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>AddGapSite</Name>
@@ -37,7 +37,7 @@
               <Name>PreviousSite</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Length,StartPosition</Selector>
+              <Selector>Length,Start_position</Selector>
             </Expression>
             <Expression xsi:type="Add" />
             <Expression xsi:type="SubscribeSubject">
@@ -54,10 +54,10 @@
               </Operand>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="LengthDistribution" />
+              <Property Name="Value" DisplayName="Length_distribution" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p1:GapSite,p1:ExponentialDistribution">
-              <MemberName>LengthDistribution</MemberName>
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Scalar">
+              <MemberName>Length_distribution</MemberName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RngSeed</Name>
@@ -87,7 +87,7 @@
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="StartPosition" Selector="Item1" />
+                <Property Name="Start_position" Selector="Item1" />
                 <Property Name="Length" Selector="Item2" />
                 <Property Name="Id" Selector="Item3" />
               </PropertyMappings>
@@ -96,7 +96,7 @@
               <Property Name="Contrast" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:Render" />
+              <Combinator xsi:type="p1:RenderSpecification" />
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -112,7 +112,7 @@
               <Id>388</Id>
               <Label>GapSite</Label>
               <Length>20.7234077</Length>
-              <StartPosition>0</StartPosition>
+              <Start_position>0</Start_position>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>SiteSpecs</Name>
@@ -132,10 +132,10 @@
             <Edge From="5" To="8" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source2" />
-            <Edge From="8" To="10" Label="Source2" />
+            <Edge From="8" To="10" Label="Source1" />
             <Edge From="8" To="14" Label="Source1" />
             <Edge From="8" To="16" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="9" To="10" Label="Source2" />
             <Edge From="10" To="13" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source2" />
