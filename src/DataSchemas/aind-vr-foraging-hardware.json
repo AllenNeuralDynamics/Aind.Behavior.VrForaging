@@ -1,0 +1,213 @@
+{
+  "$id": "aind-vr-foraging-hardware",
+  "$schema": "https://json-schema.org/draft-09/schema",
+  "definitions": {
+    "harpBoard": {
+      "properties": {
+        "deviceType": {
+          "enum": [
+            "custom",
+            "behavior",
+            "clockSynchronizer",
+            "lickometer",
+            "olfactometer"
+          ],
+          "type": "string"
+        },
+        "portName": {
+          "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "deviceName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "deviceType",
+        "portName"
+      ],
+      "type": "object"
+    },
+    "display":{
+      "type":"object",
+      "properties": {
+        "displayDevice": {"type": "integer", "default": 1},
+        "targetRenderFrequency": {"type": "integer", "default": 60},
+        "targetUpdateFrequency": {"type": "integer", "default": 120}
+      }
+    },
+    "servoMotor": {
+      "properties": {
+        "model": {
+          "default": "servoMotor",
+          "type": "string"
+        },
+        "pin": {
+          "default": "DO2",
+          "type": "string"
+        },
+        "period": {
+          "default": 20000,
+          "type": "integer",
+          "minimum": 0
+        },
+        "pulseDurationUsMin": {
+          "default": 1000,
+          "type": "integer",
+          "minimum": 1
+        },
+        "pulseDurationUsMax": {
+          "default": 2000,
+          "type": "integer",
+          "minimum": 1
+        },
+        "pulseDurationUsDefault": {
+          "default": 2000,
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "type": "object"
+    },
+    "pwmBuzzer": {
+      "properties": {
+        "model": {
+          "default": "buzzer",
+          "type": "string"
+        },
+        "pin": {
+          "default": "DO1",
+          "type": "string"
+        },
+        "pwmDefaultPulseDuration": {
+          "default": 0.2,
+          "type": "number"
+        },
+        "pwmFrequency": {
+          "default": 1000,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "treadmill": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "default": "headfix",
+          "type": "string"
+        },
+        "wheelDiameter": {
+          "default": 15,
+          "minimum": 0,
+          "type": "number"
+        },
+        "pulsesPerRevolution": {
+          "default": 2880,
+          "type": "number"
+        },
+        "invertDirection": {
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "videoCaptureDevice":{
+      "type":"object",
+      "properties": {
+        "index" : {
+          "minimum": 0,
+          "default": 0,
+          "type": "integer"
+        }
+      }
+    },
+    "spinnakerCamera": {
+      "properties": {
+        "binning": {
+          "default": 1,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "colorProcessing": {
+          "default": "Default",
+          "enum": [
+            "Default",
+            "NoColorProcessing"
+          ],
+          "type": "string"
+        },
+        "exposure": {
+          "default": 1000,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "frameRate": {
+          "default": 30,
+          "maximum": 350,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "gain": {
+          "default": 0,
+          "minimum": 0,
+          "type": "number"
+        },
+        "serialNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "serialNumber"
+      ],
+      "type": "object"
+    },
+    "renderingSettings": {
+      "properties": {
+        "monitorCalibrationDirectory": {
+          "default": "Calibration\\Monitors\\",
+          "type": "string"
+        },
+        "textureAssetDirectory": {
+          "default": "Textures",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "valve": {
+      "properties": {
+        "calibration": {
+          "properties": {
+            "intercept": {
+              "default": 0,
+              "type": "number"
+            },
+            "slope": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "model": {
+          "default": "valve",
+          "type": "string"
+        },
+        "pin": {
+          "default": "SupplyPort0",
+          "type": "string"
+        },
+        "valveType": {
+          "default": "air",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "title": "AindVrForagingHardware",
+  "type": "object"
+}
