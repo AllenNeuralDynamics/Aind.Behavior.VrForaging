@@ -37,7 +37,7 @@ class DistributionParametersBase(AindModel):
 
 
 class DistributionBase(AindModel):
-    family: DistributionFamily = Field(description="Family of the distribution")
+    family: DistributionFamily = Field(..., description="Family of the distribution")
     distribution_parameters: DistributionParameters = Field(..., description="Parameters of the distribution")
     truncation_parameters: Optional[TruncationParameters] = Field(
         None, description="Truncation parameters of the distribution"
@@ -173,7 +173,7 @@ Distribution = Annotated[
         BetaDistribution,
         GammaDistribution,
     ],
-    Field(discriminator="family"),
+    Field(discriminator="family", json_schema_extra={"type": "string"}),
 ]
 
 DistributionParameters = Annotated[
