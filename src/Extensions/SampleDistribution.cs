@@ -31,8 +31,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return source.Select(value =>
             {
+                DistributionFamily result;
+                Enum.TryParse((string) value.Family, out result);
                 var distribution = GetContinuousDistribution(
-                    (string) value.Family,
+                    result,
                     new double[] { value.Distribution_parameters.Mean, value.Distribution_parameters.Std });
                 var scalingParameters = value.Scaling_parameters;
                 var truncationParameters = value.Truncation_parameters;
@@ -53,8 +55,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return source.Select(value =>
             {
+                DistributionFamily result;
+                Enum.TryParse((string) value.Family, out result);
                 var distribution = GetContinuousDistribution(
-                    (string) value.Family,
+                    result,
                     new double[] { value.Distribution_parameters.Rate });
                 var scalingParameters = value.Scaling_parameters;
                 var truncationParameters = value.Truncation_parameters;
@@ -75,8 +79,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return source.Select(value =>
             {
+                DistributionFamily result;
+                Enum.TryParse((string) value.Family, out result);
                 var distribution = GetContinuousDistribution(
-                    (string) value.Family,
+                    result,
                     new double[] { value.Distribution_parameters.Mean, value.Distribution_parameters.Std });
                 var scalingParameters = value.Scaling_parameters;
                 var truncationParameters = value.Truncation_parameters;
@@ -97,8 +103,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return source.Select(value =>
             {
+                DistributionFamily result;
+                Enum.TryParse((string) value.Family, out result);
                 var distribution = GetContinuousDistribution(
-                    (string) value.Family,
+                    result,
                     new double[] { value.Distribution_parameters.Rate });
                 var scalingParameters = value.Scaling_parameters;
                 var truncationParameters = value.Truncation_parameters;
@@ -119,8 +127,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return source.Select(value =>
             {
+                DistributionFamily result;
+                Enum.TryParse((string) value.Family, out result);
                 var distribution = GetContinuousDistribution(
-                    (string) value.Family,
+                    result,
                     new double[] { value.Distribution_parameters.Alpha, value.Distribution_parameters.Beta });
                 var scalingParameters = value.Scaling_parameters;
                 var truncationParameters = value.Truncation_parameters;
@@ -141,8 +151,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return source.Select(value =>
             {
+                DistributionFamily result;
+                Enum.TryParse((string) value.Family, out result);
                 var distribution = GetContinuousDistribution(
-                    (string) value.Family,
+                    result,
                     new double[] { value.Distribution_parameters.Min, value.Distribution_parameters.Max });
                 var scalingParameters = value.Scaling_parameters;
                 var truncationParameters = value.Truncation_parameters;
@@ -163,8 +175,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return source.Select(value =>
             {
-                var distribution = GetContinuousDistribution(
-                    (string) value.Family,
+                DistributionFamily result;
+                Enum.TryParse((string) value.Family, out result);
+                var distribution = GetDiscreteDistribution(
+                    result,
                     new double[] { value.Distribution_parameters.P, value.Distribution_parameters.N });
                 var scalingParameters = value.Scaling_parameters;
                 var truncationParameters = value.Truncation_parameters;
@@ -174,10 +188,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
                     var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
                     return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
                 }
-                else
-                {
-                    return drawSample(distribution, scalingParameters);
-                }
+                return drawSample(distribution, scalingParameters);
             });
         }
 
@@ -185,8 +196,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return source.Select(value =>
             {
-                var distribution = GetContinuousDistribution(
-                    (string) value.Family,
+                DistributionFamily result;
+                Enum.TryParse((string) value.Family, out result);
+                var distribution = GetDiscreteDistribution(
+                    result,
                     new double[] { value.Distribution_parameters.Rate });
                 var scalingParameters = value.Scaling_parameters;
                 var truncationParameters = value.Truncation_parameters;
@@ -205,7 +218,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         private static double applyScaleAndOffset(double value, ScalingParameters scalingParameters)
         {
-            return value * scalingParameters.Scale + scalingParameters.Offset;
+            return scalingParameters == null ? value : value * scalingParameters.Scale + scalingParameters.Offset;
         }
 
         private double drawSample(IContinuousDistribution distribution, ScalingParameters scalingParameters)
@@ -269,34 +282,34 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
         }
 
-        public IDiscreteDistribution GetDiscreteDistribution(string distribution, params double[] parameters)
+        public IDiscreteDistribution GetDiscreteDistribution(DistributionFamily distribution, params double[] parameters)
         {
             switch (distribution)
             {
-                case "binomial":
+                case DistributionFamily.Binomial:
                     return new Binomial(parameters[0], (int)parameters[1], randomSource);
-                case "poisson":
+                case DistributionFamily.Poisson:
                     return new Poisson(parameters[0], randomSource);
                 default:
                     throw new ArgumentException("Invalid distribution type");
             }
         }
         
-        public IContinuousDistribution GetContinuousDistribution(string distribution, params double[] parameters)
+        public IContinuousDistribution GetContinuousDistribution(DistributionFamily distribution, params double[] parameters)
         {
             switch (distribution)
             {
-                case "normal":
+                case DistributionFamily.Normal:
                     return new Normal(parameters[0], parameters[1], randomSource);
-                case "lognormal":
+                case DistributionFamily.LogNormal:
                     return new LogNormal(parameters[0], parameters[1], randomSource);
-                case "exponential":
+                case DistributionFamily.Exponential:
                     return new Exponential(parameters[0], randomSource);
-                case "gamma":
+                case DistributionFamily.Gamma:
                     return new Gamma(parameters[0], parameters[1], randomSource);
-                case "beta":
+                case DistributionFamily.Beta:
                     return new Beta(parameters[0], parameters[1], randomSource);
-                case "uniform":
+                case DistributionFamily.Uniform:
                     return new ContinuousUniform(parameters[0], parameters[1], randomSource);
                 default:
                     throw new ArgumentException("Invalid distribution type");
