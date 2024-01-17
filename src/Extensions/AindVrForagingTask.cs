@@ -490,6 +490,185 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class CreateDistribution
+    {
+    
+        private DistributionFamily _family;
+    
+        private Distribution_parameters _distribution_parameters;
+    
+        private TruncationParameters _truncation_parameters;
+    
+        private ScalingParameters _scaling_parameters;
+    
+        public CreateDistribution()
+        {
+        }
+    
+        protected CreateDistribution(CreateDistribution other)
+        {
+            _family = other._family;
+            _distribution_parameters = other._distribution_parameters;
+            _truncation_parameters = other._truncation_parameters;
+            _scaling_parameters = other._scaling_parameters;
+        }
+    
+        /// <summary>
+        /// Family of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
+        [System.ComponentModel.DescriptionAttribute("Family of the distribution")]
+        public DistributionFamily Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        /// <summary>
+        /// Parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("distribution_parameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distribution_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Parameters of the distribution")]
+        public Distribution_parameters Distribution_parameters
+        {
+            get
+            {
+                return _distribution_parameters;
+            }
+            set
+            {
+                _distribution_parameters = value;
+            }
+        }
+    
+        /// <summary>
+        /// Truncation parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncation_parameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncation_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Truncation parameters of the distribution")]
+        public TruncationParameters Truncation_parameters
+        {
+            get
+            {
+                return _truncation_parameters;
+            }
+            set
+            {
+                _truncation_parameters = value;
+            }
+        }
+    
+        /// <summary>
+        /// Scaling parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scaling_parameters")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scaling_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Scaling parameters of the distribution")]
+        public ScalingParameters Scaling_parameters
+        {
+            get
+            {
+                return _scaling_parameters;
+            }
+            set
+            {
+                _scaling_parameters = value;
+            }
+        }
+    
+        public System.IObservable<CreateDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CreateDistribution(this)));
+        }
+    
+        public System.IObservable<CreateDistribution> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new CreateDistribution(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("family = " + _family + ", ");
+            stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
+            stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
+            stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum DistributionFamily
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Scalar")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Scalar")]
+        Scalar = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Normal")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Normal")]
+        Normal = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="LogNormal")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="LogNormal")]
+        LogNormal = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Uniform")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Uniform")]
+        Uniform = 3,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Exponential")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Exponential")]
+        Exponential = 4,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Gamma")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Gamma")]
+        Gamma = 5,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Binomial")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Binomial")]
+        Binomial = 6,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Beta")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Beta")]
+        Beta = 7,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Poisson")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Poisson")]
+        Poisson = 8,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class EnvironmentStatistics
     {
     
@@ -1129,7 +1308,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private ExponentialDistribution _distance_to_reward = new ExponentialDistribution();
     
-        private Renderspecification _reward_specification;
+        private RenderSpecification _reward_specification;
     
         public HabituationSettings()
         {
@@ -1183,7 +1362,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("reward_specification")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_specification")]
         [System.ComponentModel.DescriptionAttribute("Contrast of the environement")]
-        public Renderspecification Reward_specification
+        public RenderSpecification Reward_specification
         {
             get
             {
@@ -2267,18 +2446,18 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Odorspecification
+    public partial class OdorSpecification
     {
     
-        private OdorspecificationIndex _index;
+        private OdorSpecificationIndex _index;
     
         private double _concentration = 1D;
     
-        public Odorspecification()
+        public OdorSpecification()
         {
         }
     
-        protected Odorspecification(Odorspecification other)
+        protected OdorSpecification(OdorSpecification other)
         {
             _index = other._index;
             _concentration = other._concentration;
@@ -2291,7 +2470,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("index", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
         [System.ComponentModel.DescriptionAttribute("Index of the odor to be used")]
-        public OdorspecificationIndex Index
+        public OdorSpecificationIndex Index
         {
             get
             {
@@ -2321,14 +2500,14 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
         }
     
-        public System.IObservable<Odorspecification> Process()
+        public System.IObservable<OdorSpecification> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Odorspecification(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OdorSpecification(this)));
         }
     
-        public System.IObservable<Odorspecification> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OdorSpecification> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Odorspecification(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new OdorSpecification(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -2491,7 +2670,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class OperationControl
     {
     
-        private MovableSpoutControl _movable_spot_control;
+        private MovableSpoutControl _movable_spout_control;
     
         private OdorControl _odor_control;
     
@@ -2503,7 +2682,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         protected OperationControl(OperationControl other)
         {
-            _movable_spot_control = other._movable_spot_control;
+            _movable_spout_control = other._movable_spout_control;
             _odor_control = other._odor_control;
             _position_control = other._position_control;
         }
@@ -2512,18 +2691,18 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// Control of the movable spout
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("movable_spot_control")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="movable_spot_control")]
+        [Newtonsoft.Json.JsonPropertyAttribute("movable_spout_control")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="movable_spout_control")]
         [System.ComponentModel.DescriptionAttribute("Control of the movable spout")]
-        public MovableSpoutControl Movable_spot_control
+        public MovableSpoutControl Movable_spout_control
         {
             get
             {
-                return _movable_spot_control;
+                return _movable_spout_control;
             }
             set
             {
-                _movable_spot_control = value;
+                _movable_spout_control = value;
             }
         }
     
@@ -2577,7 +2756,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("movable_spot_control = " + _movable_spot_control + ", ");
+            stringBuilder.Append("movable_spout_control = " + _movable_spout_control + ", ");
             stringBuilder.Append("odor_control = " + _odor_control + ", ");
             stringBuilder.Append("position_control = " + _position_control);
             return true;
@@ -2608,9 +2787,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private int _state_index = 0;
     
-        private Odorspecification _odor_specification;
+        private OdorSpecification _odor_specification;
     
-        private Rewardspecification _reward_specification;
+        private RewardSpecification _reward_specification;
+    
+        private VirtualSiteGeneration _virtual_site_generation;
     
         public PatchStatistics()
         {
@@ -2622,6 +2803,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _state_index = other._state_index;
             _odor_specification = other._odor_specification;
             _reward_specification = other._reward_specification;
+            _virtual_site_generation = other._virtual_site_generation;
         }
     
         /// <summary>
@@ -2667,7 +2849,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("odor_specification")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor_specification")]
         [System.ComponentModel.DescriptionAttribute("The optional odor specification of the patch")]
-        public Odorspecification Odor_specification
+        public OdorSpecification Odor_specification
         {
             get
             {
@@ -2686,7 +2868,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("reward_specification")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_specification")]
         [System.ComponentModel.DescriptionAttribute("The optional reward specification of the patch")]
-        public Rewardspecification Reward_specification
+        public RewardSpecification Reward_specification
         {
             get
             {
@@ -2695,6 +2877,25 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             set
             {
                 _reward_specification = value;
+            }
+        }
+    
+        /// <summary>
+        /// Virtual site generation specification
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("virtual_site_generation")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="virtual_site_generation")]
+        [System.ComponentModel.DescriptionAttribute("Virtual site generation specification")]
+        public VirtualSiteGeneration Virtual_site_generation
+        {
+            get
+            {
+                return _virtual_site_generation;
+            }
+            set
+            {
+                _virtual_site_generation = value;
             }
         }
     
@@ -2713,7 +2914,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             stringBuilder.Append("label = " + _label + ", ");
             stringBuilder.Append("state_index = " + _state_index + ", ");
             stringBuilder.Append("odor_specification = " + _odor_specification + ", ");
-            stringBuilder.Append("reward_specification = " + _reward_specification);
+            stringBuilder.Append("reward_specification = " + _reward_specification + ", ");
+            stringBuilder.Append("virtual_site_generation = " + _virtual_site_generation);
             return true;
         }
     
@@ -3087,16 +3289,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Renderspecification
+    public partial class RenderSpecification
     {
     
         private double? _contrast;
     
-        public Renderspecification()
+        public RenderSpecification()
         {
         }
     
-        protected Renderspecification(Renderspecification other)
+        protected RenderSpecification(RenderSpecification other)
         {
             _contrast = other._contrast;
         }
@@ -3120,14 +3322,14 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
         }
     
-        public System.IObservable<Renderspecification> Process()
+        public System.IObservable<RenderSpecification> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Renderspecification(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RenderSpecification(this)));
         }
     
-        public System.IObservable<Renderspecification> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<RenderSpecification> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Renderspecification(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new RenderSpecification(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -3154,7 +3356,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Rewardspecification
+    public partial class RewardSpecification
     {
     
         private double _amount;
@@ -3163,13 +3365,13 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private double _probability = 1D;
     
-        private object _delay;
+        private object _delay = "{\r\n  \"family\": \"Scalar\",\r\n  \"distribution_parameters\": {\r\n    \"family\": \"Scalar\",\r\n    \"value\": 0.0\r\n  },\r\n  \"truncation_parameters\": null,\r\n  \"scaling_parameters\": null\r\n}";
     
-        public Rewardspecification()
+        public RewardSpecification()
         {
         }
     
-        protected Rewardspecification(Rewardspecification other)
+        protected RewardSpecification(RewardSpecification other)
         {
             _amount = other._amount;
             _operant_logic = other._operant_logic;
@@ -3251,14 +3453,14 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
         }
     
-        public System.IObservable<Rewardspecification> Process()
+        public System.IObservable<RewardSpecification> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rewardspecification(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RewardSpecification(this)));
         }
     
-        public System.IObservable<Rewardspecification> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<RewardSpecification> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Rewardspecification(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new RewardSpecification(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -3688,7 +3890,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private object _schema_version;
     
-        private System.Collections.Generic.List<NumericalUpdater> _updaters = new System.Collections.Generic.List<NumericalUpdater>();
+        private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     
         private EnvironmentStatistics _environment_statistics = new EnvironmentStatistics();
     
@@ -3746,7 +3948,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("updaters")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="updaters")]
         [System.ComponentModel.DescriptionAttribute("List of numerical updaters")]
-        public System.Collections.Generic.List<NumericalUpdater> Updaters
+        public System.Collections.Generic.IDictionary<string, NumericalUpdater> Updaters
         {
             get
             {
@@ -4409,15 +4611,15 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private string _label = "VirtualSite";
     
-        private VirtualSiteGeneration _length = new VirtualSiteGeneration();
+        private double _length = 20D;
     
         private double _start_position = 0D;
     
-        private Odorspecification _odor;
+        private OdorSpecification _odor;
     
-        private Rewardspecification _reward;
+        private RewardSpecification _reward;
     
-        private Renderspecification _render;
+        private RenderSpecification _render;
     
         public VirtualSite()
         {
@@ -4473,11 +4675,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// <summary>
         /// Length of the virtual site (cm)
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("length", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("length")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length")]
         [System.ComponentModel.DescriptionAttribute("Length of the virtual site (cm)")]
-        public VirtualSiteGeneration Length
+        public double Length
         {
             get
             {
@@ -4514,7 +4715,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("odor")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor")]
         [System.ComponentModel.DescriptionAttribute("The optional odor specification of the virtual site")]
-        public Odorspecification Odor
+        public OdorSpecification Odor
         {
             get
             {
@@ -4533,7 +4734,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("reward")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward")]
         [System.ComponentModel.DescriptionAttribute("The optional reward specification of the virtual site")]
-        public Rewardspecification Reward
+        public RewardSpecification Reward
         {
             get
             {
@@ -4552,7 +4753,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("render")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
         [System.ComponentModel.DescriptionAttribute("The optional render specification of the virtual site")]
-        public Renderspecification Render
+        public RenderSpecification Render
         {
             get
             {
@@ -4607,11 +4808,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class VirtualSiteGeneration
     {
     
-        private VirtualSiteGenerator _inter_site = new VirtualSiteGenerator();
+        private VirtualSiteGenerator _inter_site;
     
-        private VirtualSiteGenerator _inter_patch = new VirtualSiteGenerator();
+        private VirtualSiteGenerator _inter_patch;
     
-        private VirtualSiteGenerator _reward_site = new VirtualSiteGenerator();
+        private VirtualSiteGenerator _reward_site;
     
         public VirtualSiteGeneration()
         {
@@ -4628,7 +4829,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// Generator of the inter-site virtual sites
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("inter_site", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("inter_site")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inter_site")]
         [System.ComponentModel.DescriptionAttribute("Generator of the inter-site virtual sites")]
         public VirtualSiteGenerator Inter_site
@@ -4647,7 +4848,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// Generator of the inter-patch virtual sites
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("inter_patch", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("inter_patch")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inter_patch")]
         [System.ComponentModel.DescriptionAttribute("Generator of the inter-patch virtual sites")]
         public VirtualSiteGenerator Inter_patch
@@ -4666,7 +4867,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// Generator of the reward-site virtual sites
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("reward_site", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("reward_site")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_site")]
         [System.ComponentModel.DescriptionAttribute("Generator of the reward-site virtual sites")]
         public VirtualSiteGenerator Reward_site
@@ -4720,11 +4921,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class VirtualSiteGenerator
     {
     
-        private Renderspecification _render_specification;
+        private RenderSpecification _render_specification;
     
-        private VirtualSiteLabels _label;
+        private VirtualSiteLabels _label = AindVrForagingDataSchema.AindVrForagingTask.VirtualSiteLabels.Unspecified;
     
-        private object _length_distribution;
+        private object _length_distribution = "{\r\n  \"family\": \"Scalar\",\r\n  \"distribution_parameters\": {\r\n    \"family\": \"Scalar\",\r\n    \"value\": 20.0\r\n  },\r\n  \"truncation_parameters\": null,\r\n  \"scaling_parameters\": null\r\n}";
     
         public VirtualSiteGenerator()
         {
@@ -4744,7 +4945,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("render_specification")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render_specification")]
         [System.ComponentModel.DescriptionAttribute("Contrast of the environment")]
-        public Renderspecification Render_specification
+        public RenderSpecification Render_specification
         {
             get
             {
@@ -4760,7 +4961,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// Label of the virtual site
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("label", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("label")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="label")]
         [System.ComponentModel.DescriptionAttribute("Label of the virtual site")]
         public VirtualSiteLabels Label
@@ -4779,7 +4980,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// Distribution of the length of the virtual site
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("length_distribution", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("length_distribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length_distribution")]
         [System.ComponentModel.DescriptionAttribute("Distribution of the length of the virtual site")]
         public object Length_distribution
@@ -5221,7 +5422,51 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    public enum OdorspecificationIndex
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Distribution_parameters
+    {
+    
+        public Distribution_parameters()
+        {
+        }
+    
+        protected Distribution_parameters(Distribution_parameters other)
+        {
+        }
+    
+        public System.IObservable<Distribution_parameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Distribution_parameters(this)));
+        }
+    
+        public System.IObservable<Distribution_parameters> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Distribution_parameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    public enum OdorSpecificationIndex
     {
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="0")]
@@ -5321,6 +5566,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<BinomialDistributionParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<CreateDistribution> source)
+        {
+            return Process<CreateDistribution>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
@@ -5401,9 +5651,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<OdorControl>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Odorspecification> source)
+        public System.IObservable<string> Process(System.IObservable<OdorSpecification> source)
         {
-            return Process<Odorspecification>(source);
+            return Process<OdorSpecification>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
@@ -5436,14 +5686,14 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<PositionControl>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Renderspecification> source)
+        public System.IObservable<string> Process(System.IObservable<RenderSpecification> source)
         {
-            return Process<Renderspecification>(source);
+            return Process<RenderSpecification>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Rewardspecification> source)
+        public System.IObservable<string> Process(System.IObservable<RewardSpecification> source)
         {
-            return Process<Rewardspecification>(source);
+            return Process<RewardSpecification>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Scalar> source)
@@ -5526,6 +5776,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<Root>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Distribution_parameters> source)
+        {
+            return Process<Distribution_parameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Add_refs> source)
         {
             return Process<Add_refs>(source);
@@ -5544,6 +5799,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistributionParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CreateDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistributionParameters>))]
@@ -5560,15 +5816,15 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odorspecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Renderspecification>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rewardspecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderSpecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalarDistributionParameter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
@@ -5585,6 +5841,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualCorridor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Root>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distribution_parameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Add_refs>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -5654,6 +5911,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<BinomialDistributionParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<CreateDistribution> source)
+        {
+            return Process<CreateDistribution>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
@@ -5734,9 +5996,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<OdorControl>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Odorspecification> source)
+        public System.IObservable<string> Process(System.IObservable<OdorSpecification> source)
         {
-            return Process<Odorspecification>(source);
+            return Process<OdorSpecification>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
@@ -5769,14 +6031,14 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<PositionControl>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Renderspecification> source)
+        public System.IObservable<string> Process(System.IObservable<RenderSpecification> source)
         {
-            return Process<Renderspecification>(source);
+            return Process<RenderSpecification>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Rewardspecification> source)
+        public System.IObservable<string> Process(System.IObservable<RewardSpecification> source)
         {
-            return Process<Rewardspecification>(source);
+            return Process<RewardSpecification>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Scalar> source)
@@ -5859,6 +6121,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<Root>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Distribution_parameters> source)
+        {
+            return Process<Distribution_parameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Add_refs> source)
         {
             return Process<Add_refs>(source);
@@ -5877,6 +6144,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistributionParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CreateDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistributionParameters>))]
@@ -5893,15 +6161,15 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odorspecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Renderspecification>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rewardspecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderSpecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalarDistributionParameter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
@@ -5918,6 +6186,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualCorridor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Root>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distribution_parameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Add_refs>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

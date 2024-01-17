@@ -151,6 +151,119 @@
       "title": "BinomialDistributionParameters",
       "type": "object"
     },
+    "CreateDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/DistributionFamily"
+            }
+          ],
+          "description": "Family of the distribution"
+        },
+        "distribution_parameters": {
+          "default": null,
+          "description": "Parameters of the distribution",
+          "oneOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "Beta": "#/definitions/BetaDistributionParameters",
+                  "Binomial": "#/definitions/BinomialDistributionParameters",
+                  "Exponential": "#/definitions/ExponentialDistributionParameters",
+                  "Gamma": "#/definitions/GammaDistributionParameters",
+                  "LogNormal": "#/definitions/LogNormalDistributionParameters",
+                  "Normal": "#/definitions/NormalDistributionParameters",
+                  "Poisson": "#/definitions/PoissonDistributionParameters",
+                  "Scalar": "#/definitions/ScalarDistributionParameter",
+                  "Uniform": "#/definitions/UniformDistributionParameters"
+                },
+                "propertyName": "family"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/ScalarDistributionParameter"
+                },
+                {
+                  "$ref": "#/definitions/NormalDistributionParameters"
+                },
+                {
+                  "$ref": "#/definitions/LogNormalDistributionParameters"
+                },
+                {
+                  "$ref": "#/definitions/ExponentialDistributionParameters"
+                },
+                {
+                  "$ref": "#/definitions/UniformDistributionParameters"
+                },
+                {
+                  "$ref": "#/definitions/PoissonDistributionParameters"
+                },
+                {
+                  "$ref": "#/definitions/BinomialDistributionParameters"
+                },
+                {
+                  "$ref": "#/definitions/BetaDistributionParameters"
+                },
+                {
+                  "$ref": "#/definitions/GammaDistributionParameters"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Distribution Parameters",
+          "x-abstract": "True"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "family"
+      ],
+      "title": "CreateDistribution",
+      "type": "object"
+    },
+    "DistributionFamily": {
+      "enum": [
+        "Scalar",
+        "Normal",
+        "LogNormal",
+        "Uniform",
+        "Exponential",
+        "Gamma",
+        "Binomial",
+        "Beta",
+        "Poisson"
+      ],
+      "title": "DistributionFamily",
+      "type": "string"
+    },
     "EnvironmentStatistics": {
       "additionalProperties": false,
       "properties": {
@@ -368,7 +481,7 @@
         "reward_specification": {
           "allOf": [
             {
-              "$ref": "#/definitions/Renderspecification"
+              "$ref": "#/definitions/RenderSpecification"
             }
           ],
           "default": {
@@ -687,7 +800,7 @@
       "title": "OdorControl",
       "type": "object"
     },
-    "Odorspecification": {
+    "OdorSpecification": {
       "additionalProperties": false,
       "properties": {
         "index": {
@@ -713,7 +826,7 @@
       "required": [
         "index"
       ],
-      "title": "Odorspecification",
+      "title": "OdorSpecification",
       "type": "object"
     },
     "OperantLogic": {
@@ -753,7 +866,7 @@
     "OperationControl": {
       "additionalProperties": false,
       "properties": {
-        "movable_spot_control": {
+        "movable_spout_control": {
           "allOf": [
             {
               "$ref": "#/definitions/MovableSpoutControl"
@@ -826,7 +939,7 @@
           "description": "The optional odor specification of the patch",
           "oneOf": [
             {
-              "$ref": "#/definitions/Odorspecification"
+              "$ref": "#/definitions/OdorSpecification"
             },
             {
               "type": "null"
@@ -838,12 +951,67 @@
           "description": "The optional reward specification of the patch",
           "oneOf": [
             {
-              "$ref": "#/definitions/Rewardspecification"
+              "$ref": "#/definitions/RewardSpecification"
             },
             {
               "type": "null"
             }
           ]
+        },
+        "virtual_site_generation": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGeneration"
+            }
+          ],
+          "default": {
+            "inter_site": {
+              "label": "Unspecified",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              }
+            },
+            "inter_patch": {
+              "label": "Unspecified",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              }
+            },
+            "reward_site": {
+              "label": "Unspecified",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              }
+            }
+          },
+          "description": "Virtual site generation specification"
         }
       },
       "title": "PatchStatistics",
@@ -964,7 +1132,7 @@
       "title": "PositionControl",
       "type": "object"
     },
-    "Renderspecification": {
+    "RenderSpecification": {
       "additionalProperties": false,
       "properties": {
         "contrast": {
@@ -983,10 +1151,10 @@
           "title": "Contrast"
         }
       },
-      "title": "Renderspecification",
+      "title": "RenderSpecification",
       "type": "object"
     },
-    "Rewardspecification": {
+    "RewardSpecification": {
       "additionalProperties": false,
       "properties": {
         "amount": {
@@ -1069,13 +1237,14 @@
               "$ref": "#/definitions/GammaDistribution"
             }
           ],
-          "title": "Delay"
+          "title": "Delay",
+          "type": "string"
         }
       },
       "required": [
         "amount"
       ],
-      "title": "Rewardspecification",
+      "title": "RewardSpecification",
       "type": "object"
     },
     "Scalar": {
@@ -1196,12 +1365,12 @@
           "title": "Schema Version"
         },
         "updaters": {
-          "description": "List of numerical updaters",
-          "items": {
+          "additionalProperties": {
             "$ref": "#/definitions/NumericalUpdater"
           },
+          "description": "List of numerical updaters",
           "title": "Updaters",
-          "type": "array"
+          "type": "object"
         },
         "environment_statistics": {
           "allOf": [
@@ -1412,12 +1581,10 @@
           "type": "string"
         },
         "length": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/VirtualSiteGeneration"
-            }
-          ],
-          "description": "Length of the virtual site (cm)"
+          "default": 20,
+          "description": "Length of the virtual site (cm)",
+          "title": "Length",
+          "type": "number"
         },
         "start_position": {
           "default": 0,
@@ -1431,7 +1598,7 @@
           "description": "The optional odor specification of the virtual site",
           "oneOf": [
             {
-              "$ref": "#/definitions/Odorspecification"
+              "$ref": "#/definitions/OdorSpecification"
             },
             {
               "type": "null"
@@ -1443,7 +1610,7 @@
           "description": "The optional reward specification of the virtual site",
           "oneOf": [
             {
-              "$ref": "#/definitions/Rewardspecification"
+              "$ref": "#/definitions/RewardSpecification"
             },
             {
               "type": "null"
@@ -1453,7 +1620,7 @@
         "render": {
           "allOf": [
             {
-              "$ref": "#/definitions/Renderspecification"
+              "$ref": "#/definitions/RenderSpecification"
             }
           ],
           "default": {
@@ -1462,9 +1629,6 @@
           "description": "The optional render specification of the virtual site"
         }
       },
-      "required": [
-        "length"
-      ],
       "title": "VirtualSite",
       "type": "object"
     },
@@ -1477,6 +1641,21 @@
               "$ref": "#/definitions/VirtualSiteGenerator"
             }
           ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "Unspecified",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            }
+          },
           "description": "Generator of the inter-site virtual sites"
         },
         "inter_patch": {
@@ -1485,6 +1664,21 @@
               "$ref": "#/definitions/VirtualSiteGenerator"
             }
           ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "Unspecified",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            }
+          },
           "description": "Generator of the inter-patch virtual sites"
         },
         "reward_site": {
@@ -1493,14 +1687,24 @@
               "$ref": "#/definitions/VirtualSiteGenerator"
             }
           ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "Unspecified",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            }
+          },
           "description": "Generator of the reward-site virtual sites"
         }
       },
-      "required": [
-        "inter_site",
-        "inter_patch",
-        "reward_site"
-      ],
       "title": "VirtualSiteGeneration",
       "type": "object"
     },
@@ -1510,7 +1714,7 @@
         "render_specification": {
           "allOf": [
             {
-              "$ref": "#/definitions/Renderspecification"
+              "$ref": "#/definitions/RenderSpecification"
             }
           ],
           "default": {
@@ -1524,9 +1728,19 @@
               "$ref": "#/definitions/VirtualSiteLabels"
             }
           ],
+          "default": "Unspecified",
           "description": "Label of the virtual site"
         },
         "length_distribution": {
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 20.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
           "description": "Distribution of the length of the virtual site",
           "discriminator": {
             "mapping": {
@@ -1571,13 +1785,10 @@
               "$ref": "#/definitions/GammaDistribution"
             }
           ],
-          "title": "Length Distribution"
+          "title": "Length Distribution",
+          "type": "string"
         }
       },
-      "required": [
-        "label",
-        "length_distribution"
-      ],
       "title": "VirtualSiteGenerator",
       "type": "object"
     },
@@ -1708,6 +1919,9 @@
             },
             {
               "$ref": "#/definitions/VirtualSite"
+            },
+            {
+              "$ref": "#/definitions/CreateDistribution"
             }
           ]
         },

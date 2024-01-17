@@ -3868,6 +3868,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _root_path;
     
+        private string _remote_path;
+    
         private string _subject;
     
         private string _version;
@@ -3878,6 +3880,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _commit_hash;
     
+        private bool _allow_dirty_repo = false;
+    
+        private bool _skip_hardware_validation = false;
+    
         public Metadata()
         {
         }
@@ -3886,11 +3892,14 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
             _experiment = other._experiment;
             _root_path = other._root_path;
+            _remote_path = other._remote_path;
             _subject = other._subject;
             _version = other._version;
             _rng_seed = other._rng_seed;
             _notes = other._notes;
             _commit_hash = other._commit_hash;
+            _allow_dirty_repo = other._allow_dirty_repo;
+            _skip_hardware_validation = other._skip_hardware_validation;
         }
     
         /// <summary>
@@ -3912,11 +3921,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         }
     
         /// <summary>
-        /// Root path of the experiment
+        /// Root path where data will be logged
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("root_path", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="root_path")]
-        [System.ComponentModel.DescriptionAttribute("Root path of the experiment")]
+        [System.ComponentModel.DescriptionAttribute("Root path where data will be logged")]
         public string Root_path
         {
             get
@@ -3926,6 +3935,25 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             set
             {
                 _root_path = value;
+            }
+        }
+    
+        /// <summary>
+        /// Remote path where data will be attempted to be copied to after experiment is done
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("remote_path")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="remote_path")]
+        [System.ComponentModel.DescriptionAttribute("Remote path where data will be attempted to be copied to after experiment is done" +
+            "")]
+        public string Remote_path
+        {
+            get
+            {
+                return _remote_path;
+            }
+            set
+            {
+                _remote_path = value;
             }
         }
     
@@ -4020,6 +4048,42 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
+        /// <summary>
+        /// Allow running from a dirty repository
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("allow_dirty_repo")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="allow_dirty_repo")]
+        [System.ComponentModel.DescriptionAttribute("Allow running from a dirty repository")]
+        public bool Allow_dirty_repo
+        {
+            get
+            {
+                return _allow_dirty_repo;
+            }
+            set
+            {
+                _allow_dirty_repo = value;
+            }
+        }
+    
+        /// <summary>
+        /// Skip hardware validation
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("skip_hardware_validation")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="skip_hardware_validation")]
+        [System.ComponentModel.DescriptionAttribute("Skip hardware validation")]
+        public bool Skip_hardware_validation
+        {
+            get
+            {
+                return _skip_hardware_validation;
+            }
+            set
+            {
+                _skip_hardware_validation = value;
+            }
+        }
+    
         public System.IObservable<Metadata> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Metadata(this)));
@@ -4034,11 +4098,14 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
             stringBuilder.Append("experiment = " + _experiment + ", ");
             stringBuilder.Append("root_path = " + _root_path + ", ");
+            stringBuilder.Append("remote_path = " + _remote_path + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
             stringBuilder.Append("version = " + _version + ", ");
             stringBuilder.Append("rng_seed = " + _rng_seed + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
-            stringBuilder.Append("commit_hash = " + _commit_hash);
+            stringBuilder.Append("commit_hash = " + _commit_hash + ", ");
+            stringBuilder.Append("allow_dirty_repo = " + _allow_dirty_repo + ", ");
+            stringBuilder.Append("skip_hardware_validation = " + _skip_hardware_validation);
             return true;
         }
     
