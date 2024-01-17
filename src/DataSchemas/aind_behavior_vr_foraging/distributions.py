@@ -33,18 +33,16 @@ class DistributionFamily(str, Enum):
 
 
 class DistributionParametersBase(AindModel):
-    family: Annotated[DistributionFamily, Field(description="Family of the distribution")]
+    family: DistributionFamily = Field(..., description="Family of the distribution")
 
 
 class DistributionBase(AindModel):
-    family: Annotated[DistributionFamily, Field(description="Family of the distribution")]
-    distribution_parameters: Annotated[DistributionParameters, Field(description="Parameters of the distribution")]
-    truncation_parameters: Annotated[
-        Optional[TruncationParameters], Field(description="Truncation parameters of the distribution")
-    ] = None
-    scaling_parameters: Annotated[
-        Optional[ScalingParameters], Field(description="Scaling parameters of the distribution")
-    ] = None
+    family: DistributionFamily = Field(description="Family of the distribution")
+    distribution_parameters: DistributionParameters = Field(..., description="Parameters of the distribution")
+    truncation_parameters: Optional[TruncationParameters] = Field(
+        None, description="Truncation parameters of the distribution"
+    )
+    scaling_parameters: Optional[ScalingParameters] = Field(None, description="Scaling parameters of the distribution")
 
 
 class ScalarDistributionParameter(DistributionParametersBase):
@@ -67,10 +65,9 @@ class NormalDistributionParameters(DistributionParametersBase):
 
 class NormalDistribution(DistributionBase):
     family: Literal[DistributionFamily.NORMAL] = DistributionFamily.NORMAL
-    distribution_parameters: Annotated[
-        NormalDistributionParameters,
-        Field(NormalDistributionParameters(), description="Parameters of the distribution"),
-    ]
+    distribution_parameters: NormalDistributionParameters = Field(
+        NormalDistributionParameters(), description="Parameters of the distribution"
+    )
 
 
 class LogNormalDistributionParameters(DistributionParametersBase):
@@ -79,12 +76,11 @@ class LogNormalDistributionParameters(DistributionParametersBase):
     std: float = Field(default=0, description="Standard deviation of the distribution")
 
 
-class LogNormalDistribution(DistributionParametersBase):
+class LogNormalDistribution(DistributionBase):
     family: Literal[DistributionFamily.LOGNORMAL] = DistributionFamily.LOGNORMAL
-    distribution_parameters: Annotated[
-        LogNormalDistributionParameters,
-        Field(LogNormalDistributionParameters(), description="Parameters of the distribution"),
-    ]
+    distribution_parameters: LogNormalDistributionParameters = Field(
+        LogNormalDistributionParameters(), description="Parameters of the distribution"
+    )
 
 
 class UniformDistributionParameters(DistributionParametersBase):
@@ -95,10 +91,9 @@ class UniformDistributionParameters(DistributionParametersBase):
 
 class UniformDistribution(DistributionBase):
     family: Literal[DistributionFamily.UNIFORM] = DistributionFamily.UNIFORM
-    distribution_parameters: Annotated[
-        UniformDistributionParameters,
-        Field(UniformDistributionParameters(), description="Parameters of the distribution"),
-    ]
+    distribution_parameters: UniformDistributionParameters = Field(
+        UniformDistributionParameters(), description="Parameters of the distribution"
+    )
 
 
 class ExponentialDistributionParameters(DistributionParametersBase):
@@ -108,10 +103,9 @@ class ExponentialDistributionParameters(DistributionParametersBase):
 
 class ExponentialDistribution(DistributionBase):
     family: Literal[DistributionFamily.EXPONENTIAL] = DistributionFamily.EXPONENTIAL
-    distribution_parameters: Annotated[
-        ExponentialDistributionParameters,
-        Field(ExponentialDistributionParameters(), description="Parameters of the distribution"),
-    ]
+    distribution_parameters: ExponentialDistributionParameters = Field(
+        ExponentialDistributionParameters(), description="Parameters of the distribution"
+    )
 
 
 class GammaDistributionParameters(DistributionParametersBase):
@@ -122,9 +116,9 @@ class GammaDistributionParameters(DistributionParametersBase):
 
 class GammaDistribution(DistributionBase):
     family: Literal[DistributionFamily.GAMMA] = DistributionFamily.GAMMA
-    distribution_parameters: Annotated[
-        GammaDistributionParameters, Field(GammaDistributionParameters(), description="Parameters of the distribution")
-    ]
+    distribution_parameters: GammaDistributionParameters = Field(
+        GammaDistributionParameters(), description="Parameters of the distribution"
+    )
 
 
 class BinomialDistributionParameters(DistributionParametersBase):
@@ -135,10 +129,9 @@ class BinomialDistributionParameters(DistributionParametersBase):
 
 class BinomialDistribution(DistributionBase):
     family: Literal[DistributionFamily.BINOMIAL] = DistributionFamily.BINOMIAL
-    distribution_parameters: Annotated[
-        BinomialDistributionParameters,
-        Field(BinomialDistributionParameters(), description="Parameters of the distribution"),
-    ]
+    distribution_parameters: BinomialDistributionParameters = Field(
+        BinomialDistributionParameters(), description="Parameters of the distribution"
+    )
 
 
 class BetaDistributionParameters(DistributionParametersBase):
@@ -149,9 +142,9 @@ class BetaDistributionParameters(DistributionParametersBase):
 
 class BetaDistribution(DistributionBase):
     family: Literal[DistributionFamily.BETA] = DistributionFamily.BETA
-    distribution_parameters: Annotated[
-        BetaDistributionParameters, Field(BetaDistributionParameters(), description="Parameters of the distribution")
-    ]
+    distribution_parameters: BetaDistributionParameters = Field(
+        BetaDistributionParameters(), description="Parameters of the distribution"
+    )
 
 
 class PoissonDistributionParameters(DistributionParametersBase):
@@ -163,10 +156,9 @@ class PoissonDistributionParameters(DistributionParametersBase):
 
 class PoissonDistribution(DistributionBase):
     family: Literal[DistributionFamily.POISSON] = DistributionFamily.POISSON
-    distribution_parameters: Annotated[
-        PoissonDistributionParameters,
-        Field(PoissonDistributionParameters(), description="Parameters of the distribution"),
-    ]
+    distribution_parameters: PoissonDistributionParameters = Field(
+        PoissonDistributionParameters(), description="Parameters of the distribution"
+    )
 
 
 Distribution = Annotated[
@@ -175,6 +167,7 @@ Distribution = Annotated[
         NormalDistribution,
         LogNormalDistribution,
         ExponentialDistribution,
+        UniformDistribution,
         PoissonDistribution,
         BinomialDistribution,
         BetaDistribution,
@@ -189,6 +182,7 @@ DistributionParameters = Annotated[
         NormalDistributionParameters,
         LogNormalDistributionParameters,
         ExponentialDistributionParameters,
+        UniformDistributionParameters,
         PoissonDistributionParameters,
         BinomialDistributionParameters,
         BetaDistributionParameters,

@@ -5,10 +5,10 @@ using System.Reactive.Linq;
 using MathNet.Numerics.Distributions;
 using System.ComponentModel;
 
-namespace AindVrForagingDataSchema.Task
+namespace AindVrForagingDataSchema.AindVrForagingTask
 {
     [Combinator]
-    [Description("")]
+    [Description("Samples a value for a known distribution.")]
     [WorkflowElementCategory(ElementCategory.Transform)]
 
     public class SampleDistribution
@@ -22,15 +22,20 @@ namespace AindVrForagingDataSchema.Task
             set { randomSource = value; }
         }
 
+        public IObservable<double> Process(IObservable<Scalar> source)
+        {
+            return source.Select(value => value.Distribution_parameters.Value);
+        }
+
         public IObservable<double> Process(IObservable<NormalDistribution> source)
         {
             return source.Select(value =>
             {
                 var distribution = GetContinuousDistribution(
-                    value.Family,
-                    new double[] { value.NormalParameters.Mean, value.NormalParameters.Std });
-                var scalingParameters = value.NormalParameters.Scale;
-                var truncationParameters = value.NormalParameters.Truncate;
+                    (string) value.Family,
+                    new double[] { value.Distribution_parameters.Mean, value.Distribution_parameters.Std });
+                var scalingParameters = value.Scaling_parameters;
+                var truncationParameters = value.Truncation_parameters;
                 if (!(truncationParameters == null))
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
@@ -49,10 +54,10 @@ namespace AindVrForagingDataSchema.Task
             return source.Select(value =>
             {
                 var distribution = GetContinuousDistribution(
-                    value.Family,
-                    new double[] { value.ExponentialParameters.Rate });
-                var scalingParameters = value.ExponentialParameters.Scale;
-                var truncationParameters = value.ExponentialParameters.Truncate;
+                    (string) value.Family,
+                    new double[] { value.Distribution_parameters.Rate });
+                var scalingParameters = value.Scaling_parameters;
+                var truncationParameters = value.Truncation_parameters;
                 if (!(truncationParameters == null))
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
@@ -71,10 +76,10 @@ namespace AindVrForagingDataSchema.Task
             return source.Select(value =>
             {
                 var distribution = GetContinuousDistribution(
-                    value.Family,
-                    new double[] { value.LogNormalParameters.Mean, value.LogNormalParameters.Std });
-                var scalingParameters = value.LogNormalParameters.Scale;
-                var truncationParameters = value.LogNormalParameters.Truncate;
+                    (string) value.Family,
+                    new double[] { value.Distribution_parameters.Mean, value.Distribution_parameters.Std });
+                var scalingParameters = value.Scaling_parameters;
+                var truncationParameters = value.Truncation_parameters;
                 if (!(truncationParameters == null))
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
@@ -93,10 +98,10 @@ namespace AindVrForagingDataSchema.Task
             return source.Select(value =>
             {
                 var distribution = GetContinuousDistribution(
-                    value.Family,
-                    new double[] { value.GammaParameters.Rate });
-                var scalingParameters = value.GammaParameters.Scale;
-                var truncationParameters = value.GammaParameters.Truncate;
+                    (string) value.Family,
+                    new double[] { value.Distribution_parameters.Rate });
+                var scalingParameters = value.Scaling_parameters;
+                var truncationParameters = value.Truncation_parameters;
                 if (!(truncationParameters == null))
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
@@ -115,10 +120,10 @@ namespace AindVrForagingDataSchema.Task
             return source.Select(value =>
             {
                 var distribution = GetContinuousDistribution(
-                    value.Family,
-                    new double[] { value.BetaParameters.Alpha, value.BetaParameters.Beta });
-                var scalingParameters = value.BetaParameters.Scale;
-                var truncationParameters = value.BetaParameters.Truncate;
+                    (string) value.Family,
+                    new double[] { value.Distribution_parameters.Alpha, value.Distribution_parameters.Beta });
+                var scalingParameters = value.Scaling_parameters;
+                var truncationParameters = value.Truncation_parameters;
                 if (!(truncationParameters == null))
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
@@ -137,10 +142,10 @@ namespace AindVrForagingDataSchema.Task
             return source.Select(value =>
             {
                 var distribution = GetContinuousDistribution(
-                    value.Family,
-                    new double[] { value.UniformParameters.Min, value.UniformParameters.Max });
-                var scalingParameters = value.UniformParameters.Scale;
-                var truncationParameters = value.UniformParameters.Truncate;
+                    (string) value.Family,
+                    new double[] { value.Distribution_parameters.Min, value.Distribution_parameters.Max });
+                var scalingParameters = value.Scaling_parameters;
+                var truncationParameters = value.Truncation_parameters;
                 if (!(truncationParameters == null))
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
@@ -159,10 +164,10 @@ namespace AindVrForagingDataSchema.Task
             return source.Select(value =>
             {
                 var distribution = GetContinuousDistribution(
-                    value.Family,
-                    new double[] { value.BinomialParameters.SuccessProbability, value.BinomialParameters.Count });
-                var scalingParameters = value.BinomialParameters.Scale;
-                var truncationParameters = value.BinomialParameters.Truncate;
+                    (string) value.Family,
+                    new double[] { value.Distribution_parameters.P, value.Distribution_parameters.N });
+                var scalingParameters = value.Scaling_parameters;
+                var truncationParameters = value.Truncation_parameters;
                 if (!(truncationParameters == null))
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
@@ -181,10 +186,10 @@ namespace AindVrForagingDataSchema.Task
             return source.Select(value =>
             {
                 var distribution = GetContinuousDistribution(
-                    value.Family,
-                    new double[] { value.PoissonParameters.Rate });
-                var scalingParameters = value.PoissonParameters.Scale;
-                var truncationParameters = value.PoissonParameters.Truncate;
+                    (string) value.Family,
+                    new double[] { value.Distribution_parameters.Rate });
+                var scalingParameters = value.Scaling_parameters;
+                var truncationParameters = value.Truncation_parameters;
                 if (!(truncationParameters == null))
                 {
                     validateTruncationParameters(truncationParameters, scalingParameters);
@@ -200,7 +205,7 @@ namespace AindVrForagingDataSchema.Task
 
         private static double applyScaleAndOffset(double value, ScalingParameters scalingParameters)
         {
-            return value * scalingParameters.ScalingParametersScale + scalingParameters.ScalingParametersShift;
+            return value * scalingParameters.Scale + scalingParameters.Offset;
         }
 
         private double drawSample(IContinuousDistribution distribution, ScalingParameters scalingParameters)

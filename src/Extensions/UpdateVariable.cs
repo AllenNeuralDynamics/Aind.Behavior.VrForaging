@@ -3,8 +3,9 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using AindVrForagingDataSchema.Task;
 
+namespace AindVrForagingDataSchema.AindVrForagingTask
+{
 [Combinator]
 [Description("Applies a updater object to a value.")]
 [WorkflowElementCategory(ElementCategory.Transform)]
@@ -36,20 +37,20 @@ public class UpdateVariable
 
     private double Update(double value, NumericalUpdater updater)
     {
-        if (updater.NumericalUpdaterOperation == NumericalUpdaterOperation.None)
+        if (updater.Operation == NumericalUpdaterOperation.None)
         {
             return value;
         }
-        var updateParams = updater.NumericalUpdaterParameters;
+        var updateParams = updater.Parameters;
         var updateValue = IsIncrement ? updateParams.Increment : updateParams.Decrement;
         double updated_value;
-        switch (updater.NumericalUpdaterOperation)
+        switch (updater.Operation)
         {
             case NumericalUpdaterOperation.Offset:
                 updated_value =  value + updateValue;
                 break;
             case NumericalUpdaterOperation.Set:
-                updated_value = updateParams.InitialValue;
+                updated_value = updateParams.Initial_value;
                 break;
             case NumericalUpdaterOperation.OffsetPercentage:
                 updated_value = value + (value * updateValue);
@@ -67,4 +68,5 @@ public class UpdateVariable
         return updated_value;
     }
 
+}
 }
