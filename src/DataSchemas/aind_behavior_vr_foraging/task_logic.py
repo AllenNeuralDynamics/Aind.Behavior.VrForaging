@@ -62,7 +62,7 @@ class Texture(AindModel):
     size: Size = Field(default=Size(width=40, height=40), description="Size of the texture")
 
 
-class OdorSpecifications(AindModel):
+class Odorspecification(AindModel):
     index: Literal[0, 1, 2, 3] = Field(..., description="Index of the odor to be used")
     concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
 
@@ -84,7 +84,7 @@ class PatchRewardFunction(AindModel):
     initial_amount: float = Field(default=0, ge=0, description="Initial amount of reward (a.u.)")
 
 
-class RewardSpecifications(AindModel):
+class Rewardspecification(AindModel):
     amount: float = Field(ge=0, description="Amount of reward (a.u.)")
     operant_logic: Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
     probability: float = Field(default=1, ge=0, le=1, description="Probability of the reward")
@@ -97,11 +97,11 @@ class RewardSpecifications(AindModel):
 class PatchStatistics(AindModel):
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
-    odor_specification: Optional[OdorSpecifications] = Field(
-        None, description="The optional odor specifications of the patch"
+    odor_specification: Optional[Odorspecification] = Field(
+        None, description="The optional odor specification of the patch"
     )
-    reward_specification: Optional[RewardSpecifications] = Field(
-        None, description="The optional reward specifications of the patch"
+    reward_specification: Optional[Rewardspecification] = Field(
+        None, description="The optional reward specification of the patch"
     )
 
 
@@ -112,13 +112,13 @@ class VirtualSiteLabels(str, Enum):
     INTERSITE = "InterSite"
 
 
-class RenderSpecifications(AindModel):
+class Renderspecification(AindModel):
     contrast: Optional[float] = Field(default=None, ge=0, le=1, description="Contrast of the texture")
 
 
 class VirtualSiteGenerator(AindModel):
-    render_specification: RenderSpecifications = Field(
-        default=RenderSpecifications(), description="Contrast of the environment"
+    render_specification: Renderspecification = Field(
+        default=Renderspecification(), description="Contrast of the environment"
     )
     label: VirtualSiteLabels = Field(description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
@@ -137,12 +137,12 @@ class VirtualSite(AindModel):
     label: str = Field(default="VirtualSite", description="Label of the virtual site")
     length: VirtualSiteGeneration = Field(..., description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
-    odor: Optional[OdorSpecifications] = Field(None, description="The optional odor specifications of the virtual site")
-    reward: Optional[RewardSpecifications] = Field(
-        None, description="The optional reward specifications of the virtual site"
+    odor: Optional[Odorspecification] = Field(None, description="The optional odor specification of the virtual site")
+    reward: Optional[Rewardspecification] = Field(
+        None, description="The optional reward specification of the virtual site"
     )
-    render: RenderSpecifications = Field(
-        RenderSpecifications(), description="The optional render specifications of the virtual site"
+    render: Renderspecification = Field(
+        Renderspecification(), description="The optional render specification of the virtual site"
     )
 
 
@@ -221,9 +221,9 @@ class TaskStageSettingsBase(AindModel):
 class HabituationSettings(TaskStageSettingsBase):
     task_stage: Literal[TaskStage.HABITUATION] = TaskStage.HABITUATION
     distance_to_reward: distributions.ExponentialDistribution = Field(description="Distance (cm) to the reward")
-    reward_specification: RewardSpecifications = Field(description="Specifications of the reward")
-    reward_specification: RenderSpecifications = Field(
-        default=RenderSpecifications(), description="Contrast of the environement"
+    reward_specification: Rewardspecification = Field(description="specification of the reward")
+    reward_specification: Renderspecification = Field(
+        default=Renderspecification(), description="Contrast of the environement"
     )
 
 

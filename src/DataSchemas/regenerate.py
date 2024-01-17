@@ -5,7 +5,6 @@ import aind_behavior_vr_foraging.task_logic
 from aind_behavior_rig.base.json_schema import export_schema
 from aind_behavior_rig.utils import BonsaiSgenSerializers, bonsai_sgen, snake_to_pascal_case
 from aind_behavior_vr_foraging.session import AindVrForagingSession
-from pydantic.json_schema import GenerateJsonSchema
 
 SCHEMA_ROOT = Path("./src/DataSchemas/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")
@@ -20,7 +19,7 @@ def main():
     }
     for output_model_name, model in models.items():
         with open(SCHEMA_ROOT / f"{output_model_name}.json", "w") as f:
-            json_model = json.dumps(export_schema(model, GenerateJsonSchema), indent=2)
+            json_model = json.dumps(export_schema(model), indent=2)
             json_model = json_model.replace("$defs", "definitions")
             f.write(json_model)
         cmd_return = bonsai_sgen(
