@@ -5239,18 +5239,18 @@ Value as IsStopped)</scr:Expression>
                           <Workflow>
                             <Nodes>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:TextureSize">
-                                  <p4:X>40</p4:X>
-                                  <p4:Y>40</p4:Y>
+                                <Combinator xsi:type="p4:Size">
+                                  <p4:Width>40</p4:Width>
+                                  <p4:Height>40</p4:Height>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
                                 <PropertyMappings>
-                                  <Property Name="TextureSize" />
+                                  <Property Name="Size" />
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:Floor">
+                                <Combinator xsi:type="p4:Texture">
                                   <p4:Name>Floor</p4:Name>
                                 </Combinator>
                               </Expression>
@@ -5260,61 +5260,19 @@ Value as IsStopped)</scr:Expression>
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:TextureSize">
-                                  <p4:X>40</p4:X>
-                                  <p4:Y>40</p4:Y>
+                                <Combinator xsi:type="p4:Size">
+                                  <p4:Width>40</p4:Width>
+                                  <p4:Height>40</p4:Height>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
                                 <PropertyMappings>
-                                  <Property Name="TextureSize" />
+                                  <Property Name="Size" />
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:Floor">
-                                  <p4:Name>RightWall</p4:Name>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="RightWall" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:TextureSize">
-                                  <p4:X>40</p4:X>
-                                  <p4:Y>40</p4:Y>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="TextureSize" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:Floor">
-                                  <p4:Name>LeftWall</p4:Name>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="LeftWall" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:TextureSize">
-                                  <p4:X>40</p4:X>
-                                  <p4:Y>40</p4:Y>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="TextureSize" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:Floor">
-                                  <p4:Name>Ceiling</p4:Name>
+                                <Combinator xsi:type="p4:Texture">
+                                  <p4:Name>Ceilling</p4:Name>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
@@ -5323,7 +5281,49 @@ Value as IsStopped)</scr:Expression>
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:Textures" />
+                                <Combinator xsi:type="p4:Size">
+                                  <p4:Width>40</p4:Width>
+                                  <p4:Height>40</p4:Height>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Size" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p4:Texture">
+                                  <p4:Name>LeftWall</p4:Name>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Left" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p4:Size">
+                                  <p4:Width>40</p4:Width>
+                                  <p4:Height>40</p4:Height>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Size" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p4:Texture">
+                                  <p4:Name>RightWall</p4:Name>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Right" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p4:WallTextures" />
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
@@ -5364,7 +5364,7 @@ Value as IsStopped)</scr:Expression>
                                 <Name>TaskLogicSchema</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>OperationControl.PositionControl.InitialPosition</Selector>
+                                <Selector>Operation_control.Position_control.Initial_position</Selector>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>Z</Selector>
@@ -5634,7 +5634,7 @@ Item2 as Start
                         </Expression>
                         <Expression xsi:type="InputMapping">
                           <PropertyMappings>
-                            <Property Name="StartPosition" Selector="Start" />
+                            <Property Name="Start_position" Selector="Start" />
                             <Property Name="Id" Selector="Id" />
                           </PropertyMappings>
                         </Expression>
@@ -5670,7 +5670,13 @@ Item2 as Start
                             <Property Name="Textures" />
                           </PropertyMappings>
                         </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateCorridorSpecs.bonsai" />
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateCorridorSpecs.bonsai">
+                          <Height>0</Height>
+                          <Id>0</Id>
+                          <Length>120</Length>
+                          <Start_position>0</Start_position>
+                          <Width>0</Width>
+                        </Expression>
                         <Expression xsi:type="rx:ReplaySubject">
                           <Name>VisualCorridorSpecs</Name>
                           <rx:BufferSize xsi:nil="true" />
@@ -5732,1203 +5738,6 @@ Item2 as Start
                         <Expression xsi:type="SubscribeSubject">
                           <Name>SiteSpecs</Name>
                         </Expression>
-                        <Expression xsi:type="GroupWorkflow">
-                          <Name>InstantiateSite</Name>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="rx:CreateObservable">
-                                <Name>InstantiateSite</Name>
-                                <Workflow>
-                                  <Nodes>
-                                    <Expression xsi:type="WorkflowInput">
-                                      <Name>Source1</Name>
-                                    </Expression>
-                                    <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="rx:Take">
-                                        <rx:Count>1</rx:Count>
-                                      </Combinator>
-                                    </Expression>
-                                    <Expression xsi:type="rx:AsyncSubject">
-                                      <Name>ThisSiteSpecs</Name>
-                                    </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>CurrentPosition</Name>
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Value</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Z</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>ThisSiteSpecs</Name>
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Start_position</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>ThisSiteSpecs</Name>
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Start_position,Length</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="Add" />
-                                    <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="rx:CombineLatest" />
-                                    </Expression>
-                                    <Expression xsi:type="scr:ExpressionTransform">
-                                      <scr:Expression>(Item1 &gt;= Item2) &amp;&amp; (Item1 &lt; Item3)</scr:Expression>
-                                    </Expression>
-                                    <Expression xsi:type="rx:BehaviorSubject">
-                                      <Name>IsInSite</Name>
-                                    </Expression>
-                                    <Expression xsi:type="rx:Defer">
-                                      <Name>SiteLogic</Name>
-                                      <Workflow>
-                                        <Nodes>
-                                          <Expression xsi:type="GroupWorkflow">
-                                            <Name>RewardControl</Name>
-                                            <Workflow>
-                                              <Nodes>
-                                                <Expression xsi:type="SubscribeSubject">
-                                                  <Name>ThisSiteSpecs</Name>
-                                                </Expression>
-                                                <Expression xsi:type="MemberSelector">
-                                                  <Selector>Reward</Selector>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:Take">
-                                                    <rx:Count>1</rx:Count>
-                                                  </Combinator>
-                                                </Expression>
-                                                <Expression xsi:type="rx:AsyncSubject">
-                                                  <Name>ThisRewardControl</Name>
-                                                </Expression>
-                                                <Expression xsi:type="SubscribeSubject">
-                                                  <Name>IsStopped</Name>
-                                                </Expression>
-                                                <Expression xsi:type="rx:CreateObservable">
-                                                  <Name>CheckStop</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>ThisRewardControl</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Operant_logic.Stop_duration</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="scr:ExpressionTransform">
-                                                        <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                                                      </Expression>
-                                                      <Expression xsi:type="PropertyMapping">
-                                                        <PropertyMappings>
-                                                          <Property Name="DueTime" />
-                                                        </PropertyMappings>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="gl:Timer">
-                                                          <gl:DueTime>PT0.0000001S</gl:DueTime>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowInput">
-                                                        <Name>Source1</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:WithLatestFrom" />
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Item2</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="2" Label="Source1" />
-                                                      <Edge From="2" To="3" Label="Source1" />
-                                                      <Edge From="3" To="4" Label="Source1" />
-                                                      <Edge From="4" To="6" Label="Source1" />
-                                                      <Edge From="5" To="6" Label="Source2" />
-                                                      <Edge From="6" To="7" Label="Source1" />
-                                                      <Edge From="7" To="8" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:Switch" />
-                                                </Expression>
-                                                <Expression xsi:type="rx:Condition">
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="WorkflowInput">
-                                                        <Name>Source1</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Value</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="2" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="Annotation">
-                                                  <Name>LockedResponse</Name>
-                                                  <Text><![CDATA[]]></Text>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:Take">
-                                                    <rx:Count>1</rx:Count>
-                                                  </Combinator>
-                                                </Expression>
-                                                <Expression xsi:type="rx:SelectMany">
-                                                  <Name>LockedChoiceFeedback</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="WorkflowInput">
-                                                        <Name>Source1</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Unit" />
-                                                      <Expression xsi:type="MulticastSubject">
-                                                        <Name>ChoiceFeedback</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="BooleanProperty">
-                                                          <Value>true</Value>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="MulticastSubject">
-                                                        <Name>SpoutAvailable</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Take">
-                                                          <rx:Count>1</rx:Count>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="2" Label="Source1" />
-                                                      <Edge From="2" To="3" Label="Source1" />
-                                                      <Edge From="3" To="4" Label="Source1" />
-                                                      <Edge From="4" To="5" Label="Source1" />
-                                                      <Edge From="5" To="6" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="rx:Condition">
-                                                  <Name>Operant</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>ThisRewardControl</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Operant_logic.Is_operant</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="2" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="rx:SelectMany">
-                                                  <Name>WaitDelay</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>CurrentPosition</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Take">
-                                                          <rx:Count>1</rx:Count>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="rx:AsyncSubject">
-                                                        <Name>EntryPosition</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>ThisRewardControl</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Delay</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>RngSeed</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="PropertyMapping">
-                                                        <PropertyMappings>
-                                                          <Property Name="RandomSource" />
-                                                        </PropertyMappings>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="p4:SampleDistribution" />
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>RewardDelayOffset</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:CombineLatest" />
-                                                      </Expression>
-                                                      <Expression xsi:type="Add" />
-                                                      <Expression xsi:type="scr:ExpressionTransform">
-                                                        <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                                                      </Expression>
-                                                      <Expression xsi:type="PropertyMapping">
-                                                        <PropertyMappings>
-                                                          <Property Name="DueTime" />
-                                                        </PropertyMappings>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="gl:Timer">
-                                                          <gl:DueTime>PT0S</gl:DueTime>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="BooleanProperty">
-                                                          <Value>true</Value>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="GroupWorkflow">
-                                                        <Name>CheckDistanceFromEntry</Name>
-                                                        <Workflow>
-                                                          <Nodes>
-                                                            <Expression xsi:type="SubscribeSubject">
-                                                              <Name>EntryPosition</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>Value</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>Z</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="SubscribeSubject">
-                                                              <Name>CurrentPosition</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>Value</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>Z</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="Combinator">
-                                                              <Combinator xsi:type="rx:CombineLatest" />
-                                                            </Expression>
-                                                            <Expression xsi:type="Subtract" />
-                                                            <Expression xsi:type="Combinator">
-                                                              <Combinator xsi:type="dsp:Abs" />
-                                                            </Expression>
-                                                            <Expression xsi:type="SubscribeSubject">
-                                                              <Name>ThisRewardControl</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>OperantLogic.DistanceThresholdToBeStatic</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="PropertyMapping">
-                                                              <PropertyMappings>
-                                                                <Property Name="Value" />
-                                                              </PropertyMappings>
-                                                            </Expression>
-                                                            <Expression xsi:type="GreaterThan">
-                                                              <Operand xsi:type="FloatProperty">
-                                                                <Value>0</Value>
-                                                              </Operand>
-                                                            </Expression>
-                                                            <Expression xsi:type="SubscribeSubject">
-                                                              <Name>IsInSite</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="BitwiseNot" />
-                                                            <Expression xsi:type="rx:Condition">
-                                                              <Workflow>
-                                                                <Nodes>
-                                                                  <Expression xsi:type="WorkflowInput">
-                                                                    <Name>Source1</Name>
-                                                                  </Expression>
-                                                                  <Expression xsi:type="WorkflowOutput" />
-                                                                </Nodes>
-                                                                <Edges>
-                                                                  <Edge From="0" To="1" Label="Source1" />
-                                                                </Edges>
-                                                              </Workflow>
-                                                            </Expression>
-                                                            <Expression xsi:type="Combinator">
-                                                              <Combinator xsi:type="BooleanProperty">
-                                                                <Value>true</Value>
-                                                              </Combinator>
-                                                            </Expression>
-                                                            <Expression xsi:type="Combinator">
-                                                              <Combinator xsi:type="rx:Merge" />
-                                                            </Expression>
-                                                            <Expression xsi:type="WorkflowOutput" />
-                                                          </Nodes>
-                                                          <Edges>
-                                                            <Edge From="0" To="1" Label="Source1" />
-                                                            <Edge From="1" To="2" Label="Source1" />
-                                                            <Edge From="2" To="6" Label="Source1" />
-                                                            <Edge From="3" To="4" Label="Source1" />
-                                                            <Edge From="4" To="5" Label="Source1" />
-                                                            <Edge From="5" To="6" Label="Source2" />
-                                                            <Edge From="6" To="7" Label="Source1" />
-                                                            <Edge From="7" To="8" Label="Source1" />
-                                                            <Edge From="8" To="12" Label="Source1" />
-                                                            <Edge From="9" To="10" Label="Source1" />
-                                                            <Edge From="10" To="11" Label="Source1" />
-                                                            <Edge From="11" To="12" Label="Source2" />
-                                                            <Edge From="12" To="17" Label="Source1" />
-                                                            <Edge From="13" To="14" Label="Source1" />
-                                                            <Edge From="14" To="15" Label="Source1" />
-                                                            <Edge From="15" To="16" Label="Source1" />
-                                                            <Edge From="16" To="17" Label="Source2" />
-                                                            <Edge From="17" To="18" Label="Source1" />
-                                                          </Edges>
-                                                        </Workflow>
-                                                      </Expression>
-                                                      <Expression xsi:type="rx:Condition">
-                                                        <Workflow>
-                                                          <Nodes>
-                                                            <Expression xsi:type="WorkflowInput">
-                                                              <Name>Source1</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="WorkflowOutput" />
-                                                          </Nodes>
-                                                          <Edges>
-                                                            <Edge From="0" To="1" Label="Source1" />
-                                                          </Edges>
-                                                        </Workflow>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="BooleanProperty">
-                                                          <Value>false</Value>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Merge" />
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Take">
-                                                          <rx:Count>1</rx:Count>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>EntryPosition</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:WithLatestFrom" />
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Item1,Item2.Value.Z</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="scr:ExpressionTransform">
-                                                        <scr:Name>LabelOutcome</scr:Name>
-                                                        <scr:Expression>new(
-it.Item1 as IsSuccessfulWait,
-it.Item2 as EntryPosition)</scr:Expression>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Item2.Seconds</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Zip" />
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="harp:CreateTimestamped" />
-                                                      </Expression>
-                                                      <Expression xsi:type="IncludeWorkflow" Path="Extensions\SinkSoftwareEvent.bonsai">
-                                                        <EventName>WaitRewardOutcome</EventName>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Value</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Take">
-                                                          <rx:Count>1</rx:Count>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="2" Label="Source1" />
-                                                      <Edge From="3" To="4" Label="Source1" />
-                                                      <Edge From="4" To="7" Label="Source1" />
-                                                      <Edge From="5" To="6" Label="Source1" />
-                                                      <Edge From="6" To="7" Label="Source2" />
-                                                      <Edge From="7" To="9" Label="Source1" />
-                                                      <Edge From="8" To="9" Label="Source2" />
-                                                      <Edge From="9" To="10" Label="Source1" />
-                                                      <Edge From="10" To="11" Label="Source1" />
-                                                      <Edge From="11" To="12" Label="Source1" />
-                                                      <Edge From="12" To="13" Label="Source1" />
-                                                      <Edge From="13" To="14" Label="Source1" />
-                                                      <Edge From="14" To="18" Label="Source1" />
-                                                      <Edge From="15" To="16" Label="Source1" />
-                                                      <Edge From="16" To="17" Label="Source1" />
-                                                      <Edge From="17" To="18" Label="Source2" />
-                                                      <Edge From="18" To="19" Label="Source1" />
-                                                      <Edge From="19" To="21" Label="Source1" />
-                                                      <Edge From="20" To="21" Label="Source2" />
-                                                      <Edge From="21" To="22" Label="Source1" />
-                                                      <Edge From="21" To="24" Label="Source1" />
-                                                      <Edge From="22" To="23" Label="Source1" />
-                                                      <Edge From="23" To="25" Label="Source1" />
-                                                      <Edge From="24" To="25" Label="Source2" />
-                                                      <Edge From="25" To="26" Label="Source1" />
-                                                      <Edge From="26" To="27" Label="Source1" />
-                                                      <Edge From="27" To="28" Label="Source1" />
-                                                      <Edge From="28" To="29" Label="Source1" />
-                                                      <Edge From="29" To="30" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="rx:SelectMany">
-                                                  <Name>WaitForLick</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="WorkflowInput">
-                                                        <Name>Source1</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Take">
-                                                          <rx:Count>1</rx:Count>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="rx:AsyncSubject">
-                                                        <Name>WaitDelayOutcome</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>WaitDelayOutcome</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>IsSuccessfulWait</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="rx:Condition">
-                                                        <Name>IsFalse</Name>
-                                                        <Workflow>
-                                                          <Nodes>
-                                                            <Expression xsi:type="WorkflowInput">
-                                                              <Name>Source1</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="BitwiseNot" />
-                                                            <Expression xsi:type="WorkflowOutput" />
-                                                          </Nodes>
-                                                          <Edges>
-                                                            <Edge From="0" To="1" Label="Source1" />
-                                                            <Edge From="1" To="2" Label="Source1" />
-                                                          </Edges>
-                                                        </Workflow>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="BooleanProperty">
-                                                          <Value>false</Value>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>ThisRewardControl</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>OperantLogic.TimeToCollect</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="scr:ExpressionTransform">
-                                                        <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                                                      </Expression>
-                                                      <Expression xsi:type="PropertyMapping">
-                                                        <PropertyMappings>
-                                                          <Property Name="DueTime" />
-                                                        </PropertyMappings>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="gl:Timer">
-                                                          <gl:DueTime>P11DT13H46M40S</gl:DueTime>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="BooleanProperty">
-                                                          <Value>false</Value>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="GroupWorkflow">
-                                                        <Name>CheckDistanceFromEntry</Name>
-                                                        <Workflow>
-                                                          <Nodes>
-                                                            <Expression xsi:type="SubscribeSubject">
-                                                              <Name>WaitDelayOutcome</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>EntryPosition</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="SubscribeSubject">
-                                                              <Name>CurrentPosition</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>Value</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>Z</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="Combinator">
-                                                              <Combinator xsi:type="rx:CombineLatest" />
-                                                            </Expression>
-                                                            <Expression xsi:type="Subtract" />
-                                                            <Expression xsi:type="Combinator">
-                                                              <Combinator xsi:type="dsp:Abs" />
-                                                            </Expression>
-                                                            <Expression xsi:type="SubscribeSubject">
-                                                              <Name>ThisRewardControl</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="MemberSelector">
-                                                              <Selector>OperantLogic.DistanceThresholdToBeStatic</Selector>
-                                                            </Expression>
-                                                            <Expression xsi:type="PropertyMapping">
-                                                              <PropertyMappings>
-                                                                <Property Name="Value" />
-                                                              </PropertyMappings>
-                                                            </Expression>
-                                                            <Expression xsi:type="GreaterThan">
-                                                              <Operand xsi:type="FloatProperty">
-                                                                <Value>0</Value>
-                                                              </Operand>
-                                                            </Expression>
-                                                            <Expression xsi:type="SubscribeSubject">
-                                                              <Name>IsInSite</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="BitwiseNot" />
-                                                            <Expression xsi:type="rx:Condition">
-                                                              <Workflow>
-                                                                <Nodes>
-                                                                  <Expression xsi:type="WorkflowInput">
-                                                                    <Name>Source1</Name>
-                                                                  </Expression>
-                                                                  <Expression xsi:type="WorkflowOutput" />
-                                                                </Nodes>
-                                                                <Edges>
-                                                                  <Edge From="0" To="1" Label="Source1" />
-                                                                </Edges>
-                                                              </Workflow>
-                                                            </Expression>
-                                                            <Expression xsi:type="Combinator">
-                                                              <Combinator xsi:type="BooleanProperty">
-                                                                <Value>true</Value>
-                                                              </Combinator>
-                                                            </Expression>
-                                                            <Expression xsi:type="Combinator">
-                                                              <Combinator xsi:type="rx:Merge" />
-                                                            </Expression>
-                                                            <Expression xsi:type="WorkflowOutput" />
-                                                          </Nodes>
-                                                          <Edges>
-                                                            <Edge From="0" To="1" Label="Source1" />
-                                                            <Edge From="1" To="5" Label="Source1" />
-                                                            <Edge From="2" To="3" Label="Source1" />
-                                                            <Edge From="3" To="4" Label="Source1" />
-                                                            <Edge From="4" To="5" Label="Source2" />
-                                                            <Edge From="5" To="6" Label="Source1" />
-                                                            <Edge From="6" To="7" Label="Source1" />
-                                                            <Edge From="7" To="11" Label="Source1" />
-                                                            <Edge From="8" To="9" Label="Source1" />
-                                                            <Edge From="9" To="10" Label="Source1" />
-                                                            <Edge From="10" To="11" Label="Source2" />
-                                                            <Edge From="11" To="16" Label="Source1" />
-                                                            <Edge From="12" To="13" Label="Source1" />
-                                                            <Edge From="13" To="14" Label="Source1" />
-                                                            <Edge From="14" To="15" Label="Source1" />
-                                                            <Edge From="15" To="16" Label="Source2" />
-                                                            <Edge From="16" To="17" Label="Source1" />
-                                                          </Edges>
-                                                        </Workflow>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="gl:SampleOnUpdateFrame" />
-                                                      </Expression>
-                                                      <Expression xsi:type="rx:Condition">
-                                                        <Workflow>
-                                                          <Nodes>
-                                                            <Expression xsi:type="WorkflowInput">
-                                                              <Name>Source1</Name>
-                                                            </Expression>
-                                                            <Expression xsi:type="WorkflowOutput" />
-                                                          </Nodes>
-                                                          <Edges>
-                                                            <Edge From="0" To="1" Label="Source1" />
-                                                          </Edges>
-                                                        </Workflow>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="BooleanProperty">
-                                                          <Value>false</Value>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>LickEvent</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="gl:SampleOnUpdateFrame" />
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="BooleanProperty">
-                                                          <Value>true</Value>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Merge" />
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Take">
-                                                          <rx:Count>1</rx:Count>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="IncludeWorkflow" Path="Extensions\SinkSoftwareEvent.bonsai">
-                                                        <EventName>WaitLickOutcome</EventName>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Take">
-                                                          <rx:Count>1</rx:Count>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="2" Label="Source1" />
-                                                      <Edge From="3" To="4" Label="Source1" />
-                                                      <Edge From="4" To="5" Label="Source1" />
-                                                      <Edge From="5" To="6" Label="Source1" />
-                                                      <Edge From="6" To="20" Label="Source1" />
-                                                      <Edge From="7" To="8" Label="Source1" />
-                                                      <Edge From="8" To="9" Label="Source1" />
-                                                      <Edge From="9" To="10" Label="Source1" />
-                                                      <Edge From="10" To="11" Label="Source1" />
-                                                      <Edge From="11" To="12" Label="Source1" />
-                                                      <Edge From="12" To="20" Label="Source2" />
-                                                      <Edge From="13" To="14" Label="Source1" />
-                                                      <Edge From="14" To="15" Label="Source1" />
-                                                      <Edge From="15" To="16" Label="Source1" />
-                                                      <Edge From="16" To="20" Label="Source3" />
-                                                      <Edge From="17" To="18" Label="Source1" />
-                                                      <Edge From="18" To="19" Label="Source1" />
-                                                      <Edge From="19" To="20" Label="Source4" />
-                                                      <Edge From="20" To="21" Label="Source1" />
-                                                      <Edge From="21" To="22" Label="Source1" />
-                                                      <Edge From="22" To="23" Label="Source1" />
-                                                      <Edge From="23" To="24" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="rx:Condition">
-                                                  <Name>FailToCollect</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="WorkflowInput">
-                                                        <Name>Source1</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="BitwiseNot" />
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="2" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="BooleanProperty">
-                                                    <Value>false</Value>
-                                                  </Combinator>
-                                                </Expression>
-                                                <Expression xsi:type="MulticastSubject">
-                                                  <Name>SpoutAvailable</Name>
-                                                </Expression>
-                                                <Expression xsi:type="rx:Condition">
-                                                  <Name>Success</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="WorkflowInput">
-                                                        <Name>Source1</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="Unit" />
-                                                <Expression xsi:type="rx:Condition">
-                                                  <Name>Pavlovian</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>ThisRewardControl</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>OperantLogic.IsOperant</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="BitwiseNot" />
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="2" Label="Source1" />
-                                                      <Edge From="2" To="3" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="SubscribeSubject">
-                                                  <Name>ThisRewardControl</Name>
-                                                </Expression>
-                                                <Expression xsi:type="MemberSelector">
-                                                  <Selector>Delay</Selector>
-                                                </Expression>
-                                                <Expression xsi:type="SubscribeSubject">
-                                                  <Name>RngSeed</Name>
-                                                </Expression>
-                                                <Expression xsi:type="PropertyMapping">
-                                                  <PropertyMappings>
-                                                    <Property Name="RandomSource" />
-                                                  </PropertyMappings>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="p4:SampleDistribution" />
-                                                </Expression>
-                                                <Expression xsi:type="SubscribeSubject">
-                                                  <Name>RewardDelayOffset</Name>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:CombineLatest" />
-                                                </Expression>
-                                                <Expression xsi:type="Add" />
-                                                <Expression xsi:type="scr:ExpressionTransform">
-                                                  <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                                                </Expression>
-                                                <Expression xsi:type="PropertyMapping">
-                                                  <PropertyMappings>
-                                                    <Property Name="DueTime" />
-                                                  </PropertyMappings>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="gl:Delay">
-                                                    <gl:DueTime>PT3S</gl:DueTime>
-                                                  </Combinator>
-                                                </Expression>
-                                                <Expression xsi:type="Unit" />
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:Merge" />
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:Take">
-                                                    <rx:Count>1</rx:Count>
-                                                  </Combinator>
-                                                </Expression>
-                                                <Expression xsi:type="rx:SelectMany">
-                                                  <Name>DetermineReward</Name>
-                                                  <Workflow>
-                                                    <Nodes>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>ThisRewardControl</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Probability</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>RngSeed</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="p9:CreateContinuousUniform">
-                                                          <p9:Lower>0</p9:Lower>
-                                                          <p9:Upper>1</p9:Upper>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="p9:Sample" />
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Zip" />
-                                                      </Expression>
-                                                      <Expression xsi:type="GreaterThan" />
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Zip" />
-                                                      </Expression>
-                                                      <Expression xsi:type="scr:ExpressionTransform">
-                                                        <scr:Name>CheckEdgeCase</scr:Name>
-                                                        <scr:Expression>Item1.Item1 == 1.0 ? True : (Item1.Item1 == 0.0 ? False : Item2)</scr:Expression>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>ThisRewardControl</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="MemberSelector">
-                                                        <Selector>Amount</Selector>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Zip" />
-                                                      </Expression>
-                                                      <Expression xsi:type="scr:ExpressionTransform">
-                                                        <scr:Name>CoinFlip</scr:Name>
-                                                        <scr:Expression>Item1 ? Item2 : 0</scr:Expression>
-                                                      </Expression>
-                                                      <Expression xsi:type="SubscribeSubject">
-                                                        <Name>RewardAvailableInPatch</Name>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Zip" />
-                                                      </Expression>
-                                                      <Expression xsi:type="scr:ExpressionTransform">
-                                                        <scr:Name>CapRewardAvailable</scr:Name>
-                                                        <scr:Expression>Item1 &gt; Item2 ? Item2 : Item1</scr:Expression>
-                                                      </Expression>
-                                                      <Expression xsi:type="Combinator">
-                                                        <Combinator xsi:type="rx:Take">
-                                                          <rx:Count>1</rx:Count>
-                                                        </Combinator>
-                                                      </Expression>
-                                                      <Expression xsi:type="WorkflowOutput" />
-                                                    </Nodes>
-                                                    <Edges>
-                                                      <Edge From="0" To="1" Label="Source1" />
-                                                      <Edge From="1" To="5" Label="Source1" />
-                                                      <Edge From="2" To="3" Label="Source1" />
-                                                      <Edge From="3" To="4" Label="Source1" />
-                                                      <Edge From="4" To="5" Label="Source2" />
-                                                      <Edge From="5" To="6" Label="Source1" />
-                                                      <Edge From="5" To="7" Label="Source1" />
-                                                      <Edge From="6" To="7" Label="Source2" />
-                                                      <Edge From="7" To="8" Label="Source1" />
-                                                      <Edge From="8" To="11" Label="Source1" />
-                                                      <Edge From="9" To="10" Label="Source1" />
-                                                      <Edge From="10" To="11" Label="Source2" />
-                                                      <Edge From="11" To="12" Label="Source1" />
-                                                      <Edge From="12" To="14" Label="Source1" />
-                                                      <Edge From="13" To="14" Label="Source2" />
-                                                      <Edge From="14" To="15" Label="Source1" />
-                                                      <Edge From="15" To="16" Label="Source1" />
-                                                      <Edge From="16" To="17" Label="Source1" />
-                                                    </Edges>
-                                                  </Workflow>
-                                                </Expression>
-                                                <Expression xsi:type="MulticastSubject">
-                                                  <Name>GiveReward</Name>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="BooleanProperty">
-                                                    <Value>true</Value>
-                                                  </Combinator>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:Merge" />
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:Take">
-                                                    <rx:Count>1</rx:Count>
-                                                  </Combinator>
-                                                </Expression>
-                                                <Expression xsi:type="WorkflowOutput" />
-                                              </Nodes>
-                                              <Edges>
-                                                <Edge From="0" To="1" Label="Source1" />
-                                                <Edge From="1" To="2" Label="Source1" />
-                                                <Edge From="2" To="3" Label="Source1" />
-                                                <Edge From="4" To="5" Label="Source1" />
-                                                <Edge From="5" To="6" Label="Source1" />
-                                                <Edge From="6" To="7" Label="Source1" />
-                                                <Edge From="7" To="9" Label="Source1" />
-                                                <Edge From="8" To="9" Label="Source2" />
-                                                <Edge From="9" To="10" Label="Source1" />
-                                                <Edge From="10" To="11" Label="Source1" />
-                                                <Edge From="10" To="19" Label="Source1" />
-                                                <Edge From="11" To="12" Label="Source1" />
-                                                <Edge From="12" To="13" Label="Source1" />
-                                                <Edge From="13" To="14" Label="Source1" />
-                                                <Edge From="13" To="17" Label="Source1" />
-                                                <Edge From="14" To="15" Label="Source1" />
-                                                <Edge From="15" To="16" Label="Source1" />
-                                                <Edge From="16" To="37" Label="Source1" />
-                                                <Edge From="17" To="18" Label="Source1" />
-                                                <Edge From="18" To="32" Label="Source1" />
-                                                <Edge From="19" To="30" Label="Source1" />
-                                                <Edge From="20" To="21" Label="Source1" />
-                                                <Edge From="21" To="24" Label="Source1" />
-                                                <Edge From="22" To="23" Label="Source1" />
-                                                <Edge From="23" To="24" Label="Source2" />
-                                                <Edge From="24" To="26" Label="Source1" />
-                                                <Edge From="25" To="26" Label="Source2" />
-                                                <Edge From="26" To="27" Label="Source1" />
-                                                <Edge From="27" To="28" Label="Source1" />
-                                                <Edge From="28" To="29" Label="Source1" />
-                                                <Edge From="29" To="30" Label="Source2" />
-                                                <Edge From="30" To="31" Label="Source1" />
-                                                <Edge From="31" To="32" Label="Source2" />
-                                                <Edge From="32" To="33" Label="Source1" />
-                                                <Edge From="33" To="34" Label="Source1" />
-                                                <Edge From="34" To="35" Label="Source1" />
-                                                <Edge From="35" To="36" Label="Source1" />
-                                                <Edge From="36" To="37" Label="Source2" />
-                                                <Edge From="37" To="38" Label="Source1" />
-                                                <Edge From="38" To="39" Label="Source1" />
-                                              </Edges>
-                                            </Workflow>
-                                          </Expression>
-                                          <Expression xsi:type="SubscribeSubject">
-                                            <Name>ThisSiteSpecs</Name>
-                                          </Expression>
-                                          <Expression xsi:type="MemberSelector">
-                                            <Selector>Reward</Selector>
-                                          </Expression>
-                                          <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
-                                          <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="rx:Take">
-                                              <rx:Count>1</rx:Count>
-                                            </Combinator>
-                                          </Expression>
-                                          <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="rx:SubscribeWhen" />
-                                          </Expression>
-                                          <Expression xsi:type="GroupWorkflow">
-                                            <Name>OdorControl</Name>
-                                            <Workflow>
-                                              <Nodes>
-                                                <Expression xsi:type="Annotation">
-                                                  <Name>OdorControl</Name>
-                                                  <Text><![CDATA[]]></Text>
-                                                </Expression>
-                                                <Expression xsi:type="SubscribeSubject">
-                                                  <Name>IsInSite</Name>
-                                                </Expression>
-                                                <Expression xsi:type="Combinator">
-                                                  <Combinator xsi:type="rx:DistinctUntilChanged" />
-                                                </Expression>
-                                                <Expression xsi:type="MulticastSubject">
-                                                  <Name>OdorEndValveState</Name>
-                                                </Expression>
-                                                <Expression xsi:type="WorkflowOutput" />
-                                              </Nodes>
-                                              <Edges>
-                                                <Edge From="0" To="1" Label="Source1" />
-                                                <Edge From="1" To="2" Label="Source1" />
-                                                <Edge From="2" To="3" Label="Source1" />
-                                                <Edge From="3" To="4" Label="Source1" />
-                                              </Edges>
-                                            </Workflow>
-                                          </Expression>
-                                          <Expression xsi:type="SubscribeSubject">
-                                            <Name>ThisSiteSpecs</Name>
-                                          </Expression>
-                                          <Expression xsi:type="MemberSelector">
-                                            <Selector>Odor</Selector>
-                                          </Expression>
-                                          <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
-                                          <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="rx:Take">
-                                              <rx:Count>1</rx:Count>
-                                            </Combinator>
-                                          </Expression>
-                                          <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="rx:SubscribeWhen" />
-                                          </Expression>
-                                          <Expression xsi:type="SubscribeSubject">
-                                            <Name>ThisSiteSpecs</Name>
-                                          </Expression>
-                                          <Expression xsi:type="MemberSelector">
-                                            <Selector>Render.Contrast</Selector>
-                                          </Expression>
-                                          <Expression xsi:type="rx:Condition">
-                                            <Workflow>
-                                              <Nodes>
-                                                <Expression xsi:type="WorkflowInput">
-                                                  <Name>Source1</Name>
-                                                </Expression>
-                                                <Expression xsi:type="MemberSelector">
-                                                  <Selector>HasValue</Selector>
-                                                </Expression>
-                                                <Expression xsi:type="WorkflowOutput" />
-                                              </Nodes>
-                                              <Edges>
-                                                <Edge From="0" To="1" Label="Source1" />
-                                                <Edge From="1" To="2" Label="Source1" />
-                                              </Edges>
-                                            </Workflow>
-                                          </Expression>
-                                          <Expression xsi:type="MemberSelector">
-                                            <Selector>Value</Selector>
-                                          </Expression>
-                                          <Expression xsi:type="MulticastSubject">
-                                            <Name>ScreenContrast</Name>
-                                          </Expression>
-                                        </Nodes>
-                                        <Edges>
-                                          <Edge From="0" To="5" Label="Source1" />
-                                          <Edge From="1" To="2" Label="Source1" />
-                                          <Edge From="2" To="3" Label="Source1" />
-                                          <Edge From="3" To="4" Label="Source1" />
-                                          <Edge From="4" To="5" Label="Source2" />
-                                          <Edge From="6" To="11" Label="Source1" />
-                                          <Edge From="7" To="8" Label="Source1" />
-                                          <Edge From="8" To="9" Label="Source1" />
-                                          <Edge From="9" To="10" Label="Source1" />
-                                          <Edge From="10" To="11" Label="Source2" />
-                                          <Edge From="12" To="13" Label="Source1" />
-                                          <Edge From="13" To="14" Label="Source1" />
-                                          <Edge From="14" To="15" Label="Source1" />
-                                          <Edge From="15" To="16" Label="Source1" />
-                                        </Edges>
-                                      </Workflow>
-                                    </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>IsInSite</Name>
-                                    </Expression>
-                                    <Expression xsi:type="rx:Condition">
-                                      <Workflow>
-                                        <Nodes>
-                                          <Expression xsi:type="WorkflowInput">
-                                            <Name>Source1</Name>
-                                          </Expression>
-                                          <Expression xsi:type="WorkflowOutput" />
-                                        </Nodes>
-                                        <Edges>
-                                          <Edge From="0" To="1" Label="Source1" />
-                                        </Edges>
-                                      </Workflow>
-                                    </Expression>
-                                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\ActiveSiteEvent.bonsai" />
-                                    <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="rx:Take">
-                                        <rx:Count>1</rx:Count>
-                                      </Combinator>
-                                    </Expression>
-                                    <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="rx:SubscribeWhen" />
-                                    </Expression>
-                                    <Expression xsi:type="GroupWorkflow">
-                                      <Name>DisposeSite</Name>
-                                      <Workflow>
-                                        <Nodes>
-                                          <Expression xsi:type="SubscribeSubject">
-                                            <Name>CurrentPosition</Name>
-                                          </Expression>
-                                          <Expression xsi:type="MemberSelector">
-                                            <Selector>Value</Selector>
-                                          </Expression>
-                                          <Expression xsi:type="MemberSelector">
-                                            <Selector>Z</Selector>
-                                          </Expression>
-                                          <Expression xsi:type="SubscribeSubject">
-                                            <Name>DisposingTreshold</Name>
-                                          </Expression>
-                                          <Expression xsi:type="SubscribeSubject">
-                                            <Name>ThisSiteSpecs</Name>
-                                          </Expression>
-                                          <Expression xsi:type="MemberSelector">
-                                            <Selector>Length,StartPosition</Selector>
-                                          </Expression>
-                                          <Expression xsi:type="Add" />
-                                          <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="rx:CombineLatest" />
-                                          </Expression>
-                                          <Expression xsi:type="Add" />
-                                          <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="rx:CombineLatest" />
-                                          </Expression>
-                                          <Expression xsi:type="GreaterThan" />
-                                          <Expression xsi:type="rx:Condition">
-                                            <Workflow>
-                                              <Nodes>
-                                                <Expression xsi:type="WorkflowInput">
-                                                  <Name>Source1</Name>
-                                                </Expression>
-                                                <Expression xsi:type="WorkflowOutput" />
-                                              </Nodes>
-                                              <Edges>
-                                                <Edge From="0" To="1" Label="Source1" />
-                                              </Edges>
-                                            </Workflow>
-                                          </Expression>
-                                          <Expression xsi:type="Combinator">
-                                            <Combinator xsi:type="rx:Take">
-                                              <rx:Count>1</rx:Count>
-                                            </Combinator>
-                                          </Expression>
-                                          <Expression xsi:type="WorkflowOutput" />
-                                        </Nodes>
-                                        <Edges>
-                                          <Edge From="0" To="1" Label="Source1" />
-                                          <Edge From="1" To="2" Label="Source1" />
-                                          <Edge From="2" To="9" Label="Source1" />
-                                          <Edge From="3" To="7" Label="Source1" />
-                                          <Edge From="4" To="5" Label="Source1" />
-                                          <Edge From="5" To="6" Label="Source1" />
-                                          <Edge From="6" To="7" Label="Source2" />
-                                          <Edge From="7" To="8" Label="Source1" />
-                                          <Edge From="8" To="9" Label="Source2" />
-                                          <Edge From="9" To="10" Label="Source1" />
-                                          <Edge From="10" To="11" Label="Source1" />
-                                          <Edge From="11" To="12" Label="Source1" />
-                                          <Edge From="12" To="13" Label="Source1" />
-                                        </Edges>
-                                      </Workflow>
-                                    </Expression>
-                                    <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="rx:TakeUntil" />
-                                    </Expression>
-                                    <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="rx:LastOrDefault" />
-                                    </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>ThisSiteSpecs</Name>
-                                    </Expression>
-                                    <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="rx:WithLatestFrom" />
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Item2</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="WorkflowOutput" />
-                                  </Nodes>
-                                  <Edges>
-                                    <Edge From="0" To="1" Label="Source1" />
-                                    <Edge From="1" To="2" Label="Source1" />
-                                    <Edge From="3" To="4" Label="Source1" />
-                                    <Edge From="4" To="5" Label="Source1" />
-                                    <Edge From="5" To="11" Label="Source1" />
-                                    <Edge From="6" To="7" Label="Source1" />
-                                    <Edge From="7" To="11" Label="Source2" />
-                                    <Edge From="8" To="9" Label="Source1" />
-                                    <Edge From="9" To="10" Label="Source1" />
-                                    <Edge From="10" To="11" Label="Source3" />
-                                    <Edge From="11" To="12" Label="Source1" />
-                                    <Edge From="12" To="13" Label="Source1" />
-                                    <Edge From="14" To="19" Label="Source1" />
-                                    <Edge From="15" To="16" Label="Source1" />
-                                    <Edge From="16" To="17" Label="Source1" />
-                                    <Edge From="17" To="18" Label="Source1" />
-                                    <Edge From="18" To="19" Label="Source2" />
-                                    <Edge From="19" To="21" Label="Source1" />
-                                    <Edge From="20" To="21" Label="Source2" />
-                                    <Edge From="21" To="22" Label="Source1" />
-                                    <Edge From="22" To="24" Label="Source1" />
-                                    <Edge From="23" To="24" Label="Source2" />
-                                    <Edge From="24" To="25" Label="Source1" />
-                                    <Edge From="25" To="26" Label="Source1" />
-                                  </Edges>
-                                </Workflow>
-                              </Expression>
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>SiteSpecs</Name>
-                        </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\InstantiateSite.bonsai" />
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
@@ -6937,8 +5746,6 @@ it.Item2 as EntryPosition)</scr:Expression>
                       <Edges>
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -6994,10 +5801,10 @@ it.Item2 as EntryPosition)</scr:Expression>
                     <Name>ActivePatch</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>VirtualSiteGeneration.InterPatchSite</Selector>
+                    <Selector>Virtual_site_generation.Inter_patch</Selector>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>LengthDistribution</Selector>
+                    <Selector>Length_distribution</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -7037,7 +5844,6 @@ it.Item2 as EntryPosition)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddInterPatchSite.bonsai">
                     <Label>InterPatchSite</Label>
-                    <LengthDistribution xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="rx:SelectMany">
                     <Name>Patch</Name>
@@ -7133,7 +5939,6 @@ it.Item2 as EntryPosition)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
                           <Label>GapSite</Label>
-                          <LengthDistribution xsi:nil="true" />
                         </Expression>
                         <Expression xsi:type="rx:BehaviorSubject">
                           <Name>FirstPatchSite</Name>
@@ -7265,7 +6070,6 @@ it.Item2 as EntryPosition)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddRewardSite.bonsai">
                           <Label>RewardSite</Label>
-                          <LengthDistribution xsi:nil="true" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>ActivePatch</Name>
@@ -7314,7 +6118,6 @@ it.Item2 as EntryPosition)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\AddGapSite.bonsai">
                           <Label>GapSite</Label>
-                          <LengthDistribution xsi:nil="true" />
                         </Expression>
                         <Expression xsi:type="rx:SelectMany">
                           <Name>WaitForSiteOutcome</Name>
