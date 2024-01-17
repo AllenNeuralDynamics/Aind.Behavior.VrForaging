@@ -1237,8 +1237,7 @@
               "$ref": "#/definitions/GammaDistribution"
             }
           ],
-          "title": "Delay",
-          "type": "string"
+          "title": "Delay"
         }
       },
       "required": [
@@ -1785,8 +1784,7 @@
               "$ref": "#/definitions/GammaDistribution"
             }
           ],
-          "title": "Length Distribution",
-          "type": "string"
+          "title": "Length Distribution"
         }
       },
       "title": "VirtualSiteGenerator",

@@ -3365,7 +3365,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private double _probability = 1D;
     
-        private object _delay = "{\r\n  \"family\": \"Scalar\",\r\n  \"distribution_parameters\": {\r\n    \"family\": \"Scalar\",\r\n    \"value\": 0.0\r\n  },\r\n  \"truncation_parameters\": null,\r\n  \"scaling_parameters\": null\r\n}";
+        private object _delay;
     
         public RewardSpecification()
         {
@@ -4925,7 +4925,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private VirtualSiteLabels _label = AindVrForagingDataSchema.AindVrForagingTask.VirtualSiteLabels.Unspecified;
     
-        private object _length_distribution = "{\r\n  \"family\": \"Scalar\",\r\n  \"distribution_parameters\": {\r\n    \"family\": \"Scalar\",\r\n    \"value\": 20.0\r\n  },\r\n  \"truncation_parameters\": null,\r\n  \"scaling_parameters\": null\r\n}";
+        private object _length_distribution;
     
         public VirtualSiteGenerator()
         {
