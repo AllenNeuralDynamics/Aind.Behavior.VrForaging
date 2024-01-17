@@ -1184,6 +1184,11 @@
           "type": "number"
         },
         "delay": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Scalar"
+            }
+          ],
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1193,51 +1198,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "The optional distribution where the delay to reward will be drawn from",
-          "discriminator": {
-            "mapping": {
-              "Beta": "#/definitions/BetaDistribution",
-              "Binomial": "#/definitions/BinomialDistribution",
-              "Exponential": "#/definitions/ExponentialDistribution",
-              "Gamma": "#/definitions/GammaDistribution",
-              "LogNormal": "#/definitions/LogNormalDistribution",
-              "Normal": "#/definitions/NormalDistribution",
-              "Poisson": "#/definitions/PoissonDistribution",
-              "Scalar": "#/definitions/Scalar",
-              "Uniform": "#/definitions/UniformDistribution"
-            },
-            "propertyName": "family"
-          },
-          "oneOf": [
-            {
-              "$ref": "#/definitions/Scalar"
-            },
-            {
-              "$ref": "#/definitions/NormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/LogNormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/ExponentialDistribution"
-            },
-            {
-              "$ref": "#/definitions/UniformDistribution"
-            },
-            {
-              "$ref": "#/definitions/PoissonDistribution"
-            },
-            {
-              "$ref": "#/definitions/BinomialDistribution"
-            },
-            {
-              "$ref": "#/definitions/BetaDistribution"
-            },
-            {
-              "$ref": "#/definitions/GammaDistribution"
-            }
-          ],
-          "title": "Delay"
+          "description": "The optional distribution where the delay to reward will be drawn from"
         }
       },
       "required": [
@@ -1731,6 +1692,11 @@
           "description": "Label of the virtual site"
         },
         "length_distribution": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Scalar"
+            }
+          ],
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1740,51 +1706,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "Distribution of the length of the virtual site",
-          "discriminator": {
-            "mapping": {
-              "Beta": "#/definitions/BetaDistribution",
-              "Binomial": "#/definitions/BinomialDistribution",
-              "Exponential": "#/definitions/ExponentialDistribution",
-              "Gamma": "#/definitions/GammaDistribution",
-              "LogNormal": "#/definitions/LogNormalDistribution",
-              "Normal": "#/definitions/NormalDistribution",
-              "Poisson": "#/definitions/PoissonDistribution",
-              "Scalar": "#/definitions/Scalar",
-              "Uniform": "#/definitions/UniformDistribution"
-            },
-            "propertyName": "family"
-          },
-          "oneOf": [
-            {
-              "$ref": "#/definitions/Scalar"
-            },
-            {
-              "$ref": "#/definitions/NormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/LogNormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/ExponentialDistribution"
-            },
-            {
-              "$ref": "#/definitions/UniformDistribution"
-            },
-            {
-              "$ref": "#/definitions/PoissonDistribution"
-            },
-            {
-              "$ref": "#/definitions/BinomialDistribution"
-            },
-            {
-              "$ref": "#/definitions/BetaDistribution"
-            },
-            {
-              "$ref": "#/definitions/GammaDistribution"
-            }
-          ],
-          "title": "Length Distribution"
+          "description": "Distribution of the length of the virtual site"
         }
       },
       "title": "VirtualSiteGenerator",
@@ -1920,6 +1842,51 @@
             },
             {
               "$ref": "#/definitions/CreateDistribution"
+            },
+            {
+              "discriminator": {
+                "mapping": {
+                  "Beta": "#/definitions/BetaDistribution",
+                  "Binomial": "#/definitions/BinomialDistribution",
+                  "Exponential": "#/definitions/ExponentialDistribution",
+                  "Gamma": "#/definitions/GammaDistribution",
+                  "LogNormal": "#/definitions/LogNormalDistribution",
+                  "Normal": "#/definitions/NormalDistribution",
+                  "Poisson": "#/definitions/PoissonDistribution",
+                  "Scalar": "#/definitions/Scalar",
+                  "Uniform": "#/definitions/UniformDistribution"
+                },
+                "propertyName": "family"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/Scalar"
+                },
+                {
+                  "$ref": "#/definitions/NormalDistribution"
+                },
+                {
+                  "$ref": "#/definitions/LogNormalDistribution"
+                },
+                {
+                  "$ref": "#/definitions/ExponentialDistribution"
+                },
+                {
+                  "$ref": "#/definitions/UniformDistribution"
+                },
+                {
+                  "$ref": "#/definitions/PoissonDistribution"
+                },
+                {
+                  "$ref": "#/definitions/BinomialDistribution"
+                },
+                {
+                  "$ref": "#/definitions/BetaDistribution"
+                },
+                {
+                  "$ref": "#/definitions/GammaDistribution"
+                }
+              ]
             }
           ]
         },
