@@ -3365,7 +3365,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private double _probability = 1D;
     
-        private object _delay;
+        private Scalar _delay;
     
         public RewardSpecification()
         {
@@ -3441,7 +3441,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("delay")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
         [System.ComponentModel.DescriptionAttribute("The optional distribution where the delay to reward will be drawn from")]
-        public object Delay
+        public Scalar Delay
         {
             get
             {
@@ -4925,7 +4925,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private VirtualSiteLabels _label = AindVrForagingDataSchema.AindVrForagingTask.VirtualSiteLabels.Unspecified;
     
-        private object _length_distribution;
+        private Scalar _length_distribution;
     
         public VirtualSiteGenerator()
         {
@@ -4983,7 +4983,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("length_distribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length_distribution")]
         [System.ComponentModel.DescriptionAttribute("Distribution of the length of the virtual site")]
-        public object Length_distribution
+        public Scalar Length_distribution
         {
             get
             {
