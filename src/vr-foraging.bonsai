@@ -8474,13 +8474,6 @@ Item5 as TotalReward)</scr:Expression>
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="GroupWorkflow">
-        <Name>CalibrationTools</Name>
-        <Workflow>
-          <Nodes />
-          <Edges />
-        </Workflow>
-      </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>EndExperiment</Name>
       </Expression>
@@ -8719,11 +8712,11 @@ Item5 as TotalReward)</scr:Expression>
       <Edge From="49" To="50" Label="Source2" />
       <Edge From="50" To="52" Label="Source1" />
       <Edge From="51" To="52" Label="Source2" />
+      <Edge From="57" To="58" Label="Source1" />
       <Edge From="58" To="59" Label="Source1" />
       <Edge From="59" To="60" Label="Source1" />
       <Edge From="60" To="61" Label="Source1" />
       <Edge From="61" To="62" Label="Source1" />
-      <Edge From="62" To="63" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
