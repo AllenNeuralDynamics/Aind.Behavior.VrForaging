@@ -173,7 +173,7 @@ Distribution = Annotated[
         BetaDistribution,
         GammaDistribution,
     ],
-    Field(discriminator="family", json_schema_extra={"type": "string"}),
+    Field(discriminator="family"),
 ]
 
 DistributionParameters = Annotated[
