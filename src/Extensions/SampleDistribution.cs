@@ -32,7 +32,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return source.Select(value =>
             {
                 DistributionFamily result;
-                Enum.TryParse((string) value.Family, out result);
+                Enum.TryParse(value.Family, out result);
                 var distribution = GetContinuousDistribution(
                     result,
                     new double[] { value.Distribution_parameters.Mean, value.Distribution_parameters.Std });
@@ -56,7 +56,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return source.Select(value =>
             {
                 DistributionFamily result;
-                Enum.TryParse((string) value.Family, out result);
+                Enum.TryParse(value.Family, out result);
                 var distribution = GetContinuousDistribution(
                     result,
                     new double[] { value.Distribution_parameters.Rate });
@@ -80,7 +80,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return source.Select(value =>
             {
                 DistributionFamily result;
-                Enum.TryParse((string) value.Family, out result);
+                Enum.TryParse(value.Family, out result);
                 var distribution = GetContinuousDistribution(
                     result,
                     new double[] { value.Distribution_parameters.Mean, value.Distribution_parameters.Std });
@@ -104,7 +104,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return source.Select(value =>
             {
                 DistributionFamily result;
-                Enum.TryParse((string) value.Family, out result);
+                Enum.TryParse(value.Family, out result);
                 var distribution = GetContinuousDistribution(
                     result,
                     new double[] { value.Distribution_parameters.Rate });
@@ -128,7 +128,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return source.Select(value =>
             {
                 DistributionFamily result;
-                Enum.TryParse((string) value.Family, out result);
+                Enum.TryParse(value.Family, out result);
                 var distribution = GetContinuousDistribution(
                     result,
                     new double[] { value.Distribution_parameters.Alpha, value.Distribution_parameters.Beta });
@@ -152,7 +152,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return source.Select(value =>
             {
                 DistributionFamily result;
-                Enum.TryParse((string) value.Family, out result);
+                Enum.TryParse(value.Family, out result);
                 var distribution = GetContinuousDistribution(
                     result,
                     new double[] { value.Distribution_parameters.Min, value.Distribution_parameters.Max });
@@ -176,7 +176,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return source.Select(value =>
             {
                 DistributionFamily result;
-                Enum.TryParse((string) value.Family, out result);
+                Enum.TryParse(value.Family, out result);
                 var distribution = GetDiscreteDistribution(
                     result,
                     new double[] { value.Distribution_parameters.P, value.Distribution_parameters.N });
@@ -197,7 +197,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return source.Select(value =>
             {
                 DistributionFamily result;
-                Enum.TryParse((string) value.Family, out result);
+                Enum.TryParse(value.Family, out result);
                 var distribution = GetDiscreteDistribution(
                     result,
                     new double[] { value.Distribution_parameters.Rate });
@@ -294,7 +294,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
                     throw new ArgumentException("Invalid distribution type");
             }
         }
-        
+
         public IContinuousDistribution GetContinuousDistribution(DistributionFamily distribution, params double[] parameters)
         {
             switch (distribution)
