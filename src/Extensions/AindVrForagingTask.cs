@@ -15,7 +15,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class BetaDistribution
     {
     
-        private object _family;
+        private string _family = "Beta";
     
         private BetaDistributionParameters _distribution_parameters;
     
@@ -35,10 +35,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -147,7 +146,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class BetaDistributionParameters
     {
     
-        private object _family;
+        private string _family = "Beta";
     
         private double _alpha = 5D;
     
@@ -164,10 +163,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _beta = other._beta;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -254,7 +252,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class BinomialDistribution
     {
     
-        private object _family;
+        private string _family = "Binomial";
     
         private BinomialDistributionParameters _distribution_parameters;
     
@@ -274,10 +272,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -386,7 +383,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class BinomialDistributionParameters
     {
     
-        private object _family;
+        private string _family = "Binomial";
     
         private int _n = 1;
     
@@ -403,10 +400,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _p = other._p;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -785,7 +781,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class ExponentialDistribution
     {
     
-        private object _family;
+        private string _family = "Exponential";
     
         private ExponentialDistributionParameters _distribution_parameters;
     
@@ -805,10 +801,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -917,7 +912,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class ExponentialDistributionParameters
     {
     
-        private object _family;
+        private string _family = "Exponential";
     
         private double _rate = 0D;
     
@@ -931,10 +926,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _rate = other._rate;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -1002,7 +996,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class ForagingSettings
     {
     
-        private object _task_stage;
+        private string _task_stage = "FORAGING";
     
         public ForagingSettings()
         {
@@ -1013,10 +1007,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _task_stage = other._task_stage;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("task_stage")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="task_stage")]
-        public object Task_stage
+        public string Task_stage
         {
             get
             {
@@ -1065,7 +1058,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class GammaDistribution
     {
     
-        private object _family;
+        private string _family = "Gamma";
     
         private GammaDistributionParameters _distribution_parameters;
     
@@ -1085,10 +1078,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -1197,7 +1189,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class GammaDistributionParameters
     {
     
-        private object _family;
+        private string _family = "Gamma";
     
         private double _shape = 1D;
     
@@ -1214,10 +1206,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _rate = other._rate;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -1304,7 +1295,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class HabituationSettings
     {
     
-        private object _task_stage;
+        private string _task_stage = "HABITUATION";
     
         private ExponentialDistribution _distance_to_reward = new ExponentialDistribution();
     
@@ -1321,10 +1312,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _reward_specification = other._reward_specification;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("task_stage")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="task_stage")]
-        public object Task_stage
+        public string Task_stage
         {
             get
             {
@@ -1413,7 +1403,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class LogNormalDistribution
     {
     
-        private object _family;
+        private string _family = "LogNormal";
     
         private LogNormalDistributionParameters _distribution_parameters;
     
@@ -1433,10 +1423,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -1545,7 +1534,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class LogNormalDistributionParameters
     {
     
-        private object _family;
+        private string _family = "LogNormal";
     
         private double _mean = 0D;
     
@@ -1562,10 +1551,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _std = other._std;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -1807,7 +1795,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class NormalDistribution
     {
     
-        private object _family;
+        private string _family = "Normal";
     
         private NormalDistributionParameters _distribution_parameters;
     
@@ -1827,10 +1815,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -1939,7 +1926,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class NormalDistributionParameters
     {
     
-        private object _family;
+        private string _family = "Normal";
     
         private double _mean = 0D;
     
@@ -1956,10 +1943,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _std = other._std;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -2940,7 +2926,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class PoissonDistribution
     {
     
-        private object _family;
+        private string _family = "Poisson";
     
         private PoissonDistributionParameters _distribution_parameters;
     
@@ -2960,10 +2946,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -3072,7 +3057,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class PoissonDistributionParameters
     {
     
-        private object _family;
+        private string _family = "Poisson";
     
         private double _rate = 1D;
     
@@ -3086,10 +3071,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _rate = other._rate;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -3493,7 +3477,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class Scalar
     {
     
-        private object _family;
+        private string _family = "Scalar";
     
         private ScalarDistributionParameter _distribution_parameters;
     
@@ -3513,10 +3497,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -3625,7 +3608,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class ScalarDistributionParameter
     {
     
-        private object _family;
+        private string _family = "Scalar";
     
         private double _value = 0D;
     
@@ -3639,10 +3622,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _value = other._value;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -3888,7 +3870,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private string _describedBy = "pyd_taskLogic";
     
-        private object _schema_version;
+        private string _schema_version = "0.1.0";
     
         private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     
@@ -3926,10 +3908,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="schema_version")]
-        public object Schema_version
+        public string Schema_version
         {
             get
             {
@@ -4258,7 +4239,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class UniformDistribution
     {
     
-        private object _family;
+        private string _family = "Uniform";
     
         private UniformDistributionParameters _distribution_parameters;
     
@@ -4278,10 +4259,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _scaling_parameters = other._scaling_parameters;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {
@@ -4390,7 +4370,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class UniformDistributionParameters
     {
     
-        private object _family;
+        private string _family = "Uniform";
     
         private double _min = 0D;
     
@@ -4407,10 +4387,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _max = other._max;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public object Family
+        public string Family
         {
             get
             {

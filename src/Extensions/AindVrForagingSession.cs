@@ -122,7 +122,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class BehaviorStimulation
     {
     
-        private object _stimulus_type;
+        private string _stimulus_type = "Behavior";
     
         private string _behavior_name;
     
@@ -134,7 +134,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private object _output_parameters = new object();
     
-        private Reward_consumed_during_epoch _reward_consumed_during_epoch;
+        private string _reward_consumed_during_epoch;
     
         private VolumeUnit _reward_consumed_unit = AindVrForagingDataSchema.AindVrForagingSession.VolumeUnit.Microliter;
     
@@ -166,10 +166,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _notes = other._notes;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public object Stimulus_type
+        public string Stimulus_type
         {
             get
             {
@@ -266,10 +265,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward_consumed_during_epoch", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_consumed_during_epoch")]
-        public Reward_consumed_during_epoch Reward_consumed_during_epoch
+        public string Reward_consumed_during_epoch
         {
             get
             {
@@ -407,9 +405,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class BehaviorVideos
     {
     
-        private object _name;
+        private string _name = "Behavior videos";
     
-        private object _abbreviation;
+        private string _abbreviation = "behavior-videos";
     
         public BehaviorVideos()
         {
@@ -421,10 +419,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -436,10 +433,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -668,11 +664,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class CcfCoords
     {
     
-        private Ml _ml;
+        private string _ml;
     
-        private Ap _ap;
+        private string _ap;
     
-        private Dv _dv;
+        private string _dv;
     
         private SizeUnit _unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
@@ -691,10 +687,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _ccf_version = other._ccf_version;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("ml", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ml")]
-        public Ml Ml
+        public string Ml
         {
             get
             {
@@ -706,10 +701,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("ap", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ap")]
-        public Ap Ap
+        public string Ap
         {
             get
             {
@@ -721,10 +715,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("dv", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="dv")]
-        public Dv Dv
+        public string Dv
         {
             get
             {
@@ -840,9 +833,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Confocal
     {
     
-        private object _name;
+        private string _name = "Confocal microscopy";
     
-        private object _abbreviation;
+        private string _abbreviation = "confocal";
     
         public Confocal()
         {
@@ -854,10 +847,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -869,10 +861,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -926,11 +917,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Coordinates3d
     {
     
-        private X _x;
+        private string _x;
     
-        private Y _y;
+        private string _y;
     
-        private Z _z;
+        private string _z;
     
         private SizeUnit _unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
@@ -946,10 +937,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _unit = other._unit;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("x", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
-        public X X
+        public string X
         {
             get
             {
@@ -961,10 +951,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("y", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
-        public Y Y
+        public string Y
         {
             get
             {
@@ -976,10 +965,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("z", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="z")]
-        public Z Z
+        public string Z
         {
             get
             {
@@ -1052,7 +1040,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _name;
     
-        private Exposure_time _exposure_time;
+        private string _exposure_time;
     
         private TimeUnit _exposure_time_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Millisecond;
     
@@ -1084,10 +1072,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("exposure_time", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure_time")]
-        public Exposure_time Exposure_time
+        public string Exposure_time
         {
             get
             {
@@ -1175,13 +1162,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _assembly_name;
     
-        private Arc_angle _arc_angle;
+        private string _arc_angle;
     
-        private Module_angle _module_angle;
+        private string _module_angle;
     
         private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private Rotation_angle _rotation_angle;
+        private string _rotation_angle;
     
         private string _coordinate_transform;
     
@@ -1219,10 +1206,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("arc_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="arc_angle")]
-        public Arc_angle Arc_angle
+        public string Arc_angle
         {
             get
             {
@@ -1234,10 +1220,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("module_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="module_angle")]
-        public Module_angle Module_angle
+        public string Module_angle
         {
             get
             {
@@ -1264,10 +1249,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rotation_angle")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rotation_angle")]
-        public Rotation_angle Rotation_angle
+        public string Rotation_angle
         {
             get
             {
@@ -1374,9 +1358,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Ecephys
     {
     
-        private object _name;
+        private string _name = "Extracellular electrophysiology";
     
-        private object _abbreviation;
+        private string _abbreviation = "ecephys";
     
         public Ecephys()
         {
@@ -1388,10 +1372,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -1403,10 +1386,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -1460,9 +1442,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Electromyography
     {
     
-        private object _name;
+        private string _name = "Electromyography";
     
-        private object _abbreviation;
+        private string _abbreviation = "EMG";
     
         public Electromyography()
         {
@@ -1474,10 +1456,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -1489,10 +1470,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -1548,13 +1528,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _assembly_name;
     
-        private Arc_angle2 _arc_angle;
+        private string _arc_angle;
     
-        private Module_angle2 _module_angle;
+        private string _module_angle;
     
         private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private Rotation_angle2 _rotation_angle;
+        private string _rotation_angle;
     
         private string _coordinate_transform;
     
@@ -1604,10 +1584,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("arc_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="arc_angle")]
-        public Arc_angle2 Arc_angle
+        public string Arc_angle
         {
             get
             {
@@ -1619,10 +1598,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("module_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="module_angle")]
-        public Module_angle2 Module_angle
+        public string Module_angle
         {
             get
             {
@@ -1649,10 +1627,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rotation_angle")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rotation_angle")]
-        public Rotation_angle2 Rotation_angle
+        public string Rotation_angle
         {
             get
             {
@@ -1907,9 +1884,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Fib
     {
     
-        private object _name;
+        private string _name = "Fiber photometry";
     
-        private object _abbreviation;
+        private string _abbreviation = "fib";
     
         public Fib()
         {
@@ -1921,10 +1898,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -1936,10 +1912,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -1995,7 +1970,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _patch_cord_name;
     
-        private Patch_cord_output_power _patch_cord_output_power;
+        private string _patch_cord_output_power;
     
         private PowerUnit _output_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Microwatt;
     
@@ -2027,10 +2002,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("patch_cord_output_power", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patch_cord_output_power")]
-        public Patch_cord_output_power Patch_cord_output_power
+        public string Patch_cord_output_power
         {
             get
             {
@@ -2117,13 +2091,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _assembly_name;
     
-        private Arc_angle3 _arc_angle;
+        private string _arc_angle;
     
-        private Module_angle3 _module_angle;
+        private string _module_angle;
     
         private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private Rotation_angle3 _rotation_angle;
+        private string _rotation_angle;
     
         private string _coordinate_transform;
     
@@ -2173,10 +2147,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("arc_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="arc_angle")]
-        public Arc_angle3 Arc_angle
+        public string Arc_angle
         {
             get
             {
@@ -2188,10 +2161,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("module_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="module_angle")]
-        public Module_angle3 Module_angle
+        public string Module_angle
         {
             get
             {
@@ -2218,10 +2190,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rotation_angle")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rotation_angle")]
-        public Rotation_angle3 Rotation_angle
+        public string Rotation_angle
         {
             get
             {
@@ -2399,9 +2370,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _targeted_structure;
     
-        private Fov_coordinate_ml _fov_coordinate_ml;
+        private string _fov_coordinate_ml;
     
-        private Fov_coordinate_ap _fov_coordinate_ap;
+        private string _fov_coordinate_ap;
     
         private SizeUnit _fov_coordinate_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
@@ -2415,11 +2386,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _magnification;
     
-        private Fov_scale_factor _fov_scale_factor;
+        private string _fov_scale_factor;
     
         private string _fov_scale_factor_unit = "um/pixel";
     
-        private Frame_rate _frame_rate;
+        private string _frame_rate;
     
         private FrequencyUnit _frame_rate_unit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
     
@@ -2507,10 +2478,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ml", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ml")]
-        public Fov_coordinate_ml Fov_coordinate_ml
+        public string Fov_coordinate_ml
         {
             get
             {
@@ -2522,10 +2492,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ap", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ap")]
-        public Fov_coordinate_ap Fov_coordinate_ap
+        public string Fov_coordinate_ap
         {
             get
             {
@@ -2627,10 +2596,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_scale_factor", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_scale_factor")]
-        public Fov_scale_factor Fov_scale_factor
+        public string Fov_scale_factor
         {
             get
             {
@@ -2656,10 +2624,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate")]
-        public Frame_rate Frame_rate
+        public string Frame_rate
         {
             get
             {
@@ -2762,9 +2729,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Fmost
     {
     
-        private object _name;
+        private string _name = "Fluorescence micro-optical sectioning tomography";
     
-        private object _abbreviation;
+        private string _abbreviation = "fMOST";
     
         public Fmost()
         {
@@ -2776,10 +2743,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -2791,10 +2757,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -2870,9 +2835,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Icephys
     {
     
-        private object _name;
+        private string _name = "Intracellular electrophysiology";
     
-        private object _abbreviation;
+        private string _abbreviation = "icephys";
     
         public Icephys()
         {
@@ -2884,10 +2849,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -2899,10 +2863,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -2956,9 +2919,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Isi
     {
     
-        private object _name;
+        private string _name = "Intrinsic signal imaging";
     
-        private object _abbreviation;
+        private string _abbreviation = "ISI";
     
         public Isi()
         {
@@ -2970,10 +2933,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -2985,10 +2947,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -3042,7 +3003,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class LaserConfig
     {
     
-        private object _device_type;
+        private string _device_type = "Laser";
     
         private string _name;
     
@@ -3050,7 +3011,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private SizeUnit _wavelength_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Nanometer;
     
-        private Excitation_power _excitation_power;
+        private string _excitation_power;
     
         private PowerUnit _excitation_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
     
@@ -3068,10 +3029,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _excitation_power_unit = other._excitation_power_unit;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
-        public object Device_type
+        public string Device_type
         {
             get
             {
@@ -3130,10 +3090,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_power")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_power")]
-        public Excitation_power Excitation_power
+        public string Excitation_power
         {
             get
             {
@@ -3206,11 +3165,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class LightEmittingDiodeConfig
     {
     
-        private object _device_type;
+        private string _device_type = "LightEmittingDiode";
     
         private string _name;
     
-        private Excitation_power2 _excitation_power;
+        private string _excitation_power;
     
         private PowerUnit _excitation_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
     
@@ -3226,10 +3185,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _excitation_power_unit = other._excitation_power_unit;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
-        public object Device_type
+        public string Device_type
         {
             get
             {
@@ -3255,10 +3213,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_power")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_power")]
-        public Excitation_power2 Excitation_power
+        public string Excitation_power
         {
             get
             {
@@ -3497,13 +3454,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _assembly_name;
     
-        private Arc_angle4 _arc_angle;
+        private string _arc_angle;
     
-        private Module_angle4 _module_angle;
+        private string _module_angle;
     
         private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private Rotation_angle4 _rotation_angle;
+        private string _rotation_angle;
     
         private string _coordinate_transform;
     
@@ -3550,10 +3507,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("arc_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="arc_angle")]
-        public Arc_angle4 Arc_angle
+        public string Arc_angle
         {
             get
             {
@@ -3565,10 +3521,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("module_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="module_angle")]
-        public Module_angle4 Module_angle
+        public string Module_angle
         {
             get
             {
@@ -3595,10 +3550,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rotation_angle")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rotation_angle")]
-        public Rotation_angle4 Rotation_angle
+        public string Rotation_angle
         {
             get
             {
@@ -3782,9 +3736,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Merfish
     {
     
-        private object _name;
+        private string _name = "Multiplexed error-robust fluorescence in situ hybridization";
     
-        private object _abbreviation;
+        private string _abbreviation = "merfish";
     
         public Merfish()
         {
@@ -3796,10 +3750,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -3811,10 +3764,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -4134,9 +4086,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Mri
     {
     
-        private object _name;
+        private string _name = "Magnetic resonance imaging";
     
-        private object _abbreviation;
+        private string _abbreviation = "MRI";
     
         public Mri()
         {
@@ -4148,10 +4100,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -4163,10 +4114,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -4224,7 +4174,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _odorant;
     
-        private Odorant_dilution _odorant_dilution;
+        private string _odorant_dilution;
     
         private ConcentrationUnit _odorant_dilution_unit = AindVrForagingDataSchema.AindVrForagingSession.ConcentrationUnit.__v_v;
     
@@ -4268,10 +4218,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("odorant_dilution", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorant_dilution")]
-        public Odorant_dilution Odorant_dilution
+        public string Odorant_dilution
         {
             get
             {
@@ -4342,7 +4291,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class OlfactoryStimulation
     {
     
-        private object _stimulus_type;
+        private string _stimulus_type = "Olfactory";
     
         private System.Collections.Generic.List<OlfactometerChannelConfig> _channels = new System.Collections.Generic.List<OlfactometerChannelConfig>();
     
@@ -4356,10 +4305,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _channels = other._channels;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public object Stimulus_type
+        public string Stimulus_type
         {
             get
             {
@@ -4428,7 +4376,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class OptoStimulation
     {
     
-        private object _stimulus_type;
+        private string _stimulus_type = "Opto Stimulation";
     
         private string _stimulus_name;
     
@@ -4444,17 +4392,17 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private TimeUnit _pulse_width_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Millisecond;
     
-        private Pulse_train_duration _pulse_train_duration;
+        private string _pulse_train_duration;
     
         private TimeUnit _pulse_train_duration_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
         private bool _fixed_pulse_train_interval;
     
-        private Pulse_train_interval _pulse_train_interval;
+        private string _pulse_train_interval;
     
         private TimeUnit _pulse_train_interval_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
-        private Baseline_duration _baseline_duration;
+        private string _baseline_duration;
     
         private TimeUnit _baseline_duration_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
@@ -4487,10 +4435,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _notes = other._notes;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public object Stimulus_type
+        public string Stimulus_type
         {
             get
             {
@@ -4603,10 +4550,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_train_duration", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_train_duration")]
-        public Pulse_train_duration Pulse_train_duration
+        public string Pulse_train_duration
         {
             get
             {
@@ -4650,11 +4596,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// <summary>
         /// Time between pulse trains
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_train_interval")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_train_interval")]
         [System.ComponentModel.DescriptionAttribute("Time between pulse trains")]
-        public Pulse_train_interval Pulse_train_interval
+        public string Pulse_train_interval
         {
             get
             {
@@ -4684,11 +4629,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// <summary>
         /// Duration of baseline recording prior to first pulse train
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("baseline_duration", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="baseline_duration")]
         [System.ComponentModel.DescriptionAttribute("Duration of baseline recording prior to first pulse train")]
-        public Baseline_duration Baseline_duration
+        public string Baseline_duration
         {
             get
             {
@@ -4924,9 +4868,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class POphys
     {
     
-        private object _name;
+        private string _name = "Planar optical physiology";
     
-        private object _abbreviation;
+        private string _abbreviation = "ophys";
     
         public POphys()
         {
@@ -4938,10 +4882,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -4953,10 +4896,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -5010,7 +4952,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class PhotoStimulation
     {
     
-        private object _stimulus_type;
+        private string _stimulus_type = "Photo Stimulation";
     
         private string _stimulus_name;
     
@@ -5018,7 +4960,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private System.Collections.Generic.List<PhotoStimulationGroup> _groups = new System.Collections.Generic.List<PhotoStimulationGroup>();
     
-        private Inter_trial_interval _inter_trial_interval;
+        private string _inter_trial_interval;
     
         private TimeUnit _inter_trial_interval_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
@@ -5042,10 +4984,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _notes = other._notes;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public object Stimulus_type
+        public string Stimulus_type
         {
             get
             {
@@ -5100,10 +5041,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("inter_trial_interval", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inter_trial_interval")]
-        public Inter_trial_interval Inter_trial_interval
+        public string Inter_trial_interval
         {
             get
             {
@@ -5211,7 +5151,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private int _number_of_neurons;
     
-        private Stimulation_laser_power _stimulation_laser_power;
+        private string _stimulation_laser_power;
     
         private PowerUnit _stimulation_laser_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
     
@@ -5219,11 +5159,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private int _number_spirals;
     
-        private Spiral_duration _spiral_duration;
+        private string _spiral_duration;
     
         private TimeUnit _spiral_duration_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
-        private Inter_spiral_interval _inter_spiral_interval;
+        private string _inter_spiral_interval;
     
         private TimeUnit _inter_spiral_interval_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
@@ -5279,10 +5219,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulation_laser_power", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulation_laser_power")]
-        public Stimulation_laser_power Stimulation_laser_power
+        public string Stimulation_laser_power
         {
             get
             {
@@ -5337,10 +5276,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("spiral_duration", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="spiral_duration")]
-        public Spiral_duration Spiral_duration
+        public string Spiral_duration
         {
             get
             {
@@ -5367,10 +5305,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("inter_spiral_interval", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inter_spiral_interval")]
-        public Inter_spiral_interval Inter_spiral_interval
+        public string Inter_spiral_interval
         {
             get
             {
@@ -5662,19 +5599,19 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class RelativePosition
     {
     
-        private Pitch _pitch;
+        private string _pitch;
     
-        private Yaw _yaw;
+        private string _yaw;
     
-        private Roll _roll;
+        private string _roll;
     
         private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private X2 _x;
+        private string _x;
     
-        private Y2 _y;
+        private string _y;
     
-        private Z2 _z;
+        private string _z;
     
         private SizeUnit _position_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Millimeter;
     
@@ -5697,10 +5634,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _coordinate_system = other._coordinate_system;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("pitch")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pitch")]
-        public Pitch Pitch
+        public string Pitch
         {
             get
             {
@@ -5712,10 +5648,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("yaw")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="yaw")]
-        public Yaw Yaw
+        public string Yaw
         {
             get
             {
@@ -5727,10 +5662,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("roll")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="roll")]
-        public Roll Roll
+        public string Roll
         {
             get
             {
@@ -5757,10 +5691,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("x")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
-        public X2 X
+        public string X
         {
             get
             {
@@ -5772,10 +5705,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("y")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
-        public Y2 Y
+        public string Y
         {
             get
             {
@@ -5787,10 +5719,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("z")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="z")]
-        public Z2 Z
+        public string Z
         {
             get
             {
@@ -6120,7 +6051,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _describedBy = "https://raw.githubusercontent.com/AllenNeuralDynamics/aind-data-schema/main/src/aind_data_schema/core/session.py";
     
-        private object _schema_version;
+        private string _schema_version = "0.1.2";
     
         private System.Collections.Generic.List<string> _experimenter_full_name = new System.Collections.Generic.List<string>();
     
@@ -6140,9 +6071,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _subject_id;
     
-        private Animal_weight_prior _animal_weight_prior;
+        private string _animal_weight_prior;
     
-        private Animal_weight_post _animal_weight_post;
+        private string _animal_weight_post;
     
         private MassUnit _weight_unit = AindVrForagingDataSchema.AindVrForagingSession.MassUnit.Gram;
     
@@ -6152,7 +6083,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private RewardDeliveryConfig _reward_delivery;
     
-        private Reward_consumed_total _reward_consumed_total;
+        private string _reward_consumed_total;
     
         private VolumeUnit _reward_consumed_unit = AindVrForagingDataSchema.AindVrForagingSession.VolumeUnit.Microliter;
     
@@ -6200,10 +6131,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="schema_version")]
-        public object Schema_version
+        public string Schema_version
         {
             get
             {
@@ -6361,11 +6291,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// <summary>
         /// Animal weight before procedure
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("animal_weight_prior")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="animal_weight_prior")]
         [System.ComponentModel.DescriptionAttribute("Animal weight before procedure")]
-        public Animal_weight_prior Animal_weight_prior
+        public string Animal_weight_prior
         {
             get
             {
@@ -6380,11 +6309,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// <summary>
         /// Animal weight after procedure
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("animal_weight_post")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="animal_weight_post")]
         [System.ComponentModel.DescriptionAttribute("Animal weight after procedure")]
-        public Animal_weight_post Animal_weight_post
+        public string Animal_weight_post
         {
             get
             {
@@ -6462,10 +6390,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward_consumed_total")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_consumed_total")]
-        public Reward_consumed_total Reward_consumed_total
+        public string Reward_consumed_total
         {
             get
             {
@@ -6604,9 +6531,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Slap
     {
     
-        private object _name;
+        private string _name = "Scanned line projection imaging";
     
-        private object _abbreviation;
+        private string _abbreviation = "slap";
     
         public Slap()
         {
@@ -6618,10 +6545,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -6633,10 +6559,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -6698,9 +6623,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _targeted_structure;
     
-        private Fov_coordinate_ml2 _fov_coordinate_ml;
+        private string _fov_coordinate_ml;
     
-        private Fov_coordinate_ap2 _fov_coordinate_ap;
+        private string _fov_coordinate_ap;
     
         private SizeUnit _fov_coordinate_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
@@ -6714,11 +6639,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _magnification;
     
-        private Fov_scale_factor2 _fov_scale_factor;
+        private string _fov_scale_factor;
     
         private string _fov_scale_factor_unit = "um/pixel";
     
-        private Frame_rate2 _frame_rate;
+        private string _frame_rate;
     
         private FrequencyUnit _frame_rate_unit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
     
@@ -6827,10 +6752,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ml", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ml")]
-        public Fov_coordinate_ml2 Fov_coordinate_ml
+        public string Fov_coordinate_ml
         {
             get
             {
@@ -6842,10 +6766,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ap", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ap")]
-        public Fov_coordinate_ap2 Fov_coordinate_ap
+        public string Fov_coordinate_ap
         {
             get
             {
@@ -6947,10 +6870,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_scale_factor", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_scale_factor")]
-        public Fov_scale_factor2 Fov_scale_factor
+        public string Fov_scale_factor
         {
             get
             {
@@ -6976,10 +6898,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate")]
-        public Frame_rate2 Frame_rate
+        public string Frame_rate
         {
             get
             {
@@ -7328,9 +7249,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Spim
     {
     
-        private object _name;
+        private string _name = "Selective plane illumination microscopy";
     
-        private object _abbreviation;
+        private string _abbreviation = "SPIM";
     
         public Spim()
         {
@@ -7342,10 +7263,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -7357,10 +7277,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -7472,7 +7391,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _fov_scale_factor_unit = "um/pixel";
     
-        private Frame_rate3 _frame_rate;
+        private string _frame_rate;
     
         private FrequencyUnit _frame_rate_unit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
     
@@ -7737,10 +7656,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate")]
-        public Frame_rate3 Frame_rate
+        public string Frame_rate
         {
             get
             {
@@ -8753,9 +8671,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class TrainedBehavior
     {
     
-        private object _name;
+        private string _name = "Trained behavior";
     
-        private object _abbreviation;
+        private string _abbreviation = "trained-behavior";
     
         public TrainedBehavior()
         {
@@ -8767,10 +8685,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _abbreviation = other._abbreviation;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -8782,10 +8699,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("abbreviation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="abbreviation")]
-        public object Abbreviation
+        public string Abbreviation
         {
             get
             {
@@ -8858,7 +8774,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class VisualStimulation
     {
     
-        private object _stimulus_type;
+        private string _stimulus_type = "Visual";
     
         private string _stimulus_name;
     
@@ -8893,10 +8809,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _notes = other._notes;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public object Stimulus_type
+        public string Stimulus_type
         {
             get
             {
@@ -9193,2162 +9108,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Reward_consumed_during_epoch
-    {
-    
-        public Reward_consumed_during_epoch()
-        {
-        }
-    
-        protected Reward_consumed_during_epoch(Reward_consumed_during_epoch other)
-        {
-        }
-    
-        public System.IObservable<Reward_consumed_during_epoch> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Reward_consumed_during_epoch(this)));
-        }
-    
-        public System.IObservable<Reward_consumed_during_epoch> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Reward_consumed_during_epoch(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Ml
-    {
-    
-        public Ml()
-        {
-        }
-    
-        protected Ml(Ml other)
-        {
-        }
-    
-        public System.IObservable<Ml> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Ml(this)));
-        }
-    
-        public System.IObservable<Ml> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Ml(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Ap
-    {
-    
-        public Ap()
-        {
-        }
-    
-        protected Ap(Ap other)
-        {
-        }
-    
-        public System.IObservable<Ap> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Ap(this)));
-        }
-    
-        public System.IObservable<Ap> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Ap(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Dv
-    {
-    
-        public Dv()
-        {
-        }
-    
-        protected Dv(Dv other)
-        {
-        }
-    
-        public System.IObservable<Dv> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Dv(this)));
-        }
-    
-        public System.IObservable<Dv> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Dv(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class X
-    {
-    
-        public X()
-        {
-        }
-    
-        protected X(X other)
-        {
-        }
-    
-        public System.IObservable<X> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new X(this)));
-        }
-    
-        public System.IObservable<X> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new X(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Y
-    {
-    
-        public Y()
-        {
-        }
-    
-        protected Y(Y other)
-        {
-        }
-    
-        public System.IObservable<Y> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Y(this)));
-        }
-    
-        public System.IObservable<Y> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Y(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Z
-    {
-    
-        public Z()
-        {
-        }
-    
-        protected Z(Z other)
-        {
-        }
-    
-        public System.IObservable<Z> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Z(this)));
-        }
-    
-        public System.IObservable<Z> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Z(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Exposure_time
-    {
-    
-        public Exposure_time()
-        {
-        }
-    
-        protected Exposure_time(Exposure_time other)
-        {
-        }
-    
-        public System.IObservable<Exposure_time> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Exposure_time(this)));
-        }
-    
-        public System.IObservable<Exposure_time> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Exposure_time(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Arc_angle
-    {
-    
-        public Arc_angle()
-        {
-        }
-    
-        protected Arc_angle(Arc_angle other)
-        {
-        }
-    
-        public System.IObservable<Arc_angle> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Arc_angle(this)));
-        }
-    
-        public System.IObservable<Arc_angle> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Arc_angle(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Module_angle
-    {
-    
-        public Module_angle()
-        {
-        }
-    
-        protected Module_angle(Module_angle other)
-        {
-        }
-    
-        public System.IObservable<Module_angle> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Module_angle(this)));
-        }
-    
-        public System.IObservable<Module_angle> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Module_angle(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Rotation_angle
-    {
-    
-        public Rotation_angle()
-        {
-        }
-    
-        protected Rotation_angle(Rotation_angle other)
-        {
-        }
-    
-        public System.IObservable<Rotation_angle> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rotation_angle(this)));
-        }
-    
-        public System.IObservable<Rotation_angle> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Rotation_angle(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Arc_angle2
-    {
-    
-        public Arc_angle2()
-        {
-        }
-    
-        protected Arc_angle2(Arc_angle2 other)
-        {
-        }
-    
-        public System.IObservable<Arc_angle2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Arc_angle2(this)));
-        }
-    
-        public System.IObservable<Arc_angle2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Arc_angle2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Module_angle2
-    {
-    
-        public Module_angle2()
-        {
-        }
-    
-        protected Module_angle2(Module_angle2 other)
-        {
-        }
-    
-        public System.IObservable<Module_angle2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Module_angle2(this)));
-        }
-    
-        public System.IObservable<Module_angle2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Module_angle2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Rotation_angle2
-    {
-    
-        public Rotation_angle2()
-        {
-        }
-    
-        protected Rotation_angle2(Rotation_angle2 other)
-        {
-        }
-    
-        public System.IObservable<Rotation_angle2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rotation_angle2(this)));
-        }
-    
-        public System.IObservable<Rotation_angle2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Rotation_angle2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Patch_cord_output_power
-    {
-    
-        public Patch_cord_output_power()
-        {
-        }
-    
-        protected Patch_cord_output_power(Patch_cord_output_power other)
-        {
-        }
-    
-        public System.IObservable<Patch_cord_output_power> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Patch_cord_output_power(this)));
-        }
-    
-        public System.IObservable<Patch_cord_output_power> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Patch_cord_output_power(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Arc_angle3
-    {
-    
-        public Arc_angle3()
-        {
-        }
-    
-        protected Arc_angle3(Arc_angle3 other)
-        {
-        }
-    
-        public System.IObservable<Arc_angle3> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Arc_angle3(this)));
-        }
-    
-        public System.IObservable<Arc_angle3> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Arc_angle3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Module_angle3
-    {
-    
-        public Module_angle3()
-        {
-        }
-    
-        protected Module_angle3(Module_angle3 other)
-        {
-        }
-    
-        public System.IObservable<Module_angle3> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Module_angle3(this)));
-        }
-    
-        public System.IObservable<Module_angle3> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Module_angle3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Rotation_angle3
-    {
-    
-        public Rotation_angle3()
-        {
-        }
-    
-        protected Rotation_angle3(Rotation_angle3 other)
-        {
-        }
-    
-        public System.IObservable<Rotation_angle3> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rotation_angle3(this)));
-        }
-    
-        public System.IObservable<Rotation_angle3> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Rotation_angle3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Fov_coordinate_ml
-    {
-    
-        public Fov_coordinate_ml()
-        {
-        }
-    
-        protected Fov_coordinate_ml(Fov_coordinate_ml other)
-        {
-        }
-    
-        public System.IObservable<Fov_coordinate_ml> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Fov_coordinate_ml(this)));
-        }
-    
-        public System.IObservable<Fov_coordinate_ml> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Fov_coordinate_ml(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Fov_coordinate_ap
-    {
-    
-        public Fov_coordinate_ap()
-        {
-        }
-    
-        protected Fov_coordinate_ap(Fov_coordinate_ap other)
-        {
-        }
-    
-        public System.IObservable<Fov_coordinate_ap> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Fov_coordinate_ap(this)));
-        }
-    
-        public System.IObservable<Fov_coordinate_ap> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Fov_coordinate_ap(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Fov_scale_factor
-    {
-    
-        public Fov_scale_factor()
-        {
-        }
-    
-        protected Fov_scale_factor(Fov_scale_factor other)
-        {
-        }
-    
-        public System.IObservable<Fov_scale_factor> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Fov_scale_factor(this)));
-        }
-    
-        public System.IObservable<Fov_scale_factor> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Fov_scale_factor(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Frame_rate
-    {
-    
-        public Frame_rate()
-        {
-        }
-    
-        protected Frame_rate(Frame_rate other)
-        {
-        }
-    
-        public System.IObservable<Frame_rate> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Frame_rate(this)));
-        }
-    
-        public System.IObservable<Frame_rate> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Frame_rate(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Excitation_power
-    {
-    
-        public Excitation_power()
-        {
-        }
-    
-        protected Excitation_power(Excitation_power other)
-        {
-        }
-    
-        public System.IObservable<Excitation_power> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Excitation_power(this)));
-        }
-    
-        public System.IObservable<Excitation_power> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Excitation_power(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Excitation_power2
-    {
-    
-        public Excitation_power2()
-        {
-        }
-    
-        protected Excitation_power2(Excitation_power2 other)
-        {
-        }
-    
-        public System.IObservable<Excitation_power2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Excitation_power2(this)));
-        }
-    
-        public System.IObservable<Excitation_power2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Excitation_power2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Arc_angle4
-    {
-    
-        public Arc_angle4()
-        {
-        }
-    
-        protected Arc_angle4(Arc_angle4 other)
-        {
-        }
-    
-        public System.IObservable<Arc_angle4> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Arc_angle4(this)));
-        }
-    
-        public System.IObservable<Arc_angle4> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Arc_angle4(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Module_angle4
-    {
-    
-        public Module_angle4()
-        {
-        }
-    
-        protected Module_angle4(Module_angle4 other)
-        {
-        }
-    
-        public System.IObservable<Module_angle4> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Module_angle4(this)));
-        }
-    
-        public System.IObservable<Module_angle4> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Module_angle4(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Rotation_angle4
-    {
-    
-        public Rotation_angle4()
-        {
-        }
-    
-        protected Rotation_angle4(Rotation_angle4 other)
-        {
-        }
-    
-        public System.IObservable<Rotation_angle4> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rotation_angle4(this)));
-        }
-    
-        public System.IObservable<Rotation_angle4> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Rotation_angle4(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Odorant_dilution
-    {
-    
-        public Odorant_dilution()
-        {
-        }
-    
-        protected Odorant_dilution(Odorant_dilution other)
-        {
-        }
-    
-        public System.IObservable<Odorant_dilution> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Odorant_dilution(this)));
-        }
-    
-        public System.IObservable<Odorant_dilution> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Odorant_dilution(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Pulse_train_duration
-    {
-    
-        public Pulse_train_duration()
-        {
-        }
-    
-        protected Pulse_train_duration(Pulse_train_duration other)
-        {
-        }
-    
-        public System.IObservable<Pulse_train_duration> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Pulse_train_duration(this)));
-        }
-    
-        public System.IObservable<Pulse_train_duration> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Pulse_train_duration(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Pulse_train_interval
-    {
-    
-        public Pulse_train_interval()
-        {
-        }
-    
-        protected Pulse_train_interval(Pulse_train_interval other)
-        {
-        }
-    
-        public System.IObservable<Pulse_train_interval> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Pulse_train_interval(this)));
-        }
-    
-        public System.IObservable<Pulse_train_interval> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Pulse_train_interval(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Baseline_duration
-    {
-    
-        public Baseline_duration()
-        {
-        }
-    
-        protected Baseline_duration(Baseline_duration other)
-        {
-        }
-    
-        public System.IObservable<Baseline_duration> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Baseline_duration(this)));
-        }
-    
-        public System.IObservable<Baseline_duration> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Baseline_duration(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Inter_trial_interval
-    {
-    
-        public Inter_trial_interval()
-        {
-        }
-    
-        protected Inter_trial_interval(Inter_trial_interval other)
-        {
-        }
-    
-        public System.IObservable<Inter_trial_interval> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Inter_trial_interval(this)));
-        }
-    
-        public System.IObservable<Inter_trial_interval> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Inter_trial_interval(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Stimulation_laser_power
-    {
-    
-        public Stimulation_laser_power()
-        {
-        }
-    
-        protected Stimulation_laser_power(Stimulation_laser_power other)
-        {
-        }
-    
-        public System.IObservable<Stimulation_laser_power> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Stimulation_laser_power(this)));
-        }
-    
-        public System.IObservable<Stimulation_laser_power> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Stimulation_laser_power(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Spiral_duration
-    {
-    
-        public Spiral_duration()
-        {
-        }
-    
-        protected Spiral_duration(Spiral_duration other)
-        {
-        }
-    
-        public System.IObservable<Spiral_duration> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Spiral_duration(this)));
-        }
-    
-        public System.IObservable<Spiral_duration> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Spiral_duration(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Inter_spiral_interval
-    {
-    
-        public Inter_spiral_interval()
-        {
-        }
-    
-        protected Inter_spiral_interval(Inter_spiral_interval other)
-        {
-        }
-    
-        public System.IObservable<Inter_spiral_interval> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Inter_spiral_interval(this)));
-        }
-    
-        public System.IObservable<Inter_spiral_interval> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Inter_spiral_interval(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Pitch
-    {
-    
-        public Pitch()
-        {
-        }
-    
-        protected Pitch(Pitch other)
-        {
-        }
-    
-        public System.IObservable<Pitch> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Pitch(this)));
-        }
-    
-        public System.IObservable<Pitch> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Pitch(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Yaw
-    {
-    
-        public Yaw()
-        {
-        }
-    
-        protected Yaw(Yaw other)
-        {
-        }
-    
-        public System.IObservable<Yaw> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Yaw(this)));
-        }
-    
-        public System.IObservable<Yaw> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Yaw(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Roll
-    {
-    
-        public Roll()
-        {
-        }
-    
-        protected Roll(Roll other)
-        {
-        }
-    
-        public System.IObservable<Roll> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Roll(this)));
-        }
-    
-        public System.IObservable<Roll> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Roll(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class X2
-    {
-    
-        public X2()
-        {
-        }
-    
-        protected X2(X2 other)
-        {
-        }
-    
-        public System.IObservable<X2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new X2(this)));
-        }
-    
-        public System.IObservable<X2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new X2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Y2
-    {
-    
-        public Y2()
-        {
-        }
-    
-        protected Y2(Y2 other)
-        {
-        }
-    
-        public System.IObservable<Y2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Y2(this)));
-        }
-    
-        public System.IObservable<Y2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Y2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Z2
-    {
-    
-        public Z2()
-        {
-        }
-    
-        protected Z2(Z2 other)
-        {
-        }
-    
-        public System.IObservable<Z2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Z2(this)));
-        }
-    
-        public System.IObservable<Z2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Z2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Animal_weight_prior
-    {
-    
-        public Animal_weight_prior()
-        {
-        }
-    
-        protected Animal_weight_prior(Animal_weight_prior other)
-        {
-        }
-    
-        public System.IObservable<Animal_weight_prior> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Animal_weight_prior(this)));
-        }
-    
-        public System.IObservable<Animal_weight_prior> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Animal_weight_prior(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Animal_weight_post
-    {
-    
-        public Animal_weight_post()
-        {
-        }
-    
-        protected Animal_weight_post(Animal_weight_post other)
-        {
-        }
-    
-        public System.IObservable<Animal_weight_post> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Animal_weight_post(this)));
-        }
-    
-        public System.IObservable<Animal_weight_post> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Animal_weight_post(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Reward_consumed_total
-    {
-    
-        public Reward_consumed_total()
-        {
-        }
-    
-        protected Reward_consumed_total(Reward_consumed_total other)
-        {
-        }
-    
-        public System.IObservable<Reward_consumed_total> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Reward_consumed_total(this)));
-        }
-    
-        public System.IObservable<Reward_consumed_total> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Reward_consumed_total(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Fov_coordinate_ml2
-    {
-    
-        public Fov_coordinate_ml2()
-        {
-        }
-    
-        protected Fov_coordinate_ml2(Fov_coordinate_ml2 other)
-        {
-        }
-    
-        public System.IObservable<Fov_coordinate_ml2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Fov_coordinate_ml2(this)));
-        }
-    
-        public System.IObservable<Fov_coordinate_ml2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Fov_coordinate_ml2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Fov_coordinate_ap2
-    {
-    
-        public Fov_coordinate_ap2()
-        {
-        }
-    
-        protected Fov_coordinate_ap2(Fov_coordinate_ap2 other)
-        {
-        }
-    
-        public System.IObservable<Fov_coordinate_ap2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Fov_coordinate_ap2(this)));
-        }
-    
-        public System.IObservable<Fov_coordinate_ap2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Fov_coordinate_ap2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Fov_scale_factor2
-    {
-    
-        public Fov_scale_factor2()
-        {
-        }
-    
-        protected Fov_scale_factor2(Fov_scale_factor2 other)
-        {
-        }
-    
-        public System.IObservable<Fov_scale_factor2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Fov_scale_factor2(this)));
-        }
-    
-        public System.IObservable<Fov_scale_factor2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Fov_scale_factor2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Frame_rate2
-    {
-    
-        public Frame_rate2()
-        {
-        }
-    
-        protected Frame_rate2(Frame_rate2 other)
-        {
-        }
-    
-        public System.IObservable<Frame_rate2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Frame_rate2(this)));
-        }
-    
-        public System.IObservable<Frame_rate2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Frame_rate2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Frame_rate3
-    {
-    
-        public Frame_rate3()
-        {
-        }
-    
-        protected Frame_rate3(Frame_rate3 other)
-        {
-        }
-    
-        public System.IObservable<Frame_rate3> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Frame_rate3(this)));
-        }
-    
-        public System.IObservable<Frame_rate3> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Frame_rate3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
@@ -11613,251 +9372,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
             return Process<AindVrForagingSession>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<Reward_consumed_during_epoch> source)
-        {
-            return Process<Reward_consumed_during_epoch>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Ml> source)
-        {
-            return Process<Ml>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Ap> source)
-        {
-            return Process<Ap>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Dv> source)
-        {
-            return Process<Dv>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<X> source)
-        {
-            return Process<X>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Y> source)
-        {
-            return Process<Y>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Z> source)
-        {
-            return Process<Z>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Exposure_time> source)
-        {
-            return Process<Exposure_time>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Arc_angle> source)
-        {
-            return Process<Arc_angle>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Module_angle> source)
-        {
-            return Process<Module_angle>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Rotation_angle> source)
-        {
-            return Process<Rotation_angle>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Arc_angle2> source)
-        {
-            return Process<Arc_angle2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Module_angle2> source)
-        {
-            return Process<Module_angle2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Rotation_angle2> source)
-        {
-            return Process<Rotation_angle2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Patch_cord_output_power> source)
-        {
-            return Process<Patch_cord_output_power>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Arc_angle3> source)
-        {
-            return Process<Arc_angle3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Module_angle3> source)
-        {
-            return Process<Module_angle3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Rotation_angle3> source)
-        {
-            return Process<Rotation_angle3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_coordinate_ml> source)
-        {
-            return Process<Fov_coordinate_ml>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_coordinate_ap> source)
-        {
-            return Process<Fov_coordinate_ap>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_scale_factor> source)
-        {
-            return Process<Fov_scale_factor>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Frame_rate> source)
-        {
-            return Process<Frame_rate>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Excitation_power> source)
-        {
-            return Process<Excitation_power>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Excitation_power2> source)
-        {
-            return Process<Excitation_power2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Arc_angle4> source)
-        {
-            return Process<Arc_angle4>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Module_angle4> source)
-        {
-            return Process<Module_angle4>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Rotation_angle4> source)
-        {
-            return Process<Rotation_angle4>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Odorant_dilution> source)
-        {
-            return Process<Odorant_dilution>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Pulse_train_duration> source)
-        {
-            return Process<Pulse_train_duration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Pulse_train_interval> source)
-        {
-            return Process<Pulse_train_interval>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Baseline_duration> source)
-        {
-            return Process<Baseline_duration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Inter_trial_interval> source)
-        {
-            return Process<Inter_trial_interval>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Stimulation_laser_power> source)
-        {
-            return Process<Stimulation_laser_power>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Spiral_duration> source)
-        {
-            return Process<Spiral_duration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Inter_spiral_interval> source)
-        {
-            return Process<Inter_spiral_interval>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Pitch> source)
-        {
-            return Process<Pitch>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Yaw> source)
-        {
-            return Process<Yaw>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Roll> source)
-        {
-            return Process<Roll>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<X2> source)
-        {
-            return Process<X2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Y2> source)
-        {
-            return Process<Y2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Z2> source)
-        {
-            return Process<Z2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Animal_weight_prior> source)
-        {
-            return Process<Animal_weight_prior>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Animal_weight_post> source)
-        {
-            return Process<Animal_weight_post>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Reward_consumed_total> source)
-        {
-            return Process<Reward_consumed_total>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_coordinate_ml2> source)
-        {
-            return Process<Fov_coordinate_ml2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_coordinate_ap2> source)
-        {
-            return Process<Fov_coordinate_ap2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_scale_factor2> source)
-        {
-            return Process<Fov_scale_factor2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Frame_rate2> source)
-        {
-            return Process<Frame_rate2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Frame_rate3> source)
-        {
-            return Process<Frame_rate3>(source);
-        }
     }
 
 
@@ -11918,55 +9432,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrainedBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualStimulation>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward_consumed_during_epoch>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Ml>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Ap>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Dv>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<X>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Y>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Z>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Exposure_time>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Arc_angle>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Module_angle>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rotation_angle>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Arc_angle2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Module_angle2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rotation_angle2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Patch_cord_output_power>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Arc_angle3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Module_angle3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rotation_angle3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_coordinate_ml>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_coordinate_ap>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_scale_factor>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Frame_rate>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Excitation_power>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Excitation_power2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Arc_angle4>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Module_angle4>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rotation_angle4>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odorant_dilution>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Pulse_train_duration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Pulse_train_interval>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Baseline_duration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Inter_trial_interval>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulation_laser_power>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Spiral_duration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Inter_spiral_interval>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Pitch>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Yaw>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Roll>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<X2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Y2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Z2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Animal_weight_prior>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Animal_weight_post>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward_consumed_total>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_coordinate_ml2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_coordinate_ap2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_scale_factor2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Frame_rate2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Frame_rate3>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -12264,251 +9729,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
             return Process<AindVrForagingSession>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<Reward_consumed_during_epoch> source)
-        {
-            return Process<Reward_consumed_during_epoch>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Ml> source)
-        {
-            return Process<Ml>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Ap> source)
-        {
-            return Process<Ap>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Dv> source)
-        {
-            return Process<Dv>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<X> source)
-        {
-            return Process<X>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Y> source)
-        {
-            return Process<Y>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Z> source)
-        {
-            return Process<Z>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Exposure_time> source)
-        {
-            return Process<Exposure_time>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Arc_angle> source)
-        {
-            return Process<Arc_angle>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Module_angle> source)
-        {
-            return Process<Module_angle>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Rotation_angle> source)
-        {
-            return Process<Rotation_angle>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Arc_angle2> source)
-        {
-            return Process<Arc_angle2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Module_angle2> source)
-        {
-            return Process<Module_angle2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Rotation_angle2> source)
-        {
-            return Process<Rotation_angle2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Patch_cord_output_power> source)
-        {
-            return Process<Patch_cord_output_power>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Arc_angle3> source)
-        {
-            return Process<Arc_angle3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Module_angle3> source)
-        {
-            return Process<Module_angle3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Rotation_angle3> source)
-        {
-            return Process<Rotation_angle3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_coordinate_ml> source)
-        {
-            return Process<Fov_coordinate_ml>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_coordinate_ap> source)
-        {
-            return Process<Fov_coordinate_ap>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_scale_factor> source)
-        {
-            return Process<Fov_scale_factor>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Frame_rate> source)
-        {
-            return Process<Frame_rate>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Excitation_power> source)
-        {
-            return Process<Excitation_power>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Excitation_power2> source)
-        {
-            return Process<Excitation_power2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Arc_angle4> source)
-        {
-            return Process<Arc_angle4>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Module_angle4> source)
-        {
-            return Process<Module_angle4>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Rotation_angle4> source)
-        {
-            return Process<Rotation_angle4>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Odorant_dilution> source)
-        {
-            return Process<Odorant_dilution>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Pulse_train_duration> source)
-        {
-            return Process<Pulse_train_duration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Pulse_train_interval> source)
-        {
-            return Process<Pulse_train_interval>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Baseline_duration> source)
-        {
-            return Process<Baseline_duration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Inter_trial_interval> source)
-        {
-            return Process<Inter_trial_interval>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Stimulation_laser_power> source)
-        {
-            return Process<Stimulation_laser_power>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Spiral_duration> source)
-        {
-            return Process<Spiral_duration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Inter_spiral_interval> source)
-        {
-            return Process<Inter_spiral_interval>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Pitch> source)
-        {
-            return Process<Pitch>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Yaw> source)
-        {
-            return Process<Yaw>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Roll> source)
-        {
-            return Process<Roll>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<X2> source)
-        {
-            return Process<X2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Y2> source)
-        {
-            return Process<Y2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Z2> source)
-        {
-            return Process<Z2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Animal_weight_prior> source)
-        {
-            return Process<Animal_weight_prior>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Animal_weight_post> source)
-        {
-            return Process<Animal_weight_post>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Reward_consumed_total> source)
-        {
-            return Process<Reward_consumed_total>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_coordinate_ml2> source)
-        {
-            return Process<Fov_coordinate_ml2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_coordinate_ap2> source)
-        {
-            return Process<Fov_coordinate_ap2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Fov_scale_factor2> source)
-        {
-            return Process<Fov_scale_factor2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Frame_rate2> source)
-        {
-            return Process<Frame_rate2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Frame_rate3> source)
-        {
-            return Process<Frame_rate3>(source);
-        }
     }
 
 
@@ -12569,55 +9789,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrainedBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualStimulation>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward_consumed_during_epoch>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Ml>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Ap>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Dv>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<X>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Y>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Z>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Exposure_time>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Arc_angle>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Module_angle>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rotation_angle>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Arc_angle2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Module_angle2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rotation_angle2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Patch_cord_output_power>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Arc_angle3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Module_angle3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rotation_angle3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_coordinate_ml>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_coordinate_ap>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_scale_factor>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Frame_rate>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Excitation_power>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Excitation_power2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Arc_angle4>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Module_angle4>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rotation_angle4>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Odorant_dilution>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Pulse_train_duration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Pulse_train_interval>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Baseline_duration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Inter_trial_interval>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulation_laser_power>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Spiral_duration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Inter_spiral_interval>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Pitch>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Yaw>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Roll>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<X2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Y2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Z2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Animal_weight_prior>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Animal_weight_post>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Reward_consumed_total>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_coordinate_ml2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_coordinate_ap2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Fov_scale_factor2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Frame_rate2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Frame_rate3>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
