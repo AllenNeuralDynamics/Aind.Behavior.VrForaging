@@ -12,10 +12,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class BetaDistribution
+    public partial class BetaDistribution : Delay
     {
-    
-        private string _family = "Beta";
     
         private BetaDistributionParameters _distribution_parameters;
     
@@ -27,26 +25,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected BetaDistribution(BetaDistribution other)
+        protected BetaDistribution(BetaDistribution other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -116,26 +100,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new BetaDistribution(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -249,10 +223,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class BinomialDistribution
+    public partial class BinomialDistribution : Delay
     {
-    
-        private string _family = "Binomial";
     
         private BinomialDistributionParameters _distribution_parameters;
     
@@ -264,26 +236,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected BinomialDistribution(BinomialDistribution other)
+        protected BinomialDistribution(BinomialDistribution other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -353,26 +311,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new BinomialDistribution(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -778,10 +726,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ExponentialDistribution
+    public partial class ExponentialDistribution : Delay
     {
-    
-        private string _family = "Exponential";
     
         private ExponentialDistributionParameters _distribution_parameters;
     
@@ -793,26 +739,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected ExponentialDistribution(ExponentialDistribution other)
+        protected ExponentialDistribution(ExponentialDistribution other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -882,26 +814,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new ExponentialDistribution(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -993,32 +915,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ForagingSettings
+    public partial class ForagingSettings : Task_stage_settings
     {
-    
-        private string _task_stage = "FORAGING";
     
         public ForagingSettings()
         {
         }
     
-        protected ForagingSettings(ForagingSettings other)
+        protected ForagingSettings(ForagingSettings other) : 
+                base(other)
         {
-            _task_stage = other._task_stage;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("task_stage")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="task_stage")]
-        public string Task_stage
-        {
-            get
-            {
-                return _task_stage;
-            }
-            set
-            {
-                _task_stage = value;
-            }
         }
     
         public System.IObservable<ForagingSettings> Process()
@@ -1031,23 +937,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new ForagingSettings(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("task_stage = " + _task_stage);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
+            return base.PrintMembers(stringBuilder);
         }
     }
 
@@ -1055,10 +947,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class GammaDistribution
+    public partial class GammaDistribution : Delay
     {
-    
-        private string _family = "Gamma";
     
         private GammaDistributionParameters _distribution_parameters;
     
@@ -1070,26 +960,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected GammaDistribution(GammaDistribution other)
+        protected GammaDistribution(GammaDistribution other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -1159,26 +1035,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new GammaDistribution(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -1292,12 +1158,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HabituationSettings
+    public partial class HabituationSettings : Task_stage_settings
     {
     
-        private string _task_stage = "HABITUATION";
-    
-        private ExponentialDistribution _distance_to_reward = new ExponentialDistribution();
+        private Delay _distance_to_reward;
     
         private RenderSpecification _reward_specification;
     
@@ -1305,25 +1169,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected HabituationSettings(HabituationSettings other)
+        protected HabituationSettings(HabituationSettings other) : 
+                base(other)
         {
-            _task_stage = other._task_stage;
             _distance_to_reward = other._distance_to_reward;
             _reward_specification = other._reward_specification;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("task_stage")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="task_stage")]
-        public string Task_stage
-        {
-            get
-            {
-                return _task_stage;
-            }
-            set
-            {
-                _task_stage = value;
-            }
         }
     
         /// <summary>
@@ -1333,7 +1183,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("distance_to_reward", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distance_to_reward")]
         [System.ComponentModel.DescriptionAttribute("Distance (cm) to the reward")]
-        public ExponentialDistribution Distance_to_reward
+        public Delay Distance_to_reward
         {
             get
             {
@@ -1374,25 +1224,15 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new HabituationSettings(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("task_stage = " + _task_stage + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distance_to_reward = " + _distance_to_reward + ", ");
             stringBuilder.Append("reward_specification = " + _reward_specification);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -1400,10 +1240,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class LogNormalDistribution
+    public partial class LogNormalDistribution : Delay
     {
-    
-        private string _family = "LogNormal";
     
         private LogNormalDistributionParameters _distribution_parameters;
     
@@ -1415,26 +1253,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected LogNormalDistribution(LogNormalDistribution other)
+        protected LogNormalDistribution(LogNormalDistribution other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -1504,26 +1328,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new LogNormalDistribution(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -1792,10 +1606,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class NormalDistribution
+    public partial class NormalDistribution : Delay
     {
-    
-        private string _family = "Normal";
     
         private NormalDistributionParameters _distribution_parameters;
     
@@ -1807,26 +1619,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected NormalDistribution(NormalDistribution other)
+        protected NormalDistribution(NormalDistribution other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -1896,26 +1694,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new NormalDistribution(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -2923,10 +2711,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class PoissonDistribution
+    public partial class PoissonDistribution : Delay
     {
-    
-        private string _family = "Poisson";
     
         private PoissonDistributionParameters _distribution_parameters;
     
@@ -2938,26 +2724,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected PoissonDistribution(PoissonDistribution other)
+        protected PoissonDistribution(PoissonDistribution other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -3027,26 +2799,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new PoissonDistribution(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -3349,7 +3111,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private double _probability = 1D;
     
-        private Scalar _delay;
+        private Delay _delay;
     
         public RewardSpecification()
         {
@@ -3425,7 +3187,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("delay")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="delay")]
         [System.ComponentModel.DescriptionAttribute("The optional distribution where the delay to reward will be drawn from")]
-        public Scalar Delay
+        public Delay Delay
         {
             get
             {
@@ -3474,10 +3236,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Scalar
+    public partial class Scalar : Delay
     {
-    
-        private string _family = "Scalar";
     
         private ScalarDistributionParameter _distribution_parameters;
     
@@ -3489,26 +3249,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected Scalar(Scalar other)
+        protected Scalar(Scalar other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -3578,26 +3324,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new Scalar(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -3876,7 +3612,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private EnvironmentStatistics _environment_statistics = new EnvironmentStatistics();
     
-        private object _task_stage_settings;
+        private Task_stage_settings _task_stage_settings;
     
         private OperationControl _operation_control = new OperationControl();
     
@@ -3967,7 +3703,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("task_stage_settings", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="task_stage_settings")]
         [System.ComponentModel.DescriptionAttribute("Settings of the task stage")]
-        public object Task_stage_settings
+        public Task_stage_settings Task_stage_settings
         {
             get
             {
@@ -4236,10 +3972,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class UniformDistribution
+    public partial class UniformDistribution : Delay
     {
-    
-        private string _family = "Uniform";
     
         private UniformDistributionParameters _distribution_parameters;
     
@@ -4251,26 +3985,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected UniformDistribution(UniformDistribution other)
+        protected UniformDistribution(UniformDistribution other) : 
+                base(other)
         {
-            _family = other._family;
             _distribution_parameters = other._distribution_parameters;
             _truncation_parameters = other._truncation_parameters;
             _scaling_parameters = other._scaling_parameters;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("family")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        public string Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
         }
     
         /// <summary>
@@ -4340,26 +4060,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new UniformDistribution(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
             stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
             stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -4904,7 +4614,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private VirtualSiteLabels _label = AindVrForagingDataSchema.AindVrForagingTask.VirtualSiteLabels.Unspecified;
     
-        private Scalar _length_distribution;
+        private Delay _length_distribution;
     
         public VirtualSiteGenerator()
         {
@@ -4962,7 +4672,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         [Newtonsoft.Json.JsonPropertyAttribute("length_distribution")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="length_distribution")]
         [System.ComponentModel.DescriptionAttribute("Distribution of the length of the virtual site")]
-        public Scalar Length_distribution
+        public Delay Length_distribution
         {
             get
             {
@@ -5323,12 +5033,207 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
+    [YamlDiscriminator("family")]
+    [JsonInheritanceAttribute("Scalar", typeof(Scalar))]
+    [JsonInheritanceAttribute("Beta", typeof(BetaDistribution))]
+    [JsonInheritanceAttribute("Binomial", typeof(BinomialDistribution))]
+    [JsonInheritanceAttribute("Exponential", typeof(ExponentialDistribution))]
+    [JsonInheritanceAttribute("Gamma", typeof(GammaDistribution))]
+    [JsonInheritanceAttribute("LogNormal", typeof(LogNormalDistribution))]
+    [JsonInheritanceAttribute("Normal", typeof(NormalDistribution))]
+    [JsonInheritanceAttribute("Poisson", typeof(PoissonDistribution))]
+    [JsonInheritanceAttribute("Uniform", typeof(UniformDistribution))]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Delay
+    {
+    
+        public Delay()
+        {
+        }
+    
+        protected Delay(Delay other)
+        {
+        }
+    
+        public System.IObservable<Delay> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Delay(this)));
+        }
+    
+        public System.IObservable<Delay> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Delay(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
+    [YamlDiscriminator("family")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Length_distribution
+    {
+    
+        public Length_distribution()
+        {
+        }
+    
+        protected Length_distribution(Length_distribution other)
+        {
+        }
+    
+        public System.IObservable<Length_distribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Length_distribution(this)));
+        }
+    
+        public System.IObservable<Length_distribution> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Length_distribution(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "task_stage")]
+    [YamlDiscriminator("task_stage")]
+    [JsonInheritanceAttribute("HABITUATION", typeof(HabituationSettings))]
+    [JsonInheritanceAttribute("FORAGING", typeof(ForagingSettings))]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Task_stage_settings
+    {
+    
+        public Task_stage_settings()
+        {
+        }
+    
+        protected Task_stage_settings(Task_stage_settings other)
+        {
+        }
+    
+        public System.IObservable<Task_stage_settings> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Task_stage_settings(this)));
+        }
+    
+        public System.IObservable<Task_stage_settings> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Task_stage_settings(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
+    [YamlDiscriminator("family")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Distance_to_reward
+    {
+    
+        public Distance_to_reward()
+        {
+        }
+    
+        protected Distance_to_reward(Distance_to_reward other)
+        {
+        }
+    
+        public System.IObservable<Distance_to_reward> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Distance_to_reward(this)));
+        }
+    
+        public System.IObservable<Distance_to_reward> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Distance_to_reward(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     public abstract partial class Root
     {
     
-        private TaskLogic _taskLogic = new TaskLogic();
-    
         private Add_refs _add_refs;
+    
+        private TaskLogic _taskLogic = new TaskLogic();
     
         protected Root()
         {
@@ -5336,27 +5241,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         protected Root(Root other)
         {
-            _taskLogic = other._taskLogic;
             _add_refs = other._add_refs;
-        }
-    
-        /// <summary>
-        /// Task logic
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("taskLogic", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskLogic")]
-        [System.ComponentModel.DescriptionAttribute("Task logic")]
-        public TaskLogic TaskLogic
-        {
-            get
-            {
-                return _taskLogic;
-            }
-            set
-            {
-                _taskLogic = value;
-            }
+            _taskLogic = other._taskLogic;
         }
     
         /// <summary>
@@ -5378,10 +5264,29 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
         }
     
+        /// <summary>
+        /// Task logic
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("taskLogic", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="taskLogic")]
+        [System.ComponentModel.DescriptionAttribute("Task logic")]
+        public TaskLogic TaskLogic
+        {
+            get
+            {
+                return _taskLogic;
+            }
+            set
+            {
+                _taskLogic = value;
+            }
+        }
+    
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("taskLogic = " + _taskLogic + ", ");
-            stringBuilder.Append("add_refs = " + _add_refs);
+            stringBuilder.Append("add_refs = " + _add_refs + ", ");
+            stringBuilder.Append("taskLogic = " + _taskLogic);
             return true;
         }
     
@@ -5506,6 +5411,310 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
             stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface, AllowMultiple = true)]
+    internal class JsonInheritanceAttribute : System.Attribute
+    {
+        public JsonInheritanceAttribute(string key, System.Type type)
+        {
+            Key = key;
+            Type = type;
+        }
+
+        public string Key { get; private set; }
+
+        public System.Type Type { get; private set; }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    public class JsonInheritanceConverter : Newtonsoft.Json.JsonConverter
+    {
+        internal static readonly string DefaultDiscriminatorName = "discriminator";
+
+        private readonly string _discriminatorName;
+
+        [System.ThreadStatic]
+        private static bool _isReading;
+
+        [System.ThreadStatic]
+        private static bool _isWriting;
+
+        public JsonInheritanceConverter()
+        {
+            _discriminatorName = DefaultDiscriminatorName;
+        }
+
+        public JsonInheritanceConverter(string discriminatorName)
+        {
+            _discriminatorName = discriminatorName;
+        }
+
+        public string DiscriminatorName { get { return _discriminatorName; } }
+
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            try
+            {
+                _isWriting = true;
+
+                var jObject = Newtonsoft.Json.Linq.JObject.FromObject(value, serializer);
+                jObject.AddFirst(new Newtonsoft.Json.Linq.JProperty(_discriminatorName, GetSubtypeDiscriminator(value.GetType())));
+                writer.WriteToken(jObject.CreateReader());
+            }
+            finally
+            {
+                _isWriting = false;
+            }
+        }
+
+        public override bool CanWrite
+        {
+            get
+            {
+                if (_isWriting)
+                {
+                    _isWriting = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanRead
+        {
+            get
+            {
+                if (_isReading)
+                {
+                    _isReading = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanConvert(System.Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            var jObject = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
+            if (jObject == null)
+                return null;
+
+            var discriminatorValue = jObject.GetValue(_discriminatorName);
+            var discriminator = discriminatorValue != null ? Newtonsoft.Json.Linq.Extensions.Value<string>(discriminatorValue) : null;
+            var subtype = GetObjectSubtype(objectType, discriminator);
+
+            var objectContract = serializer.ContractResolver.ResolveContract(subtype) as Newtonsoft.Json.Serialization.JsonObjectContract;
+            if (objectContract == null || System.Linq.Enumerable.All(objectContract.Properties, p => p.PropertyName != _discriminatorName))
+            {
+                jObject.Remove(_discriminatorName);
+            }
+
+            try
+            {
+                _isReading = true;
+                return serializer.Deserialize(jObject.CreateReader(), subtype);
+            }
+            finally
+            {
+                _isReading = false;
+            }
+        }
+
+        private System.Type GetObjectSubtype(System.Type objectType, string discriminator)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Key == discriminator)
+                    return attribute.Type;
+            }
+
+            return objectType;
+        }
+
+        private string GetSubtypeDiscriminator(System.Type objectType)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Type == objectType)
+                    return attribute.Key;
+            }
+
+            return objectType.Name;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
+    public partial class MatchDelay : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Delay);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchDelay),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Delay> source)
+            where TResult : Delay
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Delay>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    public partial class MatchLength_distribution : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Length_distribution);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchLength_distribution),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Length_distribution> source)
+            where TResult : Length_distribution
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Length_distribution>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ForagingSettings>))]
+    public partial class MatchTask_stage_settings : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Task_stage_settings);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchTask_stage_settings),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Task_stage_settings> source)
+            where TResult : Task_stage_settings
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Task_stage_settings>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    public partial class MatchDistance_to_reward : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Distance_to_reward);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchDistance_to_reward),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Distance_to_reward> source)
+            where TResult : Distance_to_reward
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Distance_to_reward>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
         }
     }
 
@@ -5750,6 +5959,26 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<WallTextures>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Delay> source)
+        {
+            return Process<Delay>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Length_distribution> source)
+        {
+            return Process<Length_distribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Task_stage_settings> source)
+        {
+            return Process<Task_stage_settings>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Distance_to_reward> source)
+        {
+            return Process<Distance_to_reward>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Root> source)
         {
             return Process<Root>(source);
@@ -5819,6 +6048,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGenerator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualCorridor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Delay>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Length_distribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Task_stage_settings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distance_to_reward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Root>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distribution_parameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Add_refs>))]
@@ -5850,6 +6083,101 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.AttributeUsageAttribute((System.AttributeTargets.Class | System.AttributeTargets.Interface))]
+    public class YamlDiscriminatorAttribute : System.Attribute
+    {
+    
+        public YamlDiscriminatorAttribute(string discriminator)
+        {
+            Discriminator = discriminator;
+        }
+
+        public string Discriminator { get; private set; }
+
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    public class YamlDiscriminatorTypeInspector : YamlDotNet.Serialization.TypeInspectors.TypeInspectorSkeleton
+    {
+    
+        readonly YamlDotNet.Serialization.ITypeInspector innerTypeDescriptor;
+
+        public YamlDiscriminatorTypeInspector(YamlDotNet.Serialization.ITypeInspector innerTypeDescriptor)
+        {
+            if (innerTypeDescriptor == null)
+            {
+                throw new System.ArgumentNullException("innerTypeDescriptor");
+            }
+
+            this.innerTypeDescriptor = innerTypeDescriptor;
+        }
+
+        public override System.Collections.Generic.IEnumerable<YamlDotNet.Serialization.IPropertyDescriptor> GetProperties(System.Type type, object container)
+        {
+            var innerProperties = innerTypeDescriptor.GetProperties(type, container);
+
+            var discriminatorAttribute = (YamlDiscriminatorAttribute)System.Attribute.GetCustomAttribute(type, typeof(YamlDiscriminatorAttribute));
+            var inheritanceAttributes = (JsonInheritanceAttribute[])System.Attribute.GetCustomAttributes(type, typeof(JsonInheritanceAttribute));
+            var typeMatch = System.Array.Find(inheritanceAttributes, attribute => attribute.Type == type);
+            if (discriminatorAttribute != null && typeMatch != null)
+            {
+                return System.Linq.Enumerable.Concat(new[]
+                {
+                    new DiscriminatorPropertyDescriptor(discriminatorAttribute.Discriminator, typeMatch.Key)
+                }, innerProperties);
+            }
+
+            return innerProperties;
+        }
+
+        class DiscriminatorPropertyDescriptor : YamlDotNet.Serialization.IPropertyDescriptor
+        {
+            readonly string key;
+
+            public DiscriminatorPropertyDescriptor(string discriminator, string value)
+            {
+                ScalarStyle = YamlDotNet.Core.ScalarStyle.Plain;
+                Name = discriminator;
+                key = value;
+            }
+
+            public string Name { get; private set; }
+
+            public bool CanWrite
+            {
+                get { return true; }
+            }
+
+            public System.Type Type
+            {
+                get { return typeof(string); }
+            }
+
+            public System.Type TypeOverride { get; set; }
+
+            public int Order { get; set; }
+
+            public YamlDotNet.Core.ScalarStyle ScalarStyle { get; set; }
+
+            public T GetCustomAttribute<T>() where T : System.Attribute
+            {
+                return null;
+            }
+
+            public YamlDotNet.Serialization.IObjectDescriptor Read(object target)
+            {
+                return new YamlDotNet.Serialization.ObjectDescriptor(key, Type, Type, ScalarStyle);
+            }
+
+            public void Write(object target, object value)
+            {
+            }
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into YAML strings.
     /// </summary>
@@ -5865,6 +6193,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Defer(() =>
             {
                 var serializer = new YamlDotNet.Serialization.SerializerBuilder()
+                    .WithTypeInspector(inspector => new YamlDiscriminatorTypeInspector(inspector))
                     .Build();
                 return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
             });
@@ -6095,6 +6424,26 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<WallTextures>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Delay> source)
+        {
+            return Process<Delay>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Length_distribution> source)
+        {
+            return Process<Length_distribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Task_stage_settings> source)
+        {
+            return Process<Task_stage_settings>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Distance_to_reward> source)
+        {
+            return Process<Distance_to_reward>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Root> source)
         {
             return Process<Root>(source);
@@ -6164,6 +6513,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGenerator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualCorridor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Delay>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Length_distribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Task_stage_settings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distance_to_reward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Root>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distribution_parameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Add_refs>))]
@@ -6188,11 +6541,30 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
                 System.Linq.Enumerable.Single(arguments));
         }
 
+        private static void AddTypeDiscriminator<T>(YamlDotNet.Serialization.BufferedDeserialization.ITypeDiscriminatingNodeDeserializerOptions o)
+        {
+            var baseType = typeof(T);
+            var discriminator = System.Reflection.CustomAttributeExtensions.GetCustomAttribute<YamlDiscriminatorAttribute>(baseType).Discriminator;
+            var typeMapping = System.Linq.Enumerable.ToDictionary(
+                System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(baseType),
+                attr => attr.Key,
+                attr => attr.Type);
+            o.AddKeyValueTypeDiscriminator<T>(discriminator, typeMapping);
+        }
+
         private static System.IObservable<T> Process<T>(System.IObservable<string> source)
         {
             return System.Reactive.Linq.Observable.Defer(() =>
             {
                 var serializer = new YamlDotNet.Serialization.DeserializerBuilder()
+                    .WithTypeInspector(inspector => new YamlDiscriminatorTypeInspector(inspector))
+                    .WithTypeDiscriminatingNodeDeserializer(o =>
+                    {
+                        AddTypeDiscriminator<Delay>(o);
+                        AddTypeDiscriminator<Length_distribution>(o);
+                        AddTypeDiscriminator<Task_stage_settings>(o);
+                        AddTypeDiscriminator<Distance_to_reward>(o);
+                    })
                     .Build();
                 return System.Reactive.Linq.Observable.Select(source, value =>
                 {

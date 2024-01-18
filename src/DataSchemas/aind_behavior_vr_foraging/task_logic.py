@@ -4,7 +4,7 @@ from __future__ import annotations
 from enum import Enum
 
 # Import core types
-from typing import Annotated, List, Literal, Optional, Union, Dict
+from typing import Annotated, Dict, List, Literal, Optional, Union
 
 import aind_behavior_vr_foraging.distributions as distributions
 from aind_data_schema.base import AindCoreModel, AindModel
@@ -88,7 +88,7 @@ class RewardSpecification(AindModel):
     amount: float = Field(ge=0, description="Amount of reward (a.u.)")
     operant_logic: Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
     probability: float = Field(default=1, ge=0, le=1, description="Probability of the reward")
-    delay: distributions.Scalar = Field(
+    delay: distributions.Distribution = Field(
         default=distributions.Scalar(distribution_parameters=distributions.ScalarDistributionParameter(value=0)),
         description="The optional distribution where the delay to reward will be drawn from",
     )
@@ -110,7 +110,7 @@ class VirtualSiteGenerator(AindModel):
         default=RenderSpecification(), description="Contrast of the environment"
     )
     label: VirtualSiteLabels = Field(VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
-    length_distribution: distributions.Scalar = Field(
+    length_distribution: distributions.Distribution = Field(
         default=distributions.Scalar(distribution_parameters=distributions.ScalarDistributionParameter(value=20)),
         description="Distribution of the length of the virtual site",
     )
@@ -230,7 +230,7 @@ class TaskStageSettingsBase(AindModel):
 
 class HabituationSettings(TaskStageSettingsBase):
     task_stage: Literal[TaskStage.HABITUATION] = TaskStage.HABITUATION
-    distance_to_reward: distributions.ExponentialDistribution = Field(..., description="Distance (cm) to the reward")
+    distance_to_reward: distributions.Distribution = Field(..., description="Distance (cm) to the reward")
     reward_specification: RewardSpecification = Field(description="specification of the reward")
     reward_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="Contrast of the environement"
@@ -241,7 +241,9 @@ class ForagingSettings(TaskStageSettingsBase):
     task_stage: Literal[TaskStage.FORAGING] = TaskStage.FORAGING
 
 
-TaskStageSettings = Annotated[Union[HabituationSettings, ForagingSettings], Field(discriminator="task_stage")]
+TaskStageSettings = Annotated[
+    Union[HabituationSettings, ForagingSettings], Field(discriminator="task_stage", title="TaskStage")
+]
 
 
 class TaskLogic(AindCoreModel):
@@ -261,10 +263,10 @@ class CreateDistribution(distributions.DistributionBase):
 
 
 class Root(BaseModel):
-    taskLogic: TaskLogic = Field(description="Task logic")
     add_refs: None | VisualCorridor | VirtualSite | CreateDistribution | distributions.Distribution = Field(
         None, description="Additional references"
     )
+    taskLogic: TaskLogic = Field(description="Task logic")
 
     class Config:
         json_schema_extra = {"x-abstract": "True"}
