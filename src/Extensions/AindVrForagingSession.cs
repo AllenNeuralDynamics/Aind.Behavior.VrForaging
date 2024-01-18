@@ -119,10 +119,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         ".")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class BehaviorStimulation
+    public partial class BehaviorStimulation : Stimulus
     {
-    
-        private string _stimulus_type = "Behavior";
     
         private string _behavior_name;
     
@@ -150,9 +148,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
         }
     
-        protected BehaviorStimulation(BehaviorStimulation other)
+        protected BehaviorStimulation(BehaviorStimulation other) : 
+                base(other)
         {
-            _stimulus_type = other._stimulus_type;
             _behavior_name = other._behavior_name;
             _session_number = other._session_number;
             _behavior_software = other._behavior_software;
@@ -164,20 +162,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _trials_finished = other._trials_finished;
             _trials_rewarded = other._trials_rewarded;
             _notes = other._notes;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public string Stimulus_type
-        {
-            get
-            {
-                return _stimulus_type;
-            }
-            set
-            {
-                _stimulus_type = value;
-            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("behavior_name", Required=Newtonsoft.Json.Required.Always)]
@@ -363,9 +347,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return System.Reactive.Linq.Observable.Select(source, _ => new BehaviorStimulation(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("stimulus_type = " + _stimulus_type + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("behavior_name = " + _behavior_name + ", ");
             stringBuilder.Append("session_number = " + _session_number + ", ");
             stringBuilder.Append("behavior_software = " + _behavior_software + ", ");
@@ -378,19 +365,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("trials_rewarded = " + _trials_rewarded + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -4288,10 +4262,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.ComponentModel.DescriptionAttribute("Description of a olfactory stimulus")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class OlfactoryStimulation
+    public partial class OlfactoryStimulation : Stimulus
     {
-    
-        private string _stimulus_type = "Olfactory";
     
         private System.Collections.Generic.List<OlfactometerChannelConfig> _channels = new System.Collections.Generic.List<OlfactometerChannelConfig>();
     
@@ -4299,24 +4271,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
         }
     
-        protected OlfactoryStimulation(OlfactoryStimulation other)
+        protected OlfactoryStimulation(OlfactoryStimulation other) : 
+                base(other)
         {
-            _stimulus_type = other._stimulus_type;
             _channels = other._channels;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public string Stimulus_type
-        {
-            get
-            {
-                return _stimulus_type;
-            }
-            set
-            {
-                _stimulus_type = value;
-            }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -4344,24 +4302,14 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return System.Reactive.Linq.Observable.Select(source, _ => new OlfactoryStimulation(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("stimulus_type = " + _stimulus_type + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("channels = " + _channels);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -4373,10 +4321,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.ComponentModel.DescriptionAttribute("Description of opto stimulation parameters")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class OptoStimulation
+    public partial class OptoStimulation : Stimulus
     {
-    
-        private string _stimulus_type = "Opto Stimulation";
     
         private string _stimulus_name;
     
@@ -4414,9 +4360,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
         }
     
-        protected OptoStimulation(OptoStimulation other)
+        protected OptoStimulation(OptoStimulation other) : 
+                base(other)
         {
-            _stimulus_type = other._stimulus_type;
             _stimulus_name = other._stimulus_name;
             _pulse_shape = other._pulse_shape;
             _pulse_frequency = other._pulse_frequency;
@@ -4433,20 +4379,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _baseline_duration_unit = other._baseline_duration_unit;
             _other_parameters = other._other_parameters;
             _notes = other._notes;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public string Stimulus_type
-        {
-            get
-            {
-                return _stimulus_type;
-            }
-            set
-            {
-                _stimulus_type = value;
-            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_name", Required=Newtonsoft.Json.Required.Always)]
@@ -4698,9 +4630,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return System.Reactive.Linq.Observable.Select(source, _ => new OptoStimulation(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("stimulus_type = " + _stimulus_type + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("stimulus_name = " + _stimulus_name + ", ");
             stringBuilder.Append("pulse_shape = " + _pulse_shape + ", ");
             stringBuilder.Append("pulse_frequency = " + _pulse_frequency + ", ");
@@ -4718,19 +4653,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("other_parameters = " + _other_parameters + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -4949,10 +4871,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.ComponentModel.DescriptionAttribute("Description of a photostimulation session")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class PhotoStimulation
+    public partial class PhotoStimulation : Stimulus
     {
-    
-        private string _stimulus_type = "Photo Stimulation";
     
         private string _stimulus_name;
     
@@ -4972,9 +4892,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
         }
     
-        protected PhotoStimulation(PhotoStimulation other)
+        protected PhotoStimulation(PhotoStimulation other) : 
+                base(other)
         {
-            _stimulus_type = other._stimulus_type;
             _stimulus_name = other._stimulus_name;
             _number_groups = other._number_groups;
             _groups = other._groups;
@@ -4982,20 +4902,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _inter_trial_interval_unit = other._inter_trial_interval_unit;
             _other_parameters = other._other_parameters;
             _notes = other._notes;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public string Stimulus_type
-        {
-            get
-            {
-                return _stimulus_type;
-            }
-            set
-            {
-                _stimulus_type = value;
-            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_name", Required=Newtonsoft.Json.Required.Always)]
@@ -5109,9 +5015,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return System.Reactive.Linq.Observable.Select(source, _ => new PhotoStimulation(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("stimulus_type = " + _stimulus_type + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("stimulus_name = " + _stimulus_name + ", ");
             stringBuilder.Append("number_groups = " + _number_groups + ", ");
             stringBuilder.Append("groups = " + _groups + ", ");
@@ -5120,19 +5029,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("other_parameters = " + _other_parameters + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -8113,7 +8009,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class StimulusEpoch
     {
     
-        private object _stimulus;
+        private Stimulus _stimulus;
     
         private System.DateTimeOffset _stimulus_start_time;
     
@@ -8133,7 +8029,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus")]
-        public object Stimulus
+        public Stimulus Stimulus
         {
             get
             {
@@ -8771,10 +8667,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         "timulus.")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class VisualStimulation
+    public partial class VisualStimulation : Stimulus
     {
-    
-        private string _stimulus_type = "Visual";
     
         private string _stimulus_name;
     
@@ -8796,9 +8690,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
         }
     
-        protected VisualStimulation(VisualStimulation other)
+        protected VisualStimulation(VisualStimulation other) : 
+                base(other)
         {
-            _stimulus_type = other._stimulus_type;
             _stimulus_name = other._stimulus_name;
             _stimulus_parameters = other._stimulus_parameters;
             _stimulus_template_name = other._stimulus_template_name;
@@ -8807,20 +8701,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _stimulus_script = other._stimulus_script;
             _stimulus_script_version = other._stimulus_script_version;
             _notes = other._notes;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_type")]
-        public string Stimulus_type
-        {
-            get
-            {
-                return _stimulus_type;
-            }
-            set
-            {
-                _stimulus_type = value;
-            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_name", Required=Newtonsoft.Json.Required.Always)]
@@ -8963,9 +8843,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return System.Reactive.Linq.Observable.Select(source, _ => new VisualStimulation(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("stimulus_type = " + _stimulus_type + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("stimulus_name = " + _stimulus_name + ", ");
             stringBuilder.Append("stimulus_parameters = " + _stimulus_parameters + ", ");
             stringBuilder.Append("stimulus_template_name = " + _stimulus_template_name + ", ");
@@ -8975,19 +8858,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("stimulus_script_version = " + _stimulus_script_version + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -9015,6 +8885,57 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Runtime.Serialization.EnumMemberAttribute(Value="nanoliter")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="nanoliter")]
         Nanoliter = 3,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "stimulus_type")]
+    [YamlDiscriminator("stimulus_type")]
+    [JsonInheritanceAttribute("Olfactory", typeof(OlfactoryStimulation))]
+    [JsonInheritanceAttribute("Behavior", typeof(BehaviorStimulation))]
+    [JsonInheritanceAttribute("Opto Stimulation", typeof(OptoStimulation))]
+    [JsonInheritanceAttribute("Photo Stimulation", typeof(PhotoStimulation))]
+    [JsonInheritanceAttribute("Visual", typeof(VisualStimulation))]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Stimulus
+    {
+    
+        public Stimulus()
+        {
+        }
+    
+        protected Stimulus(Stimulus other)
+        {
+        }
+    
+        public System.IObservable<Stimulus> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Stimulus(this)));
+        }
+    
+        public System.IObservable<Stimulus> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Stimulus(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
     }
 
 
@@ -9104,6 +9025,187 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
             stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface, AllowMultiple = true)]
+    internal class JsonInheritanceAttribute : System.Attribute
+    {
+        public JsonInheritanceAttribute(string key, System.Type type)
+        {
+            Key = key;
+            Type = type;
+        }
+
+        public string Key { get; private set; }
+
+        public System.Type Type { get; private set; }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    public class JsonInheritanceConverter : Newtonsoft.Json.JsonConverter
+    {
+        internal static readonly string DefaultDiscriminatorName = "discriminator";
+
+        private readonly string _discriminatorName;
+
+        [System.ThreadStatic]
+        private static bool _isReading;
+
+        [System.ThreadStatic]
+        private static bool _isWriting;
+
+        public JsonInheritanceConverter()
+        {
+            _discriminatorName = DefaultDiscriminatorName;
+        }
+
+        public JsonInheritanceConverter(string discriminatorName)
+        {
+            _discriminatorName = discriminatorName;
+        }
+
+        public string DiscriminatorName { get { return _discriminatorName; } }
+
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            try
+            {
+                _isWriting = true;
+
+                var jObject = Newtonsoft.Json.Linq.JObject.FromObject(value, serializer);
+                jObject.AddFirst(new Newtonsoft.Json.Linq.JProperty(_discriminatorName, GetSubtypeDiscriminator(value.GetType())));
+                writer.WriteToken(jObject.CreateReader());
+            }
+            finally
+            {
+                _isWriting = false;
+            }
+        }
+
+        public override bool CanWrite
+        {
+            get
+            {
+                if (_isWriting)
+                {
+                    _isWriting = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanRead
+        {
+            get
+            {
+                if (_isReading)
+                {
+                    _isReading = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanConvert(System.Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            var jObject = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
+            if (jObject == null)
+                return null;
+
+            var discriminatorValue = jObject.GetValue(_discriminatorName);
+            var discriminator = discriminatorValue != null ? Newtonsoft.Json.Linq.Extensions.Value<string>(discriminatorValue) : null;
+            var subtype = GetObjectSubtype(objectType, discriminator);
+
+            var objectContract = serializer.ContractResolver.ResolveContract(subtype) as Newtonsoft.Json.Serialization.JsonObjectContract;
+            if (objectContract == null || System.Linq.Enumerable.All(objectContract.Properties, p => p.PropertyName != _discriminatorName))
+            {
+                jObject.Remove(_discriminatorName);
+            }
+
+            try
+            {
+                _isReading = true;
+                return serializer.Deserialize(jObject.CreateReader(), subtype);
+            }
+            finally
+            {
+                _isReading = false;
+            }
+        }
+
+        private System.Type GetObjectSubtype(System.Type objectType, string discriminator)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Key == discriminator)
+                    return attribute.Type;
+            }
+
+            return objectType;
+        }
+
+        private string GetSubtypeDiscriminator(System.Type objectType)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Type == objectType)
+                    return attribute.Key;
+            }
+
+            return objectType.Name;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactoryStimulation>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BehaviorStimulation>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OptoStimulation>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PhotoStimulation>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualStimulation>))]
+    public partial class MatchStimulus : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Stimulus);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchStimulus),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Stimulus> source)
+            where TResult : Stimulus
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Stimulus>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
         }
     }
 
@@ -9368,6 +9470,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return Process<VisualStimulation>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Stimulus> source)
+        {
+            return Process<Stimulus>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
         {
             return Process<AindVrForagingSession>(source);
@@ -9431,6 +9538,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stream>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrainedBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualStimulation>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulus>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -9460,6 +9568,101 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.AttributeUsageAttribute((System.AttributeTargets.Class | System.AttributeTargets.Interface))]
+    public class YamlDiscriminatorAttribute : System.Attribute
+    {
+    
+        public YamlDiscriminatorAttribute(string discriminator)
+        {
+            Discriminator = discriminator;
+        }
+
+        public string Discriminator { get; private set; }
+
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    public class YamlDiscriminatorTypeInspector : YamlDotNet.Serialization.TypeInspectors.TypeInspectorSkeleton
+    {
+    
+        readonly YamlDotNet.Serialization.ITypeInspector innerTypeDescriptor;
+
+        public YamlDiscriminatorTypeInspector(YamlDotNet.Serialization.ITypeInspector innerTypeDescriptor)
+        {
+            if (innerTypeDescriptor == null)
+            {
+                throw new System.ArgumentNullException("innerTypeDescriptor");
+            }
+
+            this.innerTypeDescriptor = innerTypeDescriptor;
+        }
+
+        public override System.Collections.Generic.IEnumerable<YamlDotNet.Serialization.IPropertyDescriptor> GetProperties(System.Type type, object container)
+        {
+            var innerProperties = innerTypeDescriptor.GetProperties(type, container);
+
+            var discriminatorAttribute = (YamlDiscriminatorAttribute)System.Attribute.GetCustomAttribute(type, typeof(YamlDiscriminatorAttribute));
+            var inheritanceAttributes = (JsonInheritanceAttribute[])System.Attribute.GetCustomAttributes(type, typeof(JsonInheritanceAttribute));
+            var typeMatch = System.Array.Find(inheritanceAttributes, attribute => attribute.Type == type);
+            if (discriminatorAttribute != null && typeMatch != null)
+            {
+                return System.Linq.Enumerable.Concat(new[]
+                {
+                    new DiscriminatorPropertyDescriptor(discriminatorAttribute.Discriminator, typeMatch.Key)
+                }, innerProperties);
+            }
+
+            return innerProperties;
+        }
+
+        class DiscriminatorPropertyDescriptor : YamlDotNet.Serialization.IPropertyDescriptor
+        {
+            readonly string key;
+
+            public DiscriminatorPropertyDescriptor(string discriminator, string value)
+            {
+                ScalarStyle = YamlDotNet.Core.ScalarStyle.Plain;
+                Name = discriminator;
+                key = value;
+            }
+
+            public string Name { get; private set; }
+
+            public bool CanWrite
+            {
+                get { return true; }
+            }
+
+            public System.Type Type
+            {
+                get { return typeof(string); }
+            }
+
+            public System.Type TypeOverride { get; set; }
+
+            public int Order { get; set; }
+
+            public YamlDotNet.Core.ScalarStyle ScalarStyle { get; set; }
+
+            public T GetCustomAttribute<T>() where T : System.Attribute
+            {
+                return null;
+            }
+
+            public YamlDotNet.Serialization.IObjectDescriptor Read(object target)
+            {
+                return new YamlDotNet.Serialization.ObjectDescriptor(key, Type, Type, ScalarStyle);
+            }
+
+            public void Write(object target, object value)
+            {
+            }
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into YAML strings.
     /// </summary>
@@ -9475,6 +9678,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return System.Reactive.Linq.Observable.Defer(() =>
             {
                 var serializer = new YamlDotNet.Serialization.SerializerBuilder()
+                    .WithTypeInspector(inspector => new YamlDiscriminatorTypeInspector(inspector))
                     .Build();
                 return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
             });
@@ -9725,6 +9929,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return Process<VisualStimulation>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Stimulus> source)
+        {
+            return Process<Stimulus>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
         {
             return Process<AindVrForagingSession>(source);
@@ -9788,6 +9997,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stream>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrainedBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualStimulation>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulus>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -9810,11 +10020,27 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
                 System.Linq.Enumerable.Single(arguments));
         }
 
+        private static void AddTypeDiscriminator<T>(YamlDotNet.Serialization.BufferedDeserialization.ITypeDiscriminatingNodeDeserializerOptions o)
+        {
+            var baseType = typeof(T);
+            var discriminator = System.Reflection.CustomAttributeExtensions.GetCustomAttribute<YamlDiscriminatorAttribute>(baseType).Discriminator;
+            var typeMapping = System.Linq.Enumerable.ToDictionary(
+                System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(baseType),
+                attr => attr.Key,
+                attr => attr.Type);
+            o.AddKeyValueTypeDiscriminator<T>(discriminator, typeMapping);
+        }
+
         private static System.IObservable<T> Process<T>(System.IObservable<string> source)
         {
             return System.Reactive.Linq.Observable.Defer(() =>
             {
                 var serializer = new YamlDotNet.Serialization.DeserializerBuilder()
+                    .WithTypeInspector(inspector => new YamlDiscriminatorTypeInspector(inspector))
+                    .WithTypeDiscriminatingNodeDeserializer(o =>
+                    {
+                        AddTypeDiscriminator<Stimulus>(o);
+                    })
                     .Build();
                 return System.Reactive.Linq.Observable.Select(source, value =>
                 {

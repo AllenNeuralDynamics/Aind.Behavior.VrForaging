@@ -171,6 +171,7 @@
           "description": "Parameters of the distribution",
           "oneOf": [
             {
+              "description": "Parameters of the distribution",
               "discriminator": {
                 "mapping": {
                   "Beta": "#/definitions/BetaDistributionParameters",
@@ -213,7 +214,8 @@
                 {
                   "$ref": "#/definitions/GammaDistributionParameters"
                 }
-              ]
+              ],
+              "title": "DistributionParameters"
             },
             {
               "type": "null"
@@ -481,12 +483,51 @@
           "type": "string"
         },
         "distance_to_reward": {
-          "allOf": [
+          "description": "Distance (cm) to the reward",
+          "discriminator": {
+            "mapping": {
+              "Beta": "#/definitions/BetaDistribution",
+              "Binomial": "#/definitions/BinomialDistribution",
+              "Exponential": "#/definitions/ExponentialDistribution",
+              "Gamma": "#/definitions/GammaDistribution",
+              "LogNormal": "#/definitions/LogNormalDistribution",
+              "Normal": "#/definitions/NormalDistribution",
+              "Poisson": "#/definitions/PoissonDistribution",
+              "Scalar": "#/definitions/Scalar",
+              "Uniform": "#/definitions/UniformDistribution"
+            },
+            "propertyName": "family"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Scalar"
+            },
+            {
+              "$ref": "#/definitions/NormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/LogNormalDistribution"
+            },
             {
               "$ref": "#/definitions/ExponentialDistribution"
+            },
+            {
+              "$ref": "#/definitions/UniformDistribution"
+            },
+            {
+              "$ref": "#/definitions/PoissonDistribution"
+            },
+            {
+              "$ref": "#/definitions/BinomialDistribution"
+            },
+            {
+              "$ref": "#/definitions/BetaDistribution"
+            },
+            {
+              "$ref": "#/definitions/GammaDistribution"
             }
           ],
-          "description": "Distance (cm) to the reward"
+          "title": "Distribution"
         },
         "reward_specification": {
           "allOf": [
@@ -1200,11 +1241,6 @@
           "type": "number"
         },
         "delay": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Scalar"
-            }
-          ],
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1214,7 +1250,51 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "The optional distribution where the delay to reward will be drawn from"
+          "description": "The optional distribution where the delay to reward will be drawn from",
+          "discriminator": {
+            "mapping": {
+              "Beta": "#/definitions/BetaDistribution",
+              "Binomial": "#/definitions/BinomialDistribution",
+              "Exponential": "#/definitions/ExponentialDistribution",
+              "Gamma": "#/definitions/GammaDistribution",
+              "LogNormal": "#/definitions/LogNormalDistribution",
+              "Normal": "#/definitions/NormalDistribution",
+              "Poisson": "#/definitions/PoissonDistribution",
+              "Scalar": "#/definitions/Scalar",
+              "Uniform": "#/definitions/UniformDistribution"
+            },
+            "propertyName": "family"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Scalar"
+            },
+            {
+              "$ref": "#/definitions/NormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/LogNormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/ExponentialDistribution"
+            },
+            {
+              "$ref": "#/definitions/UniformDistribution"
+            },
+            {
+              "$ref": "#/definitions/PoissonDistribution"
+            },
+            {
+              "$ref": "#/definitions/BinomialDistribution"
+            },
+            {
+              "$ref": "#/definitions/BetaDistribution"
+            },
+            {
+              "$ref": "#/definitions/GammaDistribution"
+            }
+          ],
+          "title": "Distribution"
         }
       },
       "required": [
@@ -1376,7 +1456,7 @@
               "$ref": "#/definitions/ForagingSettings"
             }
           ],
-          "title": "Task Stage Settings"
+          "title": "TaskStage"
         },
         "operation_control": {
           "allOf": [
@@ -1713,11 +1793,6 @@
           "description": "Label of the virtual site"
         },
         "length_distribution": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Scalar"
-            }
-          ],
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1727,7 +1802,51 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "Distribution of the length of the virtual site"
+          "description": "Distribution of the length of the virtual site",
+          "discriminator": {
+            "mapping": {
+              "Beta": "#/definitions/BetaDistribution",
+              "Binomial": "#/definitions/BinomialDistribution",
+              "Exponential": "#/definitions/ExponentialDistribution",
+              "Gamma": "#/definitions/GammaDistribution",
+              "LogNormal": "#/definitions/LogNormalDistribution",
+              "Normal": "#/definitions/NormalDistribution",
+              "Poisson": "#/definitions/PoissonDistribution",
+              "Scalar": "#/definitions/Scalar",
+              "Uniform": "#/definitions/UniformDistribution"
+            },
+            "propertyName": "family"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Scalar"
+            },
+            {
+              "$ref": "#/definitions/NormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/LogNormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/ExponentialDistribution"
+            },
+            {
+              "$ref": "#/definitions/UniformDistribution"
+            },
+            {
+              "$ref": "#/definitions/PoissonDistribution"
+            },
+            {
+              "$ref": "#/definitions/BinomialDistribution"
+            },
+            {
+              "$ref": "#/definitions/BetaDistribution"
+            },
+            {
+              "$ref": "#/definitions/GammaDistribution"
+            }
+          ],
+          "title": "Distribution"
         }
       },
       "title": "VirtualSiteGenerator",
@@ -1841,14 +1960,6 @@
     }
   },
   "properties": {
-    "taskLogic": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TaskLogic"
-        }
-      ],
-      "description": "Task logic"
-    },
     "add_refs": {
       "default": null,
       "description": "Additional references",
@@ -1865,6 +1976,7 @@
               "$ref": "#/definitions/CreateDistribution"
             },
             {
+              "description": "Parameters of the distribution",
               "discriminator": {
                 "mapping": {
                   "Beta": "#/definitions/BetaDistribution",
@@ -1907,7 +2019,8 @@
                 {
                   "$ref": "#/definitions/GammaDistribution"
                 }
-              ]
+              ],
+              "title": "Distribution"
             }
           ]
         },
@@ -1916,6 +2029,14 @@
         }
       ],
       "title": "Add Refs"
+    },
+    "taskLogic": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/TaskLogic"
+        }
+      ],
+      "description": "Task logic"
     }
   },
   "required": [

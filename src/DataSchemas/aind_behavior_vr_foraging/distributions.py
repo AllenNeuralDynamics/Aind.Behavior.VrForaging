@@ -173,7 +173,7 @@ Distribution = Annotated[
         BetaDistribution,
         GammaDistribution,
     ],
-    Field(discriminator="family"),
+    Field(discriminator="family", title="Distribution", description="Parameters of the distribution"),
 ]
 
 DistributionParameters = Annotated[
@@ -188,5 +188,5 @@ DistributionParameters = Annotated[
         BetaDistributionParameters,
         GammaDistributionParameters,
     ],
-    Field(discriminator="family"),
+    Field(discriminator="family", title="DistributionParameters", description="Parameters of the distribution"),
 ]
