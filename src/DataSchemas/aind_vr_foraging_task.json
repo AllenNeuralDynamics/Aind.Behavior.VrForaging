@@ -6,7 +6,8 @@
         "family": {
           "const": "Beta",
           "default": "Beta",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -55,7 +56,8 @@
         "family": {
           "const": "Beta",
           "default": "Beta",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "alpha": {
           "default": 5,
@@ -81,7 +83,8 @@
         "family": {
           "const": "Binomial",
           "default": "Binomial",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -130,7 +133,8 @@
         "family": {
           "const": "Binomial",
           "default": "Binomial",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "n": {
           "default": 1,
@@ -314,7 +318,8 @@
         "family": {
           "const": "Exponential",
           "default": "Exponential",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -362,7 +367,8 @@
         "family": {
           "const": "Exponential",
           "default": "Exponential",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "rate": {
           "default": 0,
@@ -381,7 +387,8 @@
         "task_stage": {
           "const": "FORAGING",
           "default": "FORAGING",
-          "title": "Task Stage"
+          "title": "Task Stage",
+          "type": "string"
         }
       },
       "title": "ForagingSettings",
@@ -393,7 +400,8 @@
         "family": {
           "const": "Gamma",
           "default": "Gamma",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -442,7 +450,8 @@
         "family": {
           "const": "Gamma",
           "default": "Gamma",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "shape": {
           "default": 1,
@@ -468,7 +477,8 @@
         "task_stage": {
           "const": "HABITUATION",
           "default": "HABITUATION",
-          "title": "Task Stage"
+          "title": "Task Stage",
+          "type": "string"
         },
         "distance_to_reward": {
           "allOf": [
@@ -502,7 +512,8 @@
         "family": {
           "const": "LogNormal",
           "default": "LogNormal",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -551,7 +562,8 @@
         "family": {
           "const": "LogNormal",
           "default": "LogNormal",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "mean": {
           "default": 0,
@@ -618,7 +630,8 @@
         "family": {
           "const": "Normal",
           "default": "Normal",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -667,7 +680,8 @@
         "family": {
           "const": "Normal",
           "default": "Normal",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "mean": {
           "default": 0,
@@ -1023,7 +1037,8 @@
         "family": {
           "const": "Poisson",
           "default": "Poisson",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -1071,7 +1086,8 @@
         "family": {
           "const": "Poisson",
           "default": "Poisson",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "rate": {
           "default": 1,
@@ -1213,7 +1229,8 @@
         "family": {
           "const": "Scalar",
           "default": "Scalar",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -1261,7 +1278,8 @@
         "family": {
           "const": "Scalar",
           "default": "Scalar",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "value": {
           "default": 0,
@@ -1322,7 +1340,8 @@
         "schema_version": {
           "const": "0.1.0",
           "default": "0.1.0",
-          "title": "Schema Version"
+          "title": "Schema Version",
+          "type": "string"
         },
         "updaters": {
           "additionalProperties": {
@@ -1432,7 +1451,8 @@
         "family": {
           "const": "Uniform",
           "default": "Uniform",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "distribution_parameters": {
           "allOf": [
@@ -1481,7 +1501,8 @@
         "family": {
           "const": "Uniform",
           "default": "Uniform",
-          "title": "Family"
+          "title": "Family",
+          "type": "string"
         },
         "min": {
           "default": 0,
