@@ -81,7 +81,7 @@ class Texture(AindModel):
 
 
 class OdorSpecification(AindModel):
-    index: Literal[0, 1, 2, 3] = Field(..., description="Index of the odor to be used")
+    index: int = Field(..., ge=0, le=3, description="Index of the odor to be used")
     concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
 
 
