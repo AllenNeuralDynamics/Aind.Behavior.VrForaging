@@ -7,251 +7,75 @@ using System.ComponentModel;
 
 namespace AindVrForagingDataSchema.AindVrForagingTask
 {
-    [Combinator]
-    [Description("Samples a value for a known distribution.")]
-    [WorkflowElementCategory(ElementCategory.Transform)]
 
-    public class SampleDistribution
+    partial class Delay
     {
         private const uint SampleSize = 1000;
 
-        private Random randomSource;
-        public Random RandomSource
-        {
-            get { return randomSource; }
-            set { randomSource = value; }
+        public virtual double SampleDistribution(Random random){
+            throw new NotImplementedException();
         }
 
-        public IObservable<double> Process(IObservable<Scalar> source)
-        {
-            return source.Select(value => value.Distribution_parameters.Value);
+        public virtual IDiscreteDistribution GetDiscreteDistribution(Random random){
+            throw new NotImplementedException();
         }
 
-        public IObservable<double> Process(IObservable<NormalDistribution> source)
-        {
-            return source.Select(value =>
-            {
-                DistributionFamily result;
-                Enum.TryParse(value.Family, out result);
-                var distribution = GetContinuousDistribution(
-                    result,
-                    new double[] { value.Distribution_parameters.Mean, value.Distribution_parameters.Std });
-                var scalingParameters = value.Scaling_parameters;
-                var truncationParameters = value.Truncation_parameters;
-                if (!(truncationParameters == null))
-                {
-                    validateTruncationParameters(truncationParameters, scalingParameters);
-                    var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
-                }
-                else
-                {
-                    return drawSample(distribution, scalingParameters);
-                }
-            });
+        public virtual IContinuousDistribution GetContinuousDistribution(Random random){
+            throw new NotImplementedException();
         }
 
-        public IObservable<double> Process(IObservable<ExponentialDistribution> source)
-        {
-            return source.Select(value =>
-            {
-                DistributionFamily result;
-                Enum.TryParse(value.Family, out result);
-                var distribution = GetContinuousDistribution(
-                    result,
-                    new double[] { value.Distribution_parameters.Rate });
-                var scalingParameters = value.Scaling_parameters;
-                var truncationParameters = value.Truncation_parameters;
-                if (!(truncationParameters == null))
-                {
-                    validateTruncationParameters(truncationParameters, scalingParameters);
-                    var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
-                }
-                else
-                {
-                    return drawSample(distribution, scalingParameters);
-                }
-            });
-        }
-
-        public IObservable<double> Process(IObservable<LogNormalDistribution> source)
-        {
-            return source.Select(value =>
-            {
-                DistributionFamily result;
-                Enum.TryParse(value.Family, out result);
-                var distribution = GetContinuousDistribution(
-                    result,
-                    new double[] { value.Distribution_parameters.Mean, value.Distribution_parameters.Std });
-                var scalingParameters = value.Scaling_parameters;
-                var truncationParameters = value.Truncation_parameters;
-                if (!(truncationParameters == null))
-                {
-                    validateTruncationParameters(truncationParameters, scalingParameters);
-                    var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
-                }
-                else
-                {
-                    return drawSample(distribution, scalingParameters);
-                }
-            });
-        }
-
-        public IObservable<double> Process(IObservable<GammaDistribution> source)
-        {
-            return source.Select(value =>
-            {
-                DistributionFamily result;
-                Enum.TryParse(value.Family, out result);
-                var distribution = GetContinuousDistribution(
-                    result,
-                    new double[] { value.Distribution_parameters.Rate });
-                var scalingParameters = value.Scaling_parameters;
-                var truncationParameters = value.Truncation_parameters;
-                if (!(truncationParameters == null))
-                {
-                    validateTruncationParameters(truncationParameters, scalingParameters);
-                    var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
-                }
-                else
-                {
-                    return drawSample(distribution, scalingParameters);
-                }
-            });
-        }
-
-        public IObservable<double> Process(IObservable<BetaDistribution> source)
-        {
-            return source.Select(value =>
-            {
-                DistributionFamily result;
-                Enum.TryParse(value.Family, out result);
-                var distribution = GetContinuousDistribution(
-                    result,
-                    new double[] { value.Distribution_parameters.Alpha, value.Distribution_parameters.Beta });
-                var scalingParameters = value.Scaling_parameters;
-                var truncationParameters = value.Truncation_parameters;
-                if (!(truncationParameters == null))
-                {
-                    validateTruncationParameters(truncationParameters, scalingParameters);
-                    var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
-                }
-                else
-                {
-                    return drawSample(distribution, scalingParameters);
-                }
-            });
-        }
-
-        public IObservable<double> Process(IObservable<UniformDistribution> source)
-        {
-            return source.Select(value =>
-            {
-                DistributionFamily result;
-                Enum.TryParse(value.Family, out result);
-                var distribution = GetContinuousDistribution(
-                    result,
-                    new double[] { value.Distribution_parameters.Min, value.Distribution_parameters.Max });
-                var scalingParameters = value.Scaling_parameters;
-                var truncationParameters = value.Truncation_parameters;
-                if (!(truncationParameters == null))
-                {
-                    validateTruncationParameters(truncationParameters, scalingParameters);
-                    var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
-                }
-                else
-                {
-                    return drawSample(distribution, scalingParameters);
-                }
-            });
-        }
-
-        public IObservable<double> Process(IObservable<BinomialDistribution> source)
-        {
-            return source.Select(value =>
-            {
-                DistributionFamily result;
-                Enum.TryParse(value.Family, out result);
-                var distribution = GetDiscreteDistribution(
-                    result,
-                    new double[] { value.Distribution_parameters.P, value.Distribution_parameters.N });
-                var scalingParameters = value.Scaling_parameters;
-                var truncationParameters = value.Truncation_parameters;
-                if (!(truncationParameters == null))
-                {
-                    validateTruncationParameters(truncationParameters, scalingParameters);
-                    var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
-                }
-                return drawSample(distribution, scalingParameters);
-            });
-        }
-
-        public IObservable<double> Process(IObservable<PoissonDistribution> source)
-        {
-            return source.Select(value =>
-            {
-                DistributionFamily result;
-                Enum.TryParse(value.Family, out result);
-                var distribution = GetDiscreteDistribution(
-                    result,
-                    new double[] { value.Distribution_parameters.Rate });
-                var scalingParameters = value.Scaling_parameters;
-                var truncationParameters = value.Truncation_parameters;
-                if (!(truncationParameters == null))
-                {
-                    validateTruncationParameters(truncationParameters, scalingParameters);
-                    var samples = sampleFromDistribution(distribution, truncationParameters, scalingParameters);
-                    return validateSamples(samples.Item1, samples.Item2, truncationParameters, scalingParameters);
-                }
-                else
-                {
-                    return drawSample(distribution, scalingParameters);
-                }
-            });
-        }
-
-        private static double applyScaleAndOffset(double value, ScalingParameters scalingParameters)
+        private static double ApplyScaleAndOffset(double value, ScalingParameters scalingParameters)
         {
             return scalingParameters == null ? value : value * scalingParameters.Scale + scalingParameters.Offset;
         }
 
-        private double drawSample(IContinuousDistribution distribution, ScalingParameters scalingParameters)
+        public double DrawSample(IContinuousDistribution distribution, ScalingParameters scalingParameters, TruncationParameters truncationParameters)
         {
-            return applyScaleAndOffset(distribution.Sample(), scalingParameters);
+            if (truncationParameters != null){
+                ValidateTruncationParameters(truncationParameters);
+                var samples = SampleFromDistribution(distribution, truncationParameters, scalingParameters);
+                return ValidateSamples(samples.Item1, samples.Item2, truncationParameters);
+            }
+            else
+            {
+                return ApplyScaleAndOffset(distribution.Sample(), scalingParameters);
+            }
         }
 
-        private double drawSample(IDiscreteDistribution distribution, ScalingParameters scalingParameters)
+        public double DrawSample(IDiscreteDistribution distribution, ScalingParameters scalingParameters, TruncationParameters truncationParameters)
         {
-            return applyScaleAndOffset(distribution.Sample(), scalingParameters);
+            if (truncationParameters != null){
+                ValidateTruncationParameters(truncationParameters);
+                var samples = SampleFromDistribution(distribution, truncationParameters, scalingParameters);
+                return ValidateSamples(samples.Item1, samples.Item2, truncationParameters);
+            }
+            else
+            {
+                return ApplyScaleAndOffset(distribution.Sample(), scalingParameters);
+            }
         }
 
-        private Tuple<double[], double> sampleFromDistribution(IContinuousDistribution distribution, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
+        private Tuple<double[], double> SampleFromDistribution(IContinuousDistribution distribution, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
         {
             double[] samples = new double[SampleSize];
             distribution.Samples(samples);
-            var scaledSamples = samples.Select(x => applyScaleAndOffset(x, scalingParameters));
+            var scaledSamples = samples.Select(x => ApplyScaleAndOffset(x, scalingParameters));
             var average = scaledSamples.Average();
             var truncatedSamples = scaledSamples.Where(x => x >= truncationParameters.Min && x <= truncationParameters.Max);
             return Tuple.Create(truncatedSamples.ToArray(), average);
         }
 
-        private Tuple<double[], double> sampleFromDistribution(IDiscreteDistribution distribution, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
+        private Tuple<double[], double> SampleFromDistribution(IDiscreteDistribution distribution, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
         {
             int[] samples = new int[SampleSize];
             distribution.Samples(samples);
-            var scaledSamples = samples.Select(x => applyScaleAndOffset(x, scalingParameters));
+            var scaledSamples = samples.Select(x => ApplyScaleAndOffset(x, scalingParameters));
             var average = scaledSamples.Average();
             var truncatedSamples = scaledSamples.Where(x => x >= truncationParameters.Min && x <= truncationParameters.Max);
             return Tuple.Create(truncatedSamples.ToArray(), average);
         }
 
-        private static double validateSamples(double[] drawnSamples, double preTruncatedAverage, TruncationParameters truncationParameters, ScalingParameters scalingParameters)
+        private static double ValidateSamples(double[] drawnSamples, double preTruncatedAverage, TruncationParameters truncationParameters)
         {
             double outValue;
             if (drawnSamples.Count() <= 0)
@@ -274,48 +98,143 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return outValue;
         }
 
-        private void validateTruncationParameters(TruncationParameters truncationParameters, ScalingParameters scalingParameters)
+        private void ValidateTruncationParameters(TruncationParameters truncationParameters)
         {
             if (truncationParameters.Min >= truncationParameters.Max)
             {
                 throw new ArgumentException("Invalid truncation parameters. Min must be lower than Max");
             }
         }
+    }
 
-        public IDiscreteDistribution GetDiscreteDistribution(DistributionFamily distribution, params double[] parameters)
+
+    partial class Scalar{
+        public override double SampleDistribution(Random random){
+            return Distribution_parameters.Value;
+        }
+    }
+
+    partial class NormalDistribution{
+
+        public override IContinuousDistribution GetContinuousDistribution(Random random)
         {
-            switch (distribution)
-            {
-                case DistributionFamily.Binomial:
-                    return new Binomial(parameters[0], (int)parameters[1], randomSource);
-                case DistributionFamily.Poisson:
-                    return new Poisson(parameters[0], randomSource);
-                default:
-                    throw new ArgumentException("Invalid distribution type");
-            }
+            return new Normal(Distribution_parameters.Mean, Distribution_parameters.Std, random);
         }
 
-        public IContinuousDistribution GetContinuousDistribution(DistributionFamily distribution, params double[] parameters)
+        public override double SampleDistribution(Random random){
+            var distribution = GetContinuousDistribution(random);
+            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+        }
+    }
+
+    partial class ExponentialDistribution{
+
+        public override IContinuousDistribution GetContinuousDistribution(Random random)
         {
-            switch (distribution)
-            {
-                case DistributionFamily.Normal:
-                    return new Normal(parameters[0], parameters[1], randomSource);
-                case DistributionFamily.LogNormal:
-                    return new LogNormal(parameters[0], parameters[1], randomSource);
-                case DistributionFamily.Exponential:
-                    return new Exponential(parameters[0], randomSource);
-                case DistributionFamily.Gamma:
-                    return new Gamma(parameters[0], parameters[1], randomSource);
-                case DistributionFamily.Beta:
-                    return new Beta(parameters[0], parameters[1], randomSource);
-                case DistributionFamily.Uniform:
-                    return new ContinuousUniform(parameters[0], parameters[1], randomSource);
-                default:
-                    throw new ArgumentException("Invalid distribution type");
-            }
+            return new Exponential(Distribution_parameters.Rate, random);
         }
 
+        public override double SampleDistribution(Random random){
+            var distribution = GetContinuousDistribution(random);
+            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+        }
+    }
 
+    partial class LogNormalDistribution{
+
+        public override IContinuousDistribution GetContinuousDistribution(Random random)
+        {
+            return new LogNormal(Distribution_parameters.Mean, Distribution_parameters.Std, random);
+        }
+
+        public override double SampleDistribution(Random random){
+            var distribution = GetContinuousDistribution(random);
+            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+        }
+    }
+
+    partial class GammaDistribution{
+
+        public override IContinuousDistribution GetContinuousDistribution(Random random)
+        {
+            return new Gamma(Distribution_parameters.Shape, Distribution_parameters.Rate, random);
+        }
+
+        public override double SampleDistribution(Random random){
+            var distribution = GetContinuousDistribution(random);
+            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+        }
+    }
+
+    partial class BetaDistribution{
+
+        public override IContinuousDistribution GetContinuousDistribution(Random random)
+        {
+            return new Beta(Distribution_parameters.Alpha, Distribution_parameters.Beta, random);
+        }
+
+        public override double SampleDistribution(Random random){
+            var distribution = GetContinuousDistribution(random);
+            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+        }
+    }
+
+    partial class UniformDistribution{
+
+        public override IContinuousDistribution GetContinuousDistribution(Random random)
+        {
+            return new ContinuousUniform(Distribution_parameters.Min, Distribution_parameters.Max, random);
+        }
+
+        public override double SampleDistribution(Random random){
+            var distribution = GetContinuousDistribution(random);
+            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+        }
+    }
+
+    partial class BinomialDistribution{
+
+        public override IDiscreteDistribution GetDiscreteDistribution(Random random)
+        {
+            return new Binomial(Distribution_parameters.P, Distribution_parameters.N, random);
+        }
+
+        public override double SampleDistribution(Random random){
+            var distribution = GetDiscreteDistribution(random);
+            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+        }
+    }
+
+    partial class PoissonDistribution{
+
+        public override IDiscreteDistribution GetDiscreteDistribution(Random random)
+        {
+            return new Poisson(Distribution_parameters.Rate, random);
+        }
+
+        public override double SampleDistribution(Random random){
+            var distribution = GetDiscreteDistribution(random);
+            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+        }
+    }
+
+    [Combinator]
+    [Description("Samples a value for a known distribution.")]
+    [WorkflowElementCategory(ElementCategory.Transform)]
+
+    public class SampleDistribution
+    {
+
+        private Random randomSource;
+        public Random RandomSource
+        {
+            get { return randomSource; }
+            set { randomSource = value; }
+        }
+
+        public IObservable<double> Process(IObservable<Delay> source)
+        {
+            return source.Select(value => value.SampleDistribution(RandomSource));
+        }
     }
 }

@@ -155,121 +155,6 @@
       "title": "BinomialDistributionParameters",
       "type": "object"
     },
-    "CreateDistribution": {
-      "additionalProperties": false,
-      "properties": {
-        "family": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/DistributionFamily"
-            }
-          ],
-          "description": "Family of the distribution"
-        },
-        "distribution_parameters": {
-          "default": null,
-          "description": "Parameters of the distribution",
-          "oneOf": [
-            {
-              "description": "Parameters of the distribution",
-              "discriminator": {
-                "mapping": {
-                  "Beta": "#/definitions/BetaDistributionParameters",
-                  "Binomial": "#/definitions/BinomialDistributionParameters",
-                  "Exponential": "#/definitions/ExponentialDistributionParameters",
-                  "Gamma": "#/definitions/GammaDistributionParameters",
-                  "LogNormal": "#/definitions/LogNormalDistributionParameters",
-                  "Normal": "#/definitions/NormalDistributionParameters",
-                  "Poisson": "#/definitions/PoissonDistributionParameters",
-                  "Scalar": "#/definitions/ScalarDistributionParameter",
-                  "Uniform": "#/definitions/UniformDistributionParameters"
-                },
-                "propertyName": "family"
-              },
-              "oneOf": [
-                {
-                  "$ref": "#/definitions/ScalarDistributionParameter"
-                },
-                {
-                  "$ref": "#/definitions/NormalDistributionParameters"
-                },
-                {
-                  "$ref": "#/definitions/LogNormalDistributionParameters"
-                },
-                {
-                  "$ref": "#/definitions/ExponentialDistributionParameters"
-                },
-                {
-                  "$ref": "#/definitions/UniformDistributionParameters"
-                },
-                {
-                  "$ref": "#/definitions/PoissonDistributionParameters"
-                },
-                {
-                  "$ref": "#/definitions/BinomialDistributionParameters"
-                },
-                {
-                  "$ref": "#/definitions/BetaDistributionParameters"
-                },
-                {
-                  "$ref": "#/definitions/GammaDistributionParameters"
-                }
-              ],
-              "title": "DistributionParameters"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Distribution Parameters",
-          "x-abstract": "True"
-        },
-        "truncation_parameters": {
-          "default": null,
-          "description": "Truncation parameters of the distribution",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/TruncationParameters"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "scaling_parameters": {
-          "default": null,
-          "description": "Scaling parameters of the distribution",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/ScalingParameters"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "family"
-      ],
-      "title": "CreateDistribution",
-      "type": "object"
-    },
-    "DistributionFamily": {
-      "enum": [
-        "Scalar",
-        "Normal",
-        "LogNormal",
-        "Uniform",
-        "Exponential",
-        "Gamma",
-        "Binomial",
-        "Beta",
-        "Poisson"
-      ],
-      "title": "DistributionFamily",
-      "type": "string"
-    },
     "EnvironmentStatistics": {
       "additionalProperties": false,
       "properties": {
@@ -1971,9 +1856,6 @@
             },
             {
               "$ref": "#/definitions/VirtualSite"
-            },
-            {
-              "$ref": "#/definitions/CreateDistribution"
             },
             {
               "description": "Parameters of the distribution",

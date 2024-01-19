@@ -255,15 +255,8 @@ class TaskLogic(AindCoreModel):
     operation_control: OperationControl = Field(description="Control of the operation")
 
 
-class CreateDistribution(distributions.DistributionBase):
-    family: distributions.DistributionFamily = Field(..., description="Family of the distribution")
-    distribution_parameters: Optional[distributions.DistributionParameters] = Field(
-        None, description="Parameters of the distribution", json_schema_extra={"x-abstract": "True"}
-    )
-
-
 class Root(BaseModel):
-    add_refs: None | VisualCorridor | VirtualSite | CreateDistribution | distributions.Distribution = Field(
+    add_refs: None | VisualCorridor | VirtualSite | distributions.Distribution = Field(
         None, description="Additional references"
     )
     taskLogic: TaskLogic = Field(description="Task logic")
