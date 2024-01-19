@@ -105,7 +105,9 @@ class RewardSpecification(AindModel):
         default=scalar_value(0),
         description="The optional distribution where the delay to reward will be drawn from",
     )
-    reward_function: PatchRewardFunction = Field(default=PatchRewardFunction(), description="Reward function of the patch.")
+    reward_function: PatchRewardFunction = Field(
+        default=PatchRewardFunction(), description="Reward function of the patch."
+    )
 
 
 class VirtualSiteLabels(str, Enum):
