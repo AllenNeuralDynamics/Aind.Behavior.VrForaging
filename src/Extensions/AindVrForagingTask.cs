@@ -2327,7 +2327,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class OdorSpecification
     {
     
-        private OdorSpecificationIndex _index;
+        private int _index;
     
         private double _concentration = 1D;
     
@@ -2344,11 +2344,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// <summary>
         /// Index of the odor to be used
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("index", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
         [System.ComponentModel.DescriptionAttribute("Index of the odor to be used")]
-        public OdorSpecificationIndex Index
+        public int Index
         {
             get
             {
@@ -5586,28 +5585,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             stringBuilder.Append("}");
             return stringBuilder.ToString();
         }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    public enum OdorSpecificationIndex
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="0")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="0")]
-        0 = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="1")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="1")]
-        1 = 1,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="2")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="2")]
-        2 = 2,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="3")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="3")]
-        3 = 3,
     }
 
 
