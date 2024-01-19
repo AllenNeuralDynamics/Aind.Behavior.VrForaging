@@ -26,11 +26,12 @@ class HarpDeviceType(Enum):
     TREADMILL = "treadmill"
     LICKOMETER = "lickometer"
     ANALOGINPUT = "analoginput"
+    GENERIC = "generic"
 
 
 class HarpDeviceBase(AindModel):
     who_am_i: Optional[int] = Field(None, le=9999, ge=0, description="Device WhoAmI")
-    device_type: Optional[HarpDeviceType] = Field(None, description="Device type")
+    device_type: HarpDeviceType = Field(HarpDeviceType.GENERIC, description="Device type")
     serial_number: Optional[str] = Field(None, description="Device serial number")
     port_name: str = Field(..., description="Device port name")
     additional_settings: Optional[Any] = Field(None, description="Additional settings")
@@ -66,9 +67,14 @@ class HarpTreadmill(HarpDeviceBase):
     who_am_i: Literal[None] = None
 
 
-HarpDevice = Annotated[Union[
-    HarpBehavior, HarpOlfactometer, HarpClockGenerator, HarpAnalogInput, HarpLickometer, HarpTreadmill
-], Field(discriminator="device_type")]
+from pydantic import RootModel
+
+
+class HarpDevice(RootModel):
+    root: Annotated[
+        Union[HarpBehavior, HarpOlfactometer, HarpClockGenerator, HarpAnalogInput, HarpLickometer, HarpTreadmill],
+        Field(discriminator="device_type"),
+    ]
 
 
 class WebCamera(AindModel):
@@ -94,15 +100,35 @@ class Valve(AindModel):
     calibration_slope: float = Field(1, description="Calibration slope")
 
 
+#class AindVrForagingRig(AindCoreModel):
+#    describedBy: str = Field("pyd_taskLogic")
+#    schema_version: Literal["0.1.0"] = "0.1.0"
+#    harp_devices: Dict[str, HarpDevice] = Field(default_factory=dict, description="Harp devices")
+#    spinnaker_cameras: Dict[str, SpinnakerCamera] = Field(default_factory=dict, description="Spinnaker cameras")
+#    web_cameras: Dict[str, WebCamera] = Field(default_factory=dict, description="Web cameras")
+#    screen: Screen = Field(Screen(), description="Screen settings")
+#    treadmill: Treadmill = Field(Treadmill(), description="Treadmill settings")
+#    water_valve: Valve = Field(Valve(), description="Water valve settings")
+
+
 class AindVrForagingRig(AindCoreModel):
     describedBy: str = Field("pyd_taskLogic")
     schema_version: Literal["0.1.0"] = "0.1.0"
-    harp_devices: Dict[str, HarpDevice] = Field(default_factory=dict, description="Harp devices")
-    spinnaker_cameras: Dict[str, SpinnakerCamera] = Field(default_factory=dict, description="Spinnaker cameras")
-    web_cameras: Dict[str, WebCamera] = Field(default_factory=dict, description="Web cameras")
+    auxiliary_camera0: Optional[WebCamera] = Field(WebCamera(), description="Auxiliary camera 0")
+    auxiliary_camera1: Optional[WebCamera] = Field(WebCamera(), description="Auxiliary camera 1")
+    harp_behavior: HarpBehavior = Field(..., description="Harp behavior")
+    harp_olfactometer: HarpOlfactometer = Field(..., description="Harp olfactometer")
+    harp_lickometer: HarpLickometer = Field(..., description="Harp lickometer")
+    harp_clock_generator: HarpClockGenerator = Field(..., description="Harp clock generator")
+    harp_analog_input: Optional[HarpAnalogInput] = Field(None, description="Harp analog input")
+    face_camera: SpinnakerCamera = Field(..., description="Face camera")
+    top_body_camera: Optional[SpinnakerCamera] = Field(None, description="Top body camera")
+    side_body_camera: Optional[SpinnakerCamera] = Field(None, description="Side body camera")
     screen: Screen = Field(Screen(), description="Screen settings")
     treadmill: Treadmill = Field(Treadmill(), description="Treadmill settings")
     water_valve: Valve = Field(Valve(), description="Water valve settings")
+
+
 
 
 def schema() -> BaseModel:

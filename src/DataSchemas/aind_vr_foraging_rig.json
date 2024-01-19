@@ -255,57 +255,6 @@
       "title": "HarpOlfactometer",
       "type": "object"
     },
-    "HarpTreadmill": {
-      "additionalProperties": false,
-      "properties": {
-        "who_am_i": {
-          "const": null,
-          "default": null,
-          "title": "Who Am I",
-          "type": "null"
-        },
-        "device_type": {
-          "const": "treadmill",
-          "default": "treadmill",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "serial_number": {
-          "default": null,
-          "description": "Device serial number",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Serial Number"
-        },
-        "port_name": {
-          "description": "Device port name",
-          "title": "Port Name",
-          "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {},
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Additional Settings"
-        }
-      },
-      "required": [
-        "port_name"
-      ],
-      "title": "HarpTreadmill",
-      "type": "object"
-    },
     "Screen": {
       "additionalProperties": false,
       "properties": {
@@ -475,59 +424,109 @@
       "title": "Schema Version",
       "type": "string"
     },
-    "harp_devices": {
-      "additionalProperties": {
-        "discriminator": {
-          "mapping": {
-            "analoginput": "#/definitions/HarpAnalogInput",
-            "behavior": "#/definitions/HarpBehavior",
-            "clockgenerator": "#/definitions/HarpClockGenerator",
-            "lickometer": "#/definitions/HarpLickometer",
-            "olfactometer": "#/definitions/HarpOlfactometer",
-            "treadmill": "#/definitions/HarpTreadmill"
-          },
-          "propertyName": "device_type"
+    "auxiliary_camera0": {
+      "default": {
+        "index": 0
+      },
+      "description": "Auxiliary camera 0",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/WebCamera"
         },
-        "oneOf": [
-          {
-            "$ref": "#/definitions/HarpBehavior"
-          },
-          {
-            "$ref": "#/definitions/HarpOlfactometer"
-          },
-          {
-            "$ref": "#/definitions/HarpClockGenerator"
-          },
-          {
-            "$ref": "#/definitions/HarpAnalogInput"
-          },
-          {
-            "$ref": "#/definitions/HarpLickometer"
-          },
-          {
-            "$ref": "#/definitions/HarpTreadmill"
-          }
-        ]
-      },
-      "description": "Harp devices",
-      "title": "Harp Devices",
-      "type": "object"
+        {
+          "type": "null"
+        }
+      ]
     },
-    "spinnaker_cameras": {
-      "additionalProperties": {
-        "$ref": "#/definitions/SpinnakerCamera"
+    "auxiliary_camera1": {
+      "default": {
+        "index": 0
       },
-      "description": "Spinnaker cameras",
-      "title": "Spinnaker Cameras",
-      "type": "object"
+      "description": "Auxiliary camera 1",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/WebCamera"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
-    "web_cameras": {
-      "additionalProperties": {
-        "$ref": "#/definitions/WebCamera"
-      },
-      "description": "Web cameras",
-      "title": "Web Cameras",
-      "type": "object"
+    "harp_behavior": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpBehavior"
+        }
+      ],
+      "description": "Harp behavior"
+    },
+    "harp_olfactometer": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpOlfactometer"
+        }
+      ],
+      "description": "Harp olfactometer"
+    },
+    "harp_lickometer": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpLickometer"
+        }
+      ],
+      "description": "Harp lickometer"
+    },
+    "harp_clock_generator": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpClockGenerator"
+        }
+      ],
+      "description": "Harp clock generator"
+    },
+    "harp_analog_input": {
+      "default": null,
+      "description": "Harp analog input",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/HarpAnalogInput"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "face_camera": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/SpinnakerCamera"
+        }
+      ],
+      "description": "Face camera"
+    },
+    "top_body_camera": {
+      "default": null,
+      "description": "Top body camera",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SpinnakerCamera"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "side_body_camera": {
+      "default": null,
+      "description": "Side body camera",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SpinnakerCamera"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "screen": {
       "allOf": [
@@ -570,6 +569,13 @@
       "description": "Water valve settings"
     }
   },
+  "required": [
+    "harp_behavior",
+    "harp_olfactometer",
+    "harp_lickometer",
+    "harp_clock_generator",
+    "face_camera"
+  ],
   "title": "AindVrForagingRig",
   "type": "object"
 }

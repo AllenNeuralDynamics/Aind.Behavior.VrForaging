@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace AindVrForagingDataSchema.AindVrForagingTask
 {
 
-    partial class Distribution
+    partial class Delay
     {
         private const uint SampleSize = 1000;
 
@@ -232,7 +232,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             set { randomSource = value; }
         }
 
-        public IObservable<double> Process(IObservable<Distribution> source)
+        public IObservable<double> Process(IObservable<Delay> source)
         {
             return source.Select(value => value.SampleDistribution(RandomSource));
         }

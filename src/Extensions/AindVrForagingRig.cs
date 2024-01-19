@@ -748,154 +748,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpTreadmill
-    {
-    
-        private WhoAmI2 _whoAmI;
-    
-        private string _deviceType = "treadmill";
-    
-        private string _serialNumber;
-    
-        private string _portName;
-    
-        private object _additionalSettings;
-    
-        public HarpTreadmill()
-        {
-        }
-    
-        protected HarpTreadmill(HarpTreadmill other)
-        {
-            _whoAmI = other._whoAmI;
-            _deviceType = other._deviceType;
-            _serialNumber = other._serialNumber;
-            _portName = other._portName;
-            _additionalSettings = other._additionalSettings;
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="who_am_i")]
-        public WhoAmI2 WhoAmI
-        {
-            get
-            {
-                return _whoAmI;
-            }
-            set
-            {
-                _whoAmI = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Device serial number
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serial_number")]
-        [System.ComponentModel.DescriptionAttribute("Device serial number")]
-        public string SerialNumber
-        {
-            get
-            {
-                return _serialNumber;
-            }
-            set
-            {
-                _serialNumber = value;
-            }
-        }
-    
-        /// <summary>
-        /// Device port name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="port_name")]
-        [System.ComponentModel.DescriptionAttribute("Device port name")]
-        public string PortName
-        {
-            get
-            {
-                return _portName;
-            }
-            set
-            {
-                _portName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public object AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        public System.IObservable<HarpTreadmill> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpTreadmill(this)));
-        }
-    
-        public System.IObservable<HarpTreadmill> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new HarpTreadmill(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Screen
     {
     
@@ -1498,11 +1350,25 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _schemaVersion = "0.1.0";
     
-        private System.Collections.Generic.IDictionary<string, object> _harpDevices;
+        private WebCamera _auxiliaryCamera0;
     
-        private System.Collections.Generic.IDictionary<string, SpinnakerCamera> _spinnakerCameras;
+        private WebCamera _auxiliaryCamera1;
     
-        private System.Collections.Generic.IDictionary<string, WebCamera> _webCameras;
+        private HarpBehavior _harpBehavior = new HarpBehavior();
+    
+        private HarpOlfactometer _harpOlfactometer = new HarpOlfactometer();
+    
+        private HarpLickometer _harpLickometer = new HarpLickometer();
+    
+        private HarpClockGenerator _harpClockGenerator = new HarpClockGenerator();
+    
+        private HarpAnalogInput _harpAnalogInput;
+    
+        private SpinnakerCamera _faceCamera = new SpinnakerCamera();
+    
+        private SpinnakerCamera _topBodyCamera;
+    
+        private SpinnakerCamera _sideBodyCamera;
     
         private Screen _screen;
     
@@ -1518,9 +1384,16 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             _describedBy = other._describedBy;
             _schemaVersion = other._schemaVersion;
-            _harpDevices = other._harpDevices;
-            _spinnakerCameras = other._spinnakerCameras;
-            _webCameras = other._webCameras;
+            _auxiliaryCamera0 = other._auxiliaryCamera0;
+            _auxiliaryCamera1 = other._auxiliaryCamera1;
+            _harpBehavior = other._harpBehavior;
+            _harpOlfactometer = other._harpOlfactometer;
+            _harpLickometer = other._harpLickometer;
+            _harpClockGenerator = other._harpClockGenerator;
+            _harpAnalogInput = other._harpAnalogInput;
+            _faceCamera = other._faceCamera;
+            _topBodyCamera = other._topBodyCamera;
+            _sideBodyCamera = other._sideBodyCamera;
             _screen = other._screen;
             _treadmill = other._treadmill;
             _waterValve = other._waterValve;
@@ -1555,59 +1428,192 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         /// <summary>
-        /// Harp devices
+        /// Auxiliary camera 0
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_devices")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_devices")]
-        [System.ComponentModel.DescriptionAttribute("Harp devices")]
-        public System.Collections.Generic.IDictionary<string, object> HarpDevices
+        [Newtonsoft.Json.JsonPropertyAttribute("auxiliary_camera0")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliary_camera0")]
+        [System.ComponentModel.DescriptionAttribute("Auxiliary camera 0")]
+        public WebCamera AuxiliaryCamera0
         {
             get
             {
-                return _harpDevices;
+                return _auxiliaryCamera0;
             }
             set
             {
-                _harpDevices = value;
+                _auxiliaryCamera0 = value;
             }
         }
     
         /// <summary>
-        /// Spinnaker cameras
+        /// Auxiliary camera 1
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("spinnaker_cameras")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="spinnaker_cameras")]
-        [System.ComponentModel.DescriptionAttribute("Spinnaker cameras")]
-        public System.Collections.Generic.IDictionary<string, SpinnakerCamera> SpinnakerCameras
+        [Newtonsoft.Json.JsonPropertyAttribute("auxiliary_camera1")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliary_camera1")]
+        [System.ComponentModel.DescriptionAttribute("Auxiliary camera 1")]
+        public WebCamera AuxiliaryCamera1
         {
             get
             {
-                return _spinnakerCameras;
+                return _auxiliaryCamera1;
             }
             set
             {
-                _spinnakerCameras = value;
+                _auxiliaryCamera1 = value;
             }
         }
     
         /// <summary>
-        /// Web cameras
+        /// Harp behavior
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("web_cameras")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="web_cameras")]
-        [System.ComponentModel.DescriptionAttribute("Web cameras")]
-        public System.Collections.Generic.IDictionary<string, WebCamera> WebCameras
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_behavior", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_behavior")]
+        [System.ComponentModel.DescriptionAttribute("Harp behavior")]
+        public HarpBehavior HarpBehavior
         {
             get
             {
-                return _webCameras;
+                return _harpBehavior;
             }
             set
             {
-                _webCameras = value;
+                _harpBehavior = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp olfactometer
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_olfactometer", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_olfactometer")]
+        [System.ComponentModel.DescriptionAttribute("Harp olfactometer")]
+        public HarpOlfactometer HarpOlfactometer
+        {
+            get
+            {
+                return _harpOlfactometer;
+            }
+            set
+            {
+                _harpOlfactometer = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp lickometer
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_lickometer", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_lickometer")]
+        [System.ComponentModel.DescriptionAttribute("Harp lickometer")]
+        public HarpLickometer HarpLickometer
+        {
+            get
+            {
+                return _harpLickometer;
+            }
+            set
+            {
+                _harpLickometer = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp clock generator
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_clock_generator", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_clock_generator")]
+        [System.ComponentModel.DescriptionAttribute("Harp clock generator")]
+        public HarpClockGenerator HarpClockGenerator
+        {
+            get
+            {
+                return _harpClockGenerator;
+            }
+            set
+            {
+                _harpClockGenerator = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp analog input
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_analog_input")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_analog_input")]
+        [System.ComponentModel.DescriptionAttribute("Harp analog input")]
+        public HarpAnalogInput HarpAnalogInput
+        {
+            get
+            {
+                return _harpAnalogInput;
+            }
+            set
+            {
+                _harpAnalogInput = value;
+            }
+        }
+    
+        /// <summary>
+        /// Face camera
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("face_camera", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="face_camera")]
+        [System.ComponentModel.DescriptionAttribute("Face camera")]
+        public SpinnakerCamera FaceCamera
+        {
+            get
+            {
+                return _faceCamera;
+            }
+            set
+            {
+                _faceCamera = value;
+            }
+        }
+    
+        /// <summary>
+        /// Top body camera
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("top_body_camera")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="top_body_camera")]
+        [System.ComponentModel.DescriptionAttribute("Top body camera")]
+        public SpinnakerCamera TopBodyCamera
+        {
+            get
+            {
+                return _topBodyCamera;
+            }
+            set
+            {
+                _topBodyCamera = value;
+            }
+        }
+    
+        /// <summary>
+        /// Side body camera
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("side_body_camera")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="side_body_camera")]
+        [System.ComponentModel.DescriptionAttribute("Side body camera")]
+        public SpinnakerCamera SideBodyCamera
+        {
+            get
+            {
+                return _sideBodyCamera;
+            }
+            set
+            {
+                _sideBodyCamera = value;
             }
         }
     
@@ -1682,9 +1688,16 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             stringBuilder.Append("describedBy = " + _describedBy + ", ");
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
-            stringBuilder.Append("harp_devices = " + _harpDevices + ", ");
-            stringBuilder.Append("spinnaker_cameras = " + _spinnakerCameras + ", ");
-            stringBuilder.Append("web_cameras = " + _webCameras + ", ");
+            stringBuilder.Append("auxiliary_camera0 = " + _auxiliaryCamera0 + ", ");
+            stringBuilder.Append("auxiliary_camera1 = " + _auxiliaryCamera1 + ", ");
+            stringBuilder.Append("harp_behavior = " + _harpBehavior + ", ");
+            stringBuilder.Append("harp_olfactometer = " + _harpOlfactometer + ", ");
+            stringBuilder.Append("harp_lickometer = " + _harpLickometer + ", ");
+            stringBuilder.Append("harp_clock_generator = " + _harpClockGenerator + ", ");
+            stringBuilder.Append("harp_analog_input = " + _harpAnalogInput + ", ");
+            stringBuilder.Append("face_camera = " + _faceCamera + ", ");
+            stringBuilder.Append("top_body_camera = " + _topBodyCamera + ", ");
+            stringBuilder.Append("side_body_camera = " + _sideBodyCamera + ", ");
             stringBuilder.Append("screen = " + _screen + ", ");
             stringBuilder.Append("treadmill = " + _treadmill + ", ");
             stringBuilder.Append("water_valve = " + _waterValve);
@@ -1728,50 +1741,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         public System.IObservable<WhoAmI> Process<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new WhoAmI(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class WhoAmI2
-    {
-    
-        public WhoAmI2()
-        {
-        }
-    
-        protected WhoAmI2(WhoAmI2 other)
-        {
-        }
-    
-        public System.IObservable<WhoAmI2> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WhoAmI2(this)));
-        }
-    
-        public System.IObservable<WhoAmI2> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new WhoAmI2(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -1849,11 +1818,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             return Process<HarpOlfactometer>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<HarpTreadmill> source)
-        {
-            return Process<HarpTreadmill>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Screen> source)
         {
             return Process<Screen>(source);
@@ -1888,11 +1852,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             return Process<WhoAmI>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<WhoAmI2> source)
-        {
-            return Process<WhoAmI2>(source);
-        }
     }
 
 
@@ -1908,7 +1867,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLickometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpOlfactometer>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTreadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
@@ -1916,7 +1874,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WhoAmI>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WhoAmI2>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -1990,11 +1947,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             return Process<HarpOlfactometer>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<HarpTreadmill> source)
-        {
-            return Process<HarpTreadmill>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Screen> source)
         {
             return Process<Screen>(source);
@@ -2029,11 +1981,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             return Process<WhoAmI>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<WhoAmI2> source)
-        {
-            return Process<WhoAmI2>(source);
-        }
     }
 
 
@@ -2049,7 +1996,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLickometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpOlfactometer>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTreadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
@@ -2057,7 +2003,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WhoAmI>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WhoAmI2>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     

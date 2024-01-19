@@ -1034,10 +1034,12 @@
               "label": "Unspecified",
               "length_distribution": {
                 "distribution_parameters": {
-                  "family": "Exponential",
-                  "rate": 1.0
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null,
+                  "value": 20.0
                 },
-                "family": "Exponential",
+                "family": "Scalar",
                 "scaling_parameters": null,
                 "truncation_parameters": null
               },
@@ -1049,10 +1051,12 @@
               "label": "Unspecified",
               "length_distribution": {
                 "distribution_parameters": {
-                  "family": "Exponential",
-                  "rate": 1.0
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null,
+                  "value": 20.0
                 },
-                "family": "Exponential",
+                "family": "Scalar",
                 "scaling_parameters": null,
                 "truncation_parameters": null
               },
@@ -1064,10 +1068,12 @@
               "label": "Unspecified",
               "length_distribution": {
                 "distribution_parameters": {
-                  "family": "Exponential",
-                  "rate": 1.0
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null,
+                  "value": 20.0
                 },
-                "family": "Exponential",
+                "family": "Scalar",
                 "scaling_parameters": null,
                 "truncation_parameters": null
               },
@@ -1252,10 +1258,12 @@
         },
         "delay": {
           "default": {
-            "family": "Exponential",
+            "family": "Scalar",
             "distribution_parameters": {
-              "family": "Exponential",
-              "rate": 1.0
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null,
+              "value": 0.0
             },
             "truncation_parameters": null,
             "scaling_parameters": null
@@ -1724,10 +1732,12 @@
             "label": "Unspecified",
             "length_distribution": {
               "distribution_parameters": {
-                "family": "Exponential",
-                "rate": 1.0
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null,
+                "value": 20.0
               },
-              "family": "Exponential",
+              "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
             }
@@ -1747,10 +1757,12 @@
             "label": "Unspecified",
             "length_distribution": {
               "distribution_parameters": {
-                "family": "Exponential",
-                "rate": 1.0
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null,
+                "value": 20.0
               },
-              "family": "Exponential",
+              "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
             }
@@ -1770,10 +1782,12 @@
             "label": "Unspecified",
             "length_distribution": {
               "distribution_parameters": {
-                "family": "Exponential",
-                "rate": 1.0
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null,
+                "value": 20.0
               },
-              "family": "Exponential",
+              "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
             }
@@ -1809,10 +1823,12 @@
         },
         "length_distribution": {
           "default": {
-            "family": "Exponential",
+            "family": "Scalar",
             "distribution_parameters": {
-              "family": "Exponential",
-              "rate": 1.0
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null,
+              "value": 20.0
             },
             "truncation_parameters": null,
             "scaling_parameters": null
@@ -2037,6 +2053,6 @@
     "task_stage_settings",
     "operation_control"
   ],
-  "title": "TaskLogic",
+  "title": "AindVrForagingTaskLogic",
   "type": "object"
 }

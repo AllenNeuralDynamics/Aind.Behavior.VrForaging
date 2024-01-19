@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 import aind_behavior_vr_foraging.task_logic
-import  aind_behavior_vr_foraging.rig
+import aind_behavior_vr_foraging.rig
 import aind_behavior_vr_foraging.session
 
 from aind_behavior_rig.base.json_schema import export_schema
