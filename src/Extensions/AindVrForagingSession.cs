@@ -122,25 +122,25 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class BehaviorStimulation : Stimulus
     {
     
-        private string _behavior_name;
+        private string _behaviorName;
     
-        private int _session_number;
+        private int _sessionNumber;
     
-        private System.Collections.Generic.List<Software> _behavior_software = new System.Collections.Generic.List<Software>();
+        private System.Collections.Generic.List<Software> _behaviorSoftware = new System.Collections.Generic.List<Software>();
     
-        private Software _behavior_script = new Software();
+        private Software _behaviorScript = new Software();
     
-        private object _output_parameters = new object();
+        private object _outputParameters = new object();
     
-        private string _reward_consumed_during_epoch;
+        private string _rewardConsumedDuringEpoch;
     
-        private VolumeUnit _reward_consumed_unit = AindVrForagingDataSchema.AindVrForagingSession.VolumeUnit.Microliter;
+        private VolumeUnit _rewardConsumedUnit = AindVrForagingDataSchema.AindVrForagingSession.VolumeUnit.Microliter;
     
-        private int? _trials_total;
+        private int? _trialsTotal;
     
-        private int? _trials_finished;
+        private int? _trialsFinished;
     
-        private int? _trials_rewarded;
+        private int? _trialsRewarded;
     
         private string _notes;
     
@@ -151,44 +151,44 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected BehaviorStimulation(BehaviorStimulation other) : 
                 base(other)
         {
-            _behavior_name = other._behavior_name;
-            _session_number = other._session_number;
-            _behavior_software = other._behavior_software;
-            _behavior_script = other._behavior_script;
-            _output_parameters = other._output_parameters;
-            _reward_consumed_during_epoch = other._reward_consumed_during_epoch;
-            _reward_consumed_unit = other._reward_consumed_unit;
-            _trials_total = other._trials_total;
-            _trials_finished = other._trials_finished;
-            _trials_rewarded = other._trials_rewarded;
+            _behaviorName = other._behaviorName;
+            _sessionNumber = other._sessionNumber;
+            _behaviorSoftware = other._behaviorSoftware;
+            _behaviorScript = other._behaviorScript;
+            _outputParameters = other._outputParameters;
+            _rewardConsumedDuringEpoch = other._rewardConsumedDuringEpoch;
+            _rewardConsumedUnit = other._rewardConsumedUnit;
+            _trialsTotal = other._trialsTotal;
+            _trialsFinished = other._trialsFinished;
+            _trialsRewarded = other._trialsRewarded;
             _notes = other._notes;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("behavior_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behavior_name")]
-        public string Behavior_name
+        public string BehaviorName
         {
             get
             {
-                return _behavior_name;
+                return _behaviorName;
             }
             set
             {
-                _behavior_name = value;
+                _behaviorName = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("session_number", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="session_number")]
-        public int Session_number
+        public int SessionNumber
         {
             get
             {
-                return _session_number;
+                return _sessionNumber;
             }
             set
             {
-                _session_number = value;
+                _sessionNumber = value;
             }
         }
     
@@ -199,15 +199,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("behavior_software", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behavior_software")]
         [System.ComponentModel.DescriptionAttribute("The software used to control the behavior (e.g. Bonsai)")]
-        public System.Collections.Generic.List<Software> Behavior_software
+        public System.Collections.Generic.List<Software> BehaviorSoftware
         {
             get
             {
-                return _behavior_software;
+                return _behaviorSoftware;
             }
             set
             {
-                _behavior_software = value;
+                _behaviorSoftware = value;
             }
         }
     
@@ -218,15 +218,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("behavior_script", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behavior_script")]
         [System.ComponentModel.DescriptionAttribute("provide URL to the commit of the script and the parameters used")]
-        public Software Behavior_script
+        public Software BehaviorScript
         {
             get
             {
-                return _behavior_script;
+                return _behaviorScript;
             }
             set
             {
-                _behavior_script = value;
+                _behaviorScript = value;
             }
         }
     
@@ -237,89 +237,89 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("output_parameters", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="output_parameters")]
         [System.ComponentModel.DescriptionAttribute("Performance metrics from session")]
-        public object Output_parameters
+        public object OutputParameters
         {
             get
             {
-                return _output_parameters;
+                return _outputParameters;
             }
             set
             {
-                _output_parameters = value;
+                _outputParameters = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("reward_consumed_during_epoch", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_consumed_during_epoch")]
-        public string Reward_consumed_during_epoch
+        public string RewardConsumedDuringEpoch
         {
             get
             {
-                return _reward_consumed_during_epoch;
+                return _rewardConsumedDuringEpoch;
             }
             set
             {
-                _reward_consumed_during_epoch = value;
+                _rewardConsumedDuringEpoch = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward_consumed_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_consumed_unit")]
-        public VolumeUnit Reward_consumed_unit
+        public VolumeUnit RewardConsumedUnit
         {
             get
             {
-                return _reward_consumed_unit;
+                return _rewardConsumedUnit;
             }
             set
             {
-                _reward_consumed_unit = value;
+                _rewardConsumedUnit = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("trials_total")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="trials_total")]
-        public int? Trials_total
+        public int? TrialsTotal
         {
             get
             {
-                return _trials_total;
+                return _trialsTotal;
             }
             set
             {
-                _trials_total = value;
+                _trialsTotal = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("trials_finished")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="trials_finished")]
-        public int? Trials_finished
+        public int? TrialsFinished
         {
             get
             {
-                return _trials_finished;
+                return _trialsFinished;
             }
             set
             {
-                _trials_finished = value;
+                _trialsFinished = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("trials_rewarded")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="trials_rewarded")]
-        public int? Trials_rewarded
+        public int? TrialsRewarded
         {
             get
             {
-                return _trials_rewarded;
+                return _trialsRewarded;
             }
             set
             {
-                _trials_rewarded = value;
+                _trialsRewarded = value;
             }
         }
     
@@ -353,16 +353,16 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("behavior_name = " + _behavior_name + ", ");
-            stringBuilder.Append("session_number = " + _session_number + ", ");
-            stringBuilder.Append("behavior_software = " + _behavior_software + ", ");
-            stringBuilder.Append("behavior_script = " + _behavior_script + ", ");
-            stringBuilder.Append("output_parameters = " + _output_parameters + ", ");
-            stringBuilder.Append("reward_consumed_during_epoch = " + _reward_consumed_during_epoch + ", ");
-            stringBuilder.Append("reward_consumed_unit = " + _reward_consumed_unit + ", ");
-            stringBuilder.Append("trials_total = " + _trials_total + ", ");
-            stringBuilder.Append("trials_finished = " + _trials_finished + ", ");
-            stringBuilder.Append("trials_rewarded = " + _trials_rewarded + ", ");
+            stringBuilder.Append("behavior_name = " + _behaviorName + ", ");
+            stringBuilder.Append("session_number = " + _sessionNumber + ", ");
+            stringBuilder.Append("behavior_software = " + _behaviorSoftware + ", ");
+            stringBuilder.Append("behavior_script = " + _behaviorScript + ", ");
+            stringBuilder.Append("output_parameters = " + _outputParameters + ", ");
+            stringBuilder.Append("reward_consumed_during_epoch = " + _rewardConsumedDuringEpoch + ", ");
+            stringBuilder.Append("reward_consumed_unit = " + _rewardConsumedUnit + ", ");
+            stringBuilder.Append("trials_total = " + _trialsTotal + ", ");
+            stringBuilder.Append("trials_finished = " + _trialsFinished + ", ");
+            stringBuilder.Append("trials_rewarded = " + _trialsRewarded + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
@@ -463,9 +463,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Calibration
     {
     
-        private System.DateTimeOffset _calibration_date;
+        private System.DateTimeOffset _calibrationDate;
     
-        private string _device_name;
+        private string _deviceName;
     
         private string _description;
     
@@ -481,8 +481,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected Calibration(Calibration other)
         {
-            _calibration_date = other._calibration_date;
-            _device_name = other._device_name;
+            _calibrationDate = other._calibrationDate;
+            _deviceName = other._deviceName;
             _description = other._description;
             _input = other._input;
             _output = other._output;
@@ -492,15 +492,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration_date", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration_date")]
-        public System.DateTimeOffset Calibration_date
+        public System.DateTimeOffset CalibrationDate
         {
             get
             {
-                return _calibration_date;
+                return _calibrationDate;
             }
             set
             {
-                _calibration_date = value;
+                _calibrationDate = value;
             }
         }
     
@@ -510,15 +510,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("device_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_name")]
         [System.ComponentModel.DescriptionAttribute("Must match a device name in rig/instrument")]
-        public string Device_name
+        public string DeviceName
         {
             get
             {
-                return _device_name;
+                return _deviceName;
             }
             set
             {
-                _device_name = value;
+                _deviceName = value;
             }
         }
     
@@ -604,8 +604,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("calibration_date = " + _calibration_date + ", ");
-            stringBuilder.Append("device_name = " + _device_name + ", ");
+            stringBuilder.Append("calibration_date = " + _calibrationDate + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("description = " + _description + ", ");
             stringBuilder.Append("input = " + _input + ", ");
             stringBuilder.Append("output = " + _output + ", ");
@@ -646,7 +646,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private SizeUnit _unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
-        private string _ccf_version;
+        private string _ccfVersion;
     
         public CcfCoords()
         {
@@ -658,7 +658,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _ap = other._ap;
             _dv = other._dv;
             _unit = other._unit;
-            _ccf_version = other._ccf_version;
+            _ccfVersion = other._ccfVersion;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("ml", Required=Newtonsoft.Json.Required.Always)]
@@ -720,15 +720,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("ccf_version")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ccf_version")]
-        public string Ccf_version
+        public string CcfVersion
         {
             get
             {
-                return _ccf_version;
+                return _ccfVersion;
             }
             set
             {
-                _ccf_version = value;
+                _ccfVersion = value;
             }
         }
     
@@ -748,7 +748,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("ap = " + _ap + ", ");
             stringBuilder.Append("dv = " + _dv + ", ");
             stringBuilder.Append("unit = " + _unit + ", ");
-            stringBuilder.Append("ccf_version = " + _ccf_version);
+            stringBuilder.Append("ccf_version = " + _ccfVersion);
             return true;
         }
     
@@ -789,11 +789,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="% m/m")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="% m/m")]
-        @__m_m = 3,
+        MM = 3,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="% v/v")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="% v/v")]
-        @__v_v = 4,
+        VV = 4,
     }
 
 
@@ -1014,11 +1014,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _name;
     
-        private string _exposure_time;
+        private string _exposureTime;
     
-        private TimeUnit _exposure_time_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Millisecond;
+        private TimeUnit _exposureTimeUnit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Millisecond;
     
-        private TriggerType _trigger_type;
+        private TriggerType _triggerType;
     
         public DetectorConfig()
         {
@@ -1027,9 +1027,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected DetectorConfig(DetectorConfig other)
         {
             _name = other._name;
-            _exposure_time = other._exposure_time;
-            _exposure_time_unit = other._exposure_time_unit;
-            _trigger_type = other._trigger_type;
+            _exposureTime = other._exposureTime;
+            _exposureTimeUnit = other._exposureTimeUnit;
+            _triggerType = other._triggerType;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("name", Required=Newtonsoft.Json.Required.Always)]
@@ -1048,45 +1048,45 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("exposure_time", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure_time")]
-        public string Exposure_time
+        public string ExposureTime
         {
             get
             {
-                return _exposure_time;
+                return _exposureTime;
             }
             set
             {
-                _exposure_time = value;
+                _exposureTime = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("exposure_time_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure_time_unit")]
-        public TimeUnit Exposure_time_unit
+        public TimeUnit ExposureTimeUnit
         {
             get
             {
-                return _exposure_time_unit;
+                return _exposureTimeUnit;
             }
             set
             {
-                _exposure_time_unit = value;
+                _exposureTimeUnit = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("trigger_type", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="trigger_type")]
-        public TriggerType Trigger_type
+        public TriggerType TriggerType
         {
             get
             {
-                return _trigger_type;
+                return _triggerType;
             }
             set
             {
-                _trigger_type = value;
+                _triggerType = value;
             }
         }
     
@@ -1103,9 +1103,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("name = " + _name + ", ");
-            stringBuilder.Append("exposure_time = " + _exposure_time + ", ");
-            stringBuilder.Append("exposure_time_unit = " + _exposure_time_unit + ", ");
-            stringBuilder.Append("trigger_type = " + _trigger_type);
+            stringBuilder.Append("exposure_time = " + _exposureTime + ", ");
+            stringBuilder.Append("exposure_time_unit = " + _exposureTimeUnit + ", ");
+            stringBuilder.Append("trigger_type = " + _triggerType);
             return true;
         }
     
@@ -1134,19 +1134,19 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class DomeModule
     {
     
-        private string _assembly_name;
+        private string _assemblyName;
     
-        private string _arc_angle;
+        private string _arcAngle;
     
-        private string _module_angle;
+        private string _moduleAngle;
     
-        private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
+        private AngleUnit _angleUnit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private string _rotation_angle;
+        private string _rotationAngle;
     
-        private string _coordinate_transform;
+        private string _coordinateTransform;
     
-        private System.DateTimeOffset? _calibration_date;
+        private System.DateTimeOffset? _calibrationDate;
     
         private string _notes;
     
@@ -1156,84 +1156,84 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected DomeModule(DomeModule other)
         {
-            _assembly_name = other._assembly_name;
-            _arc_angle = other._arc_angle;
-            _module_angle = other._module_angle;
-            _angle_unit = other._angle_unit;
-            _rotation_angle = other._rotation_angle;
-            _coordinate_transform = other._coordinate_transform;
-            _calibration_date = other._calibration_date;
+            _assemblyName = other._assemblyName;
+            _arcAngle = other._arcAngle;
+            _moduleAngle = other._moduleAngle;
+            _angleUnit = other._angleUnit;
+            _rotationAngle = other._rotationAngle;
+            _coordinateTransform = other._coordinateTransform;
+            _calibrationDate = other._calibrationDate;
             _notes = other._notes;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("assembly_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="assembly_name")]
-        public string Assembly_name
+        public string AssemblyName
         {
             get
             {
-                return _assembly_name;
+                return _assemblyName;
             }
             set
             {
-                _assembly_name = value;
+                _assemblyName = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("arc_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="arc_angle")]
-        public string Arc_angle
+        public string ArcAngle
         {
             get
             {
-                return _arc_angle;
+                return _arcAngle;
             }
             set
             {
-                _arc_angle = value;
+                _arcAngle = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("module_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="module_angle")]
-        public string Module_angle
+        public string ModuleAngle
         {
             get
             {
-                return _module_angle;
+                return _moduleAngle;
             }
             set
             {
-                _module_angle = value;
+                _moduleAngle = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("angle_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="angle_unit")]
-        public AngleUnit Angle_unit
+        public AngleUnit AngleUnit
         {
             get
             {
-                return _angle_unit;
+                return _angleUnit;
             }
             set
             {
-                _angle_unit = value;
+                _angleUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("rotation_angle")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rotation_angle")]
-        public string Rotation_angle
+        public string RotationAngle
         {
             get
             {
-                return _rotation_angle;
+                return _rotationAngle;
             }
             set
             {
-                _rotation_angle = value;
+                _rotationAngle = value;
             }
         }
     
@@ -1243,30 +1243,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("coordinate_transform")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="coordinate_transform")]
         [System.ComponentModel.DescriptionAttribute("Path to coordinate transform")]
-        public string Coordinate_transform
+        public string CoordinateTransform
         {
             get
             {
-                return _coordinate_transform;
+                return _coordinateTransform;
             }
             set
             {
-                _coordinate_transform = value;
+                _coordinateTransform = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration_date")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration_date")]
-        public System.DateTimeOffset? Calibration_date
+        public System.DateTimeOffset? CalibrationDate
         {
             get
             {
-                return _calibration_date;
+                return _calibrationDate;
             }
             set
             {
-                _calibration_date = value;
+                _calibrationDate = value;
             }
         }
     
@@ -1296,13 +1296,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("assembly_name = " + _assembly_name + ", ");
-            stringBuilder.Append("arc_angle = " + _arc_angle + ", ");
-            stringBuilder.Append("module_angle = " + _module_angle + ", ");
-            stringBuilder.Append("angle_unit = " + _angle_unit + ", ");
-            stringBuilder.Append("rotation_angle = " + _rotation_angle + ", ");
-            stringBuilder.Append("coordinate_transform = " + _coordinate_transform + ", ");
-            stringBuilder.Append("calibration_date = " + _calibration_date + ", ");
+            stringBuilder.Append("assembly_name = " + _assemblyName + ", ");
+            stringBuilder.Append("arc_angle = " + _arcAngle + ", ");
+            stringBuilder.Append("module_angle = " + _moduleAngle + ", ");
+            stringBuilder.Append("angle_unit = " + _angleUnit + ", ");
+            stringBuilder.Append("rotation_angle = " + _rotationAngle + ", ");
+            stringBuilder.Append("coordinate_transform = " + _coordinateTransform + ", ");
+            stringBuilder.Append("calibration_date = " + _calibrationDate + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
@@ -1500,29 +1500,29 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class EphysModule
     {
     
-        private string _assembly_name;
+        private string _assemblyName;
     
-        private string _arc_angle;
+        private string _arcAngle;
     
-        private string _module_angle;
+        private string _moduleAngle;
     
-        private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
+        private AngleUnit _angleUnit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private string _rotation_angle;
+        private string _rotationAngle;
     
-        private string _coordinate_transform;
+        private string _coordinateTransform;
     
-        private System.DateTimeOffset? _calibration_date;
+        private System.DateTimeOffset? _calibrationDate;
     
         private string _notes;
     
-        private string _primary_targeted_structure;
+        private string _primaryTargetedStructure;
     
-        private System.Collections.Generic.List<CcfCoords> _targeted_ccf_coordinates = new System.Collections.Generic.List<CcfCoords>();
+        private System.Collections.Generic.List<CcfCoords> _targetedCcfCoordinates = new System.Collections.Generic.List<CcfCoords>();
     
-        private Coordinates3d _manipulator_coordinates = new Coordinates3d();
+        private Coordinates3d _manipulatorCoordinates = new Coordinates3d();
     
-        private System.Collections.Generic.List<EphysProbeConfig> _ephys_probes = new System.Collections.Generic.List<EphysProbeConfig>();
+        private System.Collections.Generic.List<EphysProbeConfig> _ephysProbes = new System.Collections.Generic.List<EphysProbeConfig>();
     
         public EphysModule()
         {
@@ -1530,88 +1530,88 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected EphysModule(EphysModule other)
         {
-            _assembly_name = other._assembly_name;
-            _arc_angle = other._arc_angle;
-            _module_angle = other._module_angle;
-            _angle_unit = other._angle_unit;
-            _rotation_angle = other._rotation_angle;
-            _coordinate_transform = other._coordinate_transform;
-            _calibration_date = other._calibration_date;
+            _assemblyName = other._assemblyName;
+            _arcAngle = other._arcAngle;
+            _moduleAngle = other._moduleAngle;
+            _angleUnit = other._angleUnit;
+            _rotationAngle = other._rotationAngle;
+            _coordinateTransform = other._coordinateTransform;
+            _calibrationDate = other._calibrationDate;
             _notes = other._notes;
-            _primary_targeted_structure = other._primary_targeted_structure;
-            _targeted_ccf_coordinates = other._targeted_ccf_coordinates;
-            _manipulator_coordinates = other._manipulator_coordinates;
-            _ephys_probes = other._ephys_probes;
+            _primaryTargetedStructure = other._primaryTargetedStructure;
+            _targetedCcfCoordinates = other._targetedCcfCoordinates;
+            _manipulatorCoordinates = other._manipulatorCoordinates;
+            _ephysProbes = other._ephysProbes;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("assembly_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="assembly_name")]
-        public string Assembly_name
+        public string AssemblyName
         {
             get
             {
-                return _assembly_name;
+                return _assemblyName;
             }
             set
             {
-                _assembly_name = value;
+                _assemblyName = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("arc_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="arc_angle")]
-        public string Arc_angle
+        public string ArcAngle
         {
             get
             {
-                return _arc_angle;
+                return _arcAngle;
             }
             set
             {
-                _arc_angle = value;
+                _arcAngle = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("module_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="module_angle")]
-        public string Module_angle
+        public string ModuleAngle
         {
             get
             {
-                return _module_angle;
+                return _moduleAngle;
             }
             set
             {
-                _module_angle = value;
+                _moduleAngle = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("angle_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="angle_unit")]
-        public AngleUnit Angle_unit
+        public AngleUnit AngleUnit
         {
             get
             {
-                return _angle_unit;
+                return _angleUnit;
             }
             set
             {
-                _angle_unit = value;
+                _angleUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("rotation_angle")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rotation_angle")]
-        public string Rotation_angle
+        public string RotationAngle
         {
             get
             {
-                return _rotation_angle;
+                return _rotationAngle;
             }
             set
             {
-                _rotation_angle = value;
+                _rotationAngle = value;
             }
         }
     
@@ -1621,30 +1621,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("coordinate_transform")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="coordinate_transform")]
         [System.ComponentModel.DescriptionAttribute("Path to coordinate transform")]
-        public string Coordinate_transform
+        public string CoordinateTransform
         {
             get
             {
-                return _coordinate_transform;
+                return _coordinateTransform;
             }
             set
             {
-                _coordinate_transform = value;
+                _coordinateTransform = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration_date")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration_date")]
-        public System.DateTimeOffset? Calibration_date
+        public System.DateTimeOffset? CalibrationDate
         {
             get
             {
-                return _calibration_date;
+                return _calibrationDate;
             }
             set
             {
-                _calibration_date = value;
+                _calibrationDate = value;
             }
         }
     
@@ -1664,60 +1664,60 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("primary_targeted_structure", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="primary_targeted_structure")]
-        public string Primary_targeted_structure
+        public string PrimaryTargetedStructure
         {
             get
             {
-                return _primary_targeted_structure;
+                return _primaryTargetedStructure;
             }
             set
             {
-                _primary_targeted_structure = value;
+                _primaryTargetedStructure = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("targeted_ccf_coordinates")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targeted_ccf_coordinates")]
-        public System.Collections.Generic.List<CcfCoords> Targeted_ccf_coordinates
+        public System.Collections.Generic.List<CcfCoords> TargetedCcfCoordinates
         {
             get
             {
-                return _targeted_ccf_coordinates;
+                return _targetedCcfCoordinates;
             }
             set
             {
-                _targeted_ccf_coordinates = value;
+                _targetedCcfCoordinates = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("manipulator_coordinates", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="manipulator_coordinates")]
-        public Coordinates3d Manipulator_coordinates
+        public Coordinates3d ManipulatorCoordinates
         {
             get
             {
-                return _manipulator_coordinates;
+                return _manipulatorCoordinates;
             }
             set
             {
-                _manipulator_coordinates = value;
+                _manipulatorCoordinates = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("ephys_probes", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ephys_probes")]
-        public System.Collections.Generic.List<EphysProbeConfig> Ephys_probes
+        public System.Collections.Generic.List<EphysProbeConfig> EphysProbes
         {
             get
             {
-                return _ephys_probes;
+                return _ephysProbes;
             }
             set
             {
-                _ephys_probes = value;
+                _ephysProbes = value;
             }
         }
     
@@ -1733,18 +1733,18 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("assembly_name = " + _assembly_name + ", ");
-            stringBuilder.Append("arc_angle = " + _arc_angle + ", ");
-            stringBuilder.Append("module_angle = " + _module_angle + ", ");
-            stringBuilder.Append("angle_unit = " + _angle_unit + ", ");
-            stringBuilder.Append("rotation_angle = " + _rotation_angle + ", ");
-            stringBuilder.Append("coordinate_transform = " + _coordinate_transform + ", ");
-            stringBuilder.Append("calibration_date = " + _calibration_date + ", ");
+            stringBuilder.Append("assembly_name = " + _assemblyName + ", ");
+            stringBuilder.Append("arc_angle = " + _arcAngle + ", ");
+            stringBuilder.Append("module_angle = " + _moduleAngle + ", ");
+            stringBuilder.Append("angle_unit = " + _angleUnit + ", ");
+            stringBuilder.Append("rotation_angle = " + _rotationAngle + ", ");
+            stringBuilder.Append("coordinate_transform = " + _coordinateTransform + ", ");
+            stringBuilder.Append("calibration_date = " + _calibrationDate + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
-            stringBuilder.Append("primary_targeted_structure = " + _primary_targeted_structure + ", ");
-            stringBuilder.Append("targeted_ccf_coordinates = " + _targeted_ccf_coordinates + ", ");
-            stringBuilder.Append("manipulator_coordinates = " + _manipulator_coordinates + ", ");
-            stringBuilder.Append("ephys_probes = " + _ephys_probes);
+            stringBuilder.Append("primary_targeted_structure = " + _primaryTargetedStructure + ", ");
+            stringBuilder.Append("targeted_ccf_coordinates = " + _targetedCcfCoordinates + ", ");
+            stringBuilder.Append("manipulator_coordinates = " + _manipulatorCoordinates + ", ");
+            stringBuilder.Append("ephys_probes = " + _ephysProbes);
             return true;
         }
     
@@ -1775,7 +1775,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _name;
     
-        private System.Collections.Generic.List<string> _other_targeted_structures = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _otherTargetedStructures = new System.Collections.Generic.List<string>();
     
         public EphysProbeConfig()
         {
@@ -1784,7 +1784,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected EphysProbeConfig(EphysProbeConfig other)
         {
             _name = other._name;
-            _other_targeted_structures = other._other_targeted_structures;
+            _otherTargetedStructures = other._otherTargetedStructures;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("name", Required=Newtonsoft.Json.Required.Always)]
@@ -1804,15 +1804,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("other_targeted_structures")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="other_targeted_structures")]
-        public System.Collections.Generic.List<string> Other_targeted_structures
+        public System.Collections.Generic.List<string> OtherTargetedStructures
         {
             get
             {
-                return _other_targeted_structures;
+                return _otherTargetedStructures;
             }
             set
             {
-                _other_targeted_structures = value;
+                _otherTargetedStructures = value;
             }
         }
     
@@ -1829,7 +1829,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("name = " + _name + ", ");
-            stringBuilder.Append("other_targeted_structures = " + _other_targeted_structures);
+            stringBuilder.Append("other_targeted_structures = " + _otherTargetedStructures);
             return true;
         }
     
@@ -1942,13 +1942,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class FiberConnectionConfig
     {
     
-        private string _patch_cord_name;
+        private string _patchCordName;
     
-        private string _patch_cord_output_power;
+        private string _patchCordOutputPower;
     
-        private PowerUnit _output_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Microwatt;
+        private PowerUnit _outputPowerUnit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Microwatt;
     
-        private string _fiber_name;
+        private string _fiberName;
     
         public FiberConnectionConfig()
         {
@@ -1956,66 +1956,66 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected FiberConnectionConfig(FiberConnectionConfig other)
         {
-            _patch_cord_name = other._patch_cord_name;
-            _patch_cord_output_power = other._patch_cord_output_power;
-            _output_power_unit = other._output_power_unit;
-            _fiber_name = other._fiber_name;
+            _patchCordName = other._patchCordName;
+            _patchCordOutputPower = other._patchCordOutputPower;
+            _outputPowerUnit = other._outputPowerUnit;
+            _fiberName = other._fiberName;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("patch_cord_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patch_cord_name")]
-        public string Patch_cord_name
+        public string PatchCordName
         {
             get
             {
-                return _patch_cord_name;
+                return _patchCordName;
             }
             set
             {
-                _patch_cord_name = value;
+                _patchCordName = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("patch_cord_output_power", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patch_cord_output_power")]
-        public string Patch_cord_output_power
+        public string PatchCordOutputPower
         {
             get
             {
-                return _patch_cord_output_power;
+                return _patchCordOutputPower;
             }
             set
             {
-                _patch_cord_output_power = value;
+                _patchCordOutputPower = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("output_power_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="output_power_unit")]
-        public PowerUnit Output_power_unit
+        public PowerUnit OutputPowerUnit
         {
             get
             {
-                return _output_power_unit;
+                return _outputPowerUnit;
             }
             set
             {
-                _output_power_unit = value;
+                _outputPowerUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fiber_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fiber_name")]
-        public string Fiber_name
+        public string FiberName
         {
             get
             {
-                return _fiber_name;
+                return _fiberName;
             }
             set
             {
-                _fiber_name = value;
+                _fiberName = value;
             }
         }
     
@@ -2031,10 +2031,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("patch_cord_name = " + _patch_cord_name + ", ");
-            stringBuilder.Append("patch_cord_output_power = " + _patch_cord_output_power + ", ");
-            stringBuilder.Append("output_power_unit = " + _output_power_unit + ", ");
-            stringBuilder.Append("fiber_name = " + _fiber_name);
+            stringBuilder.Append("patch_cord_name = " + _patchCordName + ", ");
+            stringBuilder.Append("patch_cord_output_power = " + _patchCordOutputPower + ", ");
+            stringBuilder.Append("output_power_unit = " + _outputPowerUnit + ", ");
+            stringBuilder.Append("fiber_name = " + _fiberName);
             return true;
         }
     
@@ -2063,29 +2063,29 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class FiberModule
     {
     
-        private string _assembly_name;
+        private string _assemblyName;
     
-        private string _arc_angle;
+        private string _arcAngle;
     
-        private string _module_angle;
+        private string _moduleAngle;
     
-        private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
+        private AngleUnit _angleUnit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private string _rotation_angle;
+        private string _rotationAngle;
     
-        private string _coordinate_transform;
+        private string _coordinateTransform;
     
-        private System.DateTimeOffset? _calibration_date;
+        private System.DateTimeOffset? _calibrationDate;
     
         private string _notes;
     
-        private string _primary_targeted_structure;
+        private string _primaryTargetedStructure;
     
-        private System.Collections.Generic.List<CcfCoords> _targeted_ccf_coordinates = new System.Collections.Generic.List<CcfCoords>();
+        private System.Collections.Generic.List<CcfCoords> _targetedCcfCoordinates = new System.Collections.Generic.List<CcfCoords>();
     
-        private Coordinates3d _manipulator_coordinates = new Coordinates3d();
+        private Coordinates3d _manipulatorCoordinates = new Coordinates3d();
     
-        private System.Collections.Generic.List<FiberConnectionConfig> _fiber_connections = new System.Collections.Generic.List<FiberConnectionConfig>();
+        private System.Collections.Generic.List<FiberConnectionConfig> _fiberConnections = new System.Collections.Generic.List<FiberConnectionConfig>();
     
         public FiberModule()
         {
@@ -2093,88 +2093,88 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected FiberModule(FiberModule other)
         {
-            _assembly_name = other._assembly_name;
-            _arc_angle = other._arc_angle;
-            _module_angle = other._module_angle;
-            _angle_unit = other._angle_unit;
-            _rotation_angle = other._rotation_angle;
-            _coordinate_transform = other._coordinate_transform;
-            _calibration_date = other._calibration_date;
+            _assemblyName = other._assemblyName;
+            _arcAngle = other._arcAngle;
+            _moduleAngle = other._moduleAngle;
+            _angleUnit = other._angleUnit;
+            _rotationAngle = other._rotationAngle;
+            _coordinateTransform = other._coordinateTransform;
+            _calibrationDate = other._calibrationDate;
             _notes = other._notes;
-            _primary_targeted_structure = other._primary_targeted_structure;
-            _targeted_ccf_coordinates = other._targeted_ccf_coordinates;
-            _manipulator_coordinates = other._manipulator_coordinates;
-            _fiber_connections = other._fiber_connections;
+            _primaryTargetedStructure = other._primaryTargetedStructure;
+            _targetedCcfCoordinates = other._targetedCcfCoordinates;
+            _manipulatorCoordinates = other._manipulatorCoordinates;
+            _fiberConnections = other._fiberConnections;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("assembly_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="assembly_name")]
-        public string Assembly_name
+        public string AssemblyName
         {
             get
             {
-                return _assembly_name;
+                return _assemblyName;
             }
             set
             {
-                _assembly_name = value;
+                _assemblyName = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("arc_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="arc_angle")]
-        public string Arc_angle
+        public string ArcAngle
         {
             get
             {
-                return _arc_angle;
+                return _arcAngle;
             }
             set
             {
-                _arc_angle = value;
+                _arcAngle = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("module_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="module_angle")]
-        public string Module_angle
+        public string ModuleAngle
         {
             get
             {
-                return _module_angle;
+                return _moduleAngle;
             }
             set
             {
-                _module_angle = value;
+                _moduleAngle = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("angle_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="angle_unit")]
-        public AngleUnit Angle_unit
+        public AngleUnit AngleUnit
         {
             get
             {
-                return _angle_unit;
+                return _angleUnit;
             }
             set
             {
-                _angle_unit = value;
+                _angleUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("rotation_angle")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rotation_angle")]
-        public string Rotation_angle
+        public string RotationAngle
         {
             get
             {
-                return _rotation_angle;
+                return _rotationAngle;
             }
             set
             {
-                _rotation_angle = value;
+                _rotationAngle = value;
             }
         }
     
@@ -2184,30 +2184,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("coordinate_transform")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="coordinate_transform")]
         [System.ComponentModel.DescriptionAttribute("Path to coordinate transform")]
-        public string Coordinate_transform
+        public string CoordinateTransform
         {
             get
             {
-                return _coordinate_transform;
+                return _coordinateTransform;
             }
             set
             {
-                _coordinate_transform = value;
+                _coordinateTransform = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration_date")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration_date")]
-        public System.DateTimeOffset? Calibration_date
+        public System.DateTimeOffset? CalibrationDate
         {
             get
             {
-                return _calibration_date;
+                return _calibrationDate;
             }
             set
             {
-                _calibration_date = value;
+                _calibrationDate = value;
             }
         }
     
@@ -2227,60 +2227,60 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("primary_targeted_structure", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="primary_targeted_structure")]
-        public string Primary_targeted_structure
+        public string PrimaryTargetedStructure
         {
             get
             {
-                return _primary_targeted_structure;
+                return _primaryTargetedStructure;
             }
             set
             {
-                _primary_targeted_structure = value;
+                _primaryTargetedStructure = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("targeted_ccf_coordinates")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targeted_ccf_coordinates")]
-        public System.Collections.Generic.List<CcfCoords> Targeted_ccf_coordinates
+        public System.Collections.Generic.List<CcfCoords> TargetedCcfCoordinates
         {
             get
             {
-                return _targeted_ccf_coordinates;
+                return _targetedCcfCoordinates;
             }
             set
             {
-                _targeted_ccf_coordinates = value;
+                _targetedCcfCoordinates = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("manipulator_coordinates", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="manipulator_coordinates")]
-        public Coordinates3d Manipulator_coordinates
+        public Coordinates3d ManipulatorCoordinates
         {
             get
             {
-                return _manipulator_coordinates;
+                return _manipulatorCoordinates;
             }
             set
             {
-                _manipulator_coordinates = value;
+                _manipulatorCoordinates = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fiber_connections")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fiber_connections")]
-        public System.Collections.Generic.List<FiberConnectionConfig> Fiber_connections
+        public System.Collections.Generic.List<FiberConnectionConfig> FiberConnections
         {
             get
             {
-                return _fiber_connections;
+                return _fiberConnections;
             }
             set
             {
-                _fiber_connections = value;
+                _fiberConnections = value;
             }
         }
     
@@ -2296,18 +2296,18 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("assembly_name = " + _assembly_name + ", ");
-            stringBuilder.Append("arc_angle = " + _arc_angle + ", ");
-            stringBuilder.Append("module_angle = " + _module_angle + ", ");
-            stringBuilder.Append("angle_unit = " + _angle_unit + ", ");
-            stringBuilder.Append("rotation_angle = " + _rotation_angle + ", ");
-            stringBuilder.Append("coordinate_transform = " + _coordinate_transform + ", ");
-            stringBuilder.Append("calibration_date = " + _calibration_date + ", ");
+            stringBuilder.Append("assembly_name = " + _assemblyName + ", ");
+            stringBuilder.Append("arc_angle = " + _arcAngle + ", ");
+            stringBuilder.Append("module_angle = " + _moduleAngle + ", ");
+            stringBuilder.Append("angle_unit = " + _angleUnit + ", ");
+            stringBuilder.Append("rotation_angle = " + _rotationAngle + ", ");
+            stringBuilder.Append("coordinate_transform = " + _coordinateTransform + ", ");
+            stringBuilder.Append("calibration_date = " + _calibrationDate + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
-            stringBuilder.Append("primary_targeted_structure = " + _primary_targeted_structure + ", ");
-            stringBuilder.Append("targeted_ccf_coordinates = " + _targeted_ccf_coordinates + ", ");
-            stringBuilder.Append("manipulator_coordinates = " + _manipulator_coordinates + ", ");
-            stringBuilder.Append("fiber_connections = " + _fiber_connections);
+            stringBuilder.Append("primary_targeted_structure = " + _primaryTargetedStructure + ", ");
+            stringBuilder.Append("targeted_ccf_coordinates = " + _targetedCcfCoordinates + ", ");
+            stringBuilder.Append("manipulator_coordinates = " + _manipulatorCoordinates + ", ");
+            stringBuilder.Append("fiber_connections = " + _fiberConnections);
             return true;
         }
     
@@ -2338,37 +2338,37 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private int _index;
     
-        private int _imaging_depth;
+        private int _imagingDepth;
     
-        private SizeUnit _imaging_depth_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
+        private SizeUnit _imagingDepthUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
-        private string _targeted_structure;
+        private string _targetedStructure;
     
-        private string _fov_coordinate_ml;
+        private string _fovCoordinateMl;
     
-        private string _fov_coordinate_ap;
+        private string _fovCoordinateAp;
     
-        private SizeUnit _fov_coordinate_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
+        private SizeUnit _fovCoordinateUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
-        private string _fov_reference;
+        private string _fovReference;
     
-        private int _fov_width;
+        private int _fovWidth;
     
-        private int _fov_height;
+        private int _fovHeight;
     
-        private SizeUnit _fov_size_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
+        private SizeUnit _fovSizeUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
     
         private string _magnification;
     
-        private string _fov_scale_factor;
+        private string _fovScaleFactor;
     
-        private string _fov_scale_factor_unit = "um/pixel";
+        private string _fovScaleFactorUnit = "um/pixel";
     
-        private string _frame_rate;
+        private string _frameRate;
     
-        private FrequencyUnit _frame_rate_unit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
+        private FrequencyUnit _frameRateUnit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
     
-        private int? _coupled_fov_index;
+        private int? _coupledFovIndex;
     
         public FieldOfView()
         {
@@ -2377,22 +2377,22 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected FieldOfView(FieldOfView other)
         {
             _index = other._index;
-            _imaging_depth = other._imaging_depth;
-            _imaging_depth_unit = other._imaging_depth_unit;
-            _targeted_structure = other._targeted_structure;
-            _fov_coordinate_ml = other._fov_coordinate_ml;
-            _fov_coordinate_ap = other._fov_coordinate_ap;
-            _fov_coordinate_unit = other._fov_coordinate_unit;
-            _fov_reference = other._fov_reference;
-            _fov_width = other._fov_width;
-            _fov_height = other._fov_height;
-            _fov_size_unit = other._fov_size_unit;
+            _imagingDepth = other._imagingDepth;
+            _imagingDepthUnit = other._imagingDepthUnit;
+            _targetedStructure = other._targetedStructure;
+            _fovCoordinateMl = other._fovCoordinateMl;
+            _fovCoordinateAp = other._fovCoordinateAp;
+            _fovCoordinateUnit = other._fovCoordinateUnit;
+            _fovReference = other._fovReference;
+            _fovWidth = other._fovWidth;
+            _fovHeight = other._fovHeight;
+            _fovSizeUnit = other._fovSizeUnit;
             _magnification = other._magnification;
-            _fov_scale_factor = other._fov_scale_factor;
-            _fov_scale_factor_unit = other._fov_scale_factor_unit;
-            _frame_rate = other._frame_rate;
-            _frame_rate_unit = other._frame_rate_unit;
-            _coupled_fov_index = other._coupled_fov_index;
+            _fovScaleFactor = other._fovScaleFactor;
+            _fovScaleFactorUnit = other._fovScaleFactorUnit;
+            _frameRate = other._frameRate;
+            _frameRateUnit = other._frameRateUnit;
+            _coupledFovIndex = other._coupledFovIndex;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("index", Required=Newtonsoft.Json.Required.Always)]
@@ -2411,87 +2411,87 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("imaging_depth", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="imaging_depth")]
-        public int Imaging_depth
+        public int ImagingDepth
         {
             get
             {
-                return _imaging_depth;
+                return _imagingDepth;
             }
             set
             {
-                _imaging_depth = value;
+                _imagingDepth = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("imaging_depth_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="imaging_depth_unit")]
-        public SizeUnit Imaging_depth_unit
+        public SizeUnit ImagingDepthUnit
         {
             get
             {
-                return _imaging_depth_unit;
+                return _imagingDepthUnit;
             }
             set
             {
-                _imaging_depth_unit = value;
+                _imagingDepthUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("targeted_structure", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targeted_structure")]
-        public string Targeted_structure
+        public string TargetedStructure
         {
             get
             {
-                return _targeted_structure;
+                return _targetedStructure;
             }
             set
             {
-                _targeted_structure = value;
+                _targetedStructure = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ml", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ml")]
-        public string Fov_coordinate_ml
+        public string FovCoordinateMl
         {
             get
             {
-                return _fov_coordinate_ml;
+                return _fovCoordinateMl;
             }
             set
             {
-                _fov_coordinate_ml = value;
+                _fovCoordinateMl = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ap", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ap")]
-        public string Fov_coordinate_ap
+        public string FovCoordinateAp
         {
             get
             {
-                return _fov_coordinate_ap;
+                return _fovCoordinateAp;
             }
             set
             {
-                _fov_coordinate_ap = value;
+                _fovCoordinateAp = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_unit")]
-        public SizeUnit Fov_coordinate_unit
+        public SizeUnit FovCoordinateUnit
         {
             get
             {
-                return _fov_coordinate_unit;
+                return _fovCoordinateUnit;
             }
             set
             {
-                _fov_coordinate_unit = value;
+                _fovCoordinateUnit = value;
             }
         }
     
@@ -2501,58 +2501,58 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("fov_reference", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_reference")]
         [System.ComponentModel.DescriptionAttribute("Reference for ML/AP coordinates")]
-        public string Fov_reference
+        public string FovReference
         {
             get
             {
-                return _fov_reference;
+                return _fovReference;
             }
             set
             {
-                _fov_reference = value;
+                _fovReference = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_width", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_width")]
-        public int Fov_width
+        public int FovWidth
         {
             get
             {
-                return _fov_width;
+                return _fovWidth;
             }
             set
             {
-                _fov_width = value;
+                _fovWidth = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_height", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_height")]
-        public int Fov_height
+        public int FovHeight
         {
             get
             {
-                return _fov_height;
+                return _fovHeight;
             }
             set
             {
-                _fov_height = value;
+                _fovHeight = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_size_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_size_unit")]
-        public SizeUnit Fov_size_unit
+        public SizeUnit FovSizeUnit
         {
             get
             {
-                return _fov_size_unit;
+                return _fovSizeUnit;
             }
             set
             {
-                _fov_size_unit = value;
+                _fovSizeUnit = value;
             }
         }
     
@@ -2572,58 +2572,58 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_scale_factor", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_scale_factor")]
-        public string Fov_scale_factor
+        public string FovScaleFactor
         {
             get
             {
-                return _fov_scale_factor;
+                return _fovScaleFactor;
             }
             set
             {
-                _fov_scale_factor = value;
+                _fovScaleFactor = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_scale_factor_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_scale_factor_unit")]
-        public string Fov_scale_factor_unit
+        public string FovScaleFactorUnit
         {
             get
             {
-                return _fov_scale_factor_unit;
+                return _fovScaleFactorUnit;
             }
             set
             {
-                _fov_scale_factor_unit = value;
+                _fovScaleFactorUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate")]
-        public string Frame_rate
+        public string FrameRate
         {
             get
             {
-                return _frame_rate;
+                return _frameRate;
             }
             set
             {
-                _frame_rate = value;
+                _frameRate = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate_unit")]
-        public FrequencyUnit Frame_rate_unit
+        public FrequencyUnit FrameRateUnit
         {
             get
             {
-                return _frame_rate_unit;
+                return _frameRateUnit;
             }
             set
             {
-                _frame_rate_unit = value;
+                _frameRateUnit = value;
             }
         }
     
@@ -2634,15 +2634,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("coupled_fov_index")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="coupled_fov_index")]
         [System.ComponentModel.DescriptionAttribute("Coupled planes for multiscope")]
-        public int? Coupled_fov_index
+        public int? CoupledFovIndex
         {
             get
             {
-                return _coupled_fov_index;
+                return _coupledFovIndex;
             }
             set
             {
-                _coupled_fov_index = value;
+                _coupledFovIndex = value;
             }
         }
     
@@ -2659,22 +2659,22 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("index = " + _index + ", ");
-            stringBuilder.Append("imaging_depth = " + _imaging_depth + ", ");
-            stringBuilder.Append("imaging_depth_unit = " + _imaging_depth_unit + ", ");
-            stringBuilder.Append("targeted_structure = " + _targeted_structure + ", ");
-            stringBuilder.Append("fov_coordinate_ml = " + _fov_coordinate_ml + ", ");
-            stringBuilder.Append("fov_coordinate_ap = " + _fov_coordinate_ap + ", ");
-            stringBuilder.Append("fov_coordinate_unit = " + _fov_coordinate_unit + ", ");
-            stringBuilder.Append("fov_reference = " + _fov_reference + ", ");
-            stringBuilder.Append("fov_width = " + _fov_width + ", ");
-            stringBuilder.Append("fov_height = " + _fov_height + ", ");
-            stringBuilder.Append("fov_size_unit = " + _fov_size_unit + ", ");
+            stringBuilder.Append("imaging_depth = " + _imagingDepth + ", ");
+            stringBuilder.Append("imaging_depth_unit = " + _imagingDepthUnit + ", ");
+            stringBuilder.Append("targeted_structure = " + _targetedStructure + ", ");
+            stringBuilder.Append("fov_coordinate_ml = " + _fovCoordinateMl + ", ");
+            stringBuilder.Append("fov_coordinate_ap = " + _fovCoordinateAp + ", ");
+            stringBuilder.Append("fov_coordinate_unit = " + _fovCoordinateUnit + ", ");
+            stringBuilder.Append("fov_reference = " + _fovReference + ", ");
+            stringBuilder.Append("fov_width = " + _fovWidth + ", ");
+            stringBuilder.Append("fov_height = " + _fovHeight + ", ");
+            stringBuilder.Append("fov_size_unit = " + _fovSizeUnit + ", ");
             stringBuilder.Append("magnification = " + _magnification + ", ");
-            stringBuilder.Append("fov_scale_factor = " + _fov_scale_factor + ", ");
-            stringBuilder.Append("fov_scale_factor_unit = " + _fov_scale_factor_unit + ", ");
-            stringBuilder.Append("frame_rate = " + _frame_rate + ", ");
-            stringBuilder.Append("frame_rate_unit = " + _frame_rate_unit + ", ");
-            stringBuilder.Append("coupled_fov_index = " + _coupled_fov_index);
+            stringBuilder.Append("fov_scale_factor = " + _fovScaleFactor + ", ");
+            stringBuilder.Append("fov_scale_factor_unit = " + _fovScaleFactorUnit + ", ");
+            stringBuilder.Append("frame_rate = " + _frameRate + ", ");
+            stringBuilder.Append("frame_rate_unit = " + _frameRateUnit + ", ");
+            stringBuilder.Append("coupled_fov_index = " + _coupledFovIndex);
             return true;
         }
     
@@ -2977,17 +2977,17 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class LaserConfig
     {
     
-        private string _device_type = "Laser";
+        private string _deviceType = "Laser";
     
         private string _name;
     
         private int _wavelength;
     
-        private SizeUnit _wavelength_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Nanometer;
+        private SizeUnit _wavelengthUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Nanometer;
     
-        private string _excitation_power;
+        private string _excitationPower;
     
-        private PowerUnit _excitation_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
+        private PowerUnit _excitationPowerUnit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
     
         public LaserConfig()
         {
@@ -2995,25 +2995,25 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected LaserConfig(LaserConfig other)
         {
-            _device_type = other._device_type;
+            _deviceType = other._deviceType;
             _name = other._name;
             _wavelength = other._wavelength;
-            _wavelength_unit = other._wavelength_unit;
-            _excitation_power = other._excitation_power;
-            _excitation_power_unit = other._excitation_power_unit;
+            _wavelengthUnit = other._wavelengthUnit;
+            _excitationPower = other._excitationPower;
+            _excitationPowerUnit = other._excitationPowerUnit;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
-        public string Device_type
+        public string DeviceType
         {
             get
             {
-                return _device_type;
+                return _deviceType;
             }
             set
             {
-                _device_type = value;
+                _deviceType = value;
             }
         }
     
@@ -3052,44 +3052,44 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("wavelength_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="wavelength_unit")]
-        public SizeUnit Wavelength_unit
+        public SizeUnit WavelengthUnit
         {
             get
             {
-                return _wavelength_unit;
+                return _wavelengthUnit;
             }
             set
             {
-                _wavelength_unit = value;
+                _wavelengthUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_power")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_power")]
-        public string Excitation_power
+        public string ExcitationPower
         {
             get
             {
-                return _excitation_power;
+                return _excitationPower;
             }
             set
             {
-                _excitation_power = value;
+                _excitationPower = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_power_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_power_unit")]
-        public PowerUnit Excitation_power_unit
+        public PowerUnit ExcitationPowerUnit
         {
             get
             {
-                return _excitation_power_unit;
+                return _excitationPowerUnit;
             }
             set
             {
-                _excitation_power_unit = value;
+                _excitationPowerUnit = value;
             }
         }
     
@@ -3105,12 +3105,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _device_type + ", ");
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
             stringBuilder.Append("name = " + _name + ", ");
             stringBuilder.Append("wavelength = " + _wavelength + ", ");
-            stringBuilder.Append("wavelength_unit = " + _wavelength_unit + ", ");
-            stringBuilder.Append("excitation_power = " + _excitation_power + ", ");
-            stringBuilder.Append("excitation_power_unit = " + _excitation_power_unit);
+            stringBuilder.Append("wavelength_unit = " + _wavelengthUnit + ", ");
+            stringBuilder.Append("excitation_power = " + _excitationPower + ", ");
+            stringBuilder.Append("excitation_power_unit = " + _excitationPowerUnit);
             return true;
         }
     
@@ -3139,13 +3139,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class LightEmittingDiodeConfig
     {
     
-        private string _device_type = "LightEmittingDiode";
+        private string _deviceType = "LightEmittingDiode";
     
         private string _name;
     
-        private string _excitation_power;
+        private string _excitationPower;
     
-        private PowerUnit _excitation_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
+        private PowerUnit _excitationPowerUnit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
     
         public LightEmittingDiodeConfig()
         {
@@ -3153,23 +3153,23 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected LightEmittingDiodeConfig(LightEmittingDiodeConfig other)
         {
-            _device_type = other._device_type;
+            _deviceType = other._deviceType;
             _name = other._name;
-            _excitation_power = other._excitation_power;
-            _excitation_power_unit = other._excitation_power_unit;
+            _excitationPower = other._excitationPower;
+            _excitationPowerUnit = other._excitationPowerUnit;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
-        public string Device_type
+        public string DeviceType
         {
             get
             {
-                return _device_type;
+                return _deviceType;
             }
             set
             {
-                _device_type = value;
+                _deviceType = value;
             }
         }
     
@@ -3189,30 +3189,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_power")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_power")]
-        public string Excitation_power
+        public string ExcitationPower
         {
             get
             {
-                return _excitation_power;
+                return _excitationPower;
             }
             set
             {
-                _excitation_power = value;
+                _excitationPower = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_power_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_power_unit")]
-        public PowerUnit Excitation_power_unit
+        public PowerUnit ExcitationPowerUnit
         {
             get
             {
-                return _excitation_power_unit;
+                return _excitationPowerUnit;
             }
             set
             {
-                _excitation_power_unit = value;
+                _excitationPowerUnit = value;
             }
         }
     
@@ -3228,10 +3228,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _device_type + ", ");
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
             stringBuilder.Append("name = " + _name + ", ");
-            stringBuilder.Append("excitation_power = " + _excitation_power + ", ");
-            stringBuilder.Append("excitation_power_unit = " + _excitation_power_unit);
+            stringBuilder.Append("excitation_power = " + _excitationPower + ", ");
+            stringBuilder.Append("excitation_power_unit = " + _excitationPowerUnit);
             return true;
         }
     
@@ -3260,13 +3260,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Maintenance
     {
     
-        private System.DateTimeOffset _maintenance_date;
+        private System.DateTimeOffset _maintenanceDate;
     
-        private string _device_name;
+        private string _deviceName;
     
         private string _description;
     
-        private string _protocol_id;
+        private string _protocolId;
     
         private System.Collections.Generic.List<Reagent> _reagents = new System.Collections.Generic.List<Reagent>();
     
@@ -3278,10 +3278,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected Maintenance(Maintenance other)
         {
-            _maintenance_date = other._maintenance_date;
-            _device_name = other._device_name;
+            _maintenanceDate = other._maintenanceDate;
+            _deviceName = other._deviceName;
             _description = other._description;
-            _protocol_id = other._protocol_id;
+            _protocolId = other._protocolId;
             _reagents = other._reagents;
             _notes = other._notes;
         }
@@ -3289,15 +3289,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("maintenance_date", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maintenance_date")]
-        public System.DateTimeOffset Maintenance_date
+        public System.DateTimeOffset MaintenanceDate
         {
             get
             {
-                return _maintenance_date;
+                return _maintenanceDate;
             }
             set
             {
-                _maintenance_date = value;
+                _maintenanceDate = value;
             }
         }
     
@@ -3307,15 +3307,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("device_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_name")]
         [System.ComponentModel.DescriptionAttribute("Must match a device name in rig/instrument")]
-        public string Device_name
+        public string DeviceName
         {
             get
             {
-                return _device_name;
+                return _deviceName;
             }
             set
             {
-                _device_name = value;
+                _deviceName = value;
             }
         }
     
@@ -3339,15 +3339,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("protocol_id")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="protocol_id")]
-        public string Protocol_id
+        public string ProtocolId
         {
             get
             {
-                return _protocol_id;
+                return _protocolId;
             }
             set
             {
-                _protocol_id = value;
+                _protocolId = value;
             }
         }
     
@@ -3392,10 +3392,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("maintenance_date = " + _maintenance_date + ", ");
-            stringBuilder.Append("device_name = " + _device_name + ", ");
+            stringBuilder.Append("maintenance_date = " + _maintenanceDate + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("description = " + _description + ", ");
-            stringBuilder.Append("protocol_id = " + _protocol_id + ", ");
+            stringBuilder.Append("protocol_id = " + _protocolId + ", ");
             stringBuilder.Append("reagents = " + _reagents + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
@@ -3426,27 +3426,27 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class ManipulatorModule
     {
     
-        private string _assembly_name;
+        private string _assemblyName;
     
-        private string _arc_angle;
+        private string _arcAngle;
     
-        private string _module_angle;
+        private string _moduleAngle;
     
-        private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
+        private AngleUnit _angleUnit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
-        private string _rotation_angle;
+        private string _rotationAngle;
     
-        private string _coordinate_transform;
+        private string _coordinateTransform;
     
-        private System.DateTimeOffset? _calibration_date;
+        private System.DateTimeOffset? _calibrationDate;
     
         private string _notes;
     
-        private string _primary_targeted_structure;
+        private string _primaryTargetedStructure;
     
-        private System.Collections.Generic.List<CcfCoords> _targeted_ccf_coordinates = new System.Collections.Generic.List<CcfCoords>();
+        private System.Collections.Generic.List<CcfCoords> _targetedCcfCoordinates = new System.Collections.Generic.List<CcfCoords>();
     
-        private Coordinates3d _manipulator_coordinates = new Coordinates3d();
+        private Coordinates3d _manipulatorCoordinates = new Coordinates3d();
     
         public ManipulatorModule()
         {
@@ -3454,87 +3454,87 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected ManipulatorModule(ManipulatorModule other)
         {
-            _assembly_name = other._assembly_name;
-            _arc_angle = other._arc_angle;
-            _module_angle = other._module_angle;
-            _angle_unit = other._angle_unit;
-            _rotation_angle = other._rotation_angle;
-            _coordinate_transform = other._coordinate_transform;
-            _calibration_date = other._calibration_date;
+            _assemblyName = other._assemblyName;
+            _arcAngle = other._arcAngle;
+            _moduleAngle = other._moduleAngle;
+            _angleUnit = other._angleUnit;
+            _rotationAngle = other._rotationAngle;
+            _coordinateTransform = other._coordinateTransform;
+            _calibrationDate = other._calibrationDate;
             _notes = other._notes;
-            _primary_targeted_structure = other._primary_targeted_structure;
-            _targeted_ccf_coordinates = other._targeted_ccf_coordinates;
-            _manipulator_coordinates = other._manipulator_coordinates;
+            _primaryTargetedStructure = other._primaryTargetedStructure;
+            _targetedCcfCoordinates = other._targetedCcfCoordinates;
+            _manipulatorCoordinates = other._manipulatorCoordinates;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("assembly_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="assembly_name")]
-        public string Assembly_name
+        public string AssemblyName
         {
             get
             {
-                return _assembly_name;
+                return _assemblyName;
             }
             set
             {
-                _assembly_name = value;
+                _assemblyName = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("arc_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="arc_angle")]
-        public string Arc_angle
+        public string ArcAngle
         {
             get
             {
-                return _arc_angle;
+                return _arcAngle;
             }
             set
             {
-                _arc_angle = value;
+                _arcAngle = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("module_angle", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="module_angle")]
-        public string Module_angle
+        public string ModuleAngle
         {
             get
             {
-                return _module_angle;
+                return _moduleAngle;
             }
             set
             {
-                _module_angle = value;
+                _moduleAngle = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("angle_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="angle_unit")]
-        public AngleUnit Angle_unit
+        public AngleUnit AngleUnit
         {
             get
             {
-                return _angle_unit;
+                return _angleUnit;
             }
             set
             {
-                _angle_unit = value;
+                _angleUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("rotation_angle")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rotation_angle")]
-        public string Rotation_angle
+        public string RotationAngle
         {
             get
             {
-                return _rotation_angle;
+                return _rotationAngle;
             }
             set
             {
-                _rotation_angle = value;
+                _rotationAngle = value;
             }
         }
     
@@ -3544,30 +3544,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("coordinate_transform")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="coordinate_transform")]
         [System.ComponentModel.DescriptionAttribute("Path to coordinate transform")]
-        public string Coordinate_transform
+        public string CoordinateTransform
         {
             get
             {
-                return _coordinate_transform;
+                return _coordinateTransform;
             }
             set
             {
-                _coordinate_transform = value;
+                _coordinateTransform = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration_date")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration_date")]
-        public System.DateTimeOffset? Calibration_date
+        public System.DateTimeOffset? CalibrationDate
         {
             get
             {
-                return _calibration_date;
+                return _calibrationDate;
             }
             set
             {
-                _calibration_date = value;
+                _calibrationDate = value;
             }
         }
     
@@ -3587,45 +3587,45 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("primary_targeted_structure", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="primary_targeted_structure")]
-        public string Primary_targeted_structure
+        public string PrimaryTargetedStructure
         {
             get
             {
-                return _primary_targeted_structure;
+                return _primaryTargetedStructure;
             }
             set
             {
-                _primary_targeted_structure = value;
+                _primaryTargetedStructure = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("targeted_ccf_coordinates")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targeted_ccf_coordinates")]
-        public System.Collections.Generic.List<CcfCoords> Targeted_ccf_coordinates
+        public System.Collections.Generic.List<CcfCoords> TargetedCcfCoordinates
         {
             get
             {
-                return _targeted_ccf_coordinates;
+                return _targetedCcfCoordinates;
             }
             set
             {
-                _targeted_ccf_coordinates = value;
+                _targetedCcfCoordinates = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("manipulator_coordinates", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="manipulator_coordinates")]
-        public Coordinates3d Manipulator_coordinates
+        public Coordinates3d ManipulatorCoordinates
         {
             get
             {
-                return _manipulator_coordinates;
+                return _manipulatorCoordinates;
             }
             set
             {
-                _manipulator_coordinates = value;
+                _manipulatorCoordinates = value;
             }
         }
     
@@ -3641,17 +3641,17 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("assembly_name = " + _assembly_name + ", ");
-            stringBuilder.Append("arc_angle = " + _arc_angle + ", ");
-            stringBuilder.Append("module_angle = " + _module_angle + ", ");
-            stringBuilder.Append("angle_unit = " + _angle_unit + ", ");
-            stringBuilder.Append("rotation_angle = " + _rotation_angle + ", ");
-            stringBuilder.Append("coordinate_transform = " + _coordinate_transform + ", ");
-            stringBuilder.Append("calibration_date = " + _calibration_date + ", ");
+            stringBuilder.Append("assembly_name = " + _assemblyName + ", ");
+            stringBuilder.Append("arc_angle = " + _arcAngle + ", ");
+            stringBuilder.Append("module_angle = " + _moduleAngle + ", ");
+            stringBuilder.Append("angle_unit = " + _angleUnit + ", ");
+            stringBuilder.Append("rotation_angle = " + _rotationAngle + ", ");
+            stringBuilder.Append("coordinate_transform = " + _coordinateTransform + ", ");
+            stringBuilder.Append("calibration_date = " + _calibrationDate + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
-            stringBuilder.Append("primary_targeted_structure = " + _primary_targeted_structure + ", ");
-            stringBuilder.Append("targeted_ccf_coordinates = " + _targeted_ccf_coordinates + ", ");
-            stringBuilder.Append("manipulator_coordinates = " + _manipulator_coordinates);
+            stringBuilder.Append("primary_targeted_structure = " + _primaryTargetedStructure + ", ");
+            stringBuilder.Append("targeted_ccf_coordinates = " + _targetedCcfCoordinates + ", ");
+            stringBuilder.Append("manipulator_coordinates = " + _manipulatorCoordinates);
             return true;
         }
     
@@ -3792,23 +3792,23 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _experiment;
     
-        private string _root_path;
+        private string _rootPath;
     
-        private string _remote_path;
+        private string _remotePath;
     
         private string _subject;
     
         private string _version;
     
-        private double? _rng_seed;
+        private double? _rngSeed;
     
         private string _notes;
     
-        private string _commit_hash;
+        private string _commitHash;
     
-        private bool _allow_dirty_repo = false;
+        private bool _allowDirtyRepo = false;
     
-        private bool _skip_hardware_validation = false;
+        private bool _skipHardwareValidation = false;
     
         public Metadata()
         {
@@ -3817,15 +3817,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected Metadata(Metadata other)
         {
             _experiment = other._experiment;
-            _root_path = other._root_path;
-            _remote_path = other._remote_path;
+            _rootPath = other._rootPath;
+            _remotePath = other._remotePath;
             _subject = other._subject;
             _version = other._version;
-            _rng_seed = other._rng_seed;
+            _rngSeed = other._rngSeed;
             _notes = other._notes;
-            _commit_hash = other._commit_hash;
-            _allow_dirty_repo = other._allow_dirty_repo;
-            _skip_hardware_validation = other._skip_hardware_validation;
+            _commitHash = other._commitHash;
+            _allowDirtyRepo = other._allowDirtyRepo;
+            _skipHardwareValidation = other._skipHardwareValidation;
         }
     
         /// <summary>
@@ -3852,15 +3852,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("root_path", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="root_path")]
         [System.ComponentModel.DescriptionAttribute("Root path where data will be logged")]
-        public string Root_path
+        public string RootPath
         {
             get
             {
-                return _root_path;
+                return _rootPath;
             }
             set
             {
-                _root_path = value;
+                _rootPath = value;
             }
         }
     
@@ -3871,15 +3871,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="remote_path")]
         [System.ComponentModel.DescriptionAttribute("Remote path where data will be attempted to be copied to after experiment is done" +
             "")]
-        public string Remote_path
+        public string RemotePath
         {
             get
             {
-                return _remote_path;
+                return _remotePath;
             }
             set
             {
-                _remote_path = value;
+                _remotePath = value;
             }
         }
     
@@ -3930,11 +3930,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         {
             get
             {
-                return _rng_seed;
+                return _rngSeed;
             }
             set
             {
-                _rng_seed = value;
+                _rngSeed = value;
             }
         }
     
@@ -3962,15 +3962,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("commit_hash")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commit_hash")]
         [System.ComponentModel.DescriptionAttribute("Commit hash of the repository")]
-        public string Commit_hash
+        public string CommitHash
         {
             get
             {
-                return _commit_hash;
+                return _commitHash;
             }
             set
             {
-                _commit_hash = value;
+                _commitHash = value;
             }
         }
     
@@ -3980,15 +3980,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("allow_dirty_repo")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="allow_dirty_repo")]
         [System.ComponentModel.DescriptionAttribute("Allow running from a dirty repository")]
-        public bool Allow_dirty_repo
+        public bool AllowDirtyRepo
         {
             get
             {
-                return _allow_dirty_repo;
+                return _allowDirtyRepo;
             }
             set
             {
-                _allow_dirty_repo = value;
+                _allowDirtyRepo = value;
             }
         }
     
@@ -3998,15 +3998,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("skip_hardware_validation")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="skip_hardware_validation")]
         [System.ComponentModel.DescriptionAttribute("Skip hardware validation")]
-        public bool Skip_hardware_validation
+        public bool SkipHardwareValidation
         {
             get
             {
-                return _skip_hardware_validation;
+                return _skipHardwareValidation;
             }
             set
             {
-                _skip_hardware_validation = value;
+                _skipHardwareValidation = value;
             }
         }
     
@@ -4023,15 +4023,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("experiment = " + _experiment + ", ");
-            stringBuilder.Append("root_path = " + _root_path + ", ");
-            stringBuilder.Append("remote_path = " + _remote_path + ", ");
+            stringBuilder.Append("root_path = " + _rootPath + ", ");
+            stringBuilder.Append("remote_path = " + _remotePath + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
             stringBuilder.Append("version = " + _version + ", ");
-            stringBuilder.Append("rng_seed = " + _rng_seed + ", ");
+            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
-            stringBuilder.Append("commit_hash = " + _commit_hash + ", ");
-            stringBuilder.Append("allow_dirty_repo = " + _allow_dirty_repo + ", ");
-            stringBuilder.Append("skip_hardware_validation = " + _skip_hardware_validation);
+            stringBuilder.Append("commit_hash = " + _commitHash + ", ");
+            stringBuilder.Append("allow_dirty_repo = " + _allowDirtyRepo + ", ");
+            stringBuilder.Append("skip_hardware_validation = " + _skipHardwareValidation);
             return true;
         }
     
@@ -4144,13 +4144,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class OlfactometerChannelConfig
     {
     
-        private int _channel_index;
+        private int _channelIndex;
     
         private string _odorant;
     
-        private string _odorant_dilution;
+        private string _odorantDilution;
     
-        private ConcentrationUnit _odorant_dilution_unit = AindVrForagingDataSchema.AindVrForagingSession.ConcentrationUnit.__v_v;
+        private ConcentrationUnit _odorantDilutionUnit = AindVrForagingDataSchema.AindVrForagingSession.ConcentrationUnit.VV;
     
         public OlfactometerChannelConfig()
         {
@@ -4158,23 +4158,23 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected OlfactometerChannelConfig(OlfactometerChannelConfig other)
         {
-            _channel_index = other._channel_index;
+            _channelIndex = other._channelIndex;
             _odorant = other._odorant;
-            _odorant_dilution = other._odorant_dilution;
-            _odorant_dilution_unit = other._odorant_dilution_unit;
+            _odorantDilution = other._odorantDilution;
+            _odorantDilutionUnit = other._odorantDilutionUnit;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("channel_index", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="channel_index")]
-        public int Channel_index
+        public int ChannelIndex
         {
             get
             {
-                return _channel_index;
+                return _channelIndex;
             }
             set
             {
-                _channel_index = value;
+                _channelIndex = value;
             }
         }
     
@@ -4194,30 +4194,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("odorant_dilution", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorant_dilution")]
-        public string Odorant_dilution
+        public string OdorantDilution
         {
             get
             {
-                return _odorant_dilution;
+                return _odorantDilution;
             }
             set
             {
-                _odorant_dilution = value;
+                _odorantDilution = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("odorant_dilution_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odorant_dilution_unit")]
-        public ConcentrationUnit Odorant_dilution_unit
+        public ConcentrationUnit OdorantDilutionUnit
         {
             get
             {
-                return _odorant_dilution_unit;
+                return _odorantDilutionUnit;
             }
             set
             {
-                _odorant_dilution_unit = value;
+                _odorantDilutionUnit = value;
             }
         }
     
@@ -4233,10 +4233,10 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("channel_index = " + _channel_index + ", ");
+            stringBuilder.Append("channel_index = " + _channelIndex + ", ");
             stringBuilder.Append("odorant = " + _odorant + ", ");
-            stringBuilder.Append("odorant_dilution = " + _odorant_dilution + ", ");
-            stringBuilder.Append("odorant_dilution_unit = " + _odorant_dilution_unit);
+            stringBuilder.Append("odorant_dilution = " + _odorantDilution + ", ");
+            stringBuilder.Append("odorant_dilution_unit = " + _odorantDilutionUnit);
             return true;
         }
     
@@ -4324,35 +4324,35 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class OptoStimulation : Stimulus
     {
     
-        private string _stimulus_name;
+        private string _stimulusName;
     
-        private PulseShape _pulse_shape;
+        private PulseShape _pulseShape;
     
-        private int _pulse_frequency;
+        private int _pulseFrequency;
     
-        private FrequencyUnit _pulse_frequency_unit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
+        private FrequencyUnit _pulseFrequencyUnit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
     
-        private int _number_pulse_trains;
+        private int _numberPulseTrains;
     
-        private int _pulse_width;
+        private int _pulseWidth;
     
-        private TimeUnit _pulse_width_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Millisecond;
+        private TimeUnit _pulseWidthUnit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Millisecond;
     
-        private string _pulse_train_duration;
+        private string _pulseTrainDuration;
     
-        private TimeUnit _pulse_train_duration_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
+        private TimeUnit _pulseTrainDurationUnit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
-        private bool _fixed_pulse_train_interval;
+        private bool _fixedPulseTrainInterval;
     
-        private string _pulse_train_interval;
+        private string _pulseTrainInterval;
     
-        private TimeUnit _pulse_train_interval_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
+        private TimeUnit _pulseTrainIntervalUnit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
-        private string _baseline_duration;
+        private string _baselineDuration;
     
-        private TimeUnit _baseline_duration_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
+        private TimeUnit _baselineDurationUnit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
-        private object _other_parameters;
+        private object _otherParameters;
     
         private string _notes;
     
@@ -4363,165 +4363,165 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected OptoStimulation(OptoStimulation other) : 
                 base(other)
         {
-            _stimulus_name = other._stimulus_name;
-            _pulse_shape = other._pulse_shape;
-            _pulse_frequency = other._pulse_frequency;
-            _pulse_frequency_unit = other._pulse_frequency_unit;
-            _number_pulse_trains = other._number_pulse_trains;
-            _pulse_width = other._pulse_width;
-            _pulse_width_unit = other._pulse_width_unit;
-            _pulse_train_duration = other._pulse_train_duration;
-            _pulse_train_duration_unit = other._pulse_train_duration_unit;
-            _fixed_pulse_train_interval = other._fixed_pulse_train_interval;
-            _pulse_train_interval = other._pulse_train_interval;
-            _pulse_train_interval_unit = other._pulse_train_interval_unit;
-            _baseline_duration = other._baseline_duration;
-            _baseline_duration_unit = other._baseline_duration_unit;
-            _other_parameters = other._other_parameters;
+            _stimulusName = other._stimulusName;
+            _pulseShape = other._pulseShape;
+            _pulseFrequency = other._pulseFrequency;
+            _pulseFrequencyUnit = other._pulseFrequencyUnit;
+            _numberPulseTrains = other._numberPulseTrains;
+            _pulseWidth = other._pulseWidth;
+            _pulseWidthUnit = other._pulseWidthUnit;
+            _pulseTrainDuration = other._pulseTrainDuration;
+            _pulseTrainDurationUnit = other._pulseTrainDurationUnit;
+            _fixedPulseTrainInterval = other._fixedPulseTrainInterval;
+            _pulseTrainInterval = other._pulseTrainInterval;
+            _pulseTrainIntervalUnit = other._pulseTrainIntervalUnit;
+            _baselineDuration = other._baselineDuration;
+            _baselineDurationUnit = other._baselineDurationUnit;
+            _otherParameters = other._otherParameters;
             _notes = other._notes;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_name")]
-        public string Stimulus_name
+        public string StimulusName
         {
             get
             {
-                return _stimulus_name;
+                return _stimulusName;
             }
             set
             {
-                _stimulus_name = value;
+                _stimulusName = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_shape", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_shape")]
-        public PulseShape Pulse_shape
+        public PulseShape PulseShape
         {
             get
             {
-                return _pulse_shape;
+                return _pulseShape;
             }
             set
             {
-                _pulse_shape = value;
+                _pulseShape = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_frequency", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_frequency")]
-        public int Pulse_frequency
+        public int PulseFrequency
         {
             get
             {
-                return _pulse_frequency;
+                return _pulseFrequency;
             }
             set
             {
-                _pulse_frequency = value;
+                _pulseFrequency = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_frequency_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_frequency_unit")]
-        public FrequencyUnit Pulse_frequency_unit
+        public FrequencyUnit PulseFrequencyUnit
         {
             get
             {
-                return _pulse_frequency_unit;
+                return _pulseFrequencyUnit;
             }
             set
             {
-                _pulse_frequency_unit = value;
+                _pulseFrequencyUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("number_pulse_trains", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number_pulse_trains")]
-        public int Number_pulse_trains
+        public int NumberPulseTrains
         {
             get
             {
-                return _number_pulse_trains;
+                return _numberPulseTrains;
             }
             set
             {
-                _number_pulse_trains = value;
+                _numberPulseTrains = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_width", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_width")]
-        public int Pulse_width
+        public int PulseWidth
         {
             get
             {
-                return _pulse_width;
+                return _pulseWidth;
             }
             set
             {
-                _pulse_width = value;
+                _pulseWidth = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_width_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_width_unit")]
-        public TimeUnit Pulse_width_unit
+        public TimeUnit PulseWidthUnit
         {
             get
             {
-                return _pulse_width_unit;
+                return _pulseWidthUnit;
             }
             set
             {
-                _pulse_width_unit = value;
+                _pulseWidthUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_train_duration", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_train_duration")]
-        public string Pulse_train_duration
+        public string PulseTrainDuration
         {
             get
             {
-                return _pulse_train_duration;
+                return _pulseTrainDuration;
             }
             set
             {
-                _pulse_train_duration = value;
+                _pulseTrainDuration = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_train_duration_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_train_duration_unit")]
-        public TimeUnit Pulse_train_duration_unit
+        public TimeUnit PulseTrainDurationUnit
         {
             get
             {
-                return _pulse_train_duration_unit;
+                return _pulseTrainDurationUnit;
             }
             set
             {
-                _pulse_train_duration_unit = value;
+                _pulseTrainDurationUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fixed_pulse_train_interval", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fixed_pulse_train_interval")]
-        public bool Fixed_pulse_train_interval
+        public bool FixedPulseTrainInterval
         {
             get
             {
-                return _fixed_pulse_train_interval;
+                return _fixedPulseTrainInterval;
             }
             set
             {
-                _fixed_pulse_train_interval = value;
+                _fixedPulseTrainInterval = value;
             }
         }
     
@@ -4531,30 +4531,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_train_interval")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_train_interval")]
         [System.ComponentModel.DescriptionAttribute("Time between pulse trains")]
-        public string Pulse_train_interval
+        public string PulseTrainInterval
         {
             get
             {
-                return _pulse_train_interval;
+                return _pulseTrainInterval;
             }
             set
             {
-                _pulse_train_interval = value;
+                _pulseTrainInterval = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("pulse_train_interval_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulse_train_interval_unit")]
-        public TimeUnit Pulse_train_interval_unit
+        public TimeUnit PulseTrainIntervalUnit
         {
             get
             {
-                return _pulse_train_interval_unit;
+                return _pulseTrainIntervalUnit;
             }
             set
             {
-                _pulse_train_interval_unit = value;
+                _pulseTrainIntervalUnit = value;
             }
         }
     
@@ -4564,45 +4564,45 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("baseline_duration", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="baseline_duration")]
         [System.ComponentModel.DescriptionAttribute("Duration of baseline recording prior to first pulse train")]
-        public string Baseline_duration
+        public string BaselineDuration
         {
             get
             {
-                return _baseline_duration;
+                return _baselineDuration;
             }
             set
             {
-                _baseline_duration = value;
+                _baselineDuration = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("baseline_duration_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="baseline_duration_unit")]
-        public TimeUnit Baseline_duration_unit
+        public TimeUnit BaselineDurationUnit
         {
             get
             {
-                return _baseline_duration_unit;
+                return _baselineDurationUnit;
             }
             set
             {
-                _baseline_duration_unit = value;
+                _baselineDurationUnit = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("other_parameters")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="other_parameters")]
-        public object Other_parameters
+        public object OtherParameters
         {
             get
             {
-                return _other_parameters;
+                return _otherParameters;
             }
             set
             {
-                _other_parameters = value;
+                _otherParameters = value;
             }
         }
     
@@ -4636,21 +4636,21 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("stimulus_name = " + _stimulus_name + ", ");
-            stringBuilder.Append("pulse_shape = " + _pulse_shape + ", ");
-            stringBuilder.Append("pulse_frequency = " + _pulse_frequency + ", ");
-            stringBuilder.Append("pulse_frequency_unit = " + _pulse_frequency_unit + ", ");
-            stringBuilder.Append("number_pulse_trains = " + _number_pulse_trains + ", ");
-            stringBuilder.Append("pulse_width = " + _pulse_width + ", ");
-            stringBuilder.Append("pulse_width_unit = " + _pulse_width_unit + ", ");
-            stringBuilder.Append("pulse_train_duration = " + _pulse_train_duration + ", ");
-            stringBuilder.Append("pulse_train_duration_unit = " + _pulse_train_duration_unit + ", ");
-            stringBuilder.Append("fixed_pulse_train_interval = " + _fixed_pulse_train_interval + ", ");
-            stringBuilder.Append("pulse_train_interval = " + _pulse_train_interval + ", ");
-            stringBuilder.Append("pulse_train_interval_unit = " + _pulse_train_interval_unit + ", ");
-            stringBuilder.Append("baseline_duration = " + _baseline_duration + ", ");
-            stringBuilder.Append("baseline_duration_unit = " + _baseline_duration_unit + ", ");
-            stringBuilder.Append("other_parameters = " + _other_parameters + ", ");
+            stringBuilder.Append("stimulus_name = " + _stimulusName + ", ");
+            stringBuilder.Append("pulse_shape = " + _pulseShape + ", ");
+            stringBuilder.Append("pulse_frequency = " + _pulseFrequency + ", ");
+            stringBuilder.Append("pulse_frequency_unit = " + _pulseFrequencyUnit + ", ");
+            stringBuilder.Append("number_pulse_trains = " + _numberPulseTrains + ", ");
+            stringBuilder.Append("pulse_width = " + _pulseWidth + ", ");
+            stringBuilder.Append("pulse_width_unit = " + _pulseWidthUnit + ", ");
+            stringBuilder.Append("pulse_train_duration = " + _pulseTrainDuration + ", ");
+            stringBuilder.Append("pulse_train_duration_unit = " + _pulseTrainDurationUnit + ", ");
+            stringBuilder.Append("fixed_pulse_train_interval = " + _fixedPulseTrainInterval + ", ");
+            stringBuilder.Append("pulse_train_interval = " + _pulseTrainInterval + ", ");
+            stringBuilder.Append("pulse_train_interval_unit = " + _pulseTrainIntervalUnit + ", ");
+            stringBuilder.Append("baseline_duration = " + _baselineDuration + ", ");
+            stringBuilder.Append("baseline_duration_unit = " + _baselineDurationUnit + ", ");
+            stringBuilder.Append("other_parameters = " + _otherParameters + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
@@ -4675,7 +4675,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private BaseName _registry;
     
-        private string _registry_identifier;
+        private string _registryIdentifier;
     
         public PIDName()
         {
@@ -4686,7 +4686,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _name = other._name;
             _abbreviation = other._abbreviation;
             _registry = other._registry;
-            _registry_identifier = other._registry_identifier;
+            _registryIdentifier = other._registryIdentifier;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("name", Required=Newtonsoft.Json.Required.Always)]
@@ -4734,15 +4734,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("registry_identifier")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="registry_identifier")]
-        public string Registry_identifier
+        public string RegistryIdentifier
         {
             get
             {
-                return _registry_identifier;
+                return _registryIdentifier;
             }
             set
             {
-                _registry_identifier = value;
+                _registryIdentifier = value;
             }
         }
     
@@ -4761,7 +4761,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("name = " + _name + ", ");
             stringBuilder.Append("abbreviation = " + _abbreviation + ", ");
             stringBuilder.Append("registry = " + _registry + ", ");
-            stringBuilder.Append("registry_identifier = " + _registry_identifier);
+            stringBuilder.Append("registry_identifier = " + _registryIdentifier);
             return true;
         }
     
@@ -4874,17 +4874,17 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class PhotoStimulation : Stimulus
     {
     
-        private string _stimulus_name;
+        private string _stimulusName;
     
-        private int _number_groups;
+        private int _numberGroups;
     
         private System.Collections.Generic.List<PhotoStimulationGroup> _groups = new System.Collections.Generic.List<PhotoStimulationGroup>();
     
-        private string _inter_trial_interval;
+        private string _interTrialInterval;
     
-        private TimeUnit _inter_trial_interval_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
+        private TimeUnit _interTrialIntervalUnit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
-        private object _other_parameters;
+        private object _otherParameters;
     
         private string _notes;
     
@@ -4895,40 +4895,40 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected PhotoStimulation(PhotoStimulation other) : 
                 base(other)
         {
-            _stimulus_name = other._stimulus_name;
-            _number_groups = other._number_groups;
+            _stimulusName = other._stimulusName;
+            _numberGroups = other._numberGroups;
             _groups = other._groups;
-            _inter_trial_interval = other._inter_trial_interval;
-            _inter_trial_interval_unit = other._inter_trial_interval_unit;
-            _other_parameters = other._other_parameters;
+            _interTrialInterval = other._interTrialInterval;
+            _interTrialIntervalUnit = other._interTrialIntervalUnit;
+            _otherParameters = other._otherParameters;
             _notes = other._notes;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_name")]
-        public string Stimulus_name
+        public string StimulusName
         {
             get
             {
-                return _stimulus_name;
+                return _stimulusName;
             }
             set
             {
-                _stimulus_name = value;
+                _stimulusName = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("number_groups", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number_groups")]
-        public int Number_groups
+        public int NumberGroups
         {
             get
             {
-                return _number_groups;
+                return _numberGroups;
             }
             set
             {
-                _number_groups = value;
+                _numberGroups = value;
             }
         }
     
@@ -4949,45 +4949,45 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("inter_trial_interval", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inter_trial_interval")]
-        public string Inter_trial_interval
+        public string InterTrialInterval
         {
             get
             {
-                return _inter_trial_interval;
+                return _interTrialInterval;
             }
             set
             {
-                _inter_trial_interval = value;
+                _interTrialInterval = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("inter_trial_interval_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inter_trial_interval_unit")]
-        public TimeUnit Inter_trial_interval_unit
+        public TimeUnit InterTrialIntervalUnit
         {
             get
             {
-                return _inter_trial_interval_unit;
+                return _interTrialIntervalUnit;
             }
             set
             {
-                _inter_trial_interval_unit = value;
+                _interTrialIntervalUnit = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("other_parameters")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="other_parameters")]
-        public object Other_parameters
+        public object OtherParameters
         {
             get
             {
-                return _other_parameters;
+                return _otherParameters;
             }
             set
             {
-                _other_parameters = value;
+                _otherParameters = value;
             }
         }
     
@@ -5021,12 +5021,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("stimulus_name = " + _stimulus_name + ", ");
-            stringBuilder.Append("number_groups = " + _number_groups + ", ");
+            stringBuilder.Append("stimulus_name = " + _stimulusName + ", ");
+            stringBuilder.Append("number_groups = " + _numberGroups + ", ");
             stringBuilder.Append("groups = " + _groups + ", ");
-            stringBuilder.Append("inter_trial_interval = " + _inter_trial_interval + ", ");
-            stringBuilder.Append("inter_trial_interval_unit = " + _inter_trial_interval_unit + ", ");
-            stringBuilder.Append("other_parameters = " + _other_parameters + ", ");
+            stringBuilder.Append("inter_trial_interval = " + _interTrialInterval + ", ");
+            stringBuilder.Append("inter_trial_interval_unit = " + _interTrialIntervalUnit + ", ");
+            stringBuilder.Append("other_parameters = " + _otherParameters + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
@@ -5043,27 +5043,27 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class PhotoStimulationGroup
     {
     
-        private int _group_index;
+        private int _groupIndex;
     
-        private int _number_of_neurons;
+        private int _numberOfNeurons;
     
-        private string _stimulation_laser_power;
+        private string _stimulationLaserPower;
     
-        private PowerUnit _stimulation_laser_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
+        private PowerUnit _stimulationLaserPowerUnit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
     
-        private int _number_trials;
+        private int _numberTrials;
     
-        private int _number_spirals;
+        private int _numberSpirals;
     
-        private string _spiral_duration;
+        private string _spiralDuration;
     
-        private TimeUnit _spiral_duration_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
+        private TimeUnit _spiralDurationUnit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
-        private string _inter_spiral_interval;
+        private string _interSpiralInterval;
     
-        private TimeUnit _inter_spiral_interval_unit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
+        private TimeUnit _interSpiralIntervalUnit = AindVrForagingDataSchema.AindVrForagingSession.TimeUnit.Second;
     
-        private object _other_parameters;
+        private object _otherParameters;
     
         private string _notes;
     
@@ -5073,175 +5073,175 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected PhotoStimulationGroup(PhotoStimulationGroup other)
         {
-            _group_index = other._group_index;
-            _number_of_neurons = other._number_of_neurons;
-            _stimulation_laser_power = other._stimulation_laser_power;
-            _stimulation_laser_power_unit = other._stimulation_laser_power_unit;
-            _number_trials = other._number_trials;
-            _number_spirals = other._number_spirals;
-            _spiral_duration = other._spiral_duration;
-            _spiral_duration_unit = other._spiral_duration_unit;
-            _inter_spiral_interval = other._inter_spiral_interval;
-            _inter_spiral_interval_unit = other._inter_spiral_interval_unit;
-            _other_parameters = other._other_parameters;
+            _groupIndex = other._groupIndex;
+            _numberOfNeurons = other._numberOfNeurons;
+            _stimulationLaserPower = other._stimulationLaserPower;
+            _stimulationLaserPowerUnit = other._stimulationLaserPowerUnit;
+            _numberTrials = other._numberTrials;
+            _numberSpirals = other._numberSpirals;
+            _spiralDuration = other._spiralDuration;
+            _spiralDurationUnit = other._spiralDurationUnit;
+            _interSpiralInterval = other._interSpiralInterval;
+            _interSpiralIntervalUnit = other._interSpiralIntervalUnit;
+            _otherParameters = other._otherParameters;
             _notes = other._notes;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("group_index", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="group_index")]
-        public int Group_index
+        public int GroupIndex
         {
             get
             {
-                return _group_index;
+                return _groupIndex;
             }
             set
             {
-                _group_index = value;
+                _groupIndex = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("number_of_neurons", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number_of_neurons")]
-        public int Number_of_neurons
+        public int NumberOfNeurons
         {
             get
             {
-                return _number_of_neurons;
+                return _numberOfNeurons;
             }
             set
             {
-                _number_of_neurons = value;
+                _numberOfNeurons = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulation_laser_power", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulation_laser_power")]
-        public string Stimulation_laser_power
+        public string StimulationLaserPower
         {
             get
             {
-                return _stimulation_laser_power;
+                return _stimulationLaserPower;
             }
             set
             {
-                _stimulation_laser_power = value;
+                _stimulationLaserPower = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulation_laser_power_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulation_laser_power_unit")]
-        public PowerUnit Stimulation_laser_power_unit
+        public PowerUnit StimulationLaserPowerUnit
         {
             get
             {
-                return _stimulation_laser_power_unit;
+                return _stimulationLaserPowerUnit;
             }
             set
             {
-                _stimulation_laser_power_unit = value;
+                _stimulationLaserPowerUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("number_trials", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number_trials")]
-        public int Number_trials
+        public int NumberTrials
         {
             get
             {
-                return _number_trials;
+                return _numberTrials;
             }
             set
             {
-                _number_trials = value;
+                _numberTrials = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("number_spirals", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number_spirals")]
-        public int Number_spirals
+        public int NumberSpirals
         {
             get
             {
-                return _number_spirals;
+                return _numberSpirals;
             }
             set
             {
-                _number_spirals = value;
+                _numberSpirals = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("spiral_duration", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="spiral_duration")]
-        public string Spiral_duration
+        public string SpiralDuration
         {
             get
             {
-                return _spiral_duration;
+                return _spiralDuration;
             }
             set
             {
-                _spiral_duration = value;
+                _spiralDuration = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("spiral_duration_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="spiral_duration_unit")]
-        public TimeUnit Spiral_duration_unit
+        public TimeUnit SpiralDurationUnit
         {
             get
             {
-                return _spiral_duration_unit;
+                return _spiralDurationUnit;
             }
             set
             {
-                _spiral_duration_unit = value;
+                _spiralDurationUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("inter_spiral_interval", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inter_spiral_interval")]
-        public string Inter_spiral_interval
+        public string InterSpiralInterval
         {
             get
             {
-                return _inter_spiral_interval;
+                return _interSpiralInterval;
             }
             set
             {
-                _inter_spiral_interval = value;
+                _interSpiralInterval = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("inter_spiral_interval_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inter_spiral_interval_unit")]
-        public TimeUnit Inter_spiral_interval_unit
+        public TimeUnit InterSpiralIntervalUnit
         {
             get
             {
-                return _inter_spiral_interval_unit;
+                return _interSpiralIntervalUnit;
             }
             set
             {
-                _inter_spiral_interval_unit = value;
+                _interSpiralIntervalUnit = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("other_parameters")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="other_parameters")]
-        public object Other_parameters
+        public object OtherParameters
         {
             get
             {
-                return _other_parameters;
+                return _otherParameters;
             }
             set
             {
-                _other_parameters = value;
+                _otherParameters = value;
             }
         }
     
@@ -5271,17 +5271,17 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("group_index = " + _group_index + ", ");
-            stringBuilder.Append("number_of_neurons = " + _number_of_neurons + ", ");
-            stringBuilder.Append("stimulation_laser_power = " + _stimulation_laser_power + ", ");
-            stringBuilder.Append("stimulation_laser_power_unit = " + _stimulation_laser_power_unit + ", ");
-            stringBuilder.Append("number_trials = " + _number_trials + ", ");
-            stringBuilder.Append("number_spirals = " + _number_spirals + ", ");
-            stringBuilder.Append("spiral_duration = " + _spiral_duration + ", ");
-            stringBuilder.Append("spiral_duration_unit = " + _spiral_duration_unit + ", ");
-            stringBuilder.Append("inter_spiral_interval = " + _inter_spiral_interval + ", ");
-            stringBuilder.Append("inter_spiral_interval_unit = " + _inter_spiral_interval_unit + ", ");
-            stringBuilder.Append("other_parameters = " + _other_parameters + ", ");
+            stringBuilder.Append("group_index = " + _groupIndex + ", ");
+            stringBuilder.Append("number_of_neurons = " + _numberOfNeurons + ", ");
+            stringBuilder.Append("stimulation_laser_power = " + _stimulationLaserPower + ", ");
+            stringBuilder.Append("stimulation_laser_power_unit = " + _stimulationLaserPowerUnit + ", ");
+            stringBuilder.Append("number_trials = " + _numberTrials + ", ");
+            stringBuilder.Append("number_spirals = " + _numberSpirals + ", ");
+            stringBuilder.Append("spiral_duration = " + _spiralDuration + ", ");
+            stringBuilder.Append("spiral_duration_unit = " + _spiralDurationUnit + ", ");
+            stringBuilder.Append("inter_spiral_interval = " + _interSpiralInterval + ", ");
+            stringBuilder.Append("inter_spiral_interval_unit = " + _interSpiralIntervalUnit + ", ");
+            stringBuilder.Append("other_parameters = " + _otherParameters + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
@@ -5361,9 +5361,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private PIDName _rrid;
     
-        private string _lot_number;
+        private string _lotNumber;
     
-        private System.DateTimeOffset? _expiration_date;
+        private System.DateTimeOffset? _expirationDate;
     
         public Reagent()
         {
@@ -5374,8 +5374,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _name = other._name;
             _source = other._source;
             _rrid = other._rrid;
-            _lot_number = other._lot_number;
-            _expiration_date = other._expiration_date;
+            _lotNumber = other._lotNumber;
+            _expirationDate = other._expirationDate;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("name", Required=Newtonsoft.Json.Required.Always)]
@@ -5423,30 +5423,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("lot_number", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lot_number")]
-        public string Lot_number
+        public string LotNumber
         {
             get
             {
-                return _lot_number;
+                return _lotNumber;
             }
             set
             {
-                _lot_number = value;
+                _lotNumber = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("expiration_date")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="expiration_date")]
-        public System.DateTimeOffset? Expiration_date
+        public System.DateTimeOffset? ExpirationDate
         {
             get
             {
-                return _expiration_date;
+                return _expirationDate;
             }
             set
             {
-                _expiration_date = value;
+                _expirationDate = value;
             }
         }
     
@@ -5465,8 +5465,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("name = " + _name + ", ");
             stringBuilder.Append("source = " + _source + ", ");
             stringBuilder.Append("rrid = " + _rrid + ", ");
-            stringBuilder.Append("lot_number = " + _lot_number + ", ");
-            stringBuilder.Append("expiration_date = " + _expiration_date);
+            stringBuilder.Append("lot_number = " + _lotNumber + ", ");
+            stringBuilder.Append("expiration_date = " + _expirationDate);
             return true;
         }
     
@@ -5501,7 +5501,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _roll;
     
-        private AngleUnit _angle_unit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
+        private AngleUnit _angleUnit = AindVrForagingDataSchema.AindVrForagingSession.AngleUnit.Degrees;
     
         private string _x;
     
@@ -5509,9 +5509,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _z;
     
-        private SizeUnit _position_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Millimeter;
+        private SizeUnit _positionUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Millimeter;
     
-        private string _coordinate_system;
+        private string _coordinateSystem;
     
         public RelativePosition()
         {
@@ -5522,12 +5522,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _pitch = other._pitch;
             _yaw = other._yaw;
             _roll = other._roll;
-            _angle_unit = other._angle_unit;
+            _angleUnit = other._angleUnit;
             _x = other._x;
             _y = other._y;
             _z = other._z;
-            _position_unit = other._position_unit;
-            _coordinate_system = other._coordinate_system;
+            _positionUnit = other._positionUnit;
+            _coordinateSystem = other._coordinateSystem;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("pitch")]
@@ -5575,15 +5575,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("angle_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="angle_unit")]
-        public AngleUnit Angle_unit
+        public AngleUnit AngleUnit
         {
             get
             {
-                return _angle_unit;
+                return _angleUnit;
             }
             set
             {
-                _angle_unit = value;
+                _angleUnit = value;
             }
         }
     
@@ -5632,29 +5632,29 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("position_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="position_unit")]
-        public SizeUnit Position_unit
+        public SizeUnit PositionUnit
         {
             get
             {
-                return _position_unit;
+                return _positionUnit;
             }
             set
             {
-                _position_unit = value;
+                _positionUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("coordinate_system")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="coordinate_system")]
-        public string Coordinate_system
+        public string CoordinateSystem
         {
             get
             {
-                return _coordinate_system;
+                return _coordinateSystem;
             }
             set
             {
-                _coordinate_system = value;
+                _coordinateSystem = value;
             }
         }
     
@@ -5673,12 +5673,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("pitch = " + _pitch + ", ");
             stringBuilder.Append("yaw = " + _yaw + ", ");
             stringBuilder.Append("roll = " + _roll + ", ");
-            stringBuilder.Append("angle_unit = " + _angle_unit + ", ");
+            stringBuilder.Append("angle_unit = " + _angleUnit + ", ");
             stringBuilder.Append("x = " + _x + ", ");
             stringBuilder.Append("y = " + _y + ", ");
             stringBuilder.Append("z = " + _z + ", ");
-            stringBuilder.Append("position_unit = " + _position_unit + ", ");
-            stringBuilder.Append("coordinate_system = " + _coordinate_system);
+            stringBuilder.Append("position_unit = " + _positionUnit + ", ");
+            stringBuilder.Append("coordinate_system = " + _coordinateSystem);
             return true;
         }
     
@@ -5707,9 +5707,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class RewardDeliveryConfig
     {
     
-        private RewardSolution _reward_solution;
+        private RewardSolution _rewardSolution;
     
-        private System.Collections.Generic.List<RewardSpoutConfig> _reward_spouts = new System.Collections.Generic.List<RewardSpoutConfig>();
+        private System.Collections.Generic.List<RewardSpoutConfig> _rewardSpouts = new System.Collections.Generic.List<RewardSpoutConfig>();
     
         private string _notes;
     
@@ -5719,8 +5719,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected RewardDeliveryConfig(RewardDeliveryConfig other)
         {
-            _reward_solution = other._reward_solution;
-            _reward_spouts = other._reward_spouts;
+            _rewardSolution = other._rewardSolution;
+            _rewardSpouts = other._rewardSpouts;
             _notes = other._notes;
         }
     
@@ -5731,30 +5731,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("reward_solution", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_solution")]
         [System.ComponentModel.DescriptionAttribute("If Other use notes")]
-        public RewardSolution Reward_solution
+        public RewardSolution RewardSolution
         {
             get
             {
-                return _reward_solution;
+                return _rewardSolution;
             }
             set
             {
-                _reward_solution = value;
+                _rewardSolution = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward_spouts", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_spouts")]
-        public System.Collections.Generic.List<RewardSpoutConfig> Reward_spouts
+        public System.Collections.Generic.List<RewardSpoutConfig> RewardSpouts
         {
             get
             {
-                return _reward_spouts;
+                return _rewardSpouts;
             }
             set
             {
-                _reward_spouts = value;
+                _rewardSpouts = value;
             }
         }
     
@@ -5784,8 +5784,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("reward_solution = " + _reward_solution + ", ");
-            stringBuilder.Append("reward_spouts = " + _reward_spouts + ", ");
+            stringBuilder.Append("reward_solution = " + _rewardSolution + ", ");
+            stringBuilder.Append("reward_spouts = " + _rewardSpouts + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
@@ -5835,9 +5835,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private SpoutSide _side;
     
-        private RelativePosition _starting_position = new RelativePosition();
+        private RelativePosition _startingPosition = new RelativePosition();
     
-        private bool _variable_position;
+        private bool _variablePosition;
     
         public RewardSpoutConfig()
         {
@@ -5846,8 +5846,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected RewardSpoutConfig(RewardSpoutConfig other)
         {
             _side = other._side;
-            _starting_position = other._starting_position;
-            _variable_position = other._variable_position;
+            _startingPosition = other._startingPosition;
+            _variablePosition = other._variablePosition;
         }
     
         /// <summary>
@@ -5872,15 +5872,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("starting_position", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="starting_position")]
-        public RelativePosition Starting_position
+        public RelativePosition StartingPosition
         {
             get
             {
-                return _starting_position;
+                return _startingPosition;
             }
             set
             {
-                _starting_position = value;
+                _startingPosition = value;
             }
         }
     
@@ -5890,15 +5890,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("variable_position", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="variable_position")]
         [System.ComponentModel.DescriptionAttribute("True if spout position changes during session as tracked in data")]
-        public bool Variable_position
+        public bool VariablePosition
         {
             get
             {
-                return _variable_position;
+                return _variablePosition;
             }
             set
             {
-                _variable_position = value;
+                _variablePosition = value;
             }
         }
     
@@ -5915,8 +5915,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("side = " + _side + ", ");
-            stringBuilder.Append("starting_position = " + _starting_position + ", ");
-            stringBuilder.Append("variable_position = " + _variable_position);
+            stringBuilder.Append("starting_position = " + _startingPosition + ", ");
+            stringBuilder.Append("variable_position = " + _variablePosition);
             return true;
         }
     
@@ -5947,41 +5947,41 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _describedBy = "https://raw.githubusercontent.com/AllenNeuralDynamics/aind-data-schema/main/src/aind_data_schema/core/session.py";
     
-        private string _schema_version = "0.1.2";
+        private string _schemaVersion = "0.1.2";
     
-        private System.Collections.Generic.List<string> _experimenter_full_name = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _experimenterFullName = new System.Collections.Generic.List<string>();
     
-        private System.DateTimeOffset _session_start_time;
+        private System.DateTimeOffset _sessionStartTime;
     
-        private System.DateTimeOffset? _session_end_time;
+        private System.DateTimeOffset? _sessionEndTime;
     
-        private string _session_type;
+        private string _sessionType;
     
-        private string _iacuc_protocol;
+        private string _iacucProtocol;
     
-        private string _rig_id;
+        private string _rigId;
     
         private System.Collections.Generic.List<Calibration> _calibrations = new System.Collections.Generic.List<Calibration>();
     
         private System.Collections.Generic.List<Maintenance> _maintenance = new System.Collections.Generic.List<Maintenance>();
     
-        private string _subject_id;
+        private string _subjectId;
     
-        private string _animal_weight_prior;
+        private string _animalWeightPrior;
     
-        private string _animal_weight_post;
+        private string _animalWeightPost;
     
-        private MassUnit _weight_unit = AindVrForagingDataSchema.AindVrForagingSession.MassUnit.Gram;
+        private MassUnit _weightUnit = AindVrForagingDataSchema.AindVrForagingSession.MassUnit.Gram;
     
-        private System.Collections.Generic.List<Stream> _data_streams = new System.Collections.Generic.List<Stream>();
+        private System.Collections.Generic.List<Stream> _dataStreams = new System.Collections.Generic.List<Stream>();
     
-        private System.Collections.Generic.List<StimulusEpoch> _stimulus_epochs = new System.Collections.Generic.List<StimulusEpoch>();
+        private System.Collections.Generic.List<StimulusEpoch> _stimulusEpochs = new System.Collections.Generic.List<StimulusEpoch>();
     
-        private RewardDeliveryConfig _reward_delivery;
+        private RewardDeliveryConfig _rewardDelivery;
     
-        private string _reward_consumed_total;
+        private string _rewardConsumedTotal;
     
-        private VolumeUnit _reward_consumed_unit = AindVrForagingDataSchema.AindVrForagingSession.VolumeUnit.Microliter;
+        private VolumeUnit _rewardConsumedUnit = AindVrForagingDataSchema.AindVrForagingSession.VolumeUnit.Microliter;
     
         private string _notes;
     
@@ -5992,24 +5992,24 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected Session(Session other)
         {
             _describedBy = other._describedBy;
-            _schema_version = other._schema_version;
-            _experimenter_full_name = other._experimenter_full_name;
-            _session_start_time = other._session_start_time;
-            _session_end_time = other._session_end_time;
-            _session_type = other._session_type;
-            _iacuc_protocol = other._iacuc_protocol;
-            _rig_id = other._rig_id;
+            _schemaVersion = other._schemaVersion;
+            _experimenterFullName = other._experimenterFullName;
+            _sessionStartTime = other._sessionStartTime;
+            _sessionEndTime = other._sessionEndTime;
+            _sessionType = other._sessionType;
+            _iacucProtocol = other._iacucProtocol;
+            _rigId = other._rigId;
             _calibrations = other._calibrations;
             _maintenance = other._maintenance;
-            _subject_id = other._subject_id;
-            _animal_weight_prior = other._animal_weight_prior;
-            _animal_weight_post = other._animal_weight_post;
-            _weight_unit = other._weight_unit;
-            _data_streams = other._data_streams;
-            _stimulus_epochs = other._stimulus_epochs;
-            _reward_delivery = other._reward_delivery;
-            _reward_consumed_total = other._reward_consumed_total;
-            _reward_consumed_unit = other._reward_consumed_unit;
+            _subjectId = other._subjectId;
+            _animalWeightPrior = other._animalWeightPrior;
+            _animalWeightPost = other._animalWeightPost;
+            _weightUnit = other._weightUnit;
+            _dataStreams = other._dataStreams;
+            _stimulusEpochs = other._stimulusEpochs;
+            _rewardDelivery = other._rewardDelivery;
+            _rewardConsumedTotal = other._rewardConsumedTotal;
+            _rewardConsumedUnit = other._rewardConsumedUnit;
             _notes = other._notes;
         }
     
@@ -6029,15 +6029,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="schema_version")]
-        public string Schema_version
+        public string SchemaVersion
         {
             get
             {
-                return _schema_version;
+                return _schemaVersion;
             }
             set
             {
-                _schema_version = value;
+                _schemaVersion = value;
             }
         }
     
@@ -6048,87 +6048,87 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("experimenter_full_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="experimenter_full_name")]
         [System.ComponentModel.DescriptionAttribute("First and last name of the experimenter(s).")]
-        public System.Collections.Generic.List<string> Experimenter_full_name
+        public System.Collections.Generic.List<string> ExperimenterFullName
         {
             get
             {
-                return _experimenter_full_name;
+                return _experimenterFullName;
             }
             set
             {
-                _experimenter_full_name = value;
+                _experimenterFullName = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("session_start_time", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="session_start_time")]
-        public System.DateTimeOffset Session_start_time
+        public System.DateTimeOffset SessionStartTime
         {
             get
             {
-                return _session_start_time;
+                return _sessionStartTime;
             }
             set
             {
-                _session_start_time = value;
+                _sessionStartTime = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("session_end_time")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="session_end_time")]
-        public System.DateTimeOffset? Session_end_time
+        public System.DateTimeOffset? SessionEndTime
         {
             get
             {
-                return _session_end_time;
+                return _sessionEndTime;
             }
             set
             {
-                _session_end_time = value;
+                _sessionEndTime = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("session_type", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="session_type")]
-        public string Session_type
+        public string SessionType
         {
             get
             {
-                return _session_type;
+                return _sessionType;
             }
             set
             {
-                _session_type = value;
+                _sessionType = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("iacuc_protocol")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="iacuc_protocol")]
-        public string Iacuc_protocol
+        public string IacucProtocol
         {
             get
             {
-                return _iacuc_protocol;
+                return _iacucProtocol;
             }
             set
             {
-                _iacuc_protocol = value;
+                _iacucProtocol = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("rig_id", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rig_id")]
-        public string Rig_id
+        public string RigId
         {
             get
             {
-                return _rig_id;
+                return _rigId;
             }
             set
             {
-                _rig_id = value;
+                _rigId = value;
             }
         }
     
@@ -6172,15 +6172,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("subject_id", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="subject_id")]
-        public string Subject_id
+        public string SubjectId
         {
             get
             {
-                return _subject_id;
+                return _subjectId;
             }
             set
             {
-                _subject_id = value;
+                _subjectId = value;
             }
         }
     
@@ -6190,15 +6190,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("animal_weight_prior")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="animal_weight_prior")]
         [System.ComponentModel.DescriptionAttribute("Animal weight before procedure")]
-        public string Animal_weight_prior
+        public string AnimalWeightPrior
         {
             get
             {
-                return _animal_weight_prior;
+                return _animalWeightPrior;
             }
             set
             {
-                _animal_weight_prior = value;
+                _animalWeightPrior = value;
             }
         }
     
@@ -6208,30 +6208,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("animal_weight_post")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="animal_weight_post")]
         [System.ComponentModel.DescriptionAttribute("Animal weight after procedure")]
-        public string Animal_weight_post
+        public string AnimalWeightPost
         {
             get
             {
-                return _animal_weight_post;
+                return _animalWeightPost;
             }
             set
             {
-                _animal_weight_post = value;
+                _animalWeightPost = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("weight_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="weight_unit")]
-        public MassUnit Weight_unit
+        public MassUnit WeightUnit
         {
             get
             {
-                return _weight_unit;
+                return _weightUnit;
             }
             set
             {
-                _weight_unit = value;
+                _weightUnit = value;
             }
         }
     
@@ -6244,74 +6244,74 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.ComponentModel.DescriptionAttribute("A data stream is a collection of devices that are recorded simultaneously. Each s" +
             "ession can include multiple streams (e.g., if the manipulators are moved to a ne" +
             "w location)")]
-        public System.Collections.Generic.List<Stream> Data_streams
+        public System.Collections.Generic.List<Stream> DataStreams
         {
             get
             {
-                return _data_streams;
+                return _dataStreams;
             }
             set
             {
-                _data_streams = value;
+                _dataStreams = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_epochs")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_epochs")]
-        public System.Collections.Generic.List<StimulusEpoch> Stimulus_epochs
+        public System.Collections.Generic.List<StimulusEpoch> StimulusEpochs
         {
             get
             {
-                return _stimulus_epochs;
+                return _stimulusEpochs;
             }
             set
             {
-                _stimulus_epochs = value;
+                _stimulusEpochs = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward_delivery")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_delivery")]
-        public RewardDeliveryConfig Reward_delivery
+        public RewardDeliveryConfig RewardDelivery
         {
             get
             {
-                return _reward_delivery;
+                return _rewardDelivery;
             }
             set
             {
-                _reward_delivery = value;
+                _rewardDelivery = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("reward_consumed_total")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_consumed_total")]
-        public string Reward_consumed_total
+        public string RewardConsumedTotal
         {
             get
             {
-                return _reward_consumed_total;
+                return _rewardConsumedTotal;
             }
             set
             {
-                _reward_consumed_total = value;
+                _rewardConsumedTotal = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward_consumed_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_consumed_unit")]
-        public VolumeUnit Reward_consumed_unit
+        public VolumeUnit RewardConsumedUnit
         {
             get
             {
-                return _reward_consumed_unit;
+                return _rewardConsumedUnit;
             }
             set
             {
-                _reward_consumed_unit = value;
+                _rewardConsumedUnit = value;
             }
         }
     
@@ -6342,24 +6342,24 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("describedBy = " + _describedBy + ", ");
-            stringBuilder.Append("schema_version = " + _schema_version + ", ");
-            stringBuilder.Append("experimenter_full_name = " + _experimenter_full_name + ", ");
-            stringBuilder.Append("session_start_time = " + _session_start_time + ", ");
-            stringBuilder.Append("session_end_time = " + _session_end_time + ", ");
-            stringBuilder.Append("session_type = " + _session_type + ", ");
-            stringBuilder.Append("iacuc_protocol = " + _iacuc_protocol + ", ");
-            stringBuilder.Append("rig_id = " + _rig_id + ", ");
+            stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("experimenter_full_name = " + _experimenterFullName + ", ");
+            stringBuilder.Append("session_start_time = " + _sessionStartTime + ", ");
+            stringBuilder.Append("session_end_time = " + _sessionEndTime + ", ");
+            stringBuilder.Append("session_type = " + _sessionType + ", ");
+            stringBuilder.Append("iacuc_protocol = " + _iacucProtocol + ", ");
+            stringBuilder.Append("rig_id = " + _rigId + ", ");
             stringBuilder.Append("calibrations = " + _calibrations + ", ");
             stringBuilder.Append("maintenance = " + _maintenance + ", ");
-            stringBuilder.Append("subject_id = " + _subject_id + ", ");
-            stringBuilder.Append("animal_weight_prior = " + _animal_weight_prior + ", ");
-            stringBuilder.Append("animal_weight_post = " + _animal_weight_post + ", ");
-            stringBuilder.Append("weight_unit = " + _weight_unit + ", ");
-            stringBuilder.Append("data_streams = " + _data_streams + ", ");
-            stringBuilder.Append("stimulus_epochs = " + _stimulus_epochs + ", ");
-            stringBuilder.Append("reward_delivery = " + _reward_delivery + ", ");
-            stringBuilder.Append("reward_consumed_total = " + _reward_consumed_total + ", ");
-            stringBuilder.Append("reward_consumed_unit = " + _reward_consumed_unit + ", ");
+            stringBuilder.Append("subject_id = " + _subjectId + ", ");
+            stringBuilder.Append("animal_weight_prior = " + _animalWeightPrior + ", ");
+            stringBuilder.Append("animal_weight_post = " + _animalWeightPost + ", ");
+            stringBuilder.Append("weight_unit = " + _weightUnit + ", ");
+            stringBuilder.Append("data_streams = " + _dataStreams + ", ");
+            stringBuilder.Append("stimulus_epochs = " + _stimulusEpochs + ", ");
+            stringBuilder.Append("reward_delivery = " + _rewardDelivery + ", ");
+            stringBuilder.Append("reward_consumed_total = " + _rewardConsumedTotal + ", ");
+            stringBuilder.Append("reward_consumed_unit = " + _rewardConsumedUnit + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
@@ -6513,51 +6513,51 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private int _index;
     
-        private int _imaging_depth;
+        private int _imagingDepth;
     
-        private SizeUnit _imaging_depth_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
+        private SizeUnit _imagingDepthUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
-        private string _targeted_structure;
+        private string _targetedStructure;
     
-        private string _fov_coordinate_ml;
+        private string _fovCoordinateMl;
     
-        private string _fov_coordinate_ap;
+        private string _fovCoordinateAp;
     
-        private SizeUnit _fov_coordinate_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
+        private SizeUnit _fovCoordinateUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
-        private string _fov_reference;
+        private string _fovReference;
     
-        private int _fov_width;
+        private int _fovWidth;
     
-        private int _fov_height;
+        private int _fovHeight;
     
-        private SizeUnit _fov_size_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
+        private SizeUnit _fovSizeUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
     
         private string _magnification;
     
-        private string _fov_scale_factor;
+        private string _fovScaleFactor;
     
-        private string _fov_scale_factor_unit = "um/pixel";
+        private string _fovScaleFactorUnit = "um/pixel";
     
-        private string _frame_rate;
+        private string _frameRate;
     
-        private FrequencyUnit _frame_rate_unit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
+        private FrequencyUnit _frameRateUnit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
     
-        private int? _coupled_fov_index;
+        private int? _coupledFovIndex;
     
-        private SlapSessionType _session_type;
+        private SlapSessionType _sessionType;
     
-        private int _dmd_dilation_x;
+        private int _dmdDilationX;
     
-        private int _dmd_dilation_y;
+        private int _dmdDilationY;
     
-        private SizeUnit _dilation_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
+        private SizeUnit _dilationUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
     
-        private string _target_neuron;
+        private string _targetNeuron;
     
-        private string _target_branch;
+        private string _targetBranch;
     
-        private string _path_to_array_of_frame_rates;
+        private string _pathToArrayOfFrameRates;
     
         public SlapFieldOfView()
         {
@@ -6566,29 +6566,29 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected SlapFieldOfView(SlapFieldOfView other)
         {
             _index = other._index;
-            _imaging_depth = other._imaging_depth;
-            _imaging_depth_unit = other._imaging_depth_unit;
-            _targeted_structure = other._targeted_structure;
-            _fov_coordinate_ml = other._fov_coordinate_ml;
-            _fov_coordinate_ap = other._fov_coordinate_ap;
-            _fov_coordinate_unit = other._fov_coordinate_unit;
-            _fov_reference = other._fov_reference;
-            _fov_width = other._fov_width;
-            _fov_height = other._fov_height;
-            _fov_size_unit = other._fov_size_unit;
+            _imagingDepth = other._imagingDepth;
+            _imagingDepthUnit = other._imagingDepthUnit;
+            _targetedStructure = other._targetedStructure;
+            _fovCoordinateMl = other._fovCoordinateMl;
+            _fovCoordinateAp = other._fovCoordinateAp;
+            _fovCoordinateUnit = other._fovCoordinateUnit;
+            _fovReference = other._fovReference;
+            _fovWidth = other._fovWidth;
+            _fovHeight = other._fovHeight;
+            _fovSizeUnit = other._fovSizeUnit;
             _magnification = other._magnification;
-            _fov_scale_factor = other._fov_scale_factor;
-            _fov_scale_factor_unit = other._fov_scale_factor_unit;
-            _frame_rate = other._frame_rate;
-            _frame_rate_unit = other._frame_rate_unit;
-            _coupled_fov_index = other._coupled_fov_index;
-            _session_type = other._session_type;
-            _dmd_dilation_x = other._dmd_dilation_x;
-            _dmd_dilation_y = other._dmd_dilation_y;
-            _dilation_unit = other._dilation_unit;
-            _target_neuron = other._target_neuron;
-            _target_branch = other._target_branch;
-            _path_to_array_of_frame_rates = other._path_to_array_of_frame_rates;
+            _fovScaleFactor = other._fovScaleFactor;
+            _fovScaleFactorUnit = other._fovScaleFactorUnit;
+            _frameRate = other._frameRate;
+            _frameRateUnit = other._frameRateUnit;
+            _coupledFovIndex = other._coupledFovIndex;
+            _sessionType = other._sessionType;
+            _dmdDilationX = other._dmdDilationX;
+            _dmdDilationY = other._dmdDilationY;
+            _dilationUnit = other._dilationUnit;
+            _targetNeuron = other._targetNeuron;
+            _targetBranch = other._targetBranch;
+            _pathToArrayOfFrameRates = other._pathToArrayOfFrameRates;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("index", Required=Newtonsoft.Json.Required.Always)]
@@ -6607,87 +6607,87 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("imaging_depth", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="imaging_depth")]
-        public int Imaging_depth
+        public int ImagingDepth
         {
             get
             {
-                return _imaging_depth;
+                return _imagingDepth;
             }
             set
             {
-                _imaging_depth = value;
+                _imagingDepth = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("imaging_depth_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="imaging_depth_unit")]
-        public SizeUnit Imaging_depth_unit
+        public SizeUnit ImagingDepthUnit
         {
             get
             {
-                return _imaging_depth_unit;
+                return _imagingDepthUnit;
             }
             set
             {
-                _imaging_depth_unit = value;
+                _imagingDepthUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("targeted_structure", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targeted_structure")]
-        public string Targeted_structure
+        public string TargetedStructure
         {
             get
             {
-                return _targeted_structure;
+                return _targetedStructure;
             }
             set
             {
-                _targeted_structure = value;
+                _targetedStructure = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ml", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ml")]
-        public string Fov_coordinate_ml
+        public string FovCoordinateMl
         {
             get
             {
-                return _fov_coordinate_ml;
+                return _fovCoordinateMl;
             }
             set
             {
-                _fov_coordinate_ml = value;
+                _fovCoordinateMl = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ap", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ap")]
-        public string Fov_coordinate_ap
+        public string FovCoordinateAp
         {
             get
             {
-                return _fov_coordinate_ap;
+                return _fovCoordinateAp;
             }
             set
             {
-                _fov_coordinate_ap = value;
+                _fovCoordinateAp = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_unit")]
-        public SizeUnit Fov_coordinate_unit
+        public SizeUnit FovCoordinateUnit
         {
             get
             {
-                return _fov_coordinate_unit;
+                return _fovCoordinateUnit;
             }
             set
             {
-                _fov_coordinate_unit = value;
+                _fovCoordinateUnit = value;
             }
         }
     
@@ -6697,58 +6697,58 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("fov_reference", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_reference")]
         [System.ComponentModel.DescriptionAttribute("Reference for ML/AP coordinates")]
-        public string Fov_reference
+        public string FovReference
         {
             get
             {
-                return _fov_reference;
+                return _fovReference;
             }
             set
             {
-                _fov_reference = value;
+                _fovReference = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_width", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_width")]
-        public int Fov_width
+        public int FovWidth
         {
             get
             {
-                return _fov_width;
+                return _fovWidth;
             }
             set
             {
-                _fov_width = value;
+                _fovWidth = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_height", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_height")]
-        public int Fov_height
+        public int FovHeight
         {
             get
             {
-                return _fov_height;
+                return _fovHeight;
             }
             set
             {
-                _fov_height = value;
+                _fovHeight = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_size_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_size_unit")]
-        public SizeUnit Fov_size_unit
+        public SizeUnit FovSizeUnit
         {
             get
             {
-                return _fov_size_unit;
+                return _fovSizeUnit;
             }
             set
             {
-                _fov_size_unit = value;
+                _fovSizeUnit = value;
             }
         }
     
@@ -6768,58 +6768,58 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_scale_factor", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_scale_factor")]
-        public string Fov_scale_factor
+        public string FovScaleFactor
         {
             get
             {
-                return _fov_scale_factor;
+                return _fovScaleFactor;
             }
             set
             {
-                _fov_scale_factor = value;
+                _fovScaleFactor = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_scale_factor_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_scale_factor_unit")]
-        public string Fov_scale_factor_unit
+        public string FovScaleFactorUnit
         {
             get
             {
-                return _fov_scale_factor_unit;
+                return _fovScaleFactorUnit;
             }
             set
             {
-                _fov_scale_factor_unit = value;
+                _fovScaleFactorUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate")]
-        public string Frame_rate
+        public string FrameRate
         {
             get
             {
-                return _frame_rate;
+                return _frameRate;
             }
             set
             {
-                _frame_rate = value;
+                _frameRate = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate_unit")]
-        public FrequencyUnit Frame_rate_unit
+        public FrequencyUnit FrameRateUnit
         {
             get
             {
-                return _frame_rate_unit;
+                return _frameRateUnit;
             }
             set
             {
-                _frame_rate_unit = value;
+                _frameRateUnit = value;
             }
         }
     
@@ -6830,115 +6830,115 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("coupled_fov_index")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="coupled_fov_index")]
         [System.ComponentModel.DescriptionAttribute("Coupled planes for multiscope")]
-        public int? Coupled_fov_index
+        public int? CoupledFovIndex
         {
             get
             {
-                return _coupled_fov_index;
+                return _coupledFovIndex;
             }
             set
             {
-                _coupled_fov_index = value;
+                _coupledFovIndex = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("session_type", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="session_type")]
-        public SlapSessionType Session_type
+        public SlapSessionType SessionType
         {
             get
             {
-                return _session_type;
+                return _sessionType;
             }
             set
             {
-                _session_type = value;
+                _sessionType = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("dmd_dilation_x", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="dmd_dilation_x")]
-        public int Dmd_dilation_x
+        public int DmdDilationX
         {
             get
             {
-                return _dmd_dilation_x;
+                return _dmdDilationX;
             }
             set
             {
-                _dmd_dilation_x = value;
+                _dmdDilationX = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("dmd_dilation_y", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="dmd_dilation_y")]
-        public int Dmd_dilation_y
+        public int DmdDilationY
         {
             get
             {
-                return _dmd_dilation_y;
+                return _dmdDilationY;
             }
             set
             {
-                _dmd_dilation_y = value;
+                _dmdDilationY = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("dilation_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="dilation_unit")]
-        public SizeUnit Dilation_unit
+        public SizeUnit DilationUnit
         {
             get
             {
-                return _dilation_unit;
+                return _dilationUnit;
             }
             set
             {
-                _dilation_unit = value;
+                _dilationUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("target_neuron")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="target_neuron")]
-        public string Target_neuron
+        public string TargetNeuron
         {
             get
             {
-                return _target_neuron;
+                return _targetNeuron;
             }
             set
             {
-                _target_neuron = value;
+                _targetNeuron = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("target_branch")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="target_branch")]
-        public string Target_branch
+        public string TargetBranch
         {
             get
             {
-                return _target_branch;
+                return _targetBranch;
             }
             set
             {
-                _target_branch = value;
+                _targetBranch = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("path_to_array_of_frame_rates", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="path_to_array_of_frame_rates")]
-        public string Path_to_array_of_frame_rates
+        public string PathToArrayOfFrameRates
         {
             get
             {
-                return _path_to_array_of_frame_rates;
+                return _pathToArrayOfFrameRates;
             }
             set
             {
-                _path_to_array_of_frame_rates = value;
+                _pathToArrayOfFrameRates = value;
             }
         }
     
@@ -6955,29 +6955,29 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("index = " + _index + ", ");
-            stringBuilder.Append("imaging_depth = " + _imaging_depth + ", ");
-            stringBuilder.Append("imaging_depth_unit = " + _imaging_depth_unit + ", ");
-            stringBuilder.Append("targeted_structure = " + _targeted_structure + ", ");
-            stringBuilder.Append("fov_coordinate_ml = " + _fov_coordinate_ml + ", ");
-            stringBuilder.Append("fov_coordinate_ap = " + _fov_coordinate_ap + ", ");
-            stringBuilder.Append("fov_coordinate_unit = " + _fov_coordinate_unit + ", ");
-            stringBuilder.Append("fov_reference = " + _fov_reference + ", ");
-            stringBuilder.Append("fov_width = " + _fov_width + ", ");
-            stringBuilder.Append("fov_height = " + _fov_height + ", ");
-            stringBuilder.Append("fov_size_unit = " + _fov_size_unit + ", ");
+            stringBuilder.Append("imaging_depth = " + _imagingDepth + ", ");
+            stringBuilder.Append("imaging_depth_unit = " + _imagingDepthUnit + ", ");
+            stringBuilder.Append("targeted_structure = " + _targetedStructure + ", ");
+            stringBuilder.Append("fov_coordinate_ml = " + _fovCoordinateMl + ", ");
+            stringBuilder.Append("fov_coordinate_ap = " + _fovCoordinateAp + ", ");
+            stringBuilder.Append("fov_coordinate_unit = " + _fovCoordinateUnit + ", ");
+            stringBuilder.Append("fov_reference = " + _fovReference + ", ");
+            stringBuilder.Append("fov_width = " + _fovWidth + ", ");
+            stringBuilder.Append("fov_height = " + _fovHeight + ", ");
+            stringBuilder.Append("fov_size_unit = " + _fovSizeUnit + ", ");
             stringBuilder.Append("magnification = " + _magnification + ", ");
-            stringBuilder.Append("fov_scale_factor = " + _fov_scale_factor + ", ");
-            stringBuilder.Append("fov_scale_factor_unit = " + _fov_scale_factor_unit + ", ");
-            stringBuilder.Append("frame_rate = " + _frame_rate + ", ");
-            stringBuilder.Append("frame_rate_unit = " + _frame_rate_unit + ", ");
-            stringBuilder.Append("coupled_fov_index = " + _coupled_fov_index + ", ");
-            stringBuilder.Append("session_type = " + _session_type + ", ");
-            stringBuilder.Append("dmd_dilation_x = " + _dmd_dilation_x + ", ");
-            stringBuilder.Append("dmd_dilation_y = " + _dmd_dilation_y + ", ");
-            stringBuilder.Append("dilation_unit = " + _dilation_unit + ", ");
-            stringBuilder.Append("target_neuron = " + _target_neuron + ", ");
-            stringBuilder.Append("target_branch = " + _target_branch + ", ");
-            stringBuilder.Append("path_to_array_of_frame_rates = " + _path_to_array_of_frame_rates);
+            stringBuilder.Append("fov_scale_factor = " + _fovScaleFactor + ", ");
+            stringBuilder.Append("fov_scale_factor_unit = " + _fovScaleFactorUnit + ", ");
+            stringBuilder.Append("frame_rate = " + _frameRate + ", ");
+            stringBuilder.Append("frame_rate_unit = " + _frameRateUnit + ", ");
+            stringBuilder.Append("coupled_fov_index = " + _coupledFovIndex + ", ");
+            stringBuilder.Append("session_type = " + _sessionType + ", ");
+            stringBuilder.Append("dmd_dilation_x = " + _dmdDilationX + ", ");
+            stringBuilder.Append("dmd_dilation_y = " + _dmdDilationY + ", ");
+            stringBuilder.Append("dilation_unit = " + _dilationUnit + ", ");
+            stringBuilder.Append("target_neuron = " + _targetNeuron + ", ");
+            stringBuilder.Append("target_branch = " + _targetBranch + ", ");
+            stringBuilder.Append("path_to_array_of_frame_rates = " + _pathToArrayOfFrameRates);
             return true;
         }
     
@@ -7257,41 +7257,41 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private System.Collections.Generic.List<StackChannel> _channels = new System.Collections.Generic.List<StackChannel>();
     
-        private int _number_of_planes;
+        private int _numberOfPlanes;
     
-        private double _step_size;
+        private double _stepSize;
     
-        private SizeUnit _step_size_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
+        private SizeUnit _stepSizeUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
-        private int _number_of_plane_repeats_per_volume;
+        private int _numberOfPlaneRepeatsPerVolume;
     
-        private int _number_of_volume_repeats;
+        private int _numberOfVolumeRepeats;
     
-        private double _fov_coordinate_ml;
+        private double _fovCoordinateMl;
     
-        private double _fov_coordinate_ap;
+        private double _fovCoordinateAp;
     
-        private SizeUnit _fov_coordinate_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
+        private SizeUnit _fovCoordinateUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
-        private string _fov_reference;
+        private string _fovReference;
     
-        private int _fov_width;
+        private int _fovWidth;
     
-        private int _fov_height;
+        private int _fovHeight;
     
-        private SizeUnit _fov_size_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
+        private SizeUnit _fovSizeUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
     
         private string _magnification;
     
-        private double _fov_scale_factor;
+        private double _fovScaleFactor;
     
-        private string _fov_scale_factor_unit = "um/pixel";
+        private string _fovScaleFactorUnit = "um/pixel";
     
-        private string _frame_rate;
+        private string _frameRate;
     
-        private FrequencyUnit _frame_rate_unit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
+        private FrequencyUnit _frameRateUnit = AindVrForagingDataSchema.AindVrForagingSession.FrequencyUnit.Hertz;
     
-        private string _targeted_structure;
+        private string _targetedStructure;
     
         public Stack()
         {
@@ -7300,24 +7300,24 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected Stack(Stack other)
         {
             _channels = other._channels;
-            _number_of_planes = other._number_of_planes;
-            _step_size = other._step_size;
-            _step_size_unit = other._step_size_unit;
-            _number_of_plane_repeats_per_volume = other._number_of_plane_repeats_per_volume;
-            _number_of_volume_repeats = other._number_of_volume_repeats;
-            _fov_coordinate_ml = other._fov_coordinate_ml;
-            _fov_coordinate_ap = other._fov_coordinate_ap;
-            _fov_coordinate_unit = other._fov_coordinate_unit;
-            _fov_reference = other._fov_reference;
-            _fov_width = other._fov_width;
-            _fov_height = other._fov_height;
-            _fov_size_unit = other._fov_size_unit;
+            _numberOfPlanes = other._numberOfPlanes;
+            _stepSize = other._stepSize;
+            _stepSizeUnit = other._stepSizeUnit;
+            _numberOfPlaneRepeatsPerVolume = other._numberOfPlaneRepeatsPerVolume;
+            _numberOfVolumeRepeats = other._numberOfVolumeRepeats;
+            _fovCoordinateMl = other._fovCoordinateMl;
+            _fovCoordinateAp = other._fovCoordinateAp;
+            _fovCoordinateUnit = other._fovCoordinateUnit;
+            _fovReference = other._fovReference;
+            _fovWidth = other._fovWidth;
+            _fovHeight = other._fovHeight;
+            _fovSizeUnit = other._fovSizeUnit;
             _magnification = other._magnification;
-            _fov_scale_factor = other._fov_scale_factor;
-            _fov_scale_factor_unit = other._fov_scale_factor_unit;
-            _frame_rate = other._frame_rate;
-            _frame_rate_unit = other._frame_rate_unit;
-            _targeted_structure = other._targeted_structure;
+            _fovScaleFactor = other._fovScaleFactor;
+            _fovScaleFactorUnit = other._fovScaleFactorUnit;
+            _frameRate = other._frameRate;
+            _frameRateUnit = other._frameRateUnit;
+            _targetedStructure = other._targetedStructure;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -7337,115 +7337,115 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("number_of_planes", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number_of_planes")]
-        public int Number_of_planes
+        public int NumberOfPlanes
         {
             get
             {
-                return _number_of_planes;
+                return _numberOfPlanes;
             }
             set
             {
-                _number_of_planes = value;
+                _numberOfPlanes = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("step_size", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="step_size")]
-        public double Step_size
+        public double StepSize
         {
             get
             {
-                return _step_size;
+                return _stepSize;
             }
             set
             {
-                _step_size = value;
+                _stepSize = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("step_size_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="step_size_unit")]
-        public SizeUnit Step_size_unit
+        public SizeUnit StepSizeUnit
         {
             get
             {
-                return _step_size_unit;
+                return _stepSizeUnit;
             }
             set
             {
-                _step_size_unit = value;
+                _stepSizeUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("number_of_plane_repeats_per_volume", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number_of_plane_repeats_per_volume")]
-        public int Number_of_plane_repeats_per_volume
+        public int NumberOfPlaneRepeatsPerVolume
         {
             get
             {
-                return _number_of_plane_repeats_per_volume;
+                return _numberOfPlaneRepeatsPerVolume;
             }
             set
             {
-                _number_of_plane_repeats_per_volume = value;
+                _numberOfPlaneRepeatsPerVolume = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("number_of_volume_repeats", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="number_of_volume_repeats")]
-        public int Number_of_volume_repeats
+        public int NumberOfVolumeRepeats
         {
             get
             {
-                return _number_of_volume_repeats;
+                return _numberOfVolumeRepeats;
             }
             set
             {
-                _number_of_volume_repeats = value;
+                _numberOfVolumeRepeats = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ml", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ml")]
-        public double Fov_coordinate_ml
+        public double FovCoordinateMl
         {
             get
             {
-                return _fov_coordinate_ml;
+                return _fovCoordinateMl;
             }
             set
             {
-                _fov_coordinate_ml = value;
+                _fovCoordinateMl = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_ap", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_ap")]
-        public double Fov_coordinate_ap
+        public double FovCoordinateAp
         {
             get
             {
-                return _fov_coordinate_ap;
+                return _fovCoordinateAp;
             }
             set
             {
-                _fov_coordinate_ap = value;
+                _fovCoordinateAp = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_coordinate_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_coordinate_unit")]
-        public SizeUnit Fov_coordinate_unit
+        public SizeUnit FovCoordinateUnit
         {
             get
             {
-                return _fov_coordinate_unit;
+                return _fovCoordinateUnit;
             }
             set
             {
-                _fov_coordinate_unit = value;
+                _fovCoordinateUnit = value;
             }
         }
     
@@ -7455,58 +7455,58 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("fov_reference", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_reference")]
         [System.ComponentModel.DescriptionAttribute("Reference for ML/AP coordinates")]
-        public string Fov_reference
+        public string FovReference
         {
             get
             {
-                return _fov_reference;
+                return _fovReference;
             }
             set
             {
-                _fov_reference = value;
+                _fovReference = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_width", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_width")]
-        public int Fov_width
+        public int FovWidth
         {
             get
             {
-                return _fov_width;
+                return _fovWidth;
             }
             set
             {
-                _fov_width = value;
+                _fovWidth = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_height", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_height")]
-        public int Fov_height
+        public int FovHeight
         {
             get
             {
-                return _fov_height;
+                return _fovHeight;
             }
             set
             {
-                _fov_height = value;
+                _fovHeight = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fov_size_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_size_unit")]
-        public SizeUnit Fov_size_unit
+        public SizeUnit FovSizeUnit
         {
             get
             {
-                return _fov_size_unit;
+                return _fovSizeUnit;
             }
             set
             {
-                _fov_size_unit = value;
+                _fovSizeUnit = value;
             }
         }
     
@@ -7526,72 +7526,72 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_scale_factor", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_scale_factor")]
-        public double Fov_scale_factor
+        public double FovScaleFactor
         {
             get
             {
-                return _fov_scale_factor;
+                return _fovScaleFactor;
             }
             set
             {
-                _fov_scale_factor = value;
+                _fovScaleFactor = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("fov_scale_factor_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fov_scale_factor_unit")]
-        public string Fov_scale_factor_unit
+        public string FovScaleFactorUnit
         {
             get
             {
-                return _fov_scale_factor_unit;
+                return _fovScaleFactorUnit;
             }
             set
             {
-                _fov_scale_factor_unit = value;
+                _fovScaleFactorUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate")]
-        public string Frame_rate
+        public string FrameRate
         {
             get
             {
-                return _frame_rate;
+                return _frameRate;
             }
             set
             {
-                _frame_rate = value;
+                _frameRate = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate_unit")]
-        public FrequencyUnit Frame_rate_unit
+        public FrequencyUnit FrameRateUnit
         {
             get
             {
-                return _frame_rate_unit;
+                return _frameRateUnit;
             }
             set
             {
-                _frame_rate_unit = value;
+                _frameRateUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("targeted_structure")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targeted_structure")]
-        public string Targeted_structure
+        public string TargetedStructure
         {
             get
             {
-                return _targeted_structure;
+                return _targetedStructure;
             }
             set
             {
-                _targeted_structure = value;
+                _targetedStructure = value;
             }
         }
     
@@ -7608,24 +7608,24 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("channels = " + _channels + ", ");
-            stringBuilder.Append("number_of_planes = " + _number_of_planes + ", ");
-            stringBuilder.Append("step_size = " + _step_size + ", ");
-            stringBuilder.Append("step_size_unit = " + _step_size_unit + ", ");
-            stringBuilder.Append("number_of_plane_repeats_per_volume = " + _number_of_plane_repeats_per_volume + ", ");
-            stringBuilder.Append("number_of_volume_repeats = " + _number_of_volume_repeats + ", ");
-            stringBuilder.Append("fov_coordinate_ml = " + _fov_coordinate_ml + ", ");
-            stringBuilder.Append("fov_coordinate_ap = " + _fov_coordinate_ap + ", ");
-            stringBuilder.Append("fov_coordinate_unit = " + _fov_coordinate_unit + ", ");
-            stringBuilder.Append("fov_reference = " + _fov_reference + ", ");
-            stringBuilder.Append("fov_width = " + _fov_width + ", ");
-            stringBuilder.Append("fov_height = " + _fov_height + ", ");
-            stringBuilder.Append("fov_size_unit = " + _fov_size_unit + ", ");
+            stringBuilder.Append("number_of_planes = " + _numberOfPlanes + ", ");
+            stringBuilder.Append("step_size = " + _stepSize + ", ");
+            stringBuilder.Append("step_size_unit = " + _stepSizeUnit + ", ");
+            stringBuilder.Append("number_of_plane_repeats_per_volume = " + _numberOfPlaneRepeatsPerVolume + ", ");
+            stringBuilder.Append("number_of_volume_repeats = " + _numberOfVolumeRepeats + ", ");
+            stringBuilder.Append("fov_coordinate_ml = " + _fovCoordinateMl + ", ");
+            stringBuilder.Append("fov_coordinate_ap = " + _fovCoordinateAp + ", ");
+            stringBuilder.Append("fov_coordinate_unit = " + _fovCoordinateUnit + ", ");
+            stringBuilder.Append("fov_reference = " + _fovReference + ", ");
+            stringBuilder.Append("fov_width = " + _fovWidth + ", ");
+            stringBuilder.Append("fov_height = " + _fovHeight + ", ");
+            stringBuilder.Append("fov_size_unit = " + _fovSizeUnit + ", ");
             stringBuilder.Append("magnification = " + _magnification + ", ");
-            stringBuilder.Append("fov_scale_factor = " + _fov_scale_factor + ", ");
-            stringBuilder.Append("fov_scale_factor_unit = " + _fov_scale_factor_unit + ", ");
-            stringBuilder.Append("frame_rate = " + _frame_rate + ", ");
-            stringBuilder.Append("frame_rate_unit = " + _frame_rate_unit + ", ");
-            stringBuilder.Append("targeted_structure = " + _targeted_structure);
+            stringBuilder.Append("fov_scale_factor = " + _fovScaleFactor + ", ");
+            stringBuilder.Append("fov_scale_factor_unit = " + _fovScaleFactorUnit + ", ");
+            stringBuilder.Append("frame_rate = " + _frameRate + ", ");
+            stringBuilder.Append("frame_rate_unit = " + _frameRateUnit + ", ");
+            stringBuilder.Append("targeted_structure = " + _targetedStructure);
             return true;
         }
     
@@ -7654,37 +7654,37 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class StackChannel
     {
     
-        private string _channel_name;
+        private string _channelName;
     
-        private string _light_source_name;
+        private string _lightSourceName;
     
-        private System.Collections.Generic.List<string> _filter_names = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _filterNames = new System.Collections.Generic.List<string>();
     
-        private string _detector_name;
+        private string _detectorName;
     
-        private System.Collections.Generic.List<string> _additional_device_names = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _additionalDeviceNames = new System.Collections.Generic.List<string>();
     
-        private int _excitation_wavelength;
+        private int _excitationWavelength;
     
-        private SizeUnit _excitation_wavelength_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Nanometer;
+        private SizeUnit _excitationWavelengthUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Nanometer;
     
-        private double _excitation_power;
+        private double _excitationPower;
     
-        private PowerUnit _excitation_power_unit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
+        private PowerUnit _excitationPowerUnit = AindVrForagingDataSchema.AindVrForagingSession.PowerUnit.Milliwatt;
     
-        private int _filter_wheel_index;
+        private int _filterWheelIndex;
     
         private int? _dilation;
     
-        private SizeUnit _dilation_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
+        private SizeUnit _dilationUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Pixel;
     
         private string _description;
     
-        private int _start_depth;
+        private int _startDepth;
     
-        private int _end_depth;
+        private int _endDepth;
     
-        private SizeUnit _depth_unit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
+        private SizeUnit _depthUnit = AindVrForagingDataSchema.AindVrForagingSession.SizeUnit.Micrometer;
     
         public StackChannel()
         {
@@ -7692,35 +7692,35 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected StackChannel(StackChannel other)
         {
-            _channel_name = other._channel_name;
-            _light_source_name = other._light_source_name;
-            _filter_names = other._filter_names;
-            _detector_name = other._detector_name;
-            _additional_device_names = other._additional_device_names;
-            _excitation_wavelength = other._excitation_wavelength;
-            _excitation_wavelength_unit = other._excitation_wavelength_unit;
-            _excitation_power = other._excitation_power;
-            _excitation_power_unit = other._excitation_power_unit;
-            _filter_wheel_index = other._filter_wheel_index;
+            _channelName = other._channelName;
+            _lightSourceName = other._lightSourceName;
+            _filterNames = other._filterNames;
+            _detectorName = other._detectorName;
+            _additionalDeviceNames = other._additionalDeviceNames;
+            _excitationWavelength = other._excitationWavelength;
+            _excitationWavelengthUnit = other._excitationWavelengthUnit;
+            _excitationPower = other._excitationPower;
+            _excitationPowerUnit = other._excitationPowerUnit;
+            _filterWheelIndex = other._filterWheelIndex;
             _dilation = other._dilation;
-            _dilation_unit = other._dilation_unit;
+            _dilationUnit = other._dilationUnit;
             _description = other._description;
-            _start_depth = other._start_depth;
-            _end_depth = other._end_depth;
-            _depth_unit = other._depth_unit;
+            _startDepth = other._startDepth;
+            _endDepth = other._endDepth;
+            _depthUnit = other._depthUnit;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("channel_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="channel_name")]
-        public string Channel_name
+        public string ChannelName
         {
             get
             {
-                return _channel_name;
+                return _channelName;
             }
             set
             {
-                _channel_name = value;
+                _channelName = value;
             }
         }
     
@@ -7730,15 +7730,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("light_source_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="light_source_name")]
         [System.ComponentModel.DescriptionAttribute("Must match device name")]
-        public string Light_source_name
+        public string LightSourceName
         {
             get
             {
-                return _light_source_name;
+                return _lightSourceName;
             }
             set
             {
-                _light_source_name = value;
+                _lightSourceName = value;
             }
         }
     
@@ -7749,15 +7749,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("filter_names", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="filter_names")]
         [System.ComponentModel.DescriptionAttribute("Must match device names")]
-        public System.Collections.Generic.List<string> Filter_names
+        public System.Collections.Generic.List<string> FilterNames
         {
             get
             {
-                return _filter_names;
+                return _filterNames;
             }
             set
             {
-                _filter_names = value;
+                _filterNames = value;
             }
         }
     
@@ -7767,102 +7767,102 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("detector_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="detector_name")]
         [System.ComponentModel.DescriptionAttribute("Must match device name")]
-        public string Detector_name
+        public string DetectorName
         {
             get
             {
-                return _detector_name;
+                return _detectorName;
             }
             set
             {
-                _detector_name = value;
+                _detectorName = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_device_names")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="additional_device_names")]
-        public System.Collections.Generic.List<string> Additional_device_names
+        public System.Collections.Generic.List<string> AdditionalDeviceNames
         {
             get
             {
-                return _additional_device_names;
+                return _additionalDeviceNames;
             }
             set
             {
-                _additional_device_names = value;
+                _additionalDeviceNames = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_wavelength", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_wavelength")]
-        public int Excitation_wavelength
+        public int ExcitationWavelength
         {
             get
             {
-                return _excitation_wavelength;
+                return _excitationWavelength;
             }
             set
             {
-                _excitation_wavelength = value;
+                _excitationWavelength = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_wavelength_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_wavelength_unit")]
-        public SizeUnit Excitation_wavelength_unit
+        public SizeUnit ExcitationWavelengthUnit
         {
             get
             {
-                return _excitation_wavelength_unit;
+                return _excitationWavelengthUnit;
             }
             set
             {
-                _excitation_wavelength_unit = value;
+                _excitationWavelengthUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_power", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_power")]
-        public double Excitation_power
+        public double ExcitationPower
         {
             get
             {
-                return _excitation_power;
+                return _excitationPower;
             }
             set
             {
-                _excitation_power = value;
+                _excitationPower = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("excitation_power_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="excitation_power_unit")]
-        public PowerUnit Excitation_power_unit
+        public PowerUnit ExcitationPowerUnit
         {
             get
             {
-                return _excitation_power_unit;
+                return _excitationPowerUnit;
             }
             set
             {
-                _excitation_power_unit = value;
+                _excitationPowerUnit = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("filter_wheel_index", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="filter_wheel_index")]
-        public int Filter_wheel_index
+        public int FilterWheelIndex
         {
             get
             {
-                return _filter_wheel_index;
+                return _filterWheelIndex;
             }
             set
             {
-                _filter_wheel_index = value;
+                _filterWheelIndex = value;
             }
         }
     
@@ -7884,15 +7884,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("dilation_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="dilation_unit")]
-        public SizeUnit Dilation_unit
+        public SizeUnit DilationUnit
         {
             get
             {
-                return _dilation_unit;
+                return _dilationUnit;
             }
             set
             {
-                _dilation_unit = value;
+                _dilationUnit = value;
             }
         }
     
@@ -7912,44 +7912,44 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         [Newtonsoft.Json.JsonPropertyAttribute("start_depth", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="start_depth")]
-        public int Start_depth
+        public int StartDepth
         {
             get
             {
-                return _start_depth;
+                return _startDepth;
             }
             set
             {
-                _start_depth = value;
+                _startDepth = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("end_depth", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="end_depth")]
-        public int End_depth
+        public int EndDepth
         {
             get
             {
-                return _end_depth;
+                return _endDepth;
             }
             set
             {
-                _end_depth = value;
+                _endDepth = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("depth_unit")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="depth_unit")]
-        public SizeUnit Depth_unit
+        public SizeUnit DepthUnit
         {
             get
             {
-                return _depth_unit;
+                return _depthUnit;
             }
             set
             {
-                _depth_unit = value;
+                _depthUnit = value;
             }
         }
     
@@ -7965,22 +7965,22 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("channel_name = " + _channel_name + ", ");
-            stringBuilder.Append("light_source_name = " + _light_source_name + ", ");
-            stringBuilder.Append("filter_names = " + _filter_names + ", ");
-            stringBuilder.Append("detector_name = " + _detector_name + ", ");
-            stringBuilder.Append("additional_device_names = " + _additional_device_names + ", ");
-            stringBuilder.Append("excitation_wavelength = " + _excitation_wavelength + ", ");
-            stringBuilder.Append("excitation_wavelength_unit = " + _excitation_wavelength_unit + ", ");
-            stringBuilder.Append("excitation_power = " + _excitation_power + ", ");
-            stringBuilder.Append("excitation_power_unit = " + _excitation_power_unit + ", ");
-            stringBuilder.Append("filter_wheel_index = " + _filter_wheel_index + ", ");
+            stringBuilder.Append("channel_name = " + _channelName + ", ");
+            stringBuilder.Append("light_source_name = " + _lightSourceName + ", ");
+            stringBuilder.Append("filter_names = " + _filterNames + ", ");
+            stringBuilder.Append("detector_name = " + _detectorName + ", ");
+            stringBuilder.Append("additional_device_names = " + _additionalDeviceNames + ", ");
+            stringBuilder.Append("excitation_wavelength = " + _excitationWavelength + ", ");
+            stringBuilder.Append("excitation_wavelength_unit = " + _excitationWavelengthUnit + ", ");
+            stringBuilder.Append("excitation_power = " + _excitationPower + ", ");
+            stringBuilder.Append("excitation_power_unit = " + _excitationPowerUnit + ", ");
+            stringBuilder.Append("filter_wheel_index = " + _filterWheelIndex + ", ");
             stringBuilder.Append("dilation = " + _dilation + ", ");
-            stringBuilder.Append("dilation_unit = " + _dilation_unit + ", ");
+            stringBuilder.Append("dilation_unit = " + _dilationUnit + ", ");
             stringBuilder.Append("description = " + _description + ", ");
-            stringBuilder.Append("start_depth = " + _start_depth + ", ");
-            stringBuilder.Append("end_depth = " + _end_depth + ", ");
-            stringBuilder.Append("depth_unit = " + _depth_unit);
+            stringBuilder.Append("start_depth = " + _startDepth + ", ");
+            stringBuilder.Append("end_depth = " + _endDepth + ", ");
+            stringBuilder.Append("depth_unit = " + _depthUnit);
             return true;
         }
     
@@ -8011,9 +8011,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private Stimulus _stimulus;
     
-        private System.DateTimeOffset _stimulus_start_time;
+        private System.DateTimeOffset _stimulusStartTime;
     
-        private System.DateTimeOffset _stimulus_end_time;
+        private System.DateTimeOffset _stimulusEndTime;
     
         public StimulusEpoch()
         {
@@ -8022,8 +8022,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected StimulusEpoch(StimulusEpoch other)
         {
             _stimulus = other._stimulus;
-            _stimulus_start_time = other._stimulus_start_time;
-            _stimulus_end_time = other._stimulus_end_time;
+            _stimulusStartTime = other._stimulusStartTime;
+            _stimulusEndTime = other._stimulusEndTime;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -8049,15 +8049,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_start_time")]
         [System.ComponentModel.DescriptionAttribute("When a specific stimulus begins. This might be the same as the session start time" +
             ".")]
-        public System.DateTimeOffset Stimulus_start_time
+        public System.DateTimeOffset StimulusStartTime
         {
             get
             {
-                return _stimulus_start_time;
+                return _stimulusStartTime;
             }
             set
             {
-                _stimulus_start_time = value;
+                _stimulusStartTime = value;
             }
         }
     
@@ -8068,15 +8068,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_end_time", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_end_time")]
         [System.ComponentModel.DescriptionAttribute("When a specific stimulus ends. This might be the same as the session end time.")]
-        public System.DateTimeOffset Stimulus_end_time
+        public System.DateTimeOffset StimulusEndTime
         {
             get
             {
-                return _stimulus_end_time;
+                return _stimulusEndTime;
             }
             set
             {
-                _stimulus_end_time = value;
+                _stimulusEndTime = value;
             }
         }
     
@@ -8093,8 +8093,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("stimulus = " + _stimulus + ", ");
-            stringBuilder.Append("stimulus_start_time = " + _stimulus_start_time + ", ");
-            stringBuilder.Append("stimulus_end_time = " + _stimulus_end_time);
+            stringBuilder.Append("stimulus_start_time = " + _stimulusStartTime + ", ");
+            stringBuilder.Append("stimulus_end_time = " + _stimulusEndTime);
             return true;
         }
     
@@ -8123,41 +8123,41 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class Stream
     {
     
-        private System.DateTimeOffset _stream_start_time;
+        private System.DateTimeOffset _streamStartTime;
     
-        private System.DateTimeOffset _stream_end_time;
+        private System.DateTimeOffset _streamEndTime;
     
-        private System.Collections.Generic.List<string> _daq_names = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _daqNames = new System.Collections.Generic.List<string>();
     
-        private System.Collections.Generic.List<string> _camera_names = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _cameraNames = new System.Collections.Generic.List<string>();
     
-        private System.Collections.Generic.List<object> _light_sources = new System.Collections.Generic.List<object>();
+        private System.Collections.Generic.List<object> _lightSources = new System.Collections.Generic.List<object>();
     
-        private System.Collections.Generic.List<EphysModule> _ephys_modules = new System.Collections.Generic.List<EphysModule>();
+        private System.Collections.Generic.List<EphysModule> _ephysModules = new System.Collections.Generic.List<EphysModule>();
     
-        private System.Collections.Generic.List<DomeModule> _stick_microscopes = new System.Collections.Generic.List<DomeModule>();
+        private System.Collections.Generic.List<DomeModule> _stickMicroscopes = new System.Collections.Generic.List<DomeModule>();
     
-        private System.Collections.Generic.List<ManipulatorModule> _manipulator_modules = new System.Collections.Generic.List<ManipulatorModule>();
+        private System.Collections.Generic.List<ManipulatorModule> _manipulatorModules = new System.Collections.Generic.List<ManipulatorModule>();
     
         private System.Collections.Generic.List<DetectorConfig> _detectors = new System.Collections.Generic.List<DetectorConfig>();
     
-        private System.Collections.Generic.List<FiberConnectionConfig> _fiber_connections = new System.Collections.Generic.List<FiberConnectionConfig>();
+        private System.Collections.Generic.List<FiberConnectionConfig> _fiberConnections = new System.Collections.Generic.List<FiberConnectionConfig>();
     
-        private System.Collections.Generic.List<FiberModule> _fiber_modules = new System.Collections.Generic.List<FiberModule>();
+        private System.Collections.Generic.List<FiberModule> _fiberModules = new System.Collections.Generic.List<FiberModule>();
     
-        private System.Collections.Generic.List<FieldOfView> _ophys_fovs = new System.Collections.Generic.List<FieldOfView>();
+        private System.Collections.Generic.List<FieldOfView> _ophysFovs = new System.Collections.Generic.List<FieldOfView>();
     
-        private SlapFieldOfView _slap_fovs;
+        private SlapFieldOfView _slapFovs;
     
-        private Stack _stack_parameters;
+        private Stack _stackParameters;
     
-        private System.Collections.Generic.List<string> _stimulus_device_names = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _stimulusDeviceNames = new System.Collections.Generic.List<string>();
     
-        private string _mouse_platform_name;
+        private string _mousePlatformName;
     
-        private bool _active_mouse_platform;
+        private bool _activeMousePlatform;
     
-        private System.Collections.Generic.List<object> _stream_modalities = new System.Collections.Generic.List<object>();
+        private System.Collections.Generic.List<object> _streamModalities = new System.Collections.Generic.List<object>();
     
         private string _notes;
     
@@ -8167,114 +8167,114 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected Stream(Stream other)
         {
-            _stream_start_time = other._stream_start_time;
-            _stream_end_time = other._stream_end_time;
-            _daq_names = other._daq_names;
-            _camera_names = other._camera_names;
-            _light_sources = other._light_sources;
-            _ephys_modules = other._ephys_modules;
-            _stick_microscopes = other._stick_microscopes;
-            _manipulator_modules = other._manipulator_modules;
+            _streamStartTime = other._streamStartTime;
+            _streamEndTime = other._streamEndTime;
+            _daqNames = other._daqNames;
+            _cameraNames = other._cameraNames;
+            _lightSources = other._lightSources;
+            _ephysModules = other._ephysModules;
+            _stickMicroscopes = other._stickMicroscopes;
+            _manipulatorModules = other._manipulatorModules;
             _detectors = other._detectors;
-            _fiber_connections = other._fiber_connections;
-            _fiber_modules = other._fiber_modules;
-            _ophys_fovs = other._ophys_fovs;
-            _slap_fovs = other._slap_fovs;
-            _stack_parameters = other._stack_parameters;
-            _stimulus_device_names = other._stimulus_device_names;
-            _mouse_platform_name = other._mouse_platform_name;
-            _active_mouse_platform = other._active_mouse_platform;
-            _stream_modalities = other._stream_modalities;
+            _fiberConnections = other._fiberConnections;
+            _fiberModules = other._fiberModules;
+            _ophysFovs = other._ophysFovs;
+            _slapFovs = other._slapFovs;
+            _stackParameters = other._stackParameters;
+            _stimulusDeviceNames = other._stimulusDeviceNames;
+            _mousePlatformName = other._mousePlatformName;
+            _activeMousePlatform = other._activeMousePlatform;
+            _streamModalities = other._streamModalities;
             _notes = other._notes;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stream_start_time", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stream_start_time")]
-        public System.DateTimeOffset Stream_start_time
+        public System.DateTimeOffset StreamStartTime
         {
             get
             {
-                return _stream_start_time;
+                return _streamStartTime;
             }
             set
             {
-                _stream_start_time = value;
+                _streamStartTime = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stream_end_time", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stream_end_time")]
-        public System.DateTimeOffset Stream_end_time
+        public System.DateTimeOffset StreamEndTime
         {
             get
             {
-                return _stream_end_time;
+                return _streamEndTime;
             }
             set
             {
-                _stream_end_time = value;
+                _streamEndTime = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("daq_names")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="daq_names")]
-        public System.Collections.Generic.List<string> Daq_names
+        public System.Collections.Generic.List<string> DaqNames
         {
             get
             {
-                return _daq_names;
+                return _daqNames;
             }
             set
             {
-                _daq_names = value;
+                _daqNames = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("camera_names")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="camera_names")]
-        public System.Collections.Generic.List<string> Camera_names
+        public System.Collections.Generic.List<string> CameraNames
         {
             get
             {
-                return _camera_names;
+                return _cameraNames;
             }
             set
             {
-                _camera_names = value;
+                _cameraNames = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("light_sources")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="light_sources")]
-        public System.Collections.Generic.List<object> Light_sources
+        public System.Collections.Generic.List<object> LightSources
         {
             get
             {
-                return _light_sources;
+                return _lightSources;
             }
             set
             {
-                _light_sources = value;
+                _lightSources = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("ephys_modules")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ephys_modules")]
-        public System.Collections.Generic.List<EphysModule> Ephys_modules
+        public System.Collections.Generic.List<EphysModule> EphysModules
         {
             get
             {
-                return _ephys_modules;
+                return _ephysModules;
             }
             set
             {
-                _ephys_modules = value;
+                _ephysModules = value;
             }
         }
     
@@ -8285,30 +8285,30 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("stick_microscopes")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stick_microscopes")]
         [System.ComponentModel.DescriptionAttribute("Must match stick microscope assemblies in rig file")]
-        public System.Collections.Generic.List<DomeModule> Stick_microscopes
+        public System.Collections.Generic.List<DomeModule> StickMicroscopes
         {
             get
             {
-                return _stick_microscopes;
+                return _stickMicroscopes;
             }
             set
             {
-                _stick_microscopes = value;
+                _stickMicroscopes = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("manipulator_modules")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="manipulator_modules")]
-        public System.Collections.Generic.List<ManipulatorModule> Manipulator_modules
+        public System.Collections.Generic.List<ManipulatorModule> ManipulatorModules
         {
             get
             {
-                return _manipulator_modules;
+                return _manipulatorModules;
             }
             set
             {
-                _manipulator_modules = value;
+                _manipulatorModules = value;
             }
         }
     
@@ -8330,133 +8330,133 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fiber_connections")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fiber_connections")]
-        public System.Collections.Generic.List<FiberConnectionConfig> Fiber_connections
+        public System.Collections.Generic.List<FiberConnectionConfig> FiberConnections
         {
             get
             {
-                return _fiber_connections;
+                return _fiberConnections;
             }
             set
             {
-                _fiber_connections = value;
+                _fiberConnections = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("fiber_modules")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="fiber_modules")]
-        public System.Collections.Generic.List<FiberModule> Fiber_modules
+        public System.Collections.Generic.List<FiberModule> FiberModules
         {
             get
             {
-                return _fiber_modules;
+                return _fiberModules;
             }
             set
             {
-                _fiber_modules = value;
+                _fiberModules = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("ophys_fovs")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ophys_fovs")]
-        public System.Collections.Generic.List<FieldOfView> Ophys_fovs
+        public System.Collections.Generic.List<FieldOfView> OphysFovs
         {
             get
             {
-                return _ophys_fovs;
+                return _ophysFovs;
             }
             set
             {
-                _ophys_fovs = value;
+                _ophysFovs = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("slap_fovs")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="slap_fovs")]
-        public SlapFieldOfView Slap_fovs
+        public SlapFieldOfView SlapFovs
         {
             get
             {
-                return _slap_fovs;
+                return _slapFovs;
             }
             set
             {
-                _slap_fovs = value;
+                _slapFovs = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stack_parameters")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stack_parameters")]
-        public Stack Stack_parameters
+        public Stack StackParameters
         {
             get
             {
-                return _stack_parameters;
+                return _stackParameters;
             }
             set
             {
-                _stack_parameters = value;
+                _stackParameters = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_device_names")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_device_names")]
-        public System.Collections.Generic.List<string> Stimulus_device_names
+        public System.Collections.Generic.List<string> StimulusDeviceNames
         {
             get
             {
-                return _stimulus_device_names;
+                return _stimulusDeviceNames;
             }
             set
             {
-                _stimulus_device_names = value;
+                _stimulusDeviceNames = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("mouse_platform_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="mouse_platform_name")]
-        public string Mouse_platform_name
+        public string MousePlatformName
         {
             get
             {
-                return _mouse_platform_name;
+                return _mousePlatformName;
             }
             set
             {
-                _mouse_platform_name = value;
+                _mousePlatformName = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("active_mouse_platform", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="active_mouse_platform")]
-        public bool Active_mouse_platform
+        public bool ActiveMousePlatform
         {
             get
             {
-                return _active_mouse_platform;
+                return _activeMousePlatform;
             }
             set
             {
-                _active_mouse_platform = value;
+                _activeMousePlatform = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stream_modalities", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stream_modalities")]
-        public System.Collections.Generic.List<object> Stream_modalities
+        public System.Collections.Generic.List<object> StreamModalities
         {
             get
             {
-                return _stream_modalities;
+                return _streamModalities;
             }
             set
             {
-                _stream_modalities = value;
+                _streamModalities = value;
             }
         }
     
@@ -8486,24 +8486,24 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("stream_start_time = " + _stream_start_time + ", ");
-            stringBuilder.Append("stream_end_time = " + _stream_end_time + ", ");
-            stringBuilder.Append("daq_names = " + _daq_names + ", ");
-            stringBuilder.Append("camera_names = " + _camera_names + ", ");
-            stringBuilder.Append("light_sources = " + _light_sources + ", ");
-            stringBuilder.Append("ephys_modules = " + _ephys_modules + ", ");
-            stringBuilder.Append("stick_microscopes = " + _stick_microscopes + ", ");
-            stringBuilder.Append("manipulator_modules = " + _manipulator_modules + ", ");
+            stringBuilder.Append("stream_start_time = " + _streamStartTime + ", ");
+            stringBuilder.Append("stream_end_time = " + _streamEndTime + ", ");
+            stringBuilder.Append("daq_names = " + _daqNames + ", ");
+            stringBuilder.Append("camera_names = " + _cameraNames + ", ");
+            stringBuilder.Append("light_sources = " + _lightSources + ", ");
+            stringBuilder.Append("ephys_modules = " + _ephysModules + ", ");
+            stringBuilder.Append("stick_microscopes = " + _stickMicroscopes + ", ");
+            stringBuilder.Append("manipulator_modules = " + _manipulatorModules + ", ");
             stringBuilder.Append("detectors = " + _detectors + ", ");
-            stringBuilder.Append("fiber_connections = " + _fiber_connections + ", ");
-            stringBuilder.Append("fiber_modules = " + _fiber_modules + ", ");
-            stringBuilder.Append("ophys_fovs = " + _ophys_fovs + ", ");
-            stringBuilder.Append("slap_fovs = " + _slap_fovs + ", ");
-            stringBuilder.Append("stack_parameters = " + _stack_parameters + ", ");
-            stringBuilder.Append("stimulus_device_names = " + _stimulus_device_names + ", ");
-            stringBuilder.Append("mouse_platform_name = " + _mouse_platform_name + ", ");
-            stringBuilder.Append("active_mouse_platform = " + _active_mouse_platform + ", ");
-            stringBuilder.Append("stream_modalities = " + _stream_modalities + ", ");
+            stringBuilder.Append("fiber_connections = " + _fiberConnections + ", ");
+            stringBuilder.Append("fiber_modules = " + _fiberModules + ", ");
+            stringBuilder.Append("ophys_fovs = " + _ophysFovs + ", ");
+            stringBuilder.Append("slap_fovs = " + _slapFovs + ", ");
+            stringBuilder.Append("stack_parameters = " + _stackParameters + ", ");
+            stringBuilder.Append("stimulus_device_names = " + _stimulusDeviceNames + ", ");
+            stringBuilder.Append("mouse_platform_name = " + _mousePlatformName + ", ");
+            stringBuilder.Append("active_mouse_platform = " + _activeMousePlatform + ", ");
+            stringBuilder.Append("stream_modalities = " + _streamModalities + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
@@ -8670,19 +8670,19 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     public partial class VisualStimulation : Stimulus
     {
     
-        private string _stimulus_name;
+        private string _stimulusName;
     
-        private object _stimulus_parameters;
+        private object _stimulusParameters;
     
-        private System.Collections.Generic.List<string> _stimulus_template_name = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _stimulusTemplateName = new System.Collections.Generic.List<string>();
     
-        private string _stimulus_software;
+        private string _stimulusSoftware;
     
-        private string _stimulus_software_version;
+        private string _stimulusSoftwareVersion;
     
-        private string _stimulus_script;
+        private string _stimulusScript;
     
-        private string _stimulus_script_version;
+        private string _stimulusScriptVersion;
     
         private string _notes;
     
@@ -8693,27 +8693,27 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         protected VisualStimulation(VisualStimulation other) : 
                 base(other)
         {
-            _stimulus_name = other._stimulus_name;
-            _stimulus_parameters = other._stimulus_parameters;
-            _stimulus_template_name = other._stimulus_template_name;
-            _stimulus_software = other._stimulus_software;
-            _stimulus_software_version = other._stimulus_software_version;
-            _stimulus_script = other._stimulus_script;
-            _stimulus_script_version = other._stimulus_script_version;
+            _stimulusName = other._stimulusName;
+            _stimulusParameters = other._stimulusParameters;
+            _stimulusTemplateName = other._stimulusTemplateName;
+            _stimulusSoftware = other._stimulusSoftware;
+            _stimulusSoftwareVersion = other._stimulusSoftwareVersion;
+            _stimulusScript = other._stimulusScript;
+            _stimulusScriptVersion = other._stimulusScriptVersion;
             _notes = other._notes;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_name", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_name")]
-        public string Stimulus_name
+        public string StimulusName
         {
             get
             {
-                return _stimulus_name;
+                return _stimulusName;
             }
             set
             {
-                _stimulus_name = value;
+                _stimulusName = value;
             }
         }
     
@@ -8724,15 +8724,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_parameters")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_parameters")]
         [System.ComponentModel.DescriptionAttribute("Define and list the parameter values used (e.g. all TF or orientation values)")]
-        public object Stimulus_parameters
+        public object StimulusParameters
         {
             get
             {
-                return _stimulus_parameters;
+                return _stimulusParameters;
             }
             set
             {
-                _stimulus_parameters = value;
+                _stimulusParameters = value;
             }
         }
     
@@ -8743,15 +8743,15 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_template_name")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_template_name")]
         [System.ComponentModel.DescriptionAttribute("Name of image set or movie displayed")]
-        public System.Collections.Generic.List<string> Stimulus_template_name
+        public System.Collections.Generic.List<string> StimulusTemplateName
         {
             get
             {
-                return _stimulus_template_name;
+                return _stimulusTemplateName;
             }
             set
             {
-                _stimulus_template_name = value;
+                _stimulusTemplateName = value;
             }
         }
     
@@ -8761,29 +8761,29 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_software", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_software")]
         [System.ComponentModel.DescriptionAttribute("The software used to control the stimulus (e.g. Bonsai)")]
-        public string Stimulus_software
+        public string StimulusSoftware
         {
             get
             {
-                return _stimulus_software;
+                return _stimulusSoftware;
             }
             set
             {
-                _stimulus_software = value;
+                _stimulusSoftware = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_software_version", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_software_version")]
-        public string Stimulus_software_version
+        public string StimulusSoftwareVersion
         {
             get
             {
-                return _stimulus_software_version;
+                return _stimulusSoftwareVersion;
             }
             set
             {
-                _stimulus_software_version = value;
+                _stimulusSoftwareVersion = value;
             }
         }
     
@@ -8793,29 +8793,29 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_script", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_script")]
         [System.ComponentModel.DescriptionAttribute("The specific code for this stimulus instance")]
-        public string Stimulus_script
+        public string StimulusScript
         {
             get
             {
-                return _stimulus_script;
+                return _stimulusScript;
             }
             set
             {
-                _stimulus_script = value;
+                _stimulusScript = value;
             }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_script_version", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stimulus_script_version")]
-        public string Stimulus_script_version
+        public string StimulusScriptVersion
         {
             get
             {
-                return _stimulus_script_version;
+                return _stimulusScriptVersion;
             }
             set
             {
-                _stimulus_script_version = value;
+                _stimulusScriptVersion = value;
             }
         }
     
@@ -8849,13 +8849,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("stimulus_name = " + _stimulus_name + ", ");
-            stringBuilder.Append("stimulus_parameters = " + _stimulus_parameters + ", ");
-            stringBuilder.Append("stimulus_template_name = " + _stimulus_template_name + ", ");
-            stringBuilder.Append("stimulus_software = " + _stimulus_software + ", ");
-            stringBuilder.Append("stimulus_software_version = " + _stimulus_software_version + ", ");
-            stringBuilder.Append("stimulus_script = " + _stimulus_script + ", ");
-            stringBuilder.Append("stimulus_script_version = " + _stimulus_script_version + ", ");
+            stringBuilder.Append("stimulus_name = " + _stimulusName + ", ");
+            stringBuilder.Append("stimulus_parameters = " + _stimulusParameters + ", ");
+            stringBuilder.Append("stimulus_template_name = " + _stimulusTemplateName + ", ");
+            stringBuilder.Append("stimulus_software = " + _stimulusSoftware + ", ");
+            stringBuilder.Append("stimulus_software_version = " + _stimulusSoftwareVersion + ", ");
+            stringBuilder.Append("stimulus_script = " + _stimulusScript + ", ");
+            stringBuilder.Append("stimulus_script_version = " + _stimulusScriptVersion + ", ");
             stringBuilder.Append("notes = " + _notes);
             return true;
         }
