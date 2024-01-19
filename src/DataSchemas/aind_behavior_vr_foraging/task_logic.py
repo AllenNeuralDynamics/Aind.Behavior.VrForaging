@@ -288,9 +288,6 @@ class TaskLogic(AindCoreModel):
     task_stage_settings: TaskStageSettings = Field(description="Settings of the task stage")
     operation_control: OperationControl = Field(description="Control of the operation")
     dependencies: Optional[Dependencies] = Field(None, description="Dependencies of the task logic")
-    
-    class Config:
-        json_schema_extra = {"dependencies": {"x-abstract": "True"}}
 
 
 class Dependencies(BaseModel):
