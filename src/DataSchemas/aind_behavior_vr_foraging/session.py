@@ -4,7 +4,7 @@ from typing import Optional
 # Import aind-datas-schema types
 from aind_data_schema.base import AindModel
 from aind_data_schema.core.session import Session
-from pydantic import Field
+from pydantic import Field, BaseModel
 from typing_extensions import Annotated
 
 
@@ -31,3 +31,7 @@ class Metadata(AindModel):
 class AindVrForagingSession(AindModel):
     metadata: Annotated[Metadata, Field(description="Metadata of the session")]
     session: Annotated[Session, Field(description="Session data")]
+
+
+def schema() -> BaseModel:
+    return AindVrForagingSession

@@ -271,11 +271,14 @@ class TaskLogic(AindCoreModel):
     operation_control: OperationControl = Field(description="Control of the operation")
 
 
-class RootObj(BaseModel):
-    add_refs: None | VisualCorridor | VirtualSite | distributions.Distribution = Field(
-        None, description="Additional references"
-    )
-    taskLogic: TaskLogic = Field(description="Task logic")
+class Dependencies(BaseModel):
+    visual_corridor: VisualCorridor
+    virtual_site: VirtualSite
+    distributions: distributions.Distribution
 
     class Config:
         json_schema_extra = {"x-abstract": "True"}
+
+
+def schema() -> List[BaseModel]:
+    return [TaskLogic, Dependencies]
