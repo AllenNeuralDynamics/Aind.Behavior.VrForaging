@@ -5,7 +5,7 @@
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p2="clr-namespace:AindVrForagingDataSchema.AindVrForagingSession;assembly=Extensions"
-                 xmlns:p3="clr-namespace:AindVrForagingDataSchema.Rig;assembly=Extensions"
+                 xmlns:p3="clr-namespace:AindVrForagingDataSchema.AindVrForagingRig;assembly=Extensions"
                  xmlns:p4="clr-namespace:AindVrForagingDataSchema.AindVrForagingTask;assembly=Extensions"
                  xmlns:p5="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
@@ -128,7 +128,7 @@
         <Name>RawTaskLogicSchema</Name>
       </Expression>
       <Expression xsi:type="p4:DeserializeFromYaml">
-        <p4:Type xsi:type="TypeMapping" TypeArguments="p4:TaskLogic" />
+        <p4:Type xsi:type="TypeMapping" TypeArguments="p4:AindVrForagingTaskLogic" />
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Take">
@@ -160,7 +160,7 @@
               <Name>SubjectSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Metadata.Allow_dirty_repo</Selector>
+              <Selector>Metadata.AllowDirtyRepo</Selector>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Zip" />
@@ -265,10 +265,7 @@
               <Name>RigSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Valves.Water</Selector>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Calibration</Selector>
+              <Selector>WaterValve</Selector>
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>it == null</scr:Expression>
@@ -295,7 +292,7 @@
               <Name>TaskLogicSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>OperationControl.OdorControl.UseChannel_3AsCarrier</Selector>
+              <Selector>OperationControl.OdorControl.UseChannel3AsCarrier</Selector>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Workflow>
@@ -412,13 +409,12 @@
             <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
             <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="32" Label="Source1" />
             <Edge From="32" To="33" Label="Source1" />
             <Edge From="33" To="34" Label="Source1" />
             <Edge From="34" To="35" Label="Source1" />
             <Edge From="35" To="36" Label="Source1" />
             <Edge From="36" To="37" Label="Source1" />
-            <Edge From="37" To="38" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -426,7 +422,7 @@
         <Name>SubjectSchema</Name>
       </Expression>
       <Expression xsi:type="MemberSelector">
-        <Selector>Metadata.Skip_hardware_validation</Selector>
+        <Selector>Metadata.SkipHardwareValidation</Selector>
       </Expression>
       <Expression xsi:type="BitwiseNot" />
       <Expression xsi:type="rx:Condition">
@@ -572,7 +568,7 @@
                     <Name>RigSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Graphics.Render.TextureAssetDirectory</Selector>
+                    <Selector>Screen.TextureAssetsDirectory</Selector>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
@@ -689,11 +685,11 @@
                           <Name>RigSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Graphics.Display</Selector>
+                          <Selector>Screen</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
-                            <Property Name="DisplayDevice" Selector="DisplayDevice" />
+                            <Property Name="DisplayDevice" Selector="DisplayIndex" />
                             <Property Name="TargetRenderFrequency" Selector="TargetRenderFrequency" />
                             <Property Name="TargetUpdateFrequency" Selector="TargetUpdateFrequency" />
                           </PropertyMappings>
@@ -781,7 +777,7 @@
                           <Name>RigSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Graphics.Render.MonitorCalibrationDirectory</Selector>
+                          <Selector>Screen.CalibrationDirectory</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -1956,7 +1952,7 @@ Item2.Light as Light)</scr:Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
                 <Property Name="Subject" Selector="Subject" />
-                <Property Name="RootFolder" Selector="Root_path" />
+                <Property Name="RootFolder" Selector="RootPath" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
@@ -2224,7 +2220,7 @@ Item2.Light as Light)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionSink">
                           <scr:Name>AddHash</scr:Name>
-                          <scr:Expression>it.Item1.Metadata.set_commit_hash(it.Item2)</scr:Expression>
+                          <scr:Expression>it.Item1.Metadata.set_commitHash(it.Item2)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Item1</Selector>
@@ -3376,7 +3372,7 @@ Value as IsStopped)</scr:Expression>
                                 <Name>TaskLogicSchema</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>OperationControl.OdorControl.UseChannel_3AsCarrier</Selector>
+                                <Selector>OperationControl.OdorControl.UseChannel3AsCarrier</Selector>
                               </Expression>
                               <Expression xsi:type="rx:Condition">
                                 <Workflow>
@@ -3504,7 +3500,7 @@ Value as IsStopped)</scr:Expression>
                           <Name>TaskLogicSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>OperationControl.OdorControl.UseChannel_3AsCarrier</Selector>
+                          <Selector>OperationControl.OdorControl.UseChannel3AsCarrier</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -3792,17 +3788,14 @@ Value as IsStopped)</scr:Expression>
                     <Name>RigSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Valves.Water</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Calibration</Selector>
+                    <Selector>WaterValve</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Name>RewardToTime</scr:Name>
-                    <scr:Expression>Item1 * Item2.Slope + Item2.Intercept</scr:Expression>
+                    <scr:Expression>Item1 * Item2.CalibrationSlope + Item2.CalibrationIntercept</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Multiply">
                     <Operand xsi:type="DoubleProperty">
@@ -3877,10 +3870,10 @@ Value as IsStopped)</scr:Expression>
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="9" Label="Source1" />
+                  <Edge From="5" To="8" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source2" />
+                  <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
@@ -3888,13 +3881,12 @@ Value as IsStopped)</scr:Expression>
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="18" To="20" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source2" />
+                  <Edge From="17" To="19" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source2" />
+                  <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source1" />
                   <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -3924,17 +3916,14 @@ Value as IsStopped)</scr:Expression>
                           <Name>HarpBehaviorCommands</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
+                          <Name>TaskLogicSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>MovableSpout</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Period</Selector>
+                          <Selector>OperationControl.MovableSpoutControl</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
-                            <Property Name="Value" />
+                            <Property Name="Value" Selector="ServoMotor.Period" />
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -3959,13 +3948,13 @@ Value as IsStopped)</scr:Expression>
                           <Name>HarpBehaviorCommands</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
+                          <Name>TaskLogicSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>MovableSpout</Selector>
+                          <Selector>OperationControl.MovableSpoutControl</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>PulseDurationUsDefault</Selector>
+                          <Selector>ServoMotor.DefaultPulseDuration</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -3984,17 +3973,17 @@ Value as IsStopped)</scr:Expression>
                           <rx:Name>ServoPosition</rx:Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
+                          <Name>TaskLogicSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>MovableSpout</Selector>
+                          <Selector>OperationControl.MovableSpoutControl.ServoMotor</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:CombineLatest" />
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Name>Clamp</scr:Name>
-                          <scr:Expression>Item1 &lt; Item2.PulseDurationUsMin ? Item2.PulseDurationUsMin : (Item1 &gt; Item2.PulseDurationUsMax ? Item2.PulseDurationUsMax : Item1)</scr:Expression>
+                          <scr:Expression>Item1 &lt; Item2.MinPulseDuration ? Item2.MinPulseDuration : (Item1 &gt; Item2.MaxPulseDuration ? Item2.MaxPulseDuration : Item1)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Annotation">
                           <Name>1000:2000</Name>
@@ -4018,30 +4007,29 @@ Value as IsStopped)</scr:Expression>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="8" Label="Source1" />
+                        <Edge From="3" To="7" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="17" Label="Source1" />
+                        <Edge From="11" To="16" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
                         <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source2" />
-                        <Edge From="17" To="18" Label="Source1" />
-                        <Edge From="19" To="22" Label="Source1" />
-                        <Edge From="20" To="21" Label="Source1" />
-                        <Edge From="21" To="22" Label="Source2" />
-                        <Edge From="22" To="23" Label="Source1" />
-                        <Edge From="23" To="25" Label="Source1" />
-                        <Edge From="24" To="25" Label="Source2" />
-                        <Edge From="25" To="26" Label="Source1" />
-                        <Edge From="26" To="28" Label="Source1" />
-                        <Edge From="27" To="28" Label="Source2" />
+                        <Edge From="15" To="16" Label="Source2" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="18" To="21" Label="Source1" />
+                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source2" />
+                        <Edge From="21" To="22" Label="Source1" />
+                        <Edge From="22" To="24" Label="Source1" />
+                        <Edge From="23" To="24" Label="Source2" />
+                        <Edge From="24" To="25" Label="Source1" />
+                        <Edge From="25" To="27" Label="Source1" />
+                        <Edge From="26" To="27" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -4065,16 +4053,16 @@ Value as IsStopped)</scr:Expression>
                     <Name>SpoutAvailable</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>RigSchema</Name>
+                    <Name>TaskLogicSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>MovableSpout</Selector>
+                    <Selector>OperationControl.MovableSpoutControl.ServoMotor</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:CombineLatest" />
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>Item1 ? Item2.PulseDurationUsMax : Item2.PulseDurationUsMin</scr:Expression>
+                    <scr:Expression>Item1 ? Item2.MaxPulseDuration : Item2.MinPulseDuration</scr:Expression>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TaskLogicSchema</Name>
@@ -4856,25 +4844,25 @@ Value as IsStopped)</scr:Expression>
                           <Name>HarpBehaviorCommands</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
+                          <Name>TaskLogicSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Speaker</Selector>
+                          <Selector>OperationControl.AudioControl</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>PwmDefaultPulseDuration</Selector>
+                          <Selector>Duration</Selector>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>AudioDuration</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
+                          <Name>TaskLogicSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Speaker</Selector>
+                          <Selector>OperationControl.AudioControl</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>PwmFrequency</Selector>
+                          <Selector>Frequency</Selector>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>AudioFrequency</Name>
@@ -6212,10 +6200,25 @@ Item2 as Start
               <Name>TaskLogicSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>TaskStageSettings</Selector>
+              <Selector>Stage</Selector>
             </Expression>
-            <Expression xsi:type="p4:MatchTaskStage">
-              <p4:Type xsi:type="TypeMapping" TypeArguments="p4:ForagingSettings" />
+            <Expression xsi:type="Equal">
+              <Operand xsi:type="WorkflowProperty" TypeArguments="p4:TaskStage">
+                <Value>FORAGING</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -6233,15 +6236,7 @@ Item2 as Start
                     <Name>TaskLogicSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>TaskStageSettings</Selector>
-                  </Expression>
-                  <Expression xsi:type="p4:MatchTaskStage">
-                    <p4:Type xsi:type="TypeMapping" TypeArguments="p4:HabituationSettings" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
+                    <Selector>HabitualStageSettings</Selector>
                   </Expression>
                   <Expression xsi:type="rx:AsyncSubject">
                     <Name>HabituationSettings</Name>
@@ -6726,34 +6721,32 @@ Item2 as Start
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="21" To="28" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="19" To="26" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="24" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="26" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source2" />
                   <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source2" />
-                  <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="27" To="28" Label="Source2" />
-                  <Edge From="28" To="35" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="26" To="33" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="33" Label="Source2" />
                   <Edge From="30" To="31" Label="Source1" />
-                  <Edge From="31" To="35" Label="Source2" />
-                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="32" To="33" Label="Source3" />
                   <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source3" />
-                  <Edge From="35" To="36" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -6761,10 +6754,25 @@ Item2 as Start
               <Name>TaskLogicSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>TaskStageSettings</Selector>
+              <Selector>Stage</Selector>
             </Expression>
-            <Expression xsi:type="p4:MatchTaskStage">
-              <p4:Type xsi:type="TypeMapping" TypeArguments="p4:HabituationSettings" />
+            <Expression xsi:type="Equal">
+              <Operand xsi:type="WorkflowProperty" TypeArguments="p4:TaskStage">
+                <Value>HABITUATION</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -6778,16 +6786,18 @@ Item2 as Start
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="8" Label="Source1" />
+            <Edge From="3" To="9" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source2" />
-            <Edge From="9" To="14" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source2" />
+            <Edge From="10" To="16" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source2" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>
@@ -7350,7 +7360,7 @@ Item5 as TotalReward)</scr:Expression>
                           <Combinator xsi:type="p4:SerializeToJson" />
                         </Expression>
                         <Expression xsi:type="p4:DeserializeFromJson">
-                          <p4:Type xsi:type="TypeMapping" TypeArguments="p4:Distribution" />
+                          <p4:Type xsi:type="TypeMapping" TypeArguments="p4:Delay" />
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
@@ -8479,7 +8489,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Metadata</Selector>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Remote_path</Selector>
+              <Selector>RemotePath</Selector>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>NotNull</Name>
@@ -8537,7 +8547,7 @@ Item5 as TotalReward)</scr:Expression>
               <Selector>Metadata</Selector>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Remote_path</Selector>
+              <Selector>RemotePath</Selector>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>NotNull</Name>

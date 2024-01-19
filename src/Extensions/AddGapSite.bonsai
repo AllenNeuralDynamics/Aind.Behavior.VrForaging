@@ -56,7 +56,7 @@
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Value" DisplayName="LengthDistribution" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Distribution">
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Delay">
               <MemberName>LengthDistribution</MemberName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
