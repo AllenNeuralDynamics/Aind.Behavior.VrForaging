@@ -48,6 +48,8 @@ class DistributionBase(AindModel):
 class ScalarDistributionParameter(DistributionParametersBase):
     family: Literal[DistributionFamily.SCALAR] = DistributionFamily.SCALAR
     value: float = Field(default=0, description="The static value of the distribution")
+    truncation_parameters: Literal[None] = None
+    scaling_parameters: Literal[None] = None
 
 
 class Scalar(DistributionBase):
@@ -161,8 +163,7 @@ class PoissonDistribution(DistributionBase):
     )
 
 
-class Distribution(RootModel):
-    root: Annotated[
+Distribution = Annotated[
         Union[
             Scalar,
             NormalDistribution,
@@ -178,8 +179,7 @@ class Distribution(RootModel):
     ]
 
 
-class DistributionParameters(RootModel):
-    root: Annotated[
+DistributionParameters = Annotated[
         Union[
             ScalarDistributionParameter,
             NormalDistributionParameters,

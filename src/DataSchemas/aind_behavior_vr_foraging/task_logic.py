@@ -11,6 +11,24 @@ from aind_data_schema.base import AindCoreModel, AindModel
 from pydantic import BaseModel, Field, RootModel
 
 
+def scalar_value(value: float) -> distributions.Scalar:
+    """
+    Helper function to create a scalar value distribution for a given value.
+
+    Args:
+        value (float): The value of the scalar distribution.
+
+    Returns:
+        distributions.Scalar: The scalar distribution type.
+    """
+    #return distributions.Scalar(
+    #    distribution_parameters=distributions.ScalarDistributionParameter(value=value)
+    #)
+
+    return distributions.ExponentialDistribution(
+        distribution_parameters=distributions.ExponentialDistributionParameters(rate=1))
+
+
 class Size(AindModel):
     width: float = Field(default=0, description="Width of the texture")
     height: float = Field(default=0, description="Height of the texture")
@@ -89,7 +107,7 @@ class RewardSpecification(AindModel):
     operant_logic: Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
     probability: float = Field(default=1, ge=0, le=1, description="Probability of the reward")
     delay: distributions.Distribution = Field(
-        default=distributions.Scalar(distribution_parameters=distributions.ScalarDistributionParameter(value=0)),
+        default=scalar_value(0),
         description="The optional distribution where the delay to reward will be drawn from",
     )
 
@@ -111,7 +129,7 @@ class VirtualSiteGenerator(AindModel):
     )
     label: VirtualSiteLabels = Field(VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
-        default=distributions.Scalar(distribution_parameters=distributions.ScalarDistributionParameter(value=20)),
+        default=scalar_value(20),
         description="Distribution of the length of the virtual site",
     )
 
@@ -269,6 +287,10 @@ class TaskLogic(AindCoreModel):
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
     task_stage_settings: TaskStageSettings = Field(description="Settings of the task stage")
     operation_control: OperationControl = Field(description="Control of the operation")
+    dependencies: Optional[Dependencies] = Field(None, description="Dependencies of the task logic")
+    
+    class Config:
+        json_schema_extra = {"dependencies": {"x-abstract": "True"}}
 
 
 class Dependencies(BaseModel):
@@ -280,5 +302,5 @@ class Dependencies(BaseModel):
         json_schema_extra = {"x-abstract": "True"}
 
 
-def schema() -> List[BaseModel]:
-    return [TaskLogic, Dependencies]
+def schema() -> BaseModel:
+    return TaskLogic

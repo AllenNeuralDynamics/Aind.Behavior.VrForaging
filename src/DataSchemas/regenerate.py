@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 import aind_behavior_vr_foraging.task_logic
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
+import  aind_behavior_vr_foraging.rig
 import aind_behavior_vr_foraging.session
 
 from aind_behavior_rig.base.json_schema import export_schema
@@ -18,6 +18,7 @@ def main():
     models = {
         "aind_vr_foraging_task": aind_behavior_vr_foraging.task_logic.schema(),
         "aind_vr_foraging_session": aind_behavior_vr_foraging.session.schema(),
+        "aind_vr_foraging_rig": aind_behavior_vr_foraging.rig.schema(),
     }
     for output_model_name, model in models.items():
         with open(SCHEMA_ROOT / f"{output_model_name}.json", "w") as f:
