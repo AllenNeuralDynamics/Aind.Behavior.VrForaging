@@ -21,9 +21,7 @@ def scalar_value(value: float) -> distributions.Scalar:
     Returns:
         distributions.Scalar: The scalar distribution type.
     """
-    return distributions.Scalar(
-       distribution_parameters=distributions.ScalarDistributionParameter(value=value)
-    )
+    return distributions.Scalar(distribution_parameters=distributions.ScalarDistributionParameter(value=value))
 
 
 class Size(AindModel):
