@@ -42,13 +42,13 @@
               <Name>ThisSiteSpecs</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Start_position</Selector>
+              <Selector>StartPosition</Selector>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ThisSiteSpecs</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Start_position,Length</Selector>
+              <Selector>StartPosition,Length</Selector>
             </Expression>
             <Expression xsi:type="Add" />
             <Expression xsi:type="Combinator">
@@ -93,7 +93,7 @@
                                 <Name>ThisRewardControl</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>Operant_logic.Stop_duration</Selector>
+                                <Selector>OperantLogic.StopDuration</Selector>
                               </Expression>
                               <Expression xsi:type="scr:ExpressionTransform">
                                 <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
@@ -204,7 +204,7 @@
                                 <Name>ThisRewardControl</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>Operant_logic.Is_operant</Selector>
+                                <Selector>OperantLogic.IsOperant</Selector>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
@@ -304,7 +304,7 @@
                                       <Name>ThisRewardControl</Name>
                                     </Expression>
                                     <Expression xsi:type="MemberSelector">
-                                      <Selector>Operant_logic.Grace_distance_threshold</Selector>
+                                      <Selector>OperantLogic.GraceDistanceThreshold</Selector>
                                     </Expression>
                                     <Expression xsi:type="PropertyMapping">
                                       <PropertyMappings>
@@ -508,7 +508,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                                 <Name>ThisRewardControl</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>Operant_logic.Time_to_collect_reward</Selector>
+                                <Selector>OperantLogic.TimeToCollectReward</Selector>
                               </Expression>
                               <Expression xsi:type="scr:ExpressionTransform">
                                 <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
@@ -558,7 +558,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                                       <Name>ThisRewardControl</Name>
                                     </Expression>
                                     <Expression xsi:type="MemberSelector">
-                                      <Selector>Operant_logic.Grace_distance_threshold</Selector>
+                                      <Selector>OperantLogic.GraceDistanceThreshold</Selector>
                                     </Expression>
                                     <Expression xsi:type="PropertyMapping">
                                       <PropertyMappings>
@@ -742,7 +742,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                                 <Name>ThisRewardControl</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>Operant_logic.Is_operant</Selector>
+                                <Selector>OperantLogic.IsOperant</Selector>
                               </Expression>
                               <Expression xsi:type="BitwiseNot" />
                               <Expression xsi:type="WorkflowOutput" />
@@ -1097,7 +1097,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                     <Name>ThisSiteSpecs</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Length,Start_position</Selector>
+                    <Selector>Length,StartPosition</Selector>
                   </Expression>
                   <Expression xsi:type="Add" />
                   <Expression xsi:type="Combinator">

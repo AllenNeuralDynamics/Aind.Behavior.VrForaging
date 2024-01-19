@@ -13,7 +13,7 @@
         <Property Name="Height" />
         <Property Name="Id" />
         <Property Name="Length" />
-        <Property Name="Start_position" />
+        <Property Name="StartPosition" />
         <Property Name="Width" />
         <Property Name="Textures" />
       </Expression>
@@ -24,7 +24,7 @@
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Id" />
               <Property Name="Length" />
-              <Property Name="Start_position" />
+              <Property Name="StartPosition" />
               <Property Name="Textures" />
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -45,7 +45,7 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:VisualCorridor">
                 <p1:Id>0</p1:Id>
-                <p1:Start_position>0</p1:Start_position>
+                <p1:StartPosition>0</p1:StartPosition>
                 <p1:Length>120</p1:Length>
               </Combinator>
             </Expression>

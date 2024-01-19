@@ -3926,7 +3926,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         [Newtonsoft.Json.JsonPropertyAttribute("rng_seed")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rng_seed")]
         [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
-        public double? Rng_seed
+        public double? RngSeed
         {
             get
             {

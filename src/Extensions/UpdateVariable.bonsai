@@ -85,11 +85,11 @@
               </Operand>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Initial_value" DisplayName="DefaultValue" />
+              <Property Name="InitialValue" DisplayName="DefaultValue" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p2:NumericalUpdaterParameters">
-                <p2:Initial_value>0</p2:Initial_value>
+                <p2:InitialValue>0</p2:InitialValue>
                 <p2:Increment>0</p2:Increment>
                 <p2:Decrement>0</p2:Decrement>
                 <p2:Minimum>0</p2:Minimum>
@@ -124,7 +124,7 @@
               <Name>ThisUpdater</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Parameters.Initial_value</Selector>
+              <Selector>Parameters.InitialValue</Selector>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>ThisNumericalValue</Name>

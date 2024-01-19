@@ -417,6 +417,14 @@
         "reward_specification": {
           "allOf": [
             {
+              "$ref": "#/definitions/RewardSpecification"
+            }
+          ],
+          "description": "specification of the reward"
+        },
+        "render_specification": {
+          "allOf": [
+            {
               "$ref": "#/definitions/RenderSpecification"
             }
           ],
@@ -427,7 +435,8 @@
         }
       },
       "required": [
-        "distance_to_reward"
+        "distance_to_reward",
+        "reward_specification"
       ],
       "title": "HabituationSettings",
       "type": "object"

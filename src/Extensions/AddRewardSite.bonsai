@@ -14,7 +14,7 @@
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="Contrast" />
         <Property Name="Label" />
-        <Property Name="Length_distribution" />
+        <Property Name="LengthDistribution" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>AddRewardSite</Name>
@@ -35,7 +35,7 @@
               <Name>PreviousSite</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Length,Start_position</Selector>
+              <Selector>Length,StartPosition</Selector>
             </Expression>
             <Expression xsi:type="Add" />
             <Expression xsi:type="SubscribeSubject">
@@ -52,10 +52,10 @@
               </Operand>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Length_distribution" />
+              <Property Name="Value" DisplayName="LengthDistribution" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Delay">
-              <MemberName>Length_distribution</MemberName>
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Distribution">
+              <MemberName>LengthDistribution</MemberName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RngSeed</Name>
@@ -85,7 +85,7 @@
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="Start_position" Selector="Item1" />
+                <Property Name="StartPosition" Selector="Item1" />
                 <Property Name="Length" Selector="Item2" />
                 <Property Name="Id" Selector="Item3" />
               </PropertyMappings>
@@ -94,7 +94,7 @@
               <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Odor_specification</Selector>
+              <Selector>OdorSpecification</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -116,7 +116,7 @@
               <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Reward_specification</Selector>
+              <Selector>RewardSpecification</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -129,23 +129,23 @@
               <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Reward_specification</Selector>
+              <Selector>RewardSpecification</Selector>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Operant_logic</Selector>
+              <Selector>OperantLogic</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Is_operant" Selector="Is_operant" />
-                <Property Name="Time_to_collect_reward" Selector="Time_to_collect_reward" />
-                <Property Name="Grace_distance_threshold" Selector="Grace_distance_threshold" />
+                <Property Name="IsOperant" Selector="IsOperant" />
+                <Property Name="TimeToCollectReward" Selector="TimeToCollectReward" />
+                <Property Name="GraceDistanceThreshold" Selector="GraceDistanceThreshold" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ActivePatch</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Reward_specification.Operant_logic.Stop_duration</Selector>
+              <Selector>RewardSpecification.OperantLogic.StopDuration</Selector>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>StopDurationOffset</Name>
@@ -161,20 +161,20 @@
             <Expression xsi:type="Add" />
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Stop_duration" />
+                <Property Name="StopDuration" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:OperantLogic">
-                <p1:Is_operant>true</p1:Is_operant>
-                <p1:Stop_duration>0</p1:Stop_duration>
-                <p1:Time_to_collect_reward>100000</p1:Time_to_collect_reward>
-                <p1:Grace_distance_threshold>10</p1:Grace_distance_threshold>
+                <p1:IsOperant>true</p1:IsOperant>
+                <p1:StopDuration>0</p1:StopDuration>
+                <p1:TimeToCollectReward>100000</p1:TimeToCollectReward>
+                <p1:GraceDistanceThreshold>10</p1:GraceDistanceThreshold>
               </Combinator>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Operant_logic" />
+                <Property Name="OperantLogic" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -195,7 +195,7 @@
               <Id>353</Id>
               <Label>RewardSite</Label>
               <Length>35.1602135</Length>
-              <Start_position>0</Start_position>
+              <StartPosition>0</StartPosition>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>SiteSpecs</Name>
