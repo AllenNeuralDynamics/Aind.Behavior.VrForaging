@@ -5396,7 +5396,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class TaskLogic
+    public partial class AindVrForagingTaskLogic
     {
     
         private string _describedBy = "pyd_taskLogic";
@@ -5413,11 +5413,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private Dependencies _dependencies;
     
-        public TaskLogic()
+        public AindVrForagingTaskLogic()
         {
         }
     
-        protected TaskLogic(TaskLogic other)
+        protected AindVrForagingTaskLogic(AindVrForagingTaskLogic other)
         {
             _describedBy = other._describedBy;
             _schemaVersion = other._schemaVersion;
@@ -5551,14 +5551,14 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
         }
     
-        public System.IObservable<TaskLogic> Process()
+        public System.IObservable<AindVrForagingTaskLogic> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TaskLogic(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingTaskLogic(this)));
         }
     
-        public System.IObservable<TaskLogic> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindVrForagingTaskLogic> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new TaskLogic(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindVrForagingTaskLogic(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -6248,9 +6248,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<Distributions>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<TaskLogic> source)
+        public System.IObservable<string> Process(System.IObservable<AindVrForagingTaskLogic> source)
         {
-            return Process<TaskLogic>(source);
+            return Process<AindVrForagingTaskLogic>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<TruncationParameters2> source)
@@ -6323,7 +6323,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LengthDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DistanceToReward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distributions>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters2>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters2>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -6331,7 +6331,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         public DeserializeFromJson()
         {
-            Type = new Bonsai.Expressions.TypeMapping<TaskLogic>();
+            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingTaskLogic>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
@@ -6725,9 +6725,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<Distributions>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<TaskLogic> source)
+        public System.IObservable<string> Process(System.IObservable<AindVrForagingTaskLogic> source)
         {
-            return Process<TaskLogic>(source);
+            return Process<AindVrForagingTaskLogic>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<TruncationParameters2> source)
@@ -6800,7 +6800,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LengthDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DistanceToReward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distributions>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters2>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters2>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -6808,7 +6808,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         public DeserializeFromYaml()
         {
-            Type = new Bonsai.Expressions.TypeMapping<TaskLogic>();
+            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingTaskLogic>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }

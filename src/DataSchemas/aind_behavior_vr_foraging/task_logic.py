@@ -21,12 +21,9 @@ def scalar_value(value: float) -> distributions.Scalar:
     Returns:
         distributions.Scalar: The scalar distribution type.
     """
-    #return distributions.Scalar(
-    #    distribution_parameters=distributions.ScalarDistributionParameter(value=value)
-    #)
-
-    return distributions.ExponentialDistribution(
-        distribution_parameters=distributions.ExponentialDistributionParameters(rate=1))
+    return distributions.Scalar(
+       distribution_parameters=distributions.ScalarDistributionParameter(value=value)
+    )
 
 
 class Size(AindModel):
@@ -274,13 +271,10 @@ class ForagingSettings(TaskStageSettingsBase):
 
 
 class TaskStageSettings(RootModel):
-    root: Annotated[
-        Union[HabituationSettings, ForagingSettings],
-        Field(discriminator="task_stage", title="TaskStage")
-    ]
+    root: Annotated[Union[HabituationSettings, ForagingSettings], Field(discriminator="task_stage", title="TaskStage")]
 
 
-class TaskLogic(AindCoreModel):
+class AindVrForagingTaskLogic(AindCoreModel):
     describedBy: str = Field("pyd_taskLogic")
     schema_version: Literal["0.1.0"] = "0.1.0"
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
@@ -300,4 +294,4 @@ class Dependencies(BaseModel):
 
 
 def schema() -> BaseModel:
-    return TaskLogic
+    return AindVrForagingTaskLogic

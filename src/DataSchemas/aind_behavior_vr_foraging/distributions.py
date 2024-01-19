@@ -164,32 +164,31 @@ class PoissonDistribution(DistributionBase):
 
 
 Distribution = Annotated[
-        Union[
-            Scalar,
-            NormalDistribution,
-            LogNormalDistribution,
-            ExponentialDistribution,
-            UniformDistribution,
-            PoissonDistribution,
-            BinomialDistribution,
-            BetaDistribution,
-            GammaDistribution,
-        ],
-        Field(discriminator="family", title="Distribution", description="Available distributions"),
-    ]
-
+    Union[
+        Scalar,
+        NormalDistribution,
+        LogNormalDistribution,
+        ExponentialDistribution,
+        UniformDistribution,
+        PoissonDistribution,
+        BinomialDistribution,
+        BetaDistribution,
+        GammaDistribution,
+    ],
+    Field(discriminator="family", title="Distribution", description="Available distributions"),
+]
 
 DistributionParameters = Annotated[
-        Union[
-            ScalarDistributionParameter,
-            NormalDistributionParameters,
-            LogNormalDistributionParameters,
-            ExponentialDistributionParameters,
-            UniformDistributionParameters,
-            PoissonDistributionParameters,
-            BinomialDistributionParameters,
-            BetaDistributionParameters,
-            GammaDistributionParameters,
-        ],
-        Field(discriminator="family", title="DistributionParameters", description="Parameters of the distribution"),
-    ]
+    Union[
+        ScalarDistributionParameter,
+        NormalDistributionParameters,
+        LogNormalDistributionParameters,
+        ExponentialDistributionParameters,
+        UniformDistributionParameters,
+        PoissonDistributionParameters,
+        BinomialDistributionParameters,
+        BetaDistributionParameters,
+        GammaDistributionParameters,
+    ],
+    Field(discriminator="family", title="DistributionParameters", description="Parameters of the distribution"),
+]
