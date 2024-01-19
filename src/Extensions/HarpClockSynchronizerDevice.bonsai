@@ -14,7 +14,7 @@
         <Name>RigSchema</Name>
       </Expression>
       <Expression xsi:type="MemberSelector">
-        <Selector>HarpSynchronizer.PortName</Selector>
+        <Selector>HarpClockGenerator.PortName</Selector>
       </Expression>
       <Expression xsi:type="PropertyMapping">
         <PropertyMappings>

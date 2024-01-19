@@ -356,19 +356,6 @@
       "title": "ExponentialDistributionParameters",
       "type": "object"
     },
-    "ForagingSettings": {
-      "additionalProperties": false,
-      "properties": {
-        "task_stage": {
-          "const": "FORAGING",
-          "default": "FORAGING",
-          "title": "Task Stage",
-          "type": "string"
-        }
-      },
-      "title": "ForagingSettings",
-      "type": "object"
-    },
     "GammaDistribution": {
       "additionalProperties": false,
       "properties": {
@@ -1480,23 +1467,13 @@
       "title": "Size",
       "type": "object"
     },
-    "TaskStageSettings": {
-      "discriminator": {
-        "mapping": {
-          "FORAGING": "#/definitions/ForagingSettings",
-          "HABITUATION": "#/definitions/HabituationSettings"
-        },
-        "propertyName": "task_stage"
-      },
-      "oneOf": [
-        {
-          "$ref": "#/definitions/HabituationSettings"
-        },
-        {
-          "$ref": "#/definitions/ForagingSettings"
-        }
+    "TaskStage": {
+      "enum": [
+        "HABITUATION",
+        "FORAGING"
       ],
-      "title": "TaskStageSettings"
+      "title": "TaskStage",
+      "type": "string"
     },
     "Texture": {
       "additionalProperties": false,
@@ -2019,13 +1996,26 @@
       ],
       "description": "Statistics of the environment"
     },
-    "task_stage_settings": {
+    "stage": {
       "allOf": [
         {
-          "$ref": "#/definitions/TaskStageSettings"
+          "$ref": "#/definitions/TaskStage"
         }
       ],
-      "description": "Settings of the task stage"
+      "default": "FORAGING",
+      "description": "Stage of the task"
+    },
+    "habitual_stage_settings": {
+      "default": null,
+      "description": "Settings of the task stage",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/HabituationSettings"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "operation_control": {
       "allOf": [
@@ -2050,7 +2040,6 @@
   },
   "required": [
     "environment_statistics",
-    "task_stage_settings",
     "operation_control"
   ],
   "title": "AindVrForagingTaskLogic",

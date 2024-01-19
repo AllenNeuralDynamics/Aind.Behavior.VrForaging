@@ -279,7 +279,8 @@ class AindVrForagingTaskLogic(AindCoreModel):
     schema_version: Literal["0.1.0"] = "0.1.0"
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
-    task_stage_settings: TaskStageSettings = Field(description="Settings of the task stage")
+    stage: TaskStage = Field(TaskStage.FORAGING, description="Stage of the task")
+    habitual_stage_settings: Optional[HabituationSettings] = Field(None, description="Settings of the task stage")
     operation_control: OperationControl = Field(description="Control of the operation")
     dependencies: Optional[Dependencies] = Field(None, description="Dependencies of the task logic")
 
