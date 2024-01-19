@@ -8,7 +8,7 @@ from typing import Annotated, Dict, List, Literal, Optional, Union
 
 import aind_behavior_vr_foraging.distributions as distributions
 from aind_data_schema.base import AindCoreModel, AindModel
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 
 
 class Size(AindModel):
@@ -179,9 +179,17 @@ class EnvironmentStatistics(AindModel):
     )
 
 
+class ServoMotor(AindModel):
+    period: int = Field(20000, ge=1, description="Period", units="us")
+    min_pulse_duration: int = Field(1000, ge=1, description="Minimum pulse duration", units="us")
+    max_pulse_duration: int = Field(2000, ge=1, description="Maximum pulse duration", units="us")
+    default_pulse_duration: int = Field(2000, ge=1, description="Default pulse duration", units="us")
+
+
 class MovableSpoutControl(AindModel):
     enabled: bool = Field(default=False, description="Whether the movable spout is enabled")
     time_to_collect_after_reward: float = Field(default=1, ge=0, description="Time (s) to collect after reward")
+    servo_motor: ServoMotor = Field(ServoMotor(), description="Servo motor settings")
 
 
 class OdorControl(AindModel):
@@ -211,12 +219,18 @@ class PositionControl(AindModel):
     )
 
 
+class AudioControl(AindModel):
+    duration: float = Field(0.2, ge=0, description="Duration", units="s")
+    frequency: float = Field(1000, ge=100, description="Frequency", units="Hz")
+
+
 class OperationControl(AindModel):
     movable_spout_control: MovableSpoutControl = Field(
         default=MovableSpoutControl(), description="Control of the movable spout"
     )
     odor_control: OdorControl = Field(default=OdorControl(), description="Control of the odor")
     position_control: PositionControl = Field(default=PositionControl(), description="Control of the position")
+    audio_control: AudioControl = Field(default=AudioControl(), description="Control of the audio")
 
 
 class TaskStage(str, Enum):
@@ -231,7 +245,7 @@ class TaskStageSettingsBase(AindModel):
 class HabituationSettings(TaskStageSettingsBase):
     task_stage: Literal[TaskStage.HABITUATION] = TaskStage.HABITUATION
     distance_to_reward: distributions.Distribution = Field(..., description="Distance (cm) to the reward")
-    reward_specification: RewardSpecification = Field(...,description="specification of the reward")
+    reward_specification: RewardSpecification = Field(..., description="specification of the reward")
     render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="Contrast of the environement"
     )
@@ -241,9 +255,11 @@ class ForagingSettings(TaskStageSettingsBase):
     task_stage: Literal[TaskStage.FORAGING] = TaskStage.FORAGING
 
 
-TaskStageSettings = Annotated[
-    Union[HabituationSettings, ForagingSettings], Field(discriminator="task_stage", title="TaskStage")
-]
+class TaskStageSettings(RootModel):
+    root: Annotated[
+        Union[HabituationSettings, ForagingSettings],
+        Field(discriminator="task_stage", title="TaskStage")
+    ]
 
 
 class TaskLogic(AindCoreModel):
@@ -255,7 +271,7 @@ class TaskLogic(AindCoreModel):
     operation_control: OperationControl = Field(description="Control of the operation")
 
 
-class Root(BaseModel):
+class RootObj(BaseModel):
     add_refs: None | VisualCorridor | VirtualSite | distributions.Distribution = Field(
         None, description="Additional references"
     )
