@@ -30,7 +30,6 @@ class Metadata(AindModel):
 
 class AindVrForagingSession(AindModel):
     metadata: Annotated[Metadata, Field(description="Metadata of the session")]
-    session: Annotated[Session, Field(description="Session data")]
 
 
 def schema() -> BaseModel:
