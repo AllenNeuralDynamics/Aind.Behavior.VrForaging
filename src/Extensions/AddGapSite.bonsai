@@ -2,7 +2,7 @@
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.Task;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.AindVrForagingTask;assembly=Extensions"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns="https://bonsai-rx.org/2018/workflow">
@@ -56,7 +56,7 @@
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Value" DisplayName="LengthDistribution" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p1:GapSite,p1:ExponentialDistribution">
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Distribution">
               <MemberName>LengthDistribution</MemberName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -96,7 +96,7 @@
               <Property Name="Contrast" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:Render" />
+              <Combinator xsi:type="p1:RenderSpecification" />
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -132,10 +132,10 @@
             <Edge From="5" To="8" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source2" />
-            <Edge From="8" To="10" Label="Source2" />
+            <Edge From="8" To="10" Label="Source1" />
             <Edge From="8" To="14" Label="Source1" />
             <Edge From="8" To="16" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="9" To="10" Label="Source2" />
             <Edge From="10" To="13" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source2" />

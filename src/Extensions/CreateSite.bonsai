@@ -2,7 +2,7 @@
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.Task;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.AindVrForagingTask;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -34,9 +34,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:VirtualSite">
-                <p1:Id>0</p1:Id>
-                <p1:Label>virtualSite</p1:Label>
-                <p1:Length>120</p1:Length>
+                <p1:Id>353</p1:Id>
+                <p1:Label>RewardSite</p1:Label>
+                <p1:Length>35.1602135</p1:Length>
                 <p1:StartPosition>0</p1:StartPosition>
               </Combinator>
             </Expression>
