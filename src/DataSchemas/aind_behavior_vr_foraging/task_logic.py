@@ -94,7 +94,7 @@ class OperantLogic(AindModel):
 
 
 class PatchRewardFunction(AindModel):
-    initial_amount: float = Field(default=0, ge=0, description="Initial amount of reward (a.u.)")
+    initial_amount: float = Field(default=99999999, ge=0, description="Initial amount of reward (a.u.)")
 
 
 class RewardSpecification(AindModel):
@@ -105,6 +105,7 @@ class RewardSpecification(AindModel):
         default=scalar_value(0),
         description="The optional distribution where the delay to reward will be drawn from",
     )
+    reward_function: PatchRewardFunction = Field(default=PatchRewardFunction(), description="Reward function of the patch.")
 
 
 class VirtualSiteLabels(str, Enum):
@@ -220,7 +221,7 @@ class OdorControl(AindModel):
 
 class PositionControl(AindModel):
     gain: Vector3 = Field(default=Vector3(x=1, y=1, z=1), description="Gain of the position control.")
-    initial_position: Vector3 = Field(default=Vector3(x=0, y=0, z=0), description="Gain of the position control.")
+    initial_position: Vector3 = Field(default=Vector3(x=0, y=2.56, z=0), description="Gain of the position control.")
     frequency_filter_cutoff: float = Field(
         default=0.5,
         ge=0,

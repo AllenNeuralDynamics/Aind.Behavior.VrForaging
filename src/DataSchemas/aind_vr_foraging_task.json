@@ -946,7 +946,7 @@
             },
             "initial_position": {
               "x": 0.0,
-              "y": 0.0,
+              "y": 2.56,
               "z": 0.0
             },
             "frequency_filter_cutoff": 0.5,
@@ -968,6 +968,20 @@
         }
       },
       "title": "OperationControl",
+      "type": "object"
+    },
+    "PatchRewardFunction": {
+      "additionalProperties": false,
+      "properties": {
+        "initial_amount": {
+          "default": 99999999,
+          "description": "Initial amount of reward (a.u.)",
+          "minimum": 0.0,
+          "title": "Initial Amount",
+          "type": "number"
+        }
+      },
+      "title": "PatchRewardFunction",
       "type": "object"
     },
     "PatchStatistics": {
@@ -1168,7 +1182,7 @@
           ],
           "default": {
             "x": 0.0,
-            "y": 0.0,
+            "y": 2.56,
             "z": 0.0
           },
           "description": "Gain of the position control."
@@ -1300,6 +1314,17 @@
             }
           ],
           "title": "Distribution"
+        },
+        "reward_function": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/PatchRewardFunction"
+            }
+          ],
+          "default": {
+            "initial_amount": 99999999.0
+          },
+          "description": "Reward function of the patch."
         }
       },
       "required": [
