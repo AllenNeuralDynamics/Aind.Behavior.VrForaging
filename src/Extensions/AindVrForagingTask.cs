@@ -2618,6 +2618,72 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PatchRewardFunction
+    {
+    
+        private double _initialAmount = 99999999D;
+    
+        public PatchRewardFunction()
+        {
+        }
+    
+        protected PatchRewardFunction(PatchRewardFunction other)
+        {
+            _initialAmount = other._initialAmount;
+        }
+    
+        /// <summary>
+        /// Initial amount of reward (a.u.)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("initial_amount")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initial_amount")]
+        [System.ComponentModel.DescriptionAttribute("Initial amount of reward (a.u.)")]
+        public double InitialAmount
+        {
+            get
+            {
+                return _initialAmount;
+            }
+            set
+            {
+                _initialAmount = value;
+            }
+        }
+    
+        public System.IObservable<PatchRewardFunction> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchRewardFunction(this)));
+        }
+    
+        public System.IObservable<PatchRewardFunction> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchRewardFunction(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("initial_amount = " + _initialAmount);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class PatchStatistics
     {
     
@@ -3177,6 +3243,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private Delay _delay;
     
+        private PatchRewardFunction _rewardFunction;
+    
         public RewardSpecification()
         {
         }
@@ -3187,6 +3255,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _operantLogic = other._operantLogic;
             _probability = other._probability;
             _delay = other._delay;
+            _rewardFunction = other._rewardFunction;
         }
     
         /// <summary>
@@ -3263,6 +3332,25 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             }
         }
     
+        /// <summary>
+        /// Reward function of the patch.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("reward_function")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_function")]
+        [System.ComponentModel.DescriptionAttribute("Reward function of the patch.")]
+        public PatchRewardFunction RewardFunction
+        {
+            get
+            {
+                return _rewardFunction;
+            }
+            set
+            {
+                _rewardFunction = value;
+            }
+        }
+    
         public System.IObservable<RewardSpecification> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RewardSpecification(this)));
@@ -3278,7 +3366,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             stringBuilder.Append("amount = " + _amount + ", ");
             stringBuilder.Append("operant_logic = " + _operantLogic + ", ");
             stringBuilder.Append("probability = " + _probability + ", ");
-            stringBuilder.Append("delay = " + _delay);
+            stringBuilder.Append("delay = " + _delay + ", ");
+            stringBuilder.Append("reward_function = " + _rewardFunction);
             return true;
         }
     
@@ -6045,6 +6134,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<OperationControl>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<PatchRewardFunction> source)
+        {
+            return Process<PatchRewardFunction>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
         {
             return Process<PatchStatistics>(source);
@@ -6218,6 +6312,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistributionParameters>))]
@@ -6510,6 +6605,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<OperationControl>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<PatchRewardFunction> source)
+        {
+            return Process<PatchRewardFunction>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
         {
             return Process<PatchStatistics>(source);
@@ -6683,6 +6783,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistributionParameters>))]

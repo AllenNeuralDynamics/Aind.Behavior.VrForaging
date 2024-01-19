@@ -100,7 +100,7 @@ class Valve(AindModel):
     calibration_slope: float = Field(1, description="Calibration slope")
 
 
-#class AindVrForagingRig(AindCoreModel):
+# class AindVrForagingRig(AindCoreModel):
 #    describedBy: str = Field("pyd_taskLogic")
 #    schema_version: Literal["0.1.0"] = "0.1.0"
 #    harp_devices: Dict[str, HarpDevice] = Field(default_factory=dict, description="Harp devices")
@@ -127,8 +127,6 @@ class AindVrForagingRig(AindCoreModel):
     screen: Screen = Field(Screen(), description="Screen settings")
     treadmill: Treadmill = Field(Treadmill(), description="Treadmill settings")
     water_valve: Valve = Field(Valve(), description="Water valve settings")
-
-
 
 
 def schema() -> BaseModel:
