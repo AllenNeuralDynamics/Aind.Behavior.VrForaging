@@ -85,7 +85,7 @@ class PatchRewardFunction(AindModel):
 
 
 class RewardSpecification(AindModel):
-    amount: float = Field(ge=0, description="Amount of reward (a.u.)")
+    amount: float = Field(..., ge=0, description="Amount of reward (a.u.)")
     operant_logic: Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
     probability: float = Field(default=1, ge=0, le=1, description="Probability of the reward")
     delay: distributions.Distribution = Field(
@@ -231,8 +231,8 @@ class TaskStageSettingsBase(AindModel):
 class HabituationSettings(TaskStageSettingsBase):
     task_stage: Literal[TaskStage.HABITUATION] = TaskStage.HABITUATION
     distance_to_reward: distributions.Distribution = Field(..., description="Distance (cm) to the reward")
-    reward_specification: RewardSpecification = Field(description="specification of the reward")
-    reward_specification: RenderSpecification = Field(
+    reward_specification: RewardSpecification = Field(...,description="specification of the reward")
+    render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="Contrast of the environement"
     )
 
