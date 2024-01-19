@@ -1,0 +1,1939 @@
+{
+  "definitions": {
+    "BetaDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Beta",
+          "default": "Beta",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BetaDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Beta",
+            "alpha": 5.0,
+            "beta": 5.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "BetaDistribution",
+      "type": "object"
+    },
+    "BetaDistributionParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Beta",
+          "default": "Beta",
+          "title": "Family",
+          "type": "string"
+        },
+        "alpha": {
+          "default": 5,
+          "description": "Alpha parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Alpha",
+          "type": "number"
+        },
+        "beta": {
+          "default": 5,
+          "description": "Beta parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Beta",
+          "type": "number"
+        }
+      },
+      "title": "BetaDistributionParameters",
+      "type": "object"
+    },
+    "BinomialDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Binomial",
+          "default": "Binomial",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BinomialDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Binomial",
+            "n": 1,
+            "p": 0.5
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "BinomialDistribution",
+      "type": "object"
+    },
+    "BinomialDistributionParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Binomial",
+          "default": "Binomial",
+          "title": "Family",
+          "type": "string"
+        },
+        "n": {
+          "default": 1,
+          "description": "Number of trials",
+          "minimum": 0,
+          "title": "N",
+          "type": "integer"
+        },
+        "p": {
+          "default": 0.5,
+          "description": "Probability of success",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "P",
+          "type": "number"
+        }
+      },
+      "title": "BinomialDistributionParameters",
+      "type": "object"
+    },
+    "EnvironmentStatistics": {
+      "additionalProperties": false,
+      "properties": {
+        "patches": {
+          "description": "List of patches",
+          "items": {
+            "$ref": "#/definitions/PatchStatistics"
+          },
+          "title": "Patches",
+          "type": "array"
+        },
+        "transition_matrix": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Matrix2D"
+            }
+          ],
+          "default": {
+            "data": [
+              [
+                1.0
+              ]
+            ]
+          },
+          "description": "Transition matrix between patches"
+        },
+        "first_state": {
+          "default": null,
+          "description": "The first state to be visited. If None, it will be randomly drawn.",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "First State"
+        }
+      },
+      "title": "EnvironmentStatistics",
+      "type": "object"
+    },
+    "ExponentialDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Exponential",
+          "default": "Exponential",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ExponentialDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Exponential",
+            "rate": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "ExponentialDistribution",
+      "type": "object"
+    },
+    "ExponentialDistributionParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Exponential",
+          "default": "Exponential",
+          "title": "Family",
+          "type": "string"
+        },
+        "rate": {
+          "default": 0,
+          "description": "Rate parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Rate",
+          "type": "number"
+        }
+      },
+      "title": "ExponentialDistributionParameters",
+      "type": "object"
+    },
+    "ForagingSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "task_stage": {
+          "const": "FORAGING",
+          "default": "FORAGING",
+          "title": "Task Stage",
+          "type": "string"
+        }
+      },
+      "title": "ForagingSettings",
+      "type": "object"
+    },
+    "GammaDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Gamma",
+          "default": "Gamma",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/GammaDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Gamma",
+            "shape": 1.0,
+            "rate": 1.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "GammaDistribution",
+      "type": "object"
+    },
+    "GammaDistributionParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Gamma",
+          "default": "Gamma",
+          "title": "Family",
+          "type": "string"
+        },
+        "shape": {
+          "default": 1,
+          "description": "Shape parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Shape",
+          "type": "number"
+        },
+        "rate": {
+          "default": 1,
+          "description": "Rate parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Rate",
+          "type": "number"
+        }
+      },
+      "title": "GammaDistributionParameters",
+      "type": "object"
+    },
+    "HabituationSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "task_stage": {
+          "const": "HABITUATION",
+          "default": "HABITUATION",
+          "title": "Task Stage",
+          "type": "string"
+        },
+        "distance_to_reward": {
+          "description": "Distance (cm) to the reward",
+          "discriminator": {
+            "mapping": {
+              "Beta": "#/definitions/BetaDistribution",
+              "Binomial": "#/definitions/BinomialDistribution",
+              "Exponential": "#/definitions/ExponentialDistribution",
+              "Gamma": "#/definitions/GammaDistribution",
+              "LogNormal": "#/definitions/LogNormalDistribution",
+              "Normal": "#/definitions/NormalDistribution",
+              "Poisson": "#/definitions/PoissonDistribution",
+              "Scalar": "#/definitions/Scalar",
+              "Uniform": "#/definitions/UniformDistribution"
+            },
+            "propertyName": "family"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Scalar"
+            },
+            {
+              "$ref": "#/definitions/NormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/LogNormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/ExponentialDistribution"
+            },
+            {
+              "$ref": "#/definitions/UniformDistribution"
+            },
+            {
+              "$ref": "#/definitions/PoissonDistribution"
+            },
+            {
+              "$ref": "#/definitions/BinomialDistribution"
+            },
+            {
+              "$ref": "#/definitions/BetaDistribution"
+            },
+            {
+              "$ref": "#/definitions/GammaDistribution"
+            }
+          ],
+          "title": "Distribution"
+        },
+        "reward_specification": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardSpecification"
+            }
+          ],
+          "description": "specification of the reward"
+        },
+        "render_specification": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
+          "default": {
+            "contrast": null
+          },
+          "description": "Contrast of the environement"
+        }
+      },
+      "required": [
+        "distance_to_reward",
+        "reward_specification"
+      ],
+      "title": "HabituationSettings",
+      "type": "object"
+    },
+    "LogNormalDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "LogNormal",
+          "default": "LogNormal",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/LogNormalDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "LogNormal",
+            "mean": 0.0,
+            "std": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "LogNormalDistribution",
+      "type": "object"
+    },
+    "LogNormalDistributionParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "LogNormal",
+          "default": "LogNormal",
+          "title": "Family",
+          "type": "string"
+        },
+        "mean": {
+          "default": 0,
+          "description": "Mean of the distribution",
+          "title": "Mean",
+          "type": "number"
+        },
+        "std": {
+          "default": 0,
+          "description": "Standard deviation of the distribution",
+          "title": "Std",
+          "type": "number"
+        }
+      },
+      "title": "LogNormalDistributionParameters",
+      "type": "object"
+    },
+    "Matrix2D": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "default": [
+            [
+              1
+            ]
+          ],
+          "description": "Defines a 2D matrix",
+          "items": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "title": "Data",
+          "type": "array"
+        }
+      },
+      "title": "Matrix2D",
+      "type": "object"
+    },
+    "MovableSpoutControl": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": false,
+          "description": "Whether the movable spout is enabled",
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "time_to_collect_after_reward": {
+          "default": 1,
+          "description": "Time (s) to collect after reward",
+          "minimum": 0.0,
+          "title": "Time To Collect After Reward",
+          "type": "number"
+        }
+      },
+      "title": "MovableSpoutControl",
+      "type": "object"
+    },
+    "NormalDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Normal",
+          "default": "Normal",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/NormalDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Normal",
+            "mean": 0.0,
+            "std": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "NormalDistribution",
+      "type": "object"
+    },
+    "NormalDistributionParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Normal",
+          "default": "Normal",
+          "title": "Family",
+          "type": "string"
+        },
+        "mean": {
+          "default": 0,
+          "description": "Mean of the distribution",
+          "title": "Mean",
+          "type": "number"
+        },
+        "std": {
+          "default": 0,
+          "description": "Standard deviation of the distribution",
+          "title": "Std",
+          "type": "number"
+        }
+      },
+      "title": "NormalDistributionParameters",
+      "type": "object"
+    },
+    "NumericalUpdater": {
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/NumericalUpdaterOperation"
+            }
+          ],
+          "default": "None",
+          "description": "Operation to perform on the parameter"
+        },
+        "parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/NumericalUpdaterParameters"
+            }
+          ],
+          "default": {
+            "initial_value": 0.0,
+            "increment": 0.0,
+            "decrement": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0
+          },
+          "description": "Parameters of the updater"
+        }
+      },
+      "title": "NumericalUpdater",
+      "type": "object"
+    },
+    "NumericalUpdaterOperation": {
+      "enum": [
+        "None",
+        "Offset",
+        "Gain",
+        "Set",
+        "OffsetPercentage"
+      ],
+      "title": "NumericalUpdaterOperation",
+      "type": "string"
+    },
+    "NumericalUpdaterParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "initial_value": {
+          "default": 0.0,
+          "description": "Initial value of the parameter",
+          "title": "Initial Value",
+          "type": "number"
+        },
+        "increment": {
+          "default": 0.0,
+          "description": "Value to increment the parameter by",
+          "title": "Increment",
+          "type": "number"
+        },
+        "decrement": {
+          "default": 0.0,
+          "description": "Value to decrement the parameter by",
+          "title": "Decrement",
+          "type": "number"
+        },
+        "minimum": {
+          "default": 0.0,
+          "description": "Minimum value of the parameter",
+          "title": "Minimum",
+          "type": "number"
+        },
+        "maximum": {
+          "default": 0.0,
+          "description": "Minimum value of the parameter",
+          "title": "Maximum",
+          "type": "number"
+        }
+      },
+      "title": "NumericalUpdaterParameters",
+      "type": "object"
+    },
+    "OdorControl": {
+      "additionalProperties": false,
+      "properties": {
+        "valve_max_open_time": {
+          "default": 10,
+          "description": "Maximum time (s) the valve can be open continuously",
+          "minimum": 0.0,
+          "title": "Valve Max Open Time",
+          "type": "number"
+        },
+        "target_total_flow": {
+          "default": 1000,
+          "description": "Target total flow (ml/s) of the odor mixture",
+          "maximum": 1000.0,
+          "minimum": 100.0,
+          "title": "Target Total Flow",
+          "type": "number"
+        },
+        "use_channel_3_as_carrier": {
+          "default": true,
+          "description": "Whether to use channel 3 as carrier",
+          "title": "Use Channel 3 As Carrier",
+          "type": "boolean"
+        },
+        "target_odor_flow": {
+          "default": 100,
+          "description": "Target odor flow (ml/s) in the odor mixture",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "title": "Target Odor Flow",
+          "type": "number"
+        }
+      },
+      "title": "OdorControl",
+      "type": "object"
+    },
+    "OdorSpecification": {
+      "additionalProperties": false,
+      "properties": {
+        "index": {
+          "description": "Index of the odor to be used",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "title": "Index",
+          "type": "integer"
+        },
+        "concentration": {
+          "default": 1,
+          "description": "Concentration of the odor",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Concentration",
+          "type": "number"
+        }
+      },
+      "required": [
+        "index"
+      ],
+      "title": "OdorSpecification",
+      "type": "object"
+    },
+    "OperantLogic": {
+      "additionalProperties": false,
+      "properties": {
+        "is_operant": {
+          "default": true,
+          "description": "Will the trial implement operant logic",
+          "title": "Is Operant",
+          "type": "boolean"
+        },
+        "stop_duration": {
+          "default": 0,
+          "description": "Duration (s) the animal must stop for to lock its choice",
+          "minimum": 0.0,
+          "title": "Stop Duration",
+          "type": "number"
+        },
+        "time_to_collect_reward": {
+          "default": 100000,
+          "description": "Time(s) the animal has to collect the reward",
+          "minimum": 0.0,
+          "title": "Time To Collect Reward",
+          "type": "number"
+        },
+        "grace_distance_threshold": {
+          "default": 10,
+          "description": "Virtual distance (cm) the animal must be within to not abort the current choice",
+          "minimum": 0.0,
+          "title": "Grace Distance Threshold",
+          "type": "number"
+        }
+      },
+      "title": "OperantLogic",
+      "type": "object"
+    },
+    "OperationControl": {
+      "additionalProperties": false,
+      "properties": {
+        "movable_spout_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/MovableSpoutControl"
+            }
+          ],
+          "default": {
+            "enabled": false,
+            "time_to_collect_after_reward": 1.0
+          },
+          "description": "Control of the movable spout"
+        },
+        "odor_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OdorControl"
+            }
+          ],
+          "default": {
+            "valve_max_open_time": 10.0,
+            "target_total_flow": 1000.0,
+            "use_channel_3_as_carrier": true,
+            "target_odor_flow": 100.0
+          },
+          "description": "Control of the odor"
+        },
+        "position_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/PositionControl"
+            }
+          ],
+          "default": {
+            "gain": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "initial_position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "frequency_filter_cutoff": 0.5,
+            "velocity_threshold": 1.0
+          },
+          "description": "Control of the position"
+        }
+      },
+      "title": "OperationControl",
+      "type": "object"
+    },
+    "PatchStatistics": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "default": "",
+          "description": "Label of the patch",
+          "title": "Label",
+          "type": "string"
+        },
+        "state_index": {
+          "default": 0,
+          "description": "Index of the state",
+          "minimum": 0,
+          "title": "State Index",
+          "type": "integer"
+        },
+        "odor_specification": {
+          "default": null,
+          "description": "The optional odor specification of the patch",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdorSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reward_specification": {
+          "default": null,
+          "description": "The optional reward specification of the patch",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RewardSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "virtual_site_generation": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGeneration"
+            }
+          ],
+          "default": {
+            "inter_site": {
+              "label": "Unspecified",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              }
+            },
+            "inter_patch": {
+              "label": "Unspecified",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              }
+            },
+            "reward_site": {
+              "label": "Unspecified",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              }
+            }
+          },
+          "description": "Virtual site generation specification"
+        }
+      },
+      "title": "PatchStatistics",
+      "type": "object"
+    },
+    "PoissonDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Poisson",
+          "default": "Poisson",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/PoissonDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Poisson",
+            "rate": 1.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "PoissonDistribution",
+      "type": "object"
+    },
+    "PoissonDistributionParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Poisson",
+          "default": "Poisson",
+          "title": "Family",
+          "type": "string"
+        },
+        "rate": {
+          "default": 1,
+          "description": "Rate parameter of the Poisson process that generates the distribution",
+          "minimum": 0.0,
+          "title": "Rate",
+          "type": "number"
+        }
+      },
+      "title": "PoissonDistributionParameters",
+      "type": "object"
+    },
+    "PositionControl": {
+      "additionalProperties": false,
+      "properties": {
+        "gain": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Vector3"
+            }
+          ],
+          "default": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "description": "Gain of the position control."
+        },
+        "initial_position": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Vector3"
+            }
+          ],
+          "default": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "description": "Gain of the position control."
+        },
+        "frequency_filter_cutoff": {
+          "default": 0.5,
+          "description": "Cutoff frequency (Hz) of the low-pass filter used to filter the velocity signal.",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "title": "Frequency Filter Cutoff",
+          "type": "number"
+        },
+        "velocity_threshold": {
+          "default": 1,
+          "description": "Threshold (cm/s) of the velocity signal used to detect when the animal is moving.",
+          "minimum": 0.0,
+          "title": "Velocity Threshold",
+          "type": "number"
+        }
+      },
+      "title": "PositionControl",
+      "type": "object"
+    },
+    "RenderSpecification": {
+      "additionalProperties": false,
+      "properties": {
+        "contrast": {
+          "default": null,
+          "description": "Contrast of the texture",
+          "oneOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Contrast"
+        }
+      },
+      "title": "RenderSpecification",
+      "type": "object"
+    },
+    "RewardSpecification": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "description": "Amount of reward (a.u.)",
+          "minimum": 0.0,
+          "title": "Amount",
+          "type": "number"
+        },
+        "operant_logic": {
+          "default": null,
+          "description": "The optional operant logic of the reward",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OperantLogic"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "probability": {
+          "default": 1,
+          "description": "Probability of the reward",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Probability",
+          "type": "number"
+        },
+        "delay": {
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 0.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "The optional distribution where the delay to reward will be drawn from",
+          "discriminator": {
+            "mapping": {
+              "Beta": "#/definitions/BetaDistribution",
+              "Binomial": "#/definitions/BinomialDistribution",
+              "Exponential": "#/definitions/ExponentialDistribution",
+              "Gamma": "#/definitions/GammaDistribution",
+              "LogNormal": "#/definitions/LogNormalDistribution",
+              "Normal": "#/definitions/NormalDistribution",
+              "Poisson": "#/definitions/PoissonDistribution",
+              "Scalar": "#/definitions/Scalar",
+              "Uniform": "#/definitions/UniformDistribution"
+            },
+            "propertyName": "family"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Scalar"
+            },
+            {
+              "$ref": "#/definitions/NormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/LogNormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/ExponentialDistribution"
+            },
+            {
+              "$ref": "#/definitions/UniformDistribution"
+            },
+            {
+              "$ref": "#/definitions/PoissonDistribution"
+            },
+            {
+              "$ref": "#/definitions/BinomialDistribution"
+            },
+            {
+              "$ref": "#/definitions/BetaDistribution"
+            },
+            {
+              "$ref": "#/definitions/GammaDistribution"
+            }
+          ],
+          "title": "Distribution"
+        }
+      },
+      "required": [
+        "amount"
+      ],
+      "title": "RewardSpecification",
+      "type": "object"
+    },
+    "Scalar": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Scalar",
+          "default": "Scalar",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ScalarDistributionParameter"
+            }
+          ],
+          "default": {
+            "family": "Scalar",
+            "value": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "Scalar",
+      "type": "object"
+    },
+    "ScalarDistributionParameter": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Scalar",
+          "default": "Scalar",
+          "title": "Family",
+          "type": "string"
+        },
+        "value": {
+          "default": 0,
+          "description": "The static value of the distribution",
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "title": "ScalarDistributionParameter",
+      "type": "object"
+    },
+    "ScalingParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "scale": {
+          "default": 1,
+          "description": "Scaling factor to apply on the sampled distribution",
+          "title": "Scale",
+          "type": "number"
+        },
+        "offset": {
+          "default": 0,
+          "description": "Offset factor to apply on the sampled distribution",
+          "title": "Offset",
+          "type": "number"
+        }
+      },
+      "title": "ScalingParameters",
+      "type": "object"
+    },
+    "Size": {
+      "additionalProperties": false,
+      "properties": {
+        "width": {
+          "default": 0,
+          "description": "Width of the texture",
+          "title": "Width",
+          "type": "number"
+        },
+        "height": {
+          "default": 0,
+          "description": "Height of the texture",
+          "title": "Height",
+          "type": "number"
+        }
+      },
+      "title": "Size",
+      "type": "object"
+    },
+    "TaskLogic": {
+      "additionalProperties": false,
+      "properties": {
+        "describedBy": {
+          "default": "pyd_taskLogic",
+          "title": "Describedby",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.1.0",
+          "default": "0.1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "updaters": {
+          "additionalProperties": {
+            "$ref": "#/definitions/NumericalUpdater"
+          },
+          "description": "List of numerical updaters",
+          "title": "Updaters",
+          "type": "object"
+        },
+        "environment_statistics": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/EnvironmentStatistics"
+            }
+          ],
+          "description": "Statistics of the environment"
+        },
+        "task_stage_settings": {
+          "description": "Settings of the task stage",
+          "discriminator": {
+            "mapping": {
+              "FORAGING": "#/definitions/ForagingSettings",
+              "HABITUATION": "#/definitions/HabituationSettings"
+            },
+            "propertyName": "task_stage"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/HabituationSettings"
+            },
+            {
+              "$ref": "#/definitions/ForagingSettings"
+            }
+          ],
+          "title": "TaskStage"
+        },
+        "operation_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OperationControl"
+            }
+          ],
+          "description": "Control of the operation"
+        }
+      },
+      "required": [
+        "environment_statistics",
+        "task_stage_settings",
+        "operation_control"
+      ],
+      "title": "TaskLogic",
+      "type": "object"
+    },
+    "Texture": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "default": "default",
+          "description": "Name of the texture",
+          "title": "Name",
+          "type": "string"
+        },
+        "size": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Size"
+            }
+          ],
+          "default": {
+            "width": 40.0,
+            "height": 40.0
+          },
+          "description": "Size of the texture"
+        }
+      },
+      "title": "Texture",
+      "type": "object"
+    },
+    "TruncationParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "is_truncated": {
+          "default": false,
+          "description": "Whether the distribution is truncated",
+          "title": "Is Truncated",
+          "type": "boolean"
+        },
+        "min": {
+          "default": 0,
+          "description": "Minimum value of the sampled distribution",
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "default": 0,
+          "description": "Maximum value of the sampled distribution",
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "title": "TruncationParameters",
+      "type": "object"
+    },
+    "UniformDistribution": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Uniform",
+          "default": "Uniform",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/UniformDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Uniform",
+            "min": 0.0,
+            "max": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "UniformDistribution",
+      "type": "object"
+    },
+    "UniformDistributionParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "family": {
+          "const": "Uniform",
+          "default": "Uniform",
+          "title": "Family",
+          "type": "string"
+        },
+        "min": {
+          "default": 0,
+          "description": "Minimum value of the distribution",
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "default": 0,
+          "description": "Maximum value of the distribution",
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "title": "UniformDistributionParameters",
+      "type": "object"
+    },
+    "Vector3": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the point",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the point",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the point",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
+      "type": "object"
+    },
+    "VirtualSite": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "default": 0,
+          "description": "Id of the virtual site",
+          "minimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "label": {
+          "default": "VirtualSite",
+          "description": "Label of the virtual site",
+          "title": "Label",
+          "type": "string"
+        },
+        "length": {
+          "default": 20,
+          "description": "Length of the virtual site (cm)",
+          "title": "Length",
+          "type": "number"
+        },
+        "start_position": {
+          "default": 0,
+          "description": "Start position of the virtual site (cm)",
+          "minimum": 0.0,
+          "title": "Start Position",
+          "type": "number"
+        },
+        "odor": {
+          "default": null,
+          "description": "The optional odor specification of the virtual site",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdorSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reward": {
+          "default": null,
+          "description": "The optional reward specification of the virtual site",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RewardSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "render": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
+          "default": {
+            "contrast": null
+          },
+          "description": "The optional render specification of the virtual site"
+        }
+      },
+      "title": "VirtualSite",
+      "type": "object"
+    },
+    "VirtualSiteGeneration": {
+      "additionalProperties": false,
+      "properties": {
+        "inter_site": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "Unspecified",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            }
+          },
+          "description": "Generator of the inter-site virtual sites"
+        },
+        "inter_patch": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "Unspecified",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            }
+          },
+          "description": "Generator of the inter-patch virtual sites"
+        },
+        "reward_site": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "Unspecified",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            }
+          },
+          "description": "Generator of the reward-site virtual sites"
+        }
+      },
+      "title": "VirtualSiteGeneration",
+      "type": "object"
+    },
+    "VirtualSiteGenerator": {
+      "additionalProperties": false,
+      "properties": {
+        "render_specification": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
+          "default": {
+            "contrast": null
+          },
+          "description": "Contrast of the environment"
+        },
+        "label": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteLabels"
+            }
+          ],
+          "default": "Unspecified",
+          "description": "Label of the virtual site"
+        },
+        "length_distribution": {
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 20.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "Distribution of the length of the virtual site",
+          "discriminator": {
+            "mapping": {
+              "Beta": "#/definitions/BetaDistribution",
+              "Binomial": "#/definitions/BinomialDistribution",
+              "Exponential": "#/definitions/ExponentialDistribution",
+              "Gamma": "#/definitions/GammaDistribution",
+              "LogNormal": "#/definitions/LogNormalDistribution",
+              "Normal": "#/definitions/NormalDistribution",
+              "Poisson": "#/definitions/PoissonDistribution",
+              "Scalar": "#/definitions/Scalar",
+              "Uniform": "#/definitions/UniformDistribution"
+            },
+            "propertyName": "family"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Scalar"
+            },
+            {
+              "$ref": "#/definitions/NormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/LogNormalDistribution"
+            },
+            {
+              "$ref": "#/definitions/ExponentialDistribution"
+            },
+            {
+              "$ref": "#/definitions/UniformDistribution"
+            },
+            {
+              "$ref": "#/definitions/PoissonDistribution"
+            },
+            {
+              "$ref": "#/definitions/BinomialDistribution"
+            },
+            {
+              "$ref": "#/definitions/BetaDistribution"
+            },
+            {
+              "$ref": "#/definitions/GammaDistribution"
+            }
+          ],
+          "title": "Distribution"
+        }
+      },
+      "title": "VirtualSiteGenerator",
+      "type": "object"
+    },
+    "VirtualSiteLabels": {
+      "enum": [
+        "Unspecified",
+        "InterPatch",
+        "RewardSite",
+        "InterSite"
+      ],
+      "title": "VirtualSiteLabels",
+      "type": "string"
+    },
+    "VisualCorridor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "default": 0,
+          "description": "Id of the visual corridor object",
+          "minimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "size": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Size"
+            }
+          ],
+          "default": {
+            "width": 40.0,
+            "height": 40.0
+          },
+          "description": "Size of the corridor (cm)"
+        },
+        "start_position": {
+          "default": 0,
+          "description": "Start position of the corridor (cm)",
+          "minimum": 0.0,
+          "title": "Start Position",
+          "type": "number"
+        },
+        "length": {
+          "default": 120,
+          "description": "Length of the corridor site (cm)",
+          "minimum": 0.0,
+          "title": "Length",
+          "type": "number"
+        },
+        "textures": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/WallTextures"
+            }
+          ],
+          "description": "The textures of the corridor"
+        }
+      },
+      "required": [
+        "textures"
+      ],
+      "title": "VisualCorridor",
+      "type": "object"
+    },
+    "WallTextures": {
+      "additionalProperties": false,
+      "properties": {
+        "floor": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
+          "description": "The texture of the floor"
+        },
+        "ceiling": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
+          "description": "The texture of the ceiling"
+        },
+        "left": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
+          "description": "The texture of the left"
+        },
+        "right": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
+          "description": "The texture of the right"
+        }
+      },
+      "required": [
+        "floor",
+        "ceiling",
+        "left",
+        "right"
+      ],
+      "title": "WallTextures",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "add_refs": {
+      "default": null,
+      "description": "Additional references",
+      "oneOf": [
+        {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/VisualCorridor"
+            },
+            {
+              "$ref": "#/definitions/VirtualSite"
+            },
+            {
+              "description": "Parameters of the distribution",
+              "discriminator": {
+                "mapping": {
+                  "Beta": "#/definitions/BetaDistribution",
+                  "Binomial": "#/definitions/BinomialDistribution",
+                  "Exponential": "#/definitions/ExponentialDistribution",
+                  "Gamma": "#/definitions/GammaDistribution",
+                  "LogNormal": "#/definitions/LogNormalDistribution",
+                  "Normal": "#/definitions/NormalDistribution",
+                  "Poisson": "#/definitions/PoissonDistribution",
+                  "Scalar": "#/definitions/Scalar",
+                  "Uniform": "#/definitions/UniformDistribution"
+                },
+                "propertyName": "family"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/Scalar"
+                },
+                {
+                  "$ref": "#/definitions/NormalDistribution"
+                },
+                {
+                  "$ref": "#/definitions/LogNormalDistribution"
+                },
+                {
+                  "$ref": "#/definitions/ExponentialDistribution"
+                },
+                {
+                  "$ref": "#/definitions/UniformDistribution"
+                },
+                {
+                  "$ref": "#/definitions/PoissonDistribution"
+                },
+                {
+                  "$ref": "#/definitions/BinomialDistribution"
+                },
+                {
+                  "$ref": "#/definitions/BetaDistribution"
+                },
+                {
+                  "$ref": "#/definitions/GammaDistribution"
+                }
+              ],
+              "title": "Distribution"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Add Refs"
+    },
+    "taskLogic": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/TaskLogic"
+        }
+      ],
+      "description": "Task logic"
+    }
+  },
+  "required": [
+    "taskLogic"
+  ],
+  "title": "Root",
+  "type": "object",
+  "x-abstract": "True"
+}

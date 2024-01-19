@@ -18,10 +18,10 @@
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>new(
-Width*0.5 as OffsetX,
-Width*-0.5 as NegOffsetX,
+Size.Width*0.5 as OffsetX,
+Size.Width*-0.5 as NegOffsetX,
 StartPosition + Length*0.5 as CenterZ,
-Height*0.5 as CenterY
+Size.Height*0.5 as CenterY
 )</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -123,11 +123,11 @@ Item2 as PostCorridorSpecs
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Name>Floor</scr:Name>
               <scr:Expression>new(
-CorridorSpecs.Width as Width,
+CorridorSpecs.Size.Width as Width,
 CorridorSpecs.Length as Length,
-CorridorSpecs.Height as Height,
-CorridorSpecs.Width / CorridorSpecs.Textures.Floor.TextureSize.X  as TextureScalingX,
-CorridorSpecs.Height / CorridorSpecs.Textures.Floor.TextureSize.Y  as TextureScalingY,
+CorridorSpecs.Size.Height as Height,
+CorridorSpecs.Size.Width / CorridorSpecs.Textures.Floor.Size.Width  as TextureScalingX,
+CorridorSpecs.Size.Height / CorridorSpecs.Textures.Floor.Size.Height  as TextureScalingY,
 PostCorridorSpecs.CenterZ as CenterZ)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -194,13 +194,13 @@ PostCorridorSpecs.CenterZ as CenterZ)</scr:Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Name>Ceiling</scr:Name>
               <scr:Expression>new(
-CorridorSpecs.Width as Width,
+CorridorSpecs.Size.Width as Width,
 CorridorSpecs.Length as Length,
-CorridorSpecs.Height as Height,
-CorridorSpecs.Width / CorridorSpecs.Textures.Ceiling.TextureSize.X  as TextureScalingX,
-CorridorSpecs.Height / CorridorSpecs.Textures.Ceiling.TextureSize.Y  as TextureScalingY,
+CorridorSpecs.Size.Height as Height,
+CorridorSpecs.Size.Width / CorridorSpecs.Textures.Ceiling.Size.Width  as TextureScalingX,
+CorridorSpecs.Size.Height / CorridorSpecs.Textures.Ceiling.Size.Height  as TextureScalingY,
 PostCorridorSpecs.CenterZ as CenterZ,
-CorridorSpecs.Height as TranslationY)</scr:Expression>
+CorridorSpecs.Size.Height as TranslationY)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />
@@ -259,7 +259,7 @@ CorridorSpecs.Height as TranslationY)</scr:Expression>
               <PositionVec3>CurrentPosition</PositionVec3>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai">
-              <Selector>LeftWall</Selector>
+              <Selector>Left</Selector>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ThisCorridorSpecs</Name>
@@ -267,11 +267,11 @@ CorridorSpecs.Height as TranslationY)</scr:Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Name>LeftWall</scr:Name>
               <scr:Expression>new(
-CorridorSpecs.Width as Width,
+CorridorSpecs.Size.Width as Width,
 CorridorSpecs.Length as Length,
-CorridorSpecs.Height as Height,
-CorridorSpecs.Width / CorridorSpecs.Textures.LeftWall.TextureSize.X  as TextureScalingX,
-CorridorSpecs.Height / CorridorSpecs.Textures.LeftWall.TextureSize.Y  as TextureScalingY,
+CorridorSpecs.Size.Height as Height,
+CorridorSpecs.Size.Width / CorridorSpecs.Textures.Left.Size.Width  as TextureScalingX,
+CorridorSpecs.Size.Height / CorridorSpecs.Textures.Left.Size.Height  as TextureScalingY,
 PostCorridorSpecs.CenterZ as CenterZ,
 PostCorridorSpecs.CenterY as CenterY,
 PostCorridorSpecs.NegOffsetX as NegOffsetX)</scr:Expression>
@@ -334,7 +334,7 @@ PostCorridorSpecs.NegOffsetX as NegOffsetX)</scr:Expression>
               <PositionVec3>CurrentPosition</PositionVec3>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\BindTextureFromBank.bonsai">
-              <Selector>RightWall</Selector>
+              <Selector>Right</Selector>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>ThisCorridorSpecs</Name>
@@ -342,15 +342,15 @@ PostCorridorSpecs.NegOffsetX as NegOffsetX)</scr:Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Name>RightWall</scr:Name>
               <scr:Expression>new(
-CorridorSpecs.Width as Width,
+CorridorSpecs.Size.Width as Width,
 CorridorSpecs.Length as Length,
-CorridorSpecs.Height as Height,
-CorridorSpecs.Width / CorridorSpecs.Textures.RightWall.TextureSize.X  as TextureScalingX,
-CorridorSpecs.Height / CorridorSpecs.Textures.RightWall.TextureSize.Y  as TextureScalingY,
+CorridorSpecs.Size.Height as Height,
+CorridorSpecs.Size.Width / CorridorSpecs.Textures.Right.Size.Width  as TextureScalingX,
+CorridorSpecs.Size.Height / CorridorSpecs.Textures.Right.Size.Height  as TextureScalingY,
 PostCorridorSpecs.CenterZ as CenterZ,
 PostCorridorSpecs.CenterY as CenterY,
 PostCorridorSpecs.OffsetX as OffsetX,
-CorridorSpecs.Height as TranslationY)</scr:Expression>
+CorridorSpecs.Size.Height as TranslationY)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />

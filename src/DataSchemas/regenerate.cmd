@@ -1,1 +1,1 @@
-powershell -ExecutionPolicy Bypass -File .\src\DataSchemas\regenerate.ps1
+python src/DataSchemas/regenerate.py

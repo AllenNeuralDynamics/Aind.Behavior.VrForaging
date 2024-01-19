@@ -3,7 +3,7 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:;assembly=Extensions"
-                 xmlns:p2="clr-namespace:AindVrForagingDataSchema.Task;assembly=Extensions"
+                 xmlns:p2="clr-namespace:AindVrForagingDataSchema.AindVrForagingTask;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -27,7 +27,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="StringProperty">
-                <Value>StopDurationOffset</Value>
+                <Value />
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -98,7 +98,7 @@
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="NumericalUpdaterParameters" />
+                <Property Name="Parameters" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -124,7 +124,7 @@
               <Name>ThisUpdater</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>NumericalUpdaterParameters.InitialValue</Selector>
+              <Selector>Parameters.InitialValue</Selector>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>ThisNumericalValue</Name>
@@ -172,8 +172,8 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:UpdateVariable">
-                      <p1:IsIncrement>true</p1:IsIncrement>
+                    <Combinator xsi:type="p2:UpdateVariable">
+                      <p2:IsIncrement>true</p2:IsIncrement>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
