@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace AindVrForagingDataSchema.AindVrForagingTask
 {
 
-    partial class Delay
+    partial class Distribution
     {
         private const uint SampleSize = 1000;
 
@@ -110,7 +110,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
     partial class Scalar{
         public override double SampleDistribution(Random random){
-            return Distribution_parameters.Value;
+            return DistributionParameters.Value;
         }
     }
 
@@ -118,12 +118,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         public override IContinuousDistribution GetContinuousDistribution(Random random)
         {
-            return new Normal(Distribution_parameters.Mean, Distribution_parameters.Std, random);
+            return new Normal(DistributionParameters.Mean, DistributionParameters.Std, random);
         }
 
         public override double SampleDistribution(Random random){
             var distribution = GetContinuousDistribution(random);
-            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+            return DrawSample(distribution, ScalingParameters, TruncationParameters);
         }
     }
 
@@ -131,12 +131,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         public override IContinuousDistribution GetContinuousDistribution(Random random)
         {
-            return new Exponential(Distribution_parameters.Rate, random);
+            return new Exponential(DistributionParameters.Rate, random);
         }
 
         public override double SampleDistribution(Random random){
             var distribution = GetContinuousDistribution(random);
-            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+            return DrawSample(distribution, ScalingParameters, TruncationParameters);
         }
     }
 
@@ -144,12 +144,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         public override IContinuousDistribution GetContinuousDistribution(Random random)
         {
-            return new LogNormal(Distribution_parameters.Mean, Distribution_parameters.Std, random);
+            return new LogNormal(DistributionParameters.Mean, DistributionParameters.Std, random);
         }
 
         public override double SampleDistribution(Random random){
             var distribution = GetContinuousDistribution(random);
-            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+            return DrawSample(distribution, ScalingParameters, TruncationParameters);
         }
     }
 
@@ -157,12 +157,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         public override IContinuousDistribution GetContinuousDistribution(Random random)
         {
-            return new Gamma(Distribution_parameters.Shape, Distribution_parameters.Rate, random);
+            return new Gamma(DistributionParameters.Shape, DistributionParameters.Rate, random);
         }
 
         public override double SampleDistribution(Random random){
             var distribution = GetContinuousDistribution(random);
-            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+            return DrawSample(distribution, ScalingParameters, TruncationParameters);
         }
     }
 
@@ -170,12 +170,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         public override IContinuousDistribution GetContinuousDistribution(Random random)
         {
-            return new Beta(Distribution_parameters.Alpha, Distribution_parameters.Beta, random);
+            return new Beta(DistributionParameters.Alpha, DistributionParameters.Beta, random);
         }
 
         public override double SampleDistribution(Random random){
             var distribution = GetContinuousDistribution(random);
-            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+            return DrawSample(distribution, ScalingParameters, TruncationParameters);
         }
     }
 
@@ -183,12 +183,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         public override IContinuousDistribution GetContinuousDistribution(Random random)
         {
-            return new ContinuousUniform(Distribution_parameters.Min, Distribution_parameters.Max, random);
+            return new ContinuousUniform(DistributionParameters.Min, DistributionParameters.Max, random);
         }
 
         public override double SampleDistribution(Random random){
             var distribution = GetContinuousDistribution(random);
-            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+            return DrawSample(distribution, ScalingParameters, TruncationParameters);
         }
     }
 
@@ -196,12 +196,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         public override IDiscreteDistribution GetDiscreteDistribution(Random random)
         {
-            return new Binomial(Distribution_parameters.P, Distribution_parameters.N, random);
+            return new Binomial(DistributionParameters.P, DistributionParameters.N, random);
         }
 
         public override double SampleDistribution(Random random){
             var distribution = GetDiscreteDistribution(random);
-            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+            return DrawSample(distribution, ScalingParameters, TruncationParameters);
         }
     }
 
@@ -209,12 +209,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
         public override IDiscreteDistribution GetDiscreteDistribution(Random random)
         {
-            return new Poisson(Distribution_parameters.Rate, random);
+            return new Poisson(DistributionParameters.Rate, random);
         }
 
         public override double SampleDistribution(Random random){
             var distribution = GetDiscreteDistribution(random);
-            return DrawSample(distribution, Scaling_parameters, Truncation_parameters);
+            return DrawSample(distribution, ScalingParameters, TruncationParameters);
         }
     }
 
@@ -232,7 +232,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             set { randomSource = value; }
         }
 
-        public IObservable<double> Process(IObservable<Delay> source)
+        public IObservable<double> Process(IObservable<Distribution> source)
         {
             return source.Select(value => value.SampleDistribution(RandomSource));
         }

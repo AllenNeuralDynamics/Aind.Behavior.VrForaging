@@ -20,7 +20,7 @@
               <scr:Expression>new(
 Size.Width*0.5 as OffsetX,
 Size.Width*-0.5 as NegOffsetX,
-Start_position + Length*0.5 as CenterZ,
+StartPosition + Length*0.5 as CenterZ,
 Size.Height*0.5 as CenterY
 )</scr:Expression>
             </Expression>
@@ -53,7 +53,7 @@ Item2 as PostCorridorSpecs
                     <Name>ThisCorridorSpecs</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>CorridorSpecs.Length,CorridorSpecs.Start_position</Selector>
+                    <Selector>CorridorSpecs.Length,CorridorSpecs.StartPosition</Selector>
                   </Expression>
                   <Expression xsi:type="Add" />
                   <Expression xsi:type="SubscribeSubject">

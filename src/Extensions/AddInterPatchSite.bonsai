@@ -14,7 +14,7 @@
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="Contrast" />
         <Property Name="Label" />
-        <Property Name="Length_distribution" />
+        <Property Name="LengthDistribution" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>InterPatch</Name>
@@ -43,10 +43,10 @@
               </Operand>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Length_distribution" />
+              <Property Name="Value" DisplayName="LengthDistribution" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Delay">
-              <MemberName>Length_distribution</MemberName>
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Distribution">
+              <MemberName>LengthDistribution</MemberName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RngSeed</Name>
@@ -74,7 +74,7 @@
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings>
-                <Property Name="Start_position" Selector="Item1" />
+                <Property Name="StartPosition" Selector="Item1" />
                 <Property Name="Length" Selector="Item2" />
                 <Property Name="Id" Selector="Item3" />
               </PropertyMappings>
@@ -97,7 +97,7 @@
               <Id>0</Id>
               <Label>InterPatchSite</Label>
               <Length>120</Length>
-              <Start_position>0</Start_position>
+              <StartPosition>0</StartPosition>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>SiteSpecs</Name>

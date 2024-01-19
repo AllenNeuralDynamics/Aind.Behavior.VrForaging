@@ -50,7 +50,7 @@ public class UpdateVariable
                 updated_value =  value + updateValue;
                 break;
             case NumericalUpdaterOperation.Set:
-                updated_value = updateParams.Initial_value;
+                updated_value = updateParams.InitialValue;
                 break;
             case NumericalUpdaterOperation.OffsetPercentage:
                 updated_value = value + (value * updateValue);
