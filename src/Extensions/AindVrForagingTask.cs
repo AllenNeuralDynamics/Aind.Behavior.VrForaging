@@ -434,185 +434,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class CreateDistribution
-    {
-    
-        private DistributionFamily _family;
-    
-        private Distribution_parameters _distribution_parameters;
-    
-        private TruncationParameters _truncation_parameters;
-    
-        private ScalingParameters _scaling_parameters;
-    
-        public CreateDistribution()
-        {
-        }
-    
-        protected CreateDistribution(CreateDistribution other)
-        {
-            _family = other._family;
-            _distribution_parameters = other._distribution_parameters;
-            _truncation_parameters = other._truncation_parameters;
-            _scaling_parameters = other._scaling_parameters;
-        }
-    
-        /// <summary>
-        /// Family of the distribution
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("family", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="family")]
-        [System.ComponentModel.DescriptionAttribute("Family of the distribution")]
-        public DistributionFamily Family
-        {
-            get
-            {
-                return _family;
-            }
-            set
-            {
-                _family = value;
-            }
-        }
-    
-        /// <summary>
-        /// Parameters of the distribution
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("distribution_parameters")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distribution_parameters")]
-        [System.ComponentModel.DescriptionAttribute("Parameters of the distribution")]
-        public Distribution_parameters Distribution_parameters
-        {
-            get
-            {
-                return _distribution_parameters;
-            }
-            set
-            {
-                _distribution_parameters = value;
-            }
-        }
-    
-        /// <summary>
-        /// Truncation parameters of the distribution
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("truncation_parameters")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="truncation_parameters")]
-        [System.ComponentModel.DescriptionAttribute("Truncation parameters of the distribution")]
-        public TruncationParameters Truncation_parameters
-        {
-            get
-            {
-                return _truncation_parameters;
-            }
-            set
-            {
-                _truncation_parameters = value;
-            }
-        }
-    
-        /// <summary>
-        /// Scaling parameters of the distribution
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("scaling_parameters")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="scaling_parameters")]
-        [System.ComponentModel.DescriptionAttribute("Scaling parameters of the distribution")]
-        public ScalingParameters Scaling_parameters
-        {
-            get
-            {
-                return _scaling_parameters;
-            }
-            set
-            {
-                _scaling_parameters = value;
-            }
-        }
-    
-        public System.IObservable<CreateDistribution> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CreateDistribution(this)));
-        }
-    
-        public System.IObservable<CreateDistribution> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new CreateDistribution(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("distribution_parameters = " + _distribution_parameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncation_parameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scaling_parameters);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum DistributionFamily
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Scalar")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Scalar")]
-        Scalar = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Normal")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Normal")]
-        Normal = 1,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="LogNormal")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="LogNormal")]
-        LogNormal = 2,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Uniform")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Uniform")]
-        Uniform = 3,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Exponential")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Exponential")]
-        Exponential = 4,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Gamma")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Gamma")]
-        Gamma = 5,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Binomial")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Binomial")]
-        Binomial = 6,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Beta")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Beta")]
-        Beta = 7,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Poisson")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Poisson")]
-        Poisson = 8,
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class EnvironmentStatistics
     {
     
@@ -5306,50 +5127,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Distribution_parameters
-    {
-    
-        public Distribution_parameters()
-        {
-        }
-    
-        protected Distribution_parameters(Distribution_parameters other)
-        {
-        }
-    
-        public System.IObservable<Distribution_parameters> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Distribution_parameters(this)));
-        }
-    
-        public System.IObservable<Distribution_parameters> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Distribution_parameters(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     public enum OdorSpecificationIndex
     {
     
@@ -5754,11 +5531,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<BinomialDistributionParameters>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<CreateDistribution> source)
-        {
-            return Process<CreateDistribution>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
@@ -5984,11 +5756,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<Root>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Distribution_parameters> source)
-        {
-            return Process<Distribution_parameters>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Add_refs> source)
         {
             return Process<Add_refs>(source);
@@ -6007,7 +5774,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistributionParameters>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CreateDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistributionParameters>))]
@@ -6053,7 +5819,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Task_stage_settings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distance_to_reward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Root>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distribution_parameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Add_refs>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -6219,11 +5984,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<BinomialDistributionParameters>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<CreateDistribution> source)
-        {
-            return Process<CreateDistribution>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
         {
             return Process<EnvironmentStatistics>(source);
@@ -6449,11 +6209,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<Root>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Distribution_parameters> source)
-        {
-            return Process<Distribution_parameters>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Add_refs> source)
         {
             return Process<Add_refs>(source);
@@ -6472,7 +6227,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistributionParameters>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CreateDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistributionParameters>))]
@@ -6518,7 +6272,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Task_stage_settings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distance_to_reward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Root>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distribution_parameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Add_refs>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
