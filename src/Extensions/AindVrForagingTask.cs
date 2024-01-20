@@ -4470,11 +4470,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private double _startPosition = 0D;
     
-        private OdorSpecification _odor;
+        private OdorSpecification _odorSpecification;
     
-        private RewardSpecification _reward;
+        private RewardSpecification _rewardSpecification;
     
-        private RenderSpecification _render;
+        private RenderSpecification _renderSpecification;
     
         public VirtualSite()
         {
@@ -4486,9 +4486,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _label = other._label;
             _length = other._length;
             _startPosition = other._startPosition;
-            _odor = other._odor;
-            _reward = other._reward;
-            _render = other._render;
+            _odorSpecification = other._odorSpecification;
+            _rewardSpecification = other._rewardSpecification;
+            _renderSpecification = other._renderSpecification;
         }
     
         /// <summary>
@@ -4567,18 +4567,18 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// The optional odor specification of the virtual site
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor")]
+        [Newtonsoft.Json.JsonPropertyAttribute("odor_specification")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="odor_specification")]
         [System.ComponentModel.DescriptionAttribute("The optional odor specification of the virtual site")]
-        public OdorSpecification Odor
+        public OdorSpecification OdorSpecification
         {
             get
             {
-                return _odor;
+                return _odorSpecification;
             }
             set
             {
-                _odor = value;
+                _odorSpecification = value;
             }
         }
     
@@ -4586,18 +4586,18 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// The optional reward specification of the virtual site
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("reward")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward")]
+        [Newtonsoft.Json.JsonPropertyAttribute("reward_specification")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="reward_specification")]
         [System.ComponentModel.DescriptionAttribute("The optional reward specification of the virtual site")]
-        public RewardSpecification Reward
+        public RewardSpecification RewardSpecification
         {
             get
             {
-                return _reward;
+                return _rewardSpecification;
             }
             set
             {
-                _reward = value;
+                _rewardSpecification = value;
             }
         }
     
@@ -4605,18 +4605,18 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// The optional render specification of the virtual site
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("render")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render")]
+        [Newtonsoft.Json.JsonPropertyAttribute("render_specification")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="render_specification")]
         [System.ComponentModel.DescriptionAttribute("The optional render specification of the virtual site")]
-        public RenderSpecification Render
+        public RenderSpecification RenderSpecification
         {
             get
             {
-                return _render;
+                return _renderSpecification;
             }
             set
             {
-                _render = value;
+                _renderSpecification = value;
             }
         }
     
@@ -4636,9 +4636,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             stringBuilder.Append("label = " + _label + ", ");
             stringBuilder.Append("length = " + _length + ", ");
             stringBuilder.Append("start_position = " + _startPosition + ", ");
-            stringBuilder.Append("odor = " + _odor + ", ");
-            stringBuilder.Append("reward = " + _reward + ", ");
-            stringBuilder.Append("render = " + _render);
+            stringBuilder.Append("odor_specification = " + _odorSpecification + ", ");
+            stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
+            stringBuilder.Append("render_specification = " + _renderSpecification);
             return true;
         }
     

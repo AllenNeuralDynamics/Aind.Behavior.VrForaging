@@ -13,9 +13,9 @@
         <Property Name="Id" />
         <Property Name="Label" />
         <Property Name="Length" />
-        <Property Name="Odor" />
-        <Property Name="Render" />
-        <Property Name="Reward" />
+        <Property Name="OdorSpecification" />
+        <Property Name="RenderSpecification" />
+        <Property Name="RewardSpecification" />
         <Property Name="StartPosition" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
@@ -27,9 +27,9 @@
               <Property Name="Id" />
               <Property Name="Label" />
               <Property Name="Length" />
-              <Property Name="Odor" />
-              <Property Name="Render" />
-              <Property Name="Reward" />
+              <Property Name="OdorSpecification" />
+              <Property Name="RenderSpecification" />
+              <Property Name="RewardSpecification" />
               <Property Name="StartPosition" />
             </Expression>
             <Expression xsi:type="Combinator">

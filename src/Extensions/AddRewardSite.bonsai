@@ -98,7 +98,7 @@
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Odor" />
+                <Property Name="OdorSpecification" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -109,7 +109,7 @@
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Render" />
+                <Property Name="RenderSpecification" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -185,7 +185,7 @@
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Reward" />
+                <Property Name="RewardSpecification" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">

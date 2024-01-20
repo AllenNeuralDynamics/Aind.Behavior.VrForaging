@@ -87,7 +87,7 @@
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Render" />
+                <Property Name="RenderSpecification" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">

@@ -72,7 +72,7 @@
                           <Name>ThisSiteSpecs</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Reward</Selector>
+                          <Selector>RewardSpecification</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">
@@ -951,7 +951,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                     <Name>ThisSiteSpecs</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Reward</Selector>
+                    <Selector>RewardSpecification</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
@@ -993,7 +993,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                     <Name>ThisSiteSpecs</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Odor</Selector>
+                    <Selector>OdorSpecification</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
@@ -1008,7 +1008,10 @@ it.Item2 as EntryPosition)</scr:Expression>
                     <Name>ThisSiteSpecs</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Render.Contrast</Selector>
+                    <Selector>RenderSpecification</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Contrast</Selector>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
                     <Workflow>
@@ -1049,6 +1052,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
