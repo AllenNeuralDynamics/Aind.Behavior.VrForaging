@@ -14,8 +14,8 @@
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="Contrast" />
         <Property Name="Label" />
-        <Property Name="Odor" />
-        <Property Name="Reward" />
+        <Property Name="OdorSpecification" />
+        <Property Name="RewardSpecification" />
         <Property Name="LengthDistribution" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
@@ -100,13 +100,13 @@
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Render" />
+                <Property Name="RenderSpecification" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Label" />
-              <Property Name="Odor" />
-              <Property Name="Reward" />
+              <Property Name="OdorSpecification" />
+              <Property Name="RewardSpecification" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
               <Id>388</Id>
