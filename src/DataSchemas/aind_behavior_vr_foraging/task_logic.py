@@ -63,7 +63,7 @@ class NumericalUpdaterParameters(AindModel):
 
 class NumericalUpdater(AindModel):
     operation: NumericalUpdaterOperation = Field(
-        NumericalUpdaterOperation.NONE, description="Operation to perform on the parameter"
+        default=NumericalUpdaterOperation.NONE, description="Operation to perform on the parameter"
     )
     parameters: NumericalUpdaterParameters = Field(
         NumericalUpdaterParameters(), description="Parameters of the updater"
@@ -125,7 +125,7 @@ class VirtualSiteGenerator(AindModel):
     render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="Contrast of the environment"
     )
-    label: VirtualSiteLabels = Field(VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
+    label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
         default=scalar_value(20),
         description="Distribution of the length of the virtual site",
@@ -149,11 +149,13 @@ class VirtualSite(AindModel):
     label: str = Field(default="VirtualSite", description="Label of the virtual site")
     length: float = Field(20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
-    odor: Optional[OdorSpecification] = Field(None, description="The optional odor specification of the virtual site")
-    reward: Optional[RewardSpecification] = Field(
+    odor_specification: Optional[OdorSpecification] = Field(
+        None, description="The optional odor specification of the virtual site"
+    )
+    reward_specification: Optional[RewardSpecification] = Field(
         None, description="The optional reward specification of the virtual site"
     )
-    render: RenderSpecification = Field(
+    render_specification: RenderSpecification = Field(
         RenderSpecification(), description="The optional render specification of the virtual site"
     )
 
@@ -162,10 +164,10 @@ class PatchStatistics(AindModel):
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
     odor_specification: Optional[OdorSpecification] = Field(
-        None, description="The optional odor specification of the patch"
+        default=None, description="The optional odor specification of the patch"
     )
     reward_specification: Optional[RewardSpecification] = Field(
-        None, description="The optional reward specification of the patch"
+        default=None, description="The optional reward specification of the patch"
     )
     virtual_site_generation: VirtualSiteGeneration = Field(
         VirtualSiteGeneration(), description="Virtual site generation specification"
@@ -173,39 +175,39 @@ class PatchStatistics(AindModel):
 
 
 class WallTextures(AindModel):
-    floor: Texture = Field(description="The texture of the floor")
-    ceiling: Texture = Field(description="The texture of the ceiling")
-    left: Texture = Field(description="The texture of the left")
-    right: Texture = Field(description="The texture of the right")
+    floor: Texture = Field(..., description="The texture of the floor")
+    ceiling: Texture = Field(..., description="The texture of the ceiling")
+    left: Texture = Field(..., description="The texture of the left")
+    right: Texture = Field(..., description="The texture of the right")
 
 
 class VisualCorridor(AindModel):
     id: int = Field(default=0, ge=0, description="Id of the visual corridor object")
-    size: Size = Field(Size(width=40, height=40), description="Size of the corridor (cm)")
+    size: Size = Field(default=Size(width=40, height=40), description="Size of the corridor (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the corridor (cm)")
     length: float = Field(default=120, ge=0, description="Length of the corridor site (cm)")
-    textures: WallTextures = Field(description="The textures of the corridor")
+    textures: WallTextures = Field(..., description="The textures of the corridor")
 
 
 class EnvironmentStatistics(AindModel):
     patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches")
     transition_matrix: Matrix2D = Field(default=Matrix2D(), description="Transition matrix between patches")
     first_state: Optional[int] = Field(
-        None, ge=0, description="The first state to be visited. If None, it will be randomly drawn."
+        default=None, ge=0, description="The first state to be visited. If None, it will be randomly drawn."
     )
 
 
 class ServoMotor(AindModel):
-    period: int = Field(20000, ge=1, description="Period", units="us")
-    min_pulse_duration: int = Field(1000, ge=1, description="Minimum pulse duration", units="us")
-    max_pulse_duration: int = Field(2000, ge=1, description="Maximum pulse duration", units="us")
-    default_pulse_duration: int = Field(2000, ge=1, description="Default pulse duration", units="us")
+    period: int = Field(default=20000, ge=1, description="Period", units="us")
+    min_pulse_duration: int = Field(default=1000, ge=1, description="Minimum pulse duration", units="us")
+    max_pulse_duration: int = Field(default=2000, ge=1, description="Maximum pulse duration", units="us")
+    default_pulse_duration: int = Field(default=2000, ge=1, description="Default pulse duration", units="us")
 
 
 class MovableSpoutControl(AindModel):
     enabled: bool = Field(default=False, description="Whether the movable spout is enabled")
     time_to_collect_after_reward: float = Field(default=1, ge=0, description="Time (s) to collect after reward")
-    servo_motor: ServoMotor = Field(ServoMotor(), description="Servo motor settings")
+    servo_motor: ServoMotor = Field(default=ServoMotor(), description="Servo motor settings")
 
 
 class OdorControl(AindModel):
@@ -236,8 +238,8 @@ class PositionControl(AindModel):
 
 
 class AudioControl(AindModel):
-    duration: float = Field(0.2, ge=0, description="Duration", units="s")
-    frequency: float = Field(1000, ge=100, description="Frequency", units="Hz")
+    duration: float = Field(default=0.2, ge=0, description="Duration", units="s")
+    frequency: float = Field(default=1000, ge=100, description="Frequency", units="Hz")
 
 
 class OperationControl(AindModel):
@@ -255,7 +257,7 @@ class TaskStage(str, Enum):
 
 
 class TaskStageSettingsBase(AindModel):
-    task_stage: TaskStage = Field(TaskStage.FORAGING, description="Stage of the task")
+    task_stage: TaskStage = Field(default=TaskStage.FORAGING, description="Stage of the task")
 
 
 class HabituationSettings(TaskStageSettingsBase):
@@ -280,10 +282,12 @@ class AindVrForagingTaskLogic(AindCoreModel):
     schema_version: Literal["0.1.0"] = "0.1.0"
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
-    stage: TaskStage = Field(TaskStage.FORAGING, description="Stage of the task")
-    habitual_stage_settings: Optional[HabituationSettings] = Field(None, description="Settings of the task stage")
-    operation_control: OperationControl = Field(description="Control of the operation")
-    dependencies: Optional[Dependencies] = Field(None, description="Dependencies of the task logic")
+    stage: TaskStage = Field(default=TaskStage.FORAGING, description="Stage of the task")
+    habitual_stage_settings: Optional[HabituationSettings] = Field(
+        default=None, description="Settings of the task stage"
+    )
+    operation_control: OperationControl = Field(..., description="Control of the operation")
+    dependencies: Optional[Dependencies] = Field(default=None, description="Dependencies of the task logic")
 
 
 class Dependencies(BaseModel):

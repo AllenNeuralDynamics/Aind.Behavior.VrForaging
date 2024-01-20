@@ -172,4 +172,3 @@ with open("local/example_session.json", "w") as f:
     f.write(example_session.model_dump_json(indent=3))
 with open("local/example_rig.json", "w") as f:
     f.write(example_rig.model_dump_json(indent=3))
-

@@ -12,11 +12,11 @@ from pydantic import Field, BaseModel
 
 class SpinnakerCamera(AindModel):
     serial_number: str = Field(..., description="Camera serial number")
-    binning: int = Field(1, ge=1, description="Binning")
-    color_processing: Literal["Default", "NoColorProcessing"] = Field("Default", description="Color processing")
-    exposure: int = Field(1000, ge=100, description="Exposure time", units="us")
-    frame_rate: int = Field(30, ge=1, le=350, description="Frame rate", units="Hz")
-    gain: float = Field(0, ge=0, description="Gain", units="dB")
+    binning: int = Field(default=1, ge=1, description="Binning")
+    color_processing: Literal["Default", "NoColorProcessing"] = Field(default="Default", description="Color processing")
+    exposure: int = Field(default=1000, ge=100, description="Exposure time", units="us")
+    frame_rate: int = Field(default=30, ge=1, le=350, description="Frame rate", units="Hz")
+    gain: float = Field(default=0, ge=0, description="Gain", units="dB")
 
 
 class HarpDeviceType(Enum):
@@ -30,11 +30,11 @@ class HarpDeviceType(Enum):
 
 
 class HarpDeviceBase(AindModel):
-    who_am_i: Optional[int] = Field(None, le=9999, ge=0, description="Device WhoAmI")
-    device_type: HarpDeviceType = Field(HarpDeviceType.GENERIC, description="Device type")
-    serial_number: Optional[str] = Field(None, description="Device serial number")
+    who_am_i: Optional[int] = Field(default=None, le=9999, ge=0, description="Device WhoAmI")
+    device_type: HarpDeviceType = Field(default=HarpDeviceType.GENERIC, description="Device type")
+    serial_number: Optional[str] = Field(default=None, description="Device serial number")
     port_name: str = Field(..., description="Device port name")
-    additional_settings: Optional[Any] = Field(None, description="Additional settings")
+    additional_settings: Optional[Any] = Field(default=None, description="Additional settings")
 
 
 class HarpBehavior(HarpDeviceBase):
@@ -78,26 +78,26 @@ class HarpDevice(RootModel):
 
 
 class WebCamera(AindModel):
-    index: int = Field(0, ge=0, description="Camera index")
+    index: int = Field(default=0, ge=0, description="Camera index")
 
 
 class Screen(AindModel):
-    display_index: int = Field(1, description="Display index")
-    target_render_frequency: float = Field(60, description="Target render frequency")
-    target_update_frequency: float = Field(120, description="Target update frequency")
-    calibration_directory: str = Field("Calibration\\Monitors\\", description="Calibration directory")
-    texture_assets_directory: str = Field("Textures", description="Calibration directory")
+    display_index: int = Field(default=1, description="Display index")
+    target_render_frequency: float = Field(default=60, description="Target render frequency")
+    target_update_frequency: float = Field(default=120, description="Target update frequency")
+    calibration_directory: str = Field(default="Calibration\\Monitors\\", description="Calibration directory")
+    texture_assets_directory: str = Field(default="Textures", description="Calibration directory")
 
 
 class Treadmill(AindModel):
-    wheel_diameter: float = Field(15, ge=0, description="Wheel diameter", units="cm")
-    pulses_per_revolution: int = Field(28800, ge=1, description="Pulses per revolution")
-    invert_direction: bool = Field(False, description="Invert direction")
+    wheel_diameter: float = Field(default=15, ge=0, description="Wheel diameter", units="cm")
+    pulses_per_revolution: int = Field(default=28800, ge=1, description="Pulses per revolution")
+    invert_direction: bool = Field(default=False, description="Invert direction")
 
 
 class Valve(AindModel):
-    calibration_intercept: float = Field(0, description="Calibration intercept")
-    calibration_slope: float = Field(1, description="Calibration slope")
+    calibration_intercept: float = Field(default=0, description="Calibration intercept")
+    calibration_slope: float = Field(default=1, description="Calibration slope")
 
 
 # class AindVrForagingRig(AindCoreModel):
@@ -114,19 +114,19 @@ class Valve(AindModel):
 class AindVrForagingRig(AindCoreModel):
     describedBy: str = Field("pyd_taskLogic")
     schema_version: Literal["0.1.0"] = "0.1.0"
-    auxiliary_camera0: Optional[WebCamera] = Field(WebCamera(), description="Auxiliary camera 0")
-    auxiliary_camera1: Optional[WebCamera] = Field(WebCamera(), description="Auxiliary camera 1")
+    auxiliary_camera0: Optional[WebCamera] = Field(default=WebCamera(), description="Auxiliary camera 0")
+    auxiliary_camera1: Optional[WebCamera] = Field(default=WebCamera(), description="Auxiliary camera 1")
     harp_behavior: HarpBehavior = Field(..., description="Harp behavior")
     harp_olfactometer: HarpOlfactometer = Field(..., description="Harp olfactometer")
     harp_lickometer: HarpLickometer = Field(..., description="Harp lickometer")
     harp_clock_generator: HarpClockGenerator = Field(..., description="Harp clock generator")
-    harp_analog_input: Optional[HarpAnalogInput] = Field(None, description="Harp analog input")
+    harp_analog_input: Optional[HarpAnalogInput] = Field(default=None, description="Harp analog input")
     face_camera: SpinnakerCamera = Field(..., description="Face camera")
-    top_body_camera: Optional[SpinnakerCamera] = Field(None, description="Top body camera")
-    side_body_camera: Optional[SpinnakerCamera] = Field(None, description="Side body camera")
-    screen: Screen = Field(Screen(), description="Screen settings")
-    treadmill: Treadmill = Field(Treadmill(), description="Treadmill settings")
-    water_valve: Valve = Field(Valve(), description="Water valve settings")
+    top_body_camera: Optional[SpinnakerCamera] = Field(default=None, description="Top body camera")
+    side_body_camera: Optional[SpinnakerCamera] = Field(default=None, description="Side body camera")
+    screen: Screen = Field(default=Screen(), description="Screen settings")
+    treadmill: Treadmill = Field(default=Treadmill(), description="Treadmill settings")
+    water_valve: Valve = Field(default=Valve(), description="Water valve settings")
 
 
 def schema() -> BaseModel:
