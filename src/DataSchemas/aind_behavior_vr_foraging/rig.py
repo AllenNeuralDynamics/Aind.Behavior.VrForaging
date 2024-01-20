@@ -4,10 +4,10 @@ from __future__ import annotations
 from enum import Enum
 
 # Import core types
-from typing import Annotated, Literal, Optional, Union, Dict, Any
+from typing import Annotated, Any, Literal, Optional, Union
 
 from aind_data_schema.base import AindCoreModel, AindModel
-from pydantic import Field, BaseModel
+from pydantic import BaseModel, Field, RootModel
 
 
 class SpinnakerCamera(AindModel):
@@ -65,9 +65,6 @@ class HarpLickometer(HarpDeviceBase):
 class HarpTreadmill(HarpDeviceBase):
     device_type: Literal[HarpDeviceType.TREADMILL] = HarpDeviceType.TREADMILL
     who_am_i: Literal[None] = None
-
-
-from pydantic import RootModel
 
 
 class HarpDevice(RootModel):

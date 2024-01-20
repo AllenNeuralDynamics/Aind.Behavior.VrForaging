@@ -6,7 +6,7 @@ from typing import Annotated, Literal, Optional, Union
 
 # Import aind-datas-schema types
 from aind_data_schema.base import AindModel
-from pydantic import Field, RootModel
+from pydantic import Field
 
 
 class TruncationParameters(AindModel):

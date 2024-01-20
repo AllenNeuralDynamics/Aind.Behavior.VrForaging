@@ -14,7 +14,7 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_rig@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.RigCalibration@main",
+  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@main",
   "jupyter",
   "numpy",
   "pandas",
