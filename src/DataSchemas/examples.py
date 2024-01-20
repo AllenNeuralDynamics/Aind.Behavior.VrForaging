@@ -1,9 +1,9 @@
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
+import aind_behavior_vr_foraging.distributions as distributions
 import aind_behavior_vr_foraging.rig as rig
+import aind_behavior_vr_foraging.task_logic as task_logic
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.session import AindVrForagingSession, Metadata
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
-import aind_behavior_vr_foraging.task_logic as task_logic
-import aind_behavior_vr_foraging.distributions as distributions
 
 #  Import the 3 necessary schemas: Rig, Session, and TaskLogic
 

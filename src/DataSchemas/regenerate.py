@@ -1,12 +1,10 @@
 import json
 from pathlib import Path
 
-import aind_behavior_vr_foraging.task_logic
 import aind_behavior_vr_foraging.rig
 import aind_behavior_vr_foraging.session
-
-from aind_behavior_rig.base.json_schema import export_schema
-from aind_behavior_rig.utils import BonsaiSgenSerializers, bonsai_sgen, snake_to_pascal_case
+import aind_behavior_vr_foraging.task_logic
+from aind_behavior_services.utils import BonsaiSgenSerializers, bonsai_sgen, export_schema, snake_to_pascal_case
 
 SCHEMA_ROOT = Path("./src/DataSchemas/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")

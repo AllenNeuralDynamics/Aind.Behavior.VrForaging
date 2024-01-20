@@ -3,8 +3,7 @@ from typing import Optional
 
 # Import aind-datas-schema types
 from aind_data_schema.base import AindModel
-from aind_data_schema.core.session import Session
-from pydantic import Field, BaseModel
+from pydantic import BaseModel, Field
 from typing_extensions import Annotated
 
 
