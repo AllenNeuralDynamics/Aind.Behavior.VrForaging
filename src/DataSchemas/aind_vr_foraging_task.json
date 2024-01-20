@@ -1679,7 +1679,7 @@
           "title": "Start Position",
           "type": "number"
         },
-        "odor": {
+        "odor_specification": {
           "default": null,
           "description": "The optional odor specification of the virtual site",
           "oneOf": [
@@ -1691,7 +1691,7 @@
             }
           ]
         },
-        "reward": {
+        "reward_specification": {
           "default": null,
           "description": "The optional reward specification of the virtual site",
           "oneOf": [
@@ -1703,7 +1703,7 @@
             }
           ]
         },
-        "render": {
+        "render_specification": {
           "allOf": [
             {
               "$ref": "#/definitions/RenderSpecification"
