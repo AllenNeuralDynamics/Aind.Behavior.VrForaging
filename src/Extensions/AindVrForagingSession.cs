@@ -21,6 +21,8 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _experiment;
     
+        private string _date;
+    
         private string _rootPath;
     
         private string _remotePath;
@@ -48,6 +50,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _describedBy = other._describedBy;
             _schemaVersion = other._schemaVersion;
             _experiment = other._experiment;
+            _date = other._date;
             _rootPath = other._rootPath;
             _remotePath = other._remotePath;
             _subject = other._subject;
@@ -102,6 +105,24 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             set
             {
                 _experiment = value;
+            }
+        }
+    
+        /// <summary>
+        /// Date of the experiment
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("date")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="date")]
+        [System.ComponentModel.DescriptionAttribute("Date of the experiment")]
+        public string Date
+        {
+            get
+            {
+                return _date;
+            }
+            set
+            {
+                _date = value;
             }
         }
     
@@ -284,6 +305,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("describedBy = " + _describedBy + ", ");
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
             stringBuilder.Append("experiment = " + _experiment + ", ");
+            stringBuilder.Append("date = " + _date + ", ");
             stringBuilder.Append("root_path = " + _rootPath + ", ");
             stringBuilder.Append("remote_path = " + _remotePath + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
