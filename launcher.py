@@ -11,7 +11,7 @@ import secrets
 
 ALLOW_DIRTY = False
 CWD = os.getcwd()
-CONFIG_LIBRARY = r"C:\git\AllenNeuralDynamics\aind-vr-foraging\local"
+CONFIG_LIBRARY = r"\\allen\aind\scratch\vr-foraging\schemas"
 BONSAI_EXE = "bonsai/bonsai.exe"
 WORKFLOW_FILE = "src\\vr-foraging.bonsai"
 COMPUTER_NAME = os.environ["COMPUTERNAME"]
@@ -86,13 +86,13 @@ def save_temp_model(model: BaseModel, folder: str = TEMP) -> PathLike:
 
 
 def load_json_model(json_path: PathLike, model: BaseModel) -> BaseModel:
-    with open(json_path, 'r', encoding="utf-8") as file:
+    with open(json_path, "r", encoding="utf-8") as file:
         return model.model_validate_json(file.read())
 
 
 def prompt_yes_no_question(question: str) -> bool:
     while True:
-        reply = input(question + " (Y\n): ").upper()
+        reply = input(question + " (Y\\N): ").upper()
         if reply == "Y":
             return True
         elif reply == "N":
@@ -115,8 +115,8 @@ def pick_file_from_list(available_files: list[str], prompt: str = "Choose a file
         return available_files[choice - 1]
 
 
-def prompt_task_logic_input(folder: str = "TaskLogic") -> AindVrForagingTaskLogic:
-    available_files = glob.glob(os.path.join(CONFIG_LIBRARY, folder, "*.json"))
+def prompt_task_logic_input(folder: str = "TaskLogic", task_name="AindVrForaging") -> AindVrForagingTaskLogic:
+    available_files = glob.glob(os.path.join(CONFIG_LIBRARY, folder, task_name, "*.json"))
     while True:
         try:
             path = pick_file_from_list(available_files)
@@ -130,25 +130,61 @@ def prompt_task_logic_input(folder: str = "TaskLogic") -> AindVrForagingTaskLogi
             print("Invalid choice. Try again.")
 
 
-def prompt_session_input(root_path: str = ROOT_DATA_PATH, remote_path: str = REMOTE_DATA_PATH) -> AindVrForagingSession:
-    subject = str(input("Enter an animal name:\n"))
+def prompt_session_input(
+    folder: str = "Subjects",
+    root_path: str = ROOT_DATA_PATH,
+    remote_path: str = REMOTE_DATA_PATH,
+    task_name="AindVrForaging",
+) -> AindVrForagingSession:
+    _local_config_folder = os.path.join(CONFIG_LIBRARY, folder, task_name)
+    available_batches = glob.glob(
+        os.path.join(_local_config_folder, "*.*")
+    )
+
+    available_batches = [batch for batch in available_batches if os.path.isfile(batch)]
+    subject_list = None
+    if len(available_batches) == 0:
+        raise FileNotFoundError(f"No batch files found in {_local_config_folder}")
+    while subject_list is None:
+        try:
+            if len(available_batches) == 1:
+                batch_file = available_batches[0]
+                print(f"Found a single session config file. Using {batch_file}.")
+            else:
+                batch_file = pick_file_from_list(available_batches, prompt="Choose a batch:\n")
+                print(f"Using {batch_file}.")
+            with open(batch_file, "r", encoding="utf-8") as file:
+                subject_list = file.readlines()
+            subject_list = [subject.strip() for subject in subject_list if subject.strip()]
+            if len(subject_list) == 0:
+                print(f"No subjects found in {batch_file}")
+                raise ValueError()
+        except ValueError:
+            print("Invalid choice. Try again.")
+        except FileNotFoundError:
+            print("Invalid choice. Try again.")
+        except IOError:
+            print("Invalid choice. Try again.")
+
+    subject = None
+    while subject is None:
+        try:
+            subject = pick_file_from_list(subject_list, prompt="Choose a subject:\n")
+        except ValueError:
+            print("Invalid choice. Try again.")
+
     notes = str(input("Enter notes:\n"))
 
-    while True:
-        try:
-            session = AindVrForagingSession(
-                experiment="aind_vr_foraging",
-                root_path=root_path,
-                remote_path=remote_path,
-                version=__version__,
-                subject=subject,
-                notes=notes,
-                commit_hash=REPO.head.commit.hexsha,
-                allow_dirty_repo=ALLOW_DIRTY
-            )
-            return session
-        except ValidationError as e:
-            print(f"Failed to validate pydantic model: {e}. Try again.")
+    return AindVrForagingSession(
+        experiment="AindVrForaging",
+        root_path=root_path,
+        remote_path=remote_path,
+        version=__version__,
+        subject=subject,
+        notes=notes,
+        commit_hash=REPO.head.commit.hexsha,
+        allow_dirty_repo=ALLOW_DIRTY,
+    )
 
 
 def prompt_rig_input(folder_name: str = "Rigs") -> AindVrForagingRig:
@@ -213,7 +249,6 @@ def prompt():
             "RigPath": save_temp_model(rig),
         }
         print()
-        return None
         return run_bonsai_process(
             bonsai_exe=BONSAI_EXE,
             workflow_file=WORKFLOW_FILE,
@@ -228,5 +263,3 @@ def prompt():
 
 if __name__ == "__main__":
     prompt()
-
-
