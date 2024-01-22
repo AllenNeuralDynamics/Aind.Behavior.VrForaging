@@ -15,7 +15,6 @@ dynamic = ["version"]
 
 dependencies = [
   "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@main",
-  "jupyter",
   "numpy",
   "pandas",
   "matplotlib",
