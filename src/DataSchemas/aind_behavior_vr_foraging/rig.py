@@ -1,6 +1,6 @@
 # Import core types
 from __future__ import annotations
-
+import os
 from enum import Enum
 
 # Import core types
@@ -111,6 +111,7 @@ class Valve(AindModel):
 class AindVrForagingRig(AindCoreModel):
     describedBy: str = Field("")
     schema_version: Literal["0.1.0"] = "0.1.0"
+    computer_name: str = Field(default_factory=lambda: os.environ["COMPUTERNAME"], description="Computer name")
     auxiliary_camera0: Optional[WebCamera] = Field(default=WebCamera(), description="Auxiliary camera 0")
     auxiliary_camera1: Optional[WebCamera] = Field(default=WebCamera(), description="Auxiliary camera 1")
     harp_behavior: HarpBehavior = Field(..., description="Harp behavior")
