@@ -284,7 +284,7 @@ class AindVrForagingTaskLogic(AindCoreModel):
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
     stage_settings: TaskStageSettings = Field(ForagingSettings(), description="Settings of the task stage")
     operation_control: OperationControl = Field(..., description="Control of the operation")
-    dependencies: Optional[Dependencies] = Field(default=None, description="Dependencies of the task logic")
+    dependencies: Optional[Dependencies] = Field(None, description="Dependencies of the task logic")
 
 
 class Dependencies(BaseModel):

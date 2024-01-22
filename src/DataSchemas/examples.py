@@ -2,14 +2,14 @@ import aind_behavior_vr_foraging.distributions as distributions
 import aind_behavior_vr_foraging.rig as rig
 import aind_behavior_vr_foraging.task_logic as task_logic
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
-from aind_behavior_vr_foraging.session import AindVrForagingSession, Metadata
+from aind_behavior_vr_foraging.session import AindVrForagingSession
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 #  Import the 3 necessary schemas: Rig, Session, and TaskLogic
 
 #  Create a new Session instance
 
-metadata = Metadata(
+example_session = AindVrForagingSession(
     experiment="AindVrForaging",
     root_path="c://",
     remote_path="c://remote",
@@ -19,8 +19,6 @@ metadata = Metadata(
     allow_dirty_repo=True,
     skip_hardware_validation=False,
 )
-
-example_session = AindVrForagingSession(metadata=metadata)
 
 
 #  Create a new Rig instance
@@ -161,8 +159,7 @@ environment_statistics = task_logic.EnvironmentStatistics(
 example_task_logic = AindVrForagingTaskLogic(
     updaters=updaters,
     environment_statistics=environment_statistics,
-    habitual_stage_settings=None,
-    stage=task_logic.TaskStage.FORAGING,
+    stage_settings=task_logic.ForagingSettings(),
     operation_control=operation_control,
 )
 
