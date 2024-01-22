@@ -17,6 +17,11 @@
       "title": "Experiment",
       "type": "string"
     },
+    "date": {
+      "description": "Date of the experiment",
+      "title": "Date",
+      "type": "string"
+    },
     "root_path": {
       "description": "Root path where data will be logged",
       "title": "Root Path",

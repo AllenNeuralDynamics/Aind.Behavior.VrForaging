@@ -1350,6 +1350,8 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _schemaVersion = "0.1.0";
     
+        private string _rigName;
+    
         private string _computerName;
     
         private WebCamera _auxiliaryCamera0;
@@ -1386,6 +1388,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             _describedBy = other._describedBy;
             _schemaVersion = other._schemaVersion;
+            _rigName = other._rigName;
             _computerName = other._computerName;
             _auxiliaryCamera0 = other._auxiliaryCamera0;
             _auxiliaryCamera1 = other._auxiliaryCamera1;
@@ -1427,6 +1430,24 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             set
             {
                 _schemaVersion = value;
+            }
+        }
+    
+        /// <summary>
+        /// Rig name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rig_name", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rig_name")]
+        [System.ComponentModel.DescriptionAttribute("Rig name")]
+        public string RigName
+        {
+            get
+            {
+                return _rigName;
+            }
+            set
+            {
+                _rigName = value;
             }
         }
     
@@ -1709,6 +1730,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             stringBuilder.Append("describedBy = " + _describedBy + ", ");
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("rig_name = " + _rigName + ", ");
             stringBuilder.Append("computer_name = " + _computerName + ", ");
             stringBuilder.Append("auxiliary_camera0 = " + _auxiliaryCamera0 + ", ");
             stringBuilder.Append("auxiliary_camera1 = " + _auxiliaryCamera1 + ", ");

@@ -424,6 +424,16 @@
       "title": "Schema Version",
       "type": "string"
     },
+    "rig_name": {
+      "description": "Rig name",
+      "title": "Rig Name",
+      "type": "string"
+    },
+    "computer_name": {
+      "description": "Computer name",
+      "title": "Computer Name",
+      "type": "string"
+    },
     "auxiliary_camera0": {
       "default": {
         "index": 0
@@ -570,6 +580,7 @@
     }
   },
   "required": [
+    "rig_name",
     "harp_behavior",
     "harp_olfactometer",
     "harp_lickometer",
