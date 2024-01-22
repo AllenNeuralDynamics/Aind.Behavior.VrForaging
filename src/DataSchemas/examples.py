@@ -24,6 +24,7 @@ example_session = AindVrForagingSession(
 #  Create a new Rig instance
 
 example_rig = AindVrForagingRig(
+    rig_name="test_rig",
     auxiliary_camera0=rig.WebCamera(index=0),
     auxiliary_camera1=None,
     face_camera=rig.SpinnakerCamera(serial_number="SerialNumber", binning=1, exposure=5000, frame_rate=60, gain=0),

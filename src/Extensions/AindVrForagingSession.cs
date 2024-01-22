@@ -21,7 +21,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _experiment;
     
-        private string _date;
+        private System.DateTimeOffset _date;
     
         private string _rootPath;
     
@@ -111,10 +111,11 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// <summary>
         /// Date of the experiment
         /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("date")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="date")]
         [System.ComponentModel.DescriptionAttribute("Date of the experiment")]
-        public string Date
+        public System.DateTimeOffset Date
         {
             get
             {
