@@ -1350,6 +1350,8 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _schemaVersion = "0.1.0";
     
+        private string _computerName;
+    
         private WebCamera _auxiliaryCamera0;
     
         private WebCamera _auxiliaryCamera1;
@@ -1384,6 +1386,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             _describedBy = other._describedBy;
             _schemaVersion = other._schemaVersion;
+            _computerName = other._computerName;
             _auxiliaryCamera0 = other._auxiliaryCamera0;
             _auxiliaryCamera1 = other._auxiliaryCamera1;
             _harpBehavior = other._harpBehavior;
@@ -1424,6 +1427,24 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             set
             {
                 _schemaVersion = value;
+            }
+        }
+    
+        /// <summary>
+        /// Computer name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("computer_name")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="computer_name")]
+        [System.ComponentModel.DescriptionAttribute("Computer name")]
+        public string ComputerName
+        {
+            get
+            {
+                return _computerName;
+            }
+            set
+            {
+                _computerName = value;
             }
         }
     
@@ -1688,6 +1709,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             stringBuilder.Append("describedBy = " + _describedBy + ", ");
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("computer_name = " + _computerName + ", ");
             stringBuilder.Append("auxiliary_camera0 = " + _auxiliaryCamera0 + ", ");
             stringBuilder.Append("auxiliary_camera1 = " + _auxiliaryCamera1 + ", ");
             stringBuilder.Append("harp_behavior = " + _harpBehavior + ", ");
