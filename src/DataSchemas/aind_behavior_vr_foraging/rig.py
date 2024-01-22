@@ -19,7 +19,7 @@ class SpinnakerCamera(AindModel):
     gain: float = Field(default=0, ge=0, description="Gain", units="dB")
 
 
-class HarpDeviceType(Enum):
+class HarpDeviceType(str, Enum):
     BEHAVIOR = "behavior"
     OLFACTOMETER = "olfactometer"
     CLOCKGENERATOR = "clockgenerator"
