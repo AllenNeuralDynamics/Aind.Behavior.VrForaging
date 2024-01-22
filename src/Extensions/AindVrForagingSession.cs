@@ -12,8 +12,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Metadata
+    public partial class AindVrForagingSession
     {
+    
+        private string _describedBy = "";
+    
+        private string _schemaVersion = "0.1.0";
     
         private string _experiment;
     
@@ -35,12 +39,14 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private bool _skipHardwareValidation = false;
     
-        public Metadata()
+        public AindVrForagingSession()
         {
         }
     
-        protected Metadata(Metadata other)
+        protected AindVrForagingSession(AindVrForagingSession other)
         {
+            _describedBy = other._describedBy;
+            _schemaVersion = other._schemaVersion;
             _experiment = other._experiment;
             _rootPath = other._rootPath;
             _remotePath = other._remotePath;
@@ -51,6 +57,34 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _commitHash = other._commitHash;
             _allowDirtyRepo = other._allowDirtyRepo;
             _skipHardwareValidation = other._skipHardwareValidation;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("describedBy")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
+        public string DescribedBy
+        {
+            get
+            {
+                return _describedBy;
+            }
+            set
+            {
+                _describedBy = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="schema_version")]
+        public string SchemaVersion
+        {
+            get
+            {
+                return _schemaVersion;
+            }
+            set
+            {
+                _schemaVersion = value;
+            }
         }
     
         /// <summary>
@@ -235,82 +269,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        public System.IObservable<Metadata> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Metadata(this)));
-        }
-    
-        public System.IObservable<Metadata> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Metadata(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("experiment = " + _experiment + ", ");
-            stringBuilder.Append("root_path = " + _rootPath + ", ");
-            stringBuilder.Append("remote_path = " + _remotePath + ", ");
-            stringBuilder.Append("subject = " + _subject + ", ");
-            stringBuilder.Append("version = " + _version + ", ");
-            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
-            stringBuilder.Append("notes = " + _notes + ", ");
-            stringBuilder.Append("commit_hash = " + _commitHash + ", ");
-            stringBuilder.Append("allow_dirty_repo = " + _allowDirtyRepo + ", ");
-            stringBuilder.Append("skip_hardware_validation = " + _skipHardwareValidation);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class AindVrForagingSession
-    {
-    
-        private Metadata _metadata = new Metadata();
-    
-        public AindVrForagingSession()
-        {
-        }
-    
-        protected AindVrForagingSession(AindVrForagingSession other)
-        {
-            _metadata = other._metadata;
-        }
-    
-        /// <summary>
-        /// Metadata of the session
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("metadata", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadata")]
-        [System.ComponentModel.DescriptionAttribute("Metadata of the session")]
-        public Metadata Metadata
-        {
-            get
-            {
-                return _metadata;
-            }
-            set
-            {
-                _metadata = value;
-            }
-        }
-    
         public System.IObservable<AindVrForagingSession> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingSession(this)));
@@ -323,7 +281,18 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("metadata = " + _metadata);
+            stringBuilder.Append("describedBy = " + _describedBy + ", ");
+            stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("experiment = " + _experiment + ", ");
+            stringBuilder.Append("root_path = " + _rootPath + ", ");
+            stringBuilder.Append("remote_path = " + _remotePath + ", ");
+            stringBuilder.Append("subject = " + _subject + ", ");
+            stringBuilder.Append("version = " + _version + ", ");
+            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
+            stringBuilder.Append("notes = " + _notes + ", ");
+            stringBuilder.Append("commit_hash = " + _commitHash + ", ");
+            stringBuilder.Append("allow_dirty_repo = " + _allowDirtyRepo + ", ");
+            stringBuilder.Append("skip_hardware_validation = " + _skipHardwareValidation);
             return true;
         }
     
@@ -357,11 +326,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
-        public System.IObservable<string> Process(System.IObservable<Metadata> source)
-        {
-            return Process<Metadata>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
         {
             return Process<AindVrForagingSession>(source);
@@ -376,7 +340,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -426,11 +389,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             });
         }
 
-        public System.IObservable<string> Process(System.IObservable<Metadata> source)
-        {
-            return Process<Metadata>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
         {
             return Process<AindVrForagingSession>(source);
@@ -445,7 +403,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
