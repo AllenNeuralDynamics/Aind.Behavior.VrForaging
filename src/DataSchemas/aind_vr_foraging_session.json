@@ -19,6 +19,7 @@
     },
     "date": {
       "description": "Date of the experiment",
+      "format": "date-time",
       "title": "Date",
       "type": "string"
     },
