@@ -202,9 +202,9 @@ def prompt():
         input("Press enter to launch Bonsai or Control+C to exit...")
 
         additional_properties = {
-            "task_logic_path": save_temp_model(task_logic),
-            "session_path": save_temp_model(session),
-            "rig_path": save_temp_model(rig),
+            "TaskLogicPath": save_temp_model(task_logic),
+            "SessionPath": save_temp_model(session),
+            "RigPath": save_temp_model(rig),
         }
 
         return run_bonsai_process(
