@@ -109,7 +109,7 @@ class Valve(AindModel):
 
 
 class AindVrForagingRig(AindCoreModel):
-    describedBy: str = Field("pyd_taskLogic")
+    describedBy: str = Field("")
     schema_version: Literal["0.1.0"] = "0.1.0"
     auxiliary_camera0: Optional[WebCamera] = Field(default=WebCamera(), description="Auxiliary camera 0")
     auxiliary_camera1: Optional[WebCamera] = Field(default=WebCamera(), description="Auxiliary camera 1")

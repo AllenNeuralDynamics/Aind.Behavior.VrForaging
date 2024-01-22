@@ -917,6 +917,38 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ForagingSettings : StageSettings
+    {
+    
+        public ForagingSettings()
+        {
+        }
+    
+        protected ForagingSettings(ForagingSettings other) : 
+                base(other)
+        {
+        }
+    
+        public System.IObservable<ForagingSettings> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ForagingSettings(this)));
+        }
+    
+        public System.IObservable<ForagingSettings> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ForagingSettings(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return base.PrintMembers(stringBuilder);
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class GammaDistribution : Delay
     {
     
@@ -1128,10 +1160,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HabituationSettings
+    public partial class HabituationSettings : StageSettings
     {
-    
-        private string _taskStage = "HABITUATION";
     
         private Delay _distanceToReward;
     
@@ -1143,26 +1173,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
         }
     
-        protected HabituationSettings(HabituationSettings other)
+        protected HabituationSettings(HabituationSettings other) : 
+                base(other)
         {
-            _taskStage = other._taskStage;
             _distanceToReward = other._distanceToReward;
             _rewardSpecification = other._rewardSpecification;
             _renderSpecification = other._renderSpecification;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("task_stage")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="task_stage")]
-        public string TaskStage
-        {
-            get
-            {
-                return _taskStage;
-            }
-            set
-            {
-                _taskStage = value;
-            }
         }
     
         /// <summary>
@@ -1232,26 +1248,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return System.Reactive.Linq.Observable.Select(source, _ => new HabituationSettings(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("task_stage = " + _taskStage + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("distance_to_reward = " + _distanceToReward + ", ");
             stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
             stringBuilder.Append("render_specification = " + _renderSpecification);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -3922,21 +3928,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum TaskStage
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="HABITUATION")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="HABITUATION")]
-        HABITUATION = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="FORAGING")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="FORAGING")]
-        FORAGING = 1,
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Texture
@@ -5300,6 +5291,54 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "task_stage")]
+    [YamlDiscriminator("task_stage")]
+    [JsonInheritanceAttribute("HABITUATION", typeof(HabituationSettings))]
+    [JsonInheritanceAttribute("FORAGING", typeof(ForagingSettings))]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class StageSettings
+    {
+    
+        public StageSettings()
+        {
+        }
+    
+        protected StageSettings(StageSettings other)
+        {
+        }
+    
+        public System.IObservable<StageSettings> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new StageSettings(this)));
+        }
+    
+        public System.IObservable<StageSettings> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new StageSettings(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [YamlDiscriminator("family")]
     [Bonsai.CombinatorAttribute()]
@@ -5397,7 +5436,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class AindVrForagingTaskLogic
     {
     
-        private string _describedBy = "pyd_taskLogic";
+        private string _describedBy = "";
     
         private string _schemaVersion = "0.1.0";
     
@@ -5405,9 +5444,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
     
-        private TaskStage _stage = AindVrForagingDataSchema.AindVrForagingTask.TaskStage.FORAGING;
-    
-        private HabituationSettings _habitualStageSettings;
+        private StageSettings _stageSettings;
     
         private OperationControl _operationControl = new OperationControl();
     
@@ -5423,8 +5460,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _schemaVersion = other._schemaVersion;
             _updaters = other._updaters;
             _environmentStatistics = other._environmentStatistics;
-            _stage = other._stage;
-            _habitualStageSettings = other._habitualStageSettings;
+            _stageSettings = other._stageSettings;
             _operationControl = other._operationControl;
             _dependencies = other._dependencies;
         }
@@ -5496,40 +5532,21 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         }
     
         /// <summary>
-        /// Stage of the task
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("stage")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stage")]
-        [System.ComponentModel.DescriptionAttribute("Stage of the task")]
-        public TaskStage Stage
-        {
-            get
-            {
-                return _stage;
-            }
-            set
-            {
-                _stage = value;
-            }
-        }
-    
-        /// <summary>
         /// Settings of the task stage
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("habitual_stage_settings")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="habitual_stage_settings")]
+        [Newtonsoft.Json.JsonPropertyAttribute("stage_settings")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stage_settings")]
         [System.ComponentModel.DescriptionAttribute("Settings of the task stage")]
-        public HabituationSettings HabitualStageSettings
+        public StageSettings StageSettings
         {
             get
             {
-                return _habitualStageSettings;
+                return _stageSettings;
             }
             set
             {
-                _habitualStageSettings = value;
+                _stageSettings = value;
             }
         }
     
@@ -5587,8 +5604,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
             stringBuilder.Append("updaters = " + _updaters + ", ");
             stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
-            stringBuilder.Append("stage = " + _stage + ", ");
-            stringBuilder.Append("habitual_stage_settings = " + _habitualStageSettings + ", ");
+            stringBuilder.Append("stage_settings = " + _stageSettings + ", ");
             stringBuilder.Append("operation_control = " + _operationControl + ", ");
             stringBuilder.Append("dependencies = " + _dependencies);
             return true;
@@ -5924,6 +5940,47 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ForagingSettings>))]
+    public partial class MatchStageSettings : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(StageSettings);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchStageSettings),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<StageSettings> source)
+            where TResult : StageSettings
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<StageSettings>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     public partial class MatchDistanceToReward : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -6057,6 +6114,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         public System.IObservable<string> Process(System.IObservable<ExponentialDistributionParameters> source)
         {
             return Process<ExponentialDistributionParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ForagingSettings> source)
+        {
+            return Process<ForagingSettings>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<GammaDistribution> source)
@@ -6254,6 +6316,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<LengthDistribution>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<StageSettings> source)
+        {
+            return Process<StageSettings>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<DistanceToReward> source)
         {
             return Process<DistanceToReward>(source);
@@ -6297,6 +6364,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistributionParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ForagingSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
@@ -6336,6 +6404,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Delay>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LengthDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<StageSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DistanceToReward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distributions>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTaskLogic>))]
@@ -6530,6 +6599,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<ExponentialDistributionParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ForagingSettings> source)
+        {
+            return Process<ForagingSettings>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<GammaDistribution> source)
         {
             return Process<GammaDistribution>(source);
@@ -6725,6 +6799,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             return Process<LengthDistribution>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<StageSettings> source)
+        {
+            return Process<StageSettings>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<DistanceToReward> source)
         {
             return Process<DistanceToReward>(source);
@@ -6768,6 +6847,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ExponentialDistributionParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ForagingSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
@@ -6807,6 +6887,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Delay>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LengthDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<StageSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DistanceToReward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distributions>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTaskLogic>))]
@@ -6854,6 +6935,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
                     {
                         AddTypeDiscriminator<Delay>(o);
                         AddTypeDiscriminator<LengthDistribution>(o);
+                        AddTypeDiscriminator<StageSettings>(o);
                         AddTypeDiscriminator<DistanceToReward>(o);
                         AddTypeDiscriminator<Distributions>(o);
                     })

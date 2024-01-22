@@ -414,7 +414,7 @@
   "additionalProperties": false,
   "properties": {
     "describedBy": {
-      "default": "pyd_taskLogic",
+      "default": "",
       "title": "Describedby",
       "type": "string"
     },

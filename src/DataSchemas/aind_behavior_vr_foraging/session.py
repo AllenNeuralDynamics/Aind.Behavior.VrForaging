@@ -1,18 +1,14 @@
 # Import core types
-from typing import Optional
+from typing import Optional, Literal
 
 # Import aind-datas-schema types
-from aind_data_schema.base import AindModel
+from aind_data_schema.base import AindCoreModel
 from pydantic import BaseModel, Field
-from typing_extensions import Annotated
 
 
-class Size(AindModel):
-    width: float = Field(default=0, description="Width of the texture")
-    height: float = Field(default=0, description="Height of the texture")
-
-
-class Metadata(AindModel):
+class AindVrForagingSession(AindCoreModel):
+    describedBy: str = Field("")
+    schema_version: Literal["0.1.0"] = "0.1.0"
     experiment: str = Field(..., description="Name of the experiment")
     root_path: str = Field(..., description="Root path where data will be logged")
     remote_path: Optional[str] = Field(
@@ -25,10 +21,6 @@ class Metadata(AindModel):
     commit_hash: Optional[str] = Field(default=None, description="Commit hash of the repository")
     allow_dirty_repo: bool = Field(default=False, description="Allow running from a dirty repository")
     skip_hardware_validation: bool = Field(default=False, description="Skip hardware validation")
-
-
-class AindVrForagingSession(AindModel):
-    metadata: Annotated[Metadata, Field(description="Metadata of the session")]
 
 
 def schema() -> BaseModel:

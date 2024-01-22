@@ -1346,7 +1346,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     public partial class AindVrForagingRig
     {
     
-        private string _describedBy = "pyd_taskLogic";
+        private string _describedBy = "";
     
         private string _schemaVersion = "0.1.0";
     

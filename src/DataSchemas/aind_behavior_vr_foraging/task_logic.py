@@ -103,8 +103,7 @@ class RewardSpecification(AindModel):
     probability: float = Field(default=1, ge=0, le=1, description="Probability of the reward")
     delay: distributions.Distribution = Field(
         default=scalar_value(0),
-        description="The optional distribution where the delay to reward will be drawn from",
-    )
+        description="The optional distribution where the delay to reward will be drawn from")
     reward_function: PatchRewardFunction = Field(
         default=PatchRewardFunction(), description="Reward function of the patch."
     )
@@ -273,19 +272,17 @@ class ForagingSettings(TaskStageSettingsBase):
     task_stage: Literal[TaskStage.FORAGING] = TaskStage.FORAGING
 
 
-class TaskStageSettings(RootModel):
-    root: Annotated[Union[HabituationSettings, ForagingSettings], Field(discriminator="task_stage", title="TaskStage")]
+TaskStageSettings = Annotated[
+    Union[HabituationSettings, ForagingSettings], Field(discriminator="task_stage", title="TaskStage")
+]
 
 
 class AindVrForagingTaskLogic(AindCoreModel):
-    describedBy: str = Field("pyd_taskLogic")
+    describedBy: str = Field("")
     schema_version: Literal["0.1.0"] = "0.1.0"
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
-    stage: TaskStage = Field(default=TaskStage.FORAGING, description="Stage of the task")
-    habitual_stage_settings: Optional[HabituationSettings] = Field(
-        default=None, description="Settings of the task stage"
-    )
+    stage_settings: TaskStageSettings = Field(ForagingSettings(), description="Settings of the task stage")
     operation_control: OperationControl = Field(..., description="Control of the operation")
     dependencies: Optional[Dependencies] = Field(default=None, description="Dependencies of the task logic")
 

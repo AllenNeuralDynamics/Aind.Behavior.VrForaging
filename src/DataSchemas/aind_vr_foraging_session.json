@@ -1,116 +1,107 @@
 {
-  "definitions": {
-    "Metadata": {
-      "additionalProperties": false,
-      "properties": {
-        "experiment": {
-          "description": "Name of the experiment",
-          "title": "Experiment",
-          "type": "string"
-        },
-        "root_path": {
-          "description": "Root path where data will be logged",
-          "title": "Root Path",
-          "type": "string"
-        },
-        "remote_path": {
-          "default": null,
-          "description": "Remote path where data will be attempted to be copied to after experiment is done",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Remote Path"
-        },
-        "subject": {
-          "description": "Name of the subject",
-          "title": "Subject",
-          "type": "string"
-        },
-        "version": {
-          "description": "Version of the experiment",
-          "title": "Version",
-          "type": "string"
-        },
-        "rng_seed": {
-          "default": null,
-          "description": "Seed of the random number generator",
-          "oneOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Rng Seed"
-        },
-        "notes": {
-          "default": null,
-          "description": "Notes about the experiment",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        },
-        "commit_hash": {
-          "default": null,
-          "description": "Commit hash of the repository",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Commit Hash"
-        },
-        "allow_dirty_repo": {
-          "default": false,
-          "description": "Allow running from a dirty repository",
-          "title": "Allow Dirty Repo",
-          "type": "boolean"
-        },
-        "skip_hardware_validation": {
-          "default": false,
-          "description": "Skip hardware validation",
-          "title": "Skip Hardware Validation",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "experiment",
-        "root_path",
-        "subject",
-        "version"
-      ],
-      "title": "Metadata",
-      "type": "object"
-    }
-  },
   "additionalProperties": false,
   "properties": {
-    "metadata": {
-      "allOf": [
+    "describedBy": {
+      "default": "",
+      "title": "Describedby",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "experiment": {
+      "description": "Name of the experiment",
+      "title": "Experiment",
+      "type": "string"
+    },
+    "root_path": {
+      "description": "Root path where data will be logged",
+      "title": "Root Path",
+      "type": "string"
+    },
+    "remote_path": {
+      "default": null,
+      "description": "Remote path where data will be attempted to be copied to after experiment is done",
+      "oneOf": [
         {
-          "$ref": "#/definitions/Metadata"
+          "type": "string"
+        },
+        {
+          "type": "null"
         }
       ],
-      "description": "Metadata of the session"
+      "title": "Remote Path"
+    },
+    "subject": {
+      "description": "Name of the subject",
+      "title": "Subject",
+      "type": "string"
+    },
+    "version": {
+      "description": "Version of the experiment",
+      "title": "Version",
+      "type": "string"
+    },
+    "rng_seed": {
+      "default": null,
+      "description": "Seed of the random number generator",
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Rng Seed"
+    },
+    "notes": {
+      "default": null,
+      "description": "Notes about the experiment",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Notes"
+    },
+    "commit_hash": {
+      "default": null,
+      "description": "Commit hash of the repository",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Commit Hash"
+    },
+    "allow_dirty_repo": {
+      "default": false,
+      "description": "Allow running from a dirty repository",
+      "title": "Allow Dirty Repo",
+      "type": "boolean"
+    },
+    "skip_hardware_validation": {
+      "default": false,
+      "description": "Skip hardware validation",
+      "title": "Skip Hardware Validation",
+      "type": "boolean"
     }
   },
   "required": [
-    "metadata"
+    "experiment",
+    "root_path",
+    "subject",
+    "version"
   ],
   "title": "AindVrForagingSession",
   "type": "object"

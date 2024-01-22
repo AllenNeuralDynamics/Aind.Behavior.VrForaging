@@ -356,6 +356,19 @@
       "title": "ExponentialDistributionParameters",
       "type": "object"
     },
+    "ForagingSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "task_stage": {
+          "const": "FORAGING",
+          "default": "FORAGING",
+          "title": "Task Stage",
+          "type": "string"
+        }
+      },
+      "title": "ForagingSettings",
+      "type": "object"
+    },
     "GammaDistribution": {
       "additionalProperties": false,
       "properties": {
@@ -1492,14 +1505,6 @@
       "title": "Size",
       "type": "object"
     },
-    "TaskStage": {
-      "enum": [
-        "HABITUATION",
-        "FORAGING"
-      ],
-      "title": "TaskStage",
-      "type": "string"
-    },
     "Texture": {
       "additionalProperties": false,
       "properties": {
@@ -1995,7 +2000,7 @@
   "additionalProperties": false,
   "properties": {
     "describedBy": {
-      "default": "pyd_taskLogic",
+      "default": "",
       "title": "Describedby",
       "type": "string"
     },
@@ -2021,26 +2026,27 @@
       ],
       "description": "Statistics of the environment"
     },
-    "stage": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TaskStage"
-        }
-      ],
-      "default": "FORAGING",
-      "description": "Stage of the task"
-    },
-    "habitual_stage_settings": {
-      "default": null,
+    "stage_settings": {
+      "default": {
+        "task_stage": "FORAGING"
+      },
       "description": "Settings of the task stage",
+      "discriminator": {
+        "mapping": {
+          "FORAGING": "#/definitions/ForagingSettings",
+          "HABITUATION": "#/definitions/HabituationSettings"
+        },
+        "propertyName": "task_stage"
+      },
       "oneOf": [
         {
           "$ref": "#/definitions/HabituationSettings"
         },
         {
-          "type": "null"
+          "$ref": "#/definitions/ForagingSettings"
         }
-      ]
+      ],
+      "title": "TaskStage"
     },
     "operation_control": {
       "allOf": [
