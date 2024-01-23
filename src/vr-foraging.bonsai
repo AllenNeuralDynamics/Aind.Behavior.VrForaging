@@ -5060,7 +5060,7 @@ Value as IsStopped)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p3:Texture">
-                                  <p3:Name>Ceilling</p3:Name>
+                                  <p3:Name>Ceiling</p3:Name>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
