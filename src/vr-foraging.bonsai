@@ -7033,7 +7033,7 @@ Item2 as Start
                           <Combinator xsi:type="p3:SerializeToJson" />
                         </Expression>
                         <Expression xsi:type="p3:DeserializeFromJson">
-                          <p3:Type xsi:type="TypeMapping" TypeArguments="p3:Delay" />
+                          <p3:Type xsi:type="TypeMapping" TypeArguments="p3:Distribution" />
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>

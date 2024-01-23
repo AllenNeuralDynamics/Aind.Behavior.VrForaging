@@ -6,7 +6,7 @@ from typing import Annotated, Literal, Optional, Union
 
 # Import aind-datas-schema types
 from aind_data_schema.base import AindModel
-from pydantic import Field
+from pydantic import Field, RootModel
 
 
 class TruncationParameters(AindModel):
@@ -163,32 +163,35 @@ class PoissonDistribution(DistributionBase):
     )
 
 
-Distribution = Annotated[
-    Union[
-        Scalar,
-        NormalDistribution,
-        LogNormalDistribution,
-        ExponentialDistribution,
-        UniformDistribution,
-        PoissonDistribution,
-        BinomialDistribution,
-        BetaDistribution,
-        GammaDistribution,
-    ],
-    Field(discriminator="family", title="Distribution", description="Available distributions"),
-]
+class Distribution(RootModel):
+    root: Annotated[
+        Union[
+            Scalar,
+            NormalDistribution,
+            LogNormalDistribution,
+            ExponentialDistribution,
+            UniformDistribution,
+            PoissonDistribution,
+            BinomialDistribution,
+            BetaDistribution,
+            GammaDistribution,
+        ],
+        Field(discriminator="family", title="Distribution", description="Available distributions"),
+    ]
 
-DistributionParameters = Annotated[
-    Union[
-        ScalarDistributionParameter,
-        NormalDistributionParameters,
-        LogNormalDistributionParameters,
-        ExponentialDistributionParameters,
-        UniformDistributionParameters,
-        PoissonDistributionParameters,
-        BinomialDistributionParameters,
-        BetaDistributionParameters,
-        GammaDistributionParameters,
-    ],
-    Field(discriminator="family", title="DistributionParameters", description="Parameters of the distribution"),
-]
+
+class DistributionParameters(RootModel):
+    root: Annotated[
+        Union[
+            ScalarDistributionParameter,
+            NormalDistributionParameters,
+            LogNormalDistributionParameters,
+            ExponentialDistributionParameters,
+            UniformDistributionParameters,
+            PoissonDistributionParameters,
+            BinomialDistributionParameters,
+            BetaDistributionParameters,
+            GammaDistributionParameters,
+        ],
+        Field(discriminator="family", title="DistributionParameters", description="Parameters of the distribution"),
+    ]
