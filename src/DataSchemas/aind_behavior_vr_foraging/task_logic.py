@@ -98,7 +98,9 @@ class PowerFunction(AindModel):
     mininum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=1, description="Maximum value of the function")
     a: float = Field(default=1, description="Coefficient a of the function: value = a * pow(b, c * x) + d")
-    b: float = Field(default=2.718281828459045, description="Coefficient b of the function: value = a * pow(b, c * x) + d")
+    b: float = Field(
+        default=2.718281828459045, description="Coefficient b of the function: value = a * pow(b, c * x) + d"
+    )
     c: float = Field(default=-1, description="Coefficient c of the function: value = a * pow(b, c * x) + d")
     d: float = Field(default=0, description="Coefficient d of the function: value = a * pow(b, c * x) + d")
 
@@ -117,20 +119,30 @@ class ConstantFunction(AindModel):
 
 
 class RewardFunction(RootModel):
-    root = Annotated[Union[ConstantFunction, LinearFunction, PowerFunction], Field(discriminator="function_type")]
+    root: Annotated[Union[ConstantFunction, LinearFunction, PowerFunction], Field(discriminator="function_type")]
 
 
 class PatchRewardFunction(AindModel):
-    amount: RewardFunction = Field(default=ConstantFunction(value=1), description="Initial amount of reward delivered(a.u.)")
-    probability: RewardFunction = Field(default=ConstantFunction(value=1), description="Initial probability of the reward")
-    available: RewardFunction = Field(default=LinearFunction(mininum=0, a=-1, b=5), description="Total reward (a.u.) in the patch")
+    amount: RewardFunction = Field(
+        default=ConstantFunction(value=1), description="Initial amount of reward delivered(a.u.)", validate_default=True
+    )
+    probability: RewardFunction = Field(
+        default=ConstantFunction(value=1), description="Initial probability of the reward", validate_default=True
+    )
+    available: RewardFunction = Field(
+        default=LinearFunction(mininum=0, a=-1, b=5),
+        description="Total reward (a.u.) in the patch",
+        validate_default=True,
+    )
 
 
 class RewardSpecification(AindModel):
     operant_logic: Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
     delay: distributions.Distribution = Field(
         default=scalar_value(0),
-        description="The optional distribution where the delay to reward will be drawn from")
+        description="The optional distribution where the delay to reward will be drawn from",
+        validate_default=True,
+    )
     reward_function: PatchRewardFunction = Field(
         default=PatchRewardFunction(), description="Reward function of the patch."
     )
@@ -153,8 +165,7 @@ class VirtualSiteGenerator(AindModel):
     )
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
-        default=scalar_value(20),
-        description="Distribution of the length of the virtual site",
+        default=scalar_value(20), description="Distribution of the length of the virtual site", validate_default=True
     )
 
 

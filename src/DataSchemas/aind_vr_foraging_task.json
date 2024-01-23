@@ -178,6 +178,25 @@
       "title": "BinomialDistributionParameters",
       "type": "object"
     },
+    "ConstantFunction": {
+      "additionalProperties": false,
+      "properties": {
+        "function_type": {
+          "const": "ConstantFunction",
+          "default": "ConstantFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "value": {
+          "default": 1,
+          "description": "Value of the function",
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "title": "ConstantFunction",
+      "type": "object"
+    },
     "Dependencies": {
       "properties": {
         "visual_corridor": {
@@ -187,51 +206,7 @@
           "$ref": "#/definitions/VirtualSite"
         },
         "distributions": {
-          "description": "Available distributions",
-          "discriminator": {
-            "mapping": {
-              "Beta": "#/definitions/BetaDistribution",
-              "Binomial": "#/definitions/BinomialDistribution",
-              "Exponential": "#/definitions/ExponentialDistribution",
-              "Gamma": "#/definitions/GammaDistribution",
-              "LogNormal": "#/definitions/LogNormalDistribution",
-              "Normal": "#/definitions/NormalDistribution",
-              "Poisson": "#/definitions/PoissonDistribution",
-              "Scalar": "#/definitions/Scalar",
-              "Uniform": "#/definitions/UniformDistribution"
-            },
-            "propertyName": "family"
-          },
-          "oneOf": [
-            {
-              "$ref": "#/definitions/Scalar"
-            },
-            {
-              "$ref": "#/definitions/NormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/LogNormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/ExponentialDistribution"
-            },
-            {
-              "$ref": "#/definitions/UniformDistribution"
-            },
-            {
-              "$ref": "#/definitions/PoissonDistribution"
-            },
-            {
-              "$ref": "#/definitions/BinomialDistribution"
-            },
-            {
-              "$ref": "#/definitions/BetaDistribution"
-            },
-            {
-              "$ref": "#/definitions/GammaDistribution"
-            }
-          ],
-          "title": "Distribution"
+          "$ref": "#/definitions/Distribution"
         }
       },
       "required": [
@@ -242,6 +217,52 @@
       "title": "Dependencies",
       "type": "object",
       "x-abstract": "True"
+    },
+    "Distribution": {
+      "discriminator": {
+        "mapping": {
+          "Beta": "#/definitions/BetaDistribution",
+          "Binomial": "#/definitions/BinomialDistribution",
+          "Exponential": "#/definitions/ExponentialDistribution",
+          "Gamma": "#/definitions/GammaDistribution",
+          "LogNormal": "#/definitions/LogNormalDistribution",
+          "Normal": "#/definitions/NormalDistribution",
+          "Poisson": "#/definitions/PoissonDistribution",
+          "Scalar": "#/definitions/Scalar",
+          "Uniform": "#/definitions/UniformDistribution"
+        },
+        "propertyName": "family"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Scalar"
+        },
+        {
+          "$ref": "#/definitions/NormalDistribution"
+        },
+        {
+          "$ref": "#/definitions/LogNormalDistribution"
+        },
+        {
+          "$ref": "#/definitions/ExponentialDistribution"
+        },
+        {
+          "$ref": "#/definitions/UniformDistribution"
+        },
+        {
+          "$ref": "#/definitions/PoissonDistribution"
+        },
+        {
+          "$ref": "#/definitions/BinomialDistribution"
+        },
+        {
+          "$ref": "#/definitions/BetaDistribution"
+        },
+        {
+          "$ref": "#/definitions/GammaDistribution"
+        }
+      ],
+      "title": "Distribution"
     },
     "EnvironmentStatistics": {
       "additionalProperties": false,
@@ -456,51 +477,12 @@
           "type": "string"
         },
         "distance_to_reward": {
-          "description": "Distance (cm) to the reward",
-          "discriminator": {
-            "mapping": {
-              "Beta": "#/definitions/BetaDistribution",
-              "Binomial": "#/definitions/BinomialDistribution",
-              "Exponential": "#/definitions/ExponentialDistribution",
-              "Gamma": "#/definitions/GammaDistribution",
-              "LogNormal": "#/definitions/LogNormalDistribution",
-              "Normal": "#/definitions/NormalDistribution",
-              "Poisson": "#/definitions/PoissonDistribution",
-              "Scalar": "#/definitions/Scalar",
-              "Uniform": "#/definitions/UniformDistribution"
-            },
-            "propertyName": "family"
-          },
-          "oneOf": [
+          "allOf": [
             {
-              "$ref": "#/definitions/Scalar"
-            },
-            {
-              "$ref": "#/definitions/NormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/LogNormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/ExponentialDistribution"
-            },
-            {
-              "$ref": "#/definitions/UniformDistribution"
-            },
-            {
-              "$ref": "#/definitions/PoissonDistribution"
-            },
-            {
-              "$ref": "#/definitions/BinomialDistribution"
-            },
-            {
-              "$ref": "#/definitions/BetaDistribution"
-            },
-            {
-              "$ref": "#/definitions/GammaDistribution"
+              "$ref": "#/definitions/Distribution"
             }
           ],
-          "title": "Distribution"
+          "description": "Distance (cm) to the reward"
         },
         "reward_specification": {
           "allOf": [
@@ -527,6 +509,43 @@
         "reward_specification"
       ],
       "title": "HabituationSettings",
+      "type": "object"
+    },
+    "LinearFunction": {
+      "additionalProperties": false,
+      "properties": {
+        "function_type": {
+          "const": "LinearFunction",
+          "default": "LinearFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "mininum": {
+          "default": 0,
+          "description": "Minimum value of the function",
+          "title": "Mininum",
+          "type": "number"
+        },
+        "maximum": {
+          "default": 9999,
+          "description": "Maximum value of the function",
+          "title": "Maximum",
+          "type": "number"
+        },
+        "a": {
+          "default": 1,
+          "description": "Coefficient a of the function: value = a * x + b",
+          "title": "A",
+          "type": "number"
+        },
+        "b": {
+          "default": 0,
+          "description": "Coefficient b of the function: value = a * x + b",
+          "title": "B",
+          "type": "number"
+        }
+      },
+      "title": "LinearFunction",
       "type": "object"
     },
     "LogNormalDistribution": {
@@ -986,12 +1005,44 @@
     "PatchRewardFunction": {
       "additionalProperties": false,
       "properties": {
-        "initial_amount": {
-          "default": 99999999,
-          "description": "Initial amount of reward (a.u.)",
-          "minimum": 0.0,
-          "title": "Initial Amount",
-          "type": "number"
+        "amount": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
+          "default": {
+            "function_type": "ConstantFunction",
+            "value": 1.0
+          },
+          "description": "Initial amount of reward delivered(a.u.)"
+        },
+        "probability": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
+          "default": {
+            "function_type": "ConstantFunction",
+            "value": 1.0
+          },
+          "description": "Initial probability of the reward"
+        },
+        "available": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
+          "default": {
+            "function_type": "LinearFunction",
+            "mininum": 0.0,
+            "maximum": 9999.0,
+            "a": -1.0,
+            "b": 5.0
+          },
+          "description": "Total reward (a.u.) in the patch"
         }
       },
       "title": "PatchRewardFunction",
@@ -1219,6 +1270,55 @@
       "title": "PositionControl",
       "type": "object"
     },
+    "PowerFunction": {
+      "additionalProperties": false,
+      "properties": {
+        "function_type": {
+          "const": "PowerFunction",
+          "default": "PowerFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "mininum": {
+          "default": 0,
+          "description": "Minimum value of the function",
+          "title": "Mininum",
+          "type": "number"
+        },
+        "maximum": {
+          "default": 1,
+          "description": "Maximum value of the function",
+          "title": "Maximum",
+          "type": "number"
+        },
+        "a": {
+          "default": 1,
+          "description": "Coefficient a of the function: value = a * pow(b, c * x) + d",
+          "title": "A",
+          "type": "number"
+        },
+        "b": {
+          "default": 2.718281828459045,
+          "description": "Coefficient b of the function: value = a * pow(b, c * x) + d",
+          "title": "B",
+          "type": "number"
+        },
+        "c": {
+          "default": -1,
+          "description": "Coefficient c of the function: value = a * pow(b, c * x) + d",
+          "title": "C",
+          "type": "number"
+        },
+        "d": {
+          "default": 0,
+          "description": "Coefficient d of the function: value = a * pow(b, c * x) + d",
+          "title": "D",
+          "type": "number"
+        }
+      },
+      "title": "PowerFunction",
+      "type": "object"
+    },
     "RenderSpecification": {
       "additionalProperties": false,
       "properties": {
@@ -1241,15 +1341,31 @@
       "title": "RenderSpecification",
       "type": "object"
     },
+    "RewardFunction": {
+      "discriminator": {
+        "mapping": {
+          "ConstantFunction": "#/definitions/ConstantFunction",
+          "LinearFunction": "#/definitions/LinearFunction",
+          "PowerFunction": "#/definitions/PowerFunction"
+        },
+        "propertyName": "function_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ConstantFunction"
+        },
+        {
+          "$ref": "#/definitions/LinearFunction"
+        },
+        {
+          "$ref": "#/definitions/PowerFunction"
+        }
+      ],
+      "title": "RewardFunction"
+    },
     "RewardSpecification": {
       "additionalProperties": false,
       "properties": {
-        "amount": {
-          "description": "Amount of reward (a.u.)",
-          "minimum": 0.0,
-          "title": "Amount",
-          "type": "number"
-        },
         "operant_logic": {
           "default": null,
           "description": "The optional operant logic of the reward",
@@ -1262,15 +1378,12 @@
             }
           ]
         },
-        "probability": {
-          "default": 1,
-          "description": "Probability of the reward",
-          "maximum": 1.0,
-          "minimum": 0.0,
-          "title": "Probability",
-          "type": "number"
-        },
         "delay": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1282,51 +1395,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "The optional distribution where the delay to reward will be drawn from",
-          "discriminator": {
-            "mapping": {
-              "Beta": "#/definitions/BetaDistribution",
-              "Binomial": "#/definitions/BinomialDistribution",
-              "Exponential": "#/definitions/ExponentialDistribution",
-              "Gamma": "#/definitions/GammaDistribution",
-              "LogNormal": "#/definitions/LogNormalDistribution",
-              "Normal": "#/definitions/NormalDistribution",
-              "Poisson": "#/definitions/PoissonDistribution",
-              "Scalar": "#/definitions/Scalar",
-              "Uniform": "#/definitions/UniformDistribution"
-            },
-            "propertyName": "family"
-          },
-          "oneOf": [
-            {
-              "$ref": "#/definitions/Scalar"
-            },
-            {
-              "$ref": "#/definitions/NormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/LogNormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/ExponentialDistribution"
-            },
-            {
-              "$ref": "#/definitions/UniformDistribution"
-            },
-            {
-              "$ref": "#/definitions/PoissonDistribution"
-            },
-            {
-              "$ref": "#/definitions/BinomialDistribution"
-            },
-            {
-              "$ref": "#/definitions/BetaDistribution"
-            },
-            {
-              "$ref": "#/definitions/GammaDistribution"
-            }
-          ],
-          "title": "Distribution"
+          "description": "The optional distribution where the delay to reward will be drawn from"
         },
         "reward_function": {
           "allOf": [
@@ -1335,14 +1404,25 @@
             }
           ],
           "default": {
-            "initial_amount": 99999999.0
+            "amount": {
+              "function_type": "ConstantFunction",
+              "value": 1.0
+            },
+            "probability": {
+              "function_type": "ConstantFunction",
+              "value": 1.0
+            },
+            "available": {
+              "a": -1.0,
+              "b": 5.0,
+              "function_type": "LinearFunction",
+              "maximum": 9999.0,
+              "mininum": 0.0
+            }
           },
           "description": "Reward function of the patch."
         }
       },
-      "required": [
-        "amount"
-      ],
       "title": "RewardSpecification",
       "type": "object"
     },
@@ -1829,6 +1909,11 @@
           "description": "Label of the virtual site"
         },
         "length_distribution": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1840,51 +1925,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "Distribution of the length of the virtual site",
-          "discriminator": {
-            "mapping": {
-              "Beta": "#/definitions/BetaDistribution",
-              "Binomial": "#/definitions/BinomialDistribution",
-              "Exponential": "#/definitions/ExponentialDistribution",
-              "Gamma": "#/definitions/GammaDistribution",
-              "LogNormal": "#/definitions/LogNormalDistribution",
-              "Normal": "#/definitions/NormalDistribution",
-              "Poisson": "#/definitions/PoissonDistribution",
-              "Scalar": "#/definitions/Scalar",
-              "Uniform": "#/definitions/UniformDistribution"
-            },
-            "propertyName": "family"
-          },
-          "oneOf": [
-            {
-              "$ref": "#/definitions/Scalar"
-            },
-            {
-              "$ref": "#/definitions/NormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/LogNormalDistribution"
-            },
-            {
-              "$ref": "#/definitions/ExponentialDistribution"
-            },
-            {
-              "$ref": "#/definitions/UniformDistribution"
-            },
-            {
-              "$ref": "#/definitions/PoissonDistribution"
-            },
-            {
-              "$ref": "#/definitions/BinomialDistribution"
-            },
-            {
-              "$ref": "#/definitions/BetaDistribution"
-            },
-            {
-              "$ref": "#/definitions/GammaDistribution"
-            }
-          ],
-          "title": "Distribution"
+          "description": "Distribution of the length of the virtual site"
         }
       },
       "title": "VirtualSiteGenerator",
