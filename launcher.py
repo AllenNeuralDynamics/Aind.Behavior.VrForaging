@@ -63,10 +63,10 @@ def run_bonsai_process(
 ) -> str:
     output_cmd: str = f'"{bonsai_exe}" "{workflow_file}"'
     if is_editor_mode:
-        output_cmd += " --editor-mode"
         if is_start_flag:
             output_cmd += " --start"
     else:
+        output_cmd += " --no-editor-mode"
         if layout:
             output_cmd += f' --visualizer-layout:"{layout}"'
 
@@ -101,7 +101,7 @@ def prompt_yes_no_question(question: str) -> bool:
             print("Invalid input. Please enter 'Y' or 'N'.")
 
 
-def pick_file_from_list(available_files: list[str], prompt: str = "Choose a file:\n") -> str:
+def pick_file_from_list(available_files: list[str], prompt: str = "Choose a file:") -> str:
     print(prompt)
     print("0: Enter manually")
     [print(f"{i+1}: {os.path.split(file)[1]}") for i, file in enumerate(available_files)]
@@ -151,7 +151,7 @@ def prompt_session_input(
                 batch_file = available_batches[0]
                 print(f"Found a single session config file. Using {batch_file}.")
             else:
-                batch_file = pick_file_from_list(available_batches, prompt="Choose a batch:\n")
+                batch_file = pick_file_from_list(available_batches, prompt="Choose a batch:")
                 print(f"Using {batch_file}.")
             with open(batch_file, "r", encoding="utf-8") as file:
                 subject_list = file.readlines()
@@ -169,11 +169,11 @@ def prompt_session_input(
     subject = None
     while subject is None:
         try:
-            subject = pick_file_from_list(subject_list, prompt="Choose a subject:\n")
+            subject = pick_file_from_list(subject_list, prompt="Choose a subject:")
         except ValueError:
             print("Invalid choice. Try again.")
 
-    notes = str(input("Enter notes:\n"))
+    notes = str(input("Enter notes:"))
 
     return AindVrForagingSession(
         experiment="AindVrForaging",
@@ -189,9 +189,7 @@ def prompt_session_input(
 
 def prompt_rig_input(folder_name: str = "Rigs") -> AindVrForagingRig:
     rig_schemas_path = os.path.join(CONFIG_LIBRARY, folder_name, COMPUTER_NAME)
-    print(rig_schemas_path)
     available_rigs = glob.glob(os.path.join(rig_schemas_path, "*.json"))
-    print(available_rigs)
     if len(available_rigs) == 1:
         print(f"Found a single rig config file. Using {available_rigs[0]}.")
         return load_json_model(available_rigs[0], AindVrForagingRig)
@@ -244,14 +242,14 @@ def prompt():
         input("Press enter to launch Bonsai or Control+C to exit...")
 
         additional_properties = {
-            "TaskLogicPath": save_temp_model(task_logic),
-            "SessionPath": save_temp_model(session),
-            "RigPath": save_temp_model(rig),
+            "TaskLogicPath": os.path.abspath(save_temp_model(task_logic)),
+            "SessionPath": os.path.abspath(save_temp_model(session)),
+            "RigPath": os.path.abspath(save_temp_model(rig)),
         }
         print()
         return run_bonsai_process(
-            bonsai_exe=BONSAI_EXE,
-            workflow_file=WORKFLOW_FILE,
+            bonsai_exe=os.path.abspath(os.path.join(CWD, BONSAI_EXE)),
+            workflow_file=os.path.abspath(os.path.join(WORKFLOW_FILE)),
             additional_properties=additional_properties,
             **bonsai_config,
         )
