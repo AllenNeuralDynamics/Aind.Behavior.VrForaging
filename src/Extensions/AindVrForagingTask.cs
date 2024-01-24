@@ -667,6 +667,29 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum DepletionRule
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnReward")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="OnReward")]
+        OnReward = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnChoice")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="OnChoice")]
+        OnChoice = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnTime")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="OnTime")]
+        OnTime = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnDistance")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="OnDistance")]
+        OnDistance = 3,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [YamlDiscriminator("family")]
     [JsonInheritanceAttribute("Scalar", typeof(Scalar))]
@@ -2866,6 +2889,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private RewardFunction _available;
     
+        private DepletionRule _depletionRule = AindVrForagingDataSchema.AindVrForagingTask.DepletionRule.OnChoice;
+    
         public PatchRewardFunction()
         {
         }
@@ -2875,15 +2900,16 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             _amount = other._amount;
             _probability = other._probability;
             _available = other._available;
+            _depletionRule = other._depletionRule;
         }
     
         /// <summary>
-        /// Initial amount of reward delivered(a.u.)
+        /// Determines the amount of reward to be delivered
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("amount")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="amount")]
-        [System.ComponentModel.DescriptionAttribute("Initial amount of reward delivered(a.u.)")]
+        [System.ComponentModel.DescriptionAttribute("Determines the amount of reward to be delivered")]
         public RewardFunction Amount
         {
             get
@@ -2897,12 +2923,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         }
     
         /// <summary>
-        /// Initial probability of the reward
+        /// Determines the probability that a reward will be delivered
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("probability")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="probability")]
-        [System.ComponentModel.DescriptionAttribute("Initial probability of the reward")]
+        [System.ComponentModel.DescriptionAttribute("Determines the probability that a reward will be delivered")]
         public RewardFunction Probability
         {
             get
@@ -2916,12 +2942,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         }
     
         /// <summary>
-        /// Total reward (a.u.) in the patch
+        /// Determines the total amount of reward available left in the patch
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("available")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="available")]
-        [System.ComponentModel.DescriptionAttribute("Total reward (a.u.) in the patch")]
+        [System.ComponentModel.DescriptionAttribute("Determines the total amount of reward available left in the patch")]
         public RewardFunction Available
         {
             get
@@ -2931,6 +2957,25 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
             set
             {
                 _available = value;
+            }
+        }
+    
+        /// <summary>
+        /// Depletion
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("depletion_rule")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="depletion_rule")]
+        [System.ComponentModel.DescriptionAttribute("Depletion")]
+        public DepletionRule DepletionRule
+        {
+            get
+            {
+                return _depletionRule;
+            }
+            set
+            {
+                _depletionRule = value;
             }
         }
     
@@ -2948,7 +2993,8 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             stringBuilder.Append("amount = " + _amount + ", ");
             stringBuilder.Append("probability = " + _probability + ", ");
-            stringBuilder.Append("available = " + _available);
+            stringBuilder.Append("available = " + _available + ", ");
+            stringBuilder.Append("depletion_rule = " + _depletionRule);
             return true;
         }
     
