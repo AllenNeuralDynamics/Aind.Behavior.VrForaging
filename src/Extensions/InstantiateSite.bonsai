@@ -847,7 +847,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                                 <scr:Expression>Item1 ? Item2 : 0</scr:Expression>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>RewardAvailableInPatch</Name>
+                                <Name>PatchRewardAvailable</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Zip" />
