@@ -91,5 +91,15 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         {
             return Process(source.Select(value => Tuple.Create(value.Item2, value.Item1)));
         }
+
+        public IObservable<double> Process(IObservable<Tuple<int, RewardFunction>> source)
+        {
+            return Process(source.Select(value => Tuple.Create(value.Item2, (double) value.Item1)));
+        }
+
+        public IObservable<double> Process(IObservable<Tuple<RewardFunction, int>> source)
+        {
+            return Process(source.Select(value => Tuple.Create(value.Item1, (double) value.Item2)));
+        }
     }
 }

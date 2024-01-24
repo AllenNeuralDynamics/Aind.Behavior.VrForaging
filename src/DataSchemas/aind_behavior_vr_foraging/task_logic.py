@@ -122,18 +122,30 @@ class RewardFunction(RootModel):
     root: Annotated[Union[ConstantFunction, LinearFunction, PowerFunction], Field(discriminator="function_type")]
 
 
+class DepletionRule(str, Enum):
+    ON_REWARD = ("OnReward",)
+    ON_CHOICE = ("OnChoice",)
+    ON_TIME = ("OnTime",)
+    ON_DISTANCE = "OnDistance"
+
+
 class PatchRewardFunction(AindModel):
     amount: RewardFunction = Field(
-        default=ConstantFunction(value=1), description="Initial amount of reward delivered(a.u.)", validate_default=True
+        default=ConstantFunction(value=1),
+        description="Determines the amount of reward to be delivered",
+        validate_default=True,
     )
     probability: RewardFunction = Field(
-        default=ConstantFunction(value=1), description="Initial probability of the reward", validate_default=True
+        default=ConstantFunction(value=1),
+        description="Determines the probability that a reward will be delivered",
+        validate_default=True,
     )
     available: RewardFunction = Field(
         default=LinearFunction(mininum=0, a=-1, b=5),
-        description="Total reward (a.u.) in the patch",
+        description="Determines the total amount of reward available left in the patch",
         validate_default=True,
     )
+    depletion_rule: DepletionRule = Field(default=DepletionRule.ON_CHOICE, description="Depletion")
 
 
 class RewardSpecification(AindModel):

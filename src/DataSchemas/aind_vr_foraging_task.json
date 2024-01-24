@@ -218,6 +218,16 @@
       "type": "object",
       "x-abstract": "True"
     },
+    "DepletionRule": {
+      "enum": [
+        "OnReward",
+        "OnChoice",
+        "OnTime",
+        "OnDistance"
+      ],
+      "title": "DepletionRule",
+      "type": "string"
+    },
     "Distribution": {
       "discriminator": {
         "mapping": {
@@ -1015,7 +1025,7 @@
             "function_type": "ConstantFunction",
             "value": 1.0
           },
-          "description": "Initial amount of reward delivered(a.u.)"
+          "description": "Determines the amount of reward to be delivered"
         },
         "probability": {
           "allOf": [
@@ -1027,7 +1037,7 @@
             "function_type": "ConstantFunction",
             "value": 1.0
           },
-          "description": "Initial probability of the reward"
+          "description": "Determines the probability that a reward will be delivered"
         },
         "available": {
           "allOf": [
@@ -1042,7 +1052,16 @@
             "a": -1.0,
             "b": 5.0
           },
-          "description": "Total reward (a.u.) in the patch"
+          "description": "Determines the total amount of reward available left in the patch"
+        },
+        "depletion_rule": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/DepletionRule"
+            }
+          ],
+          "default": "OnChoice",
+          "description": "Depletion"
         }
       },
       "title": "PatchRewardFunction",
@@ -1418,7 +1437,8 @@
               "function_type": "LinearFunction",
               "maximum": 9999.0,
               "mininum": 0.0
-            }
+            },
+            "depletion_rule": "OnChoice"
           },
           "description": "Reward function of the patch."
         }
