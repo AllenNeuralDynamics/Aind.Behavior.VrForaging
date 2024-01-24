@@ -2935,11 +2935,17 @@ Value as IsStopped)</scr:Expression>
               <Name>PatchStatistics</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
-                    <rx:Name>RewardAvailableInPatch</rx:Name>
-                  </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p3:PatchStatistics">
                     <rx:Name>ActivePatch</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+                    <rx:Name>PatchRewardAvailable</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+                    <rx:Name>PatchRewardAmount</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+                    <rx:Name>PatchRewardProbability</rx:Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TaskLogicSchema</Name>
@@ -3128,20 +3134,399 @@ Value as IsStopped)</scr:Expression>
                         <Expression xsi:type="rx:AsyncSubject">
                           <Name>ThisPatch</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:BehaviorSubject">
+                          <Name>DepletionVariable</Name>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>ThisPatch</Name>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>ActivePatch</Name>
                         </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisPatch</Name>
+                        <Expression xsi:type="GroupWorkflow">
+                          <Name>DetermineDepletionRule</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>ThisPatch</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>RewardSpecification.RewardFunction.DepletionRule</Selector>
+                              </Expression>
+                              <Expression xsi:type="rx:Condition">
+                                <Name>OnChoice</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="ExternalizedMapping">
+                                      <Property Name="Value" />
+                                    </Expression>
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="WorkflowProperty" TypeArguments="p3:DepletionRule">
+                                        <Value>OnChoice</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="2" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source2" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="rx:CreateObservable">
+                                <Name>OnChoice</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ChoiceFeedback</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="IntProperty">
+                                        <Value>1</Value>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Subtract">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>1</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="scr:ExpressionTransform">
+                                      <scr:Expression>single(it)</scr:Expression>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="rx:Condition">
+                                <Name>OnReward</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="ExternalizedMapping">
+                                      <Property Name="Value" />
+                                    </Expression>
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="WorkflowProperty" TypeArguments="p3:DepletionRule">
+                                        <Value>OnReward</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="2" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source2" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="rx:CreateObservable">
+                                <Name>OnReward</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>GiveReward</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="IntProperty">
+                                        <Value>1</Value>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="rx:Accumulate" />
+                                    <Expression xsi:type="scr:ExpressionTransform">
+                                      <scr:Expression>single(it)</scr:Expression>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="rx:Condition">
+                                <Name>OnTime</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="ExternalizedMapping">
+                                      <Property Name="Value" />
+                                    </Expression>
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="WorkflowProperty" TypeArguments="p3:DepletionRule">
+                                        <Value>OnTime</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="2" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source2" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="rx:CreateObservable">
+                                <Name>OnTime</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="gl:UpdateFrame" />
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>TimeStep.ElapsedRealTime</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="rx:Accumulate" />
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="gl:Timer">
+                                        <gl:DueTime>PT0S</gl:DueTime>
+                                        <gl:Period>PT0.1S</gl:Period>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Sample" />
+                                    </Expression>
+                                    <Expression xsi:type="scr:ExpressionTransform">
+                                      <scr:Expression>single(it)</scr:Expression>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="4" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source2" />
+                                    <Edge From="4" To="5" Label="Source1" />
+                                    <Edge From="5" To="6" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="rx:Condition">
+                                <Name>OnDistance</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="ExternalizedMapping">
+                                      <Property Name="Value" />
+                                    </Expression>
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="WorkflowProperty" TypeArguments="p3:DepletionRule">
+                                        <Value>OnDistance</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="2" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source2" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="rx:CreateObservable">
+                                <Name>OnDistance</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>CurrentPosition</Name>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Value.Z</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>CurrentPosition</Name>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Value.Z</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Take">
+                                        <rx:Count>1</rx:Count>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="Subtract" />
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="gl:Timer">
+                                        <gl:DueTime>PT0S</gl:DueTime>
+                                        <gl:Period>PT0.1S</gl:Period>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Sample" />
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="5" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source1" />
+                                    <Edge From="4" To="5" Label="Source2" />
+                                    <Edge From="5" To="6" Label="Source1" />
+                                    <Edge From="6" To="8" Label="Source1" />
+                                    <Edge From="7" To="8" Label="Source2" />
+                                    <Edge From="8" To="9" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Merge" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Switch" />
+                              </Expression>
+                              <Expression xsi:type="MulticastSubject">
+                                <Name>DepletionVariable</Name>
+                              </Expression>
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
+                              <Edge From="2" To="5" Label="Source1" />
+                              <Edge From="2" To="7" Label="Source1" />
+                              <Edge From="2" To="9" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source1" />
+                              <Edge From="4" To="11" Label="Source1" />
+                              <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="6" To="11" Label="Source2" />
+                              <Edge From="7" To="8" Label="Source1" />
+                              <Edge From="8" To="11" Label="Source3" />
+                              <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source4" />
+                              <Edge From="11" To="12" Label="Source1" />
+                              <Edge From="12" To="13" Label="Source1" />
+                            </Edges>
+                          </Workflow>
                         </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>RewardSpecification.Amount</Selector>
-                        </Expression>
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>RewardAvailableInPatch</Name>
+                        <Expression xsi:type="GroupWorkflow">
+                          <Name>DetermineRewardSpecs</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>DepletionVariable</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>ThisPatch</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>RewardSpecification.RewardFunction</Selector>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Available</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:WithLatestFrom" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p3:ApplyRewardFunction">
+                                  <p3:Clamp>true</p3:Clamp>
+                                  <p3:Value>0</p3:Value>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="MulticastSubject">
+                                <Name>PatchRewardAvailable</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>DepletionVariable</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>ThisPatch</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>RewardSpecification.RewardFunction</Selector>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Amount</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:WithLatestFrom" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p3:ApplyRewardFunction">
+                                  <p3:Clamp>true</p3:Clamp>
+                                  <p3:Value>0</p3:Value>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="MulticastSubject">
+                                <Name>PatchRewardAmount</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>DepletionVariable</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>ThisPatch</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>RewardSpecification.RewardFunction</Selector>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Probability</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:WithLatestFrom" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p3:ApplyRewardFunction">
+                                  <p3:Clamp>true</p3:Clamp>
+                                  <p3:Value>0</p3:Value>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="MulticastSubject">
+                                <Name>PatchRewardProbability</Name>
+                              </Expression>
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="4" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source2" />
+                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="7" To="11" Label="Source1" />
+                              <Edge From="8" To="9" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source2" />
+                              <Edge From="11" To="12" Label="Source1" />
+                              <Edge From="12" To="13" Label="Source1" />
+                              <Edge From="14" To="18" Label="Source1" />
+                              <Edge From="15" To="16" Label="Source1" />
+                              <Edge From="16" To="17" Label="Source1" />
+                              <Edge From="17" To="18" Label="Source2" />
+                              <Edge From="18" To="19" Label="Source1" />
+                              <Edge From="19" To="20" Label="Source1" />
+                            </Edges>
+                          </Workflow>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>GiveReward</Name>
@@ -3159,7 +3544,7 @@ Value as IsStopped)</scr:Expression>
                                 <Name>Source1</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>RewardAvailableInPatch</Name>
+                                <Name>PatchRewardAvailable</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:WithLatestFrom" />
@@ -3174,7 +3559,7 @@ Value as IsStopped)</scr:Expression>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="MulticastSubject">
-                                <Name>RewardAvailableInPatch</Name>
+                                <Name>PatchRewardAvailable</Name>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
@@ -3199,9 +3584,8 @@ Value as IsStopped)</scr:Expression>
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
                         <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
+                        <Edge From="16" To="17" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -3220,11 +3604,11 @@ Value as IsStopped)</scr:Expression>
                     <Name>SoftwareEvent</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>RewardAvailableInPatch</Name>
+                    <Name>PatchRewardAvailable</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p8:CreateSoftwareEvent">
-                      <p8:EventName>RewardAvailableInPatch</p8:EventName>
+                      <p8:EventName>PatchRewardAvailable</p8:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3232,30 +3616,30 @@ Value as IsStopped)</scr:Expression>
                   </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="14" To="17" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                   <Edge From="16" To="19" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source2" />
+                  <Edge From="18" To="21" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source2" />
+                  <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -7339,8 +7723,8 @@ Item2 as Start
                     <Text><![CDATA[]]></Text>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="DoubleProperty">
-                      <Value>5</Value>
+                    <Combinator xsi:type="FloatProperty">
+                      <Value>0</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -7349,10 +7733,7 @@ Item2 as Start
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>ActivePatch</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RewardSpecification.Amount</Selector>
+                    <Name>PatchRewardAmount</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Merge" />
@@ -7387,7 +7768,7 @@ Item2 as Start
                   <Edge From="12" To="13" Label="Source4" />
                   <Edge From="13" To="16" Label="Source2" />
                   <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="14" To="32" Label="Source1" />
+                  <Edge From="14" To="31" Label="Source1" />
                   <Edge From="15" To="16" Label="Source3" />
                   <Edge From="16" To="17" Label="Source1" />
                   <Edge From="18" To="20" Label="Source1" />
@@ -7398,12 +7779,11 @@ Item2 as Start
                   <Edge From="24" To="25" Label="Source1" />
                   <Edge From="26" To="27" Label="Source1" />
                   <Edge From="27" To="28" Label="Source1" />
-                  <Edge From="28" To="31" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="28" To="30" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source2" />
                   <Edge From="30" To="31" Label="Source2" />
-                  <Edge From="31" To="32" Label="Source2" />
+                  <Edge From="31" To="32" Label="Source1" />
                   <Edge From="32" To="33" Label="Source1" />
-                  <Edge From="33" To="34" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
