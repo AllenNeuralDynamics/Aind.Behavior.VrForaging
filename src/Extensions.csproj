@@ -17,6 +17,7 @@
     <PackageReference Include="Harp.Olfactometer" Version="0.1.0" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
     <PackageReference Include="Bonsai.Design.Visualizers" Version="2.8.0" />
+    <PackageReference Include="AllenNeuralDynamics.Core" Version="0.1.0-preview2024011701" />
   </ItemGroup>
 
 </Project>
