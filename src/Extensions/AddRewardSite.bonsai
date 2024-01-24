@@ -120,9 +120,7 @@
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Amount" Selector="Amount" />
                 <Property Name="Delay" Selector="Delay" />
-                <Property Name="Probability" Selector="Probability" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -178,10 +176,7 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:RewardSpecification">
-                <p1:Amount>0</p1:Amount>
-                <p1:Probability>1</p1:Probability>
-              </Combinator>
+              <Combinator xsi:type="p1:RewardSpecification" />
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
