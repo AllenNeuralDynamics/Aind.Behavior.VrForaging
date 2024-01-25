@@ -109,7 +109,7 @@ def pick_file_from_list(available_files: list[str], prompt: str = "Choose a file
     if choice < 0 or choice >= len(available_files) + 1:
         raise ValueError
     if choice == 0:
-        path = str(input("Enter path: "))
+        path = str(input("Enter manually: "))
         return path
     else:
         return available_files[choice - 1]
@@ -120,6 +120,8 @@ def prompt_task_logic_input(folder: str = "TaskLogic", task_name="AindVrForaging
     while True:
         try:
             path = pick_file_from_list(available_files)
+            if not os.path.isfile(path):
+                raise FileNotFoundError(f"File not found: {path}")
             task_logic = load_json_model(path, AindVrForagingTaskLogic)
             print(f"Using {path}.")
             return task_logic
@@ -127,6 +129,8 @@ def prompt_task_logic_input(folder: str = "TaskLogic", task_name="AindVrForaging
             print(validation_error)
             print("Failed to validate pydantic model. Try again.")
         except ValueError:
+            print("Invalid choice. Try again.")
+        except FileNotFoundError:
             print("Invalid choice. Try again.")
 
 
@@ -152,6 +156,8 @@ def prompt_session_input(
                 print(f"Found a single session config file. Using {batch_file}.")
             else:
                 batch_file = pick_file_from_list(available_batches, prompt="Choose a batch:")
+                if not os.path.isfile(batch_file):
+                    raise FileNotFoundError(f"File not found: {batch_file}")
                 print(f"Using {batch_file}.")
             with open(batch_file, "r", encoding="utf-8") as file:
                 subject_list = file.readlines()
@@ -216,14 +222,15 @@ def prompt_bonsai_config_input() -> dict:
 
 
 BANNER = r"""
- _   _ ______         ______  _____ ______   ___   _____  _____  _   _  _____ 
-| | | || ___ \        |  ___||  _  || ___ \ / _ \ |  __ \|_   _|| \ | ||  __ \
-| | | || |_/ / ______ | |_   | | | || |_/ // /_\ \| |  \/  | |  |  \| || |  \/
-| | | ||    / |______||  _|  | | | ||    / |  _  || | __   | |  | . ` || | __ 
-\ \_/ /| |\ \         | |    \ \_/ /| |\ \ | | | || |_\ \ _| |_ | |\  || |_\ \
- \___/ \_| \_|        \_|     \___/ \_| \_|\_| |_/ \____/ \___/ \_| \_/ \____/
-                                                                              
-                                                                              
+
+ ██████╗██╗      █████╗ ██████╗ ███████╗
+██╔════╝██║     ██╔══██╗██╔══██╗██╔════╝
+██║     ██║     ███████║██████╔╝█████╗  
+██║     ██║     ██╔══██║██╔══██╗██╔══╝  
+╚██████╗███████╗██║  ██║██████╔╝███████╗
+ ╚═════╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝
+
+Command-line-interface Launcher for AIND Behavior Experiments
 Press Control+C to exit at any time.
 """
 
