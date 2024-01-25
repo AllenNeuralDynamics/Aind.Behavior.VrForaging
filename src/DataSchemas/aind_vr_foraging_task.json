@@ -216,7 +216,7 @@
       ],
       "title": "Dependencies",
       "type": "object",
-      "x-abstract": "True"
+      "x-abstract": "true"
     },
     "DepletionRule": {
       "enum": [
