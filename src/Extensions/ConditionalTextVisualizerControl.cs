@@ -3,15 +3,14 @@ using Bonsai;
 using System.ComponentModel;
 using System.Reactive.Linq;
 using System.Linq;
-using System.Collections.Generic;
 using AllenNeuralDynamics.Core.Logging;
 
 [Combinator]
-[TypeVisualizer(typeof(ConditionalTextVisualizer))]
+[TypeVisualizer(typeof(ConditionSoftwareEvent))]
 [Description("Visualizes input values as text labels of configurable size.")]
-public class ConditionalTextVisualizerControl
+public class ConditionSoftwareEventControl
 {
-    public ConditionalTextVisualizerControl()
+    public ConditionSoftwareEventControl()
     {
         Filter = new string[] {};
     }
