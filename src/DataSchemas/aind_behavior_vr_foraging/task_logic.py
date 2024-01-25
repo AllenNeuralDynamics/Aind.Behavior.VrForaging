@@ -343,7 +343,7 @@ class Dependencies(BaseModel):
     distributions: distributions.Distribution
 
     class Config:
-        json_schema_extra = {"x-abstract": "True"}
+        json_schema_extra = {"x-abstract": "true"}
 
 
 def schema() -> BaseModel:
