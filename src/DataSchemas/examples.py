@@ -122,12 +122,22 @@ def InterPatch_VirtualSiteGeneratorHelper(contrast: float = 1):
     )
 
 
+reward_function = task_logic.PatchRewardFunction(
+    amount=task_logic.ConstantFunction(value=1),
+    probability=task_logic.ConstantFunction(value=1),
+    available=task_logic.LinearFunction(a=-1, b=5),
+    depletion_rule=task_logic.DepletionRule.ON_CHOICE,
+)
+
+
 patch1 = task_logic.PatchStatistics(
     label="Amyl Acetate",
     state_index=0,
     odor_specification=task_logic.OdorSpecification(index=1, concentration=1),
     reward_specification=task_logic.RewardSpecification(
-        amount=1, probability=1, operant_logic=OperantLogicHelper(), delay=ExponentialDistributionHelper(1, 0, 10)
+        reward_function=reward_function,
+        operant_logic=OperantLogicHelper(),
+        delay=ExponentialDistributionHelper(1, 0, 10),
     ),
     virtual_site_generation=task_logic.VirtualSiteGeneration(
         inter_patch=InterPatch_VirtualSiteGeneratorHelper(),
@@ -142,7 +152,9 @@ patch2 = task_logic.PatchStatistics(
     state_index=1,
     odor_specification=task_logic.OdorSpecification(index=0, concentration=1),
     reward_specification=task_logic.RewardSpecification(
-        amount=1, probability=1, operant_logic=OperantLogicHelper(), delay=ExponentialDistributionHelper(1, 0, 10)
+        reward_function=reward_function,
+        operant_logic=OperantLogicHelper(),
+        delay=ExponentialDistributionHelper(1, 0, 10),
     ),
     virtual_site_generation=task_logic.VirtualSiteGeneration(
         inter_patch=InterPatch_VirtualSiteGeneratorHelper(),
