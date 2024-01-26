@@ -1084,7 +1084,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private double _wheelDiameter = 15D;
     
-        private int _pulsesPerRevolution = 28800;
+        private int _pulsesPerRevolution = 8192;
     
         private bool _invertDirection = false;
     

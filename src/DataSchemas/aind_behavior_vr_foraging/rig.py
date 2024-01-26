@@ -88,7 +88,7 @@ class Screen(AindModel):
 
 class Treadmill(AindModel):
     wheel_diameter: float = Field(default=15, ge=0, description="Wheel diameter", units="cm")
-    pulses_per_revolution: int = Field(default=28800, ge=1, description="Pulses per revolution")
+    pulses_per_revolution: int = Field(default=8192, ge=1, description="Pulses per revolution")
     invert_direction: bool = Field(default=False, description="Invert direction")
 
 
