@@ -56,7 +56,7 @@ import json
 def run_bonsai_process(
     workflow_file: PathLike,
     bonsai_exe: PathLike = "bonsai/bonsai.exe",
-    is_editor_mode: bool = False,
+    is_editor_mode: bool = True,
     is_start_flag: bool = True,
     layout: Optional[PathLike] = None,
     additional_properties: Optional[Dict[str, str]] = None,
