@@ -66,7 +66,7 @@ def run_bonsai_process(
         if is_start_flag:
             output_cmd += " --start"
     else:
-        output_cmd += " --no-editor-mode"
+        output_cmd += " --no-editor"
         if layout:
             output_cmd += f' --visualizer-layout:"{layout}"'
 
@@ -80,9 +80,10 @@ def run_bonsai_process(
 def save_temp_model(model: BaseModel, folder: str = TEMP) -> PathLike:
     os.makedirs(folder, exist_ok=True)
     fname = model.__class__.__name__ + "_" + secrets.token_hex(nbytes=16) + ".json"
-    with open(os.path.join(folder, fname), "w", encoding="utf-8") as f:
+    fpath = os.path.join(folder, fname)
+    with open(fpath, "w", encoding="utf-8") as f:
         f.write(model.model_dump_json(indent=3))
-    return fname
+    return fpath
 
 
 def load_json_model(json_path: PathLike, model: BaseModel) -> BaseModel:
