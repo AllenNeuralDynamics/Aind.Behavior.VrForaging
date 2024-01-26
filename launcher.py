@@ -186,7 +186,7 @@ def prompt_session_input(
         experiment="AindVrForaging",
         root_path=root_path,
         remote_path=remote_path,
-        version=__version__,
+        schema_version=__version__,
         subject=subject,
         notes=notes,
         commit_hash=REPO.head.commit.hexsha,
