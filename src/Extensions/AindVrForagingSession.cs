@@ -9,7 +9,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingSession
@@ -29,7 +29,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _subject;
     
-        private string _version;
+        private string _experimentVersion;
     
         private double? _rngSeed;
     
@@ -54,7 +54,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _rootPath = other._rootPath;
             _remotePath = other._remotePath;
             _subject = other._subject;
-            _version = other._version;
+            _experimentVersion = other._experimentVersion;
             _rngSeed = other._rngSeed;
             _notes = other._notes;
             _commitHash = other._commitHash;
@@ -63,7 +63,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("describedBy")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
         public string DescribedBy
         {
             get
@@ -77,7 +76,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="schema_version")]
         public string SchemaVersion
         {
             get
@@ -94,7 +92,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// Name of the experiment
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("experiment", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="experiment")]
         [System.ComponentModel.DescriptionAttribute("Name of the experiment")]
         public string Experiment
         {
@@ -113,7 +110,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("date")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="date")]
         [System.ComponentModel.DescriptionAttribute("Date of the experiment")]
         public System.DateTimeOffset Date
         {
@@ -131,7 +127,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// Root path where data will be logged
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("root_path", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="root_path")]
         [System.ComponentModel.DescriptionAttribute("Root path where data will be logged")]
         public string RootPath
         {
@@ -149,7 +144,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// Remote path where data will be attempted to be copied to after experiment is done
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("remote_path")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="remote_path")]
         [System.ComponentModel.DescriptionAttribute("Remote path where data will be attempted to be copied to after experiment is done" +
             "")]
         public string RemotePath
@@ -168,7 +162,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// Name of the subject
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("subject", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="subject")]
         [System.ComponentModel.DescriptionAttribute("Name of the subject")]
         public string Subject
         {
@@ -185,18 +178,17 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// <summary>
         /// Version of the experiment
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("version", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="version")]
+        [Newtonsoft.Json.JsonPropertyAttribute("experiment_version", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Version of the experiment")]
-        public string Version
+        public string ExperimentVersion
         {
             get
             {
-                return _version;
+                return _experimentVersion;
             }
             set
             {
-                _version = value;
+                _experimentVersion = value;
             }
         }
     
@@ -205,7 +197,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rng_seed")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rng_seed")]
         [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
         public double? RngSeed
         {
@@ -223,7 +214,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// Notes about the experiment
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("notes")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="notes")]
         [System.ComponentModel.DescriptionAttribute("Notes about the experiment")]
         public string Notes
         {
@@ -241,7 +231,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// Commit hash of the repository
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("commit_hash")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commit_hash")]
         [System.ComponentModel.DescriptionAttribute("Commit hash of the repository")]
         public string CommitHash
         {
@@ -259,7 +248,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// Allow running from a dirty repository
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("allow_dirty_repo")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="allow_dirty_repo")]
         [System.ComponentModel.DescriptionAttribute("Allow running from a dirty repository")]
         public bool AllowDirtyRepo
         {
@@ -277,7 +265,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         /// Skip hardware validation
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("skip_hardware_validation")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="skip_hardware_validation")]
         [System.ComponentModel.DescriptionAttribute("Skip hardware validation")]
         public bool SkipHardwareValidation
         {
@@ -310,7 +297,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             stringBuilder.Append("root_path = " + _rootPath + ", ");
             stringBuilder.Append("remote_path = " + _remotePath + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
-            stringBuilder.Append("version = " + _version + ", ");
+            stringBuilder.Append("experiment_version = " + _experimentVersion + ", ");
             stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
             stringBuilder.Append("commit_hash = " + _commitHash + ", ");
@@ -337,7 +324,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into JSON strings.")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
@@ -359,7 +346,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     /// <summary>
     /// Deserializes a sequence of JSON strings into data model objects.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
@@ -388,79 +375,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
         private static System.IObservable<T> Process<T>(System.IObservable<string> source)
         {
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.DeserializeObject<T>(value));
-        }
-    }
-
-
-    /// <summary>
-    /// Serializes a sequence of data model objects into YAML strings.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into YAML strings.")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    public partial class SerializeToYaml
-    {
-    
-        private System.IObservable<string> Process<T>(System.IObservable<T> source)
-        {
-            return System.Reactive.Linq.Observable.Defer(() =>
-            {
-                var serializer = new YamlDotNet.Serialization.SerializerBuilder()
-                    .Build();
-                return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
-            });
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
-        {
-            return Process<AindVrForagingSession>(source);
-        }
-    }
-
-
-    /// <summary>
-    /// Deserializes a sequence of YAML strings into data model objects.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
-    [System.ComponentModel.DefaultPropertyAttribute("Type")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
-    public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
-    {
-    
-        public DeserializeFromYaml()
-        {
-            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingSession>();
-        }
-
-        public Bonsai.Expressions.TypeMapping Type { get; set; }
-
-        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
-        {
-            var typeMapping = (Bonsai.Expressions.TypeMapping)Type;
-            var returnType = typeMapping.GetType().GetGenericArguments()[0];
-            return System.Linq.Expressions.Expression.Call(
-                typeof(DeserializeFromYaml),
-                "Process",
-                new System.Type[] { returnType },
-                System.Linq.Enumerable.Single(arguments));
-        }
-
-        private static System.IObservable<T> Process<T>(System.IObservable<string> source)
-        {
-            return System.Reactive.Linq.Observable.Defer(() =>
-            {
-                var serializer = new YamlDotNet.Serialization.DeserializerBuilder()
-                    .Build();
-                return System.Reactive.Linq.Observable.Select(source, value =>
-                {
-                    var reader = new System.IO.StringReader(value);
-                    var parser = new YamlDotNet.Core.MergingParser(new YamlDotNet.Core.Parser(reader));
-                    return serializer.Deserialize<T>(parser);
-                });
-            });
         }
     }
 }

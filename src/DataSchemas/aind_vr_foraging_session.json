@@ -46,9 +46,9 @@
       "title": "Subject",
       "type": "string"
     },
-    "version": {
+    "experiment_version": {
       "description": "Version of the experiment",
-      "title": "Version",
+      "title": "Experiment Version",
       "type": "string"
     },
     "rng_seed": {
@@ -107,7 +107,7 @@
     "experiment",
     "root_path",
     "subject",
-    "version"
+    "experiment_version"
   ],
   "title": "AindVrForagingSession",
   "type": "object"

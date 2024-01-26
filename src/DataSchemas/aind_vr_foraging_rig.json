@@ -424,14 +424,14 @@
       "title": "Schema Version",
       "type": "string"
     },
-    "rig_name": {
-      "description": "Rig name",
-      "title": "Rig Name",
-      "type": "string"
-    },
     "computer_name": {
       "description": "Computer name",
       "title": "Computer Name",
+      "type": "string"
+    },
+    "rig_name": {
+      "description": "Rig name",
+      "title": "Rig Name",
       "type": "string"
     },
     "auxiliary_camera0": {
