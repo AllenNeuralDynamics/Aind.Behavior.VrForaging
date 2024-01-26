@@ -9,7 +9,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpAnalogInput
@@ -39,7 +39,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="who_am_i")]
         public int WhoAmI
         {
             get
@@ -53,7 +52,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
         public string DeviceType
         {
             get
@@ -70,7 +68,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device serial number
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serial_number")]
         [System.ComponentModel.DescriptionAttribute("Device serial number")]
         public string SerialNumber
         {
@@ -88,7 +85,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device port name
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="port_name")]
         [System.ComponentModel.DescriptionAttribute("Device port name")]
         public string PortName
         {
@@ -107,7 +103,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
         public object AdditionalSettings
         {
@@ -156,7 +151,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpBehavior
@@ -186,7 +181,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="who_am_i")]
         public int WhoAmI
         {
             get
@@ -200,7 +194,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
         public string DeviceType
         {
             get
@@ -217,7 +210,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device serial number
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serial_number")]
         [System.ComponentModel.DescriptionAttribute("Device serial number")]
         public string SerialNumber
         {
@@ -235,7 +227,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device port name
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="port_name")]
         [System.ComponentModel.DescriptionAttribute("Device port name")]
         public string PortName
         {
@@ -254,7 +245,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
         public object AdditionalSettings
         {
@@ -303,7 +293,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpClockGenerator
@@ -333,7 +323,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="who_am_i")]
         public int WhoAmI
         {
             get
@@ -347,7 +336,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
         public string DeviceType
         {
             get
@@ -364,7 +352,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device serial number
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serial_number")]
         [System.ComponentModel.DescriptionAttribute("Device serial number")]
         public string SerialNumber
         {
@@ -382,7 +369,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device port name
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="port_name")]
         [System.ComponentModel.DescriptionAttribute("Device port name")]
         public string PortName
         {
@@ -401,7 +387,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
         public object AdditionalSettings
         {
@@ -450,7 +435,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpLickometer
@@ -481,7 +466,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="who_am_i")]
         public WhoAmI WhoAmI
         {
             get
@@ -495,7 +479,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
         public string DeviceType
         {
             get
@@ -512,7 +495,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device serial number
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serial_number")]
         [System.ComponentModel.DescriptionAttribute("Device serial number")]
         public string SerialNumber
         {
@@ -530,7 +512,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device port name
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="port_name")]
         [System.ComponentModel.DescriptionAttribute("Device port name")]
         public string PortName
         {
@@ -549,7 +530,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
         public object AdditionalSettings
         {
@@ -598,7 +578,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpOlfactometer
@@ -628,7 +608,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="who_am_i")]
         public int WhoAmI
         {
             get
@@ -642,7 +621,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device_type")]
         public string DeviceType
         {
             get
@@ -659,7 +637,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device serial number
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serial_number")]
         [System.ComponentModel.DescriptionAttribute("Device serial number")]
         public string SerialNumber
         {
@@ -677,7 +654,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Device port name
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="port_name")]
         [System.ComponentModel.DescriptionAttribute("Device port name")]
         public string PortName
         {
@@ -696,7 +672,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
         public object AdditionalSettings
         {
@@ -745,7 +720,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Screen
@@ -778,7 +753,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Display index
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("display_index")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="display_index")]
         [System.ComponentModel.DescriptionAttribute("Display index")]
         public int DisplayIndex
         {
@@ -796,7 +770,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Target render frequency
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("target_render_frequency")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="target_render_frequency")]
         [System.ComponentModel.DescriptionAttribute("Target render frequency")]
         public double TargetRenderFrequency
         {
@@ -814,7 +787,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Target update frequency
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("target_update_frequency")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="target_update_frequency")]
         [System.ComponentModel.DescriptionAttribute("Target update frequency")]
         public double TargetUpdateFrequency
         {
@@ -832,7 +804,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Calibration directory
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("calibration_directory")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration_directory")]
         [System.ComponentModel.DescriptionAttribute("Calibration directory")]
         public string CalibrationDirectory
         {
@@ -850,7 +821,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Calibration directory
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("texture_assets_directory")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="texture_assets_directory")]
         [System.ComponentModel.DescriptionAttribute("Calibration directory")]
         public string TextureAssetsDirectory
         {
@@ -899,7 +869,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class SpinnakerCamera
@@ -935,7 +905,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Camera serial number
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("serial_number", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serial_number")]
         [System.ComponentModel.DescriptionAttribute("Camera serial number")]
         public string SerialNumber
         {
@@ -953,7 +922,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Binning
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("binning")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binning")]
         [System.ComponentModel.DescriptionAttribute("Binning")]
         public int Binning
         {
@@ -972,7 +940,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("color_processing")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="color_processing")]
         [System.ComponentModel.DescriptionAttribute("Color processing")]
         public SpinnakerCameraColorProcessing ColorProcessing
         {
@@ -990,7 +957,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Exposure time
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("exposure")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure")]
         [System.ComponentModel.DescriptionAttribute("Exposure time")]
         public int Exposure
         {
@@ -1008,7 +974,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Frame rate
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("frame_rate")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frame_rate")]
         [System.ComponentModel.DescriptionAttribute("Frame rate")]
         public int FrameRate
         {
@@ -1026,7 +991,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Gain
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("gain")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
         [System.ComponentModel.DescriptionAttribute("Gain")]
         public double Gain
         {
@@ -1076,7 +1040,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Treadmill
@@ -1084,7 +1048,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private double _wheelDiameter = 15D;
     
-        private int _pulsesPerRevolution = 8192;
+        private int _pulsesPerRevolution = 28800;
     
         private bool _invertDirection = false;
     
@@ -1103,7 +1067,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Wheel diameter
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("wheel_diameter")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="wheel_diameter")]
         [System.ComponentModel.DescriptionAttribute("Wheel diameter")]
         public double WheelDiameter
         {
@@ -1121,7 +1084,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Pulses per revolution
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("pulses_per_revolution")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulses_per_revolution")]
         [System.ComponentModel.DescriptionAttribute("Pulses per revolution")]
         public int PulsesPerRevolution
         {
@@ -1139,7 +1101,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Invert direction
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("invert_direction")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="invert_direction")]
         [System.ComponentModel.DescriptionAttribute("Invert direction")]
         public bool InvertDirection
         {
@@ -1186,7 +1147,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Valve
@@ -1210,7 +1171,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Calibration intercept
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("calibration_intercept")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration_intercept")]
         [System.ComponentModel.DescriptionAttribute("Calibration intercept")]
         public double CalibrationIntercept
         {
@@ -1228,7 +1188,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Calibration slope
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("calibration_slope")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="calibration_slope")]
         [System.ComponentModel.DescriptionAttribute("Calibration slope")]
         public double CalibrationSlope
         {
@@ -1274,7 +1233,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class WebCamera
@@ -1295,7 +1254,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Camera index
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("index")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="index")]
         [System.ComponentModel.DescriptionAttribute("Camera index")]
         public int Index
         {
@@ -1340,7 +1298,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingRig
@@ -1350,9 +1308,9 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _schemaVersion = "0.1.0";
     
-        private string _rigName;
-    
         private string _computerName;
+    
+        private string _rigName;
     
         private WebCamera _auxiliaryCamera0;
     
@@ -1388,8 +1346,8 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             _describedBy = other._describedBy;
             _schemaVersion = other._schemaVersion;
-            _rigName = other._rigName;
             _computerName = other._computerName;
+            _rigName = other._rigName;
             _auxiliaryCamera0 = other._auxiliaryCamera0;
             _auxiliaryCamera1 = other._auxiliaryCamera1;
             _harpBehavior = other._harpBehavior;
@@ -1406,7 +1364,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("describedBy")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
         public string DescribedBy
         {
             get
@@ -1420,7 +1377,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="schema_version")]
         public string SchemaVersion
         {
             get
@@ -1434,28 +1390,9 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         /// <summary>
-        /// Rig name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("rig_name", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rig_name")]
-        [System.ComponentModel.DescriptionAttribute("Rig name")]
-        public string RigName
-        {
-            get
-            {
-                return _rigName;
-            }
-            set
-            {
-                _rigName = value;
-            }
-        }
-    
-        /// <summary>
         /// Computer name
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("computer_name")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="computer_name")]
         [System.ComponentModel.DescriptionAttribute("Computer name")]
         public string ComputerName
         {
@@ -1470,11 +1407,27 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         /// <summary>
+        /// Rig name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rig_name", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Rig name")]
+        public string RigName
+        {
+            get
+            {
+                return _rigName;
+            }
+            set
+            {
+                _rigName = value;
+            }
+        }
+    
+        /// <summary>
         /// Auxiliary camera 0
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("auxiliary_camera0")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliary_camera0")]
         [System.ComponentModel.DescriptionAttribute("Auxiliary camera 0")]
         public WebCamera AuxiliaryCamera0
         {
@@ -1493,7 +1446,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("auxiliary_camera1")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="auxiliary_camera1")]
         [System.ComponentModel.DescriptionAttribute("Auxiliary camera 1")]
         public WebCamera AuxiliaryCamera1
         {
@@ -1512,7 +1464,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_behavior", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_behavior")]
         [System.ComponentModel.DescriptionAttribute("Harp behavior")]
         public HarpBehavior HarpBehavior
         {
@@ -1531,7 +1482,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_olfactometer", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_olfactometer")]
         [System.ComponentModel.DescriptionAttribute("Harp olfactometer")]
         public HarpOlfactometer HarpOlfactometer
         {
@@ -1550,7 +1500,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_lickometer", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_lickometer")]
         [System.ComponentModel.DescriptionAttribute("Harp lickometer")]
         public HarpLickometer HarpLickometer
         {
@@ -1569,7 +1518,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_clock_generator", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_clock_generator")]
         [System.ComponentModel.DescriptionAttribute("Harp clock generator")]
         public HarpClockGenerator HarpClockGenerator
         {
@@ -1588,7 +1536,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_analog_input")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harp_analog_input")]
         [System.ComponentModel.DescriptionAttribute("Harp analog input")]
         public HarpAnalogInput HarpAnalogInput
         {
@@ -1607,7 +1554,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("face_camera", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="face_camera")]
         [System.ComponentModel.DescriptionAttribute("Face camera")]
         public SpinnakerCamera FaceCamera
         {
@@ -1626,7 +1572,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("top_body_camera")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="top_body_camera")]
         [System.ComponentModel.DescriptionAttribute("Top body camera")]
         public SpinnakerCamera TopBodyCamera
         {
@@ -1645,7 +1590,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("side_body_camera")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="side_body_camera")]
         [System.ComponentModel.DescriptionAttribute("Side body camera")]
         public SpinnakerCamera SideBodyCamera
         {
@@ -1664,7 +1608,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("screen")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="screen")]
         [System.ComponentModel.DescriptionAttribute("Screen settings")]
         public Screen Screen
         {
@@ -1683,7 +1626,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("treadmill")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="treadmill")]
         [System.ComponentModel.DescriptionAttribute("Treadmill settings")]
         public Treadmill Treadmill
         {
@@ -1702,7 +1644,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("water_valve")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="water_valve")]
         [System.ComponentModel.DescriptionAttribute("Water valve settings")]
         public Valve WaterValve
         {
@@ -1730,8 +1671,8 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
             stringBuilder.Append("describedBy = " + _describedBy + ", ");
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
-            stringBuilder.Append("rig_name = " + _rigName + ", ");
             stringBuilder.Append("computer_name = " + _computerName + ", ");
+            stringBuilder.Append("rig_name = " + _rigName + ", ");
             stringBuilder.Append("auxiliary_camera0 = " + _auxiliaryCamera0 + ", ");
             stringBuilder.Append("auxiliary_camera1 = " + _auxiliaryCamera1 + ", ");
             stringBuilder.Append("harp_behavior = " + _harpBehavior + ", ");
@@ -1763,7 +1704,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class WhoAmI
@@ -1807,17 +1748,15 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SpinnakerCameraColorProcessing
     {
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Default")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Default")]
         Default = 0,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="NoColorProcessing")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="NoColorProcessing")]
         NoColorProcessing = 1,
     }
 
@@ -1825,7 +1764,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into JSON strings.")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
@@ -1902,7 +1841,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     /// <summary>
     /// Deserializes a sequence of JSON strings into data model objects.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
@@ -1942,145 +1881,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         private static System.IObservable<T> Process<T>(System.IObservable<string> source)
         {
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.DeserializeObject<T>(value));
-        }
-    }
-
-
-    /// <summary>
-    /// Serializes a sequence of data model objects into YAML strings.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into YAML strings.")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    public partial class SerializeToYaml
-    {
-    
-        private System.IObservable<string> Process<T>(System.IObservable<T> source)
-        {
-            return System.Reactive.Linq.Observable.Defer(() =>
-            {
-                var serializer = new YamlDotNet.Serialization.SerializerBuilder()
-                    .Build();
-                return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
-            });
-        }
-
-        public System.IObservable<string> Process(System.IObservable<HarpAnalogInput> source)
-        {
-            return Process<HarpAnalogInput>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<HarpBehavior> source)
-        {
-            return Process<HarpBehavior>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<HarpClockGenerator> source)
-        {
-            return Process<HarpClockGenerator>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<HarpLickometer> source)
-        {
-            return Process<HarpLickometer>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<HarpOlfactometer> source)
-        {
-            return Process<HarpOlfactometer>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Screen> source)
-        {
-            return Process<Screen>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
-        {
-            return Process<SpinnakerCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Treadmill> source)
-        {
-            return Process<Treadmill>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Valve> source)
-        {
-            return Process<Valve>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<WebCamera> source)
-        {
-            return Process<WebCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindVrForagingRig> source)
-        {
-            return Process<AindVrForagingRig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<WhoAmI> source)
-        {
-            return Process<WhoAmI>(source);
-        }
-    }
-
-
-    /// <summary>
-    /// Deserializes a sequence of YAML strings into data model objects.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
-    [System.ComponentModel.DefaultPropertyAttribute("Type")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLickometer>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpOlfactometer>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Valve>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingRig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WhoAmI>))]
-    public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
-    {
-    
-        public DeserializeFromYaml()
-        {
-            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingRig>();
-        }
-
-        public Bonsai.Expressions.TypeMapping Type { get; set; }
-
-        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
-        {
-            var typeMapping = (Bonsai.Expressions.TypeMapping)Type;
-            var returnType = typeMapping.GetType().GetGenericArguments()[0];
-            return System.Linq.Expressions.Expression.Call(
-                typeof(DeserializeFromYaml),
-                "Process",
-                new System.Type[] { returnType },
-                System.Linq.Enumerable.Single(arguments));
-        }
-
-        private static System.IObservable<T> Process<T>(System.IObservable<string> source)
-        {
-            return System.Reactive.Linq.Observable.Defer(() =>
-            {
-                var serializer = new YamlDotNet.Serialization.DeserializerBuilder()
-                    .Build();
-                return System.Reactive.Linq.Observable.Select(source, value =>
-                {
-                    var reader = new System.IO.StringReader(value);
-                    var parser = new YamlDotNet.Core.MergingParser(new YamlDotNet.Core.Parser(reader));
-                    return serializer.Deserialize<T>(parser);
-                });
-            });
         }
     }
 }

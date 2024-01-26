@@ -1,13 +1,11 @@
-# Import core types
 from __future__ import annotations
 
 from enum import Enum
-
-# Import core types
 from typing import Annotated, Dict, List, Literal, Optional, Union
 
-import aind_behavior_vr_foraging.distributions as distributions
-from aind_data_schema.base import AindCoreModel, AindModel
+import aind_behavior_services.task_logic.distributions as distributions
+from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel
+from aind_data_schema.base import AindModel
 from pydantic import BaseModel, Field, RootModel
 
 
@@ -327,7 +325,7 @@ TaskStageSettings = Annotated[
 ]
 
 
-class AindVrForagingTaskLogic(AindCoreModel):
+class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     describedBy: str = Field("")
     schema_version: Literal["0.1.0"] = "0.1.0"
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
