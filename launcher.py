@@ -191,6 +191,7 @@ def prompt_session_input(
         notes=notes,
         commit_hash=REPO.head.commit.hexsha,
         allow_dirty_repo=ALLOW_DIRTY,
+        experiment_version="",
     )
 
 
