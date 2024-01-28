@@ -4810,7 +4810,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private int _id = 0;
     
-        private string _label = "VirtualSite";
+        private VirtualSiteLabels _label = AindVrForagingDataSchema.AindVrForagingTask.VirtualSiteLabels.Unspecified;
     
         private double _length = 20D;
     
@@ -4857,9 +4857,10 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         /// <summary>
         /// Label of the virtual site
         /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("label")]
         [System.ComponentModel.DescriptionAttribute("Label of the virtual site")]
-        public string Label
+        public VirtualSiteLabels Label
         {
             get
             {

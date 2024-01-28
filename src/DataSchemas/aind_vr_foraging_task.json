@@ -1766,10 +1766,13 @@
           "type": "integer"
         },
         "label": {
-          "default": "VirtualSite",
-          "description": "Label of the virtual site",
-          "title": "Label",
-          "type": "string"
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteLabels"
+            }
+          ],
+          "default": "Unspecified",
+          "description": "Label of the virtual site"
         },
         "length": {
           "default": 20,
