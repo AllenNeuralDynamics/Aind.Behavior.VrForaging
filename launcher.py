@@ -74,6 +74,7 @@ def run_bonsai_process(
         for param, value in additional_properties.items():
             output_cmd += f' -p:"{param}"="{value}"'
 
+    print(output_cmd)
     return subprocess.Popen(output_cmd, cwd=CWD, creationflags=subprocess.CREATE_NEW_CONSOLE)
 
 
