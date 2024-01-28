@@ -193,7 +193,7 @@ class VirtualSiteGeneration(AindModel):
 
 class VirtualSite(AindModel):
     id: int = Field(default=0, ge=0, description="Id of the virtual site")
-    label: str = Field(default="VirtualSite", description="Label of the virtual site")
+    label: VirtualSiteLabels = Field(VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length: float = Field(20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
     odor_specification: Optional[OdorSpecification] = Field(
