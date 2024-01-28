@@ -20,7 +20,7 @@ example_session = AindVrForagingSession(
     experiment_version="0.1.0",
     allow_dirty_repo=True,
     skip_hardware_validation=False,
-    schema_version="experiment_mvt_stochastic_reward"
+    schema_version="experiment_mvt_stochastic_reward",
 )
 
 
