@@ -16,7 +16,7 @@ BONSAI_EXE = "bonsai/bonsai.exe"
 WORKFLOW_FILE = "src\\vr-foraging.bonsai"
 COMPUTER_NAME = os.environ["COMPUTERNAME"]
 ROOT_DATA_PATH = "c:\\data"
-REMOTE_DATA_PATH = "c:\\data\\remote"
+REMOTE_DATA_PATH = r"\\allen\aind\scratch\vr-foraging\data"
 TEMP = "local/temp"
 
 REPO = None
