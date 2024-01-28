@@ -143,9 +143,7 @@ def prompt_session_input(
     task_name="AindVrForaging",
 ) -> AindVrForagingSession:
     _local_config_folder = os.path.join(CONFIG_LIBRARY, folder, task_name)
-    available_batches = glob.glob(
-        os.path.join(_local_config_folder, "*.*")
-    )
+    available_batches = glob.glob(os.path.join(_local_config_folder, "*.*"))
 
     available_batches = [batch for batch in available_batches if os.path.isfile(batch)]
     subject_list = None
@@ -215,6 +213,28 @@ def prompt_rig_input(folder_name: str = "Rigs") -> AindVrForagingRig:
                 print("Invalid choice. Try again.")
 
 
+def prompt_visualizer_layout_input(folder_name: str = "VisualizerLayouts") -> Optional[str]:
+    layout_schemas_path = os.path.join(CONFIG_LIBRARY, folder_name, COMPUTER_NAME)
+    available_layouts = glob.glob(os.path.join(layout_schemas_path, "*.json"))
+    while True:
+        try:
+            print("Pick a visualizer layout:")
+            print("0: Default")
+            print("1: None")
+            [print(f"{i+2}: {os.path.split(file)[1]}") for i, file in enumerate(available_layouts)]
+            choice = int(input("Choice: "))
+            if choice < 0 or choice >= len(available_layouts) + 2:
+                raise ValueError
+            if choice == 0:
+                return None
+            if choice == 1:
+                return ""
+            else:
+                return available_layouts[choice - 2]
+        except ValueError:
+            print("Invalid choice. Try again.")
+
+
 def prompt_bonsai_config_input() -> dict:
     user_input = input("Press any key to continue or type 'bonsai' for advance settings")
     settings = {}
@@ -247,6 +267,7 @@ def prompt():
         task_logic: AindVrForagingTaskLogic = prompt_task_logic_input()
         session: AindVrForagingSession = prompt_session_input()
         rig: AindVrForagingRig = prompt_rig_input()
+        bonsai_visualizer_layout: Optional[str] = prompt_visualizer_layout_input()
         bonsai_config = prompt_bonsai_config_input()
 
         input("Press enter to launch Bonsai or Control+C to exit...")
@@ -261,6 +282,7 @@ def prompt():
             bonsai_exe=os.path.abspath(os.path.join(CWD, BONSAI_EXE)),
             workflow_file=os.path.abspath(os.path.join(WORKFLOW_FILE)),
             additional_properties=additional_properties,
+            layout=bonsai_visualizer_layout,
             **bonsai_config,
         )
 
