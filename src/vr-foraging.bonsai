@@ -7641,7 +7641,7 @@ Item2 as Start
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>1</Value>
+                      <Value>3</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
