@@ -67,7 +67,7 @@ def run_bonsai_process(
             output_cmd += " --start"
     else:
         output_cmd += " --no-editor"
-        if layout:
+        if not (layout is None):
             output_cmd += f' --visualizer-layout:"{layout}"'
 
     if additional_properties:
