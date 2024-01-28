@@ -240,7 +240,8 @@ def prompt_bonsai_config_input() -> dict:
     settings = {}
     if user_input == "bonsai":
         settings["is_editor_mode"] = prompt_yes_no_question("Run with editor mode?")
-        settings["is_start_flag"] = prompt_yes_no_question("Run with start flag?")
+        if settings["is_editor_mode"] == True:
+            settings["is_start_flag"] = prompt_yes_no_question("Run with start flag?")
     return settings
 
 
