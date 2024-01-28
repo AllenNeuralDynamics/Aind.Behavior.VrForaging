@@ -4158,7 +4158,7 @@ Value as IsStopped)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Name>RewardToTime</scr:Name>
-                    <scr:Expression>Item1 * Item2.CalibrationSlope + Item2.CalibrationIntercept</scr:Expression>
+                    <scr:Expression>(Item1 - Item2.CalibrationIntercept) / Item2.CalibrationSlope </scr:Expression>
                   </Expression>
                   <Expression xsi:type="Multiply">
                     <Operand xsi:type="DoubleProperty">
