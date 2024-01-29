@@ -25,16 +25,15 @@
                  xmlns:p11="clr-namespace:Harp.Olfactometer;assembly=Extensions"
                  xmlns:p12="clr-namespace:AllenNeuralDynamics.LicketySplitLickDetector;assembly=AllenNeuralDynamics.LicketySplitLickDetector"
                  xmlns:p13="clr-namespace:Harp.TimestampGeneratorGen3;assembly=Harp.TimestampGeneratorGen3"
-                 xmlns:p14="clr-namespace:Harp.AnalogInput;assembly=Extensions"
-                 xmlns:p15="clr-namespace:Harp.AnalogInput;assembly=Harp.AnalogInput"
+                 xmlns:p14="clr-namespace:Harp.AnalogInput;assembly=Harp.AnalogInput"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
-                 xmlns:p16="clr-namespace:;assembly=Extensions"
-                 xmlns:p17="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
+                 xmlns:p15="clr-namespace:;assembly=Extensions"
+                 xmlns:p16="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:p18="clr-namespace:;assembly=AllenNeuralDynamics.Core.Design"
+                 xmlns:p17="clr-namespace:;assembly=AllenNeuralDynamics.Core.Design"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
-                 xmlns:p19="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
-                 xmlns:p20="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
+                 xmlns:p18="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
+                 xmlns:p19="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -2103,11 +2102,14 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpAnalogInputEvents</Name>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p14:FilterVisibility" />
+                  <Expression xsi:type="harp:FilterRegister">
+                    <harp:FilterType>Exclude</harp:FilterType>
+                    <harp:Register xsi:type="harp:FilterRegisterAddress">
+                      <harp:Address>15</harp:Address>
+                    </harp:Register>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p15:GroupByRegister" />
+                    <Combinator xsi:type="p14:GroupByRegister" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
@@ -3000,8 +3002,8 @@ Value as IsStopped)</scr:Expression>
                     <Selector>Data</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p16:FormatTransitionMatrix">
-                      <p16:NormalizeRows>true</p16:NormalizeRows>
+                    <Combinator xsi:type="p15:FormatTransitionMatrix">
+                      <p15:NormalizeRows>true</p15:NormalizeRows>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -3893,15 +3895,15 @@ Value as IsStopped)</scr:Expression>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p16:CreateOdorMix">
-                            <p16:channel3AsCarrier>false</p16:channel3AsCarrier>
-                            <p16:PercentageChannel0>0</p16:PercentageChannel0>
-                            <p16:PercentageChannel1>0</p16:PercentageChannel1>
-                            <p16:PercentageChannel2>0</p16:PercentageChannel2>
-                            <p16:PercentageChannel3>0</p16:PercentageChannel3>
-                            <p16:Channel3AsCarrier>false</p16:Channel3AsCarrier>
-                            <p16:TargetOdorFlow>100</p16:TargetOdorFlow>
-                            <p16:TotalFlow>1000</p16:TotalFlow>
+                          <Combinator xsi:type="p15:CreateOdorMix">
+                            <p15:channel3AsCarrier>false</p15:channel3AsCarrier>
+                            <p15:PercentageChannel0>0</p15:PercentageChannel0>
+                            <p15:PercentageChannel1>0</p15:PercentageChannel1>
+                            <p15:PercentageChannel2>0</p15:PercentageChannel2>
+                            <p15:PercentageChannel3>0</p15:PercentageChannel3>
+                            <p15:Channel3AsCarrier>false</p15:Channel3AsCarrier>
+                            <p15:TargetOdorFlow>100</p15:TargetOdorFlow>
+                            <p15:TotalFlow>1000</p15:TotalFlow>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
@@ -7400,10 +7402,10 @@ Item2 as Start
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p17:ToggleButton">
-                      <p17:CheckedLabel>Running...</p17:CheckedLabel>
-                      <p17:UncheckedLabel>Start session.</p17:UncheckedLabel>
-                      <p17:IsInitiallyChecked>false</p17:IsInitiallyChecked>
+                    <Combinator xsi:type="p16:ToggleButton">
+                      <p16:CheckedLabel>Running...</p16:CheckedLabel>
+                      <p16:UncheckedLabel>Start session.</p16:UncheckedLabel>
+                      <p16:IsInitiallyChecked>false</p16:IsInitiallyChecked>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -7429,25 +7431,25 @@ Item2 as Start
                     <Name>StartExperimentShortcut</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p17:AnnotationSource" />
+                    <Combinator xsi:type="p16:AnnotationSource" />
                   </Expression>
                   <Expression xsi:type="rx:ReplaySubject">
                     <Name>UserComments</Name>
                     <rx:BufferSize xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:AnnotationSourceVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:AnnotationSourceVisualizer" />
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:ToggleButtonVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:ToggleButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p17:PushButton">
-                      <p17:Label>End experiment</p17:Label>
+                    <Combinator xsi:type="p16:PushButton">
+                      <p16:Label>End experiment</p16:Label>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PushButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="viz:TableLayoutPanelBuilder">
                     <viz:Name>LauncherControl</viz:Name>
@@ -7516,36 +7518,36 @@ Item2 as Start
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p17:PushButton">
-                      <p17:Label>+Trigger</p17:Label>
+                    <Combinator xsi:type="p16:PushButton">
+                      <p16:Label>+Trigger</p16:Label>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PushButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p17:PushButton">
-                      <p17:Label>-Trigger</p17:Label>
+                    <Combinator xsi:type="p16:PushButton">
+                      <p16:Label>-Trigger</p16:Label>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PushButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p17:PushButton">
-                      <p17:Label>+Untrigger</p17:Label>
+                    <Combinator xsi:type="p16:PushButton">
+                      <p16:Label>+Untrigger</p16:Label>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PushButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p17:PushButton">
-                      <p17:Label>-Untrigger</p17:Label>
+                    <Combinator xsi:type="p16:PushButton">
+                      <p16:Label>-Untrigger</p16:Label>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PushButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="viz:TableLayoutPanelBuilder">
                     <viz:ColumnCount>2</viz:ColumnCount>
@@ -7558,12 +7560,12 @@ Item2 as Start
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p17:PushButton">
-                      <p17:Label>ForceReward</p17:Label>
+                    <Combinator xsi:type="p16:PushButton">
+                      <p16:Label>ForceReward</p16:Label>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PushButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="viz:TableLayoutPanelBuilder">
                     <viz:Name>LickometerControl</viz:Name>
@@ -7735,28 +7737,28 @@ Item2 as Start
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p17:PropertyGridSource" />
+                          <Combinator xsi:type="p16:PropertyGridSource" />
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
-                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:PropertyGridVisualizer" />
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PropertyGridVisualizer" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p17:PushButton">
-                            <p17:Label>Calibrate</p17:Label>
+                          <Combinator xsi:type="p16:PushButton">
+                            <p16:Label>Calibrate</p16:Label>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
-                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PushButtonVisualizer" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p17:ToggleButton">
-                            <p17:CheckedLabel>CloseValves</p17:CheckedLabel>
-                            <p17:UncheckedLabel>OpenValves</p17:UncheckedLabel>
-                            <p17:IsInitiallyChecked>false</p17:IsInitiallyChecked>
+                          <Combinator xsi:type="p16:ToggleButton">
+                            <p16:CheckedLabel>CloseValves</p16:CheckedLabel>
+                            <p16:UncheckedLabel>OpenValves</p16:UncheckedLabel>
+                            <p16:IsInitiallyChecked>false</p16:IsInitiallyChecked>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
-                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:ToggleButtonVisualizer" />
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:ToggleButtonVisualizer" />
                         </Expression>
                         <Expression xsi:type="viz:TableLayoutPanelBuilder">
                           <viz:Name>ValveCalibration</viz:Name>
@@ -7949,12 +7951,12 @@ Item2 as Start
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p17:PushButton">
-                            <p17:Label>TriggerAudio</p17:Label>
+                          <Combinator xsi:type="p16:PushButton">
+                            <p16:Label>TriggerAudio</p16:Label>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
-                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PushButtonVisualizer" />
                         </Expression>
                         <Expression xsi:type="viz:TableLayoutPanelBuilder">
                           <viz:ColumnCount>5</viz:ColumnCount>
@@ -8029,7 +8031,7 @@ Item2 as Start
               <Selector>Value.Image</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p19:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera0</Name>
@@ -8038,7 +8040,7 @@ Item2 as Start
               <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p19:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>AuxiliaryCamera1</Name>
@@ -8047,7 +8049,7 @@ Item2 as Start
               <Selector>Value</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p19:IplImageVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:IplImageVisualizer" />
             </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:ColumnCount>3</viz:ColumnCount>
@@ -8063,7 +8065,7 @@ Item2 as Start
               <Name>QCDiagnosis</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p20:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p19:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateFrame" />
@@ -8082,7 +8084,7 @@ Item2 as Start
               <Combinator xsi:type="rx:SubscribeWhen" />
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p20:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p19:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>LickEvent</Name>
@@ -8251,7 +8253,7 @@ Item2 as Start
               <Name>SoftwareEvent</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:SoftwareEventVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:SoftwareEventVisualizer" />
             </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:ColumnCount>4</viz:ColumnCount>
@@ -8582,15 +8584,15 @@ Item4 as TotalReward)</scr:Expression>
         <Workflow>
           <Nodes>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p16:CreateOdorMix">
-                <p16:channel3AsCarrier>true</p16:channel3AsCarrier>
-                <p16:PercentageChannel0>0</p16:PercentageChannel0>
-                <p16:PercentageChannel1>0</p16:PercentageChannel1>
-                <p16:PercentageChannel2>0</p16:PercentageChannel2>
-                <p16:PercentageChannel3>NaN</p16:PercentageChannel3>
-                <p16:Channel3AsCarrier>true</p16:Channel3AsCarrier>
-                <p16:TargetOdorFlow>100</p16:TargetOdorFlow>
-                <p16:TotalFlow>1000</p16:TotalFlow>
+              <Combinator xsi:type="p15:CreateOdorMix">
+                <p15:channel3AsCarrier>true</p15:channel3AsCarrier>
+                <p15:PercentageChannel0>0</p15:PercentageChannel0>
+                <p15:PercentageChannel1>0</p15:PercentageChannel1>
+                <p15:PercentageChannel2>0</p15:PercentageChannel2>
+                <p15:PercentageChannel3>NaN</p15:PercentageChannel3>
+                <p15:Channel3AsCarrier>true</p15:Channel3AsCarrier>
+                <p15:TargetOdorFlow>100</p15:TargetOdorFlow>
+                <p15:TotalFlow>1000</p15:TotalFlow>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
