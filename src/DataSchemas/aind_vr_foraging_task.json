@@ -197,26 +197,37 @@
       "title": "ConstantFunction",
       "type": "object"
     },
-    "Dependencies": {
+    "DebugSettings": {
+      "additionalProperties": false,
+      "description": "This class is not currently implemented",
       "properties": {
-        "visual_corridor": {
-          "$ref": "#/definitions/VisualCorridor"
+        "task_mode": {
+          "const": "DEBUG",
+          "default": "DEBUG",
+          "title": "Task Mode",
+          "type": "string"
         },
-        "virtual_site": {
-          "$ref": "#/definitions/VirtualSite"
+        "visual_corridors": {
+          "items": {
+            "$ref": "#/definitions/VisualCorridor"
+          },
+          "title": "Visual Corridors",
+          "type": "array"
         },
-        "distributions": {
-          "$ref": "#/definitions/Distribution"
+        "virtual_sites": {
+          "items": {
+            "$ref": "#/definitions/VirtualSite"
+          },
+          "title": "Virtual Sites",
+          "type": "array"
         }
       },
       "required": [
-        "visual_corridor",
-        "virtual_site",
-        "distributions"
+        "visual_corridors",
+        "virtual_sites"
       ],
-      "title": "Dependencies",
-      "type": "object",
-      "x-abstract": "true"
+      "title": "DebugSettings",
+      "type": "object"
     },
     "DepletionRule": {
       "enum": [
@@ -390,10 +401,10 @@
     "ForagingSettings": {
       "additionalProperties": false,
       "properties": {
-        "task_stage": {
+        "task_mode": {
           "const": "FORAGING",
           "default": "FORAGING",
-          "title": "Task Stage",
+          "title": "Task Mode",
           "type": "string"
         }
       },
@@ -480,10 +491,10 @@
     "HabituationSettings": {
       "additionalProperties": false,
       "properties": {
-        "task_stage": {
+        "task_mode": {
           "const": "HABITUATION",
           "default": "HABITUATION",
-          "title": "Task Stage",
+          "title": "Task Mode",
           "type": "string"
         },
         "distance_to_reward": {
@@ -1605,6 +1616,28 @@
       "title": "Size",
       "type": "object"
     },
+    "TaskModeSettings": {
+      "discriminator": {
+        "mapping": {
+          "DEBUG": "#/definitions/DebugSettings",
+          "FORAGING": "#/definitions/ForagingSettings",
+          "HABITUATION": "#/definitions/HabituationSettings"
+        },
+        "propertyName": "task_mode"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/HabituationSettings"
+        },
+        {
+          "$ref": "#/definitions/ForagingSettings"
+        },
+        {
+          "$ref": "#/definitions/DebugSettings"
+        }
+      ],
+      "title": "TaskModeSettings"
+    },
     "Texture": {
       "additionalProperties": false,
       "properties": {
@@ -2090,27 +2123,16 @@
       ],
       "description": "Statistics of the environment"
     },
-    "stage_settings": {
-      "default": {
-        "task_stage": "FORAGING"
-      },
-      "description": "Settings of the task stage",
-      "discriminator": {
-        "mapping": {
-          "FORAGING": "#/definitions/ForagingSettings",
-          "HABITUATION": "#/definitions/HabituationSettings"
-        },
-        "propertyName": "task_stage"
-      },
-      "oneOf": [
+    "task_mode_settings": {
+      "allOf": [
         {
-          "$ref": "#/definitions/HabituationSettings"
-        },
-        {
-          "$ref": "#/definitions/ForagingSettings"
+          "$ref": "#/definitions/TaskModeSettings"
         }
       ],
-      "title": "TaskStage"
+      "default": {
+        "task_mode": "FORAGING"
+      },
+      "description": "Settings of the task stage"
     },
     "operation_control": {
       "allOf": [
@@ -2119,18 +2141,6 @@
         }
       ],
       "description": "Control of the operation"
-    },
-    "dependencies": {
-      "default": null,
-      "description": "Dependencies of the task logic",
-      "oneOf": [
-        {
-          "$ref": "#/definitions/Dependencies"
-        },
-        {
-          "type": "null"
-        }
-      ]
     }
   },
   "required": [

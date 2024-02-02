@@ -298,17 +298,18 @@ class OperationControl(AindModel):
     audio_control: AudioControl = Field(default=AudioControl(), description="Control of the audio")
 
 
-class TaskStage(str, Enum):
+class TaskMode(str, Enum):
+    DEBUG = "DEBUG"
     HABITUATION = "HABITUATION"
     FORAGING = "FORAGING"
 
 
-class TaskStageSettingsBase(AindModel):
-    task_stage: TaskStage = Field(default=TaskStage.FORAGING, description="Stage of the task")
+class TaskModeSettingsBase(AindModel):
+    task_mode: TaskMode = Field(default=TaskMode.FORAGING, description="Stage of the task")
 
 
-class HabituationSettings(TaskStageSettingsBase):
-    task_stage: Literal[TaskStage.HABITUATION] = TaskStage.HABITUATION
+class HabituationSettings(TaskModeSettingsBase):
+    task_mode: Literal[TaskMode.HABITUATION] = TaskMode.HABITUATION
     distance_to_reward: distributions.Distribution = Field(..., description="Distance (cm) to the reward")
     reward_specification: RewardSpecification = Field(..., description="specification of the reward")
     render_specification: RenderSpecification = Field(
@@ -316,13 +317,20 @@ class HabituationSettings(TaskStageSettingsBase):
     )
 
 
-class ForagingSettings(TaskStageSettingsBase):
-    task_stage: Literal[TaskStage.FORAGING] = TaskStage.FORAGING
+class DebugSettings(TaskModeSettingsBase):
+    """This class is not currently implemented"""
+
+    task_mode: Literal[TaskMode.DEBUG] = TaskMode.DEBUG
+    visual_corridors: List[VisualCorridor]
+    virtual_sites: List[VirtualSite]
 
 
-TaskStageSettings = Annotated[
-    Union[HabituationSettings, ForagingSettings], Field(discriminator="task_stage", title="TaskStage")
-]
+class ForagingSettings(TaskModeSettingsBase):
+    task_mode: Literal[TaskMode.FORAGING] = TaskMode.FORAGING
+
+
+class TaskModeSettings(RootModel):
+    root: Annotated[Union[HabituationSettings, ForagingSettings, DebugSettings], Field(discriminator="task_mode")]
 
 
 class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
@@ -330,18 +338,10 @@ class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     schema_version: Literal["0.1.0"] = "0.1.0"
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
-    stage_settings: TaskStageSettings = Field(ForagingSettings(), description="Settings of the task stage")
+    task_mode_settings: TaskModeSettings = Field(
+        ForagingSettings(), description="Settings of the task stage", validate_default=True
+    )
     operation_control: OperationControl = Field(..., description="Control of the operation")
-    dependencies: Optional[Dependencies] = Field(None, description="Dependencies of the task logic")
-
-
-class Dependencies(BaseModel):
-    visual_corridor: VisualCorridor
-    virtual_site: VirtualSite
-    distributions: distributions.Distribution
-
-    class Config:
-        json_schema_extra = {"x-abstract": "true"}
 
 
 def schema() -> BaseModel:
