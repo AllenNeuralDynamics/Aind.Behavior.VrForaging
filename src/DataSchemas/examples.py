@@ -20,7 +20,6 @@ example_session = AindVrForagingSession(
     experiment_version="0.1.0",
     allow_dirty_repo=True,
     skip_hardware_validation=False,
-    schema_version="experiment_mvt_stochastic_reward",
 )
 
 
@@ -175,7 +174,7 @@ environment_statistics = vr_task_logic.EnvironmentStatistics(
 example_vr_task_logic = AindVrForagingTaskLogic(
     updaters=updaters,
     environment_statistics=environment_statistics,
-    stage_settings=vr_task_logic.ForagingSettings(),
+    task_mode_settings=vr_task_logic.ForagingSettings(),
     operation_control=operation_control,
 )
 

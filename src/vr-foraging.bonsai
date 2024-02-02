@@ -6607,9 +6607,9 @@ Item2 as Start
               </Combinator>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>StageSettings</Selector>
+              <Selector>TaskModeSettings</Selector>
             </Expression>
-            <Expression xsi:type="p3:MatchStageSettings">
+            <Expression xsi:type="p3:MatchTaskModeSettings">
               <p3:Type xsi:type="TypeMapping" TypeArguments="p3:ForagingSettings" />
             </Expression>
             <Expression xsi:type="Combinator">
@@ -6633,9 +6633,9 @@ Item2 as Start
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>StageSettings</Selector>
+                    <Selector>TaskModeSettings</Selector>
                   </Expression>
-                  <Expression xsi:type="p3:MatchStageSettings">
+                  <Expression xsi:type="p3:MatchTaskModeSettings">
                     <p3:Type xsi:type="TypeMapping" TypeArguments="p3:HabituationSettings" />
                   </Expression>
                   <Expression xsi:type="rx:AsyncSubject">
@@ -7195,9 +7195,9 @@ Item2 as Start
               </Combinator>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>StageSettings</Selector>
+              <Selector>TaskModeSettings</Selector>
             </Expression>
-            <Expression xsi:type="p3:MatchStageSettings">
+            <Expression xsi:type="p3:MatchTaskModeSettings">
               <p3:Type xsi:type="TypeMapping" TypeArguments="p3:HabituationSettings" />
             </Expression>
             <Expression xsi:type="Combinator">
