@@ -29,10 +29,9 @@
                  xmlns:p14="clr-namespace:;assembly=Extensions"
                  xmlns:p15="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:p16="clr-namespace:;assembly=AllenNeuralDynamics.Core.Design"
-                 xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
+                 xmlns:p16="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns:p17="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
-                 xmlns:p18="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
+                 xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -7429,7 +7428,7 @@ Item2 as Start
         <Name>Visualizer</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="rx:Defer">
+            <Expression xsi:type="GroupWorkflow">
               <Name>LauncherControl</Name>
               <Workflow>
                 <Nodes>
@@ -7461,7 +7460,7 @@ Item2 as Start
                     <Name>StartExperimentToggleButton</Name>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p15:ToggleButtonVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p15:PushButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>ExperimentState</Name>
@@ -7552,7 +7551,7 @@ Item2 as Start
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="rx:Defer">
+            <Expression xsi:type="GroupWorkflow">
               <Name>OperationControl</Name>
               <Workflow>
                 <Nodes>
@@ -7569,7 +7568,9 @@ Item2 as Start
                     <Format>TriggeredThr: {0} ; UntriggeredThr: {1}</Format>
                     <Selector>Item1,Item2</Selector>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:ObjectTextVisualizer" />
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p15:PushButton">
                       <p15:Label>+Trigger</p15:Label>
@@ -7778,7 +7779,7 @@ Item2 as Start
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="rx:Defer">
+            <Expression xsi:type="GroupWorkflow">
               <Name>Updaters</Name>
               <Workflow>
                 <Nodes>
@@ -7821,7 +7822,336 @@ Item2 as Start
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="rx:Defer">
+            <Expression xsi:type="GroupWorkflow">
+              <Name>TaskVisualizer</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>FaceCameraFrameEvent</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value.Image</Selector>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:IplImageVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>AuxiliaryCamera0</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:IplImageVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>AuxiliaryCamera1</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:IplImageVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="viz:TableLayoutPanelBuilder">
+                    <viz:ColumnCount>3</viz:ColumnCount>
+                    <viz:RowCount>1</viz:RowCount>
+                    <viz:ColumnStyles />
+                    <viz:RowStyles />
+                    <viz:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>QCDiagnosis</Name>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:ObjectTextVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:UpdateFrame" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>TimeStep.ElapsedRealTime</Selector>
+                  </Expression>
+                  <Expression xsi:type="rx:Accumulate" />
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>StartExperiment</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:SubscribeWhen" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:ObjectTextVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>LickEvent</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="IntProperty">
+                      <Value>1</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="viz:LineGraphBuilder">
+                    <viz:ValueSelector>Item2,Item1</viz:ValueSelector>
+                    <viz:SymbolType>Diamond</viz:SymbolType>
+                    <viz:LineWidth>0</viz:LineWidth>
+                    <viz:Capacity>20</viz:Capacity>
+                    <viz:XMin xsi:nil="true" />
+                    <viz:XMax xsi:nil="true" />
+                    <viz:YMin>0</viz:YMin>
+                    <viz:YMax>2</viz:YMax>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:LineGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentVelocity</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:SampleOnRenderFrame" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>TaskLogicSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>OperationControl.PositionControl.VelocityThreshold</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:ValueSelector>Item1,Item2</viz:ValueSelector>
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>2</viz:LineWidth>
+                    <viz:Capacity>2000</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>ForagingStage</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
+                          <Label>InterPatch</Label>
+                          <Value>1</Value>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
+                          <Label>InterSite</Label>
+                          <Value>2</Value>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
+                          <Label>RewardSite</Label>
+                          <Value>3</Value>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
+                          <Label>Unspecified</Label>
+                          <Value>-1</Value>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="4" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source2" />
+                        <Edge From="2" To="4" Label="Source3" />
+                        <Edge From="3" To="4" Label="Source4" />
+                        <Edge From="4" To="5" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Skip">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(Item1 as Present, Item2 as Past)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Past.Item1,Present.Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Present</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="viz:LineGraphBuilder">
+                    <viz:ValueSelector>Item2.StartPosition,Item1</viz:ValueSelector>
+                    <viz:SymbolType>Diamond</viz:SymbolType>
+                    <viz:LineWidth>3</viz:LineWidth>
+                    <viz:Capacity>30</viz:Capacity>
+                    <viz:XMin xsi:nil="true" />
+                    <viz:XMax xsi:nil="true" />
+                    <viz:YMin>-1</viz:YMin>
+                    <viz:YMax>4</viz:YMax>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:LineGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ActivePatch</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>StateIndex</Selector>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Z</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="viz:LineGraphBuilder">
+                    <viz:ValueSelector>Item2,Item1</viz:ValueSelector>
+                    <viz:SymbolType>Triangle</viz:SymbolType>
+                    <viz:LineWidth>3</viz:LineWidth>
+                    <viz:Capacity>6</viz:Capacity>
+                    <viz:XMin xsi:nil="true" />
+                    <viz:XMax xsi:nil="true" />
+                    <viz:YMin>-1</viz:YMin>
+                    <viz:YMax>2</viz:YMax>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:LineGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ThermistorData</Name>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:IndexSelector>Seconds</viz:IndexSelector>
+                    <viz:ValueSelector>Value</viz:ValueSelector>
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>2</viz:LineWidth>
+                    <viz:Capacity>2000</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SoftwareEvent</Name>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p15:SoftwareEventVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="viz:TableLayoutPanelBuilder">
+                    <viz:ColumnCount>4</viz:ColumnCount>
+                    <viz:RowCount>4</viz:RowCount>
+                    <viz:ColumnStyles />
+                    <viz:RowStyles />
+                    <viz:CellSpans>
+                      <viz:CellSpan ColumnSpan="3" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="1" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="2" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="2" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="2" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="2" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="2" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="1" RowSpan="1" />
+                      <viz:CellSpan ColumnSpan="1" RowSpan="1" />
+                    </viz:CellSpans>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="viz:TableLayoutPanelBuilder">
+                    <viz:Name>Visualization</viz:Name>
+                    <viz:ColumnCount>1</viz:ColumnCount>
+                    <viz:RowCount>2</viz:RowCount>
+                    <viz:ColumnStyles />
+                    <viz:RowStyles />
+                    <viz:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="9" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="9" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source3" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="56" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="54" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="18" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="54" Label="Source2" />
+                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="20" To="22" Label="Source2" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="54" Label="Source3" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="29" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source2" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="54" Label="Source4" />
+                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="32" To="34" Label="Source2" />
+                  <Edge From="33" To="34" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source1" />
+                  <Edge From="35" To="36" Label="Source1" />
+                  <Edge From="35" To="37" Label="Source1" />
+                  <Edge From="36" To="38" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source2" />
+                  <Edge From="38" To="39" Label="Source1" />
+                  <Edge From="39" To="40" Label="Source1" />
+                  <Edge From="40" To="54" Label="Source5" />
+                  <Edge From="41" To="42" Label="Source1" />
+                  <Edge From="42" To="46" Label="Source1" />
+                  <Edge From="43" To="44" Label="Source1" />
+                  <Edge From="44" To="45" Label="Source1" />
+                  <Edge From="45" To="46" Label="Source2" />
+                  <Edge From="46" To="47" Label="Source1" />
+                  <Edge From="47" To="48" Label="Source1" />
+                  <Edge From="48" To="54" Label="Source6" />
+                  <Edge From="49" To="50" Label="Source1" />
+                  <Edge From="50" To="51" Label="Source1" />
+                  <Edge From="51" To="54" Label="Source7" />
+                  <Edge From="52" To="53" Label="Source1" />
+                  <Edge From="53" To="54" Label="Source8" />
+                  <Edge From="54" To="55" Label="Source1" />
+                  <Edge From="55" To="56" Label="Source2" />
+                  <Edge From="56" To="57" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
               <Name>HwTestGui</Name>
               <Workflow>
                 <Nodes>
@@ -7835,7 +8165,7 @@ Item2 as Start
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
-                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PropertyGridVisualizer" />
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="p15:PropertyGridVisualizer" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>ExperimentState</Name>
@@ -8165,266 +8495,10 @@ Item2 as Start
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:TakeUntil" />
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>FaceCameraFrameEvent</Name>
+            <Expression xsi:type="Annotation">
+              <Name>Deprecating</Name>
+              <Text><![CDATA[]]></Text>
             </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Value.Image</Selector>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:IplImageVisualizer" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>AuxiliaryCamera0</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Value</Selector>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:IplImageVisualizer" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>AuxiliaryCamera1</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Value</Selector>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:IplImageVisualizer" />
-            </Expression>
-            <Expression xsi:type="viz:TableLayoutPanelBuilder">
-              <viz:ColumnCount>3</viz:ColumnCount>
-              <viz:RowCount>1</viz:RowCount>
-              <viz:ColumnStyles />
-              <viz:RowStyles />
-              <viz:CellSpans />
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>QCDiagnosis</Name>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:ObjectTextVisualizer" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:UpdateFrame" />
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>TimeStep.ElapsedRealTime</Selector>
-            </Expression>
-            <Expression xsi:type="rx:Accumulate" />
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>StartExperiment</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:SubscribeWhen" />
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:ObjectTextVisualizer" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>LickEvent</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="IntProperty">
-                <Value>1</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="viz:LineGraphBuilder">
-              <viz:ValueSelector>Item2,Item1</viz:ValueSelector>
-              <viz:SymbolType>Diamond</viz:SymbolType>
-              <viz:LineWidth>0</viz:LineWidth>
-              <viz:Capacity>20</viz:Capacity>
-              <viz:XMin xsi:nil="true" />
-              <viz:XMax xsi:nil="true" />
-              <viz:YMin>0</viz:YMin>
-              <viz:YMax>2</viz:YMax>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:LineGraphVisualizer" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>CurrentVelocity</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:SampleOnRenderFrame" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicSchema</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>OperationControl.PositionControl.VelocityThreshold</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:CombineLatest" />
-            </Expression>
-            <Expression xsi:type="viz:RollingGraphBuilder">
-              <viz:ValueSelector>Item1,Item2</viz:ValueSelector>
-              <viz:SymbolType>None</viz:SymbolType>
-              <viz:LineWidth>2</viz:LineWidth>
-              <viz:Capacity>2000</viz:Capacity>
-              <viz:Min xsi:nil="true" />
-              <viz:Max xsi:nil="true" />
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
-            </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>ForagingStage</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
-                    <Label>InterPatch</Label>
-                    <Value>1</Value>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
-                    <Label>InterSite</Label>
-                    <Value>2</Value>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
-                    <Label>RewardSite</Label>
-                    <Value>3</Value>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CheckActiveSiteLabel.bonsai">
-                    <Label>Unspecified</Label>
-                    <Value>-1</Value>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="4" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source2" />
-                  <Edge From="2" To="4" Label="Source3" />
-                  <Edge From="3" To="4" Label="Source4" />
-                  <Edge From="4" To="5" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Skip">
-                <rx:Count>1</rx:Count>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(Item1 as Present, Item2 as Past)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Past.Item1,Present.Item2</Selector>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Present</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Merge" />
-            </Expression>
-            <Expression xsi:type="viz:LineGraphBuilder">
-              <viz:ValueSelector>Item2.StartPosition,Item1</viz:ValueSelector>
-              <viz:SymbolType>Diamond</viz:SymbolType>
-              <viz:LineWidth>3</viz:LineWidth>
-              <viz:Capacity>30</viz:Capacity>
-              <viz:XMin xsi:nil="true" />
-              <viz:XMax xsi:nil="true" />
-              <viz:YMin>-1</viz:YMin>
-              <viz:YMax>4</viz:YMax>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:LineGraphVisualizer" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>ActivePatch</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>StateIndex</Selector>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>CurrentPosition</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Value</Selector>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Z</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:WithLatestFrom" />
-            </Expression>
-            <Expression xsi:type="viz:LineGraphBuilder">
-              <viz:ValueSelector>Item2,Item1</viz:ValueSelector>
-              <viz:SymbolType>Triangle</viz:SymbolType>
-              <viz:LineWidth>3</viz:LineWidth>
-              <viz:Capacity>6</viz:Capacity>
-              <viz:XMin xsi:nil="true" />
-              <viz:XMax xsi:nil="true" />
-              <viz:YMin>-1</viz:YMin>
-              <viz:YMax>2</viz:YMax>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:LineGraphVisualizer" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>ThermistorData</Name>
-            </Expression>
-            <Expression xsi:type="viz:RollingGraphBuilder">
-              <viz:IndexSelector>Seconds</viz:IndexSelector>
-              <viz:ValueSelector>Value</viz:ValueSelector>
-              <viz:SymbolType>None</viz:SymbolType>
-              <viz:LineWidth>2</viz:LineWidth>
-              <viz:Capacity>2000</viz:Capacity>
-              <viz:Min xsi:nil="true" />
-              <viz:Max xsi:nil="true" />
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>SoftwareEvent</Name>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:SoftwareEventVisualizer" />
-            </Expression>
-            <Expression xsi:type="viz:TableLayoutPanelBuilder">
-              <viz:ColumnCount>4</viz:ColumnCount>
-              <viz:RowCount>4</viz:RowCount>
-              <viz:ColumnStyles />
-              <viz:RowStyles />
-              <viz:CellSpans>
-                <viz:CellSpan ColumnSpan="3" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="1" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="2" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="2" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="2" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="2" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="2" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="1" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="1" RowSpan="1" />
-              </viz:CellSpans>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
-            </Expression>
-            <Expression xsi:type="viz:TableLayoutPanelBuilder">
-              <viz:Name>Visualization</viz:Name>
-              <viz:ColumnCount>1</viz:ColumnCount>
-              <viz:RowCount>2</viz:RowCount>
-              <viz:ColumnStyles />
-              <viz:RowStyles />
-              <viz:CellSpans />
-            </Expression>
-            <Expression xsi:type="WorkflowOutput" />
             <Expression xsi:type="GroupWorkflow">
               <Name>Shortcuts</Name>
               <Workflow>
@@ -8607,69 +8681,10 @@ Item4 as TotalReward)</scr:Expression>
             </Expression>
           </Nodes>
           <Edges>
-            <Edge From="3" To="5" Label="Source1" />
-            <Edge From="4" To="5" Label="Source2" />
-            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="4" To="6" Label="Source1" />
+            <Edge From="5" To="6" Label="Source2" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="15" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="15" Label="Source2" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="15" Label="Source3" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="62" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="60" Label="Source1" />
-            <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="24" Label="Source1" />
-            <Edge From="23" To="24" Label="Source2" />
-            <Edge From="24" To="25" Label="Source1" />
-            <Edge From="25" To="60" Label="Source2" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="26" To="28" Label="Source2" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="29" Label="Source1" />
-            <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="60" Label="Source3" />
-            <Edge From="31" To="32" Label="Source1" />
-            <Edge From="32" To="35" Label="Source1" />
-            <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="35" Label="Source2" />
-            <Edge From="35" To="36" Label="Source1" />
-            <Edge From="36" To="37" Label="Source1" />
-            <Edge From="37" To="60" Label="Source4" />
-            <Edge From="38" To="39" Label="Source1" />
-            <Edge From="38" To="40" Label="Source2" />
-            <Edge From="39" To="40" Label="Source1" />
-            <Edge From="40" To="41" Label="Source1" />
-            <Edge From="41" To="42" Label="Source1" />
-            <Edge From="41" To="43" Label="Source1" />
-            <Edge From="42" To="44" Label="Source1" />
-            <Edge From="43" To="44" Label="Source2" />
-            <Edge From="44" To="45" Label="Source1" />
-            <Edge From="45" To="46" Label="Source1" />
-            <Edge From="46" To="60" Label="Source5" />
-            <Edge From="47" To="48" Label="Source1" />
-            <Edge From="48" To="52" Label="Source1" />
-            <Edge From="49" To="50" Label="Source1" />
-            <Edge From="50" To="51" Label="Source1" />
-            <Edge From="51" To="52" Label="Source2" />
-            <Edge From="52" To="53" Label="Source1" />
-            <Edge From="53" To="54" Label="Source1" />
-            <Edge From="54" To="60" Label="Source6" />
-            <Edge From="55" To="56" Label="Source1" />
-            <Edge From="56" To="57" Label="Source1" />
-            <Edge From="57" To="60" Label="Source7" />
-            <Edge From="58" To="59" Label="Source1" />
-            <Edge From="59" To="60" Label="Source8" />
-            <Edge From="60" To="61" Label="Source1" />
-            <Edge From="61" To="62" Label="Source2" />
-            <Edge From="62" To="63" Label="Source1" />
-            <Edge From="65" To="66" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
