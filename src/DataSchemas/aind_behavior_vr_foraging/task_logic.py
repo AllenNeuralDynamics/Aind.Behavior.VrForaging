@@ -293,9 +293,13 @@ class OperationControl(AindModel):
     movable_spout_control: MovableSpoutControl = Field(
         default=MovableSpoutControl(), description="Control of the movable spout"
     )
-    odor_control: OdorControl = Field(default=OdorControl(), description="Control of the odor")
-    position_control: PositionControl = Field(default=PositionControl(), description="Control of the position")
-    audio_control: AudioControl = Field(default=AudioControl(), description="Control of the audio")
+    odor_control: OdorControl = Field(default=OdorControl(), description="Control of the odor", validate_default=True)
+    position_control: PositionControl = Field(
+        default=PositionControl(), description="Control of the position", validate_default=True
+    )
+    audio_control: AudioControl = Field(
+        default=AudioControl(), description="Control of the audio", validate_default=True
+    )
 
 
 class TaskMode(str, Enum):
