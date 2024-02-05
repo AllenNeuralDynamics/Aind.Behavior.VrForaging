@@ -8,6 +8,8 @@ from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel
 from aind_data_schema.base import AindModel
 from pydantic import BaseModel, Field, RootModel
 
+from aind_behavior_vr_foraging import __version__
+
 
 def scalar_value(value: float) -> distributions.Scalar:
     """
@@ -339,7 +341,7 @@ class TaskModeSettings(RootModel):
 
 class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     describedBy: str = Field("")
-    schema_version: Literal["0.1.0"] = "0.1.0"
+    schema_version: Literal[__version__] = __version__
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
     task_mode_settings: TaskModeSettings = Field(
