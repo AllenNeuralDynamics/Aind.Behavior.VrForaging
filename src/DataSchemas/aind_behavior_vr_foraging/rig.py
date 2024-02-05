@@ -8,10 +8,12 @@ import aind_behavior_services.rig as rig
 from aind_behavior_services.rig import AindBehaviorRigModel
 from pydantic import BaseModel, Field
 
+__version__ = "0.1.0"
+
 
 class AindVrForagingRig(AindBehaviorRigModel):
     describedBy: str = Field("")
-    schema_version: Literal["0.1.0"] = "0.1.0"
+    schema_version: Literal[__version__] = __version__
     auxiliary_camera0: Optional[rig.WebCamera] = Field(default=rig.WebCamera(), description="Auxiliary camera 0")
     auxiliary_camera1: Optional[rig.WebCamera] = Field(default=rig.WebCamera(), description="Auxiliary camera 1")
     harp_behavior: rig.HarpBehavior = Field(..., description="Harp behavior")
