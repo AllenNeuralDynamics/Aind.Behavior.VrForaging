@@ -2,9 +2,9 @@
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.AindVrForagingTask;assembly=Extensions"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
-                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.Task;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -12,11 +12,9 @@
         <Name>Source1</Name>
       </Expression>
       <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Minimum" />
-        <Property Name="Maximum" />
-        <Property Name="Average" />
         <Property Name="Contrast" />
         <Property Name="Label" />
+        <Property Name="LengthDistribution" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>InterPatch</Name>
@@ -45,15 +43,21 @@
               </Operand>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Minimum" />
-              <Property Name="Maximum" />
-              <Property Name="Average" />
+              <Property Name="Value" DisplayName="LengthDistribution" />
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawFromExponential.bonsai">
-              <Minimum>10</Minimum>
-              <Maximum>50</Maximum>
-              <Average>25</Average>
-              <Count>1</Count>
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Distribution">
+              <MemberName>LengthDistribution</MemberName>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RngSeed</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="RandomSource" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:SampleDistribution" />
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings />
@@ -79,11 +83,11 @@
               <Property Name="Contrast" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:Render" />
+              <Combinator xsi:type="p1:RenderSpecification" />
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Render" />
+                <Property Name="RenderSpecification" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -112,22 +116,25 @@
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source2" />
             <Edge From="5" To="7" Label="Source1" />
-            <Edge From="5" To="8" Label="Source1" />
             <Edge From="5" To="11" Label="Source1" />
+            <Edge From="5" To="14" Label="Source1" />
             <Edge From="6" To="7" Label="Source2" />
-            <Edge From="7" To="11" Label="Source2" />
+            <Edge From="7" To="10" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source3" />
+            <Edge From="9" To="10" Label="Source2" />
+            <Edge From="10" To="14" Label="Source3" />
             <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="17" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source4" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="17" Label="Source2" />
-            <Edge From="16" To="17" Label="Source3" />
+            <Edge From="15" To="20" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="18" To="20" Label="Source2" />
+            <Edge From="19" To="20" Label="Source3" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
