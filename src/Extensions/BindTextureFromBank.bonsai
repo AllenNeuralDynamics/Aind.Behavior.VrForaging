@@ -32,7 +32,7 @@
               <Property Name="Selector" />
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Floor</Selector>
+              <Selector>Right</Selector>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Name</Selector>

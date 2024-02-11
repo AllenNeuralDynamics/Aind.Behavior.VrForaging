@@ -1,0 +1,592 @@
+{
+  "definitions": {
+    "HarpAnalogInput": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1236,
+          "default": 1236,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "analoginput",
+          "default": "analoginput",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpAnalogInput",
+      "type": "object"
+    },
+    "HarpBehavior": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1216,
+          "default": 1216,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "behavior",
+          "default": "behavior",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpBehavior",
+      "type": "object"
+    },
+    "HarpClockGenerator": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1158,
+          "default": 1158,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "clockgenerator",
+          "default": "clockgenerator",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpClockGenerator",
+      "type": "object"
+    },
+    "HarpLickometer": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": null,
+          "default": null,
+          "title": "Who Am I",
+          "type": "null"
+        },
+        "device_type": {
+          "const": "lickometer",
+          "default": "lickometer",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpLickometer",
+      "type": "object"
+    },
+    "HarpOlfactometer": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1140,
+          "default": 1140,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "olfactometer",
+          "default": "olfactometer",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpOlfactometer",
+      "type": "object"
+    },
+    "Screen": {
+      "additionalProperties": false,
+      "properties": {
+        "display_index": {
+          "default": 1,
+          "description": "Display index",
+          "title": "Display Index",
+          "type": "integer"
+        },
+        "target_render_frequency": {
+          "default": 60,
+          "description": "Target render frequency",
+          "title": "Target Render Frequency",
+          "type": "number"
+        },
+        "target_update_frequency": {
+          "default": 120,
+          "description": "Target update frequency",
+          "title": "Target Update Frequency",
+          "type": "number"
+        },
+        "calibration_directory": {
+          "default": "Calibration\\Monitors\\",
+          "description": "Calibration directory",
+          "title": "Calibration Directory",
+          "type": "string"
+        },
+        "texture_assets_directory": {
+          "default": "Textures",
+          "description": "Calibration directory",
+          "title": "Texture Assets Directory",
+          "type": "string"
+        }
+      },
+      "title": "Screen",
+      "type": "object"
+    },
+    "SpinnakerCamera": {
+      "additionalProperties": false,
+      "properties": {
+        "serial_number": {
+          "description": "Camera serial number",
+          "title": "Serial Number",
+          "type": "string"
+        },
+        "binning": {
+          "default": 1,
+          "description": "Binning",
+          "minimum": 1,
+          "title": "Binning",
+          "type": "integer"
+        },
+        "color_processing": {
+          "default": "Default",
+          "description": "Color processing",
+          "enum": [
+            "Default",
+            "NoColorProcessing"
+          ],
+          "title": "Color Processing",
+          "type": "string"
+        },
+        "exposure": {
+          "default": 1000,
+          "description": "Exposure time",
+          "minimum": 100,
+          "title": "Exposure",
+          "type": "integer",
+          "units": "us"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate",
+          "maximum": 350,
+          "minimum": 1,
+          "title": "Frame Rate",
+          "type": "integer",
+          "units": "Hz"
+        },
+        "gain": {
+          "default": 0,
+          "description": "Gain",
+          "minimum": 0.0,
+          "title": "Gain",
+          "type": "number",
+          "units": "dB"
+        }
+      },
+      "required": [
+        "serial_number"
+      ],
+      "title": "SpinnakerCamera",
+      "type": "object"
+    },
+    "Treadmill": {
+      "additionalProperties": false,
+      "properties": {
+        "wheel_diameter": {
+          "default": 15,
+          "description": "Wheel diameter",
+          "minimum": 0.0,
+          "title": "Wheel Diameter",
+          "type": "number",
+          "units": "cm"
+        },
+        "pulses_per_revolution": {
+          "default": 28800,
+          "description": "Pulses per revolution",
+          "minimum": 1,
+          "title": "Pulses Per Revolution",
+          "type": "integer"
+        },
+        "invert_direction": {
+          "default": false,
+          "description": "Invert direction",
+          "title": "Invert Direction",
+          "type": "boolean"
+        }
+      },
+      "title": "Treadmill",
+      "type": "object"
+    },
+    "Valve": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_intercept": {
+          "default": 0,
+          "description": "Calibration intercept",
+          "title": "Calibration Intercept",
+          "type": "number"
+        },
+        "calibration_slope": {
+          "default": 1,
+          "description": "Calibration slope",
+          "title": "Calibration Slope",
+          "type": "number"
+        }
+      },
+      "title": "Valve",
+      "type": "object"
+    },
+    "WebCamera": {
+      "additionalProperties": false,
+      "properties": {
+        "index": {
+          "default": 0,
+          "description": "Camera index",
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        }
+      },
+      "title": "WebCamera",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "describedBy": {
+      "default": "",
+      "title": "Describedby",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "computer_name": {
+      "description": "Computer name",
+      "title": "Computer Name",
+      "type": "string"
+    },
+    "rig_name": {
+      "description": "Rig name",
+      "title": "Rig Name",
+      "type": "string"
+    },
+    "auxiliary_camera0": {
+      "default": {
+        "index": 0
+      },
+      "description": "Auxiliary camera 0",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/WebCamera"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "auxiliary_camera1": {
+      "default": {
+        "index": 0
+      },
+      "description": "Auxiliary camera 1",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/WebCamera"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "harp_behavior": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpBehavior"
+        }
+      ],
+      "description": "Harp behavior"
+    },
+    "harp_olfactometer": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpOlfactometer"
+        }
+      ],
+      "description": "Harp olfactometer"
+    },
+    "harp_lickometer": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpLickometer"
+        }
+      ],
+      "description": "Harp lickometer"
+    },
+    "harp_clock_generator": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpClockGenerator"
+        }
+      ],
+      "description": "Harp clock generator"
+    },
+    "harp_analog_input": {
+      "default": null,
+      "description": "Harp analog input",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/HarpAnalogInput"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "face_camera": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/SpinnakerCamera"
+        }
+      ],
+      "description": "Face camera"
+    },
+    "top_body_camera": {
+      "default": null,
+      "description": "Top body camera",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SpinnakerCamera"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "side_body_camera": {
+      "default": null,
+      "description": "Side body camera",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SpinnakerCamera"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "screen": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Screen"
+        }
+      ],
+      "default": {
+        "display_index": 1,
+        "target_render_frequency": 60.0,
+        "target_update_frequency": 120.0,
+        "calibration_directory": "Calibration\\Monitors\\",
+        "texture_assets_directory": "Textures"
+      },
+      "description": "Screen settings"
+    },
+    "treadmill": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Treadmill"
+        }
+      ],
+      "default": {
+        "wheel_diameter": 15.0,
+        "pulses_per_revolution": 28800,
+        "invert_direction": false
+      },
+      "description": "Treadmill settings"
+    },
+    "water_valve": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Valve"
+        }
+      ],
+      "default": {
+        "calibration_intercept": 0.0,
+        "calibration_slope": 1.0
+      },
+      "description": "Water valve settings"
+    }
+  },
+  "required": [
+    "rig_name",
+    "harp_behavior",
+    "harp_olfactometer",
+    "harp_lickometer",
+    "harp_clock_generator",
+    "face_camera"
+  ],
+  "title": "AindVrForagingRig",
+  "type": "object"
+}
