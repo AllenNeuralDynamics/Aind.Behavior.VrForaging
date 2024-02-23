@@ -967,7 +967,7 @@ Item2.Light as Light)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:DelaySubscription">
-                <rx:DueTime>PT1S</rx:DueTime>
+                <rx:DueTime>PT2S</rx:DueTime>
               </Combinator>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
@@ -8201,12 +8201,12 @@ Item2 as Start
                   </Expression>
                   <Expression xsi:type="viz:LineGraphBuilder">
                     <viz:ValueSelector>Item2.Seconds,Item2.Value.value__</viz:ValueSelector>
-                    <viz:SymbolType>Diamond</viz:SymbolType>
-                    <viz:LineWidth>0</viz:LineWidth>
-                    <viz:Capacity>20</viz:Capacity>
+                    <viz:SymbolType>Circle</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>30</viz:Capacity>
                     <viz:XMin xsi:nil="true" />
                     <viz:XMax xsi:nil="true" />
-                    <viz:YMin>0</viz:YMin>
+                    <viz:YMin>-1</viz:YMin>
                     <viz:YMax>2</viz:YMax>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
