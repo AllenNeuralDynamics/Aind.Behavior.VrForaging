@@ -3982,12 +3982,12 @@ Value as IsStopped)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p14:CreateOdorMix">
-                            <p14:channel3AsCarrier>false</p14:channel3AsCarrier>
+                            <p14:channel3AsCarrier>true</p14:channel3AsCarrier>
                             <p14:PercentageChannel0>0</p14:PercentageChannel0>
                             <p14:PercentageChannel1>0</p14:PercentageChannel1>
                             <p14:PercentageChannel2>0</p14:PercentageChannel2>
-                            <p14:PercentageChannel3>0</p14:PercentageChannel3>
-                            <p14:Channel3AsCarrier>false</p14:Channel3AsCarrier>
+                            <p14:PercentageChannel3>NaN</p14:PercentageChannel3>
+                            <p14:Channel3AsCarrier>true</p14:Channel3AsCarrier>
                             <p14:TargetOdorFlow>100</p14:TargetOdorFlow>
                             <p14:TotalFlow>1000</p14:TotalFlow>
                           </Combinator>
