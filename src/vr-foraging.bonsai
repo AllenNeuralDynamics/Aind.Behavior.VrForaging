@@ -8479,7 +8479,7 @@ Item2 as Start
                             <p15:Enabled>true</p15:Enabled>
                           </Combinator>
                         </Expression>
-                        <Expression xsi:type="rx:BehaviorSubject">
+                        <Expression xsi:type="rx:PublishSubject">
                           <Name>RunCalibration</Name>
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
