@@ -13,7 +13,7 @@ __version__ = "0.1.1"
 
 class AindVrForagingRig(AindBehaviorRigModel):
     describedBy: str = Field(
-        "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/blob/main/src/DataSchemas/aind_vr_foraging_rig.json"
+        "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json"
     )
     schema_version: Literal[__version__] = __version__
     auxiliary_camera0: Optional[rig.WebCamera] = Field(default=rig.WebCamera(), description="Auxiliary camera 0")

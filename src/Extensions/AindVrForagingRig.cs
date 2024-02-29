@@ -1304,7 +1304,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     public partial class AindVrForagingRig
     {
     
-        private string _describedBy = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/blob/main/src/DataSchemas/aind_vr_foraging_rig.json";
+        private string _describedBy = "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json";
     
         private string _schemaVersion = "0.1.1";
     

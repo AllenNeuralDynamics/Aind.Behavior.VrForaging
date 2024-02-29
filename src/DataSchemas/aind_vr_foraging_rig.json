@@ -414,7 +414,7 @@
   "additionalProperties": false,
   "properties": {
     "describedBy": {
-      "default": "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/blob/main/src/DataSchemas/aind_vr_foraging_rig.json",
+      "default": "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json",
       "title": "Describedby",
       "type": "string"
     },
