@@ -340,7 +340,9 @@ class TaskModeSettings(RootModel):
 
 
 class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
-    describedBy: str = Field(
+    describedBy: Literal[
+        "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_session.json"
+    ] = Field(
         "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_task_logic.json"
     )
     schema_version: Literal[__version__] = __version__

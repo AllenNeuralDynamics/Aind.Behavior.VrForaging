@@ -12,7 +12,9 @@ __version__ = "0.1.1"
 
 
 class AindVrForagingRig(AindBehaviorRigModel):
-    describedBy: str = Field(
+    describedBy: Literal[
+        "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json"
+    ] = Field(
         "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json"
     )
     schema_version: Literal[__version__] = __version__
