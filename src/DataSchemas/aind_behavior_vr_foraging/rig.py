@@ -8,11 +8,11 @@ import aind_behavior_services.rig as rig
 from aind_behavior_services.rig import AindBehaviorRigModel
 from pydantic import BaseModel, Field
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 class AindVrForagingRig(AindBehaviorRigModel):
-    describedBy: str = Field("")
+    describedBy: str = Field("https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/blob/main/src/DataSchemas/aind_vr_foraging_rig.json")
     schema_version: Literal[__version__] = __version__
     auxiliary_camera0: Optional[rig.WebCamera] = Field(default=rig.WebCamera(), description="Auxiliary camera 0")
     auxiliary_camera1: Optional[rig.WebCamera] = Field(default=rig.WebCamera(), description="Auxiliary camera 1")
