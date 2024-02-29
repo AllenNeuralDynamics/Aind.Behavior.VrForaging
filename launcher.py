@@ -17,7 +17,8 @@ WORKFLOW_FILE = "src\\vr-foraging.bonsai"
 COMPUTER_NAME = os.environ["COMPUTERNAME"]
 ROOT_DATA_PATH = "c:\\data"
 REMOTE_DATA_PATH = r"\\allen\aind\scratch\vr-foraging\data"
-TEMP = "local/temp"
+TEMP = "local/.temp"
+LOG_PATH = "local/.logs"
 
 REPO = None
 try:
@@ -60,6 +61,7 @@ def run_bonsai_process(
     is_start_flag: bool = True,
     layout: Optional[PathLike] = None,
     additional_properties: Optional[Dict[str, str]] = None,
+    log_file_name: Optional[str] = None,
 ) -> str:
     output_cmd: str = f'"{bonsai_exe}" "{workflow_file}"'
     if is_editor_mode:
@@ -74,8 +76,13 @@ def run_bonsai_process(
         for param, value in additional_properties.items():
             output_cmd += f' -p:"{param}"="{value}"'
 
-    print(output_cmd)
-    return subprocess.Popen(output_cmd, cwd=CWD, creationflags=subprocess.CREATE_NEW_CONSOLE)
+    if log_file_name is None:
+        print(output_cmd)
+        return subprocess.Popen(output_cmd, cwd=CWD, creationflags=subprocess.CREATE_NEW_CONSOLE)
+    else:
+        logging_cmd = f'powershell -ep Bypass -c "& {output_cmd} *>&1 | tee -a {log_file_name}"'
+        print(logging_cmd)
+        return subprocess.Popen(logging_cmd, cwd=CWD, creationflags=subprocess.CREATE_NEW_CONSOLE)
 
 
 def save_temp_model(model: BaseModel, folder: str = TEMP) -> PathLike:
@@ -278,12 +285,16 @@ def prompt():
             "SessionPath": os.path.abspath(save_temp_model(session)),
             "RigPath": os.path.abspath(save_temp_model(rig)),
         }
-        print()
+
+        _date = session.date.strftime("%Y%m%dT%H%M%S")
         return run_bonsai_process(
             bonsai_exe=os.path.abspath(os.path.join(CWD, BONSAI_EXE)),
             workflow_file=os.path.abspath(os.path.join(WORKFLOW_FILE)),
             additional_properties=additional_properties,
             layout=bonsai_visualizer_layout,
+            log_file_name=os.path.abspath(
+                os.path.join(LOG_PATH, f"{session.subject}_{session.experiment}_{_date}.log")
+            ),
             **bonsai_config,
         )
 
