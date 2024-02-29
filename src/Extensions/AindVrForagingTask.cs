@@ -5563,9 +5563,9 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class AindVrForagingTaskLogic
     {
     
-        private string _describedBy = "";
+        private string _describedBy = "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_task_logic.json";
     
-        private string _schemaVersion = "0.1.0";
+        private string _schemaVersion = "0.1.1";
     
         private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     

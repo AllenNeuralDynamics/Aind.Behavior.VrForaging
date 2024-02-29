@@ -2,7 +2,7 @@
   "additionalProperties": false,
   "properties": {
     "describedBy": {
-      "default": "",
+      "default": "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_session.json",
       "title": "Describedby",
       "type": "string"
     },
