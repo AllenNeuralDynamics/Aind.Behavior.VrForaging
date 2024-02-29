@@ -414,13 +414,13 @@
   "additionalProperties": false,
   "properties": {
     "describedBy": {
-      "default": "",
+      "default": "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/blob/main/src/DataSchemas/aind_vr_foraging_rig.json",
       "title": "Describedby",
       "type": "string"
     },
     "schema_version": {
-      "const": "0.1.0",
-      "default": "0.1.0",
+      "const": "0.1.1",
+      "default": "0.1.1",
       "title": "Schema Version",
       "type": "string"
     },
