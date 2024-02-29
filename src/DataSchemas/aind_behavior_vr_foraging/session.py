@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 
 class AindVrForagingSession(AindBehaviorSessionModel):
     describedBy: str = Field(
-        "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/blob/main/src/DataSchemas/aind_vr_foraging_session.json"
+        "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_session.json"
     )
     schema_version: Literal[__version__] = __version__
 
