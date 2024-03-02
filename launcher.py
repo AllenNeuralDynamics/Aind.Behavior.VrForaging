@@ -2,7 +2,6 @@ import os
 import glob
 import git
 
-from aind_behavior_vr_foraging import __version__
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 from aind_behavior_vr_foraging.session import AindVrForagingSession
@@ -192,7 +191,6 @@ def prompt_session_input(
         experiment="AindVrForaging",
         root_path=root_path,
         remote_path=remote_path,
-        schema_version=__version__,
         subject=subject,
         notes=notes,
         commit_hash=REPO.head.commit.hexsha,
