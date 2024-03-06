@@ -5247,6 +5247,11 @@ Value as IsStopped)</scr:Expression>
                       <beh:StartCameras>CameraOutput0</beh:StartCameras>
                     </harp:Payload>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:Delay">
+                      <gl:DueTime>PT2S</gl:DueTime>
+                    </Combinator>
+                  </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>HarpBehaviorCommands</Name>
                   </Expression>
@@ -5255,6 +5260,7 @@ Value as IsStopped)</scr:Expression>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
