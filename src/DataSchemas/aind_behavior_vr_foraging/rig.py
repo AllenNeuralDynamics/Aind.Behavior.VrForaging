@@ -11,6 +11,10 @@ from pydantic import BaseModel, Field
 __version__ = "0.1.2"
 
 
+class HarpTreadmill(rig.HarpTreadmill):
+    additional_settings: rig.Treadmill = Field(default=rig.Treadmill(), description="Additional treadmill settings")
+
+
 class AindVrForagingRig(AindBehaviorRigModel):
     describedBy: Literal[
         "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json"
@@ -25,13 +29,12 @@ class AindVrForagingRig(AindBehaviorRigModel):
     harp_lickometer: rig.HarpLickometer = Field(..., description="Harp lickometer")
     harp_clock_generator: rig.HarpClockGenerator = Field(..., description="Harp clock generator")
     harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
-    treadmill: rig.HarpTreadmill = Field(..., description="Treadmill settings")
-    sniff_detector: rig.HarpSniffDetector = Field(..., description="Sniff detector settings")
+    harp_treadmill: HarpTreadmill = Field(..., description="Treadmill settings")
+    harp_sniff_detector: rig.HarpSniffDetector = Field(..., description="Sniff detector settings")
     face_camera: rig.SpinnakerCamera = Field(..., description="Face camera")
     top_body_camera: Optional[rig.SpinnakerCamera] = Field(default=None, description="Top body camera")
     side_body_camera: Optional[rig.SpinnakerCamera] = Field(default=None, description="Side body camera")
     screen: rig.Screen = Field(default=rig.Screen(), description="Screen settings")
-    treadmill: rig.Treadmill = Field(default=rig.Treadmill(), description="Treadmill settings")
     water_valve: rig.Valve = Field(default=rig.Valve(), description="Water valve settings")
 
 
