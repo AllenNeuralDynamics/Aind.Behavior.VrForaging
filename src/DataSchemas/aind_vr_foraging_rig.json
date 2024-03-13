@@ -157,10 +157,10 @@
       "additionalProperties": false,
       "properties": {
         "who_am_i": {
-          "const": null,
-          "default": null,
+          "const": 1400,
+          "default": 1400,
           "title": "Who Am I",
-          "type": "null"
+          "type": "integer"
         },
         "device_type": {
           "const": "lickometer",
@@ -253,6 +253,57 @@
         "port_name"
       ],
       "title": "HarpOlfactometer",
+      "type": "object"
+    },
+    "HarpSniffDetector": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1401,
+          "default": null,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "sniffdetector",
+          "default": "sniffdetector",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpSniffDetector",
       "type": "object"
     },
     "Screen": {
@@ -420,8 +471,8 @@
       "type": "string"
     },
     "schema_version": {
-      "const": "0.1.1",
-      "default": "0.1.1",
+      "const": "0.1.2",
+      "default": "0.1.2",
       "title": "Schema Version",
       "type": "string"
     },
@@ -507,6 +558,27 @@
         }
       ]
     },
+    "treadmill": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Treadmill"
+        }
+      ],
+      "default": {
+        "wheel_diameter": 15.0,
+        "pulses_per_revolution": 28800,
+        "invert_direction": false
+      },
+      "description": "Treadmill settings"
+    },
+    "sniff_detector": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpSniffDetector"
+        }
+      ],
+      "description": "Sniff detector settings"
+    },
     "face_camera": {
       "allOf": [
         {
@@ -554,19 +626,6 @@
       },
       "description": "Screen settings"
     },
-    "treadmill": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/Treadmill"
-        }
-      ],
-      "default": {
-        "wheel_diameter": 15.0,
-        "pulses_per_revolution": 28800,
-        "invert_direction": false
-      },
-      "description": "Treadmill settings"
-    },
     "water_valve": {
       "allOf": [
         {
@@ -586,6 +645,7 @@
     "harp_olfactometer",
     "harp_lickometer",
     "harp_clock_generator",
+    "sniff_detector",
     "face_camera"
   ],
   "title": "AindVrForagingRig",
