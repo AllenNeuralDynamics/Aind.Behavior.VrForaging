@@ -306,6 +306,59 @@
       "title": "HarpSniffDetector",
       "type": "object"
     },
+    "HarpTreadmill": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1402,
+          "default": 1402,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "treadmill",
+          "default": "treadmill",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Treadmill"
+            }
+          ],
+          "default": {
+            "wheel_diameter": 15.0,
+            "pulses_per_revolution": 28800,
+            "invert_direction": false
+          },
+          "description": "Additional treadmill settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpTreadmill",
+      "type": "object"
+    },
     "Screen": {
       "additionalProperties": false,
       "properties": {
@@ -558,20 +611,15 @@
         }
       ]
     },
-    "treadmill": {
+    "harp_treadmill": {
       "allOf": [
         {
-          "$ref": "#/definitions/Treadmill"
+          "$ref": "#/definitions/HarpTreadmill"
         }
       ],
-      "default": {
-        "wheel_diameter": 15.0,
-        "pulses_per_revolution": 28800,
-        "invert_direction": false
-      },
       "description": "Treadmill settings"
     },
-    "sniff_detector": {
+    "harp_sniff_detector": {
       "allOf": [
         {
           "$ref": "#/definitions/HarpSniffDetector"
@@ -645,7 +693,8 @@
     "harp_olfactometer",
     "harp_lickometer",
     "harp_clock_generator",
-    "sniff_detector",
+    "harp_treadmill",
+    "harp_sniff_detector",
     "face_camera"
   ],
   "title": "AindVrForagingRig",
