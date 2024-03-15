@@ -2793,9 +2793,9 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Other</Modality>
-                    <LogName>RawRig</LogName>
-                    <DeviceName>Config</DeviceName>
+                    <Modality xsi:nil="true" />
+                    <LogName>rig</LogName>
+                    <DeviceName />
                     <Extension>json</Extension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -2803,9 +2803,9 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Other</Modality>
-                    <LogName>RawSubject</LogName>
-                    <DeviceName>Config</DeviceName>
+                    <Modality xsi:nil="true" />
+                    <LogName>session</LogName>
+                    <DeviceName />
                     <Extension>json</Extension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -2813,9 +2813,9 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Other</Modality>
-                    <LogName>RawTaskLogic</LogName>
-                    <DeviceName>Config</DeviceName>
+                    <Modality xsi:nil="true" />
+                    <LogName>tasklogic</LogName>
+                    <DeviceName />
                     <Extension>json</Extension>
                   </Expression>
                 </Nodes>
@@ -3199,8 +3199,8 @@ Value as IsStopped)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
                     <Modality xsi:nil="true" />
-                    <LogName>EndSession</LogName>
-                    <DeviceName>config</DeviceName>
+                    <LogName>endsession</LogName>
+                    <DeviceName />
                     <Extension>json</Extension>
                   </Expression>
                 </Nodes>
