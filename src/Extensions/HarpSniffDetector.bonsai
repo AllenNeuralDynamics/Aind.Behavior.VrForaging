@@ -3,7 +3,7 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:p1="clr-namespace:Harp.Olfactometer;assembly=Harp.Olfactometer"
+                 xmlns:p1="clr-namespace:AllenNeuralDynamics.SniffDetector;assembly=AllenNeuralDynamics.SniffDetector"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -27,9 +27,9 @@
           <harp:OperationLed>On</harp:OperationLed>
           <harp:DumpRegisters>true</harp:DumpRegisters>
           <harp:VisualIndicators>On</harp:VisualIndicators>
-          <harp:Heartbeat>Enabled</harp:Heartbeat>
+          <harp:Heartbeat>Disabled</harp:Heartbeat>
           <harp:IgnoreErrors>false</harp:IgnoreErrors>
-          <harp:PortName>COM6</harp:PortName>
+          <harp:PortName>COMx</harp:PortName>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:PublishSubject">
@@ -40,6 +40,11 @@
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>StartExperiment</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Take">
+          <rx:Count>1</rx:Count>
+        </Combinator>
       </Expression>
       <Expression xsi:type="Annotation">
         <Name>ForceRegisterDump</Name>
@@ -56,10 +61,22 @@
           <harp:Heartbeat>Enabled</harp:Heartbeat>
         </harp:Payload>
       </Expression>
+      <Expression xsi:type="MulticastSubject">
+        <Name>HarpSniffDetectorCommands</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>HarpSniffDetectorEvents</Name>
+      </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Take">
           <rx:Count>1</rx:Count>
         </Combinator>
+      </Expression>
+      <Expression xsi:type="p1:CreateMessage">
+        <harp:MessageType>Write</harp:MessageType>
+        <harp:Payload xsi:type="p1:CreateRawVoltageDispatchRatePayload">
+          <p1:RawVoltageDispatchRate>250</p1:RawVoltageDispatchRate>
+        </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
         <Name>HarpSniffDetectorCommands</Name>
@@ -72,10 +89,13 @@
       <Edge From="3" To="4" Label="Source2" />
       <Edge From="4" To="5" Label="Source1" />
       <Edge From="6" To="7" Label="Source1" />
-      <Edge From="7" To="9" Label="Source1" />
-      <Edge From="8" To="9" Label="Source2" />
-      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="10" Label="Source1" />
+      <Edge From="9" To="10" Label="Source2" />
       <Edge From="10" To="11" Label="Source1" />
+      <Edge From="12" To="13" Label="Source1" />
+      <Edge From="13" To="14" Label="Source1" />
+      <Edge From="14" To="15" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
