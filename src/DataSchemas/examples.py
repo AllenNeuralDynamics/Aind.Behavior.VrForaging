@@ -4,7 +4,7 @@ import aind_behavior_services.rig as rig
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
 
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
+from aind_behavior_vr_foraging.rig import AindVrForagingRig, HarpTreadmill
 from aind_behavior_vr_foraging.session import AindVrForagingSession
 
 #  Import the 3 necessary schemas: Rig, Session, and TaskLogic
@@ -22,9 +22,7 @@ example_session = AindVrForagingSession(
     skip_hardware_validation=False,
 )
 
-
 #  Create a new Rig instance
-
 example_rig = AindVrForagingRig(
     rig_name="test_rig",
     auxiliary_camera0=rig.WebCamera(index=0),
@@ -38,7 +36,8 @@ example_rig = AindVrForagingRig(
     harp_clock_generator=rig.HarpClockGenerator(port_name="COM6"),
     harp_analog_input=None,
     screen=rig.Screen(display_index=1),
-    treadmill=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800),
+    harp_treadmill=HarpTreadmill(port_name="COM11", additional_settings=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800)),
+    harp_sniff_detector=rig.HarpSniffDetector(port_name="COM12"),
     water_valve=rig.Valve(calibration_intercept=0, calibration_slope=1),
 )
 
