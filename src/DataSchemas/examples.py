@@ -1,11 +1,20 @@
+import datetime
 import aind_behavior_services.task_logic.distributions as distributions
 import aind_behavior_services.rig as rig
+from aind_behavior_services.calibration.olfactometer import OlfactometerCalibration
+from aind_behavior_services.calibration.water_valve import (
+    WaterValveCalibration,
+    WaterValveCalibrationInput,
+    WaterValveCalibrationOutput,
+    Measurement,
+)
 
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
 
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
-from aind_behavior_vr_foraging.rig import AindVrForagingRig, HarpTreadmill
+from aind_behavior_vr_foraging.rig import AindVrForagingRig, HarpTreadmill, RigCalibration
 from aind_behavior_vr_foraging.session import AindVrForagingSession
+
 
 #  Import the 3 necessary schemas: Rig, Session, and TaskLogic
 
@@ -23,6 +32,23 @@ example_session = AindVrForagingSession(
 )
 
 #  Create a new Rig instance
+
+
+# Create calibrations
+
+olfactometer_calibration = None
+
+water_valve_input = WaterValveCalibrationInput(
+    measurements=[
+        Measurement(valve_open_interval=0.2, valve_open_time=0.1, water_weight=[0.1, 0.1], repeat_count=200),
+        Measurement(valve_open_interval=0.2, valve_open_time=1.0, water_weight=[1, 1], repeat_count=200),
+    ]
+)
+water_valve_calibration = WaterValveCalibration(
+    input=water_valve_input, output=water_valve_input.calibrate_output(), calibration_date=datetime.datetime.now()
+)
+
+
 example_rig = AindVrForagingRig(
     rig_name="test_rig",
     auxiliary_camera0=rig.WebCamera(index=0),
@@ -36,9 +62,11 @@ example_rig = AindVrForagingRig(
     harp_clock_generator=rig.HarpClockGenerator(port_name="COM6"),
     harp_analog_input=None,
     screen=rig.Screen(display_index=1),
-    harp_treadmill=HarpTreadmill(port_name="COM11", additional_settings=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800)),
+    harp_treadmill=HarpTreadmill(
+        port_name="COM11", additional_settings=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800)
+    ),
     harp_sniff_detector=rig.HarpSniffDetector(port_name="COM12"),
-    water_valve=rig.Valve(calibration_intercept=0, calibration_slope=1),
+    calibration=RigCalibration(water_valve=water_valve_calibration, olfactometer=olfactometer_calibration),
 )
 
 #  Create a new TaskLogic instance
