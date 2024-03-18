@@ -3,16 +3,23 @@ from __future__ import annotations
 
 # Import core types
 from typing import Literal, Optional
+from pydantic import BaseModel, Field
 
 import aind_behavior_services.rig as rig
 from aind_behavior_services.rig import AindBehaviorRigModel
-from pydantic import BaseModel, Field
+import aind_behavior_services.calibration.olfactometer as oc
+import aind_behavior_services.calibration.water_valve as wvc
 
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 
 
 class HarpTreadmill(rig.HarpTreadmill):
     additional_settings: rig.Treadmill = Field(default=rig.Treadmill(), description="Additional treadmill settings")
+
+
+class RigCalibration(BaseModel):
+    water_valve: wvc.WaterValveCalibration = Field(default=..., description="Water valve calibration")
+    olfactometer: Optional[oc.OlfactometerCalibration] = Field(default=None, description="Olfactometer calibration")
 
 
 class AindVrForagingRig(AindBehaviorRigModel):
@@ -35,7 +42,7 @@ class AindVrForagingRig(AindBehaviorRigModel):
     top_body_camera: Optional[rig.SpinnakerCamera] = Field(default=None, description="Top body camera")
     side_body_camera: Optional[rig.SpinnakerCamera] = Field(default=None, description="Side body camera")
     screen: rig.Screen = Field(default=rig.Screen(), description="Screen settings")
-    water_valve: rig.Valve = Field(default=rig.Valve(), description="Water valve settings")
+    calibration: Optional[RigCalibration] = Field(default=None, description="Calibration models")
 
 
 def schema() -> BaseModel:
