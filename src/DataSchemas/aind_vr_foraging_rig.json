@@ -1,5 +1,12 @@
 {
   "definitions": {
+    "AindGeneric": {
+      "additionalProperties": true,
+      "description": "Base class for generic types that can be used in AIND schema",
+      "properties": {},
+      "title": "AindGeneric",
+      "type": "object"
+    },
     "HarpAnalogInput": {
       "additionalProperties": false,
       "properties": {
@@ -157,10 +164,10 @@
       "additionalProperties": false,
       "properties": {
         "who_am_i": {
-          "const": 1400,
-          "default": 1400,
+          "const": null,
+          "default": null,
           "title": "Who Am I",
-          "type": "integer"
+          "type": "null"
         },
         "device_type": {
           "const": "lickometer",
@@ -260,7 +267,7 @@
       "properties": {
         "who_am_i": {
           "const": 1401,
-          "default": null,
+          "default": 1401,
           "title": "Who Am I",
           "type": "integer"
         },
@@ -357,6 +364,139 @@
         "port_name"
       ],
       "title": "HarpTreadmill",
+      "type": "object"
+    },
+    "Measurement": {
+      "description": "Input for water valve calibration class",
+      "properties": {
+        "valve_open_interval": {
+          "description": "Time between two consecutive valve openings (s)",
+          "exclusiveMinimum": 0.0,
+          "title": "Valve open interval",
+          "type": "number",
+          "units": "s"
+        },
+        "valve_open_time": {
+          "description": "Valve open interval (s)",
+          "exclusiveMinimum": 0.0,
+          "title": "Valve open time",
+          "type": "number",
+          "units": "s"
+        },
+        "water_weight": {
+          "description": "Weight of water delivered (g)",
+          "items": {
+            "exclusiveMinimum": 0.0,
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Water weight",
+          "type": "array",
+          "units": "g"
+        },
+        "repeat_count": {
+          "description": "Number of times the valve opened.",
+          "minimum": 0,
+          "title": "Repeat count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "valve_open_interval",
+        "valve_open_time",
+        "water_weight",
+        "repeat_count"
+      ],
+      "title": "Measurement",
+      "type": "object"
+    },
+    "OlfactometerCalibration": {
+      "additionalProperties": false,
+      "description": "Olfactometer calibration class",
+      "properties": {
+        "calibration_date": {
+          "format": "date-time",
+          "title": "Date and time of calibration",
+          "type": "string"
+        },
+        "device_name": {
+          "default": "Olfactometer",
+          "description": "Must match a device name in rig/instrument",
+          "title": "Device name",
+          "type": "string"
+        },
+        "description": {
+          "const": "Calibration of the harp olfactometer device",
+          "default": "Calibration of the harp olfactometer device",
+          "title": "Description",
+          "type": "string"
+        },
+        "input": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/AindGeneric"
+            }
+          ],
+          "default": {},
+          "description": "Calibration input",
+          "title": "inputs"
+        },
+        "output": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/AindGeneric"
+            }
+          ],
+          "default": {},
+          "description": "Calibration output",
+          "title": "outputs"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "calibration_date"
+      ],
+      "title": "OlfactometerCalibration",
+      "type": "object"
+    },
+    "RigCalibration": {
+      "properties": {
+        "water_valve": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibration"
+            }
+          ],
+          "description": "Water valve calibration"
+        },
+        "olfactometer": {
+          "default": null,
+          "description": "Olfactometer calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "water_valve"
+      ],
+      "title": "RigCalibration",
       "type": "object"
     },
     "Screen": {
@@ -481,23 +621,154 @@
       "title": "Treadmill",
       "type": "object"
     },
-    "Valve": {
+    "WaterValveCalibration": {
       "additionalProperties": false,
+      "description": "Water valve calibration class",
       "properties": {
-        "calibration_intercept": {
-          "default": 0,
-          "description": "Calibration intercept",
-          "title": "Calibration Intercept",
-          "type": "number"
+        "calibration_date": {
+          "format": "date-time",
+          "title": "Date and time of calibration",
+          "type": "string"
         },
-        "calibration_slope": {
-          "default": 1,
-          "description": "Calibration slope",
-          "title": "Calibration Slope",
-          "type": "number"
+        "device_name": {
+          "default": "WaterValve",
+          "description": "Must match a device name in rig/instrument",
+          "title": "Device name",
+          "type": "string"
+        },
+        "description": {
+          "const": "Calibration of the water valve delivery system",
+          "default": "Calibration of the water valve delivery system",
+          "title": "Description",
+          "type": "string"
+        },
+        "input": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibrationInput"
+            }
+          ],
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibrationOutput"
+            }
+          ],
+          "title": "Output of the calibration."
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
         }
       },
-      "title": "Valve",
+      "required": [
+        "calibration_date",
+        "input",
+        "output"
+      ],
+      "title": "WaterValveCalibration",
+      "type": "object"
+    },
+    "WaterValveCalibrationInput": {
+      "additionalProperties": false,
+      "properties": {
+        "measurements": {
+          "default": [],
+          "description": "List of measurements",
+          "items": {
+            "$ref": "#/definitions/Measurement"
+          },
+          "title": "Measurements",
+          "type": "array"
+        }
+      },
+      "title": "WaterValveCalibrationInput",
+      "type": "object"
+    },
+    "WaterValveCalibrationOutput": {
+      "additionalProperties": false,
+      "description": "Output for water valve calibration class",
+      "properties": {
+        "interval_average": {
+          "default": null,
+          "description": "Dictionary keyed by measured valve interval and corresponding average single event volume.",
+          "oneOf": [
+            {
+              "additionalProperties": {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Interval average",
+          "units": "s"
+        },
+        "slope": {
+          "description": "Slope of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)",
+          "title": "Regression slope",
+          "type": "number",
+          "units": "g/s"
+        },
+        "offset": {
+          "description": "Offset of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)",
+          "title": "Regression offset",
+          "type": "number",
+          "units": "g"
+        },
+        "r2": {
+          "default": null,
+          "description": "R2 metric from the linear model.",
+          "oneOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "R2"
+        },
+        "valid_domain": {
+          "default": null,
+          "description": "The optional time-intervals the calibration curve was calculated on.",
+          "oneOf": [
+            {
+              "items": {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              "minItems": 2,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Valid domain",
+          "units": "s"
+        }
+      },
+      "required": [
+        "slope",
+        "offset"
+      ],
+      "title": "WaterValveCalibrationOutput",
       "type": "object"
     },
     "WebCamera": {
@@ -524,8 +795,8 @@
       "type": "string"
     },
     "schema_version": {
-      "const": "0.1.2",
-      "default": "0.1.2",
+      "const": "0.2.0",
+      "default": "0.2.0",
       "title": "Schema Version",
       "type": "string"
     },
@@ -674,17 +945,17 @@
       },
       "description": "Screen settings"
     },
-    "water_valve": {
-      "allOf": [
+    "calibration": {
+      "default": null,
+      "description": "Calibration models",
+      "oneOf": [
         {
-          "$ref": "#/definitions/Valve"
+          "$ref": "#/definitions/RigCalibration"
+        },
+        {
+          "type": "null"
         }
-      ],
-      "default": {
-        "calibration_intercept": 0.0,
-        "calibration_slope": 1.0
-      },
-      "description": "Water valve settings"
+      ]
     }
   },
   "required": [
