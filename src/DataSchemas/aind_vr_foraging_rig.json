@@ -826,7 +826,7 @@
     },
     "auxiliary_camera1": {
       "default": {
-        "index": 0
+        "index": 1
       },
       "description": "Auxiliary camera 1",
       "oneOf": [
@@ -946,16 +946,12 @@
       "description": "Screen settings"
     },
     "calibration": {
-      "default": null,
-      "description": "Calibration models",
-      "oneOf": [
+      "allOf": [
         {
           "$ref": "#/definitions/RigCalibration"
-        },
-        {
-          "type": "null"
         }
-      ]
+      ],
+      "description": "Calibration models"
     }
   },
   "required": [
@@ -966,7 +962,8 @@
     "harp_clock_generator",
     "harp_treadmill",
     "harp_sniff_detector",
-    "face_camera"
+    "face_camera",
+    "calibration"
   ],
   "title": "AindVrForagingRig",
   "type": "object"
