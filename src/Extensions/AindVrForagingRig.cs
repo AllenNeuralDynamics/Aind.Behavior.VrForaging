@@ -2350,7 +2350,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private Screen _screen;
     
-        private RigCalibration _calibration;
+        private RigCalibration _calibration = new RigCalibration();
     
         public AindVrForagingRig()
         {
@@ -2676,7 +2676,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Calibration models
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Calibration models")]
         public RigCalibration Calibration
         {
