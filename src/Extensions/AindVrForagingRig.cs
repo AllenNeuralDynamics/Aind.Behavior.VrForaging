@@ -202,10 +202,8 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpBehavior
+    public partial class HarpBehavior : TreadmillBoard
     {
-    
-        private int _whoAmI = 1216;
     
         private string _deviceType = "behavior";
     
@@ -219,26 +217,13 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         {
         }
     
-        protected HarpBehavior(HarpBehavior other)
+        protected HarpBehavior(HarpBehavior other) : 
+                base(other)
         {
-            _whoAmI = other._whoAmI;
             _deviceType = other._deviceType;
             _serialNumber = other._serialNumber;
             _portName = other._portName;
             _additionalSettings = other._additionalSettings;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        public int WhoAmI
-        {
-            get
-            {
-                return _whoAmI;
-            }
-            set
-            {
-                _whoAmI = value;
-            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
@@ -316,27 +301,17 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpBehavior(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("device_type = " + _deviceType + ", ");
             stringBuilder.Append("serial_number = " + _serialNumber + ", ");
             stringBuilder.Append("port_name = " + _portName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -489,7 +464,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     public partial class HarpLickometer
     {
     
-        private WhoAmI _whoAmI;
+        private int _whoAmI = 1400;
     
         private string _deviceType = "lickometer";
     
@@ -512,9 +487,8 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             _additionalSettings = other._additionalSettings;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        public WhoAmI WhoAmI
+        public int WhoAmI
         {
             get
             {
@@ -774,7 +748,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     public partial class HarpSniffDetector
     {
     
-        private int _whoAmI = 1401;
+        private int _whoAmI;
     
         private string _deviceType = "sniffdetector";
     
@@ -913,10 +887,8 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpTreadmill
+    public partial class HarpTreadmill : TreadmillBoard
     {
-    
-        private int _whoAmI = 1402;
     
         private string _deviceType = "treadmill";
     
@@ -924,32 +896,19 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _portName;
     
-        private Treadmill _additionalSettings;
+        private object _additionalSettings;
     
         public HarpTreadmill()
         {
         }
     
-        protected HarpTreadmill(HarpTreadmill other)
+        protected HarpTreadmill(HarpTreadmill other) : 
+                base(other)
         {
-            _whoAmI = other._whoAmI;
             _deviceType = other._deviceType;
             _serialNumber = other._serialNumber;
             _portName = other._portName;
             _additionalSettings = other._additionalSettings;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        public int WhoAmI
-        {
-            get
-            {
-                return _whoAmI;
-            }
-            set
-            {
-                _whoAmI = value;
-            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
@@ -1000,12 +959,12 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         }
     
         /// <summary>
-        /// Additional treadmill settings
+        /// Additional settings
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional treadmill settings")]
-        public Treadmill AdditionalSettings
+        [System.ComponentModel.DescriptionAttribute("Additional settings")]
+        public object AdditionalSettings
         {
             get
             {
@@ -1027,27 +986,17 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpTreadmill(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("device_type = " + _deviceType + ", ");
             stringBuilder.Append("serial_number = " + _serialNumber + ", ");
             stringBuilder.Append("port_name = " + _portName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -1759,95 +1708,35 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "who_am_i")]
+    [JsonInheritanceAttribute("1216", typeof(HarpBehavior))]
+    [JsonInheritanceAttribute("1402", typeof(HarpTreadmill))]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Treadmill
+    public partial class TreadmillBoard
     {
     
-        private double _wheelDiameter = 15D;
-    
-        private int _pulsesPerRevolution = 28800;
-    
-        private bool _invertDirection = false;
-    
-        public Treadmill()
+        public TreadmillBoard()
         {
         }
     
-        protected Treadmill(Treadmill other)
+        protected TreadmillBoard(TreadmillBoard other)
         {
-            _wheelDiameter = other._wheelDiameter;
-            _pulsesPerRevolution = other._pulsesPerRevolution;
-            _invertDirection = other._invertDirection;
         }
     
-        /// <summary>
-        /// Wheel diameter
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("wheel_diameter")]
-        [System.ComponentModel.DescriptionAttribute("Wheel diameter")]
-        public double WheelDiameter
+        public System.IObservable<TreadmillBoard> Process()
         {
-            get
-            {
-                return _wheelDiameter;
-            }
-            set
-            {
-                _wheelDiameter = value;
-            }
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillBoard(this)));
         }
     
-        /// <summary>
-        /// Pulses per revolution
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("pulses_per_revolution")]
-        [System.ComponentModel.DescriptionAttribute("Pulses per revolution")]
-        public int PulsesPerRevolution
+        public System.IObservable<TreadmillBoard> Process<TSource>(System.IObservable<TSource> source)
         {
-            get
-            {
-                return _pulsesPerRevolution;
-            }
-            set
-            {
-                _pulsesPerRevolution = value;
-            }
-        }
-    
-        /// <summary>
-        /// Invert direction
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("invert_direction")]
-        [System.ComponentModel.DescriptionAttribute("Invert direction")]
-        public bool InvertDirection
-        {
-            get
-            {
-                return _invertDirection;
-            }
-            set
-            {
-                _invertDirection = value;
-            }
-        }
-    
-        public System.IObservable<Treadmill> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Treadmill(this)));
-        }
-    
-        public System.IObservable<Treadmill> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Treadmill(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillBoard(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("wheel_diameter = " + _wheelDiameter + ", ");
-            stringBuilder.Append("pulses_per_revolution = " + _pulsesPerRevolution + ", ");
-            stringBuilder.Append("invert_direction = " + _invertDirection);
-            return true;
+            return false;
         }
     
         public override string ToString()
@@ -2104,7 +1993,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private double _offset;
     
-        private double? _r2;
+        private double _r2;
     
         private System.Collections.Generic.List<double> _validDomain;
     
@@ -2177,10 +2066,9 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// <summary>
         /// R2 metric from the linear model.
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("r2")]
+        [Newtonsoft.Json.JsonPropertyAttribute("r2", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("R2 metric from the linear model.")]
-        public double? R2
+        public double R2
         {
             get
             {
@@ -2313,6 +2201,201 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class AindBehaviorServicesRigTreadmill
+    {
+    
+        private double _wheelDiameter = 15D;
+    
+        private int _pulsesPerRevolution = 28800;
+    
+        private bool _invertDirection = false;
+    
+        public AindBehaviorServicesRigTreadmill()
+        {
+        }
+    
+        protected AindBehaviorServicesRigTreadmill(AindBehaviorServicesRigTreadmill other)
+        {
+            _wheelDiameter = other._wheelDiameter;
+            _pulsesPerRevolution = other._pulsesPerRevolution;
+            _invertDirection = other._invertDirection;
+        }
+    
+        /// <summary>
+        /// Wheel diameter
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("wheel_diameter")]
+        [System.ComponentModel.DescriptionAttribute("Wheel diameter")]
+        public double WheelDiameter
+        {
+            get
+            {
+                return _wheelDiameter;
+            }
+            set
+            {
+                _wheelDiameter = value;
+            }
+        }
+    
+        /// <summary>
+        /// Pulses per revolution
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pulses_per_revolution")]
+        [System.ComponentModel.DescriptionAttribute("Pulses per revolution")]
+        public int PulsesPerRevolution
+        {
+            get
+            {
+                return _pulsesPerRevolution;
+            }
+            set
+            {
+                _pulsesPerRevolution = value;
+            }
+        }
+    
+        /// <summary>
+        /// Invert direction
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("invert_direction")]
+        [System.ComponentModel.DescriptionAttribute("Invert direction")]
+        public bool InvertDirection
+        {
+            get
+            {
+                return _invertDirection;
+            }
+            set
+            {
+                _invertDirection = value;
+            }
+        }
+    
+        public System.IObservable<AindBehaviorServicesRigTreadmill> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorServicesRigTreadmill(this)));
+        }
+    
+        public System.IObservable<AindBehaviorServicesRigTreadmill> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorServicesRigTreadmill(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("wheel_diameter = " + _wheelDiameter + ", ");
+            stringBuilder.Append("pulses_per_revolution = " + _pulsesPerRevolution + ", ");
+            stringBuilder.Append("invert_direction = " + _invertDirection);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class AindBehaviorVrForagingRigTreadmill
+    {
+    
+        private TreadmillBoard _harpBoard;
+    
+        private AindBehaviorServicesRigTreadmill _settings;
+    
+        public AindBehaviorVrForagingRigTreadmill()
+        {
+        }
+    
+        protected AindBehaviorVrForagingRigTreadmill(AindBehaviorVrForagingRigTreadmill other)
+        {
+            _harpBoard = other._harpBoard;
+            _settings = other._settings;
+        }
+    
+        /// <summary>
+        /// The board to be used as a treadmill input
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_board", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The board to be used as a treadmill input")]
+        public TreadmillBoard HarpBoard
+        {
+            get
+            {
+                return _harpBoard;
+            }
+            set
+            {
+                _harpBoard = value;
+            }
+        }
+    
+        /// <summary>
+        /// Treadmill settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("settings")]
+        [System.ComponentModel.DescriptionAttribute("Treadmill settings")]
+        public AindBehaviorServicesRigTreadmill Settings
+        {
+            get
+            {
+                return _settings;
+            }
+            set
+            {
+                _settings = value;
+            }
+        }
+    
+        public System.IObservable<AindBehaviorVrForagingRigTreadmill> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorVrForagingRigTreadmill(this)));
+        }
+    
+        public System.IObservable<AindBehaviorVrForagingRigTreadmill> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorVrForagingRigTreadmill(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("harp_board = " + _harpBoard + ", ");
+            stringBuilder.Append("settings = " + _settings);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindVrForagingRig
     {
     
@@ -2338,7 +2421,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private HarpAnalogInput _harpAnalogInput;
     
-        private HarpTreadmill _harpTreadmill = new HarpTreadmill();
+        private AindBehaviorVrForagingRigTreadmill _treadmill = new AindBehaviorVrForagingRigTreadmill();
     
         private HarpSniffDetector _harpSniffDetector = new HarpSniffDetector();
     
@@ -2369,7 +2452,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             _harpLickometer = other._harpLickometer;
             _harpClockGenerator = other._harpClockGenerator;
             _harpAnalogInput = other._harpAnalogInput;
-            _harpTreadmill = other._harpTreadmill;
+            _treadmill = other._treadmill;
             _harpSniffDetector = other._harpSniffDetector;
             _faceCamera = other._faceCamera;
             _topBodyCamera = other._topBodyCamera;
@@ -2568,17 +2651,17 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// Treadmill settings
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_treadmill", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("treadmill", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Treadmill settings")]
-        public HarpTreadmill HarpTreadmill
+        public AindBehaviorVrForagingRigTreadmill Treadmill
         {
             get
             {
-                return _harpTreadmill;
+                return _treadmill;
             }
             set
             {
-                _harpTreadmill = value;
+                _treadmill = value;
             }
         }
     
@@ -2713,7 +2796,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             stringBuilder.Append("harp_lickometer = " + _harpLickometer + ", ");
             stringBuilder.Append("harp_clock_generator = " + _harpClockGenerator + ", ");
             stringBuilder.Append("harp_analog_input = " + _harpAnalogInput + ", ");
-            stringBuilder.Append("harp_treadmill = " + _harpTreadmill + ", ");
+            stringBuilder.Append("treadmill = " + _treadmill + ", ");
             stringBuilder.Append("harp_sniff_detector = " + _harpSniffDetector + ", ");
             stringBuilder.Append("face_camera = " + _faceCamera + ", ");
             stringBuilder.Append("top_body_camera = " + _topBodyCamera + ", ");
@@ -2721,50 +2804,6 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             stringBuilder.Append("screen = " + _screen + ", ");
             stringBuilder.Append("calibration = " + _calibration);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class WhoAmI
-    {
-    
-        public WhoAmI()
-        {
-        }
-    
-        protected WhoAmI(WhoAmI other)
-        {
-        }
-    
-        public System.IObservable<WhoAmI> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WhoAmI(this)));
-        }
-    
-        public System.IObservable<WhoAmI> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new WhoAmI(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
         }
     
         public override string ToString()
@@ -2792,6 +2831,184 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="NoColorProcessing")]
         NoColorProcessing = 1,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface, AllowMultiple = true)]
+    internal class JsonInheritanceAttribute : System.Attribute
+    {
+        public JsonInheritanceAttribute(string key, System.Type type)
+        {
+            Key = key;
+            Type = type;
+        }
+
+        public string Key { get; private set; }
+
+        public System.Type Type { get; private set; }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    public class JsonInheritanceConverter : Newtonsoft.Json.JsonConverter
+    {
+        internal static readonly string DefaultDiscriminatorName = "discriminator";
+
+        private readonly string _discriminatorName;
+
+        [System.ThreadStatic]
+        private static bool _isReading;
+
+        [System.ThreadStatic]
+        private static bool _isWriting;
+
+        public JsonInheritanceConverter()
+        {
+            _discriminatorName = DefaultDiscriminatorName;
+        }
+
+        public JsonInheritanceConverter(string discriminatorName)
+        {
+            _discriminatorName = discriminatorName;
+        }
+
+        public string DiscriminatorName { get { return _discriminatorName; } }
+
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            try
+            {
+                _isWriting = true;
+
+                var jObject = Newtonsoft.Json.Linq.JObject.FromObject(value, serializer);
+                jObject.AddFirst(new Newtonsoft.Json.Linq.JProperty(_discriminatorName, GetSubtypeDiscriminator(value.GetType())));
+                writer.WriteToken(jObject.CreateReader());
+            }
+            finally
+            {
+                _isWriting = false;
+            }
+        }
+
+        public override bool CanWrite
+        {
+            get
+            {
+                if (_isWriting)
+                {
+                    _isWriting = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanRead
+        {
+            get
+            {
+                if (_isReading)
+                {
+                    _isReading = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanConvert(System.Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            var jObject = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
+            if (jObject == null)
+                return null;
+
+            var discriminatorValue = jObject.GetValue(_discriminatorName);
+            var discriminator = discriminatorValue != null ? Newtonsoft.Json.Linq.Extensions.Value<string>(discriminatorValue) : null;
+            var subtype = GetObjectSubtype(objectType, discriminator);
+
+            var objectContract = serializer.ContractResolver.ResolveContract(subtype) as Newtonsoft.Json.Serialization.JsonObjectContract;
+            if (objectContract == null || System.Linq.Enumerable.All(objectContract.Properties, p => p.PropertyName != _discriminatorName))
+            {
+                jObject.Remove(_discriminatorName);
+            }
+
+            try
+            {
+                _isReading = true;
+                return serializer.Deserialize(jObject.CreateReader(), subtype);
+            }
+            finally
+            {
+                _isReading = false;
+            }
+        }
+
+        private System.Type GetObjectSubtype(System.Type objectType, string discriminator)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Key == discriminator)
+                    return attribute.Type;
+            }
+
+            return objectType;
+        }
+
+        private string GetSubtypeDiscriminator(System.Type objectType)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Type == objectType)
+                    return attribute.Key;
+            }
+
+            return objectType.Name;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTreadmill>))]
+    public partial class MatchTreadmillBoard : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(TreadmillBoard);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchTreadmillBoard),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<TreadmillBoard> source)
+            where TResult : TreadmillBoard
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<TreadmillBoard>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
     }
 
 
@@ -2875,9 +3092,9 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             return Process<SpinnakerCamera>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Treadmill> source)
+        public System.IObservable<string> Process(System.IObservable<TreadmillBoard> source)
         {
-            return Process<Treadmill>(source);
+            return Process<TreadmillBoard>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<WaterValveCalibration> source)
@@ -2900,14 +3117,19 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             return Process<WebCamera>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<AindBehaviorServicesRigTreadmill> source)
+        {
+            return Process<AindBehaviorServicesRigTreadmill>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<AindBehaviorVrForagingRigTreadmill> source)
+        {
+            return Process<AindBehaviorVrForagingRigTreadmill>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindVrForagingRig> source)
         {
             return Process<AindVrForagingRig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<WhoAmI> source)
-        {
-            return Process<WhoAmI>(source);
         }
     }
 
@@ -2932,13 +3154,14 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorServicesRigTreadmill>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorVrForagingRigTreadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingRig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WhoAmI>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     

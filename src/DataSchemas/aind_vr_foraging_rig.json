@@ -164,10 +164,10 @@
       "additionalProperties": false,
       "properties": {
         "who_am_i": {
-          "const": null,
-          "default": null,
+          "const": 1400,
+          "default": 1400,
           "title": "Who Am I",
-          "type": "null"
+          "type": "integer"
         },
         "device_type": {
           "const": "lickometer",
@@ -267,7 +267,7 @@
       "properties": {
         "who_am_i": {
           "const": 1401,
-          "default": 1401,
+          "default": null,
           "title": "Who Am I",
           "type": "integer"
         },
@@ -347,17 +347,15 @@
           "type": "string"
         },
         "additional_settings": {
-          "allOf": [
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
             {
-              "$ref": "#/definitions/Treadmill"
+              "type": "null"
             }
           ],
-          "default": {
-            "wheel_diameter": 15.0,
-            "pulses_per_revolution": 28800,
-            "invert_direction": false
-          },
-          "description": "Additional treadmill settings"
+          "title": "Additional Settings"
         }
       },
       "required": [
@@ -593,33 +591,23 @@
       "title": "SpinnakerCamera",
       "type": "object"
     },
-    "Treadmill": {
-      "additionalProperties": false,
-      "properties": {
-        "wheel_diameter": {
-          "default": 15,
-          "description": "Wheel diameter",
-          "minimum": 0.0,
-          "title": "Wheel Diameter",
-          "type": "number",
-          "units": "cm"
+    "TreadmillBoard": {
+      "discriminator": {
+        "mapping": {
+          "1216": "#/definitions/HarpBehavior",
+          "1402": "#/definitions/HarpTreadmill"
         },
-        "pulses_per_revolution": {
-          "default": 28800,
-          "description": "Pulses per revolution",
-          "minimum": 1,
-          "title": "Pulses Per Revolution",
-          "type": "integer"
-        },
-        "invert_direction": {
-          "default": false,
-          "description": "Invert direction",
-          "title": "Invert Direction",
-          "type": "boolean"
-        }
+        "propertyName": "who_am_i"
       },
-      "title": "Treadmill",
-      "type": "object"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/HarpTreadmill"
+        },
+        {
+          "$ref": "#/definitions/HarpBehavior"
+        }
+      ],
+      "title": "TreadmillBoard"
     },
     "WaterValveCalibration": {
       "additionalProperties": false,
@@ -730,19 +718,11 @@
           "units": "g"
         },
         "r2": {
-          "default": null,
           "description": "R2 metric from the linear model.",
-          "oneOf": [
-            {
-              "maximum": 1.0,
-              "minimum": 0.0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "R2"
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "R2",
+          "type": "number"
         },
         "valid_domain": {
           "default": null,
@@ -766,7 +746,8 @@
       },
       "required": [
         "slope",
-        "offset"
+        "offset",
+        "r2"
       ],
       "title": "WaterValveCalibrationOutput",
       "type": "object"
@@ -783,6 +764,64 @@
         }
       },
       "title": "WebCamera",
+      "type": "object"
+    },
+    "aind_behavior_services__rig__Treadmill": {
+      "additionalProperties": false,
+      "properties": {
+        "wheel_diameter": {
+          "default": 15,
+          "description": "Wheel diameter",
+          "minimum": 0.0,
+          "title": "Wheel Diameter",
+          "type": "number",
+          "units": "cm"
+        },
+        "pulses_per_revolution": {
+          "default": 28800,
+          "description": "Pulses per revolution",
+          "minimum": 1,
+          "title": "Pulses Per Revolution",
+          "type": "integer"
+        },
+        "invert_direction": {
+          "default": false,
+          "description": "Invert direction",
+          "title": "Invert Direction",
+          "type": "boolean"
+        }
+      },
+      "title": "Treadmill",
+      "type": "object"
+    },
+    "aind_behavior_vr_foraging__rig__Treadmill": {
+      "properties": {
+        "harp_board": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TreadmillBoard"
+            }
+          ],
+          "description": "The board to be used as a treadmill input"
+        },
+        "settings": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/aind_behavior_services__rig__Treadmill"
+            }
+          ],
+          "default": {
+            "wheel_diameter": 15.0,
+            "pulses_per_revolution": 28800,
+            "invert_direction": false
+          },
+          "description": "Treadmill settings"
+        }
+      },
+      "required": [
+        "harp_board"
+      ],
+      "title": "Treadmill",
       "type": "object"
     }
   },
@@ -882,10 +921,10 @@
         }
       ]
     },
-    "harp_treadmill": {
+    "treadmill": {
       "allOf": [
         {
-          "$ref": "#/definitions/HarpTreadmill"
+          "$ref": "#/definitions/aind_behavior_vr_foraging__rig__Treadmill"
         }
       ],
       "description": "Treadmill settings"
@@ -960,7 +999,7 @@
     "harp_olfactometer",
     "harp_lickometer",
     "harp_clock_generator",
-    "harp_treadmill",
+    "treadmill",
     "harp_sniff_detector",
     "face_camera",
     "calibration"

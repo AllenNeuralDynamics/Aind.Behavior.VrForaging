@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 # Import core types
-from typing import Literal, Optional
-from pydantic import BaseModel, Field
+from typing import Literal, Optional, Union, Annotated
+from pydantic import BaseModel, Field, RootModel
 
 import aind_behavior_services.rig as rig
 from aind_behavior_services.rig import AindBehaviorRigModel
@@ -12,9 +12,16 @@ import aind_behavior_services.calibration.water_valve as wvc
 
 __version__ = "0.2.0"
 
+TreadmillSettings = rig.Treadmill
 
-class HarpTreadmill(rig.HarpTreadmill):
-    additional_settings: rig.Treadmill = Field(default=rig.Treadmill(), description="Additional treadmill settings")
+
+class TreadmillBoard(RootModel):
+    root: Annotated[Union[rig.HarpTreadmill, rig.HarpBehavior], Field(discriminator="who_am_i")]
+
+
+class Treadmill(BaseModel):
+    harp_board: TreadmillBoard = Field(..., description="The board to be used as a treadmill input")
+    settings: rig.Treadmill = Field(default=rig.Treadmill(), description="Treadmill settings")
 
 
 class RigCalibration(BaseModel):
@@ -36,7 +43,7 @@ class AindVrForagingRig(AindBehaviorRigModel):
     harp_lickometer: rig.HarpLickometer = Field(..., description="Harp lickometer")
     harp_clock_generator: rig.HarpClockGenerator = Field(..., description="Harp clock generator")
     harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
-    harp_treadmill: HarpTreadmill = Field(..., description="Treadmill settings")
+    treadmill: Treadmill = Field(..., description="Treadmill settings")
     harp_sniff_detector: rig.HarpSniffDetector = Field(..., description="Sniff detector settings")
     face_camera: rig.SpinnakerCamera = Field(..., description="Face camera")
     top_body_camera: Optional[rig.SpinnakerCamera] = Field(default=None, description="Top body camera")
