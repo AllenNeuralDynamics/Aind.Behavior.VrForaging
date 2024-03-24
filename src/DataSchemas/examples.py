@@ -12,7 +12,7 @@ from aind_behavior_services.calibration.water_valve import (
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
 
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
-from aind_behavior_vr_foraging.rig import AindVrForagingRig, HarpTreadmill, RigCalibration
+from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
 from aind_behavior_vr_foraging.session import AindVrForagingSession
 
 
@@ -61,11 +61,12 @@ example_rig = AindVrForagingRig(
     harp_lickometer=rig.HarpLickometer(port_name="COM5"),
     harp_clock_generator=rig.HarpClockGenerator(port_name="COM6"),
     harp_analog_input=None,
-    screen=rig.Screen(display_index=1),
-    harp_treadmill=HarpTreadmill(
-        port_name="COM11", additional_settings=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800)
+    harp_sniff_detector=rig.HarpSniffDetector(port_name="COM7"),
+    treadmill=Treadmill(
+        harp_board=rig.HarpTreadmill(port_name="COM8"),
+        settings=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800),
     ),
-    harp_sniff_detector=rig.HarpSniffDetector(port_name="COM12"),
+    screen=rig.Screen(display_index=1),
     calibration=RigCalibration(water_valve=water_valve_calibration, olfactometer=olfactometer_calibration),
 )
 
