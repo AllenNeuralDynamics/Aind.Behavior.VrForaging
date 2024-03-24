@@ -11,10 +11,10 @@
         <rx:Name>HarpTreadmillCommands</rx:Name>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
-        <Name>RigSchema</Name>
+        <Name>HarpTreadmill</Name>
       </Expression>
       <Expression xsi:type="MemberSelector">
-        <Selector>HarpTreadmill.PortName</Selector>
+        <Selector>PortName</Selector>
       </Expression>
       <Expression xsi:type="PropertyMapping">
         <PropertyMappings>
@@ -27,7 +27,7 @@
           <harp:OperationLed>On</harp:OperationLed>
           <harp:DumpRegisters>true</harp:DumpRegisters>
           <harp:VisualIndicators>On</harp:VisualIndicators>
-          <harp:Heartbeat>Disabled</harp:Heartbeat>
+          <harp:Heartbeat>Enabled</harp:Heartbeat>
           <harp:IgnoreErrors>false</harp:IgnoreErrors>
           <harp:PortName>COMx</harp:PortName>
         </Combinator>
@@ -72,14 +72,18 @@
           <rx:Count>1</rx:Count>
         </Combinator>
       </Expression>
-      <Expression xsi:type="p1:CreateMessage">
-        <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreateResetTareSensorsPayload">
-          <p1:ResetTareSensors>Encoder Torque BreakCurrent</p1:ResetTareSensors>
-        </harp:Payload>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="p1:CreateMessage">
+          <harp:MessageType>Write</harp:MessageType>
+          <harp:Payload xsi:type="p1:CreateResetTareSensorsPayload">
+            <p1:ResetTareSensors>Encoder Torque BreakCurrent</p1:ResetTareSensors>
+          </harp:Payload>
+        </Builder>
       </Expression>
-      <Expression xsi:type="MulticastSubject">
-        <Name>HarpTreadmillCommands</Name>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="MulticastSubject">
+          <Name>HarpTreadmillCommands</Name>
+        </Builder>
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
