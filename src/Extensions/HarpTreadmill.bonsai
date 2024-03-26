@@ -3,7 +3,8 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:p1="clr-namespace:AllenNeuralDynamics.Treadmill;assembly=AllenNeuralDynamics.Treadmill"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.AindVrForagingRig;assembly=Extensions"
+                 xmlns:p2="clr-namespace:AllenNeuralDynamics.Treadmill;assembly=AllenNeuralDynamics.Treadmill"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -11,7 +12,16 @@
         <rx:Name>HarpTreadmillCommands</rx:Name>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
-        <Name>HarpTreadmill</Name>
+        <Name>RigSchema</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Treadmill</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>HarpBoard</Selector>
+      </Expression>
+      <Expression xsi:type="p1:MatchTreadmillBoard">
+        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:HarpTreadmill" />
       </Expression>
       <Expression xsi:type="MemberSelector">
         <Selector>PortName</Selector>
@@ -22,7 +32,7 @@
         </PropertyMappings>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:Device">
+        <Combinator xsi:type="p2:Device">
           <harp:OperationMode>Active</harp:OperationMode>
           <harp:OperationLed>On</harp:OperationLed>
           <harp:DumpRegisters>true</harp:DumpRegisters>
@@ -73,10 +83,10 @@
         </Combinator>
       </Expression>
       <Expression xsi:type="Disable">
-        <Builder xsi:type="p1:CreateMessage">
+        <Builder xsi:type="p2:CreateMessage">
           <harp:MessageType>Write</harp:MessageType>
-          <harp:Payload xsi:type="p1:CreateResetTareSensorsPayload">
-            <p1:ResetTareSensors>Encoder Torque BreakCurrent</p1:ResetTareSensors>
+          <harp:Payload xsi:type="p2:CreateResetTareSensorsPayload">
+            <p2:ResetTareSensors>Encoder Torque BreakCurrent</p2:ResetTareSensors>
           </harp:Payload>
         </Builder>
       </Expression>
@@ -85,19 +95,19 @@
           <Name>HarpTreadmillCommands</Name>
         </Builder>
       </Expression>
-      <Expression xsi:type="p1:CreateMessage">
+      <Expression xsi:type="p2:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreateBreakCurrentSetPointPayload">
-          <p1:BreakCurrentSetPoint>0</p1:BreakCurrentSetPoint>
+        <harp:Payload xsi:type="p2:CreateBreakCurrentSetPointPayload">
+          <p2:BreakCurrentSetPoint>0</p2:BreakCurrentSetPoint>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
         <Name>HarpTreadmillCommands</Name>
       </Expression>
-      <Expression xsi:type="p1:CreateMessage">
+      <Expression xsi:type="p2:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreateSensorDataDispatchRatePayload">
-          <p1:SensorDataDispatchRate>250</p1:SensorDataDispatchRate>
+        <harp:Payload xsi:type="p2:CreateSensorDataDispatchRatePayload">
+          <p2:SensorDataDispatchRate>250</p2:SensorDataDispatchRate>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
@@ -105,23 +115,26 @@
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="0" To="4" Label="Source1" />
+      <Edge From="0" To="7" Label="Source1" />
       <Edge From="1" To="2" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
-      <Edge From="3" To="4" Label="Source2" />
+      <Edge From="3" To="4" Label="Source1" />
       <Edge From="4" To="5" Label="Source1" />
-      <Edge From="6" To="7" Label="Source1" />
-      <Edge From="7" To="9" Label="Source1" />
-      <Edge From="8" To="9" Label="Source2" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source2" />
+      <Edge From="7" To="8" Label="Source1" />
       <Edge From="9" To="10" Label="Source1" />
-      <Edge From="10" To="11" Label="Source1" />
+      <Edge From="10" To="12" Label="Source1" />
+      <Edge From="11" To="12" Label="Source2" />
       <Edge From="12" To="13" Label="Source1" />
       <Edge From="13" To="14" Label="Source1" />
-      <Edge From="14" To="15" Label="Source1" />
       <Edge From="15" To="16" Label="Source1" />
       <Edge From="16" To="17" Label="Source1" />
       <Edge From="17" To="18" Label="Source1" />
       <Edge From="18" To="19" Label="Source1" />
+      <Edge From="19" To="20" Label="Source1" />
+      <Edge From="20" To="21" Label="Source1" />
+      <Edge From="21" To="22" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

@@ -1011,9 +1011,6 @@ Item2.Light as Light)</scr:Expression>
                     <p2:Type xsi:type="TypeMapping" TypeArguments="p2:HarpTreadmill" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
-                  <Expression xsi:type="rx:AsyncSubject">
-                    <Name>HarpTreadmill</Name>
-                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
@@ -1049,19 +1046,18 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="12" Label="Source1" />
+                  <Edge From="5" To="11" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source2" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="17" To="21" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="16" To="20" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source2" />
+                  <Edge From="19" To="20" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -6109,8 +6105,18 @@ Value as IsStopped)</scr:Expression>
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>HarpTreadmill</Name>
+                    <Name>RigSchema</Name>
                   </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Treadmill</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>HarpBoard</Selector>
+                  </Expression>
+                  <Expression xsi:type="p2:MatchTreadmillBoard">
+                    <p2:Type xsi:type="TypeMapping" TypeArguments="p2:HarpTreadmill" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
@@ -6236,17 +6242,21 @@ Value as IsStopped)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="2" To="4" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="12" Label="Source1" />
-                  <Edge From="5" To="11" Label="Source1" />
+                  <Edge From="2" To="8" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source2" />
-                  <Edge From="11" To="12" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source2" />
+                  <Edge From="8" To="16" Label="Source1" />
+                  <Edge From="9" To="15" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source2" />
+                  <Edge From="15" To="16" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
