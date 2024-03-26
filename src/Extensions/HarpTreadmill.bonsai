@@ -5,6 +5,7 @@
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema.AindVrForagingRig;assembly=Extensions"
                  xmlns:p2="clr-namespace:AllenNeuralDynamics.Treadmill;assembly=AllenNeuralDynamics.Treadmill"
+                 xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -104,6 +105,11 @@
       <Expression xsi:type="MulticastSubject">
         <Name>HarpTreadmillCommands</Name>
       </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="gl:Delay">
+          <gl:DueTime>PT0.01S</gl:DueTime>
+        </Combinator>
+      </Expression>
       <Expression xsi:type="p2:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
         <harp:Payload xsi:type="p2:CreateSensorDataDispatchRatePayload">
@@ -135,6 +141,7 @@
       <Edge From="19" To="20" Label="Source1" />
       <Edge From="20" To="21" Label="Source1" />
       <Edge From="21" To="22" Label="Source1" />
+      <Edge From="22" To="23" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
