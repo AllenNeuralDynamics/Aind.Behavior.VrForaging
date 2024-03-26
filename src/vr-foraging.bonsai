@@ -2178,6 +2178,12 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpLickometerEvents</Name>
                   </Expression>
+                  <Expression xsi:type="harp:FilterRegister">
+                    <harp:FilterType>Exclude</harp:FilterType>
+                    <harp:Register xsi:type="harp:FilterRegisterAddress">
+                      <harp:Address>15</harp:Address>
+                    </harp:Register>
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:GroupByRegister" />
                   </Expression>
@@ -2204,6 +2210,12 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpTreadmillEvents</Name>
                   </Expression>
+                  <Expression xsi:type="harp:FilterRegister">
+                    <harp:FilterType>Exclude</harp:FilterType>
+                    <harp:Register xsi:type="harp:FilterRegisterAddress">
+                      <harp:Address>15</harp:Address>
+                    </harp:Register>
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p13:GroupByRegister" />
                   </Expression>
@@ -2229,6 +2241,12 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpSniffDetectorEvents</Name>
+                  </Expression>
+                  <Expression xsi:type="harp:FilterRegister">
+                    <harp:FilterType>Exclude</harp:FilterType>
+                    <harp:Register xsi:type="harp:FilterRegisterAddress">
+                      <harp:Address>15</harp:Address>
+                    </harp:Register>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p14:GroupByRegister" />
@@ -2335,30 +2353,33 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source2" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="17" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="22" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="18" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="21" To="22" Label="Source2" />
-                  <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="27" Label="Source1" />
+                  <Edge From="21" To="24" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source2" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="30" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="32" Label="Source1" />
-                  <Edge From="30" To="31" Label="Source1" />
-                  <Edge From="31" To="32" Label="Source2" />
+                  <Edge From="29" To="30" Label="Source2" />
+                  <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="32" To="35" Label="Source1" />
                   <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source1" />
-                  <Edge From="35" To="38" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source2" />
                   <Edge From="36" To="37" Label="Source1" />
-                  <Edge From="37" To="38" Label="Source2" />
-                  <Edge From="38" To="42" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="38" To="41" Label="Source1" />
                   <Edge From="39" To="40" Label="Source1" />
-                  <Edge From="40" To="41" Label="Source1" />
-                  <Edge From="41" To="42" Label="Source2" />
+                  <Edge From="40" To="41" Label="Source2" />
+                  <Edge From="41" To="45" Label="Source1" />
+                  <Edge From="42" To="43" Label="Source1" />
+                  <Edge From="43" To="44" Label="Source1" />
+                  <Edge From="44" To="45" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
