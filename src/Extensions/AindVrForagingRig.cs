@@ -748,7 +748,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     public partial class HarpSniffDetector
     {
     
-        private int _whoAmI;
+        private int _whoAmI = 1401;
     
         private string _deviceType = "sniffdetector";
     
@@ -1993,7 +1993,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private double _offset;
     
-        private double _r2;
+        private double? _r2;
     
         private System.Collections.Generic.List<double> _validDomain;
     
@@ -2066,9 +2066,10 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         /// <summary>
         /// R2 metric from the linear model.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("r2", Required=Newtonsoft.Json.Required.Always)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("r2")]
         [System.ComponentModel.DescriptionAttribute("R2 metric from the linear model.")]
-        public double R2
+        public double? R2
         {
             get
             {
