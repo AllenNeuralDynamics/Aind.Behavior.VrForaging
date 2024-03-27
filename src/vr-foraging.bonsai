@@ -6078,7 +6078,7 @@ Value as IsStopped)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Name>CalculateDisplacement</scr:Name>
-                          <scr:Expression>Convert.ToUInt32(Item1.Value.Encoder - Item2.Value.Encoder)</scr:Expression>
+                          <scr:Expression>(Item1.Value.Encoder - Item2.Value.Encoder)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>TreadmillScaling</Name>
