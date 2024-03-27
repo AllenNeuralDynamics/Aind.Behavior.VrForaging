@@ -4950,7 +4950,11 @@ Value as IsStopped)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Name>RewardToTime</scr:Name>
-                    <scr:Expression>(Item1 - Item2.Offset) / Item2.Slope </scr:Expression>
+                    <scr:Expression>((Item1 * 0.001) - Item2.Offset) / Item2.Slope </scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>ToMilliseconds</Name>
+                    <Text><![CDATA[]]></Text>
                   </Expression>
                   <Expression xsi:type="Multiply">
                     <Operand xsi:type="DoubleProperty">
@@ -5054,21 +5058,22 @@ Value as IsStopped)</scr:Expression>
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source2" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="14" To="16" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source2" />
                   <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
                   <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="26" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source2" />
-                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="27" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source2" />
                   <Edge From="27" To="28" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
                   <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
