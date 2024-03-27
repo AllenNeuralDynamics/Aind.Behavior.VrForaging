@@ -1036,7 +1036,7 @@
             "function_type": "ConstantFunction",
             "value": 1.0
           },
-          "description": "Determines the amount of reward to be delivered"
+          "description": "Determines the amount of reward to be delivered. The value is in microliters"
         },
         "probability": {
           "allOf": [
@@ -1063,7 +1063,7 @@
             "a": -1.0,
             "b": 5.0
           },
-          "description": "Determines the total amount of reward available left in the patch"
+          "description": "Determines the total amount of reward available left in the patch. The value is in microliters"
         },
         "depletion_rule": {
           "allOf": [
