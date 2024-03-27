@@ -2808,11 +2808,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         }
     
         /// <summary>
-        /// Determines the amount of reward to be delivered
+        /// Determines the amount of reward to be delivered. The value is in microliters
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("amount")]
-        [System.ComponentModel.DescriptionAttribute("Determines the amount of reward to be delivered")]
+        [System.ComponentModel.DescriptionAttribute("Determines the amount of reward to be delivered. The value is in microliters")]
         public RewardFunction Amount
         {
             get
@@ -2844,11 +2844,12 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
         }
     
         /// <summary>
-        /// Determines the total amount of reward available left in the patch
+        /// Determines the total amount of reward available left in the patch. The value is in microliters
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("available")]
-        [System.ComponentModel.DescriptionAttribute("Determines the total amount of reward available left in the patch")]
+        [System.ComponentModel.DescriptionAttribute("Determines the total amount of reward available left in the patch. The value is i" +
+            "n microliters")]
         public RewardFunction Available
         {
             get
