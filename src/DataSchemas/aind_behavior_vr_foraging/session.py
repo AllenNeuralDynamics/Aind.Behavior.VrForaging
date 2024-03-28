@@ -1,7 +1,6 @@
 from typing import Literal
 
-from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services import __version__
+from aind_behavior_services.session import AindBehaviorSessionModel, __version__
 from pydantic import BaseModel, Field
 
 

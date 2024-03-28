@@ -132,7 +132,7 @@ class DepletionRule(str, Enum):
 class PatchRewardFunction(AindModel):
     amount: RewardFunction = Field(
         default=ConstantFunction(value=1),
-        description="Determines the amount of reward to be delivered",
+        description="Determines the amount of reward to be delivered. The value is in microliters",
         validate_default=True,
     )
     probability: RewardFunction = Field(
@@ -142,7 +142,7 @@ class PatchRewardFunction(AindModel):
     )
     available: RewardFunction = Field(
         default=LinearFunction(mininum=0, a=-1, b=5),
-        description="Determines the total amount of reward available left in the patch",
+        description="Determines the total amount of reward available left in the patch. The value is in microliters",
         validate_default=True,
     )
     depletion_rule: DepletionRule = Field(default=DepletionRule.ON_CHOICE, description="Depletion")

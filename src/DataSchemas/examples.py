@@ -1,11 +1,20 @@
+import datetime
 import aind_behavior_services.task_logic.distributions as distributions
 import aind_behavior_services.rig as rig
+from aind_behavior_services.calibration.olfactometer import OlfactometerCalibration
+from aind_behavior_services.calibration.water_valve import (
+    WaterValveCalibration,
+    WaterValveCalibrationInput,
+    WaterValveCalibrationOutput,
+    Measurement,
+)
 
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
 
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
+from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
 from aind_behavior_vr_foraging.session import AindVrForagingSession
+
 
 #  Import the 3 necessary schemas: Rig, Session, and TaskLogic
 
@@ -22,8 +31,23 @@ example_session = AindVrForagingSession(
     skip_hardware_validation=False,
 )
 
-
 #  Create a new Rig instance
+
+
+# Create calibrations
+
+olfactometer_calibration = None
+
+water_valve_input = WaterValveCalibrationInput(
+    measurements=[
+        Measurement(valve_open_interval=0.2, valve_open_time=0.1, water_weight=[0.1, 0.1], repeat_count=200),
+        Measurement(valve_open_interval=0.2, valve_open_time=1.0, water_weight=[1, 1], repeat_count=200),
+    ]
+)
+water_valve_calibration = WaterValveCalibration(
+    input=water_valve_input, output=water_valve_input.calibrate_output(), calibration_date=datetime.datetime.now()
+)
+
 
 example_rig = AindVrForagingRig(
     rig_name="test_rig",
@@ -37,9 +61,13 @@ example_rig = AindVrForagingRig(
     harp_lickometer=rig.HarpLickometer(port_name="COM5"),
     harp_clock_generator=rig.HarpClockGenerator(port_name="COM6"),
     harp_analog_input=None,
+    harp_sniff_detector=rig.HarpSniffDetector(port_name="COM7"),
+    treadmill=Treadmill(
+        harp_board=rig.HarpTreadmill(port_name="COM8"),
+        settings=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800),
+    ),
     screen=rig.Screen(display_index=1),
-    treadmill=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800),
-    water_valve=rig.Valve(calibration_intercept=0, calibration_slope=1),
+    calibration=RigCalibration(water_valve=water_valve_calibration, olfactometer=olfactometer_calibration),
 )
 
 #  Create a new TaskLogic instance
