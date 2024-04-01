@@ -8975,16 +8975,16 @@ Item2 as Start
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="p20:IplImageVisualizer" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>AuxiliaryCamera0</Name>
+                    <Name>SideBodyCameraFrameEvent</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
+                    <Selector>Value.Image</Selector>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="p20:IplImageVisualizer" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>AuxiliaryCamera1</Name>
+                    <Name>AuxiliaryCamera0</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Value</Selector>
