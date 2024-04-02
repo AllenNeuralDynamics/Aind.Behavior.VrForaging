@@ -7,6 +7,11 @@
       "title": "AindGeneric",
       "type": "object"
     },
+    "BaseModel": {
+      "properties": {},
+      "title": "BaseModel",
+      "type": "object"
+    },
     "HarpAnalogInput": {
       "additionalProperties": false,
       "properties": {
@@ -44,12 +49,13 @@
           "default": null,
           "description": "Additional settings",
           "oneOf": [
-            {},
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
             {
               "type": "null"
             }
-          ],
-          "title": "Additional Settings"
+          ]
         }
       },
       "required": [
@@ -95,12 +101,13 @@
           "default": null,
           "description": "Additional settings",
           "oneOf": [
-            {},
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
             {
               "type": "null"
             }
-          ],
-          "title": "Additional Settings"
+          ]
         }
       },
       "required": [
@@ -146,12 +153,13 @@
           "default": null,
           "description": "Additional settings",
           "oneOf": [
-            {},
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
             {
               "type": "null"
             }
-          ],
-          "title": "Additional Settings"
+          ]
         }
       },
       "required": [
@@ -197,12 +205,13 @@
           "default": null,
           "description": "Additional settings",
           "oneOf": [
-            {},
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
             {
               "type": "null"
             }
-          ],
-          "title": "Additional Settings"
+          ]
         }
       },
       "required": [
@@ -248,12 +257,13 @@
           "default": null,
           "description": "Additional settings",
           "oneOf": [
-            {},
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
             {
               "type": "null"
             }
-          ],
-          "title": "Additional Settings"
+          ]
         }
       },
       "required": [
@@ -299,12 +309,13 @@
           "default": null,
           "description": "Additional settings",
           "oneOf": [
-            {},
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
             {
               "type": "null"
             }
-          ],
-          "title": "Additional Settings"
+          ]
         }
       },
       "required": [
@@ -350,12 +361,13 @@
           "default": null,
           "description": "Additional settings",
           "oneOf": [
-            {},
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
             {
               "type": "null"
             }
-          ],
-          "title": "Additional Settings"
+          ]
         }
       },
       "required": [
@@ -668,7 +680,6 @@
       "type": "object"
     },
     "WaterValveCalibrationInput": {
-      "additionalProperties": false,
       "properties": {
         "measurements": {
           "default": [],
@@ -684,7 +695,6 @@
       "type": "object"
     },
     "WaterValveCalibrationOutput": {
-      "additionalProperties": false,
       "description": "Output for water valve calibration class",
       "properties": {
         "interval_average": {
