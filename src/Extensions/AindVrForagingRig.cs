@@ -60,6 +60,50 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BaseModel
+    {
+    
+        public BaseModel()
+        {
+        }
+    
+        protected BaseModel(BaseModel other)
+        {
+        }
+    
+        public System.IObservable<BaseModel> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BaseModel(this)));
+        }
+    
+        public System.IObservable<BaseModel> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BaseModel(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpAnalogInput
     {
     
@@ -71,7 +115,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _portName;
     
-        private object _additionalSettings;
+        private BaseModel _additionalSettings;
     
         public HarpAnalogInput()
         {
@@ -152,7 +196,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public object AdditionalSettings
+        public BaseModel AdditionalSettings
         {
             get
             {
@@ -211,7 +255,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _portName;
     
-        private object _additionalSettings;
+        private BaseModel _additionalSettings;
     
         public HarpBehavior()
         {
@@ -279,7 +323,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public object AdditionalSettings
+        public BaseModel AdditionalSettings
         {
             get
             {
@@ -330,7 +374,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _portName;
     
-        private object _additionalSettings;
+        private BaseModel _additionalSettings;
     
         public HarpClockGenerator()
         {
@@ -411,7 +455,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public object AdditionalSettings
+        public BaseModel AdditionalSettings
         {
             get
             {
@@ -472,7 +516,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _portName;
     
-        private object _additionalSettings;
+        private BaseModel _additionalSettings;
     
         public HarpLickometer()
         {
@@ -553,7 +597,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public object AdditionalSettings
+        public BaseModel AdditionalSettings
         {
             get
             {
@@ -614,7 +658,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _portName;
     
-        private object _additionalSettings;
+        private BaseModel _additionalSettings;
     
         public HarpOlfactometer()
         {
@@ -695,7 +739,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public object AdditionalSettings
+        public BaseModel AdditionalSettings
         {
             get
             {
@@ -756,7 +800,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _portName;
     
-        private object _additionalSettings;
+        private BaseModel _additionalSettings;
     
         public HarpSniffDetector()
         {
@@ -837,7 +881,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public object AdditionalSettings
+        public BaseModel AdditionalSettings
         {
             get
             {
@@ -896,7 +940,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _portName;
     
-        private object _additionalSettings;
+        private BaseModel _additionalSettings;
     
         public HarpTreadmill()
         {
@@ -964,7 +1008,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public object AdditionalSettings
+        public BaseModel AdditionalSettings
         {
             get
             {
@@ -3033,6 +3077,11 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
             return Process<AindGeneric>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<BaseModel> source)
+        {
+            return Process<BaseModel>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpAnalogInput> source)
         {
             return Process<HarpAnalogInput>(source);
@@ -3143,6 +3192,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindGeneric>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BaseModel>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
