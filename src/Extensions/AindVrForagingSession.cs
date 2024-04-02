@@ -17,7 +17,7 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private string _describedBy = "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_session.json";
     
-        private string _schemaVersion = "0.1.0";
+        private string _schemaVersion = "0.1.1";
     
         private string _experiment;
     

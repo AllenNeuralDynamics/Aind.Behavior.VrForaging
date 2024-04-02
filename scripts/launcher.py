@@ -10,6 +10,7 @@ import secrets
 
 ALLOW_DIRTY = False
 CWD = os.getcwd()
+
 CONFIG_LIBRARY = r"\\allen\aind\scratch\vr-foraging\schemas"
 BONSAI_EXE = "bonsai/bonsai.exe"
 WORKFLOW_FILE = "src\\vr-foraging.bonsai"
@@ -262,9 +263,12 @@ BANNER = r"""
 Command-line-interface Launcher for AIND Behavior Experiments
 Press Control+C to exit at any time.
 """
-
+print("-------------------------------")
 print(BANNER)
-
+print(f"TaskLogic Schema Version: {AindVrForagingTaskLogic.model_construct().schema_version}")
+print(f"Rig Schema Version: {AindVrForagingRig.model_construct().schema_version}")
+print(f"Session Schema Version: {AindVrForagingSession.model_construct().schema_version}")
+print("-------------------------------")
 
 def prompt():
     try:
