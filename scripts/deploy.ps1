@@ -3,7 +3,7 @@ if (Test-Path -Path ./.venv) {
     Remove-Item ./.venv -Recurse -Force
 }
 &python -m venv ./.venv
-&.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 Write-Output "Installing python packages..."
 &pip install .
 Write-Output "Creating a Bonsai environment and installing packages..."
