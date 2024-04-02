@@ -10,6 +10,7 @@ import secrets
 
 ALLOW_DIRTY = False
 CWD = os.getcwd()
+
 CONFIG_LIBRARY = r"\\allen\aind\scratch\vr-foraging\schemas"
 BONSAI_EXE = "bonsai/bonsai.exe"
 WORKFLOW_FILE = "src\\vr-foraging.bonsai"
