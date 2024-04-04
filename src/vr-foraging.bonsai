@@ -2127,7 +2127,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>Behavior.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2157,7 +2157,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>Olfactometer.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2189,7 +2189,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>Lickometer.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2221,7 +2221,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>Treadmill.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2253,7 +2253,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>SniffDetector.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2279,7 +2279,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>ClockGenerator.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2311,7 +2311,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>AnalogInput.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2407,7 +2407,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>HarpCommands/Behavior.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2458,7 +2458,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>HarpCommands/Olfactometer.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2496,7 +2496,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>HarpCommands/Lickometer.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2534,7 +2534,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>HarpCommands/Treadmill.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2572,7 +2572,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>HarpCommands/SniffDetector.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2610,7 +2610,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>HarpCommands/ClockGenerator.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2648,7 +2648,7 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                     <LogName>HarpCommands/AnalogInput.harp</LogName>
                     <Extension>bin</Extension>
                   </Expression>
@@ -2744,6 +2744,7 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
                     <LogName>FaceCamera</LogName>
                     <Name>FaceCameraFrameEvent</Name>
+                    <Modality xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -2758,6 +2759,7 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
                     <LogName>TopBodyCamera</LogName>
                     <Name>TopBodyCameraFrameEvent</Name>
+                    <Modality xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -2772,6 +2774,7 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
                     <LogName>SideBodyCamera</LogName>
                     <Name>SideBodyCameraFrameEvent</Name>
+                    <Modality xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -2812,8 +2815,8 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Other</Modality>
-                    <LogName>Subject</LogName>
+                    <Modality xsi:nil="true" />
+                    <LogName>session_output</LogName>
                     <DeviceName>Config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
@@ -2825,8 +2828,8 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Other</Modality>
-                    <LogName>TaskLogic</LogName>
+                    <Modality xsi:nil="true" />
+                    <LogName>tasklogic_output</LogName>
                     <DeviceName>Config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
@@ -2838,8 +2841,8 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Other</Modality>
-                    <LogName>Rig</LogName>
+                    <Modality xsi:nil="true" />
+                    <LogName>rig_output</LogName>
                     <DeviceName>Config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
@@ -2849,8 +2852,8 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
                     <Modality xsi:nil="true" />
-                    <LogName>rig</LogName>
-                    <DeviceName />
+                    <LogName>rig_input</LogName>
+                    <DeviceName>Config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -2859,8 +2862,8 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
                     <Modality xsi:nil="true" />
-                    <LogName>session</LogName>
-                    <DeviceName />
+                    <LogName>session_input</LogName>
+                    <DeviceName>Config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -2869,8 +2872,8 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
                     <Modality xsi:nil="true" />
-                    <LogName>tasklogic</LogName>
-                    <DeviceName />
+                    <LogName>tasklogic_input</LogName>
+                    <DeviceName>Config</DeviceName>
                     <Extension>json</Extension>
                   </Expression>
                 </Nodes>
@@ -2908,7 +2911,7 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                     <OmitHeader>false</OmitHeader>
                     <Delimiter xsi:nil="true" />
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -2963,7 +2966,7 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSoftwareEventsDemux.bonsai">
                     <LoggerName>SoftwareEvents</LoggerName>
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="SubscribeSubject">
@@ -3008,7 +3011,7 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSoftwareEventsDemux.bonsai">
                     <LoggerName>UpdaterEvents</LoggerName>
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>Annotations</Name>
@@ -3057,7 +3060,7 @@ it.SynchQuadValue.Value as SynchQuadValue)</scr:Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSoftwareEventsDemux.bonsai">
                     <LoggerName>Annotations</LoggerName>
                     <SubjectName>LoggingRootPath</SubjectName>
-                    <Modality>Behavior</Modality>
+                    <Modality xsi:nil="true" />
                   </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>Metadata</Name>
@@ -3167,7 +3170,7 @@ Item2 as Position)</scr:Expression>
                           <OmitHeader>false</OmitHeader>
                           <Delimiter xsi:nil="true" />
                           <SubjectName>LoggingRootPath</SubjectName>
-                          <Modality>Behavior</Modality>
+                          <Modality xsi:nil="true" />
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
@@ -3199,7 +3202,7 @@ Value as IsStopped)</scr:Expression>
                           <OmitHeader>false</OmitHeader>
                           <Delimiter xsi:nil="true" />
                           <SubjectName>LoggingRootPath</SubjectName>
-                          <Modality>Behavior</Modality>
+                          <Modality xsi:nil="true" />
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
