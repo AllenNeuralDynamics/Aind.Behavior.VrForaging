@@ -14,15 +14,18 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.4.0",
-  "numpy",
-  "pandas",
-  "matplotlib",
-  "Pillow",
+  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.4.3",
   "gitpython"
 ]
 
 [project.optional-dependencies]
+
+analysis = [
+  "numpy",
+  "pandas",
+  "matplotlib",
+  "Pillow",
+]
 
 linters = [
     'codespell',
