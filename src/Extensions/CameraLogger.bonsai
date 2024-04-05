@@ -10,6 +10,7 @@
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="LogName" />
         <Property Name="Name" />
+        <Property Name="Modality" />
       </Expression>
       <Expression xsi:type="rx:Defer">
         <Name>CameraLogging</Name>
@@ -28,10 +29,12 @@
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="LogName" />
+              <Property Name="Modality" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateSpinnakerLoggingPath.bonsai">
               <SubjectName>LoggingRootPath</SubjectName>
-              <LogName>Camera</LogName>
+              <Modality xsi:nil="true" />
+              <LogName>FaceCamera</LogName>
               <EncodingFrameRate>60</EncodingFrameRate>
               <VideoExtension>avi</VideoExtension>
               <MetadataExtension>csv</MetadataExtension>
@@ -44,7 +47,7 @@
               <Property Name="Name" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name />
+              <Name>FaceCameraFrameEvent</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>CameraLoggerPath</Name>
