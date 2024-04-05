@@ -5,7 +5,6 @@ from typing import Annotated, Dict, List, Literal, Optional, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel
-from aind_data_schema.base import AindModel
 from pydantic import BaseModel, Field, RootModel
 
 from aind_behavior_vr_foraging import __version__
@@ -24,23 +23,23 @@ def scalar_value(value: float) -> distributions.Scalar:
     return distributions.Scalar(distribution_parameters=distributions.ScalarDistributionParameter(value=value))
 
 
-class Size(AindModel):
+class Size(BaseModel):
     width: float = Field(default=0, description="Width of the texture")
     height: float = Field(default=0, description="Height of the texture")
 
 
-class Vector2(AindModel):
+class Vector2(BaseModel):
     x: float = Field(default=0, description="X coordinate of the point")
     y: float = Field(default=0, description="Y coordinate of the point")
 
 
-class Vector3(AindModel):
+class Vector3(BaseModel):
     x: float = Field(default=0, description="X coordinate of the point")
     y: float = Field(default=0, description="Y coordinate of the point")
     z: float = Field(default=0, description="Z coordinate of the point")
 
 
-class Matrix2D(AindModel):
+class Matrix2D(BaseModel):
     data: List[List[float]] = Field([[1]], description="Defines a 2D matrix")
 
 
@@ -53,7 +52,7 @@ class NumericalUpdaterOperation(str, Enum):
     OFFSETPERCENTAGE = "OffsetPercentage"
 
 
-class NumericalUpdaterParameters(AindModel):
+class NumericalUpdaterParameters(BaseModel):
     initial_value: float = Field(default=0.0, description="Initial value of the parameter")
     increment: float = Field(default=0.0, description="Value to increment the parameter by")
     decrement: float = Field(default=0.0, description="Value to decrement the parameter by")
@@ -61,7 +60,7 @@ class NumericalUpdaterParameters(AindModel):
     maximum: float = Field(default=0.0, description="Minimum value of the parameter")
 
 
-class NumericalUpdater(AindModel):
+class NumericalUpdater(BaseModel):
     operation: NumericalUpdaterOperation = Field(
         default=NumericalUpdaterOperation.NONE, description="Operation to perform on the parameter"
     )
@@ -70,17 +69,17 @@ class NumericalUpdater(AindModel):
     )
 
 
-class Texture(AindModel):
+class Texture(BaseModel):
     name: str = Field(default="default", description="Name of the texture")
     size: Size = Field(default=Size(width=40, height=40), description="Size of the texture")
 
 
-class OdorSpecification(AindModel):
+class OdorSpecification(BaseModel):
     index: int = Field(..., ge=0, le=3, description="Index of the odor to be used")
     concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
 
 
-class OperantLogic(AindModel):
+class OperantLogic(BaseModel):
     is_operant: bool = Field(default=True, description="Will the trial implement operant logic")
     stop_duration: float = Field(
         default=0, ge=0, description="Duration (s) the animal must stop for to lock its choice"
@@ -93,7 +92,7 @@ class OperantLogic(AindModel):
     )
 
 
-class PowerFunction(AindModel):
+class PowerFunction(BaseModel):
     function_type: Literal["PowerFunction"] = "PowerFunction"
     mininum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=1, description="Maximum value of the function")
@@ -105,7 +104,7 @@ class PowerFunction(AindModel):
     d: float = Field(default=0, description="Coefficient d of the function: value = a * pow(b, c * x) + d")
 
 
-class LinearFunction(AindModel):
+class LinearFunction(BaseModel):
     function_type: Literal["LinearFunction"] = "LinearFunction"
     mininum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=9999, description="Maximum value of the function")
@@ -113,7 +112,7 @@ class LinearFunction(AindModel):
     b: float = Field(default=0, description="Coefficient b of the function: value = a * x + b")
 
 
-class ConstantFunction(AindModel):
+class ConstantFunction(BaseModel):
     function_type: Literal["ConstantFunction"] = "ConstantFunction"
     value: float = Field(default=1, description="Value of the function")
 
@@ -129,7 +128,7 @@ class DepletionRule(str, Enum):
     ON_DISTANCE = "OnDistance"
 
 
-class PatchRewardFunction(AindModel):
+class PatchRewardFunction(BaseModel):
     amount: RewardFunction = Field(
         default=ConstantFunction(value=1),
         description="Determines the amount of reward to be delivered. The value is in microliters",
@@ -148,7 +147,7 @@ class PatchRewardFunction(AindModel):
     depletion_rule: DepletionRule = Field(default=DepletionRule.ON_CHOICE, description="Depletion")
 
 
-class RewardSpecification(AindModel):
+class RewardSpecification(BaseModel):
     operant_logic: Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
     delay: distributions.Distribution = Field(
         default=scalar_value(0),
@@ -167,11 +166,11 @@ class VirtualSiteLabels(str, Enum):
     INTERSITE = "InterSite"
 
 
-class RenderSpecification(AindModel):
+class RenderSpecification(BaseModel):
     contrast: Optional[float] = Field(default=None, ge=0, le=1, description="Contrast of the texture")
 
 
-class VirtualSiteGenerator(AindModel):
+class VirtualSiteGenerator(BaseModel):
     render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="Contrast of the environment"
     )
@@ -181,7 +180,7 @@ class VirtualSiteGenerator(AindModel):
     )
 
 
-class VirtualSiteGeneration(AindModel):
+class VirtualSiteGeneration(BaseModel):
     inter_site: VirtualSiteGenerator = Field(
         VirtualSiteGenerator(), description="Generator of the inter-site virtual sites"
     )
@@ -193,7 +192,7 @@ class VirtualSiteGeneration(AindModel):
     )
 
 
-class VirtualSite(AindModel):
+class VirtualSite(BaseModel):
     id: int = Field(default=0, ge=0, description="Id of the virtual site")
     label: VirtualSiteLabels = Field(VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length: float = Field(20, description="Length of the virtual site (cm)")
@@ -209,7 +208,7 @@ class VirtualSite(AindModel):
     )
 
 
-class PatchStatistics(AindModel):
+class PatchStatistics(BaseModel):
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
     odor_specification: Optional[OdorSpecification] = Field(
@@ -223,14 +222,14 @@ class PatchStatistics(AindModel):
     )
 
 
-class WallTextures(AindModel):
+class WallTextures(BaseModel):
     floor: Texture = Field(..., description="The texture of the floor")
     ceiling: Texture = Field(..., description="The texture of the ceiling")
     left: Texture = Field(..., description="The texture of the left")
     right: Texture = Field(..., description="The texture of the right")
 
 
-class VisualCorridor(AindModel):
+class VisualCorridor(BaseModel):
     id: int = Field(default=0, ge=0, description="Id of the visual corridor object")
     size: Size = Field(default=Size(width=40, height=40), description="Size of the corridor (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the corridor (cm)")
@@ -238,7 +237,7 @@ class VisualCorridor(AindModel):
     textures: WallTextures = Field(..., description="The textures of the corridor")
 
 
-class EnvironmentStatistics(AindModel):
+class EnvironmentStatistics(BaseModel):
     patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches")
     transition_matrix: Matrix2D = Field(default=Matrix2D(), description="Transition matrix between patches")
     first_state: Optional[int] = Field(
@@ -246,20 +245,20 @@ class EnvironmentStatistics(AindModel):
     )
 
 
-class ServoMotor(AindModel):
+class ServoMotor(BaseModel):
     period: int = Field(default=20000, ge=1, description="Period", units="us")
     min_pulse_duration: int = Field(default=1000, ge=1, description="Minimum pulse duration", units="us")
     max_pulse_duration: int = Field(default=2000, ge=1, description="Maximum pulse duration", units="us")
     default_pulse_duration: int = Field(default=2000, ge=1, description="Default pulse duration", units="us")
 
 
-class MovableSpoutControl(AindModel):
+class MovableSpoutControl(BaseModel):
     enabled: bool = Field(default=False, description="Whether the movable spout is enabled")
     time_to_collect_after_reward: float = Field(default=1, ge=0, description="Time (s) to collect after reward")
     servo_motor: ServoMotor = Field(default=ServoMotor(), description="Servo motor settings")
 
 
-class OdorControl(AindModel):
+class OdorControl(BaseModel):
     valve_max_open_time: float = Field(
         default=10, ge=0, description="Maximum time (s) the valve can be open continuously"
     )
@@ -272,7 +271,7 @@ class OdorControl(AindModel):
     )
 
 
-class PositionControl(AindModel):
+class PositionControl(BaseModel):
     gain: Vector3 = Field(default=Vector3(x=1, y=1, z=1), description="Gain of the position control.")
     initial_position: Vector3 = Field(default=Vector3(x=0, y=2.56, z=0), description="Gain of the position control.")
     frequency_filter_cutoff: float = Field(
@@ -286,12 +285,12 @@ class PositionControl(AindModel):
     )
 
 
-class AudioControl(AindModel):
+class AudioControl(BaseModel):
     duration: float = Field(default=0.2, ge=0, description="Duration", units="s")
     frequency: float = Field(default=1000, ge=100, description="Frequency", units="Hz")
 
 
-class OperationControl(AindModel):
+class OperationControl(BaseModel):
     movable_spout_control: MovableSpoutControl = Field(
         default=MovableSpoutControl(), description="Control of the movable spout"
     )
@@ -310,7 +309,7 @@ class TaskMode(str, Enum):
     FORAGING = "FORAGING"
 
 
-class TaskModeSettingsBase(AindModel):
+class TaskModeSettingsBase(BaseModel):
     task_mode: TaskMode = Field(default=TaskMode.FORAGING, description="Stage of the task")
 
 
