@@ -11,6 +11,6 @@ if __name__ == "__main__":
         data_dir=r"C:/Data",
         remote_data_dir=None,
         config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging",
-        workflow=r"./src/vr-foraging.bonsai"
+        workflow=r"./src/vr-foraging.bonsai",
     )
     launcher_cli.run()
