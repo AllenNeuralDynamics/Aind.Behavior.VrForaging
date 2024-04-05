@@ -10,7 +10,7 @@ from aind_behavior_services.rig import AindBehaviorRigModel
 import aind_behavior_services.calibration.olfactometer as oc
 import aind_behavior_services.calibration.water_valve as wvc
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 TreadmillSettings = rig.Treadmill
 
