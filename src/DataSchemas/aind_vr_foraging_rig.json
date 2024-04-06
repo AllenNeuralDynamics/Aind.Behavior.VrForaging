@@ -841,8 +841,8 @@
       "type": "string"
     },
     "schema_version": {
-      "const": "0.2.1",
-      "default": "0.2.1",
+      "const": "0.2.2",
+      "default": "0.2.2",
       "title": "Schema Version",
       "type": "string"
     },
@@ -937,12 +937,15 @@
       "description": "Treadmill settings"
     },
     "harp_sniff_detector": {
-      "allOf": [
+      "description": "Sniff detector settings",
+      "oneOf": [
         {
           "$ref": "#/definitions/HarpSniffDetector"
+        },
+        {
+          "type": "null"
         }
-      ],
-      "description": "Sniff detector settings"
+      ]
     },
     "face_camera": {
       "allOf": [
