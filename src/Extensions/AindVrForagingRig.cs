@@ -2478,7 +2478,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private string _describedBy = "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json";
     
-        private string _schemaVersion = "0.2.1";
+        private string _schemaVersion = "0.2.2";
     
         private string _computerName;
     
@@ -2500,7 +2500,7 @@ namespace AindVrForagingDataSchema.AindVrForagingRig
     
         private AindBehaviorVrForagingRigTreadmill _treadmill = new AindBehaviorVrForagingRigTreadmill();
     
-        private HarpSniffDetector _harpSniffDetector = new HarpSniffDetector();
+        private HarpSniffDetector _harpSniffDetector;
     
         private SpinnakerCamera _faceCamera = new SpinnakerCamera();
     
