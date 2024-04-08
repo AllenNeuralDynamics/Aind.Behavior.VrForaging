@@ -36,18 +36,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -87,18 +75,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -138,18 +114,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -189,18 +153,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -240,18 +192,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -291,18 +231,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -342,18 +270,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -508,6 +424,37 @@
     },
     "Screen": {
       "properties": {
+        "device_type": {
+          "const": "Screen",
+          "default": "Screen",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "display_index": {
           "default": 1,
           "description": "Display index",
@@ -544,6 +491,37 @@
     },
     "SpinnakerCamera": {
       "properties": {
+        "device_type": {
+          "const": "SpinnakerCamera",
+          "default": "SpinnakerCamera",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "serial_number": {
           "description": "Camera serial number",
           "title": "Serial Number",
@@ -765,6 +743,37 @@
     },
     "WebCamera": {
       "properties": {
+        "device_type": {
+          "const": "WebCamera",
+          "default": "WebCamera",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "index": {
           "default": 0,
           "description": "Camera index",
@@ -834,12 +843,6 @@
     }
   },
   "properties": {
-    "describedBy": {
-      "const": "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json",
-      "default": "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json",
-      "title": "Describedby",
-      "type": "string"
-    },
     "schema_version": {
       "const": "0.2.2",
       "default": "0.2.2",
@@ -858,6 +861,9 @@
     },
     "auxiliary_camera0": {
       "default": {
+        "device_type": "WebCamera",
+        "additional_settings": null,
+        "calibration": null,
         "index": 0
       },
       "description": "Auxiliary camera 0",
@@ -872,6 +878,9 @@
     },
     "auxiliary_camera1": {
       "default": {
+        "device_type": "WebCamera",
+        "additional_settings": null,
+        "calibration": null,
         "index": 1
       },
       "description": "Auxiliary camera 1",
@@ -986,6 +995,9 @@
         }
       ],
       "default": {
+        "device_type": "Screen",
+        "additional_settings": null,
+        "calibration": null,
         "display_index": 1,
         "target_render_frequency": 60.0,
         "target_update_frequency": 120.0,
