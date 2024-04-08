@@ -3,9 +3,9 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.AindVrForagingSession;assembly=Extensions"
-                 xmlns:p2="clr-namespace:AindVrForagingDataSchema.AindVrForagingRig;assembly=Extensions"
-                 xmlns:p3="clr-namespace:AindVrForagingDataSchema.AindVrForagingTask;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.Session;assembly=Extensions"
+                 xmlns:p2="clr-namespace:AindVrForagingDataSchema.Rig;assembly=Extensions"
+                 xmlns:p3="clr-namespace:AindVrForagingDataSchema.TaskLogic;assembly=Extensions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
@@ -51,7 +51,7 @@
         <Name>RawSubjectSchema</Name>
       </Expression>
       <Expression xsi:type="p1:DeserializeFromJson">
-        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindVrForagingSession" />
+        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindBehaviorSessionModel" />
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Take">

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 
-namespace AindVrForagingDataSchema.AindVrForagingTask
+namespace AindVrForagingDataSchema.TaskLogic
 {
 
     partial class RewardFunction
