@@ -30,11 +30,6 @@ class RigCalibration(BaseModel):
 
 
 class AindVrForagingRig(AindBehaviorRigModel):
-    describedBy: Literal[
-        "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json"
-    ] = Field(
-        "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json"
-    )
     schema_version: Literal[__version__] = __version__
     auxiliary_camera0: Optional[rig.WebCamera] = Field(default=rig.WebCamera(index=0), description="Auxiliary camera 0")
     auxiliary_camera1: Optional[rig.WebCamera] = Field(default=rig.WebCamera(index=1), description="Auxiliary camera 1")
