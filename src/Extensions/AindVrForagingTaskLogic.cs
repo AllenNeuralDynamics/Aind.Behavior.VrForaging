@@ -5,7 +5,7 @@
 //----------------------
 
 
-namespace AindVrForagingDataSchema.AindVrForagingTask
+namespace AindVrForagingDataSchema.TaskLogic
 {
     #pragma warning disable // Disable all warnings
 
@@ -2054,7 +2054,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class NumericalUpdater
     {
     
-        private NumericalUpdaterOperation _operation = AindVrForagingDataSchema.AindVrForagingTask.NumericalUpdaterOperation.None;
+        private NumericalUpdaterOperation _operation = AindVrForagingDataSchema.TaskLogic.NumericalUpdaterOperation.None;
     
         private NumericalUpdaterParameters _parameters;
     
@@ -2793,7 +2793,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private RewardFunction _available;
     
-        private DepletionRule _depletionRule = AindVrForagingDataSchema.AindVrForagingTask.DepletionRule.OnChoice;
+        private DepletionRule _depletionRule = AindVrForagingDataSchema.TaskLogic.DepletionRule.OnChoice;
     
         public PatchRewardFunction()
         {
@@ -4849,7 +4849,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private int _id = 0;
     
-        private VirtualSiteLabels _label = AindVrForagingDataSchema.AindVrForagingTask.VirtualSiteLabels.Unspecified;
+        private VirtualSiteLabels _label = AindVrForagingDataSchema.TaskLogic.VirtualSiteLabels.Unspecified;
     
         private double _length = 20D;
     
@@ -5154,7 +5154,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         private RenderSpecification _renderSpecification;
     
-        private VirtualSiteLabels _label = AindVrForagingDataSchema.AindVrForagingTask.VirtualSiteLabels.Unspecified;
+        private VirtualSiteLabels _label = AindVrForagingDataSchema.TaskLogic.VirtualSiteLabels.Unspecified;
     
         private Distribution _lengthDistribution;
     
@@ -5564,9 +5564,7 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     public partial class AindVrForagingTaskLogic
     {
     
-        private string _describedBy = "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_task.json";
-    
-        private string _schemaVersion = "0.2.1";
+        private string _schemaVersion = "0.3.0";
     
         private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     
@@ -5582,25 +5580,11 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         protected AindVrForagingTaskLogic(AindVrForagingTaskLogic other)
         {
-            _describedBy = other._describedBy;
             _schemaVersion = other._schemaVersion;
             _updaters = other._updaters;
             _environmentStatistics = other._environmentStatistics;
             _taskModeSettings = other._taskModeSettings;
             _operationControl = other._operationControl;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("describedBy")]
-        public string DescribedBy
-        {
-            get
-            {
-                return _describedBy;
-            }
-            set
-            {
-                _describedBy = value;
-            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
@@ -5700,7 +5684,6 @@ namespace AindVrForagingDataSchema.AindVrForagingTask
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("describedBy = " + _describedBy + ", ");
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
             stringBuilder.Append("updaters = " + _updaters + ", ");
             stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
