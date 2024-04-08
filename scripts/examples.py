@@ -12,13 +12,13 @@ import aind_behavior_vr_foraging.task_logic as vr_task_logic
 
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
-from aind_behavior_vr_foraging.session import AindVrForagingSession
+from aind_behavior_vr_foraging.session import AindBehaviorSessionModel
 
 
 def main():
     #  Create a new Session instance
 
-    example_session = AindVrForagingSession(
+    example_session = AindBehaviorSessionModel(
         experiment="AindVrForaging",
         root_path="c://",
         remote_path="c://remote",
