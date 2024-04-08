@@ -14,7 +14,7 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.5.0",
+  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.6.0",
 ]
 
 [project.optional-dependencies]
