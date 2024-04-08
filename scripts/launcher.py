@@ -9,7 +9,7 @@ if __name__ == "__main__":
         session_schema=AindVrForagingSession,
         task_logic_schema=AindVrForagingTaskLogic,
         data_dir=r"C:/Data",
-        remote_data_dir=None,
+        remote_data_dir=r"\\allen\aind\scratch\vr-foraging\data",
         config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging",
         workflow=r"./src/vr-foraging.bonsai"
     )
