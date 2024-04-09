@@ -987,7 +987,7 @@ Item2.Light as Light)</scr:Expression>
                     <Name>RigSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>HarpOlfactometer</Selector>
+                    <Selector>HarpSniffDetector</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
