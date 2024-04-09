@@ -2771,7 +2771,7 @@ namespace AindVrForagingDataSchema.Rig
         /// Sniff detector settings
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_sniff_detector", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_sniff_detector")]
         [System.ComponentModel.DescriptionAttribute("Sniff detector settings")]
         public HarpSniffDetector HarpSniffDetector
         {

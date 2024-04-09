@@ -39,7 +39,7 @@ class AindVrForagingRig(AindBehaviorRigModel):
     harp_clock_generator: rig.HarpClockGenerator = Field(..., description="Harp clock generator")
     harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
     treadmill: Treadmill = Field(..., description="Treadmill settings")
-    harp_sniff_detector: Optional[rig.HarpSniffDetector] = Field(..., description="Sniff detector settings")
+    harp_sniff_detector: Optional[rig.HarpSniffDetector] = Field(None, description="Sniff detector settings")
     face_camera: rig.SpinnakerCamera = Field(..., description="Face camera")
     top_body_camera: Optional[rig.SpinnakerCamera] = Field(default=None, description="Top body camera")
     side_body_camera: Optional[rig.SpinnakerCamera] = Field(default=None, description="Side body camera")
