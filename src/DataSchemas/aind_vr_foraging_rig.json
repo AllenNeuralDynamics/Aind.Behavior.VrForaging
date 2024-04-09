@@ -946,6 +946,7 @@
       "description": "Treadmill settings"
     },
     "harp_sniff_detector": {
+      "default": null,
       "description": "Sniff detector settings",
       "oneOf": [
         {
@@ -1022,7 +1023,6 @@
     "harp_lickometer",
     "harp_clock_generator",
     "treadmill",
-    "harp_sniff_detector",
     "face_camera",
     "calibration"
   ],
