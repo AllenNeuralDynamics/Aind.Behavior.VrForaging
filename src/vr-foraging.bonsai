@@ -3,9 +3,9 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.AindVrForagingSession;assembly=Extensions"
-                 xmlns:p2="clr-namespace:AindVrForagingDataSchema.AindVrForagingRig;assembly=Extensions"
-                 xmlns:p3="clr-namespace:AindVrForagingDataSchema.AindVrForagingTask;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.Session;assembly=Extensions"
+                 xmlns:p2="clr-namespace:AindVrForagingDataSchema.Rig;assembly=Extensions"
+                 xmlns:p3="clr-namespace:AindVrForagingDataSchema.TaskLogic;assembly=Extensions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
@@ -51,7 +51,7 @@
         <Name>RawSubjectSchema</Name>
       </Expression>
       <Expression xsi:type="p1:DeserializeFromJson">
-        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindVrForagingSession" />
+        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindBehaviorSessionModel" />
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Take">
@@ -977,23 +977,21 @@ Item2.Light as Light)</scr:Expression>
               <Name>HarpDevices</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="Annotation">
-                    <Name>PinOut</Name>
-                    <Text><![CDATA[]]></Text>
-                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpOlfactometerDevice.bonsai">
                     <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
-                  </Expression>
-                  <Expression xsi:type="Annotation">
-                    <Name>PinOut</Name>
-                    <Text><![CDATA[]]></Text>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpSniffDetector.bonsai">
                     <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
                   </Expression>
-                  <Expression xsi:type="Annotation">
-                    <Name>PinOut</Name>
-                    <Text><![CDATA[]]></Text>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RigSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>HarpSniffDetector</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpTreadmill.bonsai">
                     <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
@@ -1014,16 +1012,8 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
-                  <Expression xsi:type="Annotation">
-                    <Name>PinOut</Name>
-                    <Text><![CDATA[]]></Text>
-                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpLickometerDevice.bonsai">
                     <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
-                  </Expression>
-                  <Expression xsi:type="Annotation">
-                    <Name>PinOut</Name>
-                    <Text><![CDATA[]]></Text>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpClockSynchronizerDevice.bonsai">
                     <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
@@ -1043,21 +1033,20 @@ Item2.Light as Light)</scr:Expression>
                   </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="5" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="11" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="6" To="12" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source2" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="16" To="20" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source2" />
+                  <Edge From="15" To="19" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source2" />
+                  <Edge From="18" To="19" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2329,16 +2318,6 @@ Item2.Light as Light)</scr:Expression>
                       <harp:MessageType xsi:nil="true" />
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RigSchema</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>HarpAnalogInput</Selector>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:SubscribeWhen" />
-                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -2376,10 +2355,6 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="38" To="41" Label="Source1" />
                   <Edge From="39" To="40" Label="Source1" />
                   <Edge From="40" To="41" Label="Source2" />
-                  <Edge From="41" To="45" Label="Source1" />
-                  <Edge From="42" To="43" Label="Source1" />
-                  <Edge From="43" To="44" Label="Source1" />
-                  <Edge From="44" To="45" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>

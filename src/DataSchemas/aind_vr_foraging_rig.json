@@ -1,19 +1,11 @@
 {
   "definitions": {
-    "AindGeneric": {
-      "additionalProperties": true,
-      "description": "Base class for generic types that can be used in AIND schema",
-      "properties": {},
-      "title": "AindGeneric",
-      "type": "object"
-    },
     "BaseModel": {
       "properties": {},
       "title": "BaseModel",
       "type": "object"
     },
     "HarpAnalogInput": {
-      "additionalProperties": false,
       "properties": {
         "who_am_i": {
           "const": 1236,
@@ -44,18 +36,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -65,7 +45,6 @@
       "type": "object"
     },
     "HarpBehavior": {
-      "additionalProperties": false,
       "properties": {
         "who_am_i": {
           "const": 1216,
@@ -96,18 +75,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -117,7 +84,6 @@
       "type": "object"
     },
     "HarpClockGenerator": {
-      "additionalProperties": false,
       "properties": {
         "who_am_i": {
           "const": 1158,
@@ -148,18 +114,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -169,7 +123,6 @@
       "type": "object"
     },
     "HarpLickometer": {
-      "additionalProperties": false,
       "properties": {
         "who_am_i": {
           "const": 1400,
@@ -200,18 +153,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -221,7 +162,6 @@
       "type": "object"
     },
     "HarpOlfactometer": {
-      "additionalProperties": false,
       "properties": {
         "who_am_i": {
           "const": 1140,
@@ -252,18 +192,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -273,7 +201,6 @@
       "type": "object"
     },
     "HarpSniffDetector": {
-      "additionalProperties": false,
       "properties": {
         "who_am_i": {
           "const": 1401,
@@ -304,18 +231,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -325,7 +240,6 @@
       "type": "object"
     },
     "HarpTreadmill": {
-      "additionalProperties": false,
       "properties": {
         "who_am_i": {
           "const": 1402,
@@ -356,18 +270,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -383,15 +285,13 @@
           "description": "Time between two consecutive valve openings (s)",
           "exclusiveMinimum": 0.0,
           "title": "Valve open interval",
-          "type": "number",
-          "units": "s"
+          "type": "number"
         },
         "valve_open_time": {
           "description": "Valve open interval (s)",
           "exclusiveMinimum": 0.0,
           "title": "Valve open time",
-          "type": "number",
-          "units": "s"
+          "type": "number"
         },
         "water_weight": {
           "description": "Weight of water delivered (g)",
@@ -401,8 +301,7 @@
           },
           "minItems": 1,
           "title": "Water weight",
-          "type": "array",
-          "units": "g"
+          "type": "array"
         },
         "repeat_count": {
           "description": "Number of times the valve opened.",
@@ -421,45 +320,48 @@
       "type": "object"
     },
     "OlfactometerCalibration": {
-      "additionalProperties": false,
       "description": "Olfactometer calibration class",
       "properties": {
-        "calibration_date": {
-          "format": "date-time",
-          "title": "Date and time of calibration",
-          "type": "string"
-        },
         "device_name": {
           "default": "Olfactometer",
-          "description": "Must match a device name in rig/instrument",
+          "description": "Name of the device being calibrated",
           "title": "Device name",
           "type": "string"
+        },
+        "input": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibrationInput"
+            }
+          ],
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibrationOutput"
+            }
+          ],
+          "title": "Output of the calibration"
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
         },
         "description": {
           "const": "Calibration of the harp olfactometer device",
           "default": "Calibration of the harp olfactometer device",
           "title": "Description",
           "type": "string"
-        },
-        "input": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/AindGeneric"
-            }
-          ],
-          "default": {},
-          "description": "Calibration input",
-          "title": "inputs"
-        },
-        "output": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/AindGeneric"
-            }
-          ],
-          "default": {},
-          "description": "Calibration output",
-          "title": "outputs"
         },
         "notes": {
           "default": null,
@@ -475,9 +377,20 @@
         }
       },
       "required": [
-        "calibration_date"
+        "input",
+        "output"
       ],
       "title": "OlfactometerCalibration",
+      "type": "object"
+    },
+    "OlfactometerCalibrationInput": {
+      "properties": {},
+      "title": "OlfactometerCalibrationInput",
+      "type": "object"
+    },
+    "OlfactometerCalibrationOutput": {
+      "properties": {},
+      "title": "OlfactometerCalibrationOutput",
       "type": "object"
     },
     "RigCalibration": {
@@ -510,8 +423,38 @@
       "type": "object"
     },
     "Screen": {
-      "additionalProperties": false,
       "properties": {
+        "device_type": {
+          "const": "Screen",
+          "default": "Screen",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "display_index": {
           "default": 1,
           "description": "Display index",
@@ -547,8 +490,38 @@
       "type": "object"
     },
     "SpinnakerCamera": {
-      "additionalProperties": false,
       "properties": {
+        "device_type": {
+          "const": "SpinnakerCamera",
+          "default": "SpinnakerCamera",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "serial_number": {
           "description": "Camera serial number",
           "title": "Serial Number",
@@ -576,8 +549,7 @@
           "description": "Exposure time",
           "minimum": 100,
           "title": "Exposure",
-          "type": "integer",
-          "units": "us"
+          "type": "integer"
         },
         "frame_rate": {
           "default": 30,
@@ -585,16 +557,14 @@
           "maximum": 350,
           "minimum": 1,
           "title": "Frame Rate",
-          "type": "integer",
-          "units": "Hz"
+          "type": "integer"
         },
         "gain": {
           "default": 0,
           "description": "Gain",
           "minimum": 0.0,
           "title": "Gain",
-          "type": "number",
-          "units": "dB"
+          "type": "number"
         }
       },
       "required": [
@@ -622,24 +592,12 @@
       "title": "TreadmillBoard"
     },
     "WaterValveCalibration": {
-      "additionalProperties": false,
       "description": "Water valve calibration class",
       "properties": {
-        "calibration_date": {
-          "format": "date-time",
-          "title": "Date and time of calibration",
-          "type": "string"
-        },
         "device_name": {
           "default": "WaterValve",
-          "description": "Must match a device name in rig/instrument",
+          "description": "Name of the device being calibrated",
           "title": "Device name",
-          "type": "string"
-        },
-        "description": {
-          "const": "Calibration of the water valve delivery system",
-          "default": "Calibration of the water valve delivery system",
-          "title": "Description",
           "type": "string"
         },
         "input": {
@@ -658,6 +616,25 @@
           ],
           "title": "Output of the calibration."
         },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "const": "Calibration of the water valve delivery system",
+          "default": "Calibration of the water valve delivery system",
+          "title": "Description",
+          "type": "string"
+        },
         "notes": {
           "default": null,
           "oneOf": [
@@ -672,7 +649,6 @@
         }
       },
       "required": [
-        "calibration_date",
         "input",
         "output"
       ],
@@ -712,20 +688,17 @@
               "type": "null"
             }
           ],
-          "title": "Interval average",
-          "units": "s"
+          "title": "Interval average"
         },
         "slope": {
           "description": "Slope of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)",
           "title": "Regression slope",
-          "type": "number",
-          "units": "g/s"
+          "type": "number"
         },
         "offset": {
           "description": "Offset of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)",
           "title": "Regression offset",
-          "type": "number",
-          "units": "g"
+          "type": "number"
         },
         "r2": {
           "default": null,
@@ -758,8 +731,7 @@
               "type": "null"
             }
           ],
-          "title": "Valid domain",
-          "units": "s"
+          "title": "Valid domain"
         }
       },
       "required": [
@@ -770,8 +742,38 @@
       "type": "object"
     },
     "WebCamera": {
-      "additionalProperties": false,
       "properties": {
+        "device_type": {
+          "const": "WebCamera",
+          "default": "WebCamera",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "index": {
           "default": 0,
           "description": "Camera index",
@@ -784,15 +786,13 @@
       "type": "object"
     },
     "aind_behavior_services__rig__Treadmill": {
-      "additionalProperties": false,
       "properties": {
         "wheel_diameter": {
           "default": 15,
           "description": "Wheel diameter",
           "minimum": 0.0,
           "title": "Wheel Diameter",
-          "type": "number",
-          "units": "cm"
+          "type": "number"
         },
         "pulses_per_revolution": {
           "default": 28800,
@@ -842,17 +842,10 @@
       "type": "object"
     }
   },
-  "additionalProperties": false,
   "properties": {
-    "describedBy": {
-      "const": "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json",
-      "default": "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json",
-      "title": "Describedby",
-      "type": "string"
-    },
     "schema_version": {
-      "const": "0.2.0",
-      "default": "0.2.0",
+      "const": "0.2.2",
+      "default": "0.2.2",
       "title": "Schema Version",
       "type": "string"
     },
@@ -868,6 +861,9 @@
     },
     "auxiliary_camera0": {
       "default": {
+        "device_type": "WebCamera",
+        "additional_settings": null,
+        "calibration": null,
         "index": 0
       },
       "description": "Auxiliary camera 0",
@@ -882,6 +878,9 @@
     },
     "auxiliary_camera1": {
       "default": {
+        "device_type": "WebCamera",
+        "additional_settings": null,
+        "calibration": null,
         "index": 1
       },
       "description": "Auxiliary camera 1",
@@ -947,12 +946,16 @@
       "description": "Treadmill settings"
     },
     "harp_sniff_detector": {
-      "allOf": [
+      "default": null,
+      "description": "Sniff detector settings",
+      "oneOf": [
         {
           "$ref": "#/definitions/HarpSniffDetector"
+        },
+        {
+          "type": "null"
         }
-      ],
-      "description": "Sniff detector settings"
+      ]
     },
     "face_camera": {
       "allOf": [
@@ -993,6 +996,9 @@
         }
       ],
       "default": {
+        "device_type": "Screen",
+        "additional_settings": null,
+        "calibration": null,
         "display_index": 1,
         "target_render_frequency": 60.0,
         "target_update_frequency": 120.0,
@@ -1017,7 +1023,6 @@
     "harp_lickometer",
     "harp_clock_generator",
     "treadmill",
-    "harp_sniff_detector",
     "face_camera",
     "calibration"
   ],

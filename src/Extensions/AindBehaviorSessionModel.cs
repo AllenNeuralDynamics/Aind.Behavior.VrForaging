@@ -5,17 +5,15 @@
 //----------------------
 
 
-namespace AindVrForagingDataSchema.AindVrForagingSession
+namespace AindVrForagingDataSchema.Session
 {
     #pragma warning disable // Disable all warnings
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class AindVrForagingSession
+    public partial class AindBehaviorSessionModel
     {
-    
-        private string _describedBy = "https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_session.json";
     
         private string _schemaVersion = "0.1.1";
     
@@ -41,13 +39,12 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     
         private bool _skipHardwareValidation = false;
     
-        public AindVrForagingSession()
+        public AindBehaviorSessionModel()
         {
         }
     
-        protected AindVrForagingSession(AindVrForagingSession other)
+        protected AindBehaviorSessionModel(AindBehaviorSessionModel other)
         {
-            _describedBy = other._describedBy;
             _schemaVersion = other._schemaVersion;
             _experiment = other._experiment;
             _date = other._date;
@@ -60,19 +57,6 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             _commitHash = other._commitHash;
             _allowDirtyRepo = other._allowDirtyRepo;
             _skipHardwareValidation = other._skipHardwareValidation;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("describedBy")]
-        public string DescribedBy
-        {
-            get
-            {
-                return _describedBy;
-            }
-            set
-            {
-                _describedBy = value;
-            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
@@ -278,19 +262,18 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             }
         }
     
-        public System.IObservable<AindVrForagingSession> Process()
+        public System.IObservable<AindBehaviorSessionModel> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingSession(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorSessionModel(this)));
         }
     
-        public System.IObservable<AindVrForagingSession> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindBehaviorSessionModel> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindVrForagingSession(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorSessionModel(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("describedBy = " + _describedBy + ", ");
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
             stringBuilder.Append("experiment = " + _experiment + ", ");
             stringBuilder.Append("date = " + _date + ", ");
@@ -336,9 +319,9 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
-        public System.IObservable<string> Process(System.IObservable<AindVrForagingSession> source)
+        public System.IObservable<string> Process(System.IObservable<AindBehaviorSessionModel> source)
         {
-            return Process<AindVrForagingSession>(source);
+            return Process<AindBehaviorSessionModel>(source);
         }
     }
 
@@ -350,13 +333,13 @@ namespace AindVrForagingDataSchema.AindVrForagingSession
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingSession>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorSessionModel>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
         public DeserializeFromJson()
         {
-            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingSession>();
+            Type = new Bonsai.Expressions.TypeMapping<AindBehaviorSessionModel>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
