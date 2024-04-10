@@ -2231,14 +2231,55 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpSniffDetectorEvents</Name>
                   </Expression>
-                  <Expression xsi:type="harp:FilterRegister">
-                    <harp:FilterType>Exclude</harp:FilterType>
-                    <harp:Register xsi:type="harp:FilterRegisterAddress">
-                      <harp:Address>15</harp:Address>
-                    </harp:Register>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>FilterExpectedRegisters</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Address</Selector>
+                        </Expression>
+                        <Expression xsi:type="LessThan">
+                          <Operand xsi:type="IntProperty">
+                            <Value>15</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>32</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>33</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="BitwiseOr" />
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source1" />
+                        <Edge From="2" To="5" Label="Source1" />
+                        <Edge From="3" To="5" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source3" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p14:GroupByRegister" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Retry" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
@@ -2343,18 +2384,19 @@ Item2.Light as Light)</scr:Expression>
                   <Edge From="23" To="24" Label="Source2" />
                   <Edge From="25" To="26" Label="Source1" />
                   <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="27" To="30" Label="Source1" />
-                  <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source2" />
-                  <Edge From="31" To="32" Label="Source1" />
-                  <Edge From="32" To="35" Label="Source1" />
-                  <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source2" />
-                  <Edge From="36" To="37" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="31" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source2" />
+                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="33" To="36" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source1" />
+                  <Edge From="35" To="36" Label="Source2" />
                   <Edge From="37" To="38" Label="Source1" />
-                  <Edge From="38" To="41" Label="Source1" />
-                  <Edge From="39" To="40" Label="Source1" />
-                  <Edge From="40" To="41" Label="Source2" />
+                  <Edge From="38" To="39" Label="Source1" />
+                  <Edge From="39" To="42" Label="Source1" />
+                  <Edge From="40" To="41" Label="Source1" />
+                  <Edge From="41" To="42" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -5956,6 +5998,9 @@ Value as IsStopped)</scr:Expression>
                   <Expression xsi:type="p14:Parse">
                     <harp:Register xsi:type="p14:TimestampedRawVoltage" />
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Retry" />
+                  </Expression>
                   <Expression xsi:type="rx:PublishSubject">
                     <Name>ThermistorData</Name>
                   </Expression>
@@ -5963,6 +6008,7 @@ Value as IsStopped)</scr:Expression>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
