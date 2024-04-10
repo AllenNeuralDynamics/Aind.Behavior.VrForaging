@@ -5,7 +5,7 @@ using System.Reactive.Linq;
 using MathNet.Numerics.Distributions;
 using System.ComponentModel;
 
-namespace AindVrForagingDataSchema.AindVrForagingTask
+namespace AindVrForagingDataSchema.TaskLogic
 {
 
     partial class Distribution
