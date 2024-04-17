@@ -2607,7 +2607,7 @@ Item2.Light as Light)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>HarpClockGenEvents</Name>
+                    <Name>HarpClockGenCommands</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>HarpSeconds</Name>
