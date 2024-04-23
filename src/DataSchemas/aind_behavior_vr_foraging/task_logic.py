@@ -342,7 +342,7 @@ class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
     task_mode_settings: TaskModeSettings = Field(
-        ForagingSettings(), description="Settings of the task stage", validate_default=True
+        default=ForagingSettings(), description="Settings of the task stage", validate_default=True
     )
     operation_control: OperationControl = Field(..., description="Control of the operation")
 
