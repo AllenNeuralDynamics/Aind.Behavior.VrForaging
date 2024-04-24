@@ -12,7 +12,7 @@ from aind_behavior_vr_foraging import __version__
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "aind_behavior_vr_foraging"
+project = "AIND VR Foraging"
 copyright = "2024, Allen Institute for Neural Dynamics"
 author = "Bruno Cruz"
 release = __version__
