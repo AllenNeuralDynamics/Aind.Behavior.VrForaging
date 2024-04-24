@@ -7,6 +7,7 @@ from aind_behavior_services.calibration.water_valve import (
     WaterValveCalibrationInput,
     Measurement,
 )
+from aind_behavior_services import db_utils as db
 
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
 
@@ -192,12 +193,18 @@ def main():
         operation_control=operation_control,
     )
 
+    database = db.SubjectDataBase()
+    database.add_subject("test", db.SubjectEntry(task_logic_target="preward_intercept_stageA"))
+    database.add_subject("test2", db.SubjectEntry(task_logic_target="does_notexist"))
+
     with open("local/example_vr_task_logic.json", "w") as f:
         f.write(example_vr_task_logic.model_dump_json(indent=2))
     with open("local/example_session.json", "w") as f:
         f.write(example_session.model_dump_json(indent=2))
     with open("local/example_rig.json", "w") as f:
         f.write(example_rig.model_dump_json(indent=2))
+    with open("local/example_database.json", "w") as f:
+        f.write(database.model_dump_json(indent=2))
 
 
 if __name__ == "__main__":
