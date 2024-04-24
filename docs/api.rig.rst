@@ -1,4 +1,4 @@
-API.rig
+api.rig
 -------------
 
 .. automodule:: aind_behavior_vr_foraging.rig
