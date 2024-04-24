@@ -35,6 +35,14 @@ linters = [
     'isort'
 ]
 
+docs = [
+    'Sphinx',
+    'furo',
+    'sphinx-jinja',
+    'autodoc_pydantic',
+    'myst_parser',
+    'sphinx-jsonschema'
+]
 
 [tool.setuptools.packages.find]
 where = ["src/DataSchemas"]
