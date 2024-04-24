@@ -315,9 +315,8 @@ class TaskModeSettingsBase(BaseModel):
 class HabituationSettings(TaskModeSettingsBase):
     task_mode: Literal[TaskMode.HABITUATION] = TaskMode.HABITUATION
     distance_to_reward: distributions.Distribution = Field(..., description="Distance (cm) to the reward")
-    reward_specification: RewardSpecification = Field(..., description="specification of the reward")
     render_specification: RenderSpecification = Field(
-        default=RenderSpecification(), description="Contrast of the environement"
+        RenderSpecification(), description="The optional render specification of the virtual site", validate_default=True
     )
 
 

@@ -491,14 +491,6 @@
           ],
           "description": "Distance (cm) to the reward"
         },
-        "reward_specification": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RewardSpecification"
-            }
-          ],
-          "description": "specification of the reward"
-        },
         "render_specification": {
           "allOf": [
             {
@@ -508,12 +500,11 @@
           "default": {
             "contrast": null
           },
-          "description": "Contrast of the environement"
+          "description": "The optional render specification of the virtual site"
         }
       },
       "required": [
-        "distance_to_reward",
-        "reward_specification"
+        "distance_to_reward"
       ],
       "title": "HabituationSettings",
       "type": "object"
@@ -2046,8 +2037,8 @@
   },
   "properties": {
     "schema_version": {
-      "const": "0.3.0",
-      "default": "0.3.0",
+      "const": "0.4.0",
+      "default": "0.4.0",
       "title": "Schema Version",
       "type": "string"
     },
