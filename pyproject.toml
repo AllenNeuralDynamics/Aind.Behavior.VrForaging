@@ -40,7 +40,7 @@ docs = [
     'furo',
     'sphinx-jinja',
     'autodoc_pydantic',
-    'myst_parse',
+    'myst_parser',
     'sphinx-jsonschema'
 ]
 
