@@ -39,7 +39,8 @@ docs = [
     'Sphinx',
     'furo',
     'sphinx-jinja',
-    'autodoc_pydantic'
+    'autodoc_pydantic',
+    'myst_parse'
 ]
 
 [tool.setuptools.packages.find]
