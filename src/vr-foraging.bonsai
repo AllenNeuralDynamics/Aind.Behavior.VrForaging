@@ -2676,10 +2676,12 @@ Item2.Light as Light)</scr:Expression>
               <Name>Camera</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\FfmpegCameraLogging.bonsai">
                     <LogName>FaceCamera</LogName>
                     <Name>FaceCameraFrameEvent</Name>
                     <Modality xsi:nil="true" />
+                    <Codec>-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13-preset medium -b:v 20M -rc:v cbr</Codec>
+                    <VideoExtension>mp4</VideoExtension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -2691,10 +2693,12 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\FfmpegCameraLogging.bonsai">
                     <LogName>TopBodyCamera</LogName>
                     <Name>TopBodyCameraFrameEvent</Name>
                     <Modality xsi:nil="true" />
+                    <Codec>-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13-preset medium -b:v 20M -rc:v cbr</Codec>
+                    <VideoExtension>mp4</VideoExtension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -2706,10 +2710,12 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\CameraLogger.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\FfmpegCameraLogging.bonsai">
                     <LogName>SideBodyCamera</LogName>
                     <Name>SideBodyCameraFrameEvent</Name>
                     <Modality xsi:nil="true" />
+                    <Codec>-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13-preset medium -b:v 20M -rc:v cbr</Codec>
+                    <VideoExtension>mp4</VideoExtension>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
