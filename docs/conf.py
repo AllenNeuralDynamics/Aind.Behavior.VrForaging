@@ -9,6 +9,8 @@ import sys
 sys.path.insert(0, os.path.abspath("../src/DataSchemas"))
 from aind_behavior_vr_foraging import __version__
 
+SOURCE_ROOT = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas/"
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
@@ -31,6 +33,7 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx.ext.linkcode",
     "myst_parser",
+    "sphinxcontrib.autodoc_pydantic",
 ]
 
 templates_path = ["_templates"]
@@ -57,9 +60,7 @@ html_show_sphinx = False
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 html_show_copyright = False
 
-
-source_code_root = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas/"
-
+# -- Options for linkcode extension ---------------------------------------
 
 def linkcode_resolve(domain, info):
     if domain != "py":
@@ -67,4 +68,4 @@ def linkcode_resolve(domain, info):
     if not info["module"]:
         return None
     filename = info["module"].replace(".", "/")
-    return f"{source_code_root}/{filename}.py"
+    return f"{SOURCE_ROOT}/{filename}.py"
