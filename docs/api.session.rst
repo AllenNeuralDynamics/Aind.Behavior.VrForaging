@@ -1,7 +1,7 @@
 API.session
 -------------
 
-.. autoclass:: aind_behavior_vr_foraging.session.AindBehaviorSessionModel
+.. autopydantic_model:: aind_behavior_vr_foraging.session.AindBehaviorSessionModel
    :members:
    :undoc-members:
    :show-inheritance:
