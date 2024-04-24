@@ -7785,19 +7785,6 @@ Item2 as Start
                     <Name>HabituationSettings</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>RewardSpecification.OperantLogic</Selector>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>IsOperant</Selector>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>IsOperantMode</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>HabituationSettings</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
                     <Selector>RenderSpecification.Contrast</Selector>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -7822,114 +7809,17 @@ Item2 as Start
                     <Name>ScreenContrast</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>HabituationSettings</Name>
+                    <Name>ActivePatch</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>RewardSpecification.RewardFunction</Selector>
+                    <Selector>RewardSpecification.OperantLogic</Selector>
                   </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Amount</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p3:ApplyRewardFunction">
-                      <p3:Clamp>true</p3:Clamp>
-                      <p3:Value>0</p3:Value>
-                    </Combinator>
+                    <Selector>IsOperant</Selector>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>RewardAmount</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>HabituationSettings</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RewardSpecification.RewardFunction</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Probability</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p3:ApplyRewardFunction">
-                      <p3:Clamp>true</p3:Clamp>
-                      <p3:Value>0</p3:Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>RewardProbability</Name>
-                  </Expression>
-                  <Expression xsi:type="GroupWorkflow">
-                    <Name>SoftwareEventLogging</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>DistanceToRewardAvailable</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p5:CreateSoftwareEvent">
-                            <p5:EventName>DistanceToRewardAvailable</p5:EventName>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwareEvent</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>IsOperantMode</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p5:CreateSoftwareEvent">
-                            <p5:EventName>IsOperantMode</p5:EventName>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwareEvent</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ScreenContrast</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p5:CreateSoftwareEvent">
-                            <p5:EventName>ScreenBrightness</p5:EventName>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwareEvent</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>RewardAmount</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p5:CreateSoftwareEvent">
-                            <p5:EventName>RewardAmount</p5:EventName>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwareEvent</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>RewardProbability</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p5:CreateSoftwareEvent">
-                            <p5:EventName>RewardProbability</p5:EventName>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>SoftwareEvent</Name>
-                        </Expression>
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
-                      </Edges>
-                    </Workflow>
+                    <Name>IsOperantMode</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:Timer">
@@ -8057,22 +7947,6 @@ Item2 as Start
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RewardAmount</Name>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="RewardAmount" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RewardProbability</Name>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="RewardProbability" />
-                    </PropertyMappings>
-                  </Expression>
                   <Expression xsi:type="rx:SelectMany">
                     <Name>Reward</Name>
                     <Workflow>
@@ -8140,16 +8014,22 @@ Item2 as Start
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
                         </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" DisplayName="RewardAmount" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>PatchRewardAmount</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="DoubleProperty">
-                            <Value>0</Value>
-                          </Combinator>
+                          <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" DisplayName="RewardProbability" />
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item2</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>PatchRewardProbability</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Value" />
+                          </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="rx:SelectMany">
                           <Name>DetermineReward</Name>
@@ -8201,6 +8081,16 @@ Item2 as Start
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>PatchRewardAvailable</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Name>CapRewardAvailable</scr:Name>
+                                <scr:Expression>Item1 &gt; Item2 ? Item2 : Item1</scr:Expression>
                               </Expression>
                               <Expression xsi:type="InputMapping">
                                 <PropertyMappings>
@@ -8257,15 +8147,18 @@ Item2 as Start
                               <Edge From="4" To="6" Label="Source1" />
                               <Edge From="5" To="6" Label="Source2" />
                               <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="6" To="11" Label="Source1" />
+                              <Edge From="6" To="14" Label="Source1" />
                               <Edge From="7" To="8" Label="Source1" />
-                              <Edge From="8" To="9" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="10" To="13" Label="Source1" />
+                              <Edge From="8" To="10" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source2" />
+                              <Edge From="10" To="11" Label="Source1" />
                               <Edge From="11" To="12" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source2" />
-                              <Edge From="13" To="14" Label="Source1" />
+                              <Edge From="12" To="13" Label="Source1" />
+                              <Edge From="13" To="16" Label="Source1" />
                               <Edge From="14" To="15" Label="Source1" />
+                              <Edge From="15" To="16" Label="Source2" />
+                              <Edge From="16" To="17" Label="Source1" />
+                              <Edge From="17" To="18" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -8325,18 +8218,20 @@ Item2 as Start
                         <Edge From="8" To="9" Label="Source2" />
                         <Edge From="9" To="11" Label="Source1" />
                         <Edge From="10" To="11" Label="Source2" />
-                        <Edge From="11" To="13" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source2" />
+                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="12" To="15" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source2" />
                         <Edge From="15" To="16" Label="Source1" />
                         <Edge From="16" To="17" Label="Source1" />
                         <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source1" />
                         <Edge From="19" To="20" Label="Source1" />
-                        <Edge From="20" To="21" Label="Source1" />
                         <Edge From="21" To="22" Label="Source1" />
                         <Edge From="22" To="23" Label="Source1" />
                         <Edge From="23" To="24" Label="Source1" />
+                        <Edge From="24" To="25" Label="Source1" />
+                        <Edge From="25" To="26" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -8354,31 +8249,19 @@ Item2 as Start
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="17" To="24" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="19" To="22" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source2" />
                   <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source2" />
                   <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="28" To="35" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
-                  <Edge From="30" To="33" Label="Source1" />
-                  <Edge From="31" To="32" Label="Source1" />
-                  <Edge From="32" To="33" Label="Source2" />
-                  <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source2" />
-                  <Edge From="35" To="40" Label="Source1" />
-                  <Edge From="36" To="37" Label="Source1" />
-                  <Edge From="37" To="40" Label="Source2" />
-                  <Edge From="38" To="39" Label="Source1" />
-                  <Edge From="39" To="40" Label="Source3" />
-                  <Edge From="40" To="41" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
