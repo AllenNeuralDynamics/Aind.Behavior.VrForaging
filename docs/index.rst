@@ -1,6 +1,8 @@
-Welcome to aind_behavior_vr_foraging's documentation!
+Welcome to the AIND VR Foraging project documentation!
 ============================================
 
+.. include:: ../README.md
+   :parser: myst_parser.sphinx_
 
 .. toctree::
    :maxdepth: 2
@@ -8,9 +10,6 @@ Welcome to aind_behavior_vr_foraging's documentation!
 
    api
    json-schemas
-
-.. include:: ../README.md
-   :parser: myst_parser.sphinx_
 
 Indices and tables
 ==================
