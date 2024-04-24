@@ -48,7 +48,7 @@ autodoc_pydantic_settings_show_json = False
 
 html_theme = "furo"
 html_static_path = ["_static"]
-html_title = "aind_behavior_vr_foraging"
+html_title = "Aind VR Foraging"
 html_favicon = "_static/favicon.ico"
 html_theme_options = {
     "light_logo": "light-logo.svg",
