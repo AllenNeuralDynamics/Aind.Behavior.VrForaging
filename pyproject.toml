@@ -37,6 +37,7 @@ linters = [
 
 docs = [
     'Sphinx',
+    'furo',
     'sphinx-jinja',
     'autodoc_pydantic'
 ]
