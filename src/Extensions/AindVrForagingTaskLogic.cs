@@ -1250,8 +1250,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private Distribution _distanceToReward;
     
-        private RewardSpecification _rewardSpecification = new RewardSpecification();
-    
         private RenderSpecification _renderSpecification;
     
         public HabituationSettings()
@@ -1262,7 +1260,6 @@ namespace AindVrForagingDataSchema.TaskLogic
                 base(other)
         {
             _distanceToReward = other._distanceToReward;
-            _rewardSpecification = other._rewardSpecification;
             _renderSpecification = other._renderSpecification;
         }
     
@@ -1285,29 +1282,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// specification of the reward
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("reward_specification", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("specification of the reward")]
-        public RewardSpecification RewardSpecification
-        {
-            get
-            {
-                return _rewardSpecification;
-            }
-            set
-            {
-                _rewardSpecification = value;
-            }
-        }
-    
-        /// <summary>
-        /// Contrast of the environement
+        /// The optional render specification of the virtual site
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("render_specification")]
-        [System.ComponentModel.DescriptionAttribute("Contrast of the environement")]
+        [System.ComponentModel.DescriptionAttribute("The optional render specification of the virtual site")]
         public RenderSpecification RenderSpecification
         {
             get
@@ -1337,7 +1316,6 @@ namespace AindVrForagingDataSchema.TaskLogic
                 stringBuilder.Append(", ");
             }
             stringBuilder.Append("distance_to_reward = " + _distanceToReward + ", ");
-            stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
             stringBuilder.Append("render_specification = " + _renderSpecification);
             return true;
         }
@@ -5564,7 +5542,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class AindVrForagingTaskLogic
     {
     
-        private string _schemaVersion = "0.3.0";
+        private string _schemaVersion = "0.4.0";
     
         private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     
