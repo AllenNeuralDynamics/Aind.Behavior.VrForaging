@@ -10,6 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
     - id: deployment
       uses: sphinx-notes/pages@v3
       with:
