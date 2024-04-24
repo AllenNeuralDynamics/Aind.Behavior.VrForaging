@@ -7,6 +7,8 @@ Welcome to aind_behavior_vr_foraging's documentation!
    :caption: Contents:
 
    api
+   diagrams
+   json-schemas
 
 .. include:: ../README.md
    :parser: myst_parser.sphinx_

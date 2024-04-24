@@ -21,6 +21,7 @@ extensions = [
     "sphinx.ext.duration",
     "sphinx.ext.doctest",
     "sphinx.ext.autodoc",
+    'sphinx-jsonschema',
     "sphinxcontrib.autodoc_pydantic",
     "sphinx.ext.napoleon",
     "sphinx_jinja",
