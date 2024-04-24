@@ -40,7 +40,8 @@ docs = [
     'furo',
     'sphinx-jinja',
     'autodoc_pydantic',
-    'myst_parse'
+    'myst_parse',
+    'sphinx-jsonschema'
 ]
 
 [tool.setuptools.packages.find]
