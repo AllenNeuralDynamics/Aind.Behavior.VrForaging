@@ -6,6 +6,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../src/DataSchemas'))
+from aind_behavior_vr_foraging import __version__
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -13,26 +14,28 @@ sys.path.insert(0, os.path.abspath('../src/DataSchemas'))
 project = 'aind_behavior_vr_foraging'
 copyright = '2024, Allen Institute for Neural Dynamics'
 author = 'Bruno Cruz'
+release = __version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "sphinx.ext.duration",
-    "sphinx.ext.doctest",
-    "sphinx.ext.autodoc",
     'sphinx-jsonschema',
-    "sphinxcontrib.autodoc_pydantic",
-    "sphinx.ext.napoleon",
     "sphinx_jinja",
-    "myst_parser"
+    'sphinx.ext.napoleon',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.githubpages',
+    'myst_parser',
 ]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-autodoc_pydantic_model_show_json = True
-autodoc_pydantic_model_show_config_summary = False
+autosummary_generate = True
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

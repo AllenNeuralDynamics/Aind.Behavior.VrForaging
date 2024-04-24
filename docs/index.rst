@@ -3,11 +3,10 @@ Welcome to aind_behavior_vr_foraging's documentation!
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    api
-   diagrams
    json-schemas
 
 .. include:: ../README.md

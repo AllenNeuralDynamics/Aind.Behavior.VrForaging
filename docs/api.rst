@@ -1,7 +1,8 @@
 API
 -------------
+.. toctree::
+   :maxdepth: 2
 
-.. automodule:: aind_behavior_vr_foraging
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   api.session
+   api.rig
+   api.task_logic
