@@ -233,6 +233,7 @@
       "type": "string"
     },
     "Distribution": {
+      "description": "Available distributions",
       "discriminator": {
         "mapping": {
           "Beta": "#/definitions/BetaDistribution",
@@ -2041,6 +2042,32 @@
       "default": "0.4.0",
       "title": "Schema Version",
       "type": "string"
+    },
+    "rng_seed": {
+      "default": null,
+      "description": "Seed of the random number generator",
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Rng Seed"
+    },
+    "name": {
+      "default": null,
+      "description": "Optional name of the task or stage",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Name"
     },
     "updaters": {
       "additionalProperties": {

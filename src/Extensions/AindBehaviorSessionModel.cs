@@ -15,9 +15,11 @@ namespace AindVrForagingDataSchema.Session
     public partial class AindBehaviorSessionModel
     {
     
-        private string _schemaVersion = "0.1.1";
+        private string _schemaVersion = "0.2.0";
     
         private string _experiment;
+    
+        private System.Collections.Generic.List<string> _experimenter = new System.Collections.Generic.List<string>();
     
         private System.DateTimeOffset _date;
     
@@ -28,8 +30,6 @@ namespace AindVrForagingDataSchema.Session
         private string _subject;
     
         private string _experimentVersion;
-    
-        private double? _rngSeed;
     
         private string _notes;
     
@@ -47,12 +47,12 @@ namespace AindVrForagingDataSchema.Session
         {
             _schemaVersion = other._schemaVersion;
             _experiment = other._experiment;
+            _experimenter = other._experimenter;
             _date = other._date;
             _rootPath = other._rootPath;
             _remotePath = other._remotePath;
             _subject = other._subject;
             _experimentVersion = other._experimentVersion;
-            _rngSeed = other._rngSeed;
             _notes = other._notes;
             _commitHash = other._commitHash;
             _allowDirtyRepo = other._allowDirtyRepo;
@@ -86,6 +86,24 @@ namespace AindVrForagingDataSchema.Session
             set
             {
                 _experiment = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the experimenter
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("experimenter")]
+        [System.ComponentModel.DescriptionAttribute("Name of the experimenter")]
+        public System.Collections.Generic.List<string> Experimenter
+        {
+            get
+            {
+                return _experimenter;
+            }
+            set
+            {
+                _experimenter = value;
             }
         }
     
@@ -177,24 +195,6 @@ namespace AindVrForagingDataSchema.Session
         }
     
         /// <summary>
-        /// Seed of the random number generator
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("rng_seed")]
-        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
-        public double? RngSeed
-        {
-            get
-            {
-                return _rngSeed;
-            }
-            set
-            {
-                _rngSeed = value;
-            }
-        }
-    
-        /// <summary>
         /// Notes about the experiment
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("notes")]
@@ -276,12 +276,12 @@ namespace AindVrForagingDataSchema.Session
         {
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
             stringBuilder.Append("experiment = " + _experiment + ", ");
+            stringBuilder.Append("experimenter = " + _experimenter + ", ");
             stringBuilder.Append("date = " + _date + ", ");
             stringBuilder.Append("root_path = " + _rootPath + ", ");
             stringBuilder.Append("remote_path = " + _remotePath + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
             stringBuilder.Append("experiment_version = " + _experimentVersion + ", ");
-            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
             stringBuilder.Append("commit_hash = " + _commitHash + ", ");
             stringBuilder.Append("allow_dirty_repo = " + _allowDirtyRepo + ", ");
