@@ -657,6 +657,9 @@ namespace AindVrForagingDataSchema.TaskLogic
     }
 
 
+    /// <summary>
+    /// Available distributions
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [JsonInheritanceAttribute("Scalar", typeof(Scalar))]
@@ -668,6 +671,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [JsonInheritanceAttribute("Binomial", typeof(BinomialDistribution))]
     [JsonInheritanceAttribute("Beta", typeof(BetaDistribution))]
     [JsonInheritanceAttribute("Gamma", typeof(GammaDistribution))]
+    [System.ComponentModel.DescriptionAttribute("Available distributions")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Distribution
@@ -5544,6 +5548,10 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private string _schemaVersion = "0.4.0";
     
+        private double? _rngSeed;
+    
+        private string _name;
+    
         private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     
         private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
@@ -5559,6 +5567,8 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected AindVrForagingTaskLogic(AindVrForagingTaskLogic other)
         {
             _schemaVersion = other._schemaVersion;
+            _rngSeed = other._rngSeed;
+            _name = other._name;
             _updaters = other._updaters;
             _environmentStatistics = other._environmentStatistics;
             _taskModeSettings = other._taskModeSettings;
@@ -5575,6 +5585,41 @@ namespace AindVrForagingDataSchema.TaskLogic
             set
             {
                 _schemaVersion = value;
+            }
+        }
+    
+        /// <summary>
+        /// Seed of the random number generator
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rng_seed")]
+        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
+        public double? RngSeed
+        {
+            get
+            {
+                return _rngSeed;
+            }
+            set
+            {
+                _rngSeed = value;
+            }
+        }
+    
+        /// <summary>
+        /// Optional name of the task or stage
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        [System.ComponentModel.DescriptionAttribute("Optional name of the task or stage")]
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
             }
         }
     
@@ -5663,6 +5708,8 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
+            stringBuilder.Append("name = " + _name + ", ");
             stringBuilder.Append("updaters = " + _updaters + ", ");
             stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
             stringBuilder.Append("task_mode_settings = " + _taskModeSettings + ", ");
