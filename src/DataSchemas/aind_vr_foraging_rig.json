@@ -829,6 +829,12 @@
           "title": "Frame Rate",
           "type": "integer"
         },
+        "container_extension": {
+          "default": "mp4",
+          "description": "Container extension",
+          "title": "Container Extension",
+          "type": "string"
+        },
         "output_arguments": {
           "default": "-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13-preset medium -b:v 20M -rc:v cbr",
           "description": "Output arguments",
@@ -855,6 +861,12 @@
           "minimum": 0,
           "title": "Frame Rate",
           "type": "integer"
+        },
+        "container_extension": {
+          "default": "avi",
+          "description": "Container extension",
+          "title": "Container Extension",
+          "type": "string"
         },
         "four_cc": {
           "default": "FMP4",

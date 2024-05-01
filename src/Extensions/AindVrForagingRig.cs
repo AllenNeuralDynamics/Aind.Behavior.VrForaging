@@ -2347,6 +2347,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private int _frameRate = 30;
     
+        private string _containerExtension = "mp4";
+    
         private string _outputArguments = "-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13-preset medium -b:v 20M -rc:v cbr";
     
         public VideoWriterFfmpeg()
@@ -2357,6 +2359,7 @@ namespace AindVrForagingDataSchema.Rig
                 base(other)
         {
             _frameRate = other._frameRate;
+            _containerExtension = other._containerExtension;
             _outputArguments = other._outputArguments;
         }
     
@@ -2374,6 +2377,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _frameRate = value;
+            }
+        }
+    
+        /// <summary>
+        /// Container extension
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("container_extension")]
+        [System.ComponentModel.DescriptionAttribute("Container extension")]
+        public string ContainerExtension
+        {
+            get
+            {
+                return _containerExtension;
+            }
+            set
+            {
+                _containerExtension = value;
             }
         }
     
@@ -2411,6 +2431,7 @@ namespace AindVrForagingDataSchema.Rig
                 stringBuilder.Append(", ");
             }
             stringBuilder.Append("frame_rate = " + _frameRate + ", ");
+            stringBuilder.Append("container_extension = " + _containerExtension + ", ");
             stringBuilder.Append("output_arguments = " + _outputArguments);
             return true;
         }
@@ -2425,6 +2446,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private int _frameRate = 30;
     
+        private string _containerExtension = "avi";
+    
         private string _fourCc = "FMP4";
     
         public VideoWriterOpenCv()
@@ -2435,6 +2458,7 @@ namespace AindVrForagingDataSchema.Rig
                 base(other)
         {
             _frameRate = other._frameRate;
+            _containerExtension = other._containerExtension;
             _fourCc = other._fourCc;
         }
     
@@ -2452,6 +2476,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _frameRate = value;
+            }
+        }
+    
+        /// <summary>
+        /// Container extension
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("container_extension")]
+        [System.ComponentModel.DescriptionAttribute("Container extension")]
+        public string ContainerExtension
+        {
+            get
+            {
+                return _containerExtension;
+            }
+            set
+            {
+                _containerExtension = value;
             }
         }
     
@@ -2489,6 +2530,7 @@ namespace AindVrForagingDataSchema.Rig
                 stringBuilder.Append(", ");
             }
             stringBuilder.Append("frame_rate = " + _frameRate + ", ");
+            stringBuilder.Append("container_extension = " + _containerExtension + ", ");
             stringBuilder.Append("four_cc = " + _fourCc);
             return true;
         }
