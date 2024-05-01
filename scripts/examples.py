@@ -92,14 +92,14 @@ def main():
 
     example_rig = AindVrForagingRig(
         rig_name="test_rig",
-        triggered_camera_controller=rig.CameraController(
+        triggered_camera_controller=rig.CameraController[rig.SpinnakerCamera](
             frame_rate=120,
             cameras={
                 "FaceCamera": rig.SpinnakerCamera(serial_number="SerialNumber", binning=1, exposure=5000, gain=0),
                 "SideCamera": rig.SpinnakerCamera(serial_number="SerialNumber", binning=1, exposure=5000, gain=0),
             },
         ),
-        monitoring_camera_controller=rig.CameraController(cameras={"WebCam0": rig.WebCamera(index=0)}),
+        monitoring_camera_controller=rig.CameraController[rig.WebCamera](cameras={"WebCam0": rig.WebCamera(index=0)}),
         harp_behavior=rig.HarpBehavior(port_name="COM3"),
         harp_olfactometer=rig.HarpOlfactometer(port_name="COM4"),
         harp_lickometer=rig.HarpLickometer(port_name="COM5"),
