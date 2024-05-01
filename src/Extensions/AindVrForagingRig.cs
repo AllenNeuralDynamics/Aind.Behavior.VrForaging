@@ -54,56 +54,9 @@ namespace AindVrForagingDataSchema.Rig
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "device_type")]
-    [JsonInheritanceAttribute("WebCamera", typeof(WebCamera))]
-    [JsonInheritanceAttribute("SpinnakerCamera", typeof(SpinnakerCamera))]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Camera
-    {
-    
-        public Camera()
-        {
-        }
-    
-        protected Camera(Camera other)
-        {
-        }
-    
-        public System.IObservable<Camera> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Camera(this)));
-        }
-    
-        public System.IObservable<Camera> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Camera(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class CameraController
+    public partial class CameraControllerSpinnakerCamera
     {
     
         private string _deviceType = "CameraController";
@@ -112,15 +65,15 @@ namespace AindVrForagingDataSchema.Rig
     
         private BaseModel _calibration;
     
-        private System.Collections.Generic.IDictionary<string, Camera> _cameras = new System.Collections.Generic.Dictionary<string, Camera>();
+        private System.Collections.Generic.IDictionary<string, SpinnakerCamera> _cameras = new System.Collections.Generic.Dictionary<string, SpinnakerCamera>();
     
         private int? _frameRate;
     
-        public CameraController()
+        public CameraControllerSpinnakerCamera()
         {
         }
     
-        protected CameraController(CameraController other)
+        protected CameraControllerSpinnakerCamera(CameraControllerSpinnakerCamera other)
         {
             _deviceType = other._deviceType;
             _additionalSettings = other._additionalSettings;
@@ -184,7 +137,7 @@ namespace AindVrForagingDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("cameras", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Cameras to be instantiated")]
-        public System.Collections.Generic.IDictionary<string, Camera> Cameras
+        public System.Collections.Generic.IDictionary<string, SpinnakerCamera> Cameras
         {
             get
             {
@@ -214,14 +167,163 @@ namespace AindVrForagingDataSchema.Rig
             }
         }
     
-        public System.IObservable<CameraController> Process()
+        public System.IObservable<CameraControllerSpinnakerCamera> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CameraController(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CameraControllerSpinnakerCamera(this)));
         }
     
-        public System.IObservable<CameraController> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<CameraControllerSpinnakerCamera> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new CameraController(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new CameraControllerSpinnakerCamera(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
+            stringBuilder.Append("calibration = " + _calibration + ", ");
+            stringBuilder.Append("cameras = " + _cameras + ", ");
+            stringBuilder.Append("frame_rate = " + _frameRate);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class CameraControllerWebCamera
+    {
+    
+        private string _deviceType = "CameraController";
+    
+        private BaseModel _additionalSettings;
+    
+        private BaseModel _calibration;
+    
+        private System.Collections.Generic.IDictionary<string, WebCamera> _cameras = new System.Collections.Generic.Dictionary<string, WebCamera>();
+    
+        private int? _frameRate;
+    
+        public CameraControllerWebCamera()
+        {
+        }
+    
+        protected CameraControllerWebCamera(CameraControllerWebCamera other)
+        {
+            _deviceType = other._deviceType;
+            _additionalSettings = other._additionalSettings;
+            _calibration = other._calibration;
+            _cameras = other._cameras;
+            _frameRate = other._frameRate;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Additional settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
+        [System.ComponentModel.DescriptionAttribute("Additional settings")]
+        public BaseModel AdditionalSettings
+        {
+            get
+            {
+                return _additionalSettings;
+            }
+            set
+            {
+                _additionalSettings = value;
+            }
+        }
+    
+        /// <summary>
+        /// Calibration
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        public BaseModel Calibration
+        {
+            get
+            {
+                return _calibration;
+            }
+            set
+            {
+                _calibration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Cameras to be instantiated
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("cameras", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Cameras to be instantiated")]
+        public System.Collections.Generic.IDictionary<string, WebCamera> Cameras
+        {
+            get
+            {
+                return _cameras;
+            }
+            set
+            {
+                _cameras = value;
+            }
+        }
+    
+        /// <summary>
+        /// Frame rate of the trigger to all cameras
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("frame_rate")]
+        [System.ComponentModel.DescriptionAttribute("Frame rate of the trigger to all cameras")]
+        public int? FrameRate
+        {
+            get
+            {
+                return _frameRate;
+            }
+            set
+            {
+                _frameRate = value;
+            }
+        }
+    
+        public System.IObservable<CameraControllerWebCamera> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CameraControllerWebCamera(this)));
+        }
+    
+        public System.IObservable<CameraControllerWebCamera> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new CameraControllerWebCamera(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -1335,12 +1437,33 @@ namespace AindVrForagingDataSchema.Rig
     public partial class OlfactometerCalibrationInput
     {
     
+        private System.Collections.Generic.IDictionary<string, OlfactometerChannelConfig> _channelConfig;
+    
         public OlfactometerCalibrationInput()
         {
         }
     
         protected OlfactometerCalibrationInput(OlfactometerCalibrationInput other)
         {
+            _channelConfig = other._channelConfig;
+        }
+    
+        /// <summary>
+        /// Configuration of olfactometer channels
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("channel_config")]
+        [System.ComponentModel.DescriptionAttribute("Configuration of olfactometer channels")]
+        public System.Collections.Generic.IDictionary<string, OlfactometerChannelConfig> ChannelConfig
+        {
+            get
+            {
+                return _channelConfig;
+            }
+            set
+            {
+                _channelConfig = value;
+            }
         }
     
         public System.IObservable<OlfactometerCalibrationInput> Process()
@@ -1355,7 +1478,8 @@ namespace AindVrForagingDataSchema.Rig
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            return false;
+            stringBuilder.Append("channel_config = " + _channelConfig);
+            return true;
         }
     
         public override string ToString()
@@ -1414,6 +1538,171 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("}");
             return stringBuilder.ToString();
         }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class OlfactometerChannelConfig
+    {
+    
+        private int _channelIndex;
+    
+        private OlfactometerChannelType _channelType = AindVrForagingDataSchema.Rig.OlfactometerChannelType.Odor;
+    
+        private OlfactometerChannelConfigFlowRateCapacity _flowRateCapacity = AindVrForagingDataSchema.Rig.OlfactometerChannelConfigFlowRateCapacity._100;
+    
+        private double _flowRate = 100D;
+    
+        private string _odorant;
+    
+        private double? _odorantDilution;
+    
+        public OlfactometerChannelConfig()
+        {
+        }
+    
+        protected OlfactometerChannelConfig(OlfactometerChannelConfig other)
+        {
+            _channelIndex = other._channelIndex;
+            _channelType = other._channelType;
+            _flowRateCapacity = other._flowRateCapacity;
+            _flowRate = other._flowRate;
+            _odorant = other._odorant;
+            _odorantDilution = other._odorantDilution;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("channel_index", Required=Newtonsoft.Json.Required.Always)]
+        public int ChannelIndex
+        {
+            get
+            {
+                return _channelIndex;
+            }
+            set
+            {
+                _channelIndex = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("channel_type")]
+        public OlfactometerChannelType ChannelType
+        {
+            get
+            {
+                return _channelType;
+            }
+            set
+            {
+                _channelType = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("flow_rate_capacity")]
+        public OlfactometerChannelConfigFlowRateCapacity FlowRateCapacity
+        {
+            get
+            {
+                return _flowRateCapacity;
+            }
+            set
+            {
+                _flowRateCapacity = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("flow_rate")]
+        public double FlowRate
+        {
+            get
+            {
+                return _flowRate;
+            }
+            set
+            {
+                _flowRate = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("odorant")]
+        public string Odorant
+        {
+            get
+            {
+                return _odorant;
+            }
+            set
+            {
+                _odorant = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("odorant_dilution")]
+        public double? OdorantDilution
+        {
+            get
+            {
+                return _odorantDilution;
+            }
+            set
+            {
+                _odorantDilution = value;
+            }
+        }
+    
+        public System.IObservable<OlfactometerChannelConfig> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OlfactometerChannelConfig(this)));
+        }
+    
+        public System.IObservable<OlfactometerChannelConfig> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OlfactometerChannelConfig(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("channel_index = " + _channelIndex + ", ");
+            stringBuilder.Append("channel_type = " + _channelType + ", ");
+            stringBuilder.Append("flow_rate_capacity = " + _flowRateCapacity + ", ");
+            stringBuilder.Append("flow_rate = " + _flowRate + ", ");
+            stringBuilder.Append("odorant = " + _odorant + ", ");
+            stringBuilder.Append("odorant_dilution = " + _odorantDilution);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Channel type
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum OlfactometerChannelType
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Odor")]
+        Odor = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Carrier")]
+        Carrier = 1,
     }
 
 
@@ -1722,8 +2011,10 @@ namespace AindVrForagingDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class SpinnakerCamera : Camera
+    public partial class SpinnakerCamera
     {
+    
+        private string _deviceType = "SpinnakerCamera";
     
         private BaseModel _additionalSettings;
     
@@ -1745,9 +2036,9 @@ namespace AindVrForagingDataSchema.Rig
         {
         }
     
-        protected SpinnakerCamera(SpinnakerCamera other) : 
-                base(other)
+        protected SpinnakerCamera(SpinnakerCamera other)
         {
+            _deviceType = other._deviceType;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _serialNumber = other._serialNumber;
@@ -1756,6 +2047,23 @@ namespace AindVrForagingDataSchema.Rig
             _exposure = other._exposure;
             _gain = other._gain;
             _videoWriter = other._videoWriter;
+        }
+    
+        /// <summary>
+        /// Device type
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
+        [System.ComponentModel.DescriptionAttribute("Device type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
         }
     
         /// <summary>
@@ -1908,12 +2216,9 @@ namespace AindVrForagingDataSchema.Rig
             return System.Reactive.Linq.Observable.Select(source, _ => new SpinnakerCamera(this));
         }
     
-        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            if (base.PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(", ");
-            }
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("serial_number = " + _serialNumber + ", ");
@@ -1923,6 +2228,19 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("gain = " + _gain + ", ");
             stringBuilder.Append("video_writer = " + _videoWriter);
             return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
         }
     }
 
@@ -2560,8 +2878,10 @@ namespace AindVrForagingDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class WebCamera : Camera
+    public partial class WebCamera
     {
+    
+        private string _deviceType = "WebCamera";
     
         private BaseModel _additionalSettings;
     
@@ -2575,13 +2895,30 @@ namespace AindVrForagingDataSchema.Rig
         {
         }
     
-        protected WebCamera(WebCamera other) : 
-                base(other)
+        protected WebCamera(WebCamera other)
         {
+            _deviceType = other._deviceType;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _index = other._index;
             _videoWriter = other._videoWriter;
+        }
+    
+        /// <summary>
+        /// Device type
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
+        [System.ComponentModel.DescriptionAttribute("Device type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
         }
     
         /// <summary>
@@ -2665,17 +3002,27 @@ namespace AindVrForagingDataSchema.Rig
             return System.Reactive.Linq.Observable.Select(source, _ => new WebCamera(this));
         }
     
-        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            if (base.PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(", ");
-            }
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("index = " + _index + ", ");
             stringBuilder.Append("video_writer = " + _videoWriter);
             return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
         }
     }
 
@@ -2887,9 +3234,9 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _rigName;
     
-        private CameraController _triggeredCameraController = new CameraController();
+        private CameraControllerSpinnakerCamera _triggeredCameraController = new CameraControllerSpinnakerCamera();
     
-        private CameraController _monitoringCameraController;
+        private CameraControllerWebCamera _monitoringCameraController;
     
         private HarpBehavior _harpBehavior = new HarpBehavior();
     
@@ -2984,7 +3331,7 @@ namespace AindVrForagingDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("triggered_camera_controller", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Required camera controller to triggered cameras.")]
-        public CameraController TriggeredCameraController
+        public CameraControllerSpinnakerCamera TriggeredCameraController
         {
             get
             {
@@ -3002,7 +3349,7 @@ namespace AindVrForagingDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("monitoring_camera_controller")]
         [System.ComponentModel.DescriptionAttribute("Optional camera controller for monitoring cameras.")]
-        public CameraController MonitoringCameraController
+        public CameraControllerWebCamera MonitoringCameraController
         {
             get
             {
@@ -3221,6 +3568,18 @@ namespace AindVrForagingDataSchema.Rig
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    public enum OlfactometerChannelConfigFlowRateCapacity
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="100")]
+        _100 = 100,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="1000")]
+        _1000 = 1000,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SpinnakerCameraColorProcessing
     {
@@ -3373,47 +3732,6 @@ namespace AindVrForagingDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    public partial class MatchCamera : Bonsai.Expressions.SingleArgumentExpressionBuilder
-    {
-    
-        public Bonsai.Expressions.TypeMapping Type { get; set; }
-
-        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
-        {
-            var typeMapping = Type;
-            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Camera);
-            return System.Linq.Expressions.Expression.Call(
-                typeof(MatchCamera),
-                "Process",
-                new System.Type[] { returnType },
-                System.Linq.Enumerable.Single(arguments));
-        }
-
-    
-        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Camera> source)
-            where TResult : Camera
-        {
-            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
-            {
-                var sourceObserver = System.Reactive.Observer.Create<Camera>(
-                    value =>
-                    {
-                        var match = value as TResult;
-                        if (match != null) observer.OnNext(match);
-                    },
-                    observer.OnError,
-                    observer.OnCompleted);
-                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
-            });
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DefaultPropertyAttribute("Type")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTreadmill>))]
     public partial class MatchTreadmillBoard : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -3513,14 +3831,14 @@ namespace AindVrForagingDataSchema.Rig
             return Process<BaseModel>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Camera> source)
+        public System.IObservable<string> Process(System.IObservable<CameraControllerSpinnakerCamera> source)
         {
-            return Process<Camera>(source);
+            return Process<CameraControllerSpinnakerCamera>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<CameraController> source)
+        public System.IObservable<string> Process(System.IObservable<CameraControllerWebCamera> source)
         {
-            return Process<CameraController>(source);
+            return Process<CameraControllerWebCamera>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<HarpAnalogInput> source)
@@ -3576,6 +3894,11 @@ namespace AindVrForagingDataSchema.Rig
         public System.IObservable<string> Process(System.IObservable<OlfactometerCalibrationOutput> source)
         {
             return Process<OlfactometerCalibrationOutput>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<OlfactometerChannelConfig> source)
+        {
+            return Process<OlfactometerChannelConfig>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<RigCalibration> source)
@@ -3658,8 +3981,8 @@ namespace AindVrForagingDataSchema.Rig
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BaseModel>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Camera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerSpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerWebCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
@@ -3671,6 +3994,7 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibrationOutput>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerChannelConfig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]

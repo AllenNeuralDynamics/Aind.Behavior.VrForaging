@@ -31,10 +31,10 @@ class RigCalibration(BaseModel):
 
 class AindVrForagingRig(AindBehaviorRigModel):
     schema_version: Literal[__version__] = __version__
-    triggered_camera_controller: rig.CameraController = Field(
+    triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
     )
-    monitoring_camera_controller: Optional[rig.CameraController] = Field(
+    monitoring_camera_controller: Optional[rig.CameraController[rig.WebCamera]] = Field(
         default=None, description="Optional camera controller for monitoring cameras."
     )
     harp_behavior: rig.HarpBehavior = Field(..., description="Harp behavior")

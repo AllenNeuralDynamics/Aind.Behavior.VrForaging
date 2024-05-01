@@ -5,25 +5,7 @@
       "title": "BaseModel",
       "type": "object"
     },
-    "Camera": {
-      "discriminator": {
-        "mapping": {
-          "SpinnakerCamera": "#/definitions/SpinnakerCamera",
-          "WebCamera": "#/definitions/WebCamera"
-        },
-        "propertyName": "device_type"
-      },
-      "oneOf": [
-        {
-          "$ref": "#/definitions/WebCamera"
-        },
-        {
-          "$ref": "#/definitions/SpinnakerCamera"
-        }
-      ],
-      "title": "Camera"
-    },
-    "CameraController": {
+    "CameraController_SpinnakerCamera_": {
       "properties": {
         "device_type": {
           "const": "CameraController",
@@ -57,7 +39,7 @@
         },
         "cameras": {
           "additionalProperties": {
-            "$ref": "#/definitions/Camera"
+            "$ref": "#/definitions/SpinnakerCamera"
           },
           "description": "Cameras to be instantiated",
           "title": "Cameras",
@@ -81,7 +63,68 @@
       "required": [
         "cameras"
       ],
-      "title": "CameraController",
+      "title": "CameraController[SpinnakerCamera]",
+      "type": "object"
+    },
+    "CameraController_WebCamera_": {
+      "properties": {
+        "device_type": {
+          "const": "CameraController",
+          "default": "CameraController",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cameras": {
+          "additionalProperties": {
+            "$ref": "#/definitions/WebCamera"
+          },
+          "description": "Cameras to be instantiated",
+          "title": "Cameras",
+          "type": "object"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate of the trigger to all cameras",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frame Rate"
+        }
+      },
+      "required": [
+        "cameras"
+      ],
+      "title": "CameraController[WebCamera]",
       "type": "object"
     },
     "HarpAnalogInput": {
@@ -463,7 +506,17 @@
       "type": "object"
     },
     "OlfactometerCalibrationInput": {
-      "properties": {},
+      "properties": {
+        "channel_config": {
+          "additionalProperties": {
+            "$ref": "#/definitions/OlfactometerChannelConfig"
+          },
+          "default": {},
+          "description": "Configuration of olfactometer channels",
+          "title": "Channel Config",
+          "type": "object"
+        }
+      },
       "title": "OlfactometerCalibrationInput",
       "type": "object"
     },
@@ -471,6 +524,76 @@
       "properties": {},
       "title": "OlfactometerCalibrationOutput",
       "type": "object"
+    },
+    "OlfactometerChannelConfig": {
+      "properties": {
+        "channel_index": {
+          "title": "Channel index",
+          "type": "integer"
+        },
+        "channel_type": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerChannelType"
+            }
+          ],
+          "default": "Odor",
+          "title": "Channel type"
+        },
+        "flow_rate_capacity": {
+          "default": 100,
+          "enum": [
+            100,
+            1000
+          ],
+          "title": "Flow capacity. mL/min",
+          "type": "integer"
+        },
+        "flow_rate": {
+          "default": 100,
+          "maximum": 100.0,
+          "title": "Target flow rate. mL/min. If channel_type == CARRIER, this value is ignored.",
+          "type": "number"
+        },
+        "odorant": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Odorant name"
+        },
+        "odorant_dilution": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Odorant dilution (%v/v)"
+        }
+      },
+      "required": [
+        "channel_index"
+      ],
+      "title": "OlfactometerChannelConfig",
+      "type": "object"
+    },
+    "OlfactometerChannelType": {
+      "description": "Channel type",
+      "enum": [
+        "Odor",
+        "Carrier"
+      ],
+      "title": "OlfactometerChannelType",
+      "type": "string"
     },
     "RigCalibration": {
       "properties": {
@@ -1029,7 +1152,7 @@
     "triggered_camera_controller": {
       "allOf": [
         {
-          "$ref": "#/definitions/CameraController"
+          "$ref": "#/definitions/CameraController_SpinnakerCamera_"
         }
       ],
       "description": "Required camera controller to triggered cameras."
@@ -1039,7 +1162,7 @@
       "description": "Optional camera controller for monitoring cameras.",
       "oneOf": [
         {
-          "$ref": "#/definitions/CameraController"
+          "$ref": "#/definitions/CameraController_WebCamera_"
         },
         {
           "type": "null"
