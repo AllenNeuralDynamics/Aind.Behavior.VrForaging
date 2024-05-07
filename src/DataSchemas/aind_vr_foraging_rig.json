@@ -5,6 +5,128 @@
       "title": "BaseModel",
       "type": "object"
     },
+    "CameraController_SpinnakerCamera_": {
+      "properties": {
+        "device_type": {
+          "const": "CameraController",
+          "default": "CameraController",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cameras": {
+          "additionalProperties": {
+            "$ref": "#/definitions/SpinnakerCamera"
+          },
+          "description": "Cameras to be instantiated",
+          "title": "Cameras",
+          "type": "object"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate of the trigger to all cameras",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frame Rate"
+        }
+      },
+      "required": [
+        "cameras"
+      ],
+      "title": "CameraController[SpinnakerCamera]",
+      "type": "object"
+    },
+    "CameraController_WebCamera_": {
+      "properties": {
+        "device_type": {
+          "const": "CameraController",
+          "default": "CameraController",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cameras": {
+          "additionalProperties": {
+            "$ref": "#/definitions/WebCamera"
+          },
+          "description": "Cameras to be instantiated",
+          "title": "Cameras",
+          "type": "object"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate of the trigger to all cameras",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frame Rate"
+        }
+      },
+      "required": [
+        "cameras"
+      ],
+      "title": "CameraController[WebCamera]",
+      "type": "object"
+    },
     "HarpAnalogInput": {
       "properties": {
         "who_am_i": {
@@ -384,7 +506,17 @@
       "type": "object"
     },
     "OlfactometerCalibrationInput": {
-      "properties": {},
+      "properties": {
+        "channel_config": {
+          "additionalProperties": {
+            "$ref": "#/definitions/OlfactometerChannelConfig"
+          },
+          "default": {},
+          "description": "Configuration of olfactometer channels",
+          "title": "Channel Config",
+          "type": "object"
+        }
+      },
       "title": "OlfactometerCalibrationInput",
       "type": "object"
     },
@@ -392,6 +524,76 @@
       "properties": {},
       "title": "OlfactometerCalibrationOutput",
       "type": "object"
+    },
+    "OlfactometerChannelConfig": {
+      "properties": {
+        "channel_index": {
+          "title": "Channel index",
+          "type": "integer"
+        },
+        "channel_type": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerChannelType"
+            }
+          ],
+          "default": "Odor",
+          "title": "Channel type"
+        },
+        "flow_rate_capacity": {
+          "default": 100,
+          "enum": [
+            100,
+            1000
+          ],
+          "title": "Flow capacity. mL/min",
+          "type": "integer"
+        },
+        "flow_rate": {
+          "default": 100,
+          "maximum": 100.0,
+          "title": "Target flow rate. mL/min. If channel_type == CARRIER, this value is ignored.",
+          "type": "number"
+        },
+        "odorant": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Odorant name"
+        },
+        "odorant_dilution": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Odorant dilution (%v/v)"
+        }
+      },
+      "required": [
+        "channel_index"
+      ],
+      "title": "OlfactometerChannelConfig",
+      "type": "object"
+    },
+    "OlfactometerChannelType": {
+      "description": "Channel type",
+      "enum": [
+        "Odor",
+        "Carrier"
+      ],
+      "title": "OlfactometerChannelType",
+      "type": "string"
     },
     "RigCalibration": {
       "properties": {
@@ -551,20 +753,24 @@
           "title": "Exposure",
           "type": "integer"
         },
-        "frame_rate": {
-          "default": 30,
-          "description": "Frame rate",
-          "maximum": 350,
-          "minimum": 1,
-          "title": "Frame Rate",
-          "type": "integer"
-        },
         "gain": {
           "default": 0,
           "description": "Gain",
           "minimum": 0.0,
           "title": "Gain",
           "type": "number"
+        },
+        "video_writer": {
+          "default": null,
+          "description": "Video writer. If not provided, no video will be saved.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VideoWriter"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -590,6 +796,90 @@
         }
       ],
       "title": "TreadmillBoard"
+    },
+    "VideoWriter": {
+      "discriminator": {
+        "mapping": {
+          "FFMPEG": "#/definitions/VideoWriterFfmpeg",
+          "OPENCV": "#/definitions/VideoWriterOpenCv"
+        },
+        "propertyName": "video_writer_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/VideoWriterFfmpeg"
+        },
+        {
+          "$ref": "#/definitions/VideoWriterOpenCv"
+        }
+      ],
+      "title": "VideoWriter"
+    },
+    "VideoWriterFfmpeg": {
+      "properties": {
+        "video_writer_type": {
+          "const": "FFMPEG",
+          "title": "Video Writer Type",
+          "type": "string"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Encoding frame rate",
+          "minimum": 0,
+          "title": "Frame Rate",
+          "type": "integer"
+        },
+        "container_extension": {
+          "default": "mp4",
+          "description": "Container extension",
+          "title": "Container Extension",
+          "type": "string"
+        },
+        "output_arguments": {
+          "default": "-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13-preset medium -b:v 20M -rc:v cbr",
+          "description": "Output arguments",
+          "title": "Output Arguments",
+          "type": "string"
+        }
+      },
+      "required": [
+        "video_writer_type"
+      ],
+      "title": "VideoWriterFfmpeg",
+      "type": "object"
+    },
+    "VideoWriterOpenCv": {
+      "properties": {
+        "video_writer_type": {
+          "const": "OPENCV",
+          "title": "Video Writer Type",
+          "type": "string"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Encoding frame rate",
+          "minimum": 0,
+          "title": "Frame Rate",
+          "type": "integer"
+        },
+        "container_extension": {
+          "default": "avi",
+          "description": "Container extension",
+          "title": "Container Extension",
+          "type": "string"
+        },
+        "four_cc": {
+          "default": "FMP4",
+          "description": "Four character code",
+          "title": "Four Cc",
+          "type": "string"
+        }
+      },
+      "required": [
+        "video_writer_type"
+      ],
+      "title": "VideoWriterOpenCv",
+      "type": "object"
     },
     "WaterValveCalibration": {
       "description": "Water valve calibration class",
@@ -780,6 +1070,18 @@
           "minimum": 0,
           "title": "Index",
           "type": "integer"
+        },
+        "video_writer": {
+          "default": null,
+          "description": "Video writer. If not provided, no video will be saved.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VideoWriter"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "WebCamera",
@@ -844,8 +1146,8 @@
   },
   "properties": {
     "schema_version": {
-      "const": "0.2.2",
-      "default": "0.2.2",
+      "const": "0.3.0",
+      "default": "0.3.0",
       "title": "Schema Version",
       "type": "string"
     },
@@ -859,34 +1161,20 @@
       "title": "Rig Name",
       "type": "string"
     },
-    "auxiliary_camera0": {
-      "default": {
-        "device_type": "WebCamera",
-        "additional_settings": null,
-        "calibration": null,
-        "index": 0
-      },
-      "description": "Auxiliary camera 0",
-      "oneOf": [
+    "triggered_camera_controller": {
+      "allOf": [
         {
-          "$ref": "#/definitions/WebCamera"
-        },
-        {
-          "type": "null"
+          "$ref": "#/definitions/CameraController_SpinnakerCamera_"
         }
-      ]
+      ],
+      "description": "Required camera controller to triggered cameras."
     },
-    "auxiliary_camera1": {
-      "default": {
-        "device_type": "WebCamera",
-        "additional_settings": null,
-        "calibration": null,
-        "index": 1
-      },
-      "description": "Auxiliary camera 1",
+    "monitoring_camera_controller": {
+      "default": null,
+      "description": "Optional camera controller for monitoring cameras.",
       "oneOf": [
         {
-          "$ref": "#/definitions/WebCamera"
+          "$ref": "#/definitions/CameraController_WebCamera_"
         },
         {
           "type": "null"
@@ -957,38 +1245,6 @@
         }
       ]
     },
-    "face_camera": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/SpinnakerCamera"
-        }
-      ],
-      "description": "Face camera"
-    },
-    "top_body_camera": {
-      "default": null,
-      "description": "Top body camera",
-      "oneOf": [
-        {
-          "$ref": "#/definitions/SpinnakerCamera"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "side_body_camera": {
-      "default": null,
-      "description": "Side body camera",
-      "oneOf": [
-        {
-          "$ref": "#/definitions/SpinnakerCamera"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "screen": {
       "allOf": [
         {
@@ -1018,12 +1274,12 @@
   },
   "required": [
     "rig_name",
+    "triggered_camera_controller",
     "harp_behavior",
     "harp_olfactometer",
     "harp_lickometer",
     "harp_clock_generator",
     "treadmill",
-    "face_camera",
     "calibration"
   ],
   "title": "AindVrForagingRig",
