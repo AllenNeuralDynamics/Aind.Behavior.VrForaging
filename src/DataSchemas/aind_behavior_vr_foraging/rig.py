@@ -30,7 +30,7 @@ class RigCalibration(BaseModel):
 
 
 class AindVrForagingRig(AindBehaviorRigModel):
-    schema_version: Literal[__version__] = __version__
+    version: Literal[__version__] = __version__
     triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
     )

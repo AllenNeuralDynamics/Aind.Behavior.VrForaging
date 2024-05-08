@@ -15,7 +15,7 @@ namespace AindVrForagingDataSchema.Session
     public partial class AindBehaviorSessionModel
     {
     
-        private string _schemaVersion = "0.2.0";
+        private string _version = "0.2.0";
     
         private string _experiment;
     
@@ -45,7 +45,7 @@ namespace AindVrForagingDataSchema.Session
     
         protected AindBehaviorSessionModel(AindBehaviorSessionModel other)
         {
-            _schemaVersion = other._schemaVersion;
+            _version = other._version;
             _experiment = other._experiment;
             _experimenter = other._experimenter;
             _date = other._date;
@@ -59,16 +59,16 @@ namespace AindVrForagingDataSchema.Session
             _skipHardwareValidation = other._skipHardwareValidation;
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
-        public string SchemaVersion
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
         {
             get
             {
-                return _schemaVersion;
+                return _version;
             }
             set
             {
-                _schemaVersion = value;
+                _version = value;
             }
         }
     
@@ -274,7 +274,7 @@ namespace AindVrForagingDataSchema.Session
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("version = " + _version + ", ");
             stringBuilder.Append("experiment = " + _experiment + ", ");
             stringBuilder.Append("experimenter = " + _experimenter + ", ");
             stringBuilder.Append("date = " + _date + ", ");

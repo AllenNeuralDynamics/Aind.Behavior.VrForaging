@@ -1145,10 +1145,10 @@
     }
   },
   "properties": {
-    "schema_version": {
+    "version": {
       "const": "0.3.0",
       "default": "0.3.0",
-      "title": "Schema Version",
+      "title": "Version",
       "type": "string"
     },
     "computer_name": {
