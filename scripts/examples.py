@@ -1,26 +1,25 @@
 import datetime
-import aind_behavior_services.task_logic.distributions as distributions
+
 import aind_behavior_services.rig as rig
+import aind_behavior_services.task_logic.distributions as distributions
+import aind_behavior_vr_foraging.task_logic as vr_task_logic
+from aind_behavior_services import db_utils as db
 from aind_behavior_services.calibration.olfactometer import (
     OlfactometerCalibration,
     OlfactometerCalibrationInput,
     OlfactometerCalibrationOutput,
+    OlfactometerChannel,
     OlfactometerChannelConfig,
     OlfactometerChannelType,
-    OlfactometerChannel,
 )
 from aind_behavior_services.calibration.water_valve import (
+    Measurement,
     WaterValveCalibration,
     WaterValveCalibrationInput,
-    Measurement,
 )
-from aind_behavior_services import db_utils as db
-
-import aind_behavior_vr_foraging.task_logic as vr_task_logic
-
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
-from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
 from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
 
 
 def main():
