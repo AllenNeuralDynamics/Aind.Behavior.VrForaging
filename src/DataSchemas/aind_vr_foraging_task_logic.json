@@ -1,5 +1,64 @@
 {
   "definitions": {
+    "AindVrForagingTaskParameters": {
+      "additionalProperties": true,
+      "properties": {
+        "rng_seed": {
+          "default": null,
+          "description": "Seed of the random number generator",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rng Seed"
+        },
+        "updaters": {
+          "additionalProperties": {
+            "$ref": "#/definitions/NumericalUpdater"
+          },
+          "description": "List of numerical updaters",
+          "title": "Updaters",
+          "type": "object"
+        },
+        "environment_statistics": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/EnvironmentStatistics"
+            }
+          ],
+          "description": "Statistics of the environment"
+        },
+        "task_mode_settings": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TaskModeSettings"
+            }
+          ],
+          "default": {
+            "task_mode": "FORAGING"
+          },
+          "description": "Settings of the task stage"
+        },
+        "operation_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OperationControl"
+            }
+          ],
+          "description": "Control of the operation"
+        }
+      },
+      "required": [
+        "environment_statistics",
+        "operation_control"
+      ],
+      "title": "AindVrForagingTaskParameters",
+      "type": "object"
+    },
     "AudioControl": {
       "properties": {
         "duration": {
@@ -2036,78 +2095,37 @@
       "type": "object"
     }
   },
+  "additionalProperties": false,
   "properties": {
-    "schema_version": {
-      "const": "0.4.0",
-      "default": "0.4.0",
-      "title": "Schema Version",
+    "name": {
+      "default": "AindVrForaging",
+      "description": "Name of the task logic",
+      "title": "Name",
       "type": "string"
     },
-    "rng_seed": {
-      "default": null,
-      "description": "Seed of the random number generator",
-      "oneOf": [
-        {
-          "type": "number"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "title": "Rng Seed"
+    "description": {
+      "default": "",
+      "description": "Description of the task.",
+      "title": "Description",
+      "type": "string"
     },
-    "name": {
-      "default": null,
-      "description": "Optional name of the task or stage",
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "title": "Name"
+    "version": {
+      "const": "0.4.0",
+      "default": "0.4.0",
+      "title": "Version",
+      "type": "string"
     },
-    "updaters": {
-      "additionalProperties": {
-        "$ref": "#/definitions/NumericalUpdater"
-      },
-      "description": "List of numerical updaters",
-      "title": "Updaters",
-      "type": "object"
-    },
-    "environment_statistics": {
+    "task_parameters": {
       "allOf": [
         {
-          "$ref": "#/definitions/EnvironmentStatistics"
+          "$ref": "#/definitions/AindVrForagingTaskParameters"
         }
       ],
-      "description": "Statistics of the environment"
-    },
-    "task_mode_settings": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TaskModeSettings"
-        }
-      ],
-      "default": {
-        "task_mode": "FORAGING"
-      },
-      "description": "Settings of the task stage"
-    },
-    "operation_control": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/OperationControl"
-        }
-      ],
-      "description": "Control of the operation"
+      "description": "Parameters of the task logic"
     }
   },
   "required": [
-    "environment_statistics",
-    "operation_control"
+    "task_parameters"
   ],
   "title": "AindVrForagingTaskLogic",
   "type": "object"

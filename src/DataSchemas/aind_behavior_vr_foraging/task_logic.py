@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Annotated, Dict, List, Literal, Optional, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
-from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel
+from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
 from aind_behavior_vr_foraging import __version__
 from pydantic import BaseModel, Field, RootModel
 
@@ -338,8 +338,7 @@ class TaskModeSettings(RootModel):
     root: Annotated[Union[HabituationSettings, ForagingSettings, DebugSettings], Field(discriminator="task_mode")]
 
 
-class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
-    schema_version: Literal[__version__] = __version__
+class AindVrForagingTaskParameters(TaskParameters):
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
     task_mode_settings: TaskModeSettings = Field(
@@ -348,5 +347,7 @@ class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     operation_control: OperationControl = Field(..., description="Control of the operation")
 
 
-def schema() -> BaseModel:
-    return AindVrForagingTaskLogic
+class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
+    version: Literal[__version__] = __version__
+    name: str = Field(default="AindVrForaging", description="Name of the task logic", frozen=True)
+    task_parameters: AindVrForagingTaskParameters = Field(..., description="Parameters of the task logic")

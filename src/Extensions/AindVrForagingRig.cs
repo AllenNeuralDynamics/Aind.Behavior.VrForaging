@@ -3270,7 +3270,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _schemaVersion = "0.3.0";
+        private string _version = "0.3.0";
     
         private string _computerName;
     
@@ -3304,7 +3304,7 @@ namespace AindVrForagingDataSchema.Rig
     
         protected AindVrForagingRig(AindVrForagingRig other)
         {
-            _schemaVersion = other._schemaVersion;
+            _version = other._version;
             _computerName = other._computerName;
             _rigName = other._rigName;
             _triggeredCameraController = other._triggeredCameraController;
@@ -3320,16 +3320,16 @@ namespace AindVrForagingDataSchema.Rig
             _calibration = other._calibration;
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
-        public string SchemaVersion
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
         {
             get
             {
-                return _schemaVersion;
+                return _version;
             }
             set
             {
-                _schemaVersion = value;
+                _version = value;
             }
         }
     
@@ -3577,7 +3577,7 @@ namespace AindVrForagingDataSchema.Rig
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("version = " + _version + ", ");
             stringBuilder.Append("computer_name = " + _computerName + ", ");
             stringBuilder.Append("rig_name = " + _rigName + ", ");
             stringBuilder.Append("triggered_camera_controller = " + _triggeredCameraController + ", ");
