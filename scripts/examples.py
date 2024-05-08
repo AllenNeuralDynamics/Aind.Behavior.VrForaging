@@ -18,9 +18,9 @@ from aind_behavior_services import db_utils as db
 
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
 
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
 from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
-from aind_behavior_vr_foraging.session import AindBehaviorSessionModel
+from aind_behavior_services.session import AindBehaviorSessionModel
 
 
 def main():
@@ -234,12 +234,14 @@ def main():
     )
 
     example_vr_task_logic = AindVrForagingTaskLogic(
-        name="vr_foraging_task_stage_foo",
-        rng_seed=None,
-        updaters=updaters,
-        environment_statistics=environment_statistics,
-        task_mode_settings=vr_task_logic.ForagingSettings(),
-        operation_control=operation_control,
+        task_parameters=AindVrForagingTaskParameters(
+            name="vr_foraging_task_stage_foo",
+            rng_seed=None,
+            updaters=updaters,
+            environment_statistics=environment_statistics,
+            task_mode_settings=vr_task_logic.ForagingSettings(),
+            operation_control=operation_control,
+        )
     )
 
     database = db.SubjectDataBase()
