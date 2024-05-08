@@ -104,6 +104,12 @@
       <Expression xsi:type="rx:AsyncSubject">
         <Name>TaskLogicSchema</Name>
       </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>TaskParameters</Selector>
+      </Expression>
+      <Expression xsi:type="rx:AsyncSubject">
+        <Name>TaskLogicParameters</Name>
+      </Expression>
       <Expression xsi:type="Annotation">
         <Name>PinOut</Name>
         <Text><![CDATA[| Function | HarpBehavior Pin | Notes |
@@ -1470,7 +1476,7 @@ Item2.Light as Light)</scr:Expression>
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicSchema</Name>
+              <Name>TaskLogicParameters</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>RngSeed</Selector>
@@ -1793,7 +1799,7 @@ Item2.Light as Light)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>EnvironmentStatistics.Patches</Selector>
@@ -1835,7 +1841,7 @@ Item2.Light as Light)</scr:Expression>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl.OdorControl.UseChannel3AsCarrier</Selector>
@@ -4815,7 +4821,7 @@ Value as IsStopped)</scr:Expression>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl</Selector>
@@ -4842,7 +4848,7 @@ Value as IsStopped)</scr:Expression>
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl</Selector>
@@ -4900,7 +4906,7 @@ Value as IsStopped)</scr:Expression>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl.PositionControl.InitialPosition</Selector>
@@ -4940,7 +4946,7 @@ Value as IsStopped)</scr:Expression>
                     <Selector>Value</Selector>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl</Selector>
@@ -5117,7 +5123,7 @@ Value as IsStopped)</scr:Expression>
                     <rx:Name>DepletionVariable</rx:Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>EnvironmentStatistics.TransitionMatrix</Selector>
@@ -5134,7 +5140,7 @@ Value as IsStopped)</scr:Expression>
                     <Name>TransitionMatrix</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>EnvironmentStatistics.Patches</Selector>
@@ -5155,7 +5161,7 @@ Value as IsStopped)</scr:Expression>
                     <Name>PatchStatistics</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>EnvironmentStatistics.FirstState</Selector>
@@ -5877,7 +5883,7 @@ Value as IsStopped)</scr:Expression>
                           <Workflow>
                             <Nodes>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>TaskLogicSchema</Name>
+                                <Name>TaskLogicParameters</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>OperationControl.OdorControl.UseChannel3AsCarrier</Selector>
@@ -5973,7 +5979,7 @@ Value as IsStopped)</scr:Expression>
                           <Workflow>
                             <Nodes>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>TaskLogicSchema</Name>
+                                <Name>TaskLogicParameters</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>OperationControl.OdorControl.UseChannel3AsCarrier</Selector>
@@ -6132,7 +6138,7 @@ Value as IsStopped)</scr:Expression>
                           <Name>ArmOdor</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.OdorControl.UseChannel3AsCarrier</Selector>
@@ -6143,7 +6149,7 @@ Value as IsStopped)</scr:Expression>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.OdorControl.TargetOdorFlow</Selector>
@@ -6154,7 +6160,7 @@ Value as IsStopped)</scr:Expression>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.OdorControl.TargetTotalFlow</Selector>
@@ -6305,7 +6311,7 @@ Value as IsStopped)</scr:Expression>
                           <Name>OdorEndValveState</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.OdorControl.ValveMaxOpenTime</Selector>
@@ -6614,7 +6620,7 @@ Value as IsStopped)</scr:Expression>
                           <Name>HarpBehaviorCommands</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.MovableSpoutControl</Selector>
@@ -6646,7 +6652,7 @@ Value as IsStopped)</scr:Expression>
                           <Name>HarpBehaviorCommands</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.MovableSpoutControl</Selector>
@@ -6671,7 +6677,7 @@ Value as IsStopped)</scr:Expression>
                           <rx:Name>ServoPosition</rx:Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.MovableSpoutControl.ServoMotor</Selector>
@@ -6751,7 +6757,7 @@ Value as IsStopped)</scr:Expression>
                     <Name>SpoutAvailable</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl.MovableSpoutControl.ServoMotor</Selector>
@@ -6763,7 +6769,7 @@ Value as IsStopped)</scr:Expression>
                     <scr:Expression>Item1 ? Item2.MaxPulseDuration : Item2.MinPulseDuration</scr:Expression>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl.MovableSpoutControl</Selector>
@@ -6800,7 +6806,7 @@ Value as IsStopped)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl.MovableSpoutControl</Selector>
@@ -6867,7 +6873,7 @@ Value as IsStopped)</scr:Expression>
                           <Name>State</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.MovableSpoutControl</Selector>
@@ -6941,7 +6947,7 @@ Value as IsStopped)</scr:Expression>
                     <Name>StartExperiment</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl.MovableSpoutControl</Selector>
@@ -7919,7 +7925,7 @@ Value as IsStopped)</scr:Expression>
                           <Name>HarpBehaviorCommands</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.AudioControl</Selector>
@@ -7931,7 +7937,7 @@ Value as IsStopped)</scr:Expression>
                           <Name>AudioDuration</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicSchema</Name>
+                          <Name>TaskLogicParameters</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>OperationControl.AudioControl</Selector>
@@ -7999,7 +8005,7 @@ Value as IsStopped)</scr:Expression>
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicSchema</Name>
+              <Name>TaskLogicParameters</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Updaters</Selector>
@@ -8047,7 +8053,7 @@ Value as IsStopped)</scr:Expression>
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicSchema</Name>
+              <Name>TaskLogicParameters</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>OperationControl.PositionControl.VelocityThreshold</Selector>
@@ -8311,7 +8317,7 @@ Value as IsStopped)</scr:Expression>
                           <Workflow>
                             <Nodes>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>TaskLogicSchema</Name>
+                                <Name>TaskLogicParameters</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>OperationControl.PositionControl.InitialPosition</Selector>
@@ -9252,7 +9258,7 @@ Item2 as Start
               </Workflow>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicSchema</Name>
+              <Name>TaskLogicParameters</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -9278,7 +9284,7 @@ Item2 as Start
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
@@ -9788,7 +9794,7 @@ Item2 as Start
               </Workflow>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicSchema</Name>
+              <Name>TaskLogicParameters</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -10536,7 +10542,7 @@ Item2 as Start
                     <Combinator xsi:type="gl:SampleOnRenderFrame" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogicSchema</Name>
+                    <Name>TaskLogicParameters</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OperationControl.PositionControl.VelocityThreshold</Selector>
@@ -11491,28 +11497,30 @@ Item3 as TotalReward)</scr:Expression>
       <Edge From="14" To="15" Label="Source1" />
       <Edge From="15" To="16" Label="Source1" />
       <Edge From="16" To="17" Label="Source1" />
+      <Edge From="17" To="18" Label="Source1" />
       <Edge From="18" To="19" Label="Source1" />
       <Edge From="20" To="21" Label="Source1" />
       <Edge From="22" To="23" Label="Source1" />
-      <Edge From="23" To="24" Label="Source1" />
       <Edge From="24" To="25" Label="Source1" />
-      <Edge From="29" To="30" Label="Source1" />
-      <Edge From="30" To="33" Label="Source1" />
+      <Edge From="25" To="26" Label="Source1" />
+      <Edge From="26" To="27" Label="Source1" />
       <Edge From="31" To="32" Label="Source1" />
-      <Edge From="32" To="33" Label="Source2" />
-      <Edge From="33" To="35" Label="Source1" />
+      <Edge From="32" To="35" Label="Source1" />
+      <Edge From="33" To="34" Label="Source1" />
       <Edge From="34" To="35" Label="Source2" />
-      <Edge From="36" To="37" Label="Source1" />
+      <Edge From="35" To="37" Label="Source1" />
+      <Edge From="36" To="37" Label="Source2" />
       <Edge From="38" To="39" Label="Source1" />
-      <Edge From="40" To="42" Label="Source1" />
-      <Edge From="41" To="42" Label="Source2" />
+      <Edge From="40" To="41" Label="Source1" />
       <Edge From="42" To="44" Label="Source1" />
       <Edge From="43" To="44" Label="Source2" />
-      <Edge From="48" To="49" Label="Source1" />
-      <Edge From="49" To="50" Label="Source1" />
+      <Edge From="44" To="46" Label="Source1" />
+      <Edge From="45" To="46" Label="Source2" />
       <Edge From="50" To="51" Label="Source1" />
       <Edge From="51" To="52" Label="Source1" />
       <Edge From="52" To="53" Label="Source1" />
+      <Edge From="53" To="54" Label="Source1" />
+      <Edge From="54" To="55" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
