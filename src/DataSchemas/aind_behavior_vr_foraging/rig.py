@@ -46,7 +46,3 @@ class AindVrForagingRig(AindBehaviorRigModel):
     harp_sniff_detector: Optional[rig.HarpSniffDetector] = Field(None, description="Sniff detector settings")
     screen: rig.Screen = Field(default=rig.Screen(), description="Screen settings")
     calibration: RigCalibration = Field(..., description="Calibration models")
-
-
-def schema() -> BaseModel:
-    return AindVrForagingRig
