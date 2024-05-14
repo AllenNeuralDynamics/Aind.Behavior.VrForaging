@@ -1,18 +1,25 @@
 import datetime
-import aind_behavior_services.task_logic.distributions as distributions
+
 import aind_behavior_services.rig as rig
-from aind_behavior_services.calibration.olfactometer import OlfactometerCalibration
+import aind_behavior_services.task_logic.distributions as distributions
+import aind_behavior_vr_foraging.task_logic as vr_task_logic
+from aind_behavior_services import db_utils as db
+from aind_behavior_services.calibration.olfactometer import (
+    OlfactometerCalibration,
+    OlfactometerCalibrationInput,
+    OlfactometerCalibrationOutput,
+    OlfactometerChannel,
+    OlfactometerChannelConfig,
+    OlfactometerChannelType,
+)
 from aind_behavior_services.calibration.water_valve import (
+    Measurement,
     WaterValveCalibration,
     WaterValveCalibrationInput,
-    Measurement,
 )
-
-import aind_behavior_vr_foraging.task_logic as vr_task_logic
-
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
+from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
-from aind_behavior_vr_foraging.session import AindBehaviorSessionModel
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
 
 
 def main():
@@ -27,13 +34,50 @@ def main():
         experiment_version="0.1.0",
         allow_dirty_repo=True,
         skip_hardware_validation=False,
+        experimenter=["Foo", "Bar"],
     )
 
-    #  Create a new Rig instance
+    # Create a new Rig instance
 
     # Create calibrations
 
-    olfactometer_calibration = None
+    olfactometer_calibration = OlfactometerCalibration(
+        output=OlfactometerCalibrationOutput(),
+        date=datetime.datetime.now(),
+        input=OlfactometerCalibrationInput(
+            channel_config={
+                OlfactometerChannel.Channel0: OlfactometerChannelConfig(
+                    channel_index=OlfactometerChannel.Channel0,
+                    channel_type=OlfactometerChannelType.ODOR,
+                    flow_rate_capacity=100,
+                    flow_rate=100,
+                    odorant="Amyl Acetate",
+                    odorant_dilution=1.5,
+                ),
+                OlfactometerChannel.Channel1: OlfactometerChannelConfig(
+                    channel_index=OlfactometerChannel.Channel1,
+                    channel_type=OlfactometerChannelType.ODOR,
+                    flow_rate_capacity=100,
+                    flow_rate=100,
+                    odorant="Banana",
+                    odorant_dilution=1.5,
+                ),
+                OlfactometerChannel.Channel2: OlfactometerChannelConfig(
+                    channel_index=OlfactometerChannel.Channel2,
+                    channel_type=OlfactometerChannelType.ODOR,
+                    flow_rate_capacity=100,
+                    flow_rate=100,
+                    odorant="Apple",
+                    odorant_dilution=1.5,
+                ),
+                OlfactometerChannel.Channel3: OlfactometerChannelConfig(
+                    channel_index=OlfactometerChannel.Channel3,
+                    channel_type=OlfactometerChannelType.CARRIER,
+                    flow_rate_capacity=1000,
+                ),
+            }
+        ),
+    )
 
     water_valve_input = WaterValveCalibrationInput(
         measurements=[
@@ -47,11 +91,14 @@ def main():
 
     example_rig = AindVrForagingRig(
         rig_name="test_rig",
-        auxiliary_camera0=rig.WebCamera(index=0),
-        auxiliary_camera1=None,
-        face_camera=rig.SpinnakerCamera(serial_number="SerialNumber", binning=1, exposure=5000, frame_rate=60, gain=0),
-        top_body_camera=None,
-        side_body_camera=None,
+        triggered_camera_controller=rig.CameraController[rig.SpinnakerCamera](
+            frame_rate=120,
+            cameras={
+                "FaceCamera": rig.SpinnakerCamera(serial_number="SerialNumber", binning=1, exposure=5000, gain=0),
+                "SideCamera": rig.SpinnakerCamera(serial_number="SerialNumber", binning=1, exposure=5000, gain=0),
+            },
+        ),
+        monitoring_camera_controller=rig.CameraController[rig.WebCamera](cameras={"WebCam0": rig.WebCamera(index=0)}),
         harp_behavior=rig.HarpBehavior(port_name="COM3"),
         harp_olfactometer=rig.HarpOlfactometer(port_name="COM4"),
         harp_lickometer=rig.HarpLickometer(port_name="COM5"),
@@ -186,11 +233,19 @@ def main():
     )
 
     example_vr_task_logic = AindVrForagingTaskLogic(
-        updaters=updaters,
-        environment_statistics=environment_statistics,
-        task_mode_settings=vr_task_logic.ForagingSettings(),
-        operation_control=operation_control,
+        task_parameters=AindVrForagingTaskParameters(
+            name="vr_foraging_task_stage_foo",
+            rng_seed=None,
+            updaters=updaters,
+            environment_statistics=environment_statistics,
+            task_mode_settings=vr_task_logic.ForagingSettings(),
+            operation_control=operation_control,
+        )
     )
+
+    database = db.SubjectDataBase()
+    database.add_subject("test", db.SubjectEntry(task_logic_target="preward_intercept_stageA"))
+    database.add_subject("test2", db.SubjectEntry(task_logic_target="does_notexist"))
 
     with open("local/example_vr_task_logic.json", "w") as f:
         f.write(example_vr_task_logic.model_dump_json(indent=2))
@@ -198,6 +253,8 @@ def main():
         f.write(example_session.model_dump_json(indent=2))
     with open("local/example_rig.json", "w") as f:
         f.write(example_rig.model_dump_json(indent=2))
+    with open("local/example_database.json", "w") as f:
+        f.write(database.model_dump_json(indent=2))
 
 
 if __name__ == "__main__":

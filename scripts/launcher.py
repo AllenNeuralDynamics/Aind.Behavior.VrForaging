@@ -1,6 +1,6 @@
 from aind_behavior_services.launcher import LauncherCli
+from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
-from aind_behavior_vr_foraging.session import AindBehaviorSessionModel
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 if __name__ == "__main__":

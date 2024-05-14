@@ -14,10 +14,14 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.6.0",
+  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.7.1",
 ]
 
 [project.optional-dependencies]
+
+aind-data-schema-mapper = [
+  "aind_behavior_services[aind-data-schema-mapper]@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.7.1",
+  ]
 
 analysis = [
   "numpy",
@@ -35,6 +39,14 @@ linters = [
     'isort'
 ]
 
+docs = [
+    'Sphinx<7.3',
+    'furo',
+    'sphinx-jinja',
+    'autodoc_pydantic',
+    'myst_parser',
+    'sphinx-jsonschema'
+]
 
 [tool.setuptools.packages.find]
 where = ["src/DataSchemas"]

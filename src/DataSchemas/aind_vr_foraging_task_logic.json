@@ -1,5 +1,64 @@
 {
   "definitions": {
+    "AindVrForagingTaskParameters": {
+      "additionalProperties": true,
+      "properties": {
+        "rng_seed": {
+          "default": null,
+          "description": "Seed of the random number generator",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rng Seed"
+        },
+        "updaters": {
+          "additionalProperties": {
+            "$ref": "#/definitions/NumericalUpdater"
+          },
+          "description": "List of numerical updaters",
+          "title": "Updaters",
+          "type": "object"
+        },
+        "environment_statistics": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/EnvironmentStatistics"
+            }
+          ],
+          "description": "Statistics of the environment"
+        },
+        "task_mode_settings": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TaskModeSettings"
+            }
+          ],
+          "default": {
+            "task_mode": "FORAGING"
+          },
+          "description": "Settings of the task stage"
+        },
+        "operation_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OperationControl"
+            }
+          ],
+          "description": "Control of the operation"
+        }
+      },
+      "required": [
+        "environment_statistics",
+        "operation_control"
+      ],
+      "title": "AindVrForagingTaskParameters",
+      "type": "object"
+    },
     "AudioControl": {
       "properties": {
         "duration": {
@@ -233,6 +292,7 @@
       "type": "string"
     },
     "Distribution": {
+      "description": "Available distributions",
       "discriminator": {
         "mapping": {
           "Beta": "#/definitions/BetaDistribution",
@@ -491,14 +551,6 @@
           ],
           "description": "Distance (cm) to the reward"
         },
-        "reward_specification": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RewardSpecification"
-            }
-          ],
-          "description": "specification of the reward"
-        },
         "render_specification": {
           "allOf": [
             {
@@ -508,12 +560,11 @@
           "default": {
             "contrast": null
           },
-          "description": "Contrast of the environement"
+          "description": "The optional render specification of the virtual site"
         }
       },
       "required": [
-        "distance_to_reward",
-        "reward_specification"
+        "distance_to_reward"
       ],
       "title": "HabituationSettings",
       "type": "object"
@@ -2044,52 +2095,37 @@
       "type": "object"
     }
   },
+  "additionalProperties": false,
   "properties": {
-    "schema_version": {
-      "const": "0.3.0",
-      "default": "0.3.0",
-      "title": "Schema Version",
+    "name": {
+      "default": "AindVrForaging",
+      "description": "Name of the task logic",
+      "title": "Name",
       "type": "string"
     },
-    "updaters": {
-      "additionalProperties": {
-        "$ref": "#/definitions/NumericalUpdater"
-      },
-      "description": "List of numerical updaters",
-      "title": "Updaters",
-      "type": "object"
+    "description": {
+      "default": "",
+      "description": "Description of the task.",
+      "title": "Description",
+      "type": "string"
     },
-    "environment_statistics": {
+    "version": {
+      "const": "0.4.0",
+      "default": "0.4.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "task_parameters": {
       "allOf": [
         {
-          "$ref": "#/definitions/EnvironmentStatistics"
+          "$ref": "#/definitions/AindVrForagingTaskParameters"
         }
       ],
-      "description": "Statistics of the environment"
-    },
-    "task_mode_settings": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TaskModeSettings"
-        }
-      ],
-      "default": {
-        "task_mode": "FORAGING"
-      },
-      "description": "Settings of the task stage"
-    },
-    "operation_control": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/OperationControl"
-        }
-      ],
-      "description": "Control of the operation"
+      "description": "Parameters of the task logic"
     }
   },
   "required": [
-    "environment_statistics",
-    "operation_control"
+    "task_parameters"
   ],
   "title": "AindVrForagingTaskLogic",
   "type": "object"

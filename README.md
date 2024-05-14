@@ -2,9 +2,13 @@
 
 A repository for the VR Foraging task.
 
+---
+
 ## General instructions
 
 This repository follows the project structure laid out in the [Aind.Behavior.Services repository](https://github.com/AllenNeuralDynamics/Aind.Behavior.Services).
+
+---
 
 ## Deployment
 
