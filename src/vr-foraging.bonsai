@@ -201,7 +201,7 @@
                           <gl:ShaderUniforms />
                           <gl:BufferBindings>
                             <gl:BufferBinding xsi:type="gl:TextureBinding">
-                              <gl:Name>textureDiffuse</gl:Name>
+                              <gl:Name>tex</gl:Name>
                               <gl:TextureSlot>Texture0</gl:TextureSlot>
                               <gl:TextureTarget>Texture2D</gl:TextureTarget>
                             </gl:BufferBinding>
@@ -209,6 +209,21 @@
                           <gl:FramebufferAttachments />
                           <gl:VertexShader>BonVision:Shaders.TexturedModel.vert</gl:VertexShader>
                           <gl:FragmentShader>Shaders\ScaledTexturedModel.frag</gl:FragmentShader>
+                        </gl:ShaderConfiguration>
+                        <gl:ShaderConfiguration xsi:type="gl:Material">
+                          <gl:Name>Brightness</gl:Name>
+                          <gl:RenderState />
+                          <gl:ShaderUniforms />
+                          <gl:BufferBindings>
+                            <gl:BufferBinding xsi:type="gl:TextureBinding">
+                              <gl:Name>textureDiffuse</gl:Name>
+                              <gl:TextureSlot>Texture0</gl:TextureSlot>
+                              <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                            </gl:BufferBinding>
+                          </gl:BufferBindings>
+                          <gl:FramebufferAttachments />
+                          <gl:VertexShader>BonVision:Shaders.TexturedModel.vert</gl:VertexShader>
+                          <gl:FragmentShader>Shaders\Brightness.frag</gl:FragmentShader>
                         </gl:ShaderConfiguration>
                         <gl:ShaderConfiguration xsi:type="gl:Material">
                           <gl:Name>AdjustQuadTexture</gl:Name>
