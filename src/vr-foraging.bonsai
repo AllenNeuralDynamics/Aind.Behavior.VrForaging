@@ -24,7 +24,6 @@
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:p10="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
                  xmlns:p11="clr-namespace:AllenNeuralDynamics.SniffDetector;assembly=AllenNeuralDynamics.SniffDetector"
-                 xmlns:ffmpeg="clr-namespace:Bonsai.FFmpeg;assembly=Bonsai.FFmpeg"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p12="clr-namespace:;assembly=Extensions"
                  xmlns:bv="clr-namespace:BonVision;assembly=BonVision"
@@ -3685,11 +3684,13 @@ Value as IsStopped)</scr:Expression>
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="ffmpeg:VideoWriter">
-                                  <ffmpeg:Suffix>None</ffmpeg:Suffix>
-                                  <ffmpeg:Overwrite>false</ffmpeg:Overwrite>
-                                  <ffmpeg:FrameRate>0</ffmpeg:FrameRate>
+                                <Combinator xsi:type="p6:FfmpegVideoWriter">
+                                  <p6:Overwrite>false</p6:Overwrite>
+                                  <p6:FrameRate>0</p6:FrameRate>
                                 </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p2:VideoWriter" />
                               </Expression>
                             </Nodes>
                             <Edges>
@@ -4194,10 +4195,9 @@ Value as IsStopped)</scr:Expression>
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="ffmpeg:VideoWriter">
-                                  <ffmpeg:Suffix>None</ffmpeg:Suffix>
-                                  <ffmpeg:Overwrite>false</ffmpeg:Overwrite>
-                                  <ffmpeg:FrameRate>0</ffmpeg:FrameRate>
+                                <Combinator xsi:type="p6:FfmpegVideoWriter">
+                                  <p6:Overwrite>false</p6:Overwrite>
+                                  <p6:FrameRate>0</p6:FrameRate>
                                 </Combinator>
                               </Expression>
                             </Nodes>
