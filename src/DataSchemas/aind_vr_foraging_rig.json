@@ -819,6 +819,7 @@
       "properties": {
         "video_writer_type": {
           "const": "FFMPEG",
+          "default": "FFMPEG",
           "title": "Video Writer Type",
           "type": "string"
         },
@@ -836,15 +837,12 @@
           "type": "string"
         },
         "output_arguments": {
-          "default": "-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13-preset medium -b:v 20M -rc:v cbr",
+          "default": "-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13 -preset medium -b:v 20M -rc:v cbr",
           "description": "Output arguments",
           "title": "Output Arguments",
           "type": "string"
         }
       },
-      "required": [
-        "video_writer_type"
-      ],
       "title": "VideoWriterFfmpeg",
       "type": "object"
     },
@@ -852,6 +850,7 @@
       "properties": {
         "video_writer_type": {
           "const": "OPENCV",
+          "default": "OPENCV",
           "title": "Video Writer Type",
           "type": "string"
         },
@@ -875,9 +874,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "video_writer_type"
-      ],
       "title": "VideoWriterOpenCv",
       "type": "object"
     },
