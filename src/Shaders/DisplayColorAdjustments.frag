@@ -1,6 +1,6 @@
 #version 400
 
-uniform float brightness = 0.0;
+uniform float brightness = 1.0;
 uniform float contrast = 1.0;
 uniform vec2 shift;
 uniform vec2 scale = vec2(1, 1);
