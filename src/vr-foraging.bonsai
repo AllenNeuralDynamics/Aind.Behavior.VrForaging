@@ -226,7 +226,7 @@
                           <gl:FragmentShader>Shaders\Brightness.frag</gl:FragmentShader>
                         </gl:ShaderConfiguration>
                         <gl:ShaderConfiguration xsi:type="gl:Material">
-                          <gl:Name>AdjustQuadTexture</gl:Name>
+                          <gl:Name>DisplayColorAdjustments</gl:Name>
                           <gl:RenderState />
                           <gl:ShaderUniforms />
                           <gl:BufferBindings>
@@ -238,7 +238,7 @@
                           </gl:BufferBindings>
                           <gl:FramebufferAttachments />
                           <gl:VertexShader>BonVision:Shaders.Quad.vert</gl:VertexShader>
-                          <gl:FragmentShader>Shaders\AdjustQuadTexture.frag</gl:FragmentShader>
+                          <gl:FragmentShader>Shaders\DisplayColorAdjustments.frag</gl:FragmentShader>
                         </gl:ShaderConfiguration>
                       </gl:Shaders>
                     </Combinator>
@@ -377,7 +377,7 @@ Item2.Light as Light)</scr:Expression>
                             <Property Name="Contrast" />
                           </PropertyMappings>
                         </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\AdjustQuadTexture.bonsai">
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\DisplayColorAdjustments.bonsai">
                           <ExtentX>1</ExtentX>
                           <ExtentY>1</ExtentY>
                           <LocationX>0</LocationX>
@@ -441,7 +441,7 @@ Item2.Light as Light)</scr:Expression>
                             <Property Name="Contrast" />
                           </PropertyMappings>
                         </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\AdjustQuadTexture.bonsai">
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\DisplayColorAdjustments.bonsai">
                           <ExtentX>1</ExtentX>
                           <ExtentY>1</ExtentY>
                           <LocationX>0</LocationX>
@@ -505,7 +505,7 @@ Item2.Light as Light)</scr:Expression>
                             <Property Name="Contrast" />
                           </PropertyMappings>
                         </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\AdjustQuadTexture.bonsai">
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\DisplayColorAdjustments.bonsai">
                           <ExtentX>1</ExtentX>
                           <ExtentY>1</ExtentY>
                           <LocationX>0</LocationX>
