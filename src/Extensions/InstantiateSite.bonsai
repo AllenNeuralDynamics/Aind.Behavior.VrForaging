@@ -1091,7 +1091,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                     <Selector>Value</Selector>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>ScreenContrast</Name>
+                    <Name>WorldContrast</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
