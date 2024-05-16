@@ -349,5 +349,5 @@ class AindVrForagingTaskParameters(TaskParameters):
 
 class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     version: Literal[__version__] = __version__
-    name: str = Field(default="AindVrForaging", description="Name of the task logic", frozen=True)
+    name: str = Field(default="AindVrForaging", description="Name of the task logic")
     task_parameters: AindVrForagingTaskParameters = Field(..., description="Parameters of the task logic")
