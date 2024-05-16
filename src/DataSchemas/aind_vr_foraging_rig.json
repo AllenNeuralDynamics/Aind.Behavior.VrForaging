@@ -686,6 +686,22 @@
           "description": "Calibration directory",
           "title": "Texture Assets Directory",
           "type": "string"
+        },
+        "brightness": {
+          "default": 1,
+          "description": "Brightness",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Brightness",
+          "type": "number"
+        },
+        "contrast": {
+          "default": 1,
+          "description": "Contrast",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Contrast",
+          "type": "number"
         }
       },
       "title": "Screen",
@@ -1142,8 +1158,8 @@
   },
   "properties": {
     "version": {
-      "const": "0.3.0",
-      "default": "0.3.0",
+      "const": "0.3.1",
+      "default": "0.3.1",
       "title": "Version",
       "type": "string"
     },
@@ -1255,7 +1271,9 @@
         "target_render_frequency": 60.0,
         "target_update_frequency": 120.0,
         "calibration_directory": "Calibration\\Monitors\\",
-        "texture_assets_directory": "Textures"
+        "texture_assets_directory": "Textures",
+        "brightness": 1.0,
+        "contrast": 1.0
       },
       "description": "Screen settings"
     },
