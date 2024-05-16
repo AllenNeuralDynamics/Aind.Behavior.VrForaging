@@ -10,7 +10,7 @@ import aind_behavior_services.rig as rig
 from aind_behavior_services.rig import AindBehaviorRigModel
 from pydantic import BaseModel, Field, RootModel
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 TreadmillSettings = rig.Treadmill
 
