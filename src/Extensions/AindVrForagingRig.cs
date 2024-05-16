@@ -1816,6 +1816,10 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _textureAssetsDirectory = "Textures";
     
+        private double _brightness = 1D;
+    
+        private double _contrast = 1D;
+    
         public Screen()
         {
         }
@@ -1830,6 +1834,8 @@ namespace AindVrForagingDataSchema.Rig
             _targetUpdateFrequency = other._targetUpdateFrequency;
             _calibrationDirectory = other._calibrationDirectory;
             _textureAssetsDirectory = other._textureAssetsDirectory;
+            _brightness = other._brightness;
+            _contrast = other._contrast;
         }
     
         /// <summary>
@@ -1970,6 +1976,40 @@ namespace AindVrForagingDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Brightness
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
+        [System.ComponentModel.DescriptionAttribute("Brightness")]
+        public double Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                _brightness = value;
+            }
+        }
+    
+        /// <summary>
+        /// Contrast
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [System.ComponentModel.DescriptionAttribute("Contrast")]
+        public double Contrast
+        {
+            get
+            {
+                return _contrast;
+            }
+            set
+            {
+                _contrast = value;
+            }
+        }
+    
         public System.IObservable<Screen> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Screen(this)));
@@ -1989,7 +2029,9 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("target_render_frequency = " + _targetRenderFrequency + ", ");
             stringBuilder.Append("target_update_frequency = " + _targetUpdateFrequency + ", ");
             stringBuilder.Append("calibration_directory = " + _calibrationDirectory + ", ");
-            stringBuilder.Append("texture_assets_directory = " + _textureAssetsDirectory);
+            stringBuilder.Append("texture_assets_directory = " + _textureAssetsDirectory + ", ");
+            stringBuilder.Append("brightness = " + _brightness + ", ");
+            stringBuilder.Append("contrast = " + _contrast);
             return true;
         }
     
@@ -3270,7 +3312,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _version = "0.3.0";
+        private string _version = "0.3.1";
     
         private string _computerName;
     
