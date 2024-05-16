@@ -26,7 +26,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
-          <gl:ShaderName>AdjustQuadTexture</gl:ShaderName>
+          <gl:ShaderName>DisplayColorAdjustments</gl:ShaderName>
           <gl:TextureName />
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
@@ -103,7 +103,7 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateUniform">
                 <gl:UniformName>transform</gl:UniformName>
-                <gl:ShaderName>AdjustQuadTexture</gl:ShaderName>
+                <gl:ShaderName>DisplayColorAdjustments</gl:ShaderName>
               </Combinator>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -146,7 +146,7 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateUniform">
                 <gl:UniformName>scale</gl:UniformName>
-                <gl:ShaderName>AdjustQuadTexture</gl:ShaderName>
+                <gl:ShaderName>DisplayColorAdjustments</gl:ShaderName>
               </Combinator>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -162,7 +162,7 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateUniform">
                 <gl:UniformName>shift</gl:UniformName>
-                <gl:ShaderName>AdjustQuadTexture</gl:ShaderName>
+                <gl:ShaderName>DisplayColorAdjustments</gl:ShaderName>
               </Combinator>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -189,7 +189,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:UpdateUniform">
           <gl:UniformName>contrast</gl:UniformName>
-          <gl:ShaderName>AdjustQuadTexture</gl:ShaderName>
+          <gl:ShaderName>DisplayColorAdjustments</gl:ShaderName>
         </Combinator>
       </Expression>
       <Expression xsi:type="ExternalizedMapping">
@@ -203,12 +203,12 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:UpdateUniform">
           <gl:UniformName>brightness</gl:UniformName>
-          <gl:ShaderName>AdjustQuadTexture</gl:ShaderName>
+          <gl:ShaderName>DisplayColorAdjustments</gl:ShaderName>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:DrawMesh">
-          <gl:ShaderName>AdjustQuadTexture</gl:ShaderName>
+          <gl:ShaderName>DisplayColorAdjustments</gl:ShaderName>
           <gl:MeshName>Quad</gl:MeshName>
         </Combinator>
       </Expression>
