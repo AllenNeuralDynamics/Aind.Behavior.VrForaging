@@ -8,7 +8,7 @@ from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskPa
 from pydantic import BaseModel, Field, RootModel
 
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -351,5 +351,5 @@ class AindVrForagingTaskParameters(TaskParameters):
 
 class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     version: Literal[__version__] = __version__
-    name: str = Field(default="AindVrForaging", description="Name of the task logic")
+    name: str = Field(default="AindVrForaging", description="Name of the task logic", frozen=True)
     task_parameters: AindVrForagingTaskParameters = Field(..., description="Parameters of the task logic")
