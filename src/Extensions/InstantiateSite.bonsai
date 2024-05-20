@@ -77,7 +77,7 @@
                   <Expression xsi:type="MemberSelector">
                     <Selector>OdorSpecification</Selector>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
                       <rx:Count>1</rx:Count>
@@ -1010,7 +1010,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>RewardSpecification</Selector>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
                       <rx:Count>1</rx:Count>
@@ -1052,7 +1052,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>OdorSpecification</Selector>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
                       <rx:Count>1</rx:Count>

@@ -1078,7 +1078,7 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>HarpSniffDetector</Selector>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
@@ -1097,7 +1097,7 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="p2:MatchTreadmillBoard">
                     <p2:Type xsi:type="TypeMapping" TypeArguments="p2:HarpTreadmill" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
@@ -1116,7 +1116,7 @@ Item2.Light as Light)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>HarpAnalogInput</Selector>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
@@ -3773,9 +3773,6 @@ Value as IsStopped)</scr:Expression>
                                   <p6:Overwrite>false</p6:Overwrite>
                                   <p6:FrameRate>0</p6:FrameRate>
                                 </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p2:VideoWriter" />
                               </Expression>
                             </Nodes>
                             <Edges>
@@ -7622,7 +7619,7 @@ Value as IsStopped)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>HarpSniffDetector</Selector>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
@@ -7827,7 +7824,7 @@ Value as IsStopped)</scr:Expression>
                   <Expression xsi:type="p2:MatchTreadmillBoard">
                     <p2:Type xsi:type="TypeMapping" TypeArguments="p2:HarpTreadmill" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
@@ -7940,7 +7937,7 @@ Value as IsStopped)</scr:Expression>
                   <Expression xsi:type="p2:MatchTreadmillBoard">
                     <p2:Type xsi:type="TypeMapping" TypeArguments="p2:HarpBehavior" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:SubscribeWhen" />
                   </Expression>
@@ -9451,7 +9448,7 @@ Item2 as Start
                   <Expression xsi:type="MemberSelector">
                     <Selector>RewardSpecification.OperantLogic</Selector>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNotNull.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="MemberSelector">
                     <Selector>IsOperant</Selector>
                   </Expression>
