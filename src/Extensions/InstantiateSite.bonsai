@@ -446,7 +446,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="harp:CreateTimestamped" />
                               </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\SinkSoftwareEvent.bonsai">
+                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:PublishSoftwareEvent.bonsai">
                                 <EventName>WaitRewardOutcome</EventName>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
@@ -707,7 +707,7 @@ it.Item2 as EntryPosition)</scr:Expression>
                                   <rx:Count>1</rx:Count>
                                 </Combinator>
                               </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\SinkSoftwareEvent.bonsai">
+                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:PublishSoftwareEvent.bonsai">
                                 <EventName>WaitLickOutcome</EventName>
                               </Expression>
                               <Expression xsi:type="Combinator">
