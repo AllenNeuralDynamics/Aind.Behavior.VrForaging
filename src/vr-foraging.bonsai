@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
-                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema.Session;assembly=Extensions"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p2="clr-namespace:AindVrForagingDataSchema.Rig;assembly=Extensions"
                  xmlns:p3="clr-namespace:AindVrForagingDataSchema.TaskLogic;assembly=Extensions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
@@ -11,6 +10,7 @@
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:p4="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:p5="clr-namespace:AllenNeuralDynamics.Core.Logging;assembly=AllenNeuralDynamics.Core"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -38,76 +38,82 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Path" DisplayName="SessionPath" />
+        <Property Name="TaskLogicPath" />
+        <Property Name="RigPath" />
+        <Property Name="SessionPath" />
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="io:ReadAllText">
-          <io:Path>DataSchemas\ExampleSession.yml</io:Path>
-        </Combinator>
+      <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:ReadSchemas.bonsai">
+        <TaskLogicPath />
+        <RigPath />
+        <SessionPath />
       </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>RawSubjectSchema</Name>
-      </Expression>
-      <Expression xsi:type="p1:DeserializeFromJson">
-        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindBehaviorSessionModel" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Take">
-          <rx:Count>1</rx:Count>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>SubjectSchema</Name>
-      </Expression>
-      <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Path" DisplayName="RigPath" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="io:ReadAllText">
-          <io:Path>DataSchemas\ExampleSession.yml</io:Path>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>RawRigSchema</Name>
-      </Expression>
-      <Expression xsi:type="p2:DeserializeFromJson">
-        <p2:Type xsi:type="TypeMapping" TypeArguments="p2:AindVrForagingRig" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Take">
-          <rx:Count>1</rx:Count>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>RigSchema</Name>
-      </Expression>
-      <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Path" DisplayName="TaskLogicPath" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="io:ReadAllText">
-          <io:Path>DataSchemas\ExampleSession.yml</io:Path>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>RawTaskLogicSchema</Name>
-      </Expression>
-      <Expression xsi:type="p3:DeserializeFromJson">
-        <p3:Type xsi:type="TypeMapping" TypeArguments="p3:AindVrForagingTaskLogic" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Take">
-          <rx:Count>1</rx:Count>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>TaskLogicSchema</Name>
-      </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>TaskParameters</Selector>
-      </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>TaskLogicParameters</Name>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>LoadSchemas</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RawSessionSchema</Name>
+            </Expression>
+            <Expression xsi:type="p1:DeserializeFromJson">
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindBehaviorSessionModel" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>SubjectSchema</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RawRigSchema</Name>
+            </Expression>
+            <Expression xsi:type="p2:DeserializeFromJson">
+              <p2:Type xsi:type="TypeMapping" TypeArguments="p2:AindVrForagingRig" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>RigSchema</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RawTaskLogicSchema</Name>
+            </Expression>
+            <Expression xsi:type="p3:DeserializeFromJson">
+              <p3:Type xsi:type="TypeMapping" TypeArguments="p3:AindVrForagingTaskLogic" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>TaskLogicSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>TaskParameters</Selector>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>TaskLogicParameters</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
       <Expression xsi:type="Annotation">
         <Name>PinOut</Name>
@@ -4706,7 +4712,7 @@ Value as IsStopped)</scr:Expression>
                           <Extension>json</Extension>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>RawSubjectSchema</Name>
+                          <Name>RawSessionSchema</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>Modality</Name>
@@ -11593,44 +11599,28 @@ Item3 as TotalReward)</scr:Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
-      <Edge From="1" To="2" Label="Source1" />
-      <Edge From="2" To="3" Label="Source1" />
       <Edge From="3" To="4" Label="Source1" />
-      <Edge From="4" To="5" Label="Source1" />
-      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
       <Edge From="7" To="8" Label="Source1" />
       <Edge From="8" To="9" Label="Source1" />
       <Edge From="9" To="10" Label="Source1" />
-      <Edge From="10" To="11" Label="Source1" />
-      <Edge From="12" To="13" Label="Source1" />
-      <Edge From="13" To="14" Label="Source1" />
       <Edge From="14" To="15" Label="Source1" />
-      <Edge From="15" To="16" Label="Source1" />
+      <Edge From="15" To="18" Label="Source1" />
       <Edge From="16" To="17" Label="Source1" />
-      <Edge From="17" To="18" Label="Source1" />
-      <Edge From="18" To="19" Label="Source1" />
-      <Edge From="20" To="21" Label="Source1" />
-      <Edge From="22" To="23" Label="Source1" />
-      <Edge From="24" To="25" Label="Source1" />
-      <Edge From="25" To="26" Label="Source1" />
-      <Edge From="26" To="27" Label="Source1" />
-      <Edge From="31" To="32" Label="Source1" />
-      <Edge From="32" To="35" Label="Source1" />
+      <Edge From="17" To="18" Label="Source2" />
+      <Edge From="18" To="20" Label="Source1" />
+      <Edge From="19" To="20" Label="Source2" />
+      <Edge From="21" To="22" Label="Source1" />
+      <Edge From="23" To="24" Label="Source1" />
+      <Edge From="25" To="27" Label="Source1" />
+      <Edge From="26" To="27" Label="Source2" />
+      <Edge From="27" To="29" Label="Source1" />
+      <Edge From="28" To="29" Label="Source2" />
       <Edge From="33" To="34" Label="Source1" />
-      <Edge From="34" To="35" Label="Source2" />
-      <Edge From="35" To="37" Label="Source1" />
-      <Edge From="36" To="37" Label="Source2" />
-      <Edge From="38" To="39" Label="Source1" />
-      <Edge From="40" To="41" Label="Source1" />
-      <Edge From="42" To="44" Label="Source1" />
-      <Edge From="43" To="44" Label="Source2" />
-      <Edge From="44" To="46" Label="Source1" />
-      <Edge From="45" To="46" Label="Source2" />
-      <Edge From="50" To="51" Label="Source1" />
-      <Edge From="51" To="52" Label="Source1" />
-      <Edge From="52" To="53" Label="Source1" />
-      <Edge From="53" To="54" Label="Source1" />
-      <Edge From="54" To="55" Label="Source1" />
+      <Edge From="34" To="35" Label="Source1" />
+      <Edge From="35" To="36" Label="Source1" />
+      <Edge From="36" To="37" Label="Source1" />
+      <Edge From="37" To="38" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
