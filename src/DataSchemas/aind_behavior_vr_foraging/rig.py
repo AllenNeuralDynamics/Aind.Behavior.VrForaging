@@ -8,20 +8,13 @@ import aind_behavior_services.calibration.olfactometer as oc
 import aind_behavior_services.calibration.water_valve as wvc
 import aind_behavior_services.rig as rig
 from aind_behavior_services.rig import AindBehaviorRigModel
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, Field
 
-__version__ = "0.3.1"
-
-TreadmillSettings = rig.Treadmill
+__version__ = "0.3.2"
 
 
-class TreadmillBoard(RootModel):
-    root: Annotated[Union[rig.HarpTreadmill, rig.HarpBehavior], Field(discriminator="who_am_i")]
-
-
-class Treadmill(BaseModel):
-    harp_board: TreadmillBoard = Field(..., description="The board to be used as a treadmill input")
-    settings: rig.Treadmill = Field(default=rig.Treadmill(), description="Treadmill settings")
+class Treadmill(rig.HarpTreadmill):
+    calibration: rig.Treadmill = Field(..., description="Treadmill calibration")
 
 
 class RigCalibration(BaseModel):
