@@ -129,17 +129,41 @@
     },
     "HarpAnalogInput": {
       "properties": {
-        "who_am_i": {
-          "const": 1236,
-          "default": 1236,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
           "const": "analoginput",
           "default": "analoginput",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1236,
+          "default": 1236,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
@@ -168,17 +192,41 @@
     },
     "HarpBehavior": {
       "properties": {
-        "who_am_i": {
-          "const": 1216,
-          "default": 1216,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
           "const": "behavior",
           "default": "behavior",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1216,
+          "default": 1216,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
@@ -207,17 +255,41 @@
     },
     "HarpClockGenerator": {
       "properties": {
-        "who_am_i": {
-          "const": 1158,
-          "default": 1158,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
           "const": "clockgenerator",
           "default": "clockgenerator",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1158,
+          "default": 1158,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
@@ -246,17 +318,41 @@
     },
     "HarpLickometer": {
       "properties": {
-        "who_am_i": {
-          "const": 1400,
-          "default": 1400,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
           "const": "lickometer",
           "default": "lickometer",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1400,
+          "default": 1400,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
@@ -285,17 +381,41 @@
     },
     "HarpOlfactometer": {
       "properties": {
-        "who_am_i": {
-          "const": 1140,
-          "default": 1140,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
           "const": "olfactometer",
           "default": "olfactometer",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1140,
+          "default": 1140,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
@@ -324,17 +444,41 @@
     },
     "HarpSniffDetector": {
       "properties": {
-        "who_am_i": {
-          "const": 1401,
-          "default": 1401,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
           "const": "sniffdetector",
           "default": "sniffdetector",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1401,
+          "default": 1401,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
@@ -363,17 +507,41 @@
     },
     "HarpTreadmill": {
       "properties": {
-        "who_am_i": {
-          "const": 1402,
-          "default": 1402,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
           "const": "treadmill",
           "default": "treadmill",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1402,
+          "default": 1402,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
