@@ -79,16 +79,14 @@
           "description": "Duration",
           "minimum": 0.0,
           "title": "Duration",
-          "type": "number",
-          "units": "s"
+          "type": "number"
         },
         "frequency": {
           "default": 1000,
           "description": "Frequency",
           "minimum": 100.0,
           "title": "Frequency",
-          "type": "number",
-          "units": "Hz"
+          "type": "number"
         }
       },
       "title": "AudioControl",
@@ -1591,32 +1589,28 @@
           "description": "Period",
           "minimum": 1,
           "title": "Period",
-          "type": "integer",
-          "units": "us"
+          "type": "integer"
         },
         "min_pulse_duration": {
           "default": 1000,
           "description": "Minimum pulse duration",
           "minimum": 1,
           "title": "Min Pulse Duration",
-          "type": "integer",
-          "units": "us"
+          "type": "integer"
         },
         "max_pulse_duration": {
           "default": 2000,
           "description": "Maximum pulse duration",
           "minimum": 1,
           "title": "Max Pulse Duration",
-          "type": "integer",
-          "units": "us"
+          "type": "integer"
         },
         "default_pulse_duration": {
           "default": 2000,
           "description": "Default pulse duration",
           "minimum": 1,
           "title": "Default Pulse Duration",
-          "type": "integer",
-          "units": "us"
+          "type": "integer"
         }
       },
       "title": "ServoMotor",
