@@ -247,10 +247,10 @@ class EnvironmentStatistics(BaseModel):
 
 
 class ServoMotor(BaseModel):
-    period: int = Field(default=20000, ge=1, description="Period", units="us")
-    min_pulse_duration: int = Field(default=1000, ge=1, description="Minimum pulse duration", units="us")
-    max_pulse_duration: int = Field(default=2000, ge=1, description="Maximum pulse duration", units="us")
-    default_pulse_duration: int = Field(default=2000, ge=1, description="Default pulse duration", units="us")
+    period: int = Field(default=20000, ge=1, description="Period")
+    min_pulse_duration: int = Field(default=1000, ge=1, description="Minimum pulse duration")
+    max_pulse_duration: int = Field(default=2000, ge=1, description="Maximum pulse duration")
+    default_pulse_duration: int = Field(default=2000, ge=1, description="Default pulse duration")
 
 
 class MovableSpoutControl(BaseModel):
@@ -287,8 +287,8 @@ class PositionControl(BaseModel):
 
 
 class AudioControl(BaseModel):
-    duration: float = Field(default=0.2, ge=0, description="Duration", units="s")
-    frequency: float = Field(default=1000, ge=100, description="Frequency", units="Hz")
+    duration: float = Field(default=0.2, ge=0, description="Duration")
+    frequency: float = Field(default=1000, ge=100, description="Frequency")
 
 
 class OperationControl(BaseModel):
