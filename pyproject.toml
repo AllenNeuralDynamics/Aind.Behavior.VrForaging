@@ -23,13 +23,6 @@ aind-data-schema-mapper = [
   "aind_behavior_services[aind-data-schema-mapper]@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.7.5",
   ]
 
-analysis = [
-  "numpy",
-  "pandas",
-  "matplotlib",
-  "Pillow",
-]
-
 linters = [
     'codespell',
     'black',
