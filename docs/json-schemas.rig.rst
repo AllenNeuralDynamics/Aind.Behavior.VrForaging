@@ -1,5 +1,5 @@
 json-schemas.rig
--------------
+------------------
 
 `Download Schema <https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/src/DataSchemas/aind_vr_foraging_rig.json>`_
 
