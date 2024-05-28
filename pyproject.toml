@@ -36,7 +36,7 @@ docs = [
     'Sphinx<7.3',
     'furo',
     'sphinx-jinja',
-    'autodoc_pydantic',
+    'autodoc_pydantic[erdantic]',
     'myst_parser',
     'sphinx-jsonschema'
 ]
