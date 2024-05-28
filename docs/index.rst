@@ -1,5 +1,5 @@
 Welcome to the AIND VR Foraging project documentation!
-============================================
+=========================================================
 
 .. include:: ../README.md
    :parser: myst_parser.sphinx_
