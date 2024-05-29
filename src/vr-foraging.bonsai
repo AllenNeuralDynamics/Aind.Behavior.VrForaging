@@ -1767,6 +1767,11 @@
                                   </Edges>
                                 </Workflow>
                               </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:ObserveOn">
+                                  <rx:Scheduler>TaskPoolScheduler</rx:Scheduler>
+                                </Combinator>
+                              </Expression>
                               <Expression xsi:type="ExternalizedMapping">
                                 <Property Name="Period" DisplayName="SnoozeTime" />
                               </Expression>
@@ -1832,10 +1837,11 @@
                               <Edge From="13" To="15" Label="Source1" />
                               <Edge From="14" To="15" Label="Source2" />
                               <Edge From="15" To="16" Label="Source1" />
-                              <Edge From="16" To="19" Label="Source1" />
-                              <Edge From="17" To="18" Label="Source1" />
-                              <Edge From="18" To="19" Label="Source2" />
-                              <Edge From="19" To="20" Label="Source1" />
+                              <Edge From="16" To="17" Label="Source1" />
+                              <Edge From="17" To="20" Label="Source1" />
+                              <Edge From="18" To="19" Label="Source1" />
+                              <Edge From="19" To="20" Label="Source2" />
+                              <Edge From="20" To="21" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
