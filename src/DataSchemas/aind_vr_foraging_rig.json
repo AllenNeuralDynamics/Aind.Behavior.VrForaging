@@ -1326,8 +1326,8 @@
   },
   "properties": {
     "version": {
-      "const": "0.3.1",
-      "default": "0.3.1",
+      "const": "0.3.0",
+      "default": "0.3.0",
       "title": "Version",
       "type": "string"
     },
