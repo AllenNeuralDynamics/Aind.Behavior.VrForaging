@@ -161,8 +161,8 @@ class RewardSpecification(BaseModel):
 
 class VirtualSiteLabels(str, Enum):
     UNSPECIFIED = "Unspecified"
-    PREINTERPATCH = "PreInterPatch"
-    POSTINTERPATCH = "PostInterPatch"
+    INTERPATCH = "InterPatch"
+    POSTPATCH = "PostPatch"
     REWARDSITE = "RewardSite"
     INTERSITE = "InterSite"
 
@@ -185,10 +185,10 @@ class VirtualSiteGeneration(BaseModel):
     inter_site: VirtualSiteGenerator = Field(
         default=VirtualSiteGenerator(), description="Generator of the inter-site virtual sites"
     )
-    pre_inter_patch: VirtualSiteGenerator = Field(
+    inter_patch: VirtualSiteGenerator = Field(
         default=VirtualSiteGenerator(), description="Generator of the inter-patch virtual sites"
     )
-    post_inter_patch: VirtualSiteGenerator = Field(
+    post_patch: VirtualSiteGenerator = Field(
         default=VirtualSiteGenerator(), description="Generator of the post-inter-patch virtual sites"
     )
     reward_site: VirtualSiteGenerator = Field(
