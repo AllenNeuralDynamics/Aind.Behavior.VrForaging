@@ -3620,7 +3620,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _version = "0.3.1";
+        private string _version = "0.3.0";
     
         private string _computerName;
     

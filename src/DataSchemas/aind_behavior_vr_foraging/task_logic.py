@@ -7,8 +7,7 @@ import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
 from pydantic import BaseModel, Field, RootModel
 
-
-__version__ = "0.4.1"
+__version__ = "0.4.0"
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -41,7 +40,7 @@ class Vector3(BaseModel):
 
 
 class Matrix2D(BaseModel):
-    data: List[List[float]] = Field([[1]], description="Defines a 2D matrix")
+    data: List[List[float]] = Field(default=[[1]], description="Defines a 2D matrix")
 
 
 # Updaters
@@ -66,7 +65,7 @@ class NumericalUpdater(BaseModel):
         default=NumericalUpdaterOperation.NONE, description="Operation to perform on the parameter"
     )
     parameters: NumericalUpdaterParameters = Field(
-        NumericalUpdaterParameters(), description="Parameters of the updater"
+        default=NumericalUpdaterParameters(), description="Parameters of the updater"
     )
 
 
@@ -149,7 +148,7 @@ class PatchRewardFunction(BaseModel):
 
 
 class RewardSpecification(BaseModel):
-    operant_logic: Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
+    operant_logic: Optional[OperantLogic] = Field(default=None, description="The optional operant logic of the reward")
     delay: distributions.Distribution = Field(
         default=scalar_value(0),
         description="The optional distribution where the delay to reward will be drawn from",
@@ -163,6 +162,7 @@ class RewardSpecification(BaseModel):
 class VirtualSiteLabels(str, Enum):
     UNSPECIFIED = "Unspecified"
     INTERPATCH = "InterPatch"
+    POSTPATCH = "PostPatch"
     REWARDSITE = "RewardSite"
     INTERSITE = "InterSite"
 
@@ -183,29 +183,32 @@ class VirtualSiteGenerator(BaseModel):
 
 class VirtualSiteGeneration(BaseModel):
     inter_site: VirtualSiteGenerator = Field(
-        VirtualSiteGenerator(), description="Generator of the inter-site virtual sites"
+        default=VirtualSiteGenerator(), description="Generator of the inter-site virtual sites"
     )
     inter_patch: VirtualSiteGenerator = Field(
-        VirtualSiteGenerator(), description="Generator of the inter-patch virtual sites"
+        default=VirtualSiteGenerator(), description="Generator of the inter-patch virtual sites"
+    )
+    post_patch: VirtualSiteGenerator = Field(
+        default=VirtualSiteGenerator(), description="Generator of the post-inter-patch virtual sites"
     )
     reward_site: VirtualSiteGenerator = Field(
-        VirtualSiteGenerator(), description="Generator of the reward-site virtual sites"
+        default=VirtualSiteGenerator(), description="Generator of the reward-site virtual sites"
     )
 
 
 class VirtualSite(BaseModel):
     id: int = Field(default=0, ge=0, description="Id of the virtual site")
-    label: VirtualSiteLabels = Field(VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
-    length: float = Field(20, description="Length of the virtual site (cm)")
+    label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
+    length: float = Field(default=20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
     odor_specification: Optional[OdorSpecification] = Field(
-        None, description="The optional odor specification of the virtual site"
+        default=None, description="The optional odor specification of the virtual site"
     )
     reward_specification: Optional[RewardSpecification] = Field(
-        None, description="The optional reward specification of the virtual site"
+        default=None, description="The optional reward specification of the virtual site"
     )
     render_specification: RenderSpecification = Field(
-        RenderSpecification(), description="The optional render specification of the virtual site"
+        default=RenderSpecification(), description="The optional render specification of the virtual site"
     )
 
 
@@ -219,7 +222,7 @@ class PatchStatistics(BaseModel):
         default=None, description="The optional reward specification of the patch"
     )
     virtual_site_generation: VirtualSiteGeneration = Field(
-        VirtualSiteGeneration(), description="Virtual site generation specification"
+        default=VirtualSiteGeneration(), description="Virtual site generation specification"
     )
 
 
