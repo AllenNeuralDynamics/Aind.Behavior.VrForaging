@@ -5203,6 +5203,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private VirtualSiteGenerator _interPatch;
     
+        private VirtualSiteGenerator _postPatch;
+    
         private VirtualSiteGenerator _rewardSite;
     
         public VirtualSiteGeneration()
@@ -5213,6 +5215,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _interSite = other._interSite;
             _interPatch = other._interPatch;
+            _postPatch = other._postPatch;
             _rewardSite = other._rewardSite;
         }
     
@@ -5253,6 +5256,24 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
+        /// Generator of the post-inter-patch virtual sites
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("post_patch")]
+        [System.ComponentModel.DescriptionAttribute("Generator of the post-inter-patch virtual sites")]
+        public VirtualSiteGenerator PostPatch
+        {
+            get
+            {
+                return _postPatch;
+            }
+            set
+            {
+                _postPatch = value;
+            }
+        }
+    
+        /// <summary>
         /// Generator of the reward-site virtual sites
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5284,6 +5305,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("inter_site = " + _interSite + ", ");
             stringBuilder.Append("inter_patch = " + _interPatch + ", ");
+            stringBuilder.Append("post_patch = " + _postPatch + ", ");
             stringBuilder.Append("reward_site = " + _rewardSite);
             return true;
         }
@@ -5424,11 +5446,14 @@ namespace AindVrForagingDataSchema.TaskLogic
         [System.Runtime.Serialization.EnumMemberAttribute(Value="InterPatch")]
         InterPatch = 1,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="PostPatch")]
+        PostPatch = 2,
+    
         [System.Runtime.Serialization.EnumMemberAttribute(Value="RewardSite")]
-        RewardSite = 2,
+        RewardSite = 3,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="InterSite")]
-        InterSite = 3,
+        InterSite = 4,
     }
 
 
@@ -5725,7 +5750,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private string _description = "";
     
-        private string _version = "0.4.1";
+        private string _version = "0.4.0";
     
         private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
     

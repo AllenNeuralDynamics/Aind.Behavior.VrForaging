@@ -1192,6 +1192,23 @@
                 "contrast": null
               }
             },
+            "post_patch": {
+              "label": "Unspecified",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null,
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              }
+            },
             "reward_site": {
               "label": "Unspecified",
               "length_distribution": {
@@ -1923,6 +1940,31 @@
           },
           "description": "Generator of the inter-patch virtual sites"
         },
+        "post_patch": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "Unspecified",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null,
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            }
+          },
+          "description": "Generator of the post-inter-patch virtual sites"
+        },
         "reward_site": {
           "allOf": [
             {
@@ -2001,6 +2043,7 @@
       "enum": [
         "Unspecified",
         "InterPatch",
+        "PostPatch",
         "RewardSite",
         "InterSite"
       ],
@@ -2117,8 +2160,8 @@
       "type": "string"
     },
     "version": {
-      "const": "0.4.1",
-      "default": "0.4.1",
+      "const": "0.4.0",
+      "default": "0.4.0",
       "title": "Version",
       "type": "string"
     },
