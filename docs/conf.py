@@ -5,11 +5,11 @@
 
 import os
 import sys
+
 import aind_behavior_vr_foraging.rig
 import aind_behavior_vr_foraging.task_logic
 import erdantic as erd
 from pydantic import BaseModel
-
 
 sys.path.insert(0, os.path.abspath("../src/DataSchemas"))
 import aind_behavior_vr_foraging
@@ -69,6 +69,7 @@ html_show_copyright = False
 
 # -- Options for linkcode extension ---------------------------------------
 
+
 def linkcode_resolve(domain, info):
     if domain != "py":
         return None
@@ -79,6 +80,7 @@ def linkcode_resolve(domain, info):
 
 
 # -- Class diagram generation
+
 
 def export_model_diagram(model: BaseModel, root: str = "_static") -> None:
     diagram = erd.create(model)
