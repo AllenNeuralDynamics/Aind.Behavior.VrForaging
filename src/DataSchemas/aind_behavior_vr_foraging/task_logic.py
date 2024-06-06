@@ -196,6 +196,10 @@ class VirtualSiteGeneration(BaseModel):
     )
 
 
+class TreadmillSpecification(BaseModel):
+    friction: Optional[float] = Field(default=0, le=1, ge=0, description="Friction of the treadmill (0-1)")
+
+
 class VirtualSite(BaseModel):
     id: int = Field(default=0, ge=0, description="Id of the virtual site")
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
@@ -209,6 +213,9 @@ class VirtualSite(BaseModel):
     )
     render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="The optional render specification of the virtual site"
+    )
+    treadmill_specification: Optional[TreadmillSpecification] = Field(
+        default=None, description="Treadmill specification"
     )
 
 
