@@ -4582,6 +4582,72 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TreadmillSpecification
+    {
+    
+        private double? _friction;
+    
+        public TreadmillSpecification()
+        {
+        }
+    
+        protected TreadmillSpecification(TreadmillSpecification other)
+        {
+            _friction = other._friction;
+        }
+    
+        /// <summary>
+        /// Friction of the treadmill (0-1)
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("friction")]
+        [System.ComponentModel.DescriptionAttribute("Friction of the treadmill (0-1)")]
+        public double? Friction
+        {
+            get
+            {
+                return _friction;
+            }
+            set
+            {
+                _friction = value;
+            }
+        }
+    
+        public System.IObservable<TreadmillSpecification> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillSpecification(this)));
+        }
+    
+        public System.IObservable<TreadmillSpecification> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillSpecification(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("friction = " + _friction);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class TruncationParameters
     {
     
@@ -5018,6 +5084,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private RenderSpecification _renderSpecification;
     
+        private TreadmillSpecification _treadmillSpecification;
+    
         public VirtualSite()
         {
         }
@@ -5031,6 +5099,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             _odorSpecification = other._odorSpecification;
             _rewardSpecification = other._rewardSpecification;
             _renderSpecification = other._renderSpecification;
+            _treadmillSpecification = other._treadmillSpecification;
         }
     
         /// <summary>
@@ -5156,6 +5225,24 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
+        /// <summary>
+        /// Treadmill specification
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("treadmill_specification")]
+        [System.ComponentModel.DescriptionAttribute("Treadmill specification")]
+        public TreadmillSpecification TreadmillSpecification
+        {
+            get
+            {
+                return _treadmillSpecification;
+            }
+            set
+            {
+                _treadmillSpecification = value;
+            }
+        }
+    
         public System.IObservable<VirtualSite> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VirtualSite(this)));
@@ -5174,7 +5261,8 @@ namespace AindVrForagingDataSchema.TaskLogic
             stringBuilder.Append("start_position = " + _startPosition + ", ");
             stringBuilder.Append("odor_specification = " + _odorSpecification + ", ");
             stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
-            stringBuilder.Append("render_specification = " + _renderSpecification);
+            stringBuilder.Append("render_specification = " + _renderSpecification + ", ");
+            stringBuilder.Append("treadmill_specification = " + _treadmillSpecification);
             return true;
         }
     
@@ -6462,6 +6550,11 @@ namespace AindVrForagingDataSchema.TaskLogic
             return Process<Texture>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<TreadmillSpecification> source)
+        {
+            return Process<TreadmillSpecification>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<TruncationParameters> source)
         {
             return Process<TruncationParameters>(source);
@@ -6576,6 +6669,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Size>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskModeSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Texture>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistributionParameters>))]

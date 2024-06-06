@@ -1697,6 +1697,27 @@
       "title": "Texture",
       "type": "object"
     },
+    "TreadmillSpecification": {
+      "properties": {
+        "friction": {
+          "default": 0,
+          "description": "Friction of the treadmill (0-1)",
+          "oneOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Friction"
+        }
+      },
+      "title": "TreadmillSpecification",
+      "type": "object"
+    },
     "TruncationParameters": {
       "properties": {
         "is_truncated": {
@@ -1883,6 +1904,18 @@
             "contrast": null
           },
           "description": "The optional render specification of the virtual site"
+        },
+        "treadmill_specification": {
+          "default": null,
+          "description": "Treadmill specification",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "VirtualSite",
