@@ -526,16 +526,17 @@
           ]
         },
         "calibration": {
-          "default": null,
-          "description": "Calibration",
-          "oneOf": [
+          "allOf": [
             {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
+              "$ref": "#/definitions/Treadmill"
             }
-          ]
+          ],
+          "default": {
+            "wheel_diameter": 15.0,
+            "pulses_per_revolution": 28800,
+            "invert_direction": false
+          },
+          "description": "Treadmill calibration settings"
         },
         "who_am_i": {
           "const": 1402,
@@ -963,23 +964,31 @@
       "title": "SpinnakerCamera",
       "type": "object"
     },
-    "TreadmillBoard": {
-      "discriminator": {
-        "mapping": {
-          "1216": "#/definitions/HarpBehavior",
-          "1402": "#/definitions/HarpTreadmill"
+    "Treadmill": {
+      "properties": {
+        "wheel_diameter": {
+          "default": 15,
+          "description": "Wheel diameter",
+          "minimum": 0.0,
+          "title": "Wheel Diameter",
+          "type": "number"
         },
-        "propertyName": "who_am_i"
-      },
-      "oneOf": [
-        {
-          "$ref": "#/definitions/HarpTreadmill"
+        "pulses_per_revolution": {
+          "default": 28800,
+          "description": "Pulses per revolution",
+          "minimum": 1,
+          "title": "Pulses Per Revolution",
+          "type": "integer"
         },
-        {
-          "$ref": "#/definitions/HarpBehavior"
+        "invert_direction": {
+          "default": false,
+          "description": "Invert direction",
+          "title": "Invert Direction",
+          "type": "boolean"
         }
-      ],
-      "title": "TreadmillBoard"
+      },
+      "title": "Treadmill",
+      "type": "object"
     },
     "VideoWriter": {
       "discriminator": {
@@ -1266,62 +1275,6 @@
       },
       "title": "WebCamera",
       "type": "object"
-    },
-    "aind_behavior_services__rig__Treadmill": {
-      "properties": {
-        "wheel_diameter": {
-          "default": 15,
-          "description": "Wheel diameter",
-          "minimum": 0.0,
-          "title": "Wheel Diameter",
-          "type": "number"
-        },
-        "pulses_per_revolution": {
-          "default": 28800,
-          "description": "Pulses per revolution",
-          "minimum": 1,
-          "title": "Pulses Per Revolution",
-          "type": "integer"
-        },
-        "invert_direction": {
-          "default": false,
-          "description": "Invert direction",
-          "title": "Invert Direction",
-          "type": "boolean"
-        }
-      },
-      "title": "Treadmill",
-      "type": "object"
-    },
-    "aind_behavior_vr_foraging__rig__Treadmill": {
-      "properties": {
-        "harp_board": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/TreadmillBoard"
-            }
-          ],
-          "description": "The board to be used as a treadmill input"
-        },
-        "settings": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/aind_behavior_services__rig__Treadmill"
-            }
-          ],
-          "default": {
-            "wheel_diameter": 15.0,
-            "pulses_per_revolution": 28800,
-            "invert_direction": false
-          },
-          "description": "Treadmill settings"
-        }
-      },
-      "required": [
-        "harp_board"
-      ],
-      "title": "Treadmill",
-      "type": "object"
     }
   },
   "properties": {
@@ -1405,13 +1358,13 @@
         }
       ]
     },
-    "treadmill": {
+    "harp_treadmill": {
       "allOf": [
         {
-          "$ref": "#/definitions/aind_behavior_vr_foraging__rig__Treadmill"
+          "$ref": "#/definitions/HarpTreadmill"
         }
       ],
-      "description": "Treadmill settings"
+      "description": "Harp treadmill"
     },
     "harp_sniff_detector": {
       "default": null,
@@ -1461,7 +1414,7 @@
     "harp_olfactometer",
     "harp_lickometer",
     "harp_clock_generator",
-    "treadmill",
+    "harp_treadmill",
     "calibration"
   ],
   "title": "AindVrForagingRig",
