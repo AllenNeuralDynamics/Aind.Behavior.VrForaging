@@ -1159,7 +1159,7 @@
           ],
           "default": {
             "inter_site": {
-              "label": "Unspecified",
+              "label": "InterSite",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
@@ -1176,7 +1176,7 @@
               }
             },
             "inter_patch": {
-              "label": "Unspecified",
+              "label": "InterPatch",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
@@ -1193,7 +1193,7 @@
               }
             },
             "post_patch": {
-              "label": "Unspecified",
+              "label": "PostPatch",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
@@ -1210,7 +1210,7 @@
               }
             },
             "reward_site": {
-              "label": "Unspecified",
+              "label": "RewardSite",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
@@ -1933,7 +1933,7 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "InterSite",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
@@ -1958,7 +1958,7 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "InterPatch",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
@@ -1983,7 +1983,7 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "PostPatch",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
@@ -1996,7 +1996,7 @@
               "truncation_parameters": null
             }
           },
-          "description": "Generator of the post-inter-patch virtual sites"
+          "description": "Generator of the post-patch virtual sites"
         },
         "reward_site": {
           "allOf": [
@@ -2008,7 +2008,7 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "RewardSite",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",

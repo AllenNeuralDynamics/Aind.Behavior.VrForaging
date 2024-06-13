@@ -5344,11 +5344,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Generator of the post-inter-patch virtual sites
+        /// Generator of the post-patch virtual sites
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("post_patch")]
-        [System.ComponentModel.DescriptionAttribute("Generator of the post-inter-patch virtual sites")]
+        [System.ComponentModel.DescriptionAttribute("Generator of the post-patch virtual sites")]
         public VirtualSiteGenerator PostPatch
         {
             get
