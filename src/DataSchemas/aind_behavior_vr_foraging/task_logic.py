@@ -183,16 +183,20 @@ class VirtualSiteGenerator(BaseModel):
 
 class VirtualSiteGeneration(BaseModel):
     inter_site: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(), description="Generator of the inter-site virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.INTERSITE),
+        description="Generator of the inter-site virtual sites",
     )
     inter_patch: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(), description="Generator of the inter-patch virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.INTERPATCH),
+        description="Generator of the inter-patch virtual sites",
     )
     post_patch: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(), description="Generator of the post-inter-patch virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.POSTPATCH),
+        description="Generator of the post-patch virtual sites",
     )
     reward_site: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(), description="Generator of the reward-site virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.REWARDSITE),
+        description="Generator of the reward-site virtual sites",
     )
 
 
