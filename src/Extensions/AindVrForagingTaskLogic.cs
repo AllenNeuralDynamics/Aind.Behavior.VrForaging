@@ -5838,9 +5838,11 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private string _description = "";
     
+        private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
+    
         private string _version = "0.4.0";
     
-        private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
+        private string _stageName;
     
         public AindVrForagingTaskLogic()
         {
@@ -5850,8 +5852,9 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _name = other._name;
             _description = other._description;
-            _version = other._version;
             _taskParameters = other._taskParameters;
+            _version = other._version;
+            _stageName = other._stageName;
         }
     
         /// <summary>
@@ -5888,19 +5891,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
         /// <summary>
         /// Parameters of the task logic
         /// </summary>
@@ -5919,6 +5909,36 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+    
+        /// <summary>
+        /// Optional stage name the `Task` object instance represents.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("stage_name")]
+        [System.ComponentModel.DescriptionAttribute("Optional stage name the `Task` object instance represents.")]
+        public string StageName
+        {
+            get
+            {
+                return _stageName;
+            }
+            set
+            {
+                _stageName = value;
+            }
+        }
+    
         public System.IObservable<AindVrForagingTaskLogic> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingTaskLogic(this)));
@@ -5933,8 +5953,9 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("name = " + _name + ", ");
             stringBuilder.Append("description = " + _description + ", ");
+            stringBuilder.Append("task_parameters = " + _taskParameters + ", ");
             stringBuilder.Append("version = " + _version + ", ");
-            stringBuilder.Append("task_parameters = " + _taskParameters);
+            stringBuilder.Append("stage_name = " + _stageName);
             return true;
         }
     
