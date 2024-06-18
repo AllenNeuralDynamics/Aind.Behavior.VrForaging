@@ -173,7 +173,7 @@ class RenderSpecification(BaseModel):
 
 class VirtualSiteGenerator(BaseModel):
     render_specification: RenderSpecification = Field(
-        default=RenderSpecification(), description="Contrast of the environment"
+        default=RenderSpecification(), description="Contrast of the environment", validate_default=True
     )
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
@@ -184,18 +184,22 @@ class VirtualSiteGenerator(BaseModel):
 class VirtualSiteGeneration(BaseModel):
     inter_site: VirtualSiteGenerator = Field(
         default=VirtualSiteGenerator(label=VirtualSiteLabels.INTERSITE),
+        validate_default=True,
         description="Generator of the inter-site virtual sites",
     )
     inter_patch: VirtualSiteGenerator = Field(
         default=VirtualSiteGenerator(label=VirtualSiteLabels.INTERPATCH),
+        validate_default=True,
         description="Generator of the inter-patch virtual sites",
     )
-    post_patch: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(label=VirtualSiteLabels.POSTPATCH),
+    post_patch: Optional[VirtualSiteGenerator] = Field(
+        default=None,
+        validate_default=True,
         description="Generator of the post-patch virtual sites",
     )
     reward_site: VirtualSiteGenerator = Field(
         default=VirtualSiteGenerator(label=VirtualSiteLabels.REWARDSITE),
+        validate_default=True,
         description="Generator of the reward-site virtual sites",
     )
 
@@ -233,7 +237,7 @@ class PatchStatistics(BaseModel):
         default=None, description="The optional reward specification of the patch"
     )
     virtual_site_generation: VirtualSiteGeneration = Field(
-        default=VirtualSiteGeneration(), description="Virtual site generation specification"
+        default=VirtualSiteGeneration(), validate_default=True, description="Virtual site generation specification"
     )
 
 
