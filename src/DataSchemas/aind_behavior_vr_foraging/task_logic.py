@@ -205,7 +205,10 @@ class VirtualSiteGeneration(BaseModel):
 
 
 class TreadmillSpecification(BaseModel):
-    friction: Optional[float] = Field(default=0, le=1, ge=0, description="Friction of the treadmill (0-1)")
+    friction: Optional[distributions.Distribution] = Field(
+        default=None,
+        description="Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
+    )
 
 
 class VirtualSite(BaseModel):

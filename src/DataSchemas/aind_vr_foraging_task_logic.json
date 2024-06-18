@@ -1684,19 +1684,16 @@
     "TreadmillSpecification": {
       "properties": {
         "friction": {
-          "default": 0,
-          "description": "Friction of the treadmill (0-1)",
+          "default": null,
+          "description": "Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
           "oneOf": [
             {
-              "maximum": 1.0,
-              "minimum": 0.0,
-              "type": "number"
+              "$ref": "#/definitions/Distribution"
             },
             {
               "type": "null"
             }
-          ],
-          "title": "Friction"
+          ]
         }
       },
       "title": "TreadmillSpecification",
