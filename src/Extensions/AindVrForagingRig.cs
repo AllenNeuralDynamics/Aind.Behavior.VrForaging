@@ -2657,6 +2657,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private bool _invertDirection = false;
     
+        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _breakLookupCalibration = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
+    
         public Treadmill()
         {
         }
@@ -2666,6 +2668,7 @@ namespace AindVrForagingDataSchema.Rig
             _wheelDiameter = other._wheelDiameter;
             _pulsesPerRevolution = other._pulsesPerRevolution;
             _invertDirection = other._invertDirection;
+            _breakLookupCalibration = other._breakLookupCalibration;
         }
     
         /// <summary>
@@ -2719,6 +2722,25 @@ namespace AindVrForagingDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("break_lookup_calibration")]
+        [System.ComponentModel.DescriptionAttribute("Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).           " +
+            "  Values are linearly interpolated")]
+        public System.Collections.Generic.List<System.Collections.Generic.List<double>> BreakLookupCalibration
+        {
+            get
+            {
+                return _breakLookupCalibration;
+            }
+            set
+            {
+                _breakLookupCalibration = value;
+            }
+        }
+    
         public System.IObservable<Treadmill> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Treadmill(this)));
@@ -2733,7 +2755,8 @@ namespace AindVrForagingDataSchema.Rig
         {
             stringBuilder.Append("wheel_diameter = " + _wheelDiameter + ", ");
             stringBuilder.Append("pulses_per_revolution = " + _pulsesPerRevolution + ", ");
-            stringBuilder.Append("invert_direction = " + _invertDirection);
+            stringBuilder.Append("invert_direction = " + _invertDirection + ", ");
+            stringBuilder.Append("break_lookup_calibration = " + _breakLookupCalibration);
             return true;
         }
     
