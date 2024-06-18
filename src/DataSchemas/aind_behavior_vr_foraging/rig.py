@@ -2,26 +2,33 @@
 from __future__ import annotations
 
 # Import core types
-from typing import Annotated, Literal, Optional, Union
+from typing import Annotated, List, Literal, Optional
 
 import aind_behavior_services.calibration.olfactometer as oc
 import aind_behavior_services.calibration.water_valve as wvc
 import aind_behavior_services.rig as rig
 from aind_behavior_services.rig import AindBehaviorRigModel
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, Field
 
 __version__ = "0.3.0"
 
-TreadmillSettings = rig.Treadmill
+
+ValuePair = Annotated[List[float], Field(min_length=2, max_length=2, description="A tuple of two values")]
 
 
-class TreadmillBoard(RootModel):
-    root: Annotated[Union[rig.HarpTreadmill, rig.HarpBehavior], Field(discriminator="who_am_i")]
+class Treadmill(rig.Treadmill):
+    break_lookup_calibration: List[ValuePair] = Field(
+        default=[[0, 0], [1, 65535]],
+        validate_default=True,
+        min_length=2,
+        min=0,
+        description="Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale). \
+            Values are linearly interpolated",
+    )
 
 
-class Treadmill(BaseModel):
-    harp_board: TreadmillBoard = Field(..., description="The board to be used as a treadmill input")
-    settings: rig.Treadmill = Field(default=rig.Treadmill(), description="Treadmill settings")
+class HarpTreadmill(rig.HarpTreadmill):
+    calibration: Treadmill = Field(Treadmill(), description="Treadmill calibration settings", validate_default=True)
 
 
 class RigCalibration(BaseModel):
@@ -42,7 +49,7 @@ class AindVrForagingRig(AindBehaviorRigModel):
     harp_lickometer: rig.HarpLickometer = Field(..., description="Harp lickometer")
     harp_clock_generator: rig.HarpClockGenerator = Field(..., description="Harp clock generator")
     harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
-    treadmill: Treadmill = Field(..., description="Treadmill settings")
+    harp_treadmill: HarpTreadmill = Field(..., description="Harp treadmill")
     harp_sniff_detector: Optional[rig.HarpSniffDetector] = Field(None, description="Sniff detector settings")
     screen: rig.Screen = Field(default=rig.Screen(), description="Screen settings")
     calibration: RigCalibration = Field(..., description="Calibration models")

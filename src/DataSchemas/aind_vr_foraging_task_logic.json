@@ -1159,7 +1159,7 @@
           ],
           "default": {
             "inter_site": {
-              "label": "Unspecified",
+              "label": "InterSite",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
@@ -1176,7 +1176,7 @@
               }
             },
             "inter_patch": {
-              "label": "Unspecified",
+              "label": "InterPatch",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
@@ -1192,25 +1192,9 @@
                 "contrast": null
               }
             },
-            "post_patch": {
-              "label": "Unspecified",
-              "length_distribution": {
-                "distribution_parameters": {
-                  "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null,
-                  "value": 20.0
-                },
-                "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null
-              },
-              "render_specification": {
-                "contrast": null
-              }
-            },
+            "post_patch": null,
             "reward_site": {
-              "label": "Unspecified",
+              "label": "RewardSite",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
@@ -1697,6 +1681,24 @@
       "title": "Texture",
       "type": "object"
     },
+    "TreadmillSpecification": {
+      "properties": {
+        "friction": {
+          "default": null,
+          "description": "Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "TreadmillSpecification",
+      "type": "object"
+    },
     "TruncationParameters": {
       "properties": {
         "is_truncated": {
@@ -1883,6 +1885,18 @@
             "contrast": null
           },
           "description": "The optional render specification of the virtual site"
+        },
+        "treadmill_specification": {
+          "default": null,
+          "description": "Treadmill specification",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "VirtualSite",
@@ -1900,7 +1914,7 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "InterSite",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
@@ -1925,7 +1939,7 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "InterPatch",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
@@ -1941,29 +1955,16 @@
           "description": "Generator of the inter-patch virtual sites"
         },
         "post_patch": {
-          "allOf": [
+          "default": null,
+          "description": "Generator of the post-patch virtual sites",
+          "oneOf": [
             {
               "$ref": "#/definitions/VirtualSiteGenerator"
-            }
-          ],
-          "default": {
-            "render_specification": {
-              "contrast": null
             },
-            "label": "Unspecified",
-            "length_distribution": {
-              "distribution_parameters": {
-                "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null,
-                "value": 20.0
-              },
-              "family": "Scalar",
-              "scaling_parameters": null,
-              "truncation_parameters": null
+            {
+              "type": "null"
             }
-          },
-          "description": "Generator of the post-inter-patch virtual sites"
+          ]
         },
         "reward_site": {
           "allOf": [
@@ -1975,7 +1976,7 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "RewardSite",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
@@ -2159,12 +2160,6 @@
       "title": "Description",
       "type": "string"
     },
-    "version": {
-      "const": "0.4.0",
-      "default": "0.4.0",
-      "title": "Version",
-      "type": "string"
-    },
     "task_parameters": {
       "allOf": [
         {
@@ -2172,6 +2167,25 @@
         }
       ],
       "description": "Parameters of the task logic"
+    },
+    "version": {
+      "const": "0.4.0",
+      "default": "0.4.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "stage_name": {
+      "default": null,
+      "description": "Optional stage name the `Task` object instance represents.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Stage Name"
     }
   },
   "required": [
