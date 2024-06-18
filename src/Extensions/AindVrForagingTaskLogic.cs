@@ -4585,7 +4585,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class TreadmillSpecification
     {
     
-        private double? _friction;
+        private Distribution _friction;
     
         public TreadmillSpecification()
         {
@@ -4597,12 +4597,12 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Friction of the treadmill (0-1)
+        /// Friction of the treadmill (0-1). The drawn value must be between 0 and 1
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("friction")]
-        [System.ComponentModel.DescriptionAttribute("Friction of the treadmill (0-1)")]
-        public double? Friction
+        [System.ComponentModel.DescriptionAttribute("Friction of the treadmill (0-1). The drawn value must be between 0 and 1")]
+        public Distribution Friction
         {
             get
             {
