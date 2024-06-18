@@ -1192,23 +1192,7 @@
                 "contrast": null
               }
             },
-            "post_patch": {
-              "label": "PostPatch",
-              "length_distribution": {
-                "distribution_parameters": {
-                  "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null,
-                  "value": 20.0
-                },
-                "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null
-              },
-              "render_specification": {
-                "contrast": null
-              }
-            },
+            "post_patch": null,
             "reward_site": {
               "label": "RewardSite",
               "length_distribution": {
@@ -1974,29 +1958,16 @@
           "description": "Generator of the inter-patch virtual sites"
         },
         "post_patch": {
-          "allOf": [
+          "default": null,
+          "description": "Generator of the post-patch virtual sites",
+          "oneOf": [
             {
               "$ref": "#/definitions/VirtualSiteGenerator"
-            }
-          ],
-          "default": {
-            "render_specification": {
-              "contrast": null
             },
-            "label": "PostPatch",
-            "length_distribution": {
-              "distribution_parameters": {
-                "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null,
-                "value": 20.0
-              },
-              "family": "Scalar",
-              "scaling_parameters": null,
-              "truncation_parameters": null
+            {
+              "type": "null"
             }
-          },
-          "description": "Generator of the post-patch virtual sites"
+          ]
         },
         "reward_site": {
           "allOf": [
@@ -2192,12 +2163,6 @@
       "title": "Description",
       "type": "string"
     },
-    "version": {
-      "const": "0.4.0",
-      "default": "0.4.0",
-      "title": "Version",
-      "type": "string"
-    },
     "task_parameters": {
       "allOf": [
         {
@@ -2205,6 +2170,25 @@
         }
       ],
       "description": "Parameters of the task logic"
+    },
+    "version": {
+      "const": "0.4.0",
+      "default": "0.4.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "stage_name": {
+      "default": null,
+      "description": "Optional stage name the `Task` object instance represents.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Stage Name"
     }
   },
   "required": [
