@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 # Import core types
-from typing import Literal, Optional
+from typing import Literal, Optional, Annotated, List
 
 import aind_behavior_services.calibration.olfactometer as oc
 import aind_behavior_services.calibration.water_valve as wvc
@@ -13,9 +13,21 @@ from pydantic import BaseModel, Field
 __version__ = "0.3.0"
 
 
+ValuePair = Annotated[
+    List[float],
+    Field(min_length=2, max_length=2, description="A tuple of two values")]
+
+
+class Treadmill(rig.Treadmill):
+    break_lookup_calibration: List[ValuePair] = Field(
+        default=[[0, 0], [1, 65535]], validate_default=True, min_length=2, min=0,
+        description="Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale). \
+            Values are linearly interpolated")
+
+
 class HarpTreadmill(rig.HarpTreadmill):
-    calibration: rig.Treadmill = Field(
-        rig.Treadmill(), description="Treadmill calibration settings", validate_default=True
+    calibration: Treadmill = Field(
+        Treadmill(), description="Treadmill calibration settings", validate_default=True
     )
 
 

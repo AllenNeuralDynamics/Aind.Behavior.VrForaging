@@ -534,7 +534,17 @@
           "default": {
             "wheel_diameter": 15.0,
             "pulses_per_revolution": 28800,
-            "invert_direction": false
+            "invert_direction": false,
+            "break_lookup_calibration": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                65535.0
+              ]
+            ]
           },
           "description": "Treadmill calibration settings"
         },
@@ -985,6 +995,32 @@
           "description": "Invert direction",
           "title": "Invert Direction",
           "type": "boolean"
+        },
+        "break_lookup_calibration": {
+          "default": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              65535
+            ]
+          ],
+          "description": "Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated",
+          "items": {
+            "description": "A tuple of two values",
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "min": 0,
+          "minItems": 2,
+          "title": "Break Lookup Calibration",
+          "type": "array"
         }
       },
       "title": "Treadmill",
