@@ -4582,6 +4582,72 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TreadmillSpecification
+    {
+    
+        private Distribution _friction;
+    
+        public TreadmillSpecification()
+        {
+        }
+    
+        protected TreadmillSpecification(TreadmillSpecification other)
+        {
+            _friction = other._friction;
+        }
+    
+        /// <summary>
+        /// Friction of the treadmill (0-1). The drawn value must be between 0 and 1
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("friction")]
+        [System.ComponentModel.DescriptionAttribute("Friction of the treadmill (0-1). The drawn value must be between 0 and 1")]
+        public Distribution Friction
+        {
+            get
+            {
+                return _friction;
+            }
+            set
+            {
+                _friction = value;
+            }
+        }
+    
+        public System.IObservable<TreadmillSpecification> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillSpecification(this)));
+        }
+    
+        public System.IObservable<TreadmillSpecification> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillSpecification(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("friction = " + _friction);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class TruncationParameters
     {
     
@@ -5018,6 +5084,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private RenderSpecification _renderSpecification;
     
+        private TreadmillSpecification _treadmillSpecification;
+    
         public VirtualSite()
         {
         }
@@ -5031,6 +5099,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             _odorSpecification = other._odorSpecification;
             _rewardSpecification = other._rewardSpecification;
             _renderSpecification = other._renderSpecification;
+            _treadmillSpecification = other._treadmillSpecification;
         }
     
         /// <summary>
@@ -5156,6 +5225,24 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
+        /// <summary>
+        /// Treadmill specification
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("treadmill_specification")]
+        [System.ComponentModel.DescriptionAttribute("Treadmill specification")]
+        public TreadmillSpecification TreadmillSpecification
+        {
+            get
+            {
+                return _treadmillSpecification;
+            }
+            set
+            {
+                _treadmillSpecification = value;
+            }
+        }
+    
         public System.IObservable<VirtualSite> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VirtualSite(this)));
@@ -5174,7 +5261,8 @@ namespace AindVrForagingDataSchema.TaskLogic
             stringBuilder.Append("start_position = " + _startPosition + ", ");
             stringBuilder.Append("odor_specification = " + _odorSpecification + ", ");
             stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
-            stringBuilder.Append("render_specification = " + _renderSpecification);
+            stringBuilder.Append("render_specification = " + _renderSpecification + ", ");
+            stringBuilder.Append("treadmill_specification = " + _treadmillSpecification);
             return true;
         }
     
@@ -5256,11 +5344,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Generator of the post-inter-patch virtual sites
+        /// Generator of the post-patch virtual sites
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("post_patch")]
-        [System.ComponentModel.DescriptionAttribute("Generator of the post-inter-patch virtual sites")]
+        [System.ComponentModel.DescriptionAttribute("Generator of the post-patch virtual sites")]
         public VirtualSiteGenerator PostPatch
         {
             get
@@ -5750,9 +5838,11 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private string _description = "";
     
+        private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
+    
         private string _version = "0.4.0";
     
-        private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
+        private string _stageName;
     
         public AindVrForagingTaskLogic()
         {
@@ -5762,8 +5852,9 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _name = other._name;
             _description = other._description;
-            _version = other._version;
             _taskParameters = other._taskParameters;
+            _version = other._version;
+            _stageName = other._stageName;
         }
     
         /// <summary>
@@ -5800,19 +5891,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
         /// <summary>
         /// Parameters of the task logic
         /// </summary>
@@ -5831,6 +5909,36 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+    
+        /// <summary>
+        /// Optional stage name the `Task` object instance represents.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("stage_name")]
+        [System.ComponentModel.DescriptionAttribute("Optional stage name the `Task` object instance represents.")]
+        public string StageName
+        {
+            get
+            {
+                return _stageName;
+            }
+            set
+            {
+                _stageName = value;
+            }
+        }
+    
         public System.IObservable<AindVrForagingTaskLogic> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingTaskLogic(this)));
@@ -5845,8 +5953,9 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("name = " + _name + ", ");
             stringBuilder.Append("description = " + _description + ", ");
+            stringBuilder.Append("task_parameters = " + _taskParameters + ", ");
             stringBuilder.Append("version = " + _version + ", ");
-            stringBuilder.Append("task_parameters = " + _taskParameters);
+            stringBuilder.Append("stage_name = " + _stageName);
             return true;
         }
     
@@ -6462,6 +6571,11 @@ namespace AindVrForagingDataSchema.TaskLogic
             return Process<Texture>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<TreadmillSpecification> source)
+        {
+            return Process<TreadmillSpecification>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<TruncationParameters> source)
         {
             return Process<TruncationParameters>(source);
@@ -6576,6 +6690,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Size>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskModeSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Texture>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistributionParameters>))]

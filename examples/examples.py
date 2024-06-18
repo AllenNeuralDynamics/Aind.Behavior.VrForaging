@@ -19,7 +19,10 @@ from aind_behavior_services.calibration.water_valve import (
 )
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
+from aind_behavior_vr_foraging.task_logic import (
+    AindVrForagingTaskLogic,
+    AindVrForagingTaskParameters,
+)
 
 
 def main():

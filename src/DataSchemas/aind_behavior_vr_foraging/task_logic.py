@@ -173,7 +173,7 @@ class RenderSpecification(BaseModel):
 
 class VirtualSiteGenerator(BaseModel):
     render_specification: RenderSpecification = Field(
-        default=RenderSpecification(), description="Contrast of the environment"
+        default=RenderSpecification(), description="Contrast of the environment", validate_default=True
     )
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
@@ -183,16 +183,31 @@ class VirtualSiteGenerator(BaseModel):
 
 class VirtualSiteGeneration(BaseModel):
     inter_site: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(), description="Generator of the inter-site virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.INTERSITE),
+        validate_default=True,
+        description="Generator of the inter-site virtual sites",
     )
     inter_patch: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(), description="Generator of the inter-patch virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.INTERPATCH),
+        validate_default=True,
+        description="Generator of the inter-patch virtual sites",
     )
-    post_patch: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(), description="Generator of the post-inter-patch virtual sites"
+    post_patch: Optional[VirtualSiteGenerator] = Field(
+        default=None,
+        validate_default=True,
+        description="Generator of the post-patch virtual sites",
     )
     reward_site: VirtualSiteGenerator = Field(
-        default=VirtualSiteGenerator(), description="Generator of the reward-site virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.REWARDSITE),
+        validate_default=True,
+        description="Generator of the reward-site virtual sites",
+    )
+
+
+class TreadmillSpecification(BaseModel):
+    friction: Optional[distributions.Distribution] = Field(
+        default=None,
+        description="Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
     )
 
 
@@ -210,6 +225,9 @@ class VirtualSite(BaseModel):
     render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="The optional render specification of the virtual site"
     )
+    treadmill_specification: Optional[TreadmillSpecification] = Field(
+        default=None, description="Treadmill specification"
+    )
 
 
 class PatchStatistics(BaseModel):
@@ -222,7 +240,7 @@ class PatchStatistics(BaseModel):
         default=None, description="The optional reward specification of the patch"
     )
     virtual_site_generation: VirtualSiteGeneration = Field(
-        default=VirtualSiteGeneration(), description="Virtual site generation specification"
+        default=VirtualSiteGeneration(), validate_default=True, description="Virtual site generation specification"
     )
 
 
