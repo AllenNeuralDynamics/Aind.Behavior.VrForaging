@@ -16,19 +16,6 @@
           ],
           "title": "Rng Seed"
         },
-        "stage_alias": {
-          "default": null,
-          "description": "Alias name used for the task stage",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Stage Alias"
-        },
         "updaters": {
           "additionalProperties": {
             "$ref": "#/definitions/NumericalUpdater"
