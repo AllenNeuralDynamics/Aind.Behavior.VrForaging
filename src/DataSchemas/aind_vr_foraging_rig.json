@@ -1017,7 +1017,6 @@
             "minItems": 2,
             "type": "array"
           },
-          "min": 0,
           "minItems": 2,
           "title": "Break Lookup Calibration",
           "type": "array"
