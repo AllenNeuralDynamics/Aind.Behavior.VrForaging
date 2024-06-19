@@ -1,4 +1,5 @@
 import datetime
+import os
 
 import aind_behavior_services.rig as rig
 import aind_behavior_services.task_logic.distributions as distributions
@@ -18,17 +19,21 @@ from aind_behavior_services.calibration.water_valve import (
     WaterValveCalibrationInput,
 )
 from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_vr_foraging.rig import AindVrForagingRig, RigCalibration, Treadmill
+from aind_behavior_vr_foraging.rig import (
+    AindVrForagingRig,
+    HarpTreadmill,
+    RigCalibration,
+    Treadmill,
+)
 from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,
     AindVrForagingTaskParameters,
 )
 
 
-def main():
-    #  Create a new Session instance
-
-    example_session = AindBehaviorSessionModel(
+def mock_session() -> AindBehaviorSessionModel:
+    """Generates a mock AindBehaviorSessionModel model"""
+    return AindBehaviorSessionModel(
         experiment="AindVrForaging",
         root_path="c://",
         remote_path="c://remote",
@@ -40,10 +45,9 @@ def main():
         experimenter=["Foo", "Bar"],
     )
 
-    # Create a new Rig instance
 
-    # Create calibrations
-
+def mock_rig() -> AindVrForagingRig:
+    """Generates a mock AindVrForagingRig model"""
     olfactometer_calibration = OlfactometerCalibration(
         output=OlfactometerCalibrationOutput(),
         date=datetime.datetime.now(),
@@ -92,7 +96,7 @@ def main():
         input=water_valve_input, output=water_valve_input.calibrate_output(), calibration_date=datetime.datetime.now()
     )
 
-    example_rig = AindVrForagingRig(
+    return AindVrForagingRig(
         rig_name="test_rig",
         triggered_camera_controller=rig.CameraController[rig.SpinnakerCamera](
             frame_rate=120,
@@ -108,15 +112,21 @@ def main():
         harp_clock_generator=rig.HarpClockGenerator(port_name="COM6"),
         harp_analog_input=None,
         harp_sniff_detector=rig.HarpSniffDetector(port_name="COM7"),
-        treadmill=Treadmill(
-            harp_board=rig.HarpTreadmill(port_name="COM8"),
-            settings=rig.Treadmill(wheel_diameter=15, pulses_per_revolution=28800),
+        harp_treadmill=HarpTreadmill(
+            port_name="COM8",
+            calibration=Treadmill(
+                wheel_diameter=15,
+                pulses_per_revolution=28800,
+                break_lookup_calibration=[[0, 0], [1, 65535]],
+            ),
         ),
         screen=rig.Screen(display_index=1),
         calibration=RigCalibration(water_valve=water_valve_calibration, olfactometer=olfactometer_calibration),
     )
 
-    #  Create a new TaskLogic instance
+
+def mock_task_logic() -> AindVrForagingTaskLogic:
+    """Generates a mock AindVrForagingTaskLogic model"""
 
     def NumericalUpdaterParametersHelper(initial_value, increment, decrement, minimum, maximum):
         return vr_task_logic.NumericalUpdaterParameters(
@@ -171,25 +181,36 @@ def main():
             scaling_parameters=distributions.ScalingParameters(scale=1.0, offset=0.0),
         )
 
-    def Reward_VirtualSiteGeneratorHelper(contrast: float = 0.5):
+    def Reward_VirtualSiteGeneratorHelper(contrast: float = 0.5, friction: float = 0):
         return vr_task_logic.VirtualSiteGenerator(
             render_specification=vr_task_logic.RenderSpecification(contrast=contrast),
             label=vr_task_logic.VirtualSiteLabels.REWARDSITE,
             length_distribution=ExponentialDistributionHelper(1, 0, 10),
+            treadmill_specification=vr_task_logic.TreadmillSpecification(friction=vr_task_logic.scalar_value(friction)),
         )
 
-    def InterSite_VirtualSiteGeneratorHelper(contrast: float = 0.5):
+    def InterSite_VirtualSiteGeneratorHelper(contrast: float = 0.5, friction: float = 0):
         return vr_task_logic.VirtualSiteGenerator(
             render_specification=vr_task_logic.RenderSpecification(contrast=contrast),
             label=vr_task_logic.VirtualSiteLabels.INTERSITE,
             length_distribution=ExponentialDistributionHelper(1, 0, 10),
+            treadmill_specification=vr_task_logic.TreadmillSpecification(friction=vr_task_logic.scalar_value(friction)),
         )
 
-    def InterPatch_VirtualSiteGeneratorHelper(contrast: float = 1):
+    def InterPatch_VirtualSiteGeneratorHelper(contrast: float = 1, friction: float = 0):
         return vr_task_logic.VirtualSiteGenerator(
             render_specification=vr_task_logic.RenderSpecification(contrast=contrast),
             label=vr_task_logic.VirtualSiteLabels.INTERPATCH,
             length_distribution=ExponentialDistributionHelper(1, 0, 10),
+            treadmill_specification=vr_task_logic.TreadmillSpecification(friction=vr_task_logic.scalar_value(friction)),
+        )
+
+    def PostPatch_VirtualSiteGeneratorHelper(contrast: float = 1, friction: float = 0.5):
+        return vr_task_logic.VirtualSiteGenerator(
+            render_specification=vr_task_logic.RenderSpecification(contrast=contrast),
+            label=vr_task_logic.VirtualSiteLabels.POSTPATCH,
+            length_distribution=ExponentialDistributionHelper(1, 0, 10),
+            treadmill_specification=vr_task_logic.TreadmillSpecification(friction=vr_task_logic.scalar_value(friction)),
         )
 
     reward_function = vr_task_logic.PatchRewardFunction(
@@ -212,6 +233,7 @@ def main():
             inter_patch=InterPatch_VirtualSiteGeneratorHelper(),
             inter_site=InterSite_VirtualSiteGeneratorHelper(),
             reward_site=Reward_VirtualSiteGeneratorHelper(),
+            post_patch=PostPatch_VirtualSiteGeneratorHelper(),
         ),
     )
 
@@ -235,9 +257,8 @@ def main():
         first_state=None, transition_matrix=vr_task_logic.Matrix2D(data=[[1, 0], [0, 1]]), patches=[patch1, patch2]
     )
 
-    example_vr_task_logic = AindVrForagingTaskLogic(
+    return AindVrForagingTaskLogic(
         task_parameters=AindVrForagingTaskParameters(
-            name="vr_foraging_task_stage_foo",
             rng_seed=None,
             updaters=updaters,
             environment_statistics=environment_statistics,
@@ -246,18 +267,30 @@ def main():
         )
     )
 
+
+def mock_subject_database() -> db.SubjectDataBase:
+    """Generates a mock database object"""
     database = db.SubjectDataBase()
     database.add_subject("test", db.SubjectEntry(task_logic_target="preward_intercept_stageA"))
     database.add_subject("test2", db.SubjectEntry(task_logic_target="does_notexist"))
+    return database
 
-    with open("local/example_vr_task_logic.json", "w") as f:
-        f.write(example_vr_task_logic.model_dump_json(indent=2))
-    with open("local/example_session.json", "w") as f:
-        f.write(example_session.model_dump_json(indent=2))
-    with open("local/example_rig.json", "w") as f:
-        f.write(example_rig.model_dump_json(indent=2))
-    with open("local/example_database.json", "w") as f:
-        f.write(database.model_dump_json(indent=2))
+
+def main():
+
+    example_session = mock_session()
+    example_rig = mock_rig()
+    example_task_logic = mock_task_logic()
+    example_database = mock_subject_database()
+
+    path_seed = "./local/{schema}.json"
+    os.makedirs(os.path.dirname(path_seed), exist_ok=True)
+
+    models = [example_task_logic, example_session, example_rig, example_database]
+
+    for model in models:
+        with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
+            f.write(model.model_dump_json(indent=2))
 
 
 if __name__ == "__main__":
