@@ -171,6 +171,13 @@ class RenderSpecification(BaseModel):
     contrast: Optional[float] = Field(default=None, ge=0, le=1, description="Contrast of the texture")
 
 
+class TreadmillSpecification(BaseModel):
+    friction: Optional[distributions.Distribution] = Field(
+        default=None,
+        description="Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
+    )
+
+
 class VirtualSiteGenerator(BaseModel):
     render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="Contrast of the environment", validate_default=True
@@ -178,6 +185,9 @@ class VirtualSiteGenerator(BaseModel):
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
         default=scalar_value(20), description="Distribution of the length of the virtual site", validate_default=True
+    )
+    treadmill_specification: Optional[TreadmillSpecification] = Field(
+        default=None, description="Treadmill specification", validate_default=True
     )
 
 
@@ -201,13 +211,6 @@ class VirtualSiteGeneration(BaseModel):
         default=VirtualSiteGenerator(label=VirtualSiteLabels.REWARDSITE),
         validate_default=True,
         description="Generator of the reward-site virtual sites",
-    )
-
-
-class TreadmillSpecification(BaseModel):
-    friction: Optional[distributions.Distribution] = Field(
-        default=None,
-        description="Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
     )
 
 

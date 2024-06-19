@@ -5425,6 +5425,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private Distribution _lengthDistribution;
     
+        private TreadmillSpecification _treadmillSpecification;
+    
         public VirtualSiteGenerator()
         {
         }
@@ -5434,6 +5436,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             _renderSpecification = other._renderSpecification;
             _label = other._label;
             _lengthDistribution = other._lengthDistribution;
+            _treadmillSpecification = other._treadmillSpecification;
         }
     
         /// <summary>
@@ -5490,6 +5493,24 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
+        /// <summary>
+        /// Treadmill specification
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("treadmill_specification")]
+        [System.ComponentModel.DescriptionAttribute("Treadmill specification")]
+        public TreadmillSpecification TreadmillSpecification
+        {
+            get
+            {
+                return _treadmillSpecification;
+            }
+            set
+            {
+                _treadmillSpecification = value;
+            }
+        }
+    
         public System.IObservable<VirtualSiteGenerator> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VirtualSiteGenerator(this)));
@@ -5504,7 +5525,8 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("render_specification = " + _renderSpecification + ", ");
             stringBuilder.Append("label = " + _label + ", ");
-            stringBuilder.Append("length_distribution = " + _lengthDistribution);
+            stringBuilder.Append("length_distribution = " + _lengthDistribution + ", ");
+            stringBuilder.Append("treadmill_specification = " + _treadmillSpecification);
             return true;
         }
     
