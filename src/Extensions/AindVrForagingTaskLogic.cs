@@ -17,8 +17,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private double? _rngSeed;
     
-        private string _stageAlias;
-    
         private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     
         private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
@@ -34,7 +32,6 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected AindVrForagingTaskParameters(AindVrForagingTaskParameters other)
         {
             _rngSeed = other._rngSeed;
-            _stageAlias = other._stageAlias;
             _updaters = other._updaters;
             _environmentStatistics = other._environmentStatistics;
             _taskModeSettings = other._taskModeSettings;
@@ -56,23 +53,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             set
             {
                 _rngSeed = value;
-            }
-        }
-    
-        /// <summary>
-        /// Alias name used for the task stage
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("stage_alias")]
-        [System.ComponentModel.DescriptionAttribute("Alias name used for the task stage")]
-        public string StageAlias
-        {
-            get
-            {
-                return _stageAlias;
-            }
-            set
-            {
-                _stageAlias = value;
             }
         }
     
@@ -161,7 +141,6 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
-            stringBuilder.Append("stage_alias = " + _stageAlias + ", ");
             stringBuilder.Append("updaters = " + _updaters + ", ");
             stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
             stringBuilder.Append("task_mode_settings = " + _taskModeSettings + ", ");
