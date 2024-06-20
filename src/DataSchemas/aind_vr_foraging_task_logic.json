@@ -16,19 +16,6 @@
           ],
           "title": "Rng Seed"
         },
-        "stage_alias": {
-          "default": null,
-          "description": "Alias name used for the task stage",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Stage Alias"
-        },
         "updaters": {
           "additionalProperties": {
             "$ref": "#/definitions/NumericalUpdater"
@@ -1173,7 +1160,8 @@
               },
               "render_specification": {
                 "contrast": null
-              }
+              },
+              "treadmill_specification": null
             },
             "inter_patch": {
               "label": "InterPatch",
@@ -1190,7 +1178,8 @@
               },
               "render_specification": {
                 "contrast": null
-              }
+              },
+              "treadmill_specification": null
             },
             "post_patch": null,
             "reward_site": {
@@ -1208,7 +1197,8 @@
               },
               "render_specification": {
                 "contrast": null
-              }
+              },
+              "treadmill_specification": null
             }
           },
           "description": "Virtual site generation specification"
@@ -1925,7 +1915,8 @@
               "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
-            }
+            },
+            "treadmill_specification": null
           },
           "description": "Generator of the inter-site virtual sites"
         },
@@ -1950,7 +1941,8 @@
               "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
-            }
+            },
+            "treadmill_specification": null
           },
           "description": "Generator of the inter-patch virtual sites"
         },
@@ -1987,7 +1979,8 @@
               "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
-            }
+            },
+            "treadmill_specification": null
           },
           "description": "Generator of the reward-site virtual sites"
         }
@@ -2035,6 +2028,18 @@
             "scaling_parameters": null
           },
           "description": "Distribution of the length of the virtual site"
+        },
+        "treadmill_specification": {
+          "default": null,
+          "description": "Treadmill specification",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "VirtualSiteGenerator",

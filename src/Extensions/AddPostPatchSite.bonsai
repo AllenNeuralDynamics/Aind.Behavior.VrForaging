@@ -15,6 +15,7 @@
         <Property Name="Contrast" />
         <Property Name="Label" />
         <Property Name="LengthDistribution" />
+        <Property Name="TreadmillSpecification" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>InterPatch</Name>
@@ -101,6 +102,7 @@
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Label" />
+              <Property Name="TreadmillSpecification" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
               <Id>0</Id>

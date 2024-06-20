@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.1"
+<WorkflowBuilder Version="2.8.2"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema.TaskLogic;assembly=Extensions"
@@ -17,6 +17,7 @@
         <Property Name="OdorSpecification" />
         <Property Name="RewardSpecification" />
         <Property Name="LengthDistribution" />
+        <Property Name="TreadmillSpecification" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>AddGapSite</Name>
@@ -107,10 +108,10 @@
               <Property Name="Label" />
               <Property Name="OdorSpecification" />
               <Property Name="RewardSpecification" />
+              <Property Name="TreadmillSpecification" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
               <Id>388</Id>
-              <Label>GapSite</Label>
               <Length>20.7234077</Length>
               <StartPosition>0</StartPosition>
             </Expression>

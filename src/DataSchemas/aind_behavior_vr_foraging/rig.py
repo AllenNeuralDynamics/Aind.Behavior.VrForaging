@@ -21,7 +21,6 @@ class Treadmill(rig.Treadmill):
         default=[[0, 0], [1, 65535]],
         validate_default=True,
         min_length=2,
-        min=0,
         description="Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale). \
             Values are linearly interpolated",
     )
