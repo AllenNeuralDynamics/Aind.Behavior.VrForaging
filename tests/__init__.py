@@ -4,6 +4,7 @@ from pathlib import Path
 from types import ModuleType
 
 EXAMPLES_DIR = Path(__file__).parents[1] / "examples"
+JSON_ROOT = Path("./local").resolve()
 
 
 def build_example(script_path: str) -> ModuleType:

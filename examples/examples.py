@@ -17,6 +17,7 @@ from aind_behavior_services.calibration.water_valve import (
     Measurement,
     WaterValveCalibration,
     WaterValveCalibrationInput,
+    WaterValveCalibrationOutput,
 )
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_vr_foraging.rig import (
@@ -34,6 +35,7 @@ from aind_behavior_vr_foraging.task_logic import (
 def mock_session() -> AindBehaviorSessionModel:
     """Generates a mock AindBehaviorSessionModel model"""
     return AindBehaviorSessionModel(
+        date=datetime.datetime.now(tz=datetime.timezone.utc),
         experiment="AindVrForaging",
         root_path="c://",
         remote_path="c://remote",
@@ -88,13 +90,14 @@ def mock_rig() -> AindVrForagingRig:
 
     water_valve_input = WaterValveCalibrationInput(
         measurements=[
-            Measurement(valve_open_interval=0.2, valve_open_time=0.1, water_weight=[0.1, 0.1], repeat_count=200),
-            Measurement(valve_open_interval=0.2, valve_open_time=1.0, water_weight=[1, 1], repeat_count=200),
+            Measurement(valve_open_interval=1, valve_open_time=1, water_weight=[1, 1], repeat_count=200),
+            Measurement(valve_open_interval=2, valve_open_time=2, water_weight=[2, 2], repeat_count=200),
         ]
     )
     water_valve_calibration = WaterValveCalibration(
         input=water_valve_input, output=water_valve_input.calibrate_output(), calibration_date=datetime.datetime.now()
     )
+    water_valve_calibration.output = WaterValveCalibrationOutput(slope=1, offset=0)  # For testing purposes
 
     return AindVrForagingRig(
         rig_name="test_rig",
@@ -174,7 +177,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
             grace_distance_threshold=10,
         )
 
-    def ExponentialDistributionHelper(rate: 1, minimum: 0, maximum: 1000):
+    def ExponentialDistributionHelper(rate=1, minimum=0, maximum=1000):
         return distributions.ExponentialDistribution(
             distribution_parameters=distributions.ExponentialDistributionParameters(rate=rate),
             truncation_parameters=distributions.TruncationParameters(min=minimum, max=maximum, is_truncated=True),
@@ -276,14 +279,13 @@ def mock_subject_database() -> db.SubjectDataBase:
     return database
 
 
-def main():
+def main(path_seed: str = "./local/{schema}.json"):
 
     example_session = mock_session()
     example_rig = mock_rig()
     example_task_logic = mock_task_logic()
     example_database = mock_subject_database()
 
-    path_seed = "./local/{schema}.json"
     os.makedirs(os.path.dirname(path_seed), exist_ok=True)
 
     models = [example_task_logic, example_session, example_rig, example_database]
