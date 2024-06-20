@@ -61,7 +61,14 @@ class TestModel(Generic[TModel]):
         self.deserialized_model: Optional[TModel] = None
 
     def validate_deserialization(self) -> bool:
-        return self.input_model == self.deserialized_model
+        if not self.input_model:
+            raise ValueError("Input model is not set.")
+        if not self.deserialized_model:
+            raise ValueError("Deserialized model is not set.")
+        _round_trip = self.input_model.model_validate_json(
+            self.input_model.model_dump_json()
+            )
+        return _round_trip == self.deserialized_model
 
     def try_deserialization(self, json_str: Union[str, List[str]]) -> TModel:
         _deserialized: Optional[TModel] = None
