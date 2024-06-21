@@ -7289,7 +7289,7 @@ Value as IsStopped)</scr:Expression>
                           <Selector>HarpTreadmill.Calibration</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>BreakLookupCalibration</Selector>
+                          <Selector>BrakeLookupCalibration</Selector>
                         </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="IntProperty">

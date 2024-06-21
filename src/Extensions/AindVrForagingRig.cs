@@ -2657,7 +2657,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private bool _invertDirection = false;
     
-        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _breakLookupCalibration = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
+        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _brakeLookupCalibration = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
     
         public Treadmill()
         {
@@ -2668,7 +2668,7 @@ namespace AindVrForagingDataSchema.Rig
             _wheelDiameter = other._wheelDiameter;
             _pulsesPerRevolution = other._pulsesPerRevolution;
             _invertDirection = other._invertDirection;
-            _breakLookupCalibration = other._breakLookupCalibration;
+            _brakeLookupCalibration = other._brakeLookupCalibration;
         }
     
         /// <summary>
@@ -2723,21 +2723,21 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         /// <summary>
-        /// Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated
+        /// Brake lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("break_lookup_calibration")]
-        [System.ComponentModel.DescriptionAttribute("Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).           " +
+        [Newtonsoft.Json.JsonPropertyAttribute("brake_lookup_calibration")]
+        [System.ComponentModel.DescriptionAttribute("Brake lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).           " +
             "  Values are linearly interpolated")]
-        public System.Collections.Generic.List<System.Collections.Generic.List<double>> BreakLookupCalibration
+        public System.Collections.Generic.List<System.Collections.Generic.List<double>> BrakeLookupCalibration
         {
             get
             {
-                return _breakLookupCalibration;
+                return _brakeLookupCalibration;
             }
             set
             {
-                _breakLookupCalibration = value;
+                _brakeLookupCalibration = value;
             }
         }
     
@@ -2756,7 +2756,7 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("wheel_diameter = " + _wheelDiameter + ", ");
             stringBuilder.Append("pulses_per_revolution = " + _pulsesPerRevolution + ", ");
             stringBuilder.Append("invert_direction = " + _invertDirection + ", ");
-            stringBuilder.Append("break_lookup_calibration = " + _breakLookupCalibration);
+            stringBuilder.Append("brake_lookup_calibration = " + _brakeLookupCalibration);
             return true;
         }
     
