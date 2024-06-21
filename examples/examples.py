@@ -99,13 +99,28 @@ def mock_rig() -> AindVrForagingRig:
     )
     water_valve_calibration.output = WaterValveCalibrationOutput(slope=1, offset=0)  # For testing purposes
 
+    video_writer = rig.VideoWriterFfmpeg(
+        frame_rate=120,
+        container_extension="mp4",
+        output_arguments="-c:v h264_nvenc -vsync 0 -2pass ")
+
     return AindVrForagingRig(
         rig_name="test_rig",
         triggered_camera_controller=rig.CameraController[rig.SpinnakerCamera](
             frame_rate=120,
             cameras={
-                "FaceCamera": rig.SpinnakerCamera(serial_number="SerialNumber", binning=1, exposure=5000, gain=0),
-                "SideCamera": rig.SpinnakerCamera(serial_number="SerialNumber", binning=1, exposure=5000, gain=0),
+                "FaceCamera": rig.SpinnakerCamera(
+                    serial_number="SerialNumber",
+                    binning=1,
+                    exposure=5000,
+                    gain=0,
+                    video_writer=video_writer),
+                "SideCamera": rig.SpinnakerCamera(
+                    serial_number="SerialNumber",
+                    binning=1,
+                    exposure=5000,
+                    gain=0,
+                    video_writer=video_writer)
             },
         ),
         monitoring_camera_controller=rig.CameraController[rig.WebCamera](cameras={"WebCam0": rig.WebCamera(index=0)}),
