@@ -535,7 +535,7 @@
             "wheel_diameter": 15.0,
             "pulses_per_revolution": 28800,
             "invert_direction": false,
-            "break_lookup_calibration": [
+            "brake_lookup_calibration": [
               [
                 0.0,
                 0.0
@@ -996,7 +996,7 @@
           "title": "Invert Direction",
           "type": "boolean"
         },
-        "break_lookup_calibration": {
+        "brake_lookup_calibration": {
           "default": [
             [
               0,
@@ -1007,7 +1007,7 @@
               65535
             ]
           ],
-          "description": "Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated",
+          "description": "Brake lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated",
           "items": {
             "description": "A tuple of two values",
             "items": {
@@ -1018,7 +1018,7 @@
             "type": "array"
           },
           "minItems": 2,
-          "title": "Break Lookup Calibration",
+          "title": "Brake Lookup Calibration",
           "type": "array"
         }
       },

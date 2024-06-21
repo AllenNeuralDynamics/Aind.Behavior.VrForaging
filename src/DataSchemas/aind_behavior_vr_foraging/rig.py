@@ -17,11 +17,11 @@ ValuePair = Annotated[List[float], Field(min_length=2, max_length=2, description
 
 
 class Treadmill(rig.Treadmill):
-    break_lookup_calibration: List[ValuePair] = Field(
+    brake_lookup_calibration: List[ValuePair] = Field(
         default=[[0, 0], [1, 65535]],
         validate_default=True,
         min_length=2,
-        description="Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale). \
+        description="Brake lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale). \
             Values are linearly interpolated",
     )
 
