@@ -1,0 +1,3780 @@
+{
+  "definitions": {
+    "AindBehaviorSessionModel": {
+      "properties": {
+        "version": {
+          "const": "0.2.0",
+          "default": "0.2.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "experiment": {
+          "description": "Name of the experiment",
+          "title": "Experiment",
+          "type": "string"
+        },
+        "experimenter": {
+          "default": [],
+          "description": "Name of the experimenter",
+          "items": {
+            "type": "string"
+          },
+          "title": "Experimenter",
+          "type": "array"
+        },
+        "date": {
+          "description": "Date of the experiment",
+          "format": "date-time",
+          "title": "Date",
+          "type": "string"
+        },
+        "root_path": {
+          "description": "Root path where data will be logged",
+          "title": "Root Path",
+          "type": "string"
+        },
+        "remote_path": {
+          "default": null,
+          "description": "Remote path where data will be attempted to be copied to after experiment is done",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Remote Path"
+        },
+        "subject": {
+          "description": "Name of the subject",
+          "title": "Subject",
+          "type": "string"
+        },
+        "experiment_version": {
+          "description": "Version of the experiment",
+          "title": "Experiment Version",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "description": "Notes about the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "commit_hash": {
+          "default": null,
+          "description": "Commit hash of the repository",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit Hash"
+        },
+        "allow_dirty_repo": {
+          "default": false,
+          "description": "Allow running from a dirty repository",
+          "title": "Allow Dirty Repo",
+          "type": "boolean"
+        },
+        "skip_hardware_validation": {
+          "default": false,
+          "description": "Skip hardware validation",
+          "title": "Skip Hardware Validation",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "experiment",
+        "root_path",
+        "subject",
+        "experiment_version"
+      ],
+      "title": "AindBehaviorSessionModel",
+      "type": "object"
+    },
+    "AindVrForagingRig": {
+      "properties": {
+        "version": {
+          "const": "0.3.0",
+          "default": "0.3.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "computer_name": {
+          "description": "Computer name",
+          "title": "Computer Name",
+          "type": "string"
+        },
+        "rig_name": {
+          "description": "Rig name",
+          "title": "Rig Name",
+          "type": "string"
+        },
+        "triggered_camera_controller": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/CameraController_SpinnakerCamera_"
+            }
+          ],
+          "description": "Required camera controller to triggered cameras."
+        },
+        "monitoring_camera_controller": {
+          "default": null,
+          "description": "Optional camera controller for monitoring cameras.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/CameraController_WebCamera_"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "harp_behavior": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/HarpBehavior"
+            }
+          ],
+          "description": "Harp behavior"
+        },
+        "harp_olfactometer": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/HarpOlfactometer"
+            }
+          ],
+          "description": "Harp olfactometer"
+        },
+        "harp_lickometer": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/HarpLickometer"
+            }
+          ],
+          "description": "Harp lickometer"
+        },
+        "harp_clock_generator": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/HarpClockGenerator"
+            }
+          ],
+          "description": "Harp clock generator"
+        },
+        "harp_analog_input": {
+          "default": null,
+          "description": "Harp analog input",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/HarpAnalogInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "harp_treadmill": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/HarpTreadmill"
+            }
+          ],
+          "description": "Harp treadmill"
+        },
+        "harp_sniff_detector": {
+          "default": null,
+          "description": "Sniff detector settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/HarpSniffDetector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "screen": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Screen"
+            }
+          ],
+          "default": {
+            "device_type": "Screen",
+            "additional_settings": null,
+            "calibration": null,
+            "display_index": 1,
+            "target_render_frequency": 60.0,
+            "target_update_frequency": 120.0,
+            "calibration_directory": "Calibration\\Monitors\\",
+            "texture_assets_directory": "Textures",
+            "brightness": 1.0,
+            "contrast": 1.0
+          },
+          "description": "Screen settings"
+        },
+        "calibration": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RigCalibration"
+            }
+          ],
+          "description": "Calibration models"
+        }
+      },
+      "required": [
+        "rig_name",
+        "triggered_camera_controller",
+        "harp_behavior",
+        "harp_olfactometer",
+        "harp_lickometer",
+        "harp_clock_generator",
+        "harp_treadmill",
+        "calibration"
+      ],
+      "title": "AindVrForagingRig",
+      "type": "object"
+    },
+    "AindVrForagingTaskLogic": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "default": "AindVrForaging",
+          "description": "Name of the task logic",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "description": "Description of the task.",
+          "title": "Description",
+          "type": "string"
+        },
+        "task_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/AindVrForagingTaskParameters"
+            }
+          ],
+          "description": "Parameters of the task logic"
+        },
+        "version": {
+          "const": "0.4.0",
+          "default": "0.4.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "stage_name": {
+          "default": null,
+          "description": "Optional stage name the `Task` object instance represents.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Stage Name"
+        }
+      },
+      "required": [
+        "task_parameters"
+      ],
+      "title": "AindVrForagingTaskLogic",
+      "type": "object"
+    },
+    "AindVrForagingTaskParameters": {
+      "additionalProperties": true,
+      "properties": {
+        "rng_seed": {
+          "default": null,
+          "description": "Seed of the random number generator",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rng Seed"
+        },
+        "updaters": {
+          "additionalProperties": {
+            "$ref": "#/definitions/NumericalUpdater"
+          },
+          "description": "List of numerical updaters",
+          "title": "Updaters",
+          "type": "object"
+        },
+        "environment_statistics": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/EnvironmentStatistics"
+            }
+          ],
+          "description": "Statistics of the environment"
+        },
+        "task_mode_settings": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TaskModeSettings"
+            }
+          ],
+          "default": {
+            "task_mode": "FORAGING"
+          },
+          "description": "Settings of the task stage"
+        },
+        "operation_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OperationControl"
+            }
+          ],
+          "description": "Control of the operation"
+        }
+      },
+      "required": [
+        "environment_statistics",
+        "operation_control"
+      ],
+      "title": "AindVrForagingTaskParameters",
+      "type": "object"
+    },
+    "AudioControl": {
+      "properties": {
+        "duration": {
+          "default": 0.2,
+          "description": "Duration",
+          "minimum": 0.0,
+          "title": "Duration",
+          "type": "number"
+        },
+        "frequency": {
+          "default": 1000,
+          "description": "Frequency",
+          "minimum": 100.0,
+          "title": "Frequency",
+          "type": "number"
+        }
+      },
+      "title": "AudioControl",
+      "type": "object"
+    },
+    "BaseModel": {
+      "properties": {},
+      "title": "BaseModel",
+      "type": "object"
+    },
+    "BetaDistribution": {
+      "properties": {
+        "family": {
+          "const": "Beta",
+          "default": "Beta",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BetaDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Beta",
+            "alpha": 5.0,
+            "beta": 5.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "BetaDistribution",
+      "type": "object"
+    },
+    "BetaDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Beta",
+          "default": "Beta",
+          "title": "Family",
+          "type": "string"
+        },
+        "alpha": {
+          "default": 5,
+          "description": "Alpha parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Alpha",
+          "type": "number"
+        },
+        "beta": {
+          "default": 5,
+          "description": "Beta parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Beta",
+          "type": "number"
+        }
+      },
+      "title": "BetaDistributionParameters",
+      "type": "object"
+    },
+    "BinomialDistribution": {
+      "properties": {
+        "family": {
+          "const": "Binomial",
+          "default": "Binomial",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/BinomialDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Binomial",
+            "n": 1,
+            "p": 0.5
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "BinomialDistribution",
+      "type": "object"
+    },
+    "BinomialDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Binomial",
+          "default": "Binomial",
+          "title": "Family",
+          "type": "string"
+        },
+        "n": {
+          "default": 1,
+          "description": "Number of trials",
+          "minimum": 0,
+          "title": "N",
+          "type": "integer"
+        },
+        "p": {
+          "default": 0.5,
+          "description": "Probability of success",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "P",
+          "type": "number"
+        }
+      },
+      "title": "BinomialDistributionParameters",
+      "type": "object"
+    },
+    "CameraController_SpinnakerCamera_": {
+      "properties": {
+        "device_type": {
+          "const": "CameraController",
+          "default": "CameraController",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cameras": {
+          "additionalProperties": {
+            "$ref": "#/definitions/SpinnakerCamera"
+          },
+          "description": "Cameras to be instantiated",
+          "title": "Cameras",
+          "type": "object"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate of the trigger to all cameras",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frame Rate"
+        }
+      },
+      "required": [
+        "cameras"
+      ],
+      "title": "CameraController[SpinnakerCamera]",
+      "type": "object"
+    },
+    "CameraController_WebCamera_": {
+      "properties": {
+        "device_type": {
+          "const": "CameraController",
+          "default": "CameraController",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cameras": {
+          "additionalProperties": {
+            "$ref": "#/definitions/WebCamera"
+          },
+          "description": "Cameras to be instantiated",
+          "title": "Cameras",
+          "type": "object"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate of the trigger to all cameras",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frame Rate"
+        }
+      },
+      "required": [
+        "cameras"
+      ],
+      "title": "CameraController[WebCamera]",
+      "type": "object"
+    },
+    "ConstantFunction": {
+      "properties": {
+        "function_type": {
+          "const": "ConstantFunction",
+          "default": "ConstantFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "value": {
+          "default": 1,
+          "description": "Value of the function",
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "title": "ConstantFunction",
+      "type": "object"
+    },
+    "DebugSettings": {
+      "description": "This class is not currently implemented",
+      "properties": {
+        "task_mode": {
+          "const": "DEBUG",
+          "default": "DEBUG",
+          "title": "Task Mode",
+          "type": "string"
+        },
+        "visual_corridors": {
+          "items": {
+            "$ref": "#/definitions/VisualCorridor"
+          },
+          "title": "Visual Corridors",
+          "type": "array"
+        },
+        "virtual_sites": {
+          "items": {
+            "$ref": "#/definitions/VirtualSite"
+          },
+          "title": "Virtual Sites",
+          "type": "array"
+        }
+      },
+      "required": [
+        "visual_corridors",
+        "virtual_sites"
+      ],
+      "title": "DebugSettings",
+      "type": "object"
+    },
+    "DepletionRule": {
+      "enum": [
+        "OnReward",
+        "OnChoice",
+        "OnTime",
+        "OnDistance"
+      ],
+      "title": "DepletionRule",
+      "type": "string"
+    },
+    "Distribution": {
+      "description": "Available distributions",
+      "discriminator": {
+        "mapping": {
+          "Beta": "#/definitions/BetaDistribution",
+          "Binomial": "#/definitions/BinomialDistribution",
+          "Exponential": "#/definitions/ExponentialDistribution",
+          "Gamma": "#/definitions/GammaDistribution",
+          "LogNormal": "#/definitions/LogNormalDistribution",
+          "Normal": "#/definitions/NormalDistribution",
+          "Poisson": "#/definitions/PoissonDistribution",
+          "Scalar": "#/definitions/Scalar",
+          "Uniform": "#/definitions/UniformDistribution"
+        },
+        "propertyName": "family"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Scalar"
+        },
+        {
+          "$ref": "#/definitions/NormalDistribution"
+        },
+        {
+          "$ref": "#/definitions/LogNormalDistribution"
+        },
+        {
+          "$ref": "#/definitions/ExponentialDistribution"
+        },
+        {
+          "$ref": "#/definitions/UniformDistribution"
+        },
+        {
+          "$ref": "#/definitions/PoissonDistribution"
+        },
+        {
+          "$ref": "#/definitions/BinomialDistribution"
+        },
+        {
+          "$ref": "#/definitions/BetaDistribution"
+        },
+        {
+          "$ref": "#/definitions/GammaDistribution"
+        }
+      ],
+      "title": "Distribution"
+    },
+    "EnvironmentStatistics": {
+      "properties": {
+        "patches": {
+          "description": "List of patches",
+          "items": {
+            "$ref": "#/definitions/PatchStatistics"
+          },
+          "title": "Patches",
+          "type": "array"
+        },
+        "transition_matrix": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Matrix2D"
+            }
+          ],
+          "default": {
+            "data": [
+              [
+                1.0
+              ]
+            ]
+          },
+          "description": "Transition matrix between patches"
+        },
+        "first_state": {
+          "default": null,
+          "description": "The first state to be visited. If None, it will be randomly drawn.",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "First State"
+        }
+      },
+      "title": "EnvironmentStatistics",
+      "type": "object"
+    },
+    "ExponentialDistribution": {
+      "properties": {
+        "family": {
+          "const": "Exponential",
+          "default": "Exponential",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ExponentialDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Exponential",
+            "rate": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "ExponentialDistribution",
+      "type": "object"
+    },
+    "ExponentialDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Exponential",
+          "default": "Exponential",
+          "title": "Family",
+          "type": "string"
+        },
+        "rate": {
+          "default": 0,
+          "description": "Rate parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Rate",
+          "type": "number"
+        }
+      },
+      "title": "ExponentialDistributionParameters",
+      "type": "object"
+    },
+    "ForagingSettings": {
+      "properties": {
+        "task_mode": {
+          "const": "FORAGING",
+          "default": "FORAGING",
+          "title": "Task Mode",
+          "type": "string"
+        }
+      },
+      "title": "ForagingSettings",
+      "type": "object"
+    },
+    "GammaDistribution": {
+      "properties": {
+        "family": {
+          "const": "Gamma",
+          "default": "Gamma",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/GammaDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Gamma",
+            "shape": 1.0,
+            "rate": 1.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "GammaDistribution",
+      "type": "object"
+    },
+    "GammaDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Gamma",
+          "default": "Gamma",
+          "title": "Family",
+          "type": "string"
+        },
+        "shape": {
+          "default": 1,
+          "description": "Shape parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Shape",
+          "type": "number"
+        },
+        "rate": {
+          "default": 1,
+          "description": "Rate parameter of the distribution",
+          "minimum": 0.0,
+          "title": "Rate",
+          "type": "number"
+        }
+      },
+      "title": "GammaDistributionParameters",
+      "type": "object"
+    },
+    "HabituationSettings": {
+      "properties": {
+        "task_mode": {
+          "const": "HABITUATION",
+          "default": "HABITUATION",
+          "title": "Task Mode",
+          "type": "string"
+        },
+        "distance_to_reward": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
+          "description": "Distance (cm) to the reward"
+        },
+        "render_specification": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
+          "default": {
+            "contrast": null
+          },
+          "description": "The optional render specification of the virtual site"
+        }
+      },
+      "required": [
+        "distance_to_reward"
+      ],
+      "title": "HabituationSettings",
+      "type": "object"
+    },
+    "HarpAnalogInput": {
+      "properties": {
+        "device_type": {
+          "const": "analoginput",
+          "default": "analoginput",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1236,
+          "default": 1236,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpAnalogInput",
+      "type": "object"
+    },
+    "HarpBehavior": {
+      "properties": {
+        "device_type": {
+          "const": "behavior",
+          "default": "behavior",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1216,
+          "default": 1216,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpBehavior",
+      "type": "object"
+    },
+    "HarpClockGenerator": {
+      "properties": {
+        "device_type": {
+          "const": "clockgenerator",
+          "default": "clockgenerator",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1158,
+          "default": 1158,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpClockGenerator",
+      "type": "object"
+    },
+    "HarpLickometer": {
+      "properties": {
+        "device_type": {
+          "const": "lickometer",
+          "default": "lickometer",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1400,
+          "default": 1400,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpLickometer",
+      "type": "object"
+    },
+    "HarpOlfactometer": {
+      "properties": {
+        "device_type": {
+          "const": "olfactometer",
+          "default": "olfactometer",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1140,
+          "default": 1140,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpOlfactometer",
+      "type": "object"
+    },
+    "HarpSniffDetector": {
+      "properties": {
+        "device_type": {
+          "const": "sniffdetector",
+          "default": "sniffdetector",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1401,
+          "default": 1401,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpSniffDetector",
+      "type": "object"
+    },
+    "HarpTreadmill": {
+      "properties": {
+        "device_type": {
+          "const": "treadmill",
+          "default": "treadmill",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Treadmill"
+            }
+          ],
+          "default": {
+            "wheel_diameter": 15.0,
+            "pulses_per_revolution": 28800,
+            "invert_direction": false,
+            "break_lookup_calibration": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                65535.0
+              ]
+            ]
+          },
+          "description": "Treadmill calibration settings"
+        },
+        "who_am_i": {
+          "const": 1402,
+          "default": 1402,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpTreadmill",
+      "type": "object"
+    },
+    "LinearFunction": {
+      "properties": {
+        "function_type": {
+          "const": "LinearFunction",
+          "default": "LinearFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "mininum": {
+          "default": 0,
+          "description": "Minimum value of the function",
+          "title": "Mininum",
+          "type": "number"
+        },
+        "maximum": {
+          "default": 9999,
+          "description": "Maximum value of the function",
+          "title": "Maximum",
+          "type": "number"
+        },
+        "a": {
+          "default": 1,
+          "description": "Coefficient a of the function: value = a * x + b",
+          "title": "A",
+          "type": "number"
+        },
+        "b": {
+          "default": 0,
+          "description": "Coefficient b of the function: value = a * x + b",
+          "title": "B",
+          "type": "number"
+        }
+      },
+      "title": "LinearFunction",
+      "type": "object"
+    },
+    "LogNormalDistribution": {
+      "properties": {
+        "family": {
+          "const": "LogNormal",
+          "default": "LogNormal",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/LogNormalDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "LogNormal",
+            "mean": 0.0,
+            "std": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "LogNormalDistribution",
+      "type": "object"
+    },
+    "LogNormalDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "LogNormal",
+          "default": "LogNormal",
+          "title": "Family",
+          "type": "string"
+        },
+        "mean": {
+          "default": 0,
+          "description": "Mean of the distribution",
+          "title": "Mean",
+          "type": "number"
+        },
+        "std": {
+          "default": 0,
+          "description": "Standard deviation of the distribution",
+          "title": "Std",
+          "type": "number"
+        }
+      },
+      "title": "LogNormalDistributionParameters",
+      "type": "object"
+    },
+    "Matrix2D": {
+      "properties": {
+        "data": {
+          "default": [
+            [
+              1
+            ]
+          ],
+          "description": "Defines a 2D matrix",
+          "items": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "title": "Data",
+          "type": "array"
+        }
+      },
+      "title": "Matrix2D",
+      "type": "object"
+    },
+    "Measurement": {
+      "description": "Input for water valve calibration class",
+      "properties": {
+        "valve_open_interval": {
+          "description": "Time between two consecutive valve openings (s)",
+          "exclusiveMinimum": 0.0,
+          "title": "Valve open interval",
+          "type": "number"
+        },
+        "valve_open_time": {
+          "description": "Valve open interval (s)",
+          "exclusiveMinimum": 0.0,
+          "title": "Valve open time",
+          "type": "number"
+        },
+        "water_weight": {
+          "description": "Weight of water delivered (g)",
+          "items": {
+            "exclusiveMinimum": 0.0,
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Water weight",
+          "type": "array"
+        },
+        "repeat_count": {
+          "description": "Number of times the valve opened.",
+          "minimum": 0,
+          "title": "Repeat count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "valve_open_interval",
+        "valve_open_time",
+        "water_weight",
+        "repeat_count"
+      ],
+      "title": "Measurement",
+      "type": "object"
+    },
+    "MovableSpoutControl": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "description": "Whether the movable spout is enabled",
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "time_to_collect_after_reward": {
+          "default": 1,
+          "description": "Time (s) to collect after reward",
+          "minimum": 0.0,
+          "title": "Time To Collect After Reward",
+          "type": "number"
+        },
+        "servo_motor": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ServoMotor"
+            }
+          ],
+          "default": {
+            "period": 20000,
+            "min_pulse_duration": 1000,
+            "max_pulse_duration": 2000,
+            "default_pulse_duration": 2000
+          },
+          "description": "Servo motor settings"
+        }
+      },
+      "title": "MovableSpoutControl",
+      "type": "object"
+    },
+    "NormalDistribution": {
+      "properties": {
+        "family": {
+          "const": "Normal",
+          "default": "Normal",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/NormalDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Normal",
+            "mean": 0.0,
+            "std": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "NormalDistribution",
+      "type": "object"
+    },
+    "NormalDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Normal",
+          "default": "Normal",
+          "title": "Family",
+          "type": "string"
+        },
+        "mean": {
+          "default": 0,
+          "description": "Mean of the distribution",
+          "title": "Mean",
+          "type": "number"
+        },
+        "std": {
+          "default": 0,
+          "description": "Standard deviation of the distribution",
+          "title": "Std",
+          "type": "number"
+        }
+      },
+      "title": "NormalDistributionParameters",
+      "type": "object"
+    },
+    "NumericalUpdater": {
+      "properties": {
+        "operation": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/NumericalUpdaterOperation"
+            }
+          ],
+          "default": "None",
+          "description": "Operation to perform on the parameter"
+        },
+        "parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/NumericalUpdaterParameters"
+            }
+          ],
+          "default": {
+            "initial_value": 0.0,
+            "increment": 0.0,
+            "decrement": 0.0,
+            "minimum": 0.0,
+            "maximum": 0.0
+          },
+          "description": "Parameters of the updater"
+        }
+      },
+      "title": "NumericalUpdater",
+      "type": "object"
+    },
+    "NumericalUpdaterOperation": {
+      "enum": [
+        "None",
+        "Offset",
+        "Gain",
+        "Set",
+        "OffsetPercentage"
+      ],
+      "title": "NumericalUpdaterOperation",
+      "type": "string"
+    },
+    "NumericalUpdaterParameters": {
+      "properties": {
+        "initial_value": {
+          "default": 0.0,
+          "description": "Initial value of the parameter",
+          "title": "Initial Value",
+          "type": "number"
+        },
+        "increment": {
+          "default": 0.0,
+          "description": "Value to increment the parameter by",
+          "title": "Increment",
+          "type": "number"
+        },
+        "decrement": {
+          "default": 0.0,
+          "description": "Value to decrement the parameter by",
+          "title": "Decrement",
+          "type": "number"
+        },
+        "minimum": {
+          "default": 0.0,
+          "description": "Minimum value of the parameter",
+          "title": "Minimum",
+          "type": "number"
+        },
+        "maximum": {
+          "default": 0.0,
+          "description": "Minimum value of the parameter",
+          "title": "Maximum",
+          "type": "number"
+        }
+      },
+      "title": "NumericalUpdaterParameters",
+      "type": "object"
+    },
+    "OdorControl": {
+      "properties": {
+        "valve_max_open_time": {
+          "default": 10,
+          "description": "Maximum time (s) the valve can be open continuously",
+          "minimum": 0.0,
+          "title": "Valve Max Open Time",
+          "type": "number"
+        },
+        "target_total_flow": {
+          "default": 1000,
+          "description": "Target total flow (ml/s) of the odor mixture",
+          "maximum": 1000.0,
+          "minimum": 100.0,
+          "title": "Target Total Flow",
+          "type": "number"
+        },
+        "use_channel_3_as_carrier": {
+          "default": true,
+          "description": "Whether to use channel 3 as carrier",
+          "title": "Use Channel 3 As Carrier",
+          "type": "boolean"
+        },
+        "target_odor_flow": {
+          "default": 100,
+          "description": "Target odor flow (ml/s) in the odor mixture",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "title": "Target Odor Flow",
+          "type": "number"
+        }
+      },
+      "title": "OdorControl",
+      "type": "object"
+    },
+    "OdorSpecification": {
+      "properties": {
+        "index": {
+          "description": "Index of the odor to be used",
+          "maximum": 3,
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "concentration": {
+          "default": 1,
+          "description": "Concentration of the odor",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Concentration",
+          "type": "number"
+        }
+      },
+      "required": [
+        "index"
+      ],
+      "title": "OdorSpecification",
+      "type": "object"
+    },
+    "OlfactometerCalibration": {
+      "description": "Olfactometer calibration class",
+      "properties": {
+        "device_name": {
+          "default": "Olfactometer",
+          "description": "Name of the device being calibrated",
+          "title": "Device name",
+          "type": "string"
+        },
+        "input": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibrationInput"
+            }
+          ],
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibrationOutput"
+            }
+          ],
+          "title": "Output of the calibration"
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "const": "Calibration of the harp olfactometer device",
+          "default": "Calibration of the harp olfactometer device",
+          "title": "Description",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "title": "OlfactometerCalibration",
+      "type": "object"
+    },
+    "OlfactometerCalibrationInput": {
+      "properties": {
+        "channel_config": {
+          "additionalProperties": {
+            "$ref": "#/definitions/OlfactometerChannelConfig"
+          },
+          "default": {},
+          "description": "Configuration of olfactometer channels",
+          "title": "Channel Config",
+          "type": "object"
+        }
+      },
+      "title": "OlfactometerCalibrationInput",
+      "type": "object"
+    },
+    "OlfactometerCalibrationOutput": {
+      "properties": {},
+      "title": "OlfactometerCalibrationOutput",
+      "type": "object"
+    },
+    "OlfactometerChannelConfig": {
+      "properties": {
+        "channel_index": {
+          "title": "Channel index",
+          "type": "integer"
+        },
+        "channel_type": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerChannelType"
+            }
+          ],
+          "default": "Odor",
+          "title": "Channel type"
+        },
+        "flow_rate_capacity": {
+          "default": 100,
+          "enum": [
+            100,
+            1000
+          ],
+          "title": "Flow capacity. mL/min",
+          "type": "integer"
+        },
+        "flow_rate": {
+          "default": 100,
+          "maximum": 100.0,
+          "title": "Target flow rate. mL/min. If channel_type == CARRIER, this value is ignored.",
+          "type": "number"
+        },
+        "odorant": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Odorant name"
+        },
+        "odorant_dilution": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Odorant dilution (%v/v)"
+        }
+      },
+      "required": [
+        "channel_index"
+      ],
+      "title": "OlfactometerChannelConfig",
+      "type": "object"
+    },
+    "OlfactometerChannelType": {
+      "description": "Channel type",
+      "enum": [
+        "Odor",
+        "Carrier"
+      ],
+      "title": "OlfactometerChannelType",
+      "type": "string"
+    },
+    "OperantLogic": {
+      "properties": {
+        "is_operant": {
+          "default": true,
+          "description": "Will the trial implement operant logic",
+          "title": "Is Operant",
+          "type": "boolean"
+        },
+        "stop_duration": {
+          "default": 0,
+          "description": "Duration (s) the animal must stop for to lock its choice",
+          "minimum": 0.0,
+          "title": "Stop Duration",
+          "type": "number"
+        },
+        "time_to_collect_reward": {
+          "default": 100000,
+          "description": "Time(s) the animal has to collect the reward",
+          "minimum": 0.0,
+          "title": "Time To Collect Reward",
+          "type": "number"
+        },
+        "grace_distance_threshold": {
+          "default": 10,
+          "description": "Virtual distance (cm) the animal must be within to not abort the current choice",
+          "minimum": 0.0,
+          "title": "Grace Distance Threshold",
+          "type": "number"
+        }
+      },
+      "title": "OperantLogic",
+      "type": "object"
+    },
+    "OperationControl": {
+      "properties": {
+        "movable_spout_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/MovableSpoutControl"
+            }
+          ],
+          "default": {
+            "enabled": false,
+            "time_to_collect_after_reward": 1.0,
+            "servo_motor": {
+              "default_pulse_duration": 2000,
+              "max_pulse_duration": 2000,
+              "min_pulse_duration": 1000,
+              "period": 20000
+            }
+          },
+          "description": "Control of the movable spout"
+        },
+        "odor_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OdorControl"
+            }
+          ],
+          "default": {
+            "valve_max_open_time": 10.0,
+            "target_total_flow": 1000.0,
+            "use_channel_3_as_carrier": true,
+            "target_odor_flow": 100.0
+          },
+          "description": "Control of the odor"
+        },
+        "position_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/PositionControl"
+            }
+          ],
+          "default": {
+            "gain": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            },
+            "initial_position": {
+              "x": 0.0,
+              "y": 2.56,
+              "z": 0.0
+            },
+            "frequency_filter_cutoff": 0.5,
+            "velocity_threshold": 1.0
+          },
+          "description": "Control of the position"
+        },
+        "audio_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/AudioControl"
+            }
+          ],
+          "default": {
+            "duration": 0.2,
+            "frequency": 1000.0
+          },
+          "description": "Control of the audio"
+        }
+      },
+      "title": "OperationControl",
+      "type": "object"
+    },
+    "PatchRewardFunction": {
+      "properties": {
+        "amount": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
+          "default": {
+            "function_type": "ConstantFunction",
+            "value": 1.0
+          },
+          "description": "Determines the amount of reward to be delivered. The value is in microliters"
+        },
+        "probability": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
+          "default": {
+            "function_type": "ConstantFunction",
+            "value": 1.0
+          },
+          "description": "Determines the probability that a reward will be delivered"
+        },
+        "available": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
+          "default": {
+            "function_type": "LinearFunction",
+            "mininum": 0.0,
+            "maximum": 9999.0,
+            "a": -1.0,
+            "b": 5.0
+          },
+          "description": "Determines the total amount of reward available left in the patch. The value is in microliters"
+        },
+        "depletion_rule": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/DepletionRule"
+            }
+          ],
+          "default": "OnChoice",
+          "description": "Depletion"
+        }
+      },
+      "title": "PatchRewardFunction",
+      "type": "object"
+    },
+    "PatchStatistics": {
+      "properties": {
+        "label": {
+          "default": "",
+          "description": "Label of the patch",
+          "title": "Label",
+          "type": "string"
+        },
+        "state_index": {
+          "default": 0,
+          "description": "Index of the state",
+          "minimum": 0,
+          "title": "State Index",
+          "type": "integer"
+        },
+        "odor_specification": {
+          "default": null,
+          "description": "The optional odor specification of the patch",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdorSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reward_specification": {
+          "default": null,
+          "description": "The optional reward specification of the patch",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RewardSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "virtual_site_generation": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGeneration"
+            }
+          ],
+          "default": {
+            "inter_site": {
+              "label": "InterSite",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null,
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              },
+              "treadmill_specification": null
+            },
+            "inter_patch": {
+              "label": "InterPatch",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null,
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              },
+              "treadmill_specification": null
+            },
+            "post_patch": null,
+            "reward_site": {
+              "label": "RewardSite",
+              "length_distribution": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null,
+                  "value": 20.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              },
+              "render_specification": {
+                "contrast": null
+              },
+              "treadmill_specification": null
+            }
+          },
+          "description": "Virtual site generation specification"
+        }
+      },
+      "title": "PatchStatistics",
+      "type": "object"
+    },
+    "PoissonDistribution": {
+      "properties": {
+        "family": {
+          "const": "Poisson",
+          "default": "Poisson",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/PoissonDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Poisson",
+            "rate": 1.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "PoissonDistribution",
+      "type": "object"
+    },
+    "PoissonDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Poisson",
+          "default": "Poisson",
+          "title": "Family",
+          "type": "string"
+        },
+        "rate": {
+          "default": 1,
+          "description": "Rate parameter of the Poisson process that generates the distribution",
+          "minimum": 0.0,
+          "title": "Rate",
+          "type": "number"
+        }
+      },
+      "title": "PoissonDistributionParameters",
+      "type": "object"
+    },
+    "PositionControl": {
+      "properties": {
+        "gain": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Vector3"
+            }
+          ],
+          "default": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "description": "Gain of the position control."
+        },
+        "initial_position": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Vector3"
+            }
+          ],
+          "default": {
+            "x": 0.0,
+            "y": 2.56,
+            "z": 0.0
+          },
+          "description": "Gain of the position control."
+        },
+        "frequency_filter_cutoff": {
+          "default": 0.5,
+          "description": "Cutoff frequency (Hz) of the low-pass filter used to filter the velocity signal.",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "title": "Frequency Filter Cutoff",
+          "type": "number"
+        },
+        "velocity_threshold": {
+          "default": 1,
+          "description": "Threshold (cm/s) of the velocity signal used to detect when the animal is moving.",
+          "minimum": 0.0,
+          "title": "Velocity Threshold",
+          "type": "number"
+        }
+      },
+      "title": "PositionControl",
+      "type": "object"
+    },
+    "PowerFunction": {
+      "properties": {
+        "function_type": {
+          "const": "PowerFunction",
+          "default": "PowerFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "mininum": {
+          "default": 0,
+          "description": "Minimum value of the function",
+          "title": "Mininum",
+          "type": "number"
+        },
+        "maximum": {
+          "default": 1,
+          "description": "Maximum value of the function",
+          "title": "Maximum",
+          "type": "number"
+        },
+        "a": {
+          "default": 1,
+          "description": "Coefficient a of the function: value = a * pow(b, c * x) + d",
+          "title": "A",
+          "type": "number"
+        },
+        "b": {
+          "default": 2.718281828459045,
+          "description": "Coefficient b of the function: value = a * pow(b, c * x) + d",
+          "title": "B",
+          "type": "number"
+        },
+        "c": {
+          "default": -1,
+          "description": "Coefficient c of the function: value = a * pow(b, c * x) + d",
+          "title": "C",
+          "type": "number"
+        },
+        "d": {
+          "default": 0,
+          "description": "Coefficient d of the function: value = a * pow(b, c * x) + d",
+          "title": "D",
+          "type": "number"
+        }
+      },
+      "title": "PowerFunction",
+      "type": "object"
+    },
+    "RenderSpecification": {
+      "properties": {
+        "contrast": {
+          "default": null,
+          "description": "Contrast of the texture",
+          "oneOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Contrast"
+        }
+      },
+      "title": "RenderSpecification",
+      "type": "object"
+    },
+    "RewardFunction": {
+      "discriminator": {
+        "mapping": {
+          "ConstantFunction": "#/definitions/ConstantFunction",
+          "LinearFunction": "#/definitions/LinearFunction",
+          "PowerFunction": "#/definitions/PowerFunction"
+        },
+        "propertyName": "function_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ConstantFunction"
+        },
+        {
+          "$ref": "#/definitions/LinearFunction"
+        },
+        {
+          "$ref": "#/definitions/PowerFunction"
+        }
+      ],
+      "title": "RewardFunction"
+    },
+    "RewardSpecification": {
+      "properties": {
+        "operant_logic": {
+          "default": null,
+          "description": "The optional operant logic of the reward",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OperantLogic"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "delay": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null,
+              "value": 0.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "The optional distribution where the delay to reward will be drawn from"
+        },
+        "reward_function": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/PatchRewardFunction"
+            }
+          ],
+          "default": {
+            "amount": {
+              "function_type": "ConstantFunction",
+              "value": 1.0
+            },
+            "probability": {
+              "function_type": "ConstantFunction",
+              "value": 1.0
+            },
+            "available": {
+              "a": -1.0,
+              "b": 5.0,
+              "function_type": "LinearFunction",
+              "maximum": 9999.0,
+              "mininum": 0.0
+            },
+            "depletion_rule": "OnChoice"
+          },
+          "description": "Reward function of the patch."
+        }
+      },
+      "title": "RewardSpecification",
+      "type": "object"
+    },
+    "RigCalibration": {
+      "properties": {
+        "water_valve": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibration"
+            }
+          ],
+          "description": "Water valve calibration"
+        },
+        "olfactometer": {
+          "default": null,
+          "description": "Olfactometer calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "water_valve"
+      ],
+      "title": "RigCalibration",
+      "type": "object"
+    },
+    "Scalar": {
+      "properties": {
+        "family": {
+          "const": "Scalar",
+          "default": "Scalar",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ScalarDistributionParameter"
+            }
+          ],
+          "default": {
+            "family": "Scalar",
+            "value": 0.0,
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "Scalar",
+      "type": "object"
+    },
+    "ScalarDistributionParameter": {
+      "properties": {
+        "family": {
+          "const": "Scalar",
+          "default": "Scalar",
+          "title": "Family",
+          "type": "string"
+        },
+        "value": {
+          "default": 0,
+          "description": "The static value of the distribution",
+          "title": "Value",
+          "type": "number"
+        },
+        "truncation_parameters": {
+          "const": null,
+          "default": null,
+          "title": "Truncation Parameters",
+          "type": "null"
+        },
+        "scaling_parameters": {
+          "const": null,
+          "default": null,
+          "title": "Scaling Parameters",
+          "type": "null"
+        }
+      },
+      "title": "ScalarDistributionParameter",
+      "type": "object"
+    },
+    "ScalingParameters": {
+      "properties": {
+        "scale": {
+          "default": 1,
+          "description": "Scaling factor to apply on the sampled distribution",
+          "title": "Scale",
+          "type": "number"
+        },
+        "offset": {
+          "default": 0,
+          "description": "Offset factor to apply on the sampled distribution",
+          "title": "Offset",
+          "type": "number"
+        }
+      },
+      "title": "ScalingParameters",
+      "type": "object"
+    },
+    "Screen": {
+      "properties": {
+        "device_type": {
+          "const": "Screen",
+          "default": "Screen",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "display_index": {
+          "default": 1,
+          "description": "Display index",
+          "title": "Display Index",
+          "type": "integer"
+        },
+        "target_render_frequency": {
+          "default": 60,
+          "description": "Target render frequency",
+          "title": "Target Render Frequency",
+          "type": "number"
+        },
+        "target_update_frequency": {
+          "default": 120,
+          "description": "Target update frequency",
+          "title": "Target Update Frequency",
+          "type": "number"
+        },
+        "calibration_directory": {
+          "default": "Calibration\\Monitors\\",
+          "description": "Calibration directory",
+          "title": "Calibration Directory",
+          "type": "string"
+        },
+        "texture_assets_directory": {
+          "default": "Textures",
+          "description": "Calibration directory",
+          "title": "Texture Assets Directory",
+          "type": "string"
+        },
+        "brightness": {
+          "default": 1,
+          "description": "Brightness",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Brightness",
+          "type": "number"
+        },
+        "contrast": {
+          "default": 1,
+          "description": "Contrast",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Contrast",
+          "type": "number"
+        }
+      },
+      "title": "Screen",
+      "type": "object"
+    },
+    "ServoMotor": {
+      "properties": {
+        "period": {
+          "default": 20000,
+          "description": "Period",
+          "minimum": 1,
+          "title": "Period",
+          "type": "integer"
+        },
+        "min_pulse_duration": {
+          "default": 1000,
+          "description": "Minimum pulse duration",
+          "minimum": 1,
+          "title": "Min Pulse Duration",
+          "type": "integer"
+        },
+        "max_pulse_duration": {
+          "default": 2000,
+          "description": "Maximum pulse duration",
+          "minimum": 1,
+          "title": "Max Pulse Duration",
+          "type": "integer"
+        },
+        "default_pulse_duration": {
+          "default": 2000,
+          "description": "Default pulse duration",
+          "minimum": 1,
+          "title": "Default Pulse Duration",
+          "type": "integer"
+        }
+      },
+      "title": "ServoMotor",
+      "type": "object"
+    },
+    "Size": {
+      "properties": {
+        "width": {
+          "default": 0,
+          "description": "Width of the texture",
+          "title": "Width",
+          "type": "number"
+        },
+        "height": {
+          "default": 0,
+          "description": "Height of the texture",
+          "title": "Height",
+          "type": "number"
+        }
+      },
+      "title": "Size",
+      "type": "object"
+    },
+    "SpinnakerCamera": {
+      "properties": {
+        "device_type": {
+          "const": "SpinnakerCamera",
+          "default": "SpinnakerCamera",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "serial_number": {
+          "description": "Camera serial number",
+          "title": "Serial Number",
+          "type": "string"
+        },
+        "binning": {
+          "default": 1,
+          "description": "Binning",
+          "minimum": 1,
+          "title": "Binning",
+          "type": "integer"
+        },
+        "color_processing": {
+          "default": "Default",
+          "description": "Color processing",
+          "enum": [
+            "Default",
+            "NoColorProcessing"
+          ],
+          "title": "Color Processing",
+          "type": "string"
+        },
+        "exposure": {
+          "default": 1000,
+          "description": "Exposure time",
+          "minimum": 100,
+          "title": "Exposure",
+          "type": "integer"
+        },
+        "gain": {
+          "default": 0,
+          "description": "Gain",
+          "minimum": 0.0,
+          "title": "Gain",
+          "type": "number"
+        },
+        "video_writer": {
+          "default": null,
+          "description": "Video writer. If not provided, no video will be saved.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VideoWriter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "serial_number"
+      ],
+      "title": "SpinnakerCamera",
+      "type": "object"
+    },
+    "TaskModeSettings": {
+      "discriminator": {
+        "mapping": {
+          "DEBUG": "#/definitions/DebugSettings",
+          "FORAGING": "#/definitions/ForagingSettings",
+          "HABITUATION": "#/definitions/HabituationSettings"
+        },
+        "propertyName": "task_mode"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/HabituationSettings"
+        },
+        {
+          "$ref": "#/definitions/ForagingSettings"
+        },
+        {
+          "$ref": "#/definitions/DebugSettings"
+        }
+      ],
+      "title": "TaskModeSettings"
+    },
+    "Texture": {
+      "properties": {
+        "name": {
+          "default": "default",
+          "description": "Name of the texture",
+          "title": "Name",
+          "type": "string"
+        },
+        "size": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Size"
+            }
+          ],
+          "default": {
+            "width": 40.0,
+            "height": 40.0
+          },
+          "description": "Size of the texture"
+        }
+      },
+      "title": "Texture",
+      "type": "object"
+    },
+    "Treadmill": {
+      "properties": {
+        "wheel_diameter": {
+          "default": 15,
+          "description": "Wheel diameter",
+          "minimum": 0.0,
+          "title": "Wheel Diameter",
+          "type": "number"
+        },
+        "pulses_per_revolution": {
+          "default": 28800,
+          "description": "Pulses per revolution",
+          "minimum": 1,
+          "title": "Pulses Per Revolution",
+          "type": "integer"
+        },
+        "invert_direction": {
+          "default": false,
+          "description": "Invert direction",
+          "title": "Invert Direction",
+          "type": "boolean"
+        },
+        "break_lookup_calibration": {
+          "default": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              65535
+            ]
+          ],
+          "description": "Break lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated",
+          "items": {
+            "description": "A tuple of two values",
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "minItems": 2,
+          "title": "Break Lookup Calibration",
+          "type": "array"
+        }
+      },
+      "title": "Treadmill",
+      "type": "object"
+    },
+    "TreadmillSpecification": {
+      "properties": {
+        "friction": {
+          "default": null,
+          "description": "Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "TreadmillSpecification",
+      "type": "object"
+    },
+    "TruncationParameters": {
+      "properties": {
+        "is_truncated": {
+          "default": false,
+          "description": "Whether the distribution is truncated",
+          "title": "Is Truncated",
+          "type": "boolean"
+        },
+        "min": {
+          "default": 0,
+          "description": "Minimum value of the sampled distribution",
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "default": 0,
+          "description": "Maximum value of the sampled distribution",
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "title": "TruncationParameters",
+      "type": "object"
+    },
+    "UniformDistribution": {
+      "properties": {
+        "family": {
+          "const": "Uniform",
+          "default": "Uniform",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/UniformDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Uniform",
+            "min": 0.0,
+            "max": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "UniformDistribution",
+      "type": "object"
+    },
+    "UniformDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Uniform",
+          "default": "Uniform",
+          "title": "Family",
+          "type": "string"
+        },
+        "min": {
+          "default": 0,
+          "description": "Minimum value of the distribution",
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "default": 0,
+          "description": "Maximum value of the distribution",
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "title": "UniformDistributionParameters",
+      "type": "object"
+    },
+    "Vector3": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the point",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the point",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the point",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
+      "type": "object"
+    },
+    "VideoWriter": {
+      "discriminator": {
+        "mapping": {
+          "FFMPEG": "#/definitions/VideoWriterFfmpeg",
+          "OPENCV": "#/definitions/VideoWriterOpenCv"
+        },
+        "propertyName": "video_writer_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/VideoWriterFfmpeg"
+        },
+        {
+          "$ref": "#/definitions/VideoWriterOpenCv"
+        }
+      ],
+      "title": "VideoWriter"
+    },
+    "VideoWriterFfmpeg": {
+      "properties": {
+        "video_writer_type": {
+          "const": "FFMPEG",
+          "default": "FFMPEG",
+          "title": "Video Writer Type",
+          "type": "string"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Encoding frame rate",
+          "minimum": 0,
+          "title": "Frame Rate",
+          "type": "integer"
+        },
+        "container_extension": {
+          "default": "mp4",
+          "description": "Container extension",
+          "title": "Container Extension",
+          "type": "string"
+        },
+        "output_arguments": {
+          "default": "-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13 -preset medium -b:v 20M -rc:v cbr",
+          "description": "Output arguments",
+          "title": "Output Arguments",
+          "type": "string"
+        }
+      },
+      "title": "VideoWriterFfmpeg",
+      "type": "object"
+    },
+    "VideoWriterOpenCv": {
+      "properties": {
+        "video_writer_type": {
+          "const": "OPENCV",
+          "default": "OPENCV",
+          "title": "Video Writer Type",
+          "type": "string"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Encoding frame rate",
+          "minimum": 0,
+          "title": "Frame Rate",
+          "type": "integer"
+        },
+        "container_extension": {
+          "default": "avi",
+          "description": "Container extension",
+          "title": "Container Extension",
+          "type": "string"
+        },
+        "four_cc": {
+          "default": "FMP4",
+          "description": "Four character code",
+          "title": "Four Cc",
+          "type": "string"
+        }
+      },
+      "title": "VideoWriterOpenCv",
+      "type": "object"
+    },
+    "VirtualSite": {
+      "properties": {
+        "id": {
+          "default": 0,
+          "description": "Id of the virtual site",
+          "minimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "label": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteLabels"
+            }
+          ],
+          "default": "Unspecified",
+          "description": "Label of the virtual site"
+        },
+        "length": {
+          "default": 20,
+          "description": "Length of the virtual site (cm)",
+          "title": "Length",
+          "type": "number"
+        },
+        "start_position": {
+          "default": 0,
+          "description": "Start position of the virtual site (cm)",
+          "minimum": 0.0,
+          "title": "Start Position",
+          "type": "number"
+        },
+        "odor_specification": {
+          "default": null,
+          "description": "The optional odor specification of the virtual site",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OdorSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reward_specification": {
+          "default": null,
+          "description": "The optional reward specification of the virtual site",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/RewardSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "render_specification": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
+          "default": {
+            "contrast": null
+          },
+          "description": "The optional render specification of the virtual site"
+        },
+        "treadmill_specification": {
+          "default": null,
+          "description": "Treadmill specification",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "VirtualSite",
+      "type": "object"
+    },
+    "VirtualSiteGeneration": {
+      "properties": {
+        "inter_site": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "InterSite",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null,
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            },
+            "treadmill_specification": null
+          },
+          "description": "Generator of the inter-site virtual sites"
+        },
+        "inter_patch": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "InterPatch",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null,
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            },
+            "treadmill_specification": null
+          },
+          "description": "Generator of the inter-patch virtual sites"
+        },
+        "post_patch": {
+          "default": null,
+          "description": "Generator of the post-patch virtual sites",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reward_site": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
+          "default": {
+            "render_specification": {
+              "contrast": null
+            },
+            "label": "RewardSite",
+            "length_distribution": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null,
+                "value": 20.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            },
+            "treadmill_specification": null
+          },
+          "description": "Generator of the reward-site virtual sites"
+        }
+      },
+      "title": "VirtualSiteGeneration",
+      "type": "object"
+    },
+    "VirtualSiteGenerator": {
+      "properties": {
+        "render_specification": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
+          "default": {
+            "contrast": null
+          },
+          "description": "Contrast of the environment"
+        },
+        "label": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteLabels"
+            }
+          ],
+          "default": "Unspecified",
+          "description": "Label of the virtual site"
+        },
+        "length_distribution": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null,
+              "value": 20.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "Distribution of the length of the virtual site"
+        },
+        "treadmill_specification": {
+          "default": null,
+          "description": "Treadmill specification",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "VirtualSiteGenerator",
+      "type": "object"
+    },
+    "VirtualSiteLabels": {
+      "enum": [
+        "Unspecified",
+        "InterPatch",
+        "PostPatch",
+        "RewardSite",
+        "InterSite"
+      ],
+      "title": "VirtualSiteLabels",
+      "type": "string"
+    },
+    "VisualCorridor": {
+      "properties": {
+        "id": {
+          "default": 0,
+          "description": "Id of the visual corridor object",
+          "minimum": 0,
+          "title": "Id",
+          "type": "integer"
+        },
+        "size": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Size"
+            }
+          ],
+          "default": {
+            "width": 40.0,
+            "height": 40.0
+          },
+          "description": "Size of the corridor (cm)"
+        },
+        "start_position": {
+          "default": 0,
+          "description": "Start position of the corridor (cm)",
+          "minimum": 0.0,
+          "title": "Start Position",
+          "type": "number"
+        },
+        "length": {
+          "default": 120,
+          "description": "Length of the corridor site (cm)",
+          "minimum": 0.0,
+          "title": "Length",
+          "type": "number"
+        },
+        "textures": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/WallTextures"
+            }
+          ],
+          "description": "The textures of the corridor"
+        }
+      },
+      "required": [
+        "textures"
+      ],
+      "title": "VisualCorridor",
+      "type": "object"
+    },
+    "WallTextures": {
+      "properties": {
+        "floor": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
+          "description": "The texture of the floor"
+        },
+        "ceiling": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
+          "description": "The texture of the ceiling"
+        },
+        "left": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
+          "description": "The texture of the left"
+        },
+        "right": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
+          "description": "The texture of the right"
+        }
+      },
+      "required": [
+        "floor",
+        "ceiling",
+        "left",
+        "right"
+      ],
+      "title": "WallTextures",
+      "type": "object"
+    },
+    "WaterValveCalibration": {
+      "description": "Water valve calibration class",
+      "properties": {
+        "device_name": {
+          "default": "WaterValve",
+          "description": "Name of the device being calibrated",
+          "title": "Device name",
+          "type": "string"
+        },
+        "input": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibrationInput"
+            }
+          ],
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibrationOutput"
+            }
+          ],
+          "title": "Output of the calibration."
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "const": "Calibration of the water valve delivery system",
+          "default": "Calibration of the water valve delivery system",
+          "title": "Description",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "title": "WaterValveCalibration",
+      "type": "object"
+    },
+    "WaterValveCalibrationInput": {
+      "properties": {
+        "measurements": {
+          "default": [],
+          "description": "List of measurements",
+          "items": {
+            "$ref": "#/definitions/Measurement"
+          },
+          "title": "Measurements",
+          "type": "array"
+        }
+      },
+      "title": "WaterValveCalibrationInput",
+      "type": "object"
+    },
+    "WaterValveCalibrationOutput": {
+      "description": "Output for water valve calibration class",
+      "properties": {
+        "interval_average": {
+          "default": null,
+          "description": "Dictionary keyed by measured valve interval and corresponding average single event volume.",
+          "oneOf": [
+            {
+              "additionalProperties": {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Interval average"
+        },
+        "slope": {
+          "description": "Slope of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)",
+          "title": "Regression slope",
+          "type": "number"
+        },
+        "offset": {
+          "description": "Offset of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)",
+          "title": "Regression offset",
+          "type": "number"
+        },
+        "r2": {
+          "default": null,
+          "description": "R2 metric from the linear model.",
+          "oneOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "R2"
+        },
+        "valid_domain": {
+          "default": null,
+          "description": "The optional time-intervals the calibration curve was calculated on.",
+          "oneOf": [
+            {
+              "items": {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              "minItems": 2,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Valid domain"
+        }
+      },
+      "required": [
+        "slope",
+        "offset"
+      ],
+      "title": "WaterValveCalibrationOutput",
+      "type": "object"
+    },
+    "WebCamera": {
+      "properties": {
+        "device_type": {
+          "const": "WebCamera",
+          "default": "WebCamera",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index": {
+          "default": 0,
+          "description": "Camera index",
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "video_writer": {
+          "default": null,
+          "description": "Video writer. If not provided, no video will be saved.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VideoWriter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "WebCamera",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "rig": {
+      "$ref": "#/definitions/AindVrForagingRig"
+    },
+    "task_logic": {
+      "$ref": "#/definitions/AindVrForagingTaskLogic"
+    },
+    "session": {
+      "$ref": "#/definitions/AindBehaviorSessionModel"
+    }
+  },
+  "required": [
+    "rig",
+    "task_logic",
+    "session"
+  ],
+  "title": "SchemaContainer",
+  "type": "object"
+}
