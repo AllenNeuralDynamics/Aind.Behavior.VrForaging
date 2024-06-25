@@ -295,7 +295,7 @@
                           <Selector>Screen</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Contrast</Selector>
+                          <Selector>Brightness</Selector>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>DisplayBrightness</Name>
