@@ -10951,7 +10951,6 @@ Item2 as Start
               <gui:Name>DataVisualization</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
-              <gui:Font>Microsoft Sans Serif, 16pt</gui:Font>
               <gui:ColumnCount>1</gui:ColumnCount>
               <gui:RowCount>2</gui:RowCount>
               <gui:ColumnStyles />
