@@ -9687,7 +9687,7 @@ Item2 as Start
                 <Nodes>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\Annotation.bonsai" />
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p10:AnnotationSourceVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>ExperimentState</Name>
