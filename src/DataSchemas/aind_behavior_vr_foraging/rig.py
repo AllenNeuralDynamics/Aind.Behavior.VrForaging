@@ -6,6 +6,7 @@ from typing import Annotated, List, Literal, Optional
 
 import aind_behavior_services.calibration.olfactometer as oc
 import aind_behavior_services.calibration.water_valve as wvc
+from aind_behavior_services.calibration import aind_manipulator
 import aind_behavior_services.rig as rig
 from aind_behavior_services.rig import AindBehaviorRigModel
 from pydantic import BaseModel, Field
@@ -51,5 +52,6 @@ class AindVrForagingRig(AindBehaviorRigModel):
     harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
     harp_treadmill: HarpTreadmill = Field(..., description="Harp treadmill")
     harp_sniff_detector: Optional[rig.HarpSniffDetector] = Field(None, description="Sniff detector settings")
+    manipulator: aind_manipulator.AindManipulatorDevice = Field(..., description="Manipulator")
     screen: rig.Screen = Field(default=rig.Screen(), description="Screen settings")
     calibration: RigCalibration = Field(..., description="Calibration models")
