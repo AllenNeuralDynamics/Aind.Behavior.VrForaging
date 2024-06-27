@@ -867,10 +867,10 @@
           "type": "string"
         },
         "brightness": {
-          "default": 1,
+          "default": 0,
           "description": "Brightness",
           "maximum": 1.0,
-          "minimum": 0.0,
+          "minimum": -1.0,
           "title": "Brightness",
           "type": "number"
         },
@@ -878,7 +878,7 @@
           "default": 1,
           "description": "Contrast",
           "maximum": 1.0,
-          "minimum": 0.0,
+          "minimum": -1.0,
           "title": "Contrast",
           "type": "number"
         }
@@ -1065,7 +1065,7 @@
           "type": "string"
         },
         "output_arguments": {
-          "default": "-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13 -preset medium -b:v 20M -rc:v cbr",
+          "default": "c:v hevc_nvenc -pix_fmt x2rgb10le -color_range full -tune hq -preset p3 -rc vbr -cq 16 -rc-lookahead 56 -temporal-aq 1 -qmin 0 -qmax 10",
           "description": "Output arguments",
           "title": "Output Arguments",
           "type": "string"
@@ -1381,6 +1381,15 @@
       ],
       "description": "Harp clock generator"
     },
+    "harp_clock_repeaters": {
+      "default": [],
+      "description": "Harp clock repeaters",
+      "items": {
+        "$ref": "#/definitions/HarpClockGenerator"
+      },
+      "title": "Harp Clock Repeaters",
+      "type": "array"
+    },
     "harp_analog_input": {
       "default": null,
       "description": "Harp analog input",
@@ -1428,7 +1437,7 @@
         "target_update_frequency": 120.0,
         "calibration_directory": "Calibration\\Monitors\\",
         "texture_assets_directory": "Textures",
-        "brightness": 1.0,
+        "brightness": 0.0,
         "contrast": 1.0
       },
       "description": "Screen settings"
