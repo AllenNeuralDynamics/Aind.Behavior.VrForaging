@@ -47,6 +47,7 @@ class AindVrForagingRig(AindBehaviorRigModel):
     harp_olfactometer: rig.HarpOlfactometer = Field(..., description="Harp olfactometer")
     harp_lickometer: rig.HarpLickometer = Field(..., description="Harp lickometer")
     harp_clock_generator: rig.HarpClockGenerator = Field(..., description="Harp clock generator")
+    harp_clock_repeaters: List[rig.HarpClockGenerator] = Field(default=[], description="Harp clock repeaters")
     harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
     harp_treadmill: HarpTreadmill = Field(..., description="Harp treadmill")
     harp_sniff_detector: Optional[rig.HarpSniffDetector] = Field(None, description="Sniff detector settings")

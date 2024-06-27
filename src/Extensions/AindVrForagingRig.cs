@@ -2174,7 +2174,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _textureAssetsDirectory = "Textures";
     
-        private double _brightness = 1D;
+        private double _brightness = 0D;
     
         private double _contrast = 1D;
     
@@ -2832,7 +2832,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _containerExtension = "mp4";
     
-        private string _outputArguments = "-c:v h264_nvenc -vsync 0 -2pass 1 -bf:v 0 -qp 13 -preset medium -b:v 20M -rc:v cbr";
+        private string _outputArguments = "c:v hevc_nvenc -pix_fmt x2rgb10le -color_range full -tune hq -preset p3 -rc vbr -cq 16 -rc-lookahead 56 -temporal-aq 1 -qmin 0 -qmax 10";
     
         public VideoWriterFfmpeg()
         {
@@ -3576,6 +3576,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private HarpClockGenerator _harpClockGenerator = new HarpClockGenerator();
     
+        private System.Collections.Generic.List<HarpClockGenerator> _harpClockRepeaters = new System.Collections.Generic.List<HarpClockGenerator>();
+    
         private HarpAnalogInput _harpAnalogInput;
     
         private HarpTreadmill _harpTreadmill = new HarpTreadmill();
@@ -3601,6 +3603,7 @@ namespace AindVrForagingDataSchema.Rig
             _harpOlfactometer = other._harpOlfactometer;
             _harpLickometer = other._harpLickometer;
             _harpClockGenerator = other._harpClockGenerator;
+            _harpClockRepeaters = other._harpClockRepeaters;
             _harpAnalogInput = other._harpAnalogInput;
             _harpTreadmill = other._harpTreadmill;
             _harpSniffDetector = other._harpSniffDetector;
@@ -3764,6 +3767,24 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         /// <summary>
+        /// Harp clock repeaters
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_clock_repeaters")]
+        [System.ComponentModel.DescriptionAttribute("Harp clock repeaters")]
+        public System.Collections.Generic.List<HarpClockGenerator> HarpClockRepeaters
+        {
+            get
+            {
+                return _harpClockRepeaters;
+            }
+            set
+            {
+                _harpClockRepeaters = value;
+            }
+        }
+    
+        /// <summary>
         /// Harp analog input
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -3874,6 +3895,7 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("harp_olfactometer = " + _harpOlfactometer + ", ");
             stringBuilder.Append("harp_lickometer = " + _harpLickometer + ", ");
             stringBuilder.Append("harp_clock_generator = " + _harpClockGenerator + ", ");
+            stringBuilder.Append("harp_clock_repeaters = " + _harpClockRepeaters + ", ");
             stringBuilder.Append("harp_analog_input = " + _harpAnalogInput + ", ");
             stringBuilder.Append("harp_treadmill = " + _harpTreadmill + ", ");
             stringBuilder.Append("harp_sniff_detector = " + _harpSniffDetector + ", ");
