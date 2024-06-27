@@ -1,5 +1,320 @@
 {
   "definitions": {
+    "AindManipulatorCalibration": {
+      "description": "Aind manipulator calibration class",
+      "properties": {
+        "device_name": {
+          "default": "AindManipulator",
+          "description": "Must match a device name in rig/instrument",
+          "title": "Device name",
+          "type": "string"
+        },
+        "input": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/AindManipulatorCalibrationInput"
+            }
+          ],
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/AindManipulatorCalibrationOutput"
+            }
+          ],
+          "title": "Output of the calibration."
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "const": "Calibration of the load cells system",
+          "default": "Calibration of the load cells system",
+          "title": "Description",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "title": "AindManipulatorCalibration",
+      "type": "object"
+    },
+    "AindManipulatorCalibrationInput": {
+      "properties": {
+        "full_step_to_mm": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ManipulatorPosition"
+            }
+          ],
+          "default": {
+            "x": 0.01,
+            "y1": 0.01,
+            "y2": 0.01,
+            "z": 0.01
+          },
+          "title": "Full step to mm"
+        },
+        "axis_configuration": {
+          "default": [
+            {
+              "axis": 2,
+              "step_acceleration_interval": 100,
+              "step_interval": 100,
+              "microstep_resolution": 0,
+              "maximum_step_interval": 2000,
+              "motor_operation_mode": 0,
+              "max_limit": 24000,
+              "min_limit": -1
+            },
+            {
+              "axis": 3,
+              "step_acceleration_interval": 100,
+              "step_interval": 100,
+              "microstep_resolution": 0,
+              "maximum_step_interval": 2000,
+              "motor_operation_mode": 0,
+              "max_limit": 24000,
+              "min_limit": -1
+            },
+            {
+              "axis": 1,
+              "step_acceleration_interval": 100,
+              "step_interval": 100,
+              "microstep_resolution": 0,
+              "maximum_step_interval": 2000,
+              "motor_operation_mode": 0,
+              "max_limit": 24000,
+              "min_limit": -1
+            },
+            {
+              "axis": 4,
+              "step_acceleration_interval": 100,
+              "step_interval": 100,
+              "microstep_resolution": 0,
+              "maximum_step_interval": 2000,
+              "motor_operation_mode": 0,
+              "max_limit": 24000,
+              "min_limit": -1
+            }
+          ],
+          "items": {
+            "$ref": "#/definitions/AxisConfiguration"
+          },
+          "title": "Axes configuration. Only the axes that are configured will be enabled.",
+          "type": "array"
+        },
+        "homing_order": {
+          "default": [
+            2,
+            3,
+            1,
+            4
+          ],
+          "items": {
+            "$ref": "#/definitions/Axis"
+          },
+          "title": "Homing order",
+          "type": "array"
+        },
+        "initial_position": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ManipulatorPosition"
+            }
+          ],
+          "default": {
+            "x": 0.0,
+            "y1": 0.0,
+            "y2": 0.0,
+            "z": 0.0
+          }
+        }
+      },
+      "title": "AindManipulatorCalibrationInput",
+      "type": "object"
+    },
+    "AindManipulatorCalibrationOutput": {
+      "properties": {},
+      "title": "AindManipulatorCalibrationOutput",
+      "type": "object"
+    },
+    "AindManipulatorDevice": {
+      "properties": {
+        "device_type": {
+          "const": "stepperdriver",
+          "default": "stepperdriver",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "oneOf": [
+            {
+              "$ref": "#/definitions/AindManipulatorCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calibration of the manipulator"
+        },
+        "who_am_i": {
+          "const": 1130,
+          "default": 1130,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "AindManipulatorDevice",
+      "type": "object"
+    },
+    "Axis": {
+      "description": "Motor axis available",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "title": "Axis",
+      "type": "integer",
+      "x-enumNames": [
+        "None",
+        "X",
+        "Y1",
+        "Y2",
+        "Z"
+      ]
+    },
+    "AxisConfiguration": {
+      "description": "Axis configuration",
+      "properties": {
+        "axis": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Axis"
+            }
+          ],
+          "title": "Axis to be configured"
+        },
+        "step_acceleration_interval": {
+          "default": 100,
+          "description": "Acceleration of the step interval in microseconds",
+          "maximum": 2000,
+          "minimum": 2,
+          "title": "Acceleration",
+          "type": "integer"
+        },
+        "step_interval": {
+          "default": 100,
+          "description": "Step interval in microseconds.",
+          "maximum": 20000,
+          "minimum": 100,
+          "title": "Step interval",
+          "type": "integer"
+        },
+        "microstep_resolution": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/MicrostepResolution"
+            }
+          ],
+          "default": 0,
+          "title": "Microstep resolution"
+        },
+        "maximum_step_interval": {
+          "default": 2000,
+          "maximum": 20000,
+          "minimum": 100,
+          "title": "Configures the time between step motor pulses (us) used when starting or stopping a movement",
+          "type": "integer"
+        },
+        "motor_operation_mode": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/MotorOperationMode"
+            }
+          ],
+          "default": 0,
+          "title": "Motor operation mode"
+        },
+        "max_limit": {
+          "default": 24000,
+          "title": "Maximum limit. A value of 0 disables this limit.",
+          "type": "integer"
+        },
+        "min_limit": {
+          "default": -1,
+          "title": "Minimum limit. A value of 0 disables this limit.",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "axis"
+      ],
+      "title": "AxisConfiguration",
+      "type": "object"
+    },
     "BaseModel": {
       "properties": {},
       "title": "BaseModel",
@@ -579,6 +894,34 @@
       "title": "HarpTreadmill",
       "type": "object"
     },
+    "ManipulatorPosition": {
+      "properties": {
+        "x": {
+          "title": "X coordinate",
+          "type": "number"
+        },
+        "y1": {
+          "title": "Y1 coordinate",
+          "type": "number"
+        },
+        "y2": {
+          "title": "Y2 coordinate",
+          "type": "number"
+        },
+        "z": {
+          "title": "Z coordinate",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y1",
+        "y2",
+        "z"
+      ],
+      "title": "ManipulatorPosition",
+      "type": "object"
+    },
     "Measurement": {
       "description": "Input for water valve calibration class",
       "properties": {
@@ -619,6 +962,34 @@
       ],
       "title": "Measurement",
       "type": "object"
+    },
+    "MicrostepResolution": {
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "title": "MicrostepResolution",
+      "type": "integer",
+      "x-enumNames": [
+        "Microstep8",
+        "Microstep16",
+        "Microstep32",
+        "Microstep64"
+      ]
+    },
+    "MotorOperationMode": {
+      "enum": [
+        0,
+        1
+      ],
+      "title": "MotorOperationMode",
+      "type": "integer",
+      "x-enumNames": [
+        "Quiet",
+        "Dynamic"
+      ]
     },
     "OlfactometerCalibration": {
       "description": "Olfactometer calibration class",
@@ -1422,6 +1793,14 @@
         }
       ]
     },
+    "manipulator": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AindManipulatorDevice"
+        }
+      ],
+      "description": "Manipulator"
+    },
     "screen": {
       "allOf": [
         {
@@ -1459,6 +1838,7 @@
     "harp_lickometer",
     "harp_clock_generator",
     "harp_treadmill",
+    "manipulator",
     "calibration"
   ],
   "title": "AindVrForagingRig",

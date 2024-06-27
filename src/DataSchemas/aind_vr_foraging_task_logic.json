@@ -713,19 +713,12 @@
           "title": "Time To Collect After Reward",
           "type": "number"
         },
-        "servo_motor": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ServoMotor"
-            }
-          ],
-          "default": {
-            "period": 20000,
-            "min_pulse_duration": 1000,
-            "max_pulse_duration": 2000,
-            "default_pulse_duration": 2000
-          },
-          "description": "Servo motor settings"
+        "retracting_distance": {
+          "default": 0,
+          "description": "The distance, relative to the default position, the spout will be retracted by",
+          "minimum": 0.0,
+          "title": "Retracting Distance",
+          "type": "number"
         }
       },
       "title": "MovableSpoutControl",
@@ -984,12 +977,7 @@
           "default": {
             "enabled": false,
             "time_to_collect_after_reward": 1.0,
-            "servo_motor": {
-              "default_pulse_duration": 2000,
-              "max_pulse_duration": 2000,
-              "min_pulse_duration": 1000,
-              "period": 20000
-            }
+            "retracting_distance": 0.0
           },
           "description": "Control of the movable spout"
         },
@@ -1571,40 +1559,6 @@
         }
       },
       "title": "ScalingParameters",
-      "type": "object"
-    },
-    "ServoMotor": {
-      "properties": {
-        "period": {
-          "default": 20000,
-          "description": "Period",
-          "minimum": 1,
-          "title": "Period",
-          "type": "integer"
-        },
-        "min_pulse_duration": {
-          "default": 1000,
-          "description": "Minimum pulse duration",
-          "minimum": 1,
-          "title": "Min Pulse Duration",
-          "type": "integer"
-        },
-        "max_pulse_duration": {
-          "default": 2000,
-          "description": "Maximum pulse duration",
-          "minimum": 1,
-          "title": "Max Pulse Duration",
-          "type": "integer"
-        },
-        "default_pulse_duration": {
-          "default": 2000,
-          "description": "Default pulse duration",
-          "minimum": 1,
-          "title": "Default Pulse Duration",
-          "type": "integer"
-        }
-      },
-      "title": "ServoMotor",
       "type": "object"
     },
     "Size": {

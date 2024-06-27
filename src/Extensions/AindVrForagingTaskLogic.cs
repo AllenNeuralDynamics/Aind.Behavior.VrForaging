@@ -1881,7 +1881,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private double _timeToCollectAfterReward = 1D;
     
-        private ServoMotor _servoMotor;
+        private double _retractingDistance = 0D;
     
         public MovableSpoutControl()
         {
@@ -1891,7 +1891,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _enabled = other._enabled;
             _timeToCollectAfterReward = other._timeToCollectAfterReward;
-            _servoMotor = other._servoMotor;
+            _retractingDistance = other._retractingDistance;
         }
     
         /// <summary>
@@ -1929,20 +1929,19 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Servo motor settings
+        /// The distance, relative to the default position, the spout will be retracted by
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("servo_motor")]
-        [System.ComponentModel.DescriptionAttribute("Servo motor settings")]
-        public ServoMotor ServoMotor
+        [Newtonsoft.Json.JsonPropertyAttribute("retracting_distance")]
+        [System.ComponentModel.DescriptionAttribute("The distance, relative to the default position, the spout will be retracted by")]
+        public double RetractingDistance
         {
             get
             {
-                return _servoMotor;
+                return _retractingDistance;
             }
             set
             {
-                _servoMotor = value;
+                _retractingDistance = value;
             }
         }
     
@@ -1960,7 +1959,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("enabled = " + _enabled + ", ");
             stringBuilder.Append("time_to_collect_after_reward = " + _timeToCollectAfterReward + ", ");
-            stringBuilder.Append("servo_motor = " + _servoMotor);
+            stringBuilder.Append("retracting_distance = " + _retractingDistance);
             return true;
         }
     
@@ -4212,134 +4211,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ServoMotor
-    {
-    
-        private int _period = 20000;
-    
-        private int _minPulseDuration = 1000;
-    
-        private int _maxPulseDuration = 2000;
-    
-        private int _defaultPulseDuration = 2000;
-    
-        public ServoMotor()
-        {
-        }
-    
-        protected ServoMotor(ServoMotor other)
-        {
-            _period = other._period;
-            _minPulseDuration = other._minPulseDuration;
-            _maxPulseDuration = other._maxPulseDuration;
-            _defaultPulseDuration = other._defaultPulseDuration;
-        }
-    
-        /// <summary>
-        /// Period
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("period")]
-        [System.ComponentModel.DescriptionAttribute("Period")]
-        public int Period
-        {
-            get
-            {
-                return _period;
-            }
-            set
-            {
-                _period = value;
-            }
-        }
-    
-        /// <summary>
-        /// Minimum pulse duration
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("min_pulse_duration")]
-        [System.ComponentModel.DescriptionAttribute("Minimum pulse duration")]
-        public int MinPulseDuration
-        {
-            get
-            {
-                return _minPulseDuration;
-            }
-            set
-            {
-                _minPulseDuration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Maximum pulse duration
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("max_pulse_duration")]
-        [System.ComponentModel.DescriptionAttribute("Maximum pulse duration")]
-        public int MaxPulseDuration
-        {
-            get
-            {
-                return _maxPulseDuration;
-            }
-            set
-            {
-                _maxPulseDuration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Default pulse duration
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("default_pulse_duration")]
-        [System.ComponentModel.DescriptionAttribute("Default pulse duration")]
-        public int DefaultPulseDuration
-        {
-            get
-            {
-                return _defaultPulseDuration;
-            }
-            set
-            {
-                _defaultPulseDuration = value;
-            }
-        }
-    
-        public System.IObservable<ServoMotor> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ServoMotor(this)));
-        }
-    
-        public System.IObservable<ServoMotor> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new ServoMotor(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("period = " + _period + ", ");
-            stringBuilder.Append("min_pulse_duration = " + _minPulseDuration + ", ");
-            stringBuilder.Append("max_pulse_duration = " + _maxPulseDuration + ", ");
-            stringBuilder.Append("default_pulse_duration = " + _defaultPulseDuration);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Size
     {
     
@@ -6552,11 +6423,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             return Process<ScalingParameters>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ServoMotor> source)
-        {
-            return Process<ServoMotor>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Size> source)
         {
             return Process<Size>(source);
@@ -6687,7 +6553,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalarDistributionParameter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ServoMotor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Size>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskModeSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Texture>))]

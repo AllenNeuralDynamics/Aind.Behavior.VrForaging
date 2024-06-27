@@ -270,17 +270,10 @@ class EnvironmentStatistics(BaseModel):
     )
 
 
-class ServoMotor(BaseModel):
-    period: int = Field(default=20000, ge=1, description="Period")
-    min_pulse_duration: int = Field(default=1000, ge=1, description="Minimum pulse duration")
-    max_pulse_duration: int = Field(default=2000, ge=1, description="Maximum pulse duration")
-    default_pulse_duration: int = Field(default=2000, ge=1, description="Default pulse duration")
-
-
 class MovableSpoutControl(BaseModel):
     enabled: bool = Field(default=False, description="Whether the movable spout is enabled")
     time_to_collect_after_reward: float = Field(default=1, ge=0, description="Time (s) to collect after reward")
-    servo_motor: ServoMotor = Field(default=ServoMotor(), description="Servo motor settings")
+    retracting_distance: float = Field(default=0, ge=0, description="The distance, relative to the default position, the spout will be retracted by")
 
 
 class OdorControl(BaseModel):
