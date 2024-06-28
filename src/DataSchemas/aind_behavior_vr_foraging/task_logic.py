@@ -273,7 +273,9 @@ class EnvironmentStatistics(BaseModel):
 class MovableSpoutControl(BaseModel):
     enabled: bool = Field(default=False, description="Whether the movable spout is enabled")
     time_to_collect_after_reward: float = Field(default=1, ge=0, description="Time (s) to collect after reward")
-    retracting_distance: float = Field(default=0, ge=0, description="The distance, relative to the default position, the spout will be retracted by")
+    retracting_distance: float = Field(
+        default=0, ge=0, description="The distance, relative to the default position, the spout will be retracted by"
+    )
 
 
 class OdorControl(BaseModel):
