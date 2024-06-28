@@ -10,6 +10,76 @@ namespace AindVrForagingDataSchema.Rig
     #pragma warning disable // Disable all warnings
 
     /// <summary>
+    /// Additional settings for the manipulator device
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Additional settings for the manipulator device")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class AindManipulatorAdditionalSettings
+    {
+    
+        private Axis _spoutAxis = AindVrForagingDataSchema.Rig.Axis.Y1;
+    
+        public AindManipulatorAdditionalSettings()
+        {
+        }
+    
+        protected AindManipulatorAdditionalSettings(AindManipulatorAdditionalSettings other)
+        {
+            _spoutAxis = other._spoutAxis;
+        }
+    
+        /// <summary>
+        /// Spout axis
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("spout_axis")]
+        [System.ComponentModel.DescriptionAttribute("Spout axis")]
+        public Axis SpoutAxis
+        {
+            get
+            {
+                return _spoutAxis;
+            }
+            set
+            {
+                _spoutAxis = value;
+            }
+        }
+    
+        public System.IObservable<AindManipulatorAdditionalSettings> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorAdditionalSettings(this)));
+        }
+    
+        public System.IObservable<AindManipulatorAdditionalSettings> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorAdditionalSettings(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("spout_axis = " + _spoutAxis);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
     /// Aind manipulator calibration class
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
@@ -326,7 +396,12 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
+    /// <summary>
+    /// Overrides the default settings for the manipulator device by spec'ing additional_settings field
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the manipulator device by spec\'ing additional_" +
+        "settings field")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindManipulatorDevice
@@ -334,7 +409,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "stepperdriver";
     
-        private BaseModel _additionalSettings;
+        private AindManipulatorAdditionalSettings _additionalSettings;
     
         private AindManipulatorCalibration _calibration;
     
@@ -377,7 +452,7 @@ namespace AindVrForagingDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
         [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
+        public AindManipulatorAdditionalSettings AdditionalSettings
         {
             get
             {
@@ -1703,7 +1778,11 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
+    /// <summary>
+    /// Overrides the default settings for the olfactometer calibration
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the olfactometer calibration")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpOlfactometer
@@ -1713,7 +1792,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private BaseModel _additionalSettings;
     
-        private BaseModel _calibration;
+        private OlfactometerCalibration _calibration;
     
         private int _whoAmI = 1140;
     
@@ -1767,12 +1846,12 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         /// <summary>
-        /// Calibration
+        /// Olfactometer calibration
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
-        public BaseModel Calibration
+        [System.ComponentModel.DescriptionAttribute("Olfactometer calibration")]
+        public OlfactometerCalibration Calibration
         {
             get
             {
@@ -2031,7 +2110,11 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
+    /// <summary>
+    /// Overrides the default settings for the treadmill calibration
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the treadmill calibration")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpTreadmill
@@ -2902,15 +2985,18 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
+    /// <summary>
+    /// Container class for calibration models. In a future release these will be moved to the respective devices
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Container class for calibration models. In a future release these will be moved t" +
+        "o the respective devices")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class RigCalibration
     {
     
         private WaterValveCalibration _waterValve = new WaterValveCalibration();
-    
-        private OlfactometerCalibration _olfactometer;
     
         public RigCalibration()
         {
@@ -2919,7 +3005,6 @@ namespace AindVrForagingDataSchema.Rig
         protected RigCalibration(RigCalibration other)
         {
             _waterValve = other._waterValve;
-            _olfactometer = other._olfactometer;
         }
     
         /// <summary>
@@ -2940,24 +3025,6 @@ namespace AindVrForagingDataSchema.Rig
             }
         }
     
-        /// <summary>
-        /// Olfactometer calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("olfactometer")]
-        [System.ComponentModel.DescriptionAttribute("Olfactometer calibration")]
-        public OlfactometerCalibration Olfactometer
-        {
-            get
-            {
-                return _olfactometer;
-            }
-            set
-            {
-                _olfactometer = value;
-            }
-        }
-    
         public System.IObservable<RigCalibration> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RigCalibration(this)));
@@ -2970,8 +3037,7 @@ namespace AindVrForagingDataSchema.Rig
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("water_valve = " + _waterValve + ", ");
-            stringBuilder.Append("olfactometer = " + _olfactometer);
+            stringBuilder.Append("water_valve = " + _waterValve);
             return true;
         }
     
@@ -3483,7 +3549,12 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
+    /// <summary>
+    /// Overrides the default settings for the treadmill calibration by spec'ing brake_lookup_calibration field
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the treadmill calibration by spec\'ing brake_lo" +
+        "okup_calibration field")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Treadmill
@@ -4997,6 +5068,11 @@ namespace AindVrForagingDataSchema.Rig
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
+        public System.IObservable<string> Process(System.IObservable<AindManipulatorAdditionalSettings> source)
+        {
+            return Process<AindManipulatorAdditionalSettings>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindManipulatorCalibration> source)
         {
             return Process<AindManipulatorCalibration>(source);
@@ -5171,6 +5247,7 @@ namespace AindVrForagingDataSchema.Rig
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorAdditionalSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibrationOutput>))]

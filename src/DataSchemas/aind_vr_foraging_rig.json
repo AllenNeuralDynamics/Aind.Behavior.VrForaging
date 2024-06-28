@@ -1,5 +1,21 @@
 {
   "definitions": {
+    "AindManipulatorAdditionalSettings": {
+      "description": "Additional settings for the manipulator device",
+      "properties": {
+        "spout_axis": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Axis"
+            }
+          ],
+          "default": 2,
+          "description": "Spout axis"
+        }
+      },
+      "title": "AindManipulatorAdditionalSettings",
+      "type": "object"
+    },
     "AindManipulatorCalibration": {
       "description": "Aind manipulator calibration class",
       "properties": {
@@ -165,6 +181,7 @@
       "type": "object"
     },
     "AindManipulatorDevice": {
+      "description": "Overrides the default settings for the manipulator device by spec'ing additional_settings field",
       "properties": {
         "device_type": {
           "const": "stepperdriver",
@@ -173,16 +190,15 @@
           "type": "string"
         },
         "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
+          "allOf": [
             {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
+              "$ref": "#/definitions/AindManipulatorAdditionalSettings"
             }
-          ]
+          ],
+          "default": {
+            "spout_axis": 2
+          },
+          "description": "Additional settings"
         },
         "calibration": {
           "default": null,
@@ -695,6 +711,7 @@
       "type": "object"
     },
     "HarpOlfactometer": {
+      "description": "Overrides the default settings for the olfactometer calibration",
       "properties": {
         "device_type": {
           "const": "olfactometer",
@@ -716,10 +733,10 @@
         },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Olfactometer calibration",
           "oneOf": [
             {
-              "$ref": "#/definitions/BaseModel"
+              "$ref": "#/definitions/OlfactometerCalibration"
             },
             {
               "type": "null"
@@ -821,6 +838,7 @@
       "type": "object"
     },
     "HarpTreadmill": {
+      "description": "Overrides the default settings for the treadmill calibration",
       "properties": {
         "device_type": {
           "const": "treadmill",
@@ -1146,6 +1164,7 @@
       "type": "string"
     },
     "RigCalibration": {
+      "description": "Container class for calibration models. In a future release these will be moved to the respective devices",
       "properties": {
         "water_valve": {
           "allOf": [
@@ -1154,18 +1173,6 @@
             }
           ],
           "description": "Water valve calibration"
-        },
-        "olfactometer": {
-          "default": null,
-          "description": "Olfactometer calibration",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/OlfactometerCalibration"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
@@ -1346,6 +1353,7 @@
       "type": "object"
     },
     "Treadmill": {
+      "description": "Overrides the default settings for the treadmill calibration by spec'ing brake_lookup_calibration field",
       "properties": {
         "wheel_diameter": {
           "default": 15,
