@@ -5,6 +5,14 @@ import aind_behavior_services.rig as rig
 import aind_behavior_services.task_logic.distributions as distributions
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
 from aind_behavior_services import db_utils as db
+from aind_behavior_services.calibration.aind_manipulator import (
+    AindManipulatorCalibration,
+    AindManipulatorCalibrationInput,
+    AindManipulatorCalibrationOutput,
+    Axis,
+    AxisConfiguration,
+    ManipulatorPosition,
+)
 from aind_behavior_services.calibration.olfactometer import (
     OlfactometerCalibration,
     OlfactometerCalibrationInput,
@@ -21,9 +29,16 @@ from aind_behavior_services.calibration.water_valve import (
 )
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_vr_foraging.rig import (
+    AindManipulatorDevice,
     AindVrForagingRig,
+    HarpBehavior,
+    HarpClockGenerator,
+    HarpLickometer,
+    HarpOlfactometer,
+    HarpSniffDetector,
     HarpTreadmill,
     RigCalibration,
+    Screen,
     Treadmill,
 )
 from aind_behavior_vr_foraging.task_logic import (
@@ -50,6 +65,22 @@ def mock_session() -> AindBehaviorSessionModel:
 
 def mock_rig() -> AindVrForagingRig:
     """Generates a mock AindVrForagingRig model"""
+
+    manipulator_calibration = AindManipulatorCalibration(
+        output=AindManipulatorCalibrationOutput(),
+        input=AindManipulatorCalibrationInput(
+            full_step_to_mm=(ManipulatorPosition(x=0.010, y1=0.010, y2=0.010, z=0.010)),
+            axis_configuration=[
+                AxisConfiguration(axis=Axis.Y1, min_limit=-1, max_limit=15000),
+                AxisConfiguration(axis=Axis.Y2, min_limit=-1, max_limit=15000),
+                AxisConfiguration(axis=Axis.X, min_limit=-1, max_limit=15000),
+                AxisConfiguration(axis=Axis.Z, min_limit=-1, max_limit=15000),
+            ],
+            homing_order=[Axis.Y1, Axis.Y2, Axis.X, Axis.Z],
+            initial_position=ManipulatorPosition(y1=0, y2=0, x=0, z=0),
+        ),
+    )
+
     olfactometer_calibration = OlfactometerCalibration(
         output=OlfactometerCalibrationOutput(),
         date=datetime.datetime.now(),
@@ -100,9 +131,8 @@ def mock_rig() -> AindVrForagingRig:
     water_valve_calibration.output = WaterValveCalibrationOutput(slope=1, offset=0)  # For testing purposes
 
     video_writer = rig.VideoWriterFfmpeg(
-        frame_rate=120,
-        container_extension="mp4",
-        output_arguments="-c:v h264_nvenc -vsync 0 -2pass ")
+        frame_rate=120, container_extension="mp4", output_arguments="-c:v h264_nvenc -vsync 0 -2pass "
+    )
 
     return AindVrForagingRig(
         rig_name="test_rig",
@@ -110,26 +140,20 @@ def mock_rig() -> AindVrForagingRig:
             frame_rate=120,
             cameras={
                 "FaceCamera": rig.SpinnakerCamera(
-                    serial_number="SerialNumber",
-                    binning=1,
-                    exposure=5000,
-                    gain=0,
-                    video_writer=video_writer),
+                    serial_number="SerialNumber", binning=1, exposure=5000, gain=0, video_writer=video_writer
+                ),
                 "SideCamera": rig.SpinnakerCamera(
-                    serial_number="SerialNumber",
-                    binning=1,
-                    exposure=5000,
-                    gain=0,
-                    video_writer=video_writer)
+                    serial_number="SerialNumber", binning=1, exposure=5000, gain=0, video_writer=video_writer
+                ),
             },
         ),
         monitoring_camera_controller=rig.CameraController[rig.WebCamera](cameras={"WebCam0": rig.WebCamera(index=0)}),
-        harp_behavior=rig.HarpBehavior(port_name="COM3"),
-        harp_olfactometer=rig.HarpOlfactometer(port_name="COM4"),
-        harp_lickometer=rig.HarpLickometer(port_name="COM5"),
-        harp_clock_generator=rig.HarpClockGenerator(port_name="COM6"),
+        harp_behavior=HarpBehavior(port_name="COM3"),
+        harp_olfactometer=HarpOlfactometer(port_name="COM4", calibration=olfactometer_calibration),
+        harp_lickometer=HarpLickometer(port_name="COM5"),
+        harp_clock_generator=HarpClockGenerator(port_name="COM6"),
         harp_analog_input=None,
-        harp_sniff_detector=rig.HarpSniffDetector(port_name="COM7"),
+        harp_sniff_detector=HarpSniffDetector(port_name="COM7"),
         harp_treadmill=HarpTreadmill(
             port_name="COM8",
             calibration=Treadmill(
@@ -138,8 +162,9 @@ def mock_rig() -> AindVrForagingRig:
                 break_lookup_calibration=[[0, 0], [1, 65535]],
             ),
         ),
-        screen=rig.Screen(display_index=1),
-        calibration=RigCalibration(water_valve=water_valve_calibration, olfactometer=olfactometer_calibration),
+        manipulator=AindManipulatorDevice(port_name="COM9", calibration=manipulator_calibration),
+        screen=Screen(display_index=1),
+        calibration=RigCalibration(water_valve=water_valve_calibration),
     )
 
 
@@ -170,7 +195,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
         movable_spout_control=vr_task_logic.MovableSpoutControl(
             enabled=True,
             time_to_collect_after_reward=1,
-            servo_motor=vr_task_logic.ServoMotor(min_pulse_duration=1000, max_pulse_duration=2000),
+            retracting_distance=2000,
         ),
         audio_control=vr_task_logic.AudioControl(),
         odor_control=vr_task_logic.OdorControl(
