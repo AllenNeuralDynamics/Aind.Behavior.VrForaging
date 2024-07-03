@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.1"
+<WorkflowBuilder Version="2.8.2"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
@@ -222,7 +222,7 @@ CorridorSpecs.Size.Height as TranslationY)</scr:Expression>
               <TranslationZ>25</TranslationZ>
               <RotationZ>0</RotationZ>
               <RotationY>0</RotationY>
-              <RotationX>90</RotationX>
+              <RotationX>-90</RotationX>
               <ScaleX>10</ScaleX>
               <ScaleY>50</ScaleY>
               <ScaleZ>1.58139539</ScaleZ>
@@ -295,9 +295,9 @@ PostCorridorSpecs.NegOffsetX as NegOffsetX)</scr:Expression>
               <TranslationX>0</TranslationX>
               <TranslationY>0</TranslationY>
               <TranslationZ>25</TranslationZ>
-              <RotationZ>0</RotationZ>
+              <RotationZ>-90</RotationZ>
               <RotationY>0</RotationY>
-              <RotationX>90</RotationX>
+              <RotationX>-90</RotationX>
               <ScaleX>10</ScaleX>
               <ScaleY>50</ScaleY>
               <ScaleZ>1.58139539</ScaleZ>
@@ -371,9 +371,9 @@ CorridorSpecs.Size.Height as TranslationY)</scr:Expression>
               <TranslationX>0</TranslationX>
               <TranslationY>0</TranslationY>
               <TranslationZ>25</TranslationZ>
-              <RotationZ>0</RotationZ>
+              <RotationZ>90</RotationZ>
               <RotationY>0</RotationY>
-              <RotationX>90</RotationX>
+              <RotationX>-90</RotationX>
               <ScaleX>10</ScaleX>
               <ScaleY>50</ScaleY>
               <ScaleZ>1.58139539</ScaleZ>
