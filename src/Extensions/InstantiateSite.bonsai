@@ -1099,10 +1099,10 @@ it.Item2 as EntryPosition)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>TreadmillSpecification</Selector>
                   </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="MemberSelector">
                     <Selector>Friction</Selector>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RngSeed</Name>
                   </Expression>
@@ -1112,7 +1112,9 @@ it.Item2 as EntryPosition)</scr:Expression>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:SampleDistribution" />
+                    <Combinator xsi:type="p1:SampleDistribution">
+                      <p1:RandomSource />
+                    </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>TreadmillFriction</Name>
