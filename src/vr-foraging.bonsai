@@ -7445,7 +7445,7 @@ Value as Image)
                   </Expression>
                   <Expression xsi:type="beh:Format">
                     <harp:MessageType>Write</harp:MessageType>
-                    <harp:Register xsi:type="beh:PulseDO1" />
+                    <harp:Register xsi:type="beh:PulseDO2" />
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>HarpBehaviorCommands</Name>
@@ -7455,7 +7455,7 @@ Value as Image)
                   </Expression>
                   <Expression xsi:type="beh:Format">
                     <harp:MessageType>Write</harp:MessageType>
-                    <harp:Register xsi:type="beh:PwmFrequencyDO1" />
+                    <harp:Register xsi:type="beh:PwmFrequencyDO2" />
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>HarpBehaviorCommands</Name>
@@ -7466,7 +7466,7 @@ Value as Image)
                   <Expression xsi:type="beh:CreateMessage">
                     <harp:MessageType>Write</harp:MessageType>
                     <harp:Payload xsi:type="beh:CreatePwmStartPayload">
-                      <beh:PwmStart>PwmDO1</beh:PwmStart>
+                      <beh:PwmStart>PwmDO2</beh:PwmStart>
                     </harp:Payload>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -7481,8 +7481,8 @@ Value as Image)
                         </Expression>
                         <Expression xsi:type="beh:CreateMessage">
                           <harp:MessageType>Write</harp:MessageType>
-                          <harp:Payload xsi:type="beh:CreatePwmDutyCycleDO1Payload">
-                            <beh:PwmDutyCycleDO1>50</beh:PwmDutyCycleDO1>
+                          <harp:Payload xsi:type="beh:CreatePwmDutyCycleDO2Payload">
+                            <beh:PwmDutyCycleDO2>1</beh:PwmDutyCycleDO2>
                           </harp:Payload>
                         </Expression>
                         <Expression xsi:type="Combinator">
