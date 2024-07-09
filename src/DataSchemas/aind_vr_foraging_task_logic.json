@@ -1138,8 +1138,6 @@
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null,
                   "value": 20.0
                 },
                 "family": "Scalar",
@@ -1156,8 +1154,6 @@
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null,
                   "value": 20.0
                 },
                 "family": "Scalar",
@@ -1175,8 +1171,6 @@
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null,
                   "value": 20.0
                 },
                 "family": "Scalar",
@@ -1424,8 +1418,6 @@
             "family": "Scalar",
             "distribution_parameters": {
               "family": "Scalar",
-              "scaling_parameters": null,
-              "truncation_parameters": null,
               "value": 0.0
             },
             "truncation_parameters": null,
@@ -1479,35 +1471,21 @@
           ],
           "default": {
             "family": "Scalar",
-            "value": 0.0,
-            "truncation_parameters": null,
-            "scaling_parameters": null
+            "value": 0.0
           },
           "description": "Parameters of the distribution"
         },
         "truncation_parameters": {
+          "const": null,
           "default": null,
-          "description": "Truncation parameters of the distribution",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/TruncationParameters"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "title": "Truncation Parameters",
+          "type": "null"
         },
         "scaling_parameters": {
+          "const": null,
           "default": null,
-          "description": "Scaling parameters of the distribution",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/ScalingParameters"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "title": "Scaling Parameters",
+          "type": "null"
         }
       },
       "title": "Scalar",
@@ -1526,18 +1504,6 @@
           "description": "The static value of the distribution",
           "title": "Value",
           "type": "number"
-        },
-        "truncation_parameters": {
-          "const": null,
-          "default": null,
-          "title": "Truncation Parameters",
-          "type": "null"
-        },
-        "scaling_parameters": {
-          "const": null,
-          "default": null,
-          "title": "Scaling Parameters",
-          "type": "null"
         }
       },
       "title": "ScalarDistributionParameter",
@@ -1862,8 +1828,6 @@
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null,
                 "value": 20.0
               },
               "family": "Scalar",
@@ -1888,8 +1852,6 @@
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null,
                 "value": 20.0
               },
               "family": "Scalar",
@@ -1926,8 +1888,6 @@
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null,
                 "value": 20.0
               },
               "family": "Scalar",
@@ -1974,8 +1934,6 @@
             "family": "Scalar",
             "distribution_parameters": {
               "family": "Scalar",
-              "scaling_parameters": null,
-              "truncation_parameters": null,
               "value": 20.0
             },
             "truncation_parameters": null,
