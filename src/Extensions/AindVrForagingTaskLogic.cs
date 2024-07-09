@@ -3910,9 +3910,9 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private ScalarDistributionParameter _distributionParameters;
     
-        private TruncationParameters _truncationParameters;
+        private TruncationParameters2 _truncationParameters;
     
-        private ScalingParameters _scalingParameters;
+        private ScalingParameters2 _scalingParameters;
     
         public Scalar()
         {
@@ -3944,13 +3944,9 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
-        /// <summary>
-        /// Truncation parameters of the distribution
-        /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("truncation_parameters")]
-        [System.ComponentModel.DescriptionAttribute("Truncation parameters of the distribution")]
-        public TruncationParameters TruncationParameters
+        public TruncationParameters2 TruncationParameters
         {
             get
             {
@@ -3962,13 +3958,9 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
-        /// <summary>
-        /// Scaling parameters of the distribution
-        /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("scaling_parameters")]
-        [System.ComponentModel.DescriptionAttribute("Scaling parameters of the distribution")]
-        public ScalingParameters ScalingParameters
+        public ScalingParameters2 ScalingParameters
         {
             get
             {
@@ -4014,10 +4006,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private double _value = 0D;
     
-        private TruncationParameters2 _truncationParameters;
-    
-        private ScalingParameters2 _scalingParameters;
-    
         public ScalarDistributionParameter()
         {
         }
@@ -4026,8 +4014,6 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _family = other._family;
             _value = other._value;
-            _truncationParameters = other._truncationParameters;
-            _scalingParameters = other._scalingParameters;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
@@ -4060,34 +4046,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("truncation_parameters")]
-        public TruncationParameters2 TruncationParameters
-        {
-            get
-            {
-                return _truncationParameters;
-            }
-            set
-            {
-                _truncationParameters = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("scaling_parameters")]
-        public ScalingParameters2 ScalingParameters
-        {
-            get
-            {
-                return _scalingParameters;
-            }
-            set
-            {
-                _scalingParameters = value;
-            }
-        }
-    
         public System.IObservable<ScalarDistributionParameter> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ScalarDistributionParameter(this)));
@@ -4101,9 +4059,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("value = " + _value + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("value = " + _value);
             return true;
         }
     
