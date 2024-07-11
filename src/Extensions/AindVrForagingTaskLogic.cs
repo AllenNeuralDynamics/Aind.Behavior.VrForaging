@@ -877,9 +877,9 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private System.Collections.Generic.List<PatchStatistics> _patches = new System.Collections.Generic.List<PatchStatistics>();
     
-        private Matrix2D _transitionMatrix;
+        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _transitionMatrix = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
     
-        private int? _firstState;
+        private System.Collections.Generic.List<double> _firstStateOccupancy;
     
         public EnvironmentStatistics()
         {
@@ -889,7 +889,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _patches = other._patches;
             _transitionMatrix = other._transitionMatrix;
-            _firstState = other._firstState;
+            _firstStateOccupancy = other._firstStateOccupancy;
         }
     
         /// <summary>
@@ -911,12 +911,12 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Transition matrix between patches
+        /// Determines the transition probabilities between patches
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("transition_matrix")]
-        [System.ComponentModel.DescriptionAttribute("Transition matrix between patches")]
-        public Matrix2D TransitionMatrix
+        [System.ComponentModel.DescriptionAttribute("Determines the transition probabilities between patches")]
+        public System.Collections.Generic.List<System.Collections.Generic.List<double>> TransitionMatrix
         {
             get
             {
@@ -929,20 +929,21 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// The first state to be visited. If None, it will be randomly drawn.
+        /// Determines the first state the animal will be in. If null, it will be randomly drawn.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("first_state")]
-        [System.ComponentModel.DescriptionAttribute("The first state to be visited. If None, it will be randomly drawn.")]
-        public int? FirstState
+        [Newtonsoft.Json.JsonPropertyAttribute("first_state_occupancy")]
+        [System.ComponentModel.DescriptionAttribute("Determines the first state the animal will be in. If null, it will be randomly dr" +
+            "awn.")]
+        public System.Collections.Generic.List<double> FirstStateOccupancy
         {
             get
             {
-                return _firstState;
+                return _firstStateOccupancy;
             }
             set
             {
-                _firstState = value;
+                _firstStateOccupancy = value;
             }
         }
     
@@ -960,7 +961,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("patches = " + _patches + ", ");
             stringBuilder.Append("transition_matrix = " + _transitionMatrix + ", ");
-            stringBuilder.Append("first_state = " + _firstState);
+            stringBuilder.Append("first_state_occupancy = " + _firstStateOccupancy);
             return true;
         }
     
@@ -1787,72 +1788,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             stringBuilder.Append("family = " + _family + ", ");
             stringBuilder.Append("mean = " + _mean + ", ");
             stringBuilder.Append("std = " + _std);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Matrix2D
-    {
-    
-        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _data = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
-    
-        public Matrix2D()
-        {
-        }
-    
-        protected Matrix2D(Matrix2D other)
-        {
-            _data = other._data;
-        }
-    
-        /// <summary>
-        /// Defines a 2D matrix
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("data")]
-        [System.ComponentModel.DescriptionAttribute("Defines a 2D matrix")]
-        public System.Collections.Generic.List<System.Collections.Generic.List<double>> Data
-        {
-            get
-            {
-                return _data;
-            }
-            set
-            {
-                _data = value;
-            }
-        }
-    
-        public System.IObservable<Matrix2D> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Matrix2D(this)));
-        }
-    
-        public System.IObservable<Matrix2D> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Matrix2D(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("data = " + _data);
             return true;
         }
     
@@ -6269,11 +6204,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             return Process<LogNormalDistributionParameters>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Matrix2D> source)
-        {
-            return Process<Matrix2D>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
         {
             return Process<MovableSpoutControl>(source);
@@ -6487,7 +6417,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LinearFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistributionParameters>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2D>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistributionParameters>))]

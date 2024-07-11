@@ -39,10 +39,6 @@ class Vector3(BaseModel):
     z: float = Field(default=0, description="Z coordinate of the point")
 
 
-class Matrix2D(BaseModel):
-    data: List[List[float]] = Field(default=[[1]], description="Defines a 2D matrix")
-
-
 # Updaters
 class NumericalUpdaterOperation(str, Enum):
     NONE = "None"
@@ -263,10 +259,14 @@ class VisualCorridor(BaseModel):
 
 
 class EnvironmentStatistics(BaseModel):
-    patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches")
-    transition_matrix: Matrix2D = Field(default=Matrix2D(), description="Transition matrix between patches")
-    first_state: Optional[int] = Field(
-        default=None, ge=0, description="The first state to be visited. If None, it will be randomly drawn."
+    patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches", min_items=1)
+    transition_matrix: List[List[float]] = Field(
+        default=[[1]], description="Determines the transition probabilities between patches"
+    )
+    first_state_occupancy: Optional[List[float]] = Field(
+        default=None,
+        ge=0,
+        description="Determines the first state the animal will be in. If null, it will be randomly drawn.",
     )
 
 

@@ -343,37 +343,41 @@
           "items": {
             "$ref": "#/definitions/PatchStatistics"
           },
+          "minItems": 1,
           "title": "Patches",
           "type": "array"
         },
         "transition_matrix": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Matrix2D"
-            }
-          ],
-          "default": {
-            "data": [
-              [
-                1.0
-              ]
+          "default": [
+            [
+              1
             ]
+          ],
+          "description": "Determines the transition probabilities between patches",
+          "items": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
           },
-          "description": "Transition matrix between patches"
+          "title": "Transition Matrix",
+          "type": "array"
         },
-        "first_state": {
+        "first_state_occupancy": {
           "default": null,
-          "description": "The first state to be visited. If None, it will be randomly drawn.",
+          "description": "Determines the first state the animal will be in. If null, it will be randomly drawn.",
           "oneOf": [
             {
-              "minimum": 0,
-              "type": "integer"
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
             },
             {
               "type": "null"
             }
           ],
-          "title": "First State"
+          "title": "First State Occupancy"
         }
       },
       "title": "EnvironmentStatistics",
@@ -674,28 +678,6 @@
         }
       },
       "title": "LogNormalDistributionParameters",
-      "type": "object"
-    },
-    "Matrix2D": {
-      "properties": {
-        "data": {
-          "default": [
-            [
-              1
-            ]
-          ],
-          "description": "Defines a 2D matrix",
-          "items": {
-            "items": {
-              "type": "number"
-            },
-            "type": "array"
-          },
-          "title": "Data",
-          "type": "array"
-        }
-      },
-      "title": "Matrix2D",
       "type": "object"
     },
     "MovableSpoutControl": {
