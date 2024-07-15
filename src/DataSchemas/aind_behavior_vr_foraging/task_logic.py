@@ -5,7 +5,7 @@ from typing import Annotated, Dict, List, Literal, Optional, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, Field, RootModel, NonNegativeFloat
 
 __version__ = "0.4.0"
 
@@ -260,12 +260,11 @@ class VisualCorridor(BaseModel):
 
 class EnvironmentStatistics(BaseModel):
     patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches", min_items=1)
-    transition_matrix: List[List[float]] = Field(
+    transition_matrix: List[List[NonNegativeFloat]] = Field(
         default=[[1]], description="Determines the transition probabilities between patches"
     )
-    first_state_occupancy: Optional[List[float]] = Field(
+    first_state_occupancy: Optional[List[NonNegativeFloat]] = Field(
         default=None,
-        ge=0,
         description="Determines the first state the animal will be in. If null, it will be randomly drawn.",
     )
 
