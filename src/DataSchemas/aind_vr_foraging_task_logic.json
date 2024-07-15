@@ -356,6 +356,7 @@
           "description": "Determines the transition probabilities between patches",
           "items": {
             "items": {
+              "minimum": 0.0,
               "type": "number"
             },
             "type": "array"
@@ -369,6 +370,7 @@
           "oneOf": [
             {
               "items": {
+                "minimum": 0.0,
                 "type": "number"
               },
               "type": "array"
