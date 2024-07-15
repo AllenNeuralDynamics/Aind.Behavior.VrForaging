@@ -297,7 +297,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
     )
 
     environment_statistics = vr_task_logic.EnvironmentStatistics(
-        first_state=None, transition_matrix=vr_task_logic.Matrix2D(data=[[1, 0], [0, 1]]), patches=[patch1, patch2]
+        first_state_occupancy=[1, 0], transition_matrix=[[1, 0], [0, 1]], patches=[patch1, patch2]
     )
 
     return AindVrForagingTaskLogic(
