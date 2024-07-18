@@ -2837,8 +2837,10 @@ it.SyncQuadValue.Value as SyncQuadValue)</scr:Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Repository</Name>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Head</Selector>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p7:IsRepositoryClean">
+                                  <p7:IgnoreUntracked>false</p7:IgnoreUntracked>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p5:CreateSoftwareEvent">
