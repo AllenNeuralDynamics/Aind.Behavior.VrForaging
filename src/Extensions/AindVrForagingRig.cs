@@ -607,9 +607,9 @@ namespace AindVrForagingDataSchema.Rig
     
         private MotorOperationMode _motorOperationMode = AindVrForagingDataSchema.Rig.MotorOperationMode.Quiet;
     
-        private int _maxLimit = 24000;
+        private double _maxLimit = 25D;
     
-        private int _minLimit = -1;
+        private double _minLimit = -0.01D;
     
         public AxisConfiguration()
         {
@@ -717,7 +717,7 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("max_limit")]
-        public int MaxLimit
+        public double MaxLimit
         {
             get
             {
@@ -730,7 +730,7 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("min_limit")]
-        public int MinLimit
+        public double MinLimit
         {
             get
             {
