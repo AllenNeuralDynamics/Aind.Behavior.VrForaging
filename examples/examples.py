@@ -71,10 +71,10 @@ def mock_rig() -> AindVrForagingRig:
         input=AindManipulatorCalibrationInput(
             full_step_to_mm=(ManipulatorPosition(x=0.010, y1=0.010, y2=0.010, z=0.010)),
             axis_configuration=[
-                AxisConfiguration(axis=Axis.Y1, min_limit=-1, max_limit=15000),
-                AxisConfiguration(axis=Axis.Y2, min_limit=-1, max_limit=15000),
-                AxisConfiguration(axis=Axis.X, min_limit=-1, max_limit=15000),
-                AxisConfiguration(axis=Axis.Z, min_limit=-1, max_limit=15000),
+                AxisConfiguration(axis=Axis.Y1, min_limit=-0.01, max_limit=25),
+                AxisConfiguration(axis=Axis.Y2, min_limit=-0.01, max_limit=25),
+                AxisConfiguration(axis=Axis.X, min_limit=-0.01, max_limit=25),
+                AxisConfiguration(axis=Axis.Z, min_limit=-0.01, max_limit=25),
             ],
             homing_order=[Axis.Y1, Axis.Y2, Axis.X, Axis.Z],
             initial_position=ManipulatorPosition(y1=0, y2=0, x=0, z=0),
@@ -131,7 +131,7 @@ def mock_rig() -> AindVrForagingRig:
     water_valve_calibration.output = WaterValveCalibrationOutput(slope=1, offset=0)  # For testing purposes
 
     video_writer = rig.VideoWriterFfmpeg(
-        frame_rate=120, container_extension="mp4", output_arguments="-c:v h264_nvenc -vsync 0 -2pass "
+        frame_rate=120, container_extension="mp4"
     )
 
     return AindVrForagingRig(
