@@ -19,7 +19,6 @@ TModel = TypeVar("TModel", bound=Union[AindVrForagingRig, AindVrForagingTaskLogi
 
 class BonsaiTests(unittest.TestCase):
     def test_deserialization(self):
-
         examples.main("./local/{schema}.json")
 
         models_to_test = [
@@ -65,9 +64,7 @@ class TestModel(Generic[TModel]):
             raise ValueError("Input model is not set.")
         if not self.deserialized_model:
             raise ValueError("Deserialized model is not set.")
-        _round_trip = self.input_model.model_validate_json(
-            self.input_model.model_dump_json()
-            )
+        _round_trip = self.input_model.model_validate_json(self.input_model.model_dump_json())
         return _round_trip == self.deserialized_model
 
     def try_deserialization(self, json_str: Union[str, List[str]]) -> TModel:

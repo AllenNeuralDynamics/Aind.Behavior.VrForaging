@@ -3,16 +3,11 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import os
-import sys
-
+import aind_behavior_vr_foraging
 import aind_behavior_vr_foraging.rig
 import aind_behavior_vr_foraging.task_logic
 import erdantic as erd
 from pydantic import BaseModel
-
-sys.path.insert(0, os.path.abspath("../src/DataSchemas"))
-import aind_behavior_vr_foraging
 
 SOURCE_ROOT = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas/"
 

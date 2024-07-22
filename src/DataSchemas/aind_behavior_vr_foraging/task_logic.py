@@ -5,7 +5,7 @@ from typing import Annotated, Dict, List, Literal, Optional, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import BaseModel, Field, RootModel, NonNegativeFloat
+from pydantic import BaseModel, Field, NonNegativeFloat, RootModel
 
 __version__ = "0.4.0"
 
