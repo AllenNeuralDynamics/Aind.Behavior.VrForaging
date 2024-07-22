@@ -16,7 +16,6 @@ NAMESPACE_PREFIX = "AindVrForagingDataSchema"
 
 
 def main():
-
     models = [
         aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic,
         aind_behavior_vr_foraging.rig.AindVrForagingRig,
