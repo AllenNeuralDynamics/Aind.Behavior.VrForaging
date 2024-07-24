@@ -4480,7 +4480,13 @@ Value as Image)
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>EncoderData</Name>
+                    <Name>EncoderSample</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value.Displacement,Seconds</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Concat" />
@@ -4529,10 +4535,13 @@ Value as Image)
                     <Name>CurrentPosition</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>EncoderData</Name>
+                    <Name>EncoderSample</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>InstantVelocity</Selector>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TaskLogicParameters</Name>
@@ -4565,12 +4574,8 @@ Value as Image)
                       <dsp:FilterType>LowPass</dsp:FilterType>
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Name>cm/second</scr:Name>
-                    <scr:Expression>it * 1000</scr:Expression>
-                  </Expression>
                   <Expression xsi:type="rx:PublishSubject">
-                    <Name>CurrentVelocity</Name>
+                    <Name>FilteredCurrentVelocity</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>StopVelocityThreshold</Name>
@@ -4652,47 +4657,49 @@ Value as Image)
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="7" To="9" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source2" />
+                  <Edge From="7" To="11" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="9" To="17" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
                   <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="16" Label="Source1" />
+                  <Edge From="11" To="19" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source2" />
-                  <Edge From="16" To="18" Label="Source1" />
+                  <Edge From="14" To="18" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source2" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="18" To="20" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source2" />
                   <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="22" To="37" Label="Source1" />
-                  <Edge From="23" To="30" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="24" To="39" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="27" To="30" Label="Source2" />
+                  <Edge From="26" To="33" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source3" />
-                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="33" Label="Source2" />
                   <Edge From="31" To="32" Label="Source1" />
-                  <Edge From="32" To="35" Label="Source1" />
+                  <Edge From="32" To="33" Label="Source3" />
                   <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source2" />
+                  <Edge From="34" To="37" Label="Source1" />
                   <Edge From="35" To="36" Label="Source1" />
-                  <Edge From="36" To="38" Label="Source1" />
-                  <Edge From="37" To="38" Label="Source2" />
-                  <Edge From="38" To="39" Label="Source1" />
-                  <Edge From="39" To="40" Label="Source1" />
+                  <Edge From="36" To="37" Label="Source2" />
+                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="38" To="40" Label="Source1" />
+                  <Edge From="39" To="40" Label="Source2" />
                   <Edge From="40" To="41" Label="Source1" />
+                  <Edge From="41" To="42" Label="Source1" />
                   <Edge From="42" To="43" Label="Source1" />
-                  <Edge From="43" To="46" Label="Source1" />
                   <Edge From="44" To="45" Label="Source1" />
-                  <Edge From="45" To="46" Label="Source2" />
-                  <Edge From="46" To="48" Label="Source1" />
+                  <Edge From="45" To="48" Label="Source1" />
+                  <Edge From="46" To="47" Label="Source1" />
                   <Edge From="47" To="48" Label="Source2" />
+                  <Edge From="48" To="50" Label="Source1" />
+                  <Edge From="49" To="50" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -7246,6 +7253,15 @@ Value as Image)
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>TreadmillFriction</Name>
                   </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpTreadmillEvents</Name>
+                  </Expression>
+                  <Expression xsi:type="p17:Parse">
+                    <harp:Register xsi:type="p17:SensorDataDispatchRate" />
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>TreadmillSamplingRate</Name>
+                  </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>DetermineTreadmillScaling</Name>
                     <Workflow>
@@ -7319,7 +7335,7 @@ Value as Image)
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Name>CalculateDisplacement</scr:Name>
-                    <scr:Expression>(Item1.Value.Encoder - Item2.Value.Encoder)</scr:Expression>
+                    <scr:Expression>single(Item1.Value.Encoder - Item2.Value.Encoder)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TreadmillScaling</Name>
@@ -7338,6 +7354,16 @@ Value as Image)
                       <dsp:RescaleType>Linear</dsp:RescaleType>
                     </Combinator>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>CalculateInstantSpeed</scr:Name>
+                    <scr:Expression>new(
+Item1 as Displacement,
+(Item1 / single(Item2.Item1.Seconds - Item2.Item2.Seconds)) as InstantVelocity
+)</scr:Expression>
+                  </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Item1.Seconds</Selector>
                   </Expression>
@@ -7348,7 +7374,7 @@ Value as Image)
                     <Combinator xsi:type="harp:CreateTimestamped" />
                   </Expression>
                   <Expression xsi:type="rx:PublishSubject">
-                    <Name>EncoderData</Name>
+                    <Name>EncoderSample</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TreadmillFriction</Name>
@@ -7516,27 +7542,32 @@ Value as Image)
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="6" To="8" Label="Source2" />
-                  <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="8" To="13" Label="Source1" />
-                  <Edge From="9" To="12" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="9" To="11" Label="Source2" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source2" />
-                  <Edge From="12" To="14" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source2" />
-                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="11" To="16" Label="Source2" />
+                  <Edge From="11" To="18" Label="Source1" />
+                  <Edge From="12" To="15" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source2" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="22" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="19" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source2" />
+                  <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="21" To="22" Label="Source2" />
                   <Edge From="22" To="23" Label="Source1" />
                   <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="24" To="27" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -7663,26 +7694,6 @@ Value as Image)
                   <Edge From="10" To="13" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source2" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>DeviceDerivedSettings</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>HarpTreadmillEvents</Name>
-                  </Expression>
-                  <Expression xsi:type="p17:Parse">
-                    <harp:Register xsi:type="p17:SensorDataDispatchRate" />
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>TreadmillSamplingRate</Name>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -10579,7 +10590,7 @@ Item2 as Start
               <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:LineGraphVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>CurrentVelocity</Name>
+              <Name>FilteredCurrentVelocity</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:SampleOnRenderFrame" />
