@@ -459,14 +459,9 @@
                       <Property Name="PortName" />
                     </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.AindManipulator:CreateAindManipulator.bonsai">
-                    <OperationMode>Active</OperationMode>
-                    <OperationLed>On</OperationLed>
-                    <DumpRegisters>false</DumpRegisters>
-                    <VisualIndicators>On</VisualIndicators>
-                    <Heartbeat>Enabled</Heartbeat>
-                    <IgnoreErrors>false</IgnoreErrors>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\AindManipulator.bonsai">
                     <PortName>COMx</PortName>
+                    <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
