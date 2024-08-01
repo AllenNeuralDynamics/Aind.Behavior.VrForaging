@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.1"
+<WorkflowBuilder Version="2.8.2"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema.TaskLogic;assembly=Extensions"
@@ -15,6 +15,7 @@
         <Property Name="Contrast" />
         <Property Name="Label" />
         <Property Name="LengthDistribution" />
+        <Property Name="TreadmillSpecification" />
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>InterPatch</Name>
@@ -91,11 +92,11 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
+              <Property Name="TreadmillSpecification" />
               <Property Name="Label" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
               <Id>0</Id>
-              <Label>InterPatchSite</Label>
               <Length>120</Length>
               <StartPosition>0</StartPosition>
             </Expression>

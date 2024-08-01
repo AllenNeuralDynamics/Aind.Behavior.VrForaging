@@ -2,7 +2,7 @@
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:p2="clr-namespace:AindVrForagingDataSchema.TaskLogic;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -60,9 +60,7 @@
                     <Property Name="Key" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:ContainsKey">
-                      <p1:Key>StopVelocityThreshold</p1:Key>
-                    </Combinator>
+                    <Combinator xsi:type="p1:ContainsKey" />
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
@@ -150,9 +148,7 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:ContainsKey">
-                      <p1:Key>StopVelocityThreshold</p1:Key>
-                    </Combinator>
+                    <Combinator xsi:type="p1:ContainsKey" />
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>

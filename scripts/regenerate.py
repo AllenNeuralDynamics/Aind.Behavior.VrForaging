@@ -2,9 +2,13 @@ import inspect
 from pathlib import Path
 
 import aind_behavior_vr_foraging.rig
-import aind_behavior_vr_foraging.session
 import aind_behavior_vr_foraging.task_logic
-from aind_behavior_services.utils import convert_pydantic_to_bonsai, pascal_to_snake_case, snake_to_pascal_case
+from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.utils import (
+    convert_pydantic_to_bonsai,
+    pascal_to_snake_case,
+    snake_to_pascal_case,
+)
 
 SCHEMA_ROOT = Path("./src/DataSchemas/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")
@@ -12,11 +16,10 @@ NAMESPACE_PREFIX = "AindVrForagingDataSchema"
 
 
 def main():
-
     models = [
-        aind_behavior_vr_foraging.task_logic.schema(),
-        aind_behavior_vr_foraging.session.schema(),
-        aind_behavior_vr_foraging.rig.schema(),
+        aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic,
+        aind_behavior_vr_foraging.rig.AindVrForagingRig,
+        AindBehaviorSessionModel,
     ]
 
     for model in models:

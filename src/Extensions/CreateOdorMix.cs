@@ -1,4 +1,4 @@
-using Bonsai;
+﻿using Bonsai;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -6,8 +6,10 @@ using System.Reactive.Linq;
 using Harp.Olfactometer;
 using Bonsai.Harp;
 
+
+
 [Description("Creates a Harp Message that sets the target flow for each channel, assuming target full and a percentage of odor for each channel from the total target odor percentage")]
-public class CreateOdorMix:Source<OdorMixMessages>
+public class CreateOdorMix : Source<OdorMixMessages>
 {
     private float channel0 = 0;
     [Range(0, 1)]
@@ -54,10 +56,11 @@ public class CreateOdorMix:Source<OdorMixMessages>
     public bool Channel3AsCarrier
     {
         get { return channel3AsCarrier; }
-        set {
+        set
+        {
             channel3AsCarrier = value;
             channel3 = channel3AsCarrier ? float.NaN : 0;
-            }
+        }
     }
 
     private int targetOdorFlow = 100;
@@ -81,87 +84,60 @@ public class CreateOdorMix:Source<OdorMixMessages>
         set { totalFlow = value; }
     }
 
-    private OdorMixMessages ConstructMessage(){
-        var adjustedOdorFlow0 = (int)(TargetOdorFlow * channel0);
-        var adjustedOdorFlow1 = (int)(TargetOdorFlow * channel1);
-        var adjustedOdorFlow2 = (int)(TargetOdorFlow * channel2);
-        var adjustedOdorFlow3 = channel3AsCarrier ? 0 : (int)(TargetOdorFlow * channel3);
-        var carrierFlow = totalFlow - (adjustedOdorFlow0 + adjustedOdorFlow1 + adjustedOdorFlow2 + adjustedOdorFlow3);
-
-        var channelsTargetFlow = ChannelsTargetFlow.FromPayload(MessageType.Write, new ChannelsTargetFlowPayload(
-            adjustedOdorFlow0,
-            adjustedOdorFlow1,
-            adjustedOdorFlow2,
-            channel3AsCarrier ? totalFlow : adjustedOdorFlow3,
-            carrierFlow));
-
-        adjustedOdorFlow3 = channel3AsCarrier ? totalFlow : adjustedOdorFlow3;
-        var odorValveState = OdorValveState.FromPayload(MessageType.Write,
-        (
-            (adjustedOdorFlow0 > 0 ? OdorValves.Valve0 : OdorValves.None) |
-            (adjustedOdorFlow1 > 0 ? OdorValves.Valve1 : OdorValves.None) |
-            (adjustedOdorFlow2 > 0 ? OdorValves.Valve2 : OdorValves.None) |
-            (adjustedOdorFlow3 > 0 ? OdorValves.Valve3 : OdorValves.None)
-        ));
-
-        return new OdorMixMessages()
-            {
-            ChannelsTargetFlow = channelsTargetFlow,
-            OdorValveState = odorValveState
-            };
-    }
-
-    private OdorMixMessages ConstructMessage(int odorIndex, double concentration){
-
-        var adjustedOdorFlow0 = 0;
-        var adjustedOdorFlow1 = 0;
-        var adjustedOdorFlow2 = 0;
-        var adjustedOdorFlow3 = 0;
-
-        switch (odorIndex)
+    private OdorMixMessages ConstructMessage(float[] odorConcentration){
+        if (odorConcentration.Length != 4)
         {
-            case 0:
-                adjustedOdorFlow0 = (int)(TargetOdorFlow * concentration);
-                break;
-            case 1:
-                adjustedOdorFlow1 = (int)(TargetOdorFlow * concentration);
-                break;
-            case 2:
-                adjustedOdorFlow2 = (int)(TargetOdorFlow * concentration);
-                break;
-            case 3:
-                if (channel3AsCarrier){
-                    throw new Exception("Channel 3 is set as carrier. Cannot set flow for this channel.");
-                }
-                adjustedOdorFlow3 = (int)(TargetOdorFlow * concentration);
-                break;
-            default:
-                throw new Exception("Invalid channel number. Must be between 0 and 3.");
+            throw new ArgumentException("Input array must have 4 elements.");
         }
 
-        var carrierFlow = totalFlow - (adjustedOdorFlow0 + adjustedOdorFlow1 + adjustedOdorFlow2 + adjustedOdorFlow3);
+        if (channel3AsCarrier){
+
+            if (!((odorConcentration[3] == 0) || float.IsNaN(odorConcentration[3])))
+            {
+                throw new ArgumentException("Channel 3 is set as carrier. Cannot set flow for this channel.");
+            }
+            odorConcentration[3] = 0;
+        }
+
+        float[] adjustedOdorFlow = new float[4];
+        for (int i = 0; i < 4; i++)
+        {
+            adjustedOdorFlow[i] = (int)(odorConcentration[i] * TargetOdorFlow);
+        }
+
+        var carrierFlow = totalFlow - adjustedOdorFlow.Where(x => !float.IsNaN(x)).Sum();
 
         var channelsTargetFlow = ChannelsTargetFlow.FromPayload(MessageType.Write, new ChannelsTargetFlowPayload(
-            adjustedOdorFlow0,
-            adjustedOdorFlow1,
-            adjustedOdorFlow2,
-            channel3AsCarrier ? totalFlow : adjustedOdorFlow3,
+            adjustedOdorFlow[0],
+            adjustedOdorFlow[1],
+            adjustedOdorFlow[2],
+            channel3AsCarrier ? totalFlow : adjustedOdorFlow[3],
             carrierFlow));
 
-        adjustedOdorFlow3 = channel3AsCarrier ? totalFlow : adjustedOdorFlow3;
+        adjustedOdorFlow[3] = channel3AsCarrier ? totalFlow : adjustedOdorFlow[3];
         var odorValveState = OdorValveState.FromPayload(MessageType.Write,
         (
-            (adjustedOdorFlow0 > 0 ? OdorValves.Valve0 : OdorValves.None) |
-            (adjustedOdorFlow1 > 0 ? OdorValves.Valve1 : OdorValves.None) |
-            (adjustedOdorFlow2 > 0 ? OdorValves.Valve2 : OdorValves.None) |
-            (adjustedOdorFlow3 > 0 ? OdorValves.Valve3 : OdorValves.None)
+            (adjustedOdorFlow[0] > 0 ? OdorValves.Valve0 : OdorValves.None) |
+            (adjustedOdorFlow[1] > 0 ? OdorValves.Valve1 : OdorValves.None) |
+            (adjustedOdorFlow[2] > 0 ? OdorValves.Valve2 : OdorValves.None) |
+            (adjustedOdorFlow[3] > 0 ? OdorValves.Valve3 : OdorValves.None)
         ));
 
         return new OdorMixMessages()
-            {
+        {
             ChannelsTargetFlow = channelsTargetFlow,
             OdorValveState = odorValveState
-            };
+        };
+    }
+
+    private OdorMixMessages ConstructMessage()
+    {
+        return ConstructMessage(new float[] { channel0, channel1, channel2, channel3 });
+    }
+
+    private OdorMixMessages ConstructMessage(int odorIndex, double concentration)
+    {
+        return ConstructMessage(new float[] { 0, 0, 0, 0 }.Select((x, i) => i == odorIndex ? (float)concentration : x).ToArray());
     }
 
     public IObservable<OdorMixMessages> Generate<TSource>(IObservable<TSource> source)
@@ -174,13 +150,22 @@ public class CreateOdorMix:Source<OdorMixMessages>
         return Observable.Return(ConstructMessage());
     }
 
-    public IObservable<OdorMixMessages> Generate(IObservable<AindVrForagingDataSchema.TaskLogic.OdorSpecification> source)
+    public IObservable<OdorMixMessages> Generate(IObservable<Tuple<int, double>> source)
     {
-        return source.Select(value => ConstructMessage((int) value.Index, value.Concentration));
+        return source.Select(value => ConstructMessage(value.Item1, value.Item2));
     }
+
+    public IObservable<OdorMixMessages> Generate(IObservable<float[]> source)
+    {
+        return source.Select(value => {
+            return ConstructMessage(value);
+        });
+    }
+
 }
 
-public class OdorMixMessages{
-    public HarpMessage ChannelsTargetFlow {get; set;}
-    public HarpMessage OdorValveState {get; set;}
+public class OdorMixMessages
+{
+    public HarpMessage ChannelsTargetFlow { get; set; }
+    public HarpMessage OdorValveState { get; set; }
 }

@@ -1,15 +1,24 @@
 {
   "properties": {
-    "schema_version": {
-      "const": "0.1.1",
-      "default": "0.1.1",
-      "title": "Schema Version",
+    "version": {
+      "const": "0.2.0",
+      "default": "0.2.0",
+      "title": "Version",
       "type": "string"
     },
     "experiment": {
       "description": "Name of the experiment",
       "title": "Experiment",
       "type": "string"
+    },
+    "experimenter": {
+      "default": [],
+      "description": "Name of the experimenter",
+      "items": {
+        "type": "string"
+      },
+      "title": "Experimenter",
+      "type": "array"
     },
     "date": {
       "description": "Date of the experiment",
@@ -44,19 +53,6 @@
       "description": "Version of the experiment",
       "title": "Experiment Version",
       "type": "string"
-    },
-    "rng_seed": {
-      "default": null,
-      "description": "Seed of the random number generator",
-      "oneOf": [
-        {
-          "type": "number"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "title": "Rng Seed"
     },
     "notes": {
       "default": null,

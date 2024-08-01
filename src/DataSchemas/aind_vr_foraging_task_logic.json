@@ -1,5 +1,64 @@
 {
   "definitions": {
+    "AindVrForagingTaskParameters": {
+      "additionalProperties": true,
+      "properties": {
+        "rng_seed": {
+          "default": null,
+          "description": "Seed of the random number generator",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rng Seed"
+        },
+        "updaters": {
+          "additionalProperties": {
+            "$ref": "#/definitions/NumericalUpdater"
+          },
+          "description": "List of numerical updaters",
+          "title": "Updaters",
+          "type": "object"
+        },
+        "environment_statistics": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/EnvironmentStatistics"
+            }
+          ],
+          "description": "Statistics of the environment"
+        },
+        "task_mode_settings": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TaskModeSettings"
+            }
+          ],
+          "default": {
+            "task_mode": "FORAGING"
+          },
+          "description": "Settings of the task stage"
+        },
+        "operation_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/OperationControl"
+            }
+          ],
+          "description": "Control of the operation"
+        }
+      },
+      "required": [
+        "environment_statistics",
+        "operation_control"
+      ],
+      "title": "AindVrForagingTaskParameters",
+      "type": "object"
+    },
     "AudioControl": {
       "properties": {
         "duration": {
@@ -7,16 +66,14 @@
           "description": "Duration",
           "minimum": 0.0,
           "title": "Duration",
-          "type": "number",
-          "units": "s"
+          "type": "number"
         },
         "frequency": {
           "default": 1000,
           "description": "Frequency",
           "minimum": 100.0,
           "title": "Frequency",
-          "type": "number",
-          "units": "Hz"
+          "type": "number"
         }
       },
       "title": "AudioControl",
@@ -233,6 +290,7 @@
       "type": "string"
     },
     "Distribution": {
+      "description": "Available distributions",
       "discriminator": {
         "mapping": {
           "Beta": "#/definitions/BetaDistribution",
@@ -285,37 +343,43 @@
           "items": {
             "$ref": "#/definitions/PatchStatistics"
           },
+          "minItems": 1,
           "title": "Patches",
           "type": "array"
         },
         "transition_matrix": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Matrix2D"
-            }
-          ],
-          "default": {
-            "data": [
-              [
-                1.0
-              ]
+          "default": [
+            [
+              1
             ]
+          ],
+          "description": "Determines the transition probabilities between patches",
+          "items": {
+            "items": {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            "type": "array"
           },
-          "description": "Transition matrix between patches"
+          "title": "Transition Matrix",
+          "type": "array"
         },
-        "first_state": {
+        "first_state_occupancy": {
           "default": null,
-          "description": "The first state to be visited. If None, it will be randomly drawn.",
+          "description": "Determines the first state the animal will be in. If null, it will be randomly drawn.",
           "oneOf": [
             {
-              "minimum": 0,
-              "type": "integer"
+              "items": {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              "type": "array"
             },
             {
               "type": "null"
             }
           ],
-          "title": "First State"
+          "title": "First State Occupancy"
         }
       },
       "title": "EnvironmentStatistics",
@@ -491,14 +555,6 @@
           ],
           "description": "Distance (cm) to the reward"
         },
-        "reward_specification": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RewardSpecification"
-            }
-          ],
-          "description": "specification of the reward"
-        },
         "render_specification": {
           "allOf": [
             {
@@ -508,12 +564,11 @@
           "default": {
             "contrast": null
           },
-          "description": "Contrast of the environement"
+          "description": "The optional render specification of the virtual site"
         }
       },
       "required": [
-        "distance_to_reward",
-        "reward_specification"
+        "distance_to_reward"
       ],
       "title": "HabituationSettings",
       "type": "object"
@@ -627,28 +682,6 @@
       "title": "LogNormalDistributionParameters",
       "type": "object"
     },
-    "Matrix2D": {
-      "properties": {
-        "data": {
-          "default": [
-            [
-              1
-            ]
-          ],
-          "description": "Defines a 2D matrix",
-          "items": {
-            "items": {
-              "type": "number"
-            },
-            "type": "array"
-          },
-          "title": "Data",
-          "type": "array"
-        }
-      },
-      "title": "Matrix2D",
-      "type": "object"
-    },
     "MovableSpoutControl": {
       "properties": {
         "enabled": {
@@ -664,19 +697,12 @@
           "title": "Time To Collect After Reward",
           "type": "number"
         },
-        "servo_motor": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ServoMotor"
-            }
-          ],
-          "default": {
-            "period": 20000,
-            "min_pulse_duration": 1000,
-            "max_pulse_duration": 2000,
-            "default_pulse_duration": 2000
-          },
-          "description": "Servo motor settings"
+        "retracting_distance": {
+          "default": 0,
+          "description": "The distance, relative to the default position, the spout will be retracted by",
+          "minimum": 0.0,
+          "title": "Retracting Distance",
+          "type": "number"
         }
       },
       "title": "MovableSpoutControl",
@@ -935,12 +961,7 @@
           "default": {
             "enabled": false,
             "time_to_collect_after_reward": 1.0,
-            "servo_motor": {
-              "default_pulse_duration": 2000,
-              "max_pulse_duration": 2000,
-              "min_pulse_duration": 1000,
-              "period": 20000
-            }
+            "retracting_distance": 0.0
           },
           "description": "Control of the movable spout"
         },
@@ -1097,12 +1118,10 @@
           ],
           "default": {
             "inter_site": {
-              "label": "Unspecified",
+              "label": "InterSite",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null,
                   "value": 20.0
                 },
                 "family": "Scalar",
@@ -1111,15 +1130,14 @@
               },
               "render_specification": {
                 "contrast": null
-              }
+              },
+              "treadmill_specification": null
             },
             "inter_patch": {
-              "label": "Unspecified",
+              "label": "InterPatch",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null,
                   "value": 20.0
                 },
                 "family": "Scalar",
@@ -1128,15 +1146,15 @@
               },
               "render_specification": {
                 "contrast": null
-              }
+              },
+              "treadmill_specification": null
             },
+            "post_patch": null,
             "reward_site": {
-              "label": "Unspecified",
+              "label": "RewardSite",
               "length_distribution": {
                 "distribution_parameters": {
                   "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null,
                   "value": 20.0
                 },
                 "family": "Scalar",
@@ -1145,7 +1163,8 @@
               },
               "render_specification": {
                 "contrast": null
-              }
+              },
+              "treadmill_specification": null
             }
           },
           "description": "Virtual site generation specification"
@@ -1383,8 +1402,6 @@
             "family": "Scalar",
             "distribution_parameters": {
               "family": "Scalar",
-              "scaling_parameters": null,
-              "truncation_parameters": null,
               "value": 0.0
             },
             "truncation_parameters": null,
@@ -1438,35 +1455,21 @@
           ],
           "default": {
             "family": "Scalar",
-            "value": 0.0,
-            "truncation_parameters": null,
-            "scaling_parameters": null
+            "value": 0.0
           },
           "description": "Parameters of the distribution"
         },
         "truncation_parameters": {
+          "const": null,
           "default": null,
-          "description": "Truncation parameters of the distribution",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/TruncationParameters"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "title": "Truncation Parameters",
+          "type": "null"
         },
         "scaling_parameters": {
+          "const": null,
           "default": null,
-          "description": "Scaling parameters of the distribution",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/ScalingParameters"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "title": "Scaling Parameters",
+          "type": "null"
         }
       },
       "title": "Scalar",
@@ -1485,18 +1488,6 @@
           "description": "The static value of the distribution",
           "title": "Value",
           "type": "number"
-        },
-        "truncation_parameters": {
-          "const": null,
-          "default": null,
-          "title": "Truncation Parameters",
-          "type": "null"
-        },
-        "scaling_parameters": {
-          "const": null,
-          "default": null,
-          "title": "Scaling Parameters",
-          "type": "null"
         }
       },
       "title": "ScalarDistributionParameter",
@@ -1518,44 +1509,6 @@
         }
       },
       "title": "ScalingParameters",
-      "type": "object"
-    },
-    "ServoMotor": {
-      "properties": {
-        "period": {
-          "default": 20000,
-          "description": "Period",
-          "minimum": 1,
-          "title": "Period",
-          "type": "integer",
-          "units": "us"
-        },
-        "min_pulse_duration": {
-          "default": 1000,
-          "description": "Minimum pulse duration",
-          "minimum": 1,
-          "title": "Min Pulse Duration",
-          "type": "integer",
-          "units": "us"
-        },
-        "max_pulse_duration": {
-          "default": 2000,
-          "description": "Maximum pulse duration",
-          "minimum": 1,
-          "title": "Max Pulse Duration",
-          "type": "integer",
-          "units": "us"
-        },
-        "default_pulse_duration": {
-          "default": 2000,
-          "description": "Default pulse duration",
-          "minimum": 1,
-          "title": "Default Pulse Duration",
-          "type": "integer",
-          "units": "us"
-        }
-      },
-      "title": "ServoMotor",
       "type": "object"
     },
     "Size": {
@@ -1620,6 +1573,24 @@
         }
       },
       "title": "Texture",
+      "type": "object"
+    },
+    "TreadmillSpecification": {
+      "properties": {
+        "friction": {
+          "default": null,
+          "description": "Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "TreadmillSpecification",
       "type": "object"
     },
     "TruncationParameters": {
@@ -1808,6 +1779,18 @@
             "contrast": null
           },
           "description": "The optional render specification of the virtual site"
+        },
+        "treadmill_specification": {
+          "default": null,
+          "description": "Treadmill specification",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "VirtualSite",
@@ -1825,18 +1808,17 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "InterSite",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null,
                 "value": 20.0
               },
               "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
-            }
+            },
+            "treadmill_specification": null
           },
           "description": "Generator of the inter-site virtual sites"
         },
@@ -1850,20 +1832,31 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "InterPatch",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null,
                 "value": 20.0
               },
               "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
-            }
+            },
+            "treadmill_specification": null
           },
           "description": "Generator of the inter-patch virtual sites"
+        },
+        "post_patch": {
+          "default": null,
+          "description": "Generator of the post-patch virtual sites",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "reward_site": {
           "allOf": [
@@ -1875,18 +1868,17 @@
             "render_specification": {
               "contrast": null
             },
-            "label": "Unspecified",
+            "label": "RewardSite",
             "length_distribution": {
               "distribution_parameters": {
                 "family": "Scalar",
-                "scaling_parameters": null,
-                "truncation_parameters": null,
                 "value": 20.0
               },
               "family": "Scalar",
               "scaling_parameters": null,
               "truncation_parameters": null
-            }
+            },
+            "treadmill_specification": null
           },
           "description": "Generator of the reward-site virtual sites"
         }
@@ -1926,14 +1918,24 @@
             "family": "Scalar",
             "distribution_parameters": {
               "family": "Scalar",
-              "scaling_parameters": null,
-              "truncation_parameters": null,
               "value": 20.0
             },
             "truncation_parameters": null,
             "scaling_parameters": null
           },
           "description": "Distribution of the length of the virtual site"
+        },
+        "treadmill_specification": {
+          "default": null,
+          "description": "Treadmill specification",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillSpecification"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "VirtualSiteGenerator",
@@ -1943,6 +1945,7 @@
       "enum": [
         "Unspecified",
         "InterPatch",
+        "PostPatch",
         "RewardSite",
         "InterSite"
       ],
@@ -2044,52 +2047,50 @@
       "type": "object"
     }
   },
+  "additionalProperties": false,
   "properties": {
-    "schema_version": {
-      "const": "0.3.0",
-      "default": "0.3.0",
-      "title": "Schema Version",
+    "name": {
+      "default": "AindVrForaging",
+      "description": "Name of the task logic",
+      "title": "Name",
       "type": "string"
     },
-    "updaters": {
-      "additionalProperties": {
-        "$ref": "#/definitions/NumericalUpdater"
-      },
-      "description": "List of numerical updaters",
-      "title": "Updaters",
-      "type": "object"
+    "description": {
+      "default": "",
+      "description": "Description of the task.",
+      "title": "Description",
+      "type": "string"
     },
-    "environment_statistics": {
+    "task_parameters": {
       "allOf": [
         {
-          "$ref": "#/definitions/EnvironmentStatistics"
+          "$ref": "#/definitions/AindVrForagingTaskParameters"
         }
       ],
-      "description": "Statistics of the environment"
+      "description": "Parameters of the task logic"
     },
-    "task_mode_settings": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/TaskModeSettings"
-        }
-      ],
-      "default": {
-        "task_mode": "FORAGING"
-      },
-      "description": "Settings of the task stage"
+    "version": {
+      "const": "0.4.0",
+      "default": "0.4.0",
+      "title": "Version",
+      "type": "string"
     },
-    "operation_control": {
-      "allOf": [
+    "stage_name": {
+      "default": null,
+      "description": "Optional stage name the `Task` object instance represents.",
+      "oneOf": [
         {
-          "$ref": "#/definitions/OperationControl"
+          "type": "string"
+        },
+        {
+          "type": "null"
         }
       ],
-      "description": "Control of the operation"
+      "title": "Stage Name"
     }
   },
   "required": [
-    "environment_statistics",
-    "operation_control"
+    "task_parameters"
   ],
   "title": "AindVrForagingTaskLogic",
   "type": "object"
