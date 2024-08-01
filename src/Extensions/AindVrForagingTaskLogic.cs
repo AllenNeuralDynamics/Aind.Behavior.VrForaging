@@ -12,6 +12,160 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class AindVrForagingTaskParameters
+    {
+    
+        private double? _rngSeed;
+    
+        private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
+    
+        private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
+    
+        private TaskModeSettings _taskModeSettings;
+    
+        private OperationControl _operationControl = new OperationControl();
+    
+        public AindVrForagingTaskParameters()
+        {
+        }
+    
+        protected AindVrForagingTaskParameters(AindVrForagingTaskParameters other)
+        {
+            _rngSeed = other._rngSeed;
+            _updaters = other._updaters;
+            _environmentStatistics = other._environmentStatistics;
+            _taskModeSettings = other._taskModeSettings;
+            _operationControl = other._operationControl;
+        }
+    
+        /// <summary>
+        /// Seed of the random number generator
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rng_seed")]
+        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
+        public double? RngSeed
+        {
+            get
+            {
+                return _rngSeed;
+            }
+            set
+            {
+                _rngSeed = value;
+            }
+        }
+    
+        /// <summary>
+        /// List of numerical updaters
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("updaters")]
+        [System.ComponentModel.DescriptionAttribute("List of numerical updaters")]
+        public System.Collections.Generic.IDictionary<string, NumericalUpdater> Updaters
+        {
+            get
+            {
+                return _updaters;
+            }
+            set
+            {
+                _updaters = value;
+            }
+        }
+    
+        /// <summary>
+        /// Statistics of the environment
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("environment_statistics", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
+        public EnvironmentStatistics EnvironmentStatistics
+        {
+            get
+            {
+                return _environmentStatistics;
+            }
+            set
+            {
+                _environmentStatistics = value;
+            }
+        }
+    
+        /// <summary>
+        /// Settings of the task stage
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("task_mode_settings")]
+        [System.ComponentModel.DescriptionAttribute("Settings of the task stage")]
+        public TaskModeSettings TaskModeSettings
+        {
+            get
+            {
+                return _taskModeSettings;
+            }
+            set
+            {
+                _taskModeSettings = value;
+            }
+        }
+    
+        /// <summary>
+        /// Control of the operation
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("operation_control", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Control of the operation")]
+        public OperationControl OperationControl
+        {
+            get
+            {
+                return _operationControl;
+            }
+            set
+            {
+                _operationControl = value;
+            }
+        }
+    
+        public System.IObservable<AindVrForagingTaskParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingTaskParameters(this)));
+        }
+    
+        public System.IObservable<AindVrForagingTaskParameters> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindVrForagingTaskParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
+            stringBuilder.Append("updaters = " + _updaters + ", ");
+            stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
+            stringBuilder.Append("task_mode_settings = " + _taskModeSettings + ", ");
+            stringBuilder.Append("operation_control = " + _operationControl);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AudioControl
     {
     
@@ -657,6 +811,9 @@ namespace AindVrForagingDataSchema.TaskLogic
     }
 
 
+    /// <summary>
+    /// Available distributions
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [JsonInheritanceAttribute("Scalar", typeof(Scalar))]
@@ -668,6 +825,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [JsonInheritanceAttribute("Binomial", typeof(BinomialDistribution))]
     [JsonInheritanceAttribute("Beta", typeof(BetaDistribution))]
     [JsonInheritanceAttribute("Gamma", typeof(GammaDistribution))]
+    [System.ComponentModel.DescriptionAttribute("Available distributions")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Distribution
@@ -719,9 +877,9 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private System.Collections.Generic.List<PatchStatistics> _patches = new System.Collections.Generic.List<PatchStatistics>();
     
-        private Matrix2D _transitionMatrix;
+        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _transitionMatrix = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
     
-        private int? _firstState;
+        private System.Collections.Generic.List<double> _firstStateOccupancy;
     
         public EnvironmentStatistics()
         {
@@ -731,7 +889,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _patches = other._patches;
             _transitionMatrix = other._transitionMatrix;
-            _firstState = other._firstState;
+            _firstStateOccupancy = other._firstStateOccupancy;
         }
     
         /// <summary>
@@ -753,12 +911,12 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Transition matrix between patches
+        /// Determines the transition probabilities between patches
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("transition_matrix")]
-        [System.ComponentModel.DescriptionAttribute("Transition matrix between patches")]
-        public Matrix2D TransitionMatrix
+        [System.ComponentModel.DescriptionAttribute("Determines the transition probabilities between patches")]
+        public System.Collections.Generic.List<System.Collections.Generic.List<double>> TransitionMatrix
         {
             get
             {
@@ -771,20 +929,21 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// The first state to be visited. If None, it will be randomly drawn.
+        /// Determines the first state the animal will be in. If null, it will be randomly drawn.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("first_state")]
-        [System.ComponentModel.DescriptionAttribute("The first state to be visited. If None, it will be randomly drawn.")]
-        public int? FirstState
+        [Newtonsoft.Json.JsonPropertyAttribute("first_state_occupancy")]
+        [System.ComponentModel.DescriptionAttribute("Determines the first state the animal will be in. If null, it will be randomly dr" +
+            "awn.")]
+        public System.Collections.Generic.List<double> FirstStateOccupancy
         {
             get
             {
-                return _firstState;
+                return _firstStateOccupancy;
             }
             set
             {
-                _firstState = value;
+                _firstStateOccupancy = value;
             }
         }
     
@@ -802,7 +961,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("patches = " + _patches + ", ");
             stringBuilder.Append("transition_matrix = " + _transitionMatrix + ", ");
-            stringBuilder.Append("first_state = " + _firstState);
+            stringBuilder.Append("first_state_occupancy = " + _firstStateOccupancy);
             return true;
         }
     
@@ -1250,8 +1409,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private Distribution _distanceToReward;
     
-        private RewardSpecification _rewardSpecification = new RewardSpecification();
-    
         private RenderSpecification _renderSpecification;
     
         public HabituationSettings()
@@ -1262,7 +1419,6 @@ namespace AindVrForagingDataSchema.TaskLogic
                 base(other)
         {
             _distanceToReward = other._distanceToReward;
-            _rewardSpecification = other._rewardSpecification;
             _renderSpecification = other._renderSpecification;
         }
     
@@ -1285,29 +1441,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// specification of the reward
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("reward_specification", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("specification of the reward")]
-        public RewardSpecification RewardSpecification
-        {
-            get
-            {
-                return _rewardSpecification;
-            }
-            set
-            {
-                _rewardSpecification = value;
-            }
-        }
-    
-        /// <summary>
-        /// Contrast of the environement
+        /// The optional render specification of the virtual site
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("render_specification")]
-        [System.ComponentModel.DescriptionAttribute("Contrast of the environement")]
+        [System.ComponentModel.DescriptionAttribute("The optional render specification of the virtual site")]
         public RenderSpecification RenderSpecification
         {
             get
@@ -1337,7 +1475,6 @@ namespace AindVrForagingDataSchema.TaskLogic
                 stringBuilder.Append(", ");
             }
             stringBuilder.Append("distance_to_reward = " + _distanceToReward + ", ");
-            stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
             stringBuilder.Append("render_specification = " + _renderSpecification);
             return true;
         }
@@ -1672,72 +1809,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Matrix2D
-    {
-    
-        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _data = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
-    
-        public Matrix2D()
-        {
-        }
-    
-        protected Matrix2D(Matrix2D other)
-        {
-            _data = other._data;
-        }
-    
-        /// <summary>
-        /// Defines a 2D matrix
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("data")]
-        [System.ComponentModel.DescriptionAttribute("Defines a 2D matrix")]
-        public System.Collections.Generic.List<System.Collections.Generic.List<double>> Data
-        {
-            get
-            {
-                return _data;
-            }
-            set
-            {
-                _data = value;
-            }
-        }
-    
-        public System.IObservable<Matrix2D> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Matrix2D(this)));
-        }
-    
-        public System.IObservable<Matrix2D> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Matrix2D(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("data = " + _data);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class MovableSpoutControl
     {
     
@@ -1745,7 +1816,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private double _timeToCollectAfterReward = 1D;
     
-        private ServoMotor _servoMotor;
+        private double _retractingDistance = 0D;
     
         public MovableSpoutControl()
         {
@@ -1755,7 +1826,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _enabled = other._enabled;
             _timeToCollectAfterReward = other._timeToCollectAfterReward;
-            _servoMotor = other._servoMotor;
+            _retractingDistance = other._retractingDistance;
         }
     
         /// <summary>
@@ -1793,20 +1864,19 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Servo motor settings
+        /// The distance, relative to the default position, the spout will be retracted by
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("servo_motor")]
-        [System.ComponentModel.DescriptionAttribute("Servo motor settings")]
-        public ServoMotor ServoMotor
+        [Newtonsoft.Json.JsonPropertyAttribute("retracting_distance")]
+        [System.ComponentModel.DescriptionAttribute("The distance, relative to the default position, the spout will be retracted by")]
+        public double RetractingDistance
         {
             get
             {
-                return _servoMotor;
+                return _retractingDistance;
             }
             set
             {
-                _servoMotor = value;
+                _retractingDistance = value;
             }
         }
     
@@ -1824,7 +1894,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("enabled = " + _enabled + ", ");
             stringBuilder.Append("time_to_collect_after_reward = " + _timeToCollectAfterReward + ", ");
-            stringBuilder.Append("servo_motor = " + _servoMotor);
+            stringBuilder.Append("retracting_distance = " + _retractingDistance);
             return true;
         }
     
@@ -3775,9 +3845,9 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private ScalarDistributionParameter _distributionParameters;
     
-        private TruncationParameters _truncationParameters;
+        private TruncationParameters2 _truncationParameters;
     
-        private ScalingParameters _scalingParameters;
+        private ScalingParameters2 _scalingParameters;
     
         public Scalar()
         {
@@ -3809,13 +3879,9 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
-        /// <summary>
-        /// Truncation parameters of the distribution
-        /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("truncation_parameters")]
-        [System.ComponentModel.DescriptionAttribute("Truncation parameters of the distribution")]
-        public TruncationParameters TruncationParameters
+        public TruncationParameters2 TruncationParameters
         {
             get
             {
@@ -3827,13 +3893,9 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
-        /// <summary>
-        /// Scaling parameters of the distribution
-        /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("scaling_parameters")]
-        [System.ComponentModel.DescriptionAttribute("Scaling parameters of the distribution")]
-        public ScalingParameters ScalingParameters
+        public ScalingParameters2 ScalingParameters
         {
             get
             {
@@ -3879,10 +3941,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private double _value = 0D;
     
-        private TruncationParameters2 _truncationParameters;
-    
-        private ScalingParameters2 _scalingParameters;
-    
         public ScalarDistributionParameter()
         {
         }
@@ -3891,8 +3949,6 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _family = other._family;
             _value = other._value;
-            _truncationParameters = other._truncationParameters;
-            _scalingParameters = other._scalingParameters;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("family")]
@@ -3925,34 +3981,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("truncation_parameters")]
-        public TruncationParameters2 TruncationParameters
-        {
-            get
-            {
-                return _truncationParameters;
-            }
-            set
-            {
-                _truncationParameters = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("scaling_parameters")]
-        public ScalingParameters2 ScalingParameters
-        {
-            get
-            {
-                return _scalingParameters;
-            }
-            set
-            {
-                _scalingParameters = value;
-            }
-        }
-    
         public System.IObservable<ScalarDistributionParameter> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ScalarDistributionParameter(this)));
@@ -3966,9 +3994,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("value = " + _value + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("value = " + _value);
             return true;
         }
     
@@ -4055,134 +4081,6 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("scale = " + _scale + ", ");
             stringBuilder.Append("offset = " + _offset);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ServoMotor
-    {
-    
-        private int _period = 20000;
-    
-        private int _minPulseDuration = 1000;
-    
-        private int _maxPulseDuration = 2000;
-    
-        private int _defaultPulseDuration = 2000;
-    
-        public ServoMotor()
-        {
-        }
-    
-        protected ServoMotor(ServoMotor other)
-        {
-            _period = other._period;
-            _minPulseDuration = other._minPulseDuration;
-            _maxPulseDuration = other._maxPulseDuration;
-            _defaultPulseDuration = other._defaultPulseDuration;
-        }
-    
-        /// <summary>
-        /// Period
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("period")]
-        [System.ComponentModel.DescriptionAttribute("Period")]
-        public int Period
-        {
-            get
-            {
-                return _period;
-            }
-            set
-            {
-                _period = value;
-            }
-        }
-    
-        /// <summary>
-        /// Minimum pulse duration
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("min_pulse_duration")]
-        [System.ComponentModel.DescriptionAttribute("Minimum pulse duration")]
-        public int MinPulseDuration
-        {
-            get
-            {
-                return _minPulseDuration;
-            }
-            set
-            {
-                _minPulseDuration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Maximum pulse duration
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("max_pulse_duration")]
-        [System.ComponentModel.DescriptionAttribute("Maximum pulse duration")]
-        public int MaxPulseDuration
-        {
-            get
-            {
-                return _maxPulseDuration;
-            }
-            set
-            {
-                _maxPulseDuration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Default pulse duration
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("default_pulse_duration")]
-        [System.ComponentModel.DescriptionAttribute("Default pulse duration")]
-        public int DefaultPulseDuration
-        {
-            get
-            {
-                return _defaultPulseDuration;
-            }
-            set
-            {
-                _defaultPulseDuration = value;
-            }
-        }
-    
-        public System.IObservable<ServoMotor> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ServoMotor(this)));
-        }
-    
-        public System.IObservable<ServoMotor> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new ServoMotor(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("period = " + _period + ", ");
-            stringBuilder.Append("min_pulse_duration = " + _minPulseDuration + ", ");
-            stringBuilder.Append("max_pulse_duration = " + _maxPulseDuration + ", ");
-            stringBuilder.Append("default_pulse_duration = " + _defaultPulseDuration);
             return true;
         }
     
@@ -4404,6 +4302,72 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("name = " + _name + ", ");
             stringBuilder.Append("size = " + _size);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TreadmillSpecification
+    {
+    
+        private Distribution _friction;
+    
+        public TreadmillSpecification()
+        {
+        }
+    
+        protected TreadmillSpecification(TreadmillSpecification other)
+        {
+            _friction = other._friction;
+        }
+    
+        /// <summary>
+        /// Friction of the treadmill (0-1). The drawn value must be between 0 and 1
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("friction")]
+        [System.ComponentModel.DescriptionAttribute("Friction of the treadmill (0-1). The drawn value must be between 0 and 1")]
+        public Distribution Friction
+        {
+            get
+            {
+                return _friction;
+            }
+            set
+            {
+                _friction = value;
+            }
+        }
+    
+        public System.IObservable<TreadmillSpecification> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillSpecification(this)));
+        }
+    
+        public System.IObservable<TreadmillSpecification> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillSpecification(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("friction = " + _friction);
             return true;
         }
     
@@ -4861,6 +4825,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private RenderSpecification _renderSpecification;
     
+        private TreadmillSpecification _treadmillSpecification;
+    
         public VirtualSite()
         {
         }
@@ -4874,6 +4840,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             _odorSpecification = other._odorSpecification;
             _rewardSpecification = other._rewardSpecification;
             _renderSpecification = other._renderSpecification;
+            _treadmillSpecification = other._treadmillSpecification;
         }
     
         /// <summary>
@@ -4999,6 +4966,24 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
+        /// <summary>
+        /// Treadmill specification
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("treadmill_specification")]
+        [System.ComponentModel.DescriptionAttribute("Treadmill specification")]
+        public TreadmillSpecification TreadmillSpecification
+        {
+            get
+            {
+                return _treadmillSpecification;
+            }
+            set
+            {
+                _treadmillSpecification = value;
+            }
+        }
+    
         public System.IObservable<VirtualSite> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VirtualSite(this)));
@@ -5017,7 +5002,8 @@ namespace AindVrForagingDataSchema.TaskLogic
             stringBuilder.Append("start_position = " + _startPosition + ", ");
             stringBuilder.Append("odor_specification = " + _odorSpecification + ", ");
             stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
-            stringBuilder.Append("render_specification = " + _renderSpecification);
+            stringBuilder.Append("render_specification = " + _renderSpecification + ", ");
+            stringBuilder.Append("treadmill_specification = " + _treadmillSpecification);
             return true;
         }
     
@@ -5046,6 +5032,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private VirtualSiteGenerator _interPatch;
     
+        private VirtualSiteGenerator _postPatch;
+    
         private VirtualSiteGenerator _rewardSite;
     
         public VirtualSiteGeneration()
@@ -5056,6 +5044,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             _interSite = other._interSite;
             _interPatch = other._interPatch;
+            _postPatch = other._postPatch;
             _rewardSite = other._rewardSite;
         }
     
@@ -5096,6 +5085,24 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
+        /// Generator of the post-patch virtual sites
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("post_patch")]
+        [System.ComponentModel.DescriptionAttribute("Generator of the post-patch virtual sites")]
+        public VirtualSiteGenerator PostPatch
+        {
+            get
+            {
+                return _postPatch;
+            }
+            set
+            {
+                _postPatch = value;
+            }
+        }
+    
+        /// <summary>
         /// Generator of the reward-site virtual sites
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5127,6 +5134,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("inter_site = " + _interSite + ", ");
             stringBuilder.Append("inter_patch = " + _interPatch + ", ");
+            stringBuilder.Append("post_patch = " + _postPatch + ", ");
             stringBuilder.Append("reward_site = " + _rewardSite);
             return true;
         }
@@ -5158,6 +5166,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private Distribution _lengthDistribution;
     
+        private TreadmillSpecification _treadmillSpecification;
+    
         public VirtualSiteGenerator()
         {
         }
@@ -5167,6 +5177,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             _renderSpecification = other._renderSpecification;
             _label = other._label;
             _lengthDistribution = other._lengthDistribution;
+            _treadmillSpecification = other._treadmillSpecification;
         }
     
         /// <summary>
@@ -5223,6 +5234,24 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
+        /// <summary>
+        /// Treadmill specification
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("treadmill_specification")]
+        [System.ComponentModel.DescriptionAttribute("Treadmill specification")]
+        public TreadmillSpecification TreadmillSpecification
+        {
+            get
+            {
+                return _treadmillSpecification;
+            }
+            set
+            {
+                _treadmillSpecification = value;
+            }
+        }
+    
         public System.IObservable<VirtualSiteGenerator> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VirtualSiteGenerator(this)));
@@ -5237,7 +5266,8 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("render_specification = " + _renderSpecification + ", ");
             stringBuilder.Append("label = " + _label + ", ");
-            stringBuilder.Append("length_distribution = " + _lengthDistribution);
+            stringBuilder.Append("length_distribution = " + _lengthDistribution + ", ");
+            stringBuilder.Append("treadmill_specification = " + _treadmillSpecification);
             return true;
         }
     
@@ -5267,11 +5297,14 @@ namespace AindVrForagingDataSchema.TaskLogic
         [System.Runtime.Serialization.EnumMemberAttribute(Value="InterPatch")]
         InterPatch = 1,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="PostPatch")]
+        PostPatch = 2,
+    
         [System.Runtime.Serialization.EnumMemberAttribute(Value="RewardSite")]
-        RewardSite = 2,
+        RewardSite = 3,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="InterSite")]
-        InterSite = 3,
+        InterSite = 4,
     }
 
 
@@ -5564,15 +5597,15 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class AindVrForagingTaskLogic
     {
     
-        private string _schemaVersion = "0.3.0";
+        private string _name = "AindVrForaging";
     
-        private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
+        private string _description = "";
     
-        private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
+        private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
     
-        private TaskModeSettings _taskModeSettings;
+        private string _version = "0.4.0";
     
-        private OperationControl _operationControl = new OperationControl();
+        private string _stageName;
     
         public AindVrForagingTaskLogic()
         {
@@ -5580,95 +5613,92 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         protected AindVrForagingTaskLogic(AindVrForagingTaskLogic other)
         {
-            _schemaVersion = other._schemaVersion;
-            _updaters = other._updaters;
-            _environmentStatistics = other._environmentStatistics;
-            _taskModeSettings = other._taskModeSettings;
-            _operationControl = other._operationControl;
+            _name = other._name;
+            _description = other._description;
+            _taskParameters = other._taskParameters;
+            _version = other._version;
+            _stageName = other._stageName;
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
-        public string SchemaVersion
+        /// <summary>
+        /// Name of the task logic
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        [System.ComponentModel.DescriptionAttribute("Name of the task logic")]
+        public string Name
         {
             get
             {
-                return _schemaVersion;
+                return _name;
             }
             set
             {
-                _schemaVersion = value;
+                _name = value;
             }
         }
     
         /// <summary>
-        /// List of numerical updaters
+        /// Description of the task.
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("updaters")]
-        [System.ComponentModel.DescriptionAttribute("List of numerical updaters")]
-        public System.Collections.Generic.IDictionary<string, NumericalUpdater> Updaters
+        [Newtonsoft.Json.JsonPropertyAttribute("description")]
+        [System.ComponentModel.DescriptionAttribute("Description of the task.")]
+        public string Description
         {
             get
             {
-                return _updaters;
+                return _description;
             }
             set
             {
-                _updaters = value;
+                _description = value;
             }
         }
     
         /// <summary>
-        /// Statistics of the environment
+        /// Parameters of the task logic
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("environment_statistics", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
-        public EnvironmentStatistics EnvironmentStatistics
+        [Newtonsoft.Json.JsonPropertyAttribute("task_parameters", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Parameters of the task logic")]
+        public AindVrForagingTaskParameters TaskParameters
         {
             get
             {
-                return _environmentStatistics;
+                return _taskParameters;
             }
             set
             {
-                _environmentStatistics = value;
+                _taskParameters = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
             }
         }
     
         /// <summary>
-        /// Settings of the task stage
+        /// Optional stage name the `Task` object instance represents.
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("task_mode_settings")]
-        [System.ComponentModel.DescriptionAttribute("Settings of the task stage")]
-        public TaskModeSettings TaskModeSettings
+        [Newtonsoft.Json.JsonPropertyAttribute("stage_name")]
+        [System.ComponentModel.DescriptionAttribute("Optional stage name the `Task` object instance represents.")]
+        public string StageName
         {
             get
             {
-                return _taskModeSettings;
+                return _stageName;
             }
             set
             {
-                _taskModeSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Control of the operation
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("operation_control", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Control of the operation")]
-        public OperationControl OperationControl
-        {
-            get
-            {
-                return _operationControl;
-            }
-            set
-            {
-                _operationControl = value;
+                _stageName = value;
             }
         }
     
@@ -5684,11 +5714,11 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
-            stringBuilder.Append("updaters = " + _updaters + ", ");
-            stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
-            stringBuilder.Append("task_mode_settings = " + _taskModeSettings + ", ");
-            stringBuilder.Append("operation_control = " + _operationControl);
+            stringBuilder.Append("name = " + _name + ", ");
+            stringBuilder.Append("description = " + _description + ", ");
+            stringBuilder.Append("task_parameters = " + _taskParameters + ", ");
+            stringBuilder.Append("version = " + _version + ", ");
+            stringBuilder.Append("stage_name = " + _stageName);
             return true;
         }
     
@@ -6079,6 +6109,11 @@ namespace AindVrForagingDataSchema.TaskLogic
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
+        public System.IObservable<string> Process(System.IObservable<AindVrForagingTaskParameters> source)
+        {
+            return Process<AindVrForagingTaskParameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AudioControl> source)
         {
             return Process<AudioControl>(source);
@@ -6167,11 +6202,6 @@ namespace AindVrForagingDataSchema.TaskLogic
         public System.IObservable<string> Process(System.IObservable<LogNormalDistributionParameters> source)
         {
             return Process<LogNormalDistributionParameters>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Matrix2D> source)
-        {
-            return Process<Matrix2D>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
@@ -6279,11 +6309,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             return Process<ScalingParameters>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ServoMotor> source)
-        {
-            return Process<ServoMotor>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Size> source)
         {
             return Process<Size>(source);
@@ -6297,6 +6322,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         public System.IObservable<string> Process(System.IObservable<Texture> source)
         {
             return Process<Texture>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TreadmillSpecification> source)
+        {
+            return Process<TreadmillSpecification>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<TruncationParameters> source)
@@ -6368,6 +6398,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AudioControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistributionParameters>))]
@@ -6386,7 +6417,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LinearFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistributionParameters>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Matrix2D>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistributionParameters>))]
@@ -6408,10 +6438,10 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalarDistributionParameter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ServoMotor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Size>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TaskModeSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Texture>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistributionParameters>))]

@@ -4,9 +4,10 @@ from enum import Enum
 from typing import Annotated, Dict, List, Literal, Optional, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
-from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel
-from aind_behavior_vr_foraging import __version__
-from pydantic import BaseModel, Field, RootModel
+from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
+from pydantic import BaseModel, Field, NonNegativeFloat, RootModel
+
+__version__ = "0.4.0"
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -38,10 +39,6 @@ class Vector3(BaseModel):
     z: float = Field(default=0, description="Z coordinate of the point")
 
 
-class Matrix2D(BaseModel):
-    data: List[List[float]] = Field([[1]], description="Defines a 2D matrix")
-
-
 # Updaters
 class NumericalUpdaterOperation(str, Enum):
     NONE = "None"
@@ -64,7 +61,7 @@ class NumericalUpdater(BaseModel):
         default=NumericalUpdaterOperation.NONE, description="Operation to perform on the parameter"
     )
     parameters: NumericalUpdaterParameters = Field(
-        NumericalUpdaterParameters(), description="Parameters of the updater"
+        default=NumericalUpdaterParameters(), description="Parameters of the updater"
     )
 
 
@@ -147,7 +144,7 @@ class PatchRewardFunction(BaseModel):
 
 
 class RewardSpecification(BaseModel):
-    operant_logic: Optional[OperantLogic] = Field(None, description="The optional operant logic of the reward")
+    operant_logic: Optional[OperantLogic] = Field(default=None, description="The optional operant logic of the reward")
     delay: distributions.Distribution = Field(
         default=scalar_value(0),
         description="The optional distribution where the delay to reward will be drawn from",
@@ -161,6 +158,7 @@ class RewardSpecification(BaseModel):
 class VirtualSiteLabels(str, Enum):
     UNSPECIFIED = "Unspecified"
     INTERPATCH = "InterPatch"
+    POSTPATCH = "PostPatch"
     REWARDSITE = "RewardSite"
     INTERSITE = "InterSite"
 
@@ -169,41 +167,65 @@ class RenderSpecification(BaseModel):
     contrast: Optional[float] = Field(default=None, ge=0, le=1, description="Contrast of the texture")
 
 
+class TreadmillSpecification(BaseModel):
+    friction: Optional[distributions.Distribution] = Field(
+        default=None,
+        description="Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
+    )
+
+
 class VirtualSiteGenerator(BaseModel):
     render_specification: RenderSpecification = Field(
-        default=RenderSpecification(), description="Contrast of the environment"
+        default=RenderSpecification(), description="Contrast of the environment", validate_default=True
     )
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
         default=scalar_value(20), description="Distribution of the length of the virtual site", validate_default=True
     )
+    treadmill_specification: Optional[TreadmillSpecification] = Field(
+        default=None, description="Treadmill specification", validate_default=True
+    )
 
 
 class VirtualSiteGeneration(BaseModel):
     inter_site: VirtualSiteGenerator = Field(
-        VirtualSiteGenerator(), description="Generator of the inter-site virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.INTERSITE),
+        validate_default=True,
+        description="Generator of the inter-site virtual sites",
     )
     inter_patch: VirtualSiteGenerator = Field(
-        VirtualSiteGenerator(), description="Generator of the inter-patch virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.INTERPATCH),
+        validate_default=True,
+        description="Generator of the inter-patch virtual sites",
+    )
+    post_patch: Optional[VirtualSiteGenerator] = Field(
+        default=None,
+        validate_default=True,
+        description="Generator of the post-patch virtual sites",
     )
     reward_site: VirtualSiteGenerator = Field(
-        VirtualSiteGenerator(), description="Generator of the reward-site virtual sites"
+        default=VirtualSiteGenerator(label=VirtualSiteLabels.REWARDSITE),
+        validate_default=True,
+        description="Generator of the reward-site virtual sites",
     )
 
 
 class VirtualSite(BaseModel):
     id: int = Field(default=0, ge=0, description="Id of the virtual site")
-    label: VirtualSiteLabels = Field(VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
-    length: float = Field(20, description="Length of the virtual site (cm)")
+    label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
+    length: float = Field(default=20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
     odor_specification: Optional[OdorSpecification] = Field(
-        None, description="The optional odor specification of the virtual site"
+        default=None, description="The optional odor specification of the virtual site"
     )
     reward_specification: Optional[RewardSpecification] = Field(
-        None, description="The optional reward specification of the virtual site"
+        default=None, description="The optional reward specification of the virtual site"
     )
     render_specification: RenderSpecification = Field(
-        RenderSpecification(), description="The optional render specification of the virtual site"
+        default=RenderSpecification(), description="The optional render specification of the virtual site"
+    )
+    treadmill_specification: Optional[TreadmillSpecification] = Field(
+        default=None, description="Treadmill specification"
     )
 
 
@@ -217,7 +239,7 @@ class PatchStatistics(BaseModel):
         default=None, description="The optional reward specification of the patch"
     )
     virtual_site_generation: VirtualSiteGeneration = Field(
-        VirtualSiteGeneration(), description="Virtual site generation specification"
+        default=VirtualSiteGeneration(), validate_default=True, description="Virtual site generation specification"
     )
 
 
@@ -237,24 +259,22 @@ class VisualCorridor(BaseModel):
 
 
 class EnvironmentStatistics(BaseModel):
-    patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches")
-    transition_matrix: Matrix2D = Field(default=Matrix2D(), description="Transition matrix between patches")
-    first_state: Optional[int] = Field(
-        default=None, ge=0, description="The first state to be visited. If None, it will be randomly drawn."
+    patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches", min_items=1)
+    transition_matrix: List[List[NonNegativeFloat]] = Field(
+        default=[[1]], description="Determines the transition probabilities between patches"
     )
-
-
-class ServoMotor(BaseModel):
-    period: int = Field(default=20000, ge=1, description="Period", units="us")
-    min_pulse_duration: int = Field(default=1000, ge=1, description="Minimum pulse duration", units="us")
-    max_pulse_duration: int = Field(default=2000, ge=1, description="Maximum pulse duration", units="us")
-    default_pulse_duration: int = Field(default=2000, ge=1, description="Default pulse duration", units="us")
+    first_state_occupancy: Optional[List[NonNegativeFloat]] = Field(
+        default=None,
+        description="Determines the first state the animal will be in. If null, it will be randomly drawn.",
+    )
 
 
 class MovableSpoutControl(BaseModel):
     enabled: bool = Field(default=False, description="Whether the movable spout is enabled")
     time_to_collect_after_reward: float = Field(default=1, ge=0, description="Time (s) to collect after reward")
-    servo_motor: ServoMotor = Field(default=ServoMotor(), description="Servo motor settings")
+    retracting_distance: float = Field(
+        default=0, ge=0, description="The distance, relative to the default position, the spout will be retracted by"
+    )
 
 
 class OdorControl(BaseModel):
@@ -285,8 +305,8 @@ class PositionControl(BaseModel):
 
 
 class AudioControl(BaseModel):
-    duration: float = Field(default=0.2, ge=0, description="Duration", units="s")
-    frequency: float = Field(default=1000, ge=100, description="Frequency", units="Hz")
+    duration: float = Field(default=0.2, ge=0, description="Duration")
+    frequency: float = Field(default=1000, ge=100, description="Frequency")
 
 
 class OperationControl(BaseModel):
@@ -315,9 +335,10 @@ class TaskModeSettingsBase(BaseModel):
 class HabituationSettings(TaskModeSettingsBase):
     task_mode: Literal[TaskMode.HABITUATION] = TaskMode.HABITUATION
     distance_to_reward: distributions.Distribution = Field(..., description="Distance (cm) to the reward")
-    reward_specification: RewardSpecification = Field(..., description="specification of the reward")
     render_specification: RenderSpecification = Field(
-        default=RenderSpecification(), description="Contrast of the environement"
+        RenderSpecification(),
+        description="The optional render specification of the virtual site",
+        validate_default=True,
     )
 
 
@@ -337,8 +358,7 @@ class TaskModeSettings(RootModel):
     root: Annotated[Union[HabituationSettings, ForagingSettings, DebugSettings], Field(discriminator="task_mode")]
 
 
-class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
-    schema_version: Literal[__version__] = __version__
+class AindVrForagingTaskParameters(TaskParameters):
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
     task_mode_settings: TaskModeSettings = Field(
@@ -347,5 +367,7 @@ class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     operation_control: OperationControl = Field(..., description="Control of the operation")
 
 
-def schema() -> BaseModel:
-    return AindVrForagingTaskLogic
+class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
+    version: Literal[__version__] = __version__
+    name: str = Field(default="AindVrForaging", description="Name of the task logic", frozen=True)
+    task_parameters: AindVrForagingTaskParameters = Field(..., description="Parameters of the task logic")

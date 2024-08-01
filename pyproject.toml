@@ -14,27 +14,24 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.6.0",
+  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.7.14",
 ]
 
 [project.optional-dependencies]
 
-analysis = [
-  "numpy",
-  "pandas",
-  "matplotlib",
-  "Pillow",
-]
-
 linters = [
-    'codespell',
-    'black',
-    'coverage',
-    'flake8',
-    'interrogate',
-    'isort'
+    'ruff',
+    'codespell'
 ]
 
+docs = [
+    'Sphinx<7.3',
+    'furo',
+    'sphinx-jinja',
+    'autodoc_pydantic[erdantic]',
+    'myst_parser',
+    'sphinx-jsonschema'
+]
 
 [tool.setuptools.packages.find]
 where = ["src/DataSchemas"]
@@ -43,43 +40,16 @@ where = ["src/DataSchemas"]
 version = {attr = "aind_behavior_vr_foraging.__version__"}
 readme = {file = ["README.md"]}
 
-[tool.black]
+[tool.ruff]
 line-length = 120
-target_version = ['py311']
-exclude = '''
+target-version = 'py311'
 
-(
-  /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | build
-    | dist
-  )/
-  | .gitignore
-)
-'''
-
-[tool.coverage.run]
-omit = ["*__init__*"]
-source = ["aind_behavior_vr_foraging", "tests"]
-
-[tool.coverage.report]
-exclude_lines = ["if __name__ == .__main__.:", "pragma: no cover"]
-fail_under = 100
-
-[tool.isort]
-line_length = 120
-profile = "black"
-
-[tool.interrogate]
-exclude = ["setup.py", "docs", "build"]
-fail-under = 100
+[tool.ruff.lint]
+extend-select = ['Q', 'RUF100', 'C90', 'I']
+extend-ignore = []
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = 'google' }
 
 [tool.codespell]
-skip = '.git,*.pdf,*.svg'
+skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build'
 ignore-words-list = 'nd'

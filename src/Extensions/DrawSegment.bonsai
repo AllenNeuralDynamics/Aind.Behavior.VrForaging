@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.1"
+<WorkflowBuilder Version="2.8.2"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
@@ -143,15 +143,15 @@ PostCorridorSpecs.CenterZ as CenterZ)</scr:Expression>
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
+            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:DrawScaledTexturedModel.bonsai">
               <TranslationX>0</TranslationX>
               <TranslationY>0</TranslationY>
-              <TranslationZ>1950</TranslationZ>
+              <TranslationZ>25</TranslationZ>
               <RotationZ>0</RotationZ>
               <RotationY>0</RotationY>
               <RotationX>90</RotationX>
               <ScaleX>10</ScaleX>
-              <ScaleY>100</ScaleY>
+              <ScaleY>50</ScaleY>
               <ScaleZ>1.58139539</ScaleZ>
               <Ambient>
                 <X>1</X>
@@ -216,15 +216,15 @@ CorridorSpecs.Size.Height as TranslationY)</scr:Expression>
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
+            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:DrawScaledTexturedModel.bonsai">
               <TranslationX>0</TranslationX>
-              <TranslationY>10</TranslationY>
-              <TranslationZ>1950</TranslationZ>
+              <TranslationY>0</TranslationY>
+              <TranslationZ>25</TranslationZ>
               <RotationZ>0</RotationZ>
               <RotationY>0</RotationY>
               <RotationX>-90</RotationX>
               <ScaleX>10</ScaleX>
-              <ScaleY>100</ScaleY>
+              <ScaleY>50</ScaleY>
               <ScaleZ>1.58139539</ScaleZ>
               <Ambient>
                 <X>1</X>
@@ -291,15 +291,15 @@ PostCorridorSpecs.NegOffsetX as NegOffsetX)</scr:Expression>
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
-              <TranslationX>-5</TranslationX>
-              <TranslationY>5</TranslationY>
-              <TranslationZ>1950</TranslationZ>
+            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:DrawScaledTexturedModel.bonsai">
+              <TranslationX>0</TranslationX>
+              <TranslationY>0</TranslationY>
+              <TranslationZ>25</TranslationZ>
               <RotationZ>-90</RotationZ>
               <RotationY>0</RotationY>
               <RotationX>-90</RotationX>
               <ScaleX>10</ScaleX>
-              <ScaleY>100</ScaleY>
+              <ScaleY>50</ScaleY>
               <ScaleZ>1.58139539</ScaleZ>
               <Ambient>
                 <X>1</X>
@@ -367,15 +367,15 @@ CorridorSpecs.Size.Height as TranslationY)</scr:Expression>
               </PropertyMappings>
               <Selector>Item1</Selector>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawTexturedModel.bonsai">
-              <TranslationX>5</TranslationX>
-              <TranslationY>5</TranslationY>
-              <TranslationZ>1950</TranslationZ>
+            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:DrawScaledTexturedModel.bonsai">
+              <TranslationX>0</TranslationX>
+              <TranslationY>0</TranslationY>
+              <TranslationZ>25</TranslationZ>
               <RotationZ>90</RotationZ>
               <RotationY>0</RotationY>
               <RotationX>-90</RotationX>
               <ScaleX>10</ScaleX>
-              <ScaleY>100</ScaleY>
+              <ScaleY>50</ScaleY>
               <ScaleZ>1.58139539</ScaleZ>
               <Ambient>
                 <X>1</X>
