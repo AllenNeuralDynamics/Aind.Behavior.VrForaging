@@ -118,9 +118,9 @@ class RewardFunction(RootModel):
 
 
 class DepletionRule(str, Enum):
-    ON_REWARD = ("OnReward",)
-    ON_CHOICE = ("OnChoice",)
-    ON_TIME = ("OnTime",)
+    ON_REWARD = "OnReward"
+    ON_CHOICE = "OnChoice"
+    ON_TIME = "OnTime"
     ON_DISTANCE = "OnDistance"
 
 
