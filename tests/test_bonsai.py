@@ -11,8 +11,8 @@ from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 from pydantic import ValidationError
 
 sys.path.append(".")
-from examples import examples  # noqa: E402 # isort:skip # pylint: disable=wrong-import-position
-from tests import JSON_ROOT  # noqa: E402 # isort:skip # pylint: disable=wrong-import-position
+from examples import examples  # isort:skip # pylint: disable=wrong-import-position
+from tests import JSON_ROOT  # isort:skip # pylint: disable=wrong-import-position
 
 TModel = TypeVar("TModel", bound=Union[AindVrForagingRig, AindVrForagingTaskLogic, AindBehaviorSessionModel])
 
