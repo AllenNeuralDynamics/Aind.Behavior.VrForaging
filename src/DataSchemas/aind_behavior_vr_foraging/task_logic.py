@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, Dict, List, Literal, Optional, Union
+from typing import Annotated, Dict, List, Literal, Optional, Self, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import BaseModel, Field, NonNegativeFloat, RootModel
+from pydantic import BaseModel, Field, NonNegativeFloat, RootModel, model_validator
 
 __version__ = "0.4.0"
 
@@ -90,7 +90,7 @@ class OperantLogic(BaseModel):
 
 class PowerFunction(BaseModel):
     function_type: Literal["PowerFunction"] = "PowerFunction"
-    mininum: float = Field(default=0, description="Minimum value of the function")
+    minimum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=1, description="Maximum value of the function")
     a: float = Field(default=1, description="Coefficient a of the function: value = a * pow(b, c * x) + d")
     b: float = Field(
@@ -102,7 +102,7 @@ class PowerFunction(BaseModel):
 
 class LinearFunction(BaseModel):
     function_type: Literal["LinearFunction"] = "LinearFunction"
-    mininum: float = Field(default=0, description="Minimum value of the function")
+    minimum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=9999, description="Maximum value of the function")
     a: float = Field(default=1, description="Coefficient a of the function: value = a * x + b")
     b: float = Field(default=0, description="Coefficient b of the function: value = a * x + b")
@@ -113,14 +113,29 @@ class ConstantFunction(BaseModel):
     value: float = Field(default=1, description="Value of the function")
 
 
+class LookupTableFunction(BaseModel):
+    function_type: Literal["LookupTableFunction"] = "LookupTableFunction"
+    lut_keys: List[float] = Field(..., description="List of keys of the lookup table", min_items=1)
+    lut_values: List[float] = Field(..., description="List of values of the lookup table", min_items=1)
+
+    @model_validator(mode="after")
+    def _validate_lut(self) -> Self:
+        if len(self.lut_keys) != len(self.lut_values):
+            raise ValueError("The number of keys and values must be the same.")
+        return self
+
+
 class RewardFunction(RootModel):
-    root: Annotated[Union[ConstantFunction, LinearFunction, PowerFunction], Field(discriminator="function_type")]
+    root: Annotated[
+        Union[ConstantFunction, LinearFunction, PowerFunction, LookupTableFunction],
+        Field(discriminator="function_type"),
+    ]
 
 
 class DepletionRule(str, Enum):
-    ON_REWARD = ("OnReward",)
-    ON_CHOICE = ("OnChoice",)
-    ON_TIME = ("OnTime",)
+    ON_REWARD = "OnReward"
+    ON_CHOICE = "OnChoice"
+    ON_TIME = "OnTime"
     ON_DISTANCE = "OnDistance"
 
 
@@ -136,7 +151,7 @@ class PatchRewardFunction(BaseModel):
         validate_default=True,
     )
     available: RewardFunction = Field(
-        default=LinearFunction(mininum=0, a=-1, b=5),
+        default=LinearFunction(minimum=0, a=-1, b=5),
         description="Determines the total amount of reward available left in the patch. The value is in microliters",
         validate_default=True,
     )
