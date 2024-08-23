@@ -423,7 +423,7 @@
                       <Property Name="PortName" />
                     </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpTreadmill.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpTreadmill.bonsai">
                     <PortName>COMx</PortName>
                     <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
                   </Expression>
@@ -7451,7 +7451,7 @@ Item1 as Displacement,
                   </Expression>
                   <Expression xsi:type="p17:Format">
                     <harp:MessageType>Write</harp:MessageType>
-                    <harp:Register xsi:type="p17:BrakeCurrentSetPoint" />
+                    <harp:Register xsi:type="p17:BreakCurrentSetPoint" />
                   </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>SendMessage</Name>
@@ -7472,7 +7472,7 @@ Item1 as Displacement,
                           <Name>HarpTreadmillEvents</Name>
                         </Expression>
                         <Expression xsi:type="p17:Parse">
-                          <harp:Register xsi:type="p17:BrakeCurrentSetPoint" />
+                          <harp:Register xsi:type="p17:BreakCurrentSetPoint" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpMessage</Name>
