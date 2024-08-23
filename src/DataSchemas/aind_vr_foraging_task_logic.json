@@ -682,6 +682,40 @@
       "title": "LogNormalDistributionParameters",
       "type": "object"
     },
+    "LookupTableFunction": {
+      "properties": {
+        "function_type": {
+          "const": "LookupTableFunction",
+          "default": "LookupTableFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "lut_keys": {
+          "description": "List of keys of the lookup table",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Lut Keys",
+          "type": "array"
+        },
+        "lut_values": {
+          "description": "List of values of the lookup table",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Lut Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "lut_keys",
+        "lut_values"
+      ],
+      "title": "LookupTableFunction",
+      "type": "object"
+    },
     "MovableSpoutControl": {
       "properties": {
         "enabled": {
@@ -1361,6 +1395,7 @@
         "mapping": {
           "ConstantFunction": "#/definitions/ConstantFunction",
           "LinearFunction": "#/definitions/LinearFunction",
+          "LookupTableFunction": "#/definitions/LookupTableFunction",
           "PowerFunction": "#/definitions/PowerFunction"
         },
         "propertyName": "function_type"
@@ -1374,6 +1409,9 @@
         },
         {
           "$ref": "#/definitions/PowerFunction"
+        },
+        {
+          "$ref": "#/definitions/LookupTableFunction"
         }
       ],
       "title": "RewardFunction"

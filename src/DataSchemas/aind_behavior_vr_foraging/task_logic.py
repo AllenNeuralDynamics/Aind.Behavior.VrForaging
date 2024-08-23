@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, Dict, List, Literal, Optional, Union
+from typing import Annotated, Dict, List, Literal, Optional, Self, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import BaseModel, Field, NonNegativeFloat, RootModel
+from pydantic import BaseModel, Field, NonNegativeFloat, RootModel, model_validator
 
 __version__ = "0.4.0"
 
@@ -113,8 +113,23 @@ class ConstantFunction(BaseModel):
     value: float = Field(default=1, description="Value of the function")
 
 
+class LookupTableFunction(BaseModel):
+    function_type: Literal["LookupTableFunction"] = "LookupTableFunction"
+    lut_keys: List[float] = Field(..., description="List of keys of the lookup table", min_items=1)
+    lut_values: List[float] = Field(..., description="List of values of the lookup table", min_items=1)
+
+    @model_validator(mode="after")
+    def _validate_lut(self) -> Self:
+        if len(self.lut_keys) != len(self.lut_values):
+            raise ValueError("The number of keys and values must be the same.")
+        return self
+
+
 class RewardFunction(RootModel):
-    root: Annotated[Union[ConstantFunction, LinearFunction, PowerFunction], Field(discriminator="function_type")]
+    root: Annotated[
+        Union[ConstantFunction, LinearFunction, PowerFunction, LookupTableFunction],
+        Field(discriminator="function_type"),
+    ]
 
 
 class DepletionRule(str, Enum):
