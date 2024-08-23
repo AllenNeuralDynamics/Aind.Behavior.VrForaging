@@ -1487,7 +1487,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class LinearFunction : RewardFunction
     {
     
-        private double _mininum = 0D;
+        private double _minimum = 0D;
     
         private double _maximum = 9999D;
     
@@ -1502,7 +1502,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected LinearFunction(LinearFunction other) : 
                 base(other)
         {
-            _mininum = other._mininum;
+            _minimum = other._minimum;
             _maximum = other._maximum;
             _a = other._a;
             _b = other._b;
@@ -1511,17 +1511,17 @@ namespace AindVrForagingDataSchema.TaskLogic
         /// <summary>
         /// Minimum value of the function
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("mininum")]
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
         [System.ComponentModel.DescriptionAttribute("Minimum value of the function")]
-        public double Mininum
+        public double Minimum
         {
             get
             {
-                return _mininum;
+                return _minimum;
             }
             set
             {
-                _mininum = value;
+                _minimum = value;
             }
         }
     
@@ -1592,7 +1592,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("mininum = " + _mininum + ", ");
+            stringBuilder.Append("minimum = " + _minimum + ", ");
             stringBuilder.Append("maximum = " + _maximum + ", ");
             stringBuilder.Append("a = " + _a + ", ");
             stringBuilder.Append("b = " + _b);
@@ -3537,7 +3537,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class PowerFunction : RewardFunction
     {
     
-        private double _mininum = 0D;
+        private double _minimum = 0D;
     
         private double _maximum = 1D;
     
@@ -3556,7 +3556,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected PowerFunction(PowerFunction other) : 
                 base(other)
         {
-            _mininum = other._mininum;
+            _minimum = other._minimum;
             _maximum = other._maximum;
             _a = other._a;
             _b = other._b;
@@ -3567,17 +3567,17 @@ namespace AindVrForagingDataSchema.TaskLogic
         /// <summary>
         /// Minimum value of the function
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("mininum")]
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
         [System.ComponentModel.DescriptionAttribute("Minimum value of the function")]
-        public double Mininum
+        public double Minimum
         {
             get
             {
-                return _mininum;
+                return _minimum;
             }
             set
             {
-                _mininum = value;
+                _minimum = value;
             }
         }
     
@@ -3682,7 +3682,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("mininum = " + _mininum + ", ");
+            stringBuilder.Append("minimum = " + _minimum + ", ");
             stringBuilder.Append("maximum = " + _maximum + ", ");
             stringBuilder.Append("a = " + _a + ", ");
             stringBuilder.Append("b = " + _b + ", ");

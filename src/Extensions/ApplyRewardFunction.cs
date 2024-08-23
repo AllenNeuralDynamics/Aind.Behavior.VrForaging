@@ -26,7 +26,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
 
         public override double Clamp(double value){
-            return Math.Min(Math.Max(value, Mininum), Maximum);
+            return Math.Min(Math.Max(value, Minimum), Maximum);
         }
     }
 
@@ -36,7 +36,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
 
         public override double Clamp(double value){
-            return Math.Min(Math.Max(value, Mininum), Maximum);
+            return Math.Min(Math.Max(value, Minimum), Maximum);
         }
     }
 
