@@ -90,7 +90,7 @@ class OperantLogic(BaseModel):
 
 class PowerFunction(BaseModel):
     function_type: Literal["PowerFunction"] = "PowerFunction"
-    mininum: float = Field(default=0, description="Minimum value of the function")
+    minimum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=1, description="Maximum value of the function")
     a: float = Field(default=1, description="Coefficient a of the function: value = a * pow(b, c * x) + d")
     b: float = Field(
@@ -102,7 +102,7 @@ class PowerFunction(BaseModel):
 
 class LinearFunction(BaseModel):
     function_type: Literal["LinearFunction"] = "LinearFunction"
-    mininum: float = Field(default=0, description="Minimum value of the function")
+    minimum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=9999, description="Maximum value of the function")
     a: float = Field(default=1, description="Coefficient a of the function: value = a * x + b")
     b: float = Field(default=0, description="Coefficient b of the function: value = a * x + b")
@@ -151,7 +151,7 @@ class PatchRewardFunction(BaseModel):
         validate_default=True,
     )
     available: RewardFunction = Field(
-        default=LinearFunction(mininum=0, a=-1, b=5),
+        default=LinearFunction(minimum=0, a=-1, b=5),
         description="Determines the total amount of reward available left in the patch. The value is in microliters",
         validate_default=True,
     )
