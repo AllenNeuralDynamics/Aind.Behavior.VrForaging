@@ -5141,7 +5141,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _aindBehaviorServicesPkgVersion = "0.8.0-rc1";
     
-        private string _version = "0.3.0";
+        private string _version = "0.4.0";
     
         private string _computerName;
     
@@ -5169,7 +5169,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private AindManipulatorDevice _manipulator = new AindManipulatorDevice();
     
-        private Screen _screen = new Screen();
+        private Screen _screen;
     
         private RigCalibration _calibration = new RigCalibration();
     
@@ -5460,7 +5460,7 @@ namespace AindVrForagingDataSchema.Rig
         /// Screen settings
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("screen", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("screen")]
         [System.ComponentModel.DescriptionAttribute("Screen settings")]
         public Screen Screen
         {
