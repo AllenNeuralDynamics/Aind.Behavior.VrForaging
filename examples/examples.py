@@ -38,7 +38,6 @@ from aind_behavior_vr_foraging.rig import (
     HarpSniffDetector,
     HarpTreadmill,
     RigCalibration,
-    Screen,
     Treadmill,
 )
 from aind_behavior_vr_foraging.task_logic import (
@@ -111,6 +110,7 @@ def mock_rig() -> AindVrForagingRig:
                     odorant_dilution=1.5,
                 ),
                 OlfactometerChannel.Channel3: OlfactometerChannelConfig(
+
                     channel_index=OlfactometerChannel.Channel3,
                     channel_type=OlfactometerChannelType.CARRIER,
                     flow_rate_capacity=1000,
@@ -126,7 +126,7 @@ def mock_rig() -> AindVrForagingRig:
         ]
     )
     water_valve_calibration = WaterValveCalibration(
-        input=water_valve_input, output=water_valve_input.calibrate_output(), calibration_date=datetime.datetime.now()
+        input=water_valve_input, output=water_valve_input.calibrate_output(), date=datetime.datetime.now()
     )
     water_valve_calibration.output = WaterValveCalibrationOutput(slope=1, offset=0)  # For testing purposes
 
@@ -161,7 +161,7 @@ def mock_rig() -> AindVrForagingRig:
             ),
         ),
         manipulator=AindManipulatorDevice(port_name="COM9", calibration=manipulator_calibration),
-        screen=Screen(display_index=1),
+        screen=rig.Screen(display_index=1),
         calibration=RigCalibration(water_valve=water_valve_calibration),
     )
 
