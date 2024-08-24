@@ -1125,6 +1125,420 @@ namespace AindVrForagingDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class DisplayCalibration
+    {
+    
+        private DisplayIntrinsics _intrinsics;
+    
+        private DisplayExtrinsics _extrinsics;
+    
+        public DisplayCalibration()
+        {
+        }
+    
+        protected DisplayCalibration(DisplayCalibration other)
+        {
+            _intrinsics = other._intrinsics;
+            _extrinsics = other._extrinsics;
+        }
+    
+        /// <summary>
+        /// Intrinsics
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("intrinsics")]
+        [System.ComponentModel.DescriptionAttribute("Intrinsics")]
+        public DisplayIntrinsics Intrinsics
+        {
+            get
+            {
+                return _intrinsics;
+            }
+            set
+            {
+                _intrinsics = value;
+            }
+        }
+    
+        /// <summary>
+        /// Extrinsics
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("extrinsics")]
+        [System.ComponentModel.DescriptionAttribute("Extrinsics")]
+        public DisplayExtrinsics Extrinsics
+        {
+            get
+            {
+                return _extrinsics;
+            }
+            set
+            {
+                _extrinsics = value;
+            }
+        }
+    
+        public System.IObservable<DisplayCalibration> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayCalibration(this)));
+        }
+    
+        public System.IObservable<DisplayCalibration> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new DisplayCalibration(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("intrinsics = " + _intrinsics + ", ");
+            stringBuilder.Append("extrinsics = " + _extrinsics);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class DisplayExtrinsics
+    {
+    
+        private Vector3 _rotation;
+    
+        private Vector3 _translation;
+    
+        public DisplayExtrinsics()
+        {
+        }
+    
+        protected DisplayExtrinsics(DisplayExtrinsics other)
+        {
+            _rotation = other._rotation;
+            _translation = other._translation;
+        }
+    
+        /// <summary>
+        /// Rotation vector (radians)
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rotation")]
+        [System.ComponentModel.DescriptionAttribute("Rotation vector (radians)")]
+        public Vector3 Rotation
+        {
+            get
+            {
+                return _rotation;
+            }
+            set
+            {
+                _rotation = value;
+            }
+        }
+    
+        /// <summary>
+        /// Translation (in cm)
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("translation")]
+        [System.ComponentModel.DescriptionAttribute("Translation (in cm)")]
+        public Vector3 Translation
+        {
+            get
+            {
+                return _translation;
+            }
+            set
+            {
+                _translation = value;
+            }
+        }
+    
+        public System.IObservable<DisplayExtrinsics> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayExtrinsics(this)));
+        }
+    
+        public System.IObservable<DisplayExtrinsics> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new DisplayExtrinsics(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("rotation = " + _rotation + ", ");
+            stringBuilder.Append("translation = " + _translation);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class DisplayIntrinsics
+    {
+    
+        private int _frameWidth = 1920;
+    
+        private int _frameHeight = 1080;
+    
+        private double _displayWidth = 20D;
+    
+        private double _displayHeight = 15D;
+    
+        public DisplayIntrinsics()
+        {
+        }
+    
+        protected DisplayIntrinsics(DisplayIntrinsics other)
+        {
+            _frameWidth = other._frameWidth;
+            _frameHeight = other._frameHeight;
+            _displayWidth = other._displayWidth;
+            _displayHeight = other._displayHeight;
+        }
+    
+        /// <summary>
+        /// Frame width (px)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("frame_width")]
+        [System.ComponentModel.DescriptionAttribute("Frame width (px)")]
+        public int FrameWidth
+        {
+            get
+            {
+                return _frameWidth;
+            }
+            set
+            {
+                _frameWidth = value;
+            }
+        }
+    
+        /// <summary>
+        /// Frame height (px)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("frame_height")]
+        [System.ComponentModel.DescriptionAttribute("Frame height (px)")]
+        public int FrameHeight
+        {
+            get
+            {
+                return _frameHeight;
+            }
+            set
+            {
+                _frameHeight = value;
+            }
+        }
+    
+        /// <summary>
+        /// Display width (cm)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("display_width")]
+        [System.ComponentModel.DescriptionAttribute("Display width (cm)")]
+        public double DisplayWidth
+        {
+            get
+            {
+                return _displayWidth;
+            }
+            set
+            {
+                _displayWidth = value;
+            }
+        }
+    
+        /// <summary>
+        /// Display width (cm)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("display_height")]
+        [System.ComponentModel.DescriptionAttribute("Display width (cm)")]
+        public double DisplayHeight
+        {
+            get
+            {
+                return _displayHeight;
+            }
+            set
+            {
+                _displayHeight = value;
+            }
+        }
+    
+        public System.IObservable<DisplayIntrinsics> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayIntrinsics(this)));
+        }
+    
+        public System.IObservable<DisplayIntrinsics> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new DisplayIntrinsics(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("frame_width = " + _frameWidth + ", ");
+            stringBuilder.Append("frame_height = " + _frameHeight + ", ");
+            stringBuilder.Append("display_width = " + _displayWidth + ", ");
+            stringBuilder.Append("display_height = " + _displayHeight);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class DisplaysCalibration
+    {
+    
+        private DisplayCalibration _left;
+    
+        private DisplayCalibration _center;
+    
+        private DisplayCalibration _right;
+    
+        public DisplaysCalibration()
+        {
+        }
+    
+        protected DisplaysCalibration(DisplaysCalibration other)
+        {
+            _left = other._left;
+            _center = other._center;
+            _right = other._right;
+        }
+    
+        /// <summary>
+        /// Left display calibration
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("left")]
+        [System.ComponentModel.DescriptionAttribute("Left display calibration")]
+        public DisplayCalibration Left
+        {
+            get
+            {
+                return _left;
+            }
+            set
+            {
+                _left = value;
+            }
+        }
+    
+        /// <summary>
+        /// Center display calibration
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("center")]
+        [System.ComponentModel.DescriptionAttribute("Center display calibration")]
+        public DisplayCalibration Center
+        {
+            get
+            {
+                return _center;
+            }
+            set
+            {
+                _center = value;
+            }
+        }
+    
+        /// <summary>
+        /// Right display calibration
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("right")]
+        [System.ComponentModel.DescriptionAttribute("Right display calibration")]
+        public DisplayCalibration Right
+        {
+            get
+            {
+                return _right;
+            }
+            set
+            {
+                _right = value;
+            }
+        }
+    
+        public System.IObservable<DisplaysCalibration> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplaysCalibration(this)));
+        }
+    
+        public System.IObservable<DisplaysCalibration> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new DisplaysCalibration(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("left = " + _left + ", ");
+            stringBuilder.Append("center = " + _center + ", ");
+            stringBuilder.Append("right = " + _right);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpAnalogInput
     {
     
@@ -2985,6 +3399,134 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Rect
+    {
+    
+        private int _x = 0;
+    
+        private int _y = 0;
+    
+        private int _width = 0;
+    
+        private int _height = 0;
+    
+        public Rect()
+        {
+        }
+    
+        protected Rect(Rect other)
+        {
+            _x = other._x;
+            _y = other._y;
+            _width = other._width;
+            _height = other._height;
+        }
+    
+        /// <summary>
+        /// X coordinate of the top-left corner
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
+        [System.ComponentModel.DescriptionAttribute("X coordinate of the top-left corner")]
+        public int X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        /// <summary>
+        /// Y coordinate of the top-left corner
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
+        [System.ComponentModel.DescriptionAttribute("Y coordinate of the top-left corner")]
+        public int Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        /// <summary>
+        /// Width of the rectangle
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("width")]
+        [System.ComponentModel.DescriptionAttribute("Width of the rectangle")]
+        public int Width
+        {
+            get
+            {
+                return _width;
+            }
+            set
+            {
+                _width = value;
+            }
+        }
+    
+        /// <summary>
+        /// Height of the rectangle
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("height")]
+        [System.ComponentModel.DescriptionAttribute("Height of the rectangle")]
+        public int Height
+        {
+            get
+            {
+                return _height;
+            }
+            set
+            {
+                _height = value;
+            }
+        }
+    
+        public System.IObservable<Rect> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rect(this)));
+        }
+    
+        public System.IObservable<Rect> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Rect(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("x = " + _x + ", ");
+            stringBuilder.Append("y = " + _y + ", ");
+            stringBuilder.Append("width = " + _width + ", ");
+            stringBuilder.Append("height = " + _height);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
     /// <summary>
     /// Container class for calibration models. In a future release these will be moved to the respective devices
     /// </summary>
@@ -3066,15 +3608,13 @@ namespace AindVrForagingDataSchema.Rig
     
         private BaseModel _additionalSettings;
     
-        private BaseModel _calibration;
+        private DisplaysCalibration _calibration;
     
         private int _displayIndex = 1;
     
         private double _targetRenderFrequency = 60D;
     
         private double _targetUpdateFrequency = 120D;
-    
-        private string _calibrationDirectory = "Calibration\\Monitors\\";
     
         private string _textureAssetsDirectory = "Textures";
     
@@ -3094,7 +3634,6 @@ namespace AindVrForagingDataSchema.Rig
             _displayIndex = other._displayIndex;
             _targetRenderFrequency = other._targetRenderFrequency;
             _targetUpdateFrequency = other._targetUpdateFrequency;
-            _calibrationDirectory = other._calibrationDirectory;
             _textureAssetsDirectory = other._textureAssetsDirectory;
             _brightness = other._brightness;
             _contrast = other._contrast;
@@ -3136,12 +3675,12 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         /// <summary>
-        /// Calibration
+        /// Screen calibration
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
-        public BaseModel Calibration
+        [System.ComponentModel.DescriptionAttribute("Screen calibration")]
+        public DisplaysCalibration Calibration
         {
             get
             {
@@ -3201,23 +3740,6 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _targetUpdateFrequency = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration directory
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration_directory")]
-        [System.ComponentModel.DescriptionAttribute("Calibration directory")]
-        public string CalibrationDirectory
-        {
-            get
-            {
-                return _calibrationDirectory;
-            }
-            set
-            {
-                _calibrationDirectory = value;
             }
         }
     
@@ -3290,7 +3812,6 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("display_index = " + _displayIndex + ", ");
             stringBuilder.Append("target_render_frequency = " + _targetRenderFrequency + ", ");
             stringBuilder.Append("target_update_frequency = " + _targetUpdateFrequency + ", ");
-            stringBuilder.Append("calibration_directory = " + _calibrationDirectory + ", ");
             stringBuilder.Append("texture_assets_directory = " + _textureAssetsDirectory + ", ");
             stringBuilder.Append("brightness = " + _brightness + ", ");
             stringBuilder.Append("contrast = " + _contrast);
@@ -3334,6 +3855,10 @@ namespace AindVrForagingDataSchema.Rig
     
         private double _gain = 0D;
     
+        private double? _gamma;
+    
+        private Rect _regionOfInterest;
+    
         private VideoWriter _videoWriter;
     
         public SpinnakerCamera()
@@ -3350,6 +3875,8 @@ namespace AindVrForagingDataSchema.Rig
             _colorProcessing = other._colorProcessing;
             _exposure = other._exposure;
             _gain = other._gain;
+            _gamma = other._gamma;
+            _regionOfInterest = other._regionOfInterest;
             _videoWriter = other._videoWriter;
         }
     
@@ -3493,6 +4020,42 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         /// <summary>
+        /// Gamma. If None, will disable gamma correction.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("gamma")]
+        [System.ComponentModel.DescriptionAttribute("Gamma. If None, will disable gamma correction.")]
+        public double? Gamma
+        {
+            get
+            {
+                return _gamma;
+            }
+            set
+            {
+                _gamma = value;
+            }
+        }
+    
+        /// <summary>
+        /// Region of interest
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("region_of_interest")]
+        [System.ComponentModel.DescriptionAttribute("Region of interest")]
+        public Rect RegionOfInterest
+        {
+            get
+            {
+                return _regionOfInterest;
+            }
+            set
+            {
+                _regionOfInterest = value;
+            }
+        }
+    
+        /// <summary>
         /// Video writer. If not provided, no video will be saved.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -3530,6 +4093,8 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("color_processing = " + _colorProcessing + ", ");
             stringBuilder.Append("exposure = " + _exposure + ", ");
             stringBuilder.Append("gain = " + _gain + ", ");
+            stringBuilder.Append("gamma = " + _gamma + ", ");
+            stringBuilder.Append("region_of_interest = " + _regionOfInterest + ", ");
             stringBuilder.Append("video_writer = " + _videoWriter);
             return true;
         }
@@ -3666,6 +4231,113 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("pulses_per_revolution = " + _pulsesPerRevolution + ", ");
             stringBuilder.Append("invert_direction = " + _invertDirection + ", ");
             stringBuilder.Append("brake_lookup_calibration = " + _brakeLookupCalibration);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Vector3
+    {
+    
+        private double _x = 0D;
+    
+        private double _y = 0D;
+    
+        private double _z = 0D;
+    
+        public Vector3()
+        {
+        }
+    
+        protected Vector3(Vector3 other)
+        {
+            _x = other._x;
+            _y = other._y;
+            _z = other._z;
+        }
+    
+        /// <summary>
+        /// X coordinate of the point
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
+        [System.ComponentModel.DescriptionAttribute("X coordinate of the point")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        /// <summary>
+        /// Y coordinate of the point
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
+        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        /// <summary>
+        /// Z coordinate of the point
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("z")]
+        [System.ComponentModel.DescriptionAttribute("Z coordinate of the point")]
+        public double Z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                _z = value;
+            }
+        }
+    
+        public System.IObservable<Vector3> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Vector3(this)));
+        }
+    
+        public System.IObservable<Vector3> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Vector3(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("x = " + _x + ", ");
+            stringBuilder.Append("y = " + _y + ", ");
+            stringBuilder.Append("z = " + _z);
             return true;
         }
     
@@ -4467,6 +5139,8 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
+        private string _aindBehaviorServicesPkgVersion = "0.8.0-rc1";
+    
         private string _version = "0.3.0";
     
         private string _computerName;
@@ -4495,7 +5169,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private AindManipulatorDevice _manipulator = new AindManipulatorDevice();
     
-        private Screen _screen;
+        private Screen _screen = new Screen();
     
         private RigCalibration _calibration = new RigCalibration();
     
@@ -4505,6 +5179,7 @@ namespace AindVrForagingDataSchema.Rig
     
         protected AindVrForagingRig(AindVrForagingRig other)
         {
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
             _version = other._version;
             _computerName = other._computerName;
             _rigName = other._rigName;
@@ -4521,6 +5196,19 @@ namespace AindVrForagingDataSchema.Rig
             _manipulator = other._manipulator;
             _screen = other._screen;
             _calibration = other._calibration;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
+        {
+            get
+            {
+                return _aindBehaviorServicesPkgVersion;
+            }
+            set
+            {
+                _aindBehaviorServicesPkgVersion = value;
+            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("version")]
@@ -4772,7 +5460,7 @@ namespace AindVrForagingDataSchema.Rig
         /// Screen settings
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("screen")]
+        [Newtonsoft.Json.JsonPropertyAttribute("screen", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Screen settings")]
         public Screen Screen
         {
@@ -4816,6 +5504,7 @@ namespace AindVrForagingDataSchema.Rig
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
+            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
             stringBuilder.Append("version = " + _version + ", ");
             stringBuilder.Append("computer_name = " + _computerName + ", ");
             stringBuilder.Append("rig_name = " + _rigName + ", ");
@@ -5113,6 +5802,26 @@ namespace AindVrForagingDataSchema.Rig
             return Process<CameraControllerWebCamera>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<DisplayCalibration> source)
+        {
+            return Process<DisplayCalibration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<DisplayExtrinsics> source)
+        {
+            return Process<DisplayExtrinsics>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<DisplayIntrinsics> source)
+        {
+            return Process<DisplayIntrinsics>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<DisplaysCalibration> source)
+        {
+            return Process<DisplaysCalibration>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpAnalogInput> source)
         {
             return Process<HarpAnalogInput>(source);
@@ -5178,6 +5887,11 @@ namespace AindVrForagingDataSchema.Rig
             return Process<OlfactometerChannelConfig>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Rect> source)
+        {
+            return Process<Rect>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<RigCalibration> source)
         {
             return Process<RigCalibration>(source);
@@ -5196,6 +5910,11 @@ namespace AindVrForagingDataSchema.Rig
         public System.IObservable<string> Process(System.IObservable<Treadmill> source)
         {
             return Process<Treadmill>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Vector3> source)
+        {
+            return Process<Vector3>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<VideoWriter> source)
@@ -5256,6 +5975,10 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BaseModel>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerSpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerWebCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplaysCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
@@ -5269,10 +5992,12 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerChannelConfig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rect>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]

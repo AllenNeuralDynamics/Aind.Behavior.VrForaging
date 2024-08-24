@@ -15,11 +15,10 @@ from aind_behavior_services.rig import (
     HarpClockGenerator,
     HarpLickometer,
     HarpSniffDetector,
-    Screen,
 )
 from pydantic import BaseModel, Field
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 ValuePair = Annotated[List[float], Field(min_length=2, max_length=2, description="A tuple of two values")]
@@ -86,5 +85,5 @@ class AindVrForagingRig(AindBehaviorRigModel):
     harp_treadmill: HarpTreadmill = Field(..., description="Harp treadmill")
     harp_sniff_detector: Optional[HarpSniffDetector] = Field(None, description="Sniff detector settings")
     manipulator: AindManipulatorDevice = Field(..., description="Manipulator")
-    screen: rig.Screen = Field(default=Screen(), description="Screen settings")
+    screen: rig.Screen = Field(default=rig.Screen(), description="Screen settings")
     calibration: RigCalibration = Field(..., description="Calibration models")
