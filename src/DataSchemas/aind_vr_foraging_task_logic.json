@@ -16,6 +16,12 @@
           ],
           "title": "Rng Seed"
         },
+        "aind_behavior_services_pkg_version": {
+          "default": "0.8.0-rc1",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
         "updaters": {
           "additionalProperties": {
             "$ref": "#/definitions/NumericalUpdater"
@@ -299,6 +305,7 @@
           "Gamma": "#/definitions/GammaDistribution",
           "LogNormal": "#/definitions/LogNormalDistribution",
           "Normal": "#/definitions/NormalDistribution",
+          "Pdf": "#/definitions/PdfDistribution",
           "Poisson": "#/definitions/PoissonDistribution",
           "Scalar": "#/definitions/Scalar",
           "Uniform": "#/definitions/UniformDistribution"
@@ -332,6 +339,9 @@
         },
         {
           "$ref": "#/definitions/GammaDistribution"
+        },
+        {
+          "$ref": "#/definitions/PdfDistribution"
         }
       ],
       "title": "Distribution"
@@ -1171,6 +1181,94 @@
         }
       },
       "title": "PatchStatistics",
+      "type": "object"
+    },
+    "PdfDistribution": {
+      "properties": {
+        "family": {
+          "const": "Pdf",
+          "default": "Pdf",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/PdfDistributionParameters"
+            }
+          ],
+          "default": {
+            "family": "Pdf",
+            "pdf": [
+              1.0
+            ],
+            "index": [
+              0.0
+            ]
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "PdfDistribution",
+      "type": "object"
+    },
+    "PdfDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Pdf",
+          "default": "Pdf",
+          "title": "Family",
+          "type": "string"
+        },
+        "pdf": {
+          "default": [
+            1
+          ],
+          "description": "The probability density function",
+          "items": {
+            "minimum": 0.0,
+            "type": "number"
+          },
+          "title": "Pdf",
+          "type": "array"
+        },
+        "index": {
+          "default": [
+            0
+          ],
+          "description": "The index of the probability density function",
+          "items": {
+            "type": "number"
+          },
+          "title": "Index",
+          "type": "array"
+        }
+      },
+      "title": "PdfDistributionParameters",
       "type": "object"
     },
     "PoissonDistribution": {

@@ -15,6 +15,8 @@ namespace AindVrForagingDataSchema.Session
     public partial class AindBehaviorSessionModel
     {
     
+        private string _aindBehaviorServicesPkgVersion = "0.8.0-rc1";
+    
         private string _version = "0.2.0";
     
         private string _experiment;
@@ -45,6 +47,7 @@ namespace AindVrForagingDataSchema.Session
     
         protected AindBehaviorSessionModel(AindBehaviorSessionModel other)
         {
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
             _version = other._version;
             _experiment = other._experiment;
             _experimenter = other._experimenter;
@@ -57,6 +60,19 @@ namespace AindVrForagingDataSchema.Session
             _commitHash = other._commitHash;
             _allowDirtyRepo = other._allowDirtyRepo;
             _skipHardwareValidation = other._skipHardwareValidation;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
+        {
+            get
+            {
+                return _aindBehaviorServicesPkgVersion;
+            }
+            set
+            {
+                _aindBehaviorServicesPkgVersion = value;
+            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("version")]
@@ -274,6 +290,7 @@ namespace AindVrForagingDataSchema.Session
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
+            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
             stringBuilder.Append("version = " + _version + ", ");
             stringBuilder.Append("experiment = " + _experiment + ", ");
             stringBuilder.Append("experimenter = " + _experimenter + ", ");
