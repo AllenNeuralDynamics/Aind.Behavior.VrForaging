@@ -2033,8 +2033,8 @@
       "type": "string"
     },
     "version": {
-      "const": "0.3.0",
-      "default": "0.3.0",
+      "const": "0.4.0",
+      "default": "0.4.0",
       "title": "Version",
       "type": "string"
     },
@@ -2155,6 +2155,78 @@
           "$ref": "#/definitions/Screen"
         }
       ],
+      "default": {
+        "device_type": "Screen",
+        "additional_settings": null,
+        "calibration": {
+          "center": {
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            },
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            }
+          },
+          "left": {
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            },
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            }
+          },
+          "right": {
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            },
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            }
+          }
+        },
+        "display_index": 1,
+        "target_render_frequency": 60.0,
+        "target_update_frequency": 120.0,
+        "texture_assets_directory": "Textures",
+        "brightness": 0.0,
+        "contrast": 1.0
+      },
       "description": "Screen settings"
     },
     "calibration": {
@@ -2175,7 +2247,6 @@
     "harp_clock_generator",
     "harp_treadmill",
     "manipulator",
-    "screen",
     "calibration"
   ],
   "title": "AindVrForagingRig",
