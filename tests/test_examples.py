@@ -1,11 +1,11 @@
-""" testing examples """
+"""testing examples"""
 
 import glob
 import sys
 import unittest
 
 sys.path.append(".")
-from tests import EXAMPLES_DIR, build_example  # noqa: E402 # isort:skip # pylint: disable=wrong-import-position
+from tests import EXAMPLES_DIR, build_example  # isort:skip # pylint: disable=wrong-import-position
 
 
 class ExampleTests(unittest.TestCase):
