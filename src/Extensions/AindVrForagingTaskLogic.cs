@@ -1505,7 +1505,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class LinearFunction : RewardFunction
     {
     
-        private double _mininum = 0D;
+        private double _minimum = 0D;
     
         private double _maximum = 9999D;
     
@@ -1520,7 +1520,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected LinearFunction(LinearFunction other) : 
                 base(other)
         {
-            _mininum = other._mininum;
+            _minimum = other._minimum;
             _maximum = other._maximum;
             _a = other._a;
             _b = other._b;
@@ -1529,17 +1529,17 @@ namespace AindVrForagingDataSchema.TaskLogic
         /// <summary>
         /// Minimum value of the function
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("mininum")]
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
         [System.ComponentModel.DescriptionAttribute("Minimum value of the function")]
-        public double Mininum
+        public double Minimum
         {
             get
             {
-                return _mininum;
+                return _minimum;
             }
             set
             {
-                _mininum = value;
+                _minimum = value;
             }
         }
     
@@ -1610,7 +1610,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("mininum = " + _mininum + ", ");
+            stringBuilder.Append("minimum = " + _minimum + ", ");
             stringBuilder.Append("maximum = " + _maximum + ", ");
             stringBuilder.Append("a = " + _a + ", ");
             stringBuilder.Append("b = " + _b);
@@ -1820,6 +1820,86 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
             stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class LookupTableFunction : RewardFunction
+    {
+    
+        private System.Collections.Generic.List<double> _lutKeys = new System.Collections.Generic.List<double>();
+    
+        private System.Collections.Generic.List<double> _lutValues = new System.Collections.Generic.List<double>();
+    
+        public LookupTableFunction()
+        {
+        }
+    
+        protected LookupTableFunction(LookupTableFunction other) : 
+                base(other)
+        {
+            _lutKeys = other._lutKeys;
+            _lutValues = other._lutValues;
+        }
+    
+        /// <summary>
+        /// List of keys of the lookup table
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lut_keys", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("List of keys of the lookup table")]
+        public System.Collections.Generic.List<double> LutKeys
+        {
+            get
+            {
+                return _lutKeys;
+            }
+            set
+            {
+                _lutKeys = value;
+            }
+        }
+    
+        /// <summary>
+        /// List of values of the lookup table
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lut_values", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("List of values of the lookup table")]
+        public System.Collections.Generic.List<double> LutValues
+        {
+            get
+            {
+                return _lutValues;
+            }
+            set
+            {
+                _lutValues = value;
+            }
+        }
+    
+        public System.IObservable<LookupTableFunction> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LookupTableFunction(this)));
+        }
+    
+        public System.IObservable<LookupTableFunction> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new LookupTableFunction(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("lut_keys = " + _lutKeys + ", ");
+            stringBuilder.Append("lut_values = " + _lutValues);
+            return true;
         }
     }
 
@@ -3682,7 +3762,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class PowerFunction : RewardFunction
     {
     
-        private double _mininum = 0D;
+        private double _minimum = 0D;
     
         private double _maximum = 1D;
     
@@ -3701,7 +3781,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected PowerFunction(PowerFunction other) : 
                 base(other)
         {
-            _mininum = other._mininum;
+            _minimum = other._minimum;
             _maximum = other._maximum;
             _a = other._a;
             _b = other._b;
@@ -3712,17 +3792,17 @@ namespace AindVrForagingDataSchema.TaskLogic
         /// <summary>
         /// Minimum value of the function
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("mininum")]
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
         [System.ComponentModel.DescriptionAttribute("Minimum value of the function")]
-        public double Mininum
+        public double Minimum
         {
             get
             {
-                return _mininum;
+                return _minimum;
             }
             set
             {
-                _mininum = value;
+                _minimum = value;
             }
         }
     
@@ -3827,7 +3907,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("mininum = " + _mininum + ", ");
+            stringBuilder.Append("minimum = " + _minimum + ", ");
             stringBuilder.Append("maximum = " + _maximum + ", ");
             stringBuilder.Append("a = " + _a + ", ");
             stringBuilder.Append("b = " + _b + ", ");
@@ -3909,6 +3989,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [JsonInheritanceAttribute("ConstantFunction", typeof(ConstantFunction))]
     [JsonInheritanceAttribute("LinearFunction", typeof(LinearFunction))]
     [JsonInheritanceAttribute("PowerFunction", typeof(PowerFunction))]
+    [JsonInheritanceAttribute("LookupTableFunction", typeof(LookupTableFunction))]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class RewardFunction
@@ -6242,6 +6323,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ConstantFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LinearFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PowerFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LookupTableFunction>))]
     public partial class MatchRewardFunction : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -6428,6 +6510,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         public System.IObservable<string> Process(System.IObservable<LogNormalDistributionParameters> source)
         {
             return Process<LogNormalDistributionParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<LookupTableFunction> source)
+        {
+            return Process<LookupTableFunction>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
@@ -6653,6 +6740,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LinearFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistributionParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LookupTableFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistributionParameters>))]
