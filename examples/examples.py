@@ -110,7 +110,6 @@ def mock_rig() -> AindVrForagingRig:
                     odorant_dilution=1.5,
                 ),
                 OlfactometerChannel.Channel3: OlfactometerChannelConfig(
-
                     channel_index=OlfactometerChannel.Channel3,
                     channel_type=OlfactometerChannelType.CARRIER,
                     flow_rate_capacity=1000,
