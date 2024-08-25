@@ -12,8 +12,7 @@ if __name__ == "__main__":
     data_dir = Path(r"C:/Data")
     _watchdog = watchdog.Watchdog(
         project_name="Cognitive flexibility in patch foraging",
-        time_to_run=datetime.time(hour=20),
-        watched_folder=data_dir)
+        time_to_run=datetime.time(hour=20))
 
     launcher = Launcher(
         rig_schema_model=AindVrForagingRig,
