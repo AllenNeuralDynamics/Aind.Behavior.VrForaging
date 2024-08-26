@@ -7586,7 +7586,7 @@ Item1 as Displacement,
                   </Expression>
                   <Expression xsi:type="p14:Format">
                     <harp:MessageType>Write</harp:MessageType>
-                    <harp:Register xsi:type="p14:TorqueLoadCurrent" />
+                    <harp:Register xsi:type="p14:BrakeCurrentSetPoint" />
                   </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>SendMessage</Name>
@@ -7607,7 +7607,7 @@ Item1 as Displacement,
                           <Name>HarpTreadmillEvents</Name>
                         </Expression>
                         <Expression xsi:type="p14:Parse">
-                          <harp:Register xsi:type="p14:TimestampedTorqueLoadCurrent" />
+                          <harp:Register xsi:type="p14:TimestampedTorque" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpMessage</Name>
