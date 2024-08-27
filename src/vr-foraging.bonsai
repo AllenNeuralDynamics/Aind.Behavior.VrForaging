@@ -1372,16 +1372,77 @@ Item3 as Right)</scr:Expression>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="Subject" Selector="Subject" />
                 <Property Name="RootFolder" Selector="RootPath" />
-                <Property Name="DateTimeOffset" Selector="Date" />
+                <Property Name="SessionName" Selector="SessionName" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
-              <RootFolder>C:\data\</RootFolder>
-              <Subject>672102</Subject>
-              <DateTimeOffset>0001-01-01T00:00:00.0000000+00:00</DateTimeOffset>
-              <SubjectName>LoggingRootPath</SubjectName>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>GenerateRootLoggingPath</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="RootFolder" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p7:StripDirectoryPath" />
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="SessionName" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p7:StripDirectoryPath" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Format">
+                    <Format>{0}/{1}</Format>
+                    <Selector>Item1,Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Name" DisplayName="SubjectName" />
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>LoggingRootPath</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(Item1 as Root, Item2 as SessionPath)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="6" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="5" To="11" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="10" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
