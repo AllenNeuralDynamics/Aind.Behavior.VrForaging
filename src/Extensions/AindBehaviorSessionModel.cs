@@ -27,6 +27,8 @@ namespace AindVrForagingDataSchema.Session
     
         private string _rootPath;
     
+        private string _sessionName;
+    
         private string _remotePath;
     
         private string _subject;
@@ -53,6 +55,7 @@ namespace AindVrForagingDataSchema.Session
             _experimenter = other._experimenter;
             _date = other._date;
             _rootPath = other._rootPath;
+            _sessionName = other._sessionName;
             _remotePath = other._remotePath;
             _subject = other._subject;
             _experimentVersion = other._experimentVersion;
@@ -155,6 +158,23 @@ namespace AindVrForagingDataSchema.Session
             set
             {
                 _rootPath = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the session. This will be used to create a folder in the root path.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("session_name")]
+        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path.")]
+        public string SessionName
+        {
+            get
+            {
+                return _sessionName;
+            }
+            set
+            {
+                _sessionName = value;
             }
         }
     
@@ -296,6 +316,7 @@ namespace AindVrForagingDataSchema.Session
             stringBuilder.Append("experimenter = " + _experimenter + ", ");
             stringBuilder.Append("date = " + _date + ", ");
             stringBuilder.Append("root_path = " + _rootPath + ", ");
+            stringBuilder.Append("session_name = " + _sessionName + ", ");
             stringBuilder.Append("remote_path = " + _remotePath + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
             stringBuilder.Append("experiment_version = " + _experimentVersion + ", ");

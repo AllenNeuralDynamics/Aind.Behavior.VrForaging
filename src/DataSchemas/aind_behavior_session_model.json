@@ -37,6 +37,19 @@
       "title": "Root Path",
       "type": "string"
     },
+    "session_name": {
+      "default": null,
+      "description": "Name of the session. This will be used to create a folder in the root path.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Session Name"
+    },
     "remote_path": {
       "default": null,
       "description": "Remote path where data will be attempted to be copied to after experiment is done",
