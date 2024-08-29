@@ -7,7 +7,7 @@ import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
 from pydantic import BaseModel, Field, NonNegativeFloat, RootModel, model_validator
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 
 def scalar_value(value: float) -> distributions.Scalar:
