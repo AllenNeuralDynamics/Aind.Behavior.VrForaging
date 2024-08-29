@@ -107,6 +107,28 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     }
 
+    partial class PdfDistribution{
+        public override double SampleDistribution(Random random){
+            var pdf = DistributionParameters.Pdf;
+            var index = DistributionParameters.Index;
+            if (pdf.Count != index.Count)
+            {
+                throw new ArgumentException("Pdf and Index must have the same length.");
+            }
+            var pdf_normalized = pdf.Select(x => x / pdf.Sum()).ToArray();
+            var coin = random.NextDouble();
+            double sum = 0;
+            for (int i = 0; i < pdf_normalized.Length; i++)
+            {
+                sum += pdf_normalized[i];
+                if (coin < sum)
+                {
+                    return index[i];
+                }
+            }
+            return index.Last();
+        }
+    }
 
     partial class Scalar{
         public override double SampleDistribution(Random random){
