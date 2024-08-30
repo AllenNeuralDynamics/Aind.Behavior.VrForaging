@@ -3218,6 +3218,60 @@ Item2 as Position)</scr:Expression>
                           </Workflow>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
+                          <Name>TreadmillFriction</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>HarpTimestampSource</Name>
+                        </Expression>
+                        <Expression xsi:type="harp:Parse">
+                          <harp:Register xsi:type="harp:ParseMessagePayload">
+                            <harp:PayloadType>Timestamp</harp:PayloadType>
+                            <harp:IsArray>false</harp:IsArray>
+                          </harp:Register>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:CreateTimestamped" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>new(
+Seconds as Seconds,
+Value as Torque)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="rx:Defer">
+                          <Name>LogCsv</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>Modality</Name>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Modality" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogCsv.bonsai">
+                                <SubjectName>LoggingRootPath</SubjectName>
+                                <Modality xsi:nil="true" />
+                                <LogName>Torque</LogName>
+                                <DeviceName>OperationControl</DeviceName>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="3" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source2" />
+                              <Edge From="3" To="4" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
                           <Name>IsStopped</Name>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
@@ -3261,8 +3315,14 @@ Value as IsStopped)</scr:Expression>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="4" To="7" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7562,6 +7622,9 @@ Value as Image)
                           <Selector>HarpTreadmill.Calibration</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
+                          <Selector>Output</Selector>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
                           <Selector>WheelDiameter</Selector>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
@@ -7592,16 +7655,17 @@ Value as Image)
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="1" To="4" Label="Source1" />
-                        <Edge From="1" To="7" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="5" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source2" />
-                        <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="8" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source2" />
-                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="2" To="5" Label="Source1" />
+                        <Edge From="2" To="8" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="6" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="9" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source2" />
                         <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7691,23 +7755,23 @@ Item1 as Displacement,
                           <Selector>HarpTreadmill.Calibration</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
+                          <Selector>Output</Selector>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
                           <Selector>BrakeLookupCalibration</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
                         </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="IntProperty">
                             <Value>0</Value>
                           </Operand>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="IntProperty">
                             <Value>1</Value>
                           </Operand>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Zip" />
@@ -7724,10 +7788,10 @@ Item1 as Displacement,
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="2" To="5" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="7" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="4" To="6" Label="Source1" />
+                        <Edge From="5" To="7" Label="Source1" />
                         <Edge From="6" To="7" Label="Source2" />
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
