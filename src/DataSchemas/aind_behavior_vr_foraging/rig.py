@@ -2,13 +2,13 @@
 from __future__ import annotations
 
 # Import core types
-from typing import Annotated, List, Literal, Optional
+from typing import List, Literal, Optional
 
 import aind_behavior_services.calibration.olfactometer as oc
 import aind_behavior_services.calibration.water_valve as wvc
-from aind_behavior_services.calibration.treadmill import Treadmill
 import aind_behavior_services.rig as rig
 from aind_behavior_services.calibration import aind_manipulator
+from aind_behavior_services.calibration.treadmill import Treadmill
 from aind_behavior_services.rig import (
     AindBehaviorRigModel,
     HarpAnalogInput,
@@ -20,7 +20,6 @@ from aind_behavior_services.rig import (
 from pydantic import BaseModel, Field
 
 __version__ = "0.4.0"
-
 
 
 class AindManipulatorAdditionalSettings(BaseModel):
