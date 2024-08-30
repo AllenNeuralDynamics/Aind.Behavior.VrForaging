@@ -2524,174 +2524,6 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
-    /// <summary>
-    /// Overrides the default settings for the treadmill calibration
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the treadmill calibration")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpTreadmill
-    {
-    
-        private string _deviceType = "treadmill";
-    
-        private BaseModel _additionalSettings;
-    
-        private Treadmill _calibration;
-    
-        private int _whoAmI = 1402;
-    
-        private string _serialNumber;
-    
-        private string _portName;
-    
-        public HarpTreadmill()
-        {
-        }
-    
-        protected HarpTreadmill(HarpTreadmill other)
-        {
-            _deviceType = other._deviceType;
-            _additionalSettings = other._additionalSettings;
-            _calibration = other._calibration;
-            _whoAmI = other._whoAmI;
-            _serialNumber = other._serialNumber;
-            _portName = other._portName;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Treadmill calibration settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Treadmill calibration settings")]
-        public Treadmill Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        public int WhoAmI
-        {
-            get
-            {
-                return _whoAmI;
-            }
-            set
-            {
-                _whoAmI = value;
-            }
-        }
-    
-        /// <summary>
-        /// Device serial number
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [System.ComponentModel.DescriptionAttribute("Device serial number")]
-        public string SerialNumber
-        {
-            get
-            {
-                return _serialNumber;
-            }
-            set
-            {
-                _serialNumber = value;
-            }
-        }
-    
-        /// <summary>
-        /// Device port name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Device port name")]
-        public string PortName
-        {
-            get
-            {
-                return _portName;
-            }
-            set
-            {
-                _portName = value;
-            }
-        }
-    
-        public System.IObservable<HarpTreadmill> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpTreadmill(this)));
-        }
-    
-        public System.IObservable<HarpTreadmill> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new HarpTreadmill(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
@@ -4114,15 +3946,371 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
-    /// <summary>
-    /// Overrides the default settings for the treadmill calibration by spec'ing brake_lookup_calibration field
-    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the treadmill calibration by spec\'ing brake_lo" +
-        "okup_calibration field")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Treadmill
+    {
+    
+        private string _deviceType = "treadmill";
+    
+        private BaseModel _additionalSettings;
+    
+        private TreadmillCalibration _calibration;
+    
+        private int _whoAmI = 1402;
+    
+        private string _serialNumber;
+    
+        private string _portName;
+    
+        public Treadmill()
+        {
+        }
+    
+        protected Treadmill(Treadmill other)
+        {
+            _deviceType = other._deviceType;
+            _additionalSettings = other._additionalSettings;
+            _calibration = other._calibration;
+            _whoAmI = other._whoAmI;
+            _serialNumber = other._serialNumber;
+            _portName = other._portName;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Additional settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
+        [System.ComponentModel.DescriptionAttribute("Additional settings")]
+        public BaseModel AdditionalSettings
+        {
+            get
+            {
+                return _additionalSettings;
+            }
+            set
+            {
+                _additionalSettings = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        public TreadmillCalibration Calibration
+        {
+            get
+            {
+                return _calibration;
+            }
+            set
+            {
+                _calibration = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
+        public int WhoAmI
+        {
+            get
+            {
+                return _whoAmI;
+            }
+            set
+            {
+                _whoAmI = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device serial number
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
+        [System.ComponentModel.DescriptionAttribute("Device serial number")]
+        public string SerialNumber
+        {
+            get
+            {
+                return _serialNumber;
+            }
+            set
+            {
+                _serialNumber = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device port name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Device port name")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        public System.IObservable<Treadmill> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Treadmill(this)));
+        }
+    
+        public System.IObservable<Treadmill> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Treadmill(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
+            stringBuilder.Append("calibration = " + _calibration + ", ");
+            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
+            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
+            stringBuilder.Append("port_name = " + _portName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Treadmill calibration class
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Treadmill calibration class")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TreadmillCalibration
+    {
+    
+        private string _deviceName = "Treadmill";
+    
+        private TreadmillCalibrationInput _input = new TreadmillCalibrationInput();
+    
+        private TreadmillCalibrationOutput _output = new TreadmillCalibrationOutput();
+    
+        private System.DateTimeOffset? _date;
+    
+        private string _description = "Calibration of the treadmill system";
+    
+        private string _notes;
+    
+        public TreadmillCalibration()
+        {
+        }
+    
+        protected TreadmillCalibration(TreadmillCalibration other)
+        {
+            _deviceName = other._deviceName;
+            _input = other._input;
+            _output = other._output;
+            _date = other._date;
+            _description = other._description;
+            _notes = other._notes;
+        }
+    
+        /// <summary>
+        /// Must match a device name in rig/instrument
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Must match a device name in rig/instrument")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("input", Required=Newtonsoft.Json.Required.Always)]
+        public TreadmillCalibrationInput Input
+        {
+            get
+            {
+                return _input;
+            }
+            set
+            {
+                _input = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("output", Required=Newtonsoft.Json.Required.Always)]
+        public TreadmillCalibrationOutput Output
+        {
+            get
+            {
+                return _output;
+            }
+            set
+            {
+                _output = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("date")]
+        public System.DateTimeOffset? Date
+        {
+            get
+            {
+                return _date;
+            }
+            set
+            {
+                _date = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("description")]
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
+        public string Notes
+        {
+            get
+            {
+                return _notes;
+            }
+            set
+            {
+                _notes = value;
+            }
+        }
+    
+        public System.IObservable<TreadmillCalibration> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillCalibration(this)));
+        }
+    
+        public System.IObservable<TreadmillCalibration> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillCalibration(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
+            stringBuilder.Append("input = " + _input + ", ");
+            stringBuilder.Append("output = " + _output + ", ");
+            stringBuilder.Append("date = " + _date + ", ");
+            stringBuilder.Append("description = " + _description + ", ");
+            stringBuilder.Append("notes = " + _notes);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TreadmillCalibrationInput
+    {
+    
+        public TreadmillCalibrationInput()
+        {
+        }
+    
+        protected TreadmillCalibrationInput(TreadmillCalibrationInput other)
+        {
+        }
+    
+        public System.IObservable<TreadmillCalibrationInput> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillCalibrationInput(this)));
+        }
+    
+        public System.IObservable<TreadmillCalibrationInput> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillCalibrationInput(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class TreadmillCalibrationOutput
     {
     
         private double _wheelDiameter = 15D;
@@ -4133,11 +4321,11 @@ namespace AindVrForagingDataSchema.Rig
     
         private System.Collections.Generic.List<System.Collections.Generic.List<double>> _brakeLookupCalibration = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
     
-        public Treadmill()
+        public TreadmillCalibrationOutput()
         {
         }
     
-        protected Treadmill(Treadmill other)
+        protected TreadmillCalibrationOutput(TreadmillCalibrationOutput other)
         {
             _wheelDiameter = other._wheelDiameter;
             _pulsesPerRevolution = other._pulsesPerRevolution;
@@ -4197,12 +4385,12 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         /// <summary>
-        /// Brake lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated
+        /// Brake lookup calibration. Each pair of values define (input [torque], output [brake set-point U16])
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("brake_lookup_calibration")]
-        [System.ComponentModel.DescriptionAttribute("Brake lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).           " +
-            "  Values are linearly interpolated")]
+        [Newtonsoft.Json.JsonPropertyAttribute("brake_lookup_calibration", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Brake lookup calibration. Each pair of values define (input [torque], output [bra" +
+            "ke set-point U16])")]
         public System.Collections.Generic.List<System.Collections.Generic.List<double>> BrakeLookupCalibration
         {
             get
@@ -4215,14 +4403,14 @@ namespace AindVrForagingDataSchema.Rig
             }
         }
     
-        public System.IObservable<Treadmill> Process()
+        public System.IObservable<TreadmillCalibrationOutput> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Treadmill(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillCalibrationOutput(this)));
         }
     
-        public System.IObservable<Treadmill> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<TreadmillCalibrationOutput> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Treadmill(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillCalibrationOutput(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -5163,7 +5351,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private HarpAnalogInput _harpAnalogInput;
     
-        private HarpTreadmill _harpTreadmill = new HarpTreadmill();
+        private Treadmill _harpTreadmill = new Treadmill();
     
         private HarpSniffDetector _harpSniffDetector;
     
@@ -5408,7 +5596,7 @@ namespace AindVrForagingDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_treadmill", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Harp treadmill")]
-        public HarpTreadmill HarpTreadmill
+        public Treadmill HarpTreadmill
         {
             get
             {
@@ -5852,11 +6040,6 @@ namespace AindVrForagingDataSchema.Rig
             return Process<HarpSniffDetector>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<HarpTreadmill> source)
-        {
-            return Process<HarpTreadmill>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<ManipulatorPosition> source)
         {
             return Process<ManipulatorPosition>(source);
@@ -5910,6 +6093,21 @@ namespace AindVrForagingDataSchema.Rig
         public System.IObservable<string> Process(System.IObservable<Treadmill> source)
         {
             return Process<Treadmill>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TreadmillCalibration> source)
+        {
+            return Process<TreadmillCalibration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TreadmillCalibrationInput> source)
+        {
+            return Process<TreadmillCalibrationInput>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TreadmillCalibrationOutput> source)
+        {
+            return Process<TreadmillCalibrationOutput>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
@@ -5985,7 +6183,6 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLickometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpOlfactometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpSniffDetector>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTreadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ManipulatorPosition>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibration>))]
@@ -5997,6 +6194,9 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillCalibrationInput>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]

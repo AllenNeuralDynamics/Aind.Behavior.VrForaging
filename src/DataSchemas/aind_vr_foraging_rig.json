@@ -1033,81 +1033,6 @@
       "title": "HarpSniffDetector",
       "type": "object"
     },
-    "HarpTreadmill": {
-      "description": "Overrides the default settings for the treadmill calibration",
-      "properties": {
-        "device_type": {
-          "const": "treadmill",
-          "default": "treadmill",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Treadmill"
-            }
-          ],
-          "default": {
-            "wheel_diameter": 15.0,
-            "pulses_per_revolution": 28800,
-            "invert_direction": false,
-            "brake_lookup_calibration": [
-              [
-                0.0,
-                0.0
-              ],
-              [
-                1.0,
-                65535.0
-              ]
-            ]
-          },
-          "description": "Treadmill calibration settings"
-        },
-        "who_am_i": {
-          "const": 1402,
-          "default": 1402,
-          "title": "Who Am I",
-          "type": "integer"
-        },
-        "serial_number": {
-          "default": null,
-          "description": "Device serial number",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Serial Number"
-        },
-        "port_name": {
-          "description": "Device port name",
-          "title": "Port Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "port_name"
-      ],
-      "title": "HarpTreadmill",
-      "type": "object"
-    },
     "ManipulatorPosition": {
       "properties": {
         "x": {
@@ -1663,7 +1588,138 @@
       "type": "object"
     },
     "Treadmill": {
-      "description": "Overrides the default settings for the treadmill calibration by spec'ing brake_lookup_calibration field",
+      "properties": {
+        "device_type": {
+          "const": "treadmill",
+          "default": "treadmill",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calibration of the treadmill"
+        },
+        "who_am_i": {
+          "const": 1402,
+          "default": 1402,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "Treadmill",
+      "type": "object"
+    },
+    "TreadmillCalibration": {
+      "description": "Treadmill calibration class",
+      "properties": {
+        "device_name": {
+          "default": "Treadmill",
+          "description": "Must match a device name in rig/instrument",
+          "title": "Device name",
+          "type": "string"
+        },
+        "input": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TreadmillCalibrationInput"
+            }
+          ],
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TreadmillCalibrationOutput"
+            }
+          ],
+          "title": "Output of the calibration."
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "const": "Calibration of the treadmill system",
+          "default": "Calibration of the treadmill system",
+          "title": "Description",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "title": "TreadmillCalibration",
+      "type": "object"
+    },
+    "TreadmillCalibrationInput": {
+      "properties": {},
+      "title": "TreadmillCalibrationInput",
+      "type": "object"
+    },
+    "TreadmillCalibrationOutput": {
       "properties": {
         "wheel_diameter": {
           "default": 15,
@@ -1686,19 +1742,8 @@
           "type": "boolean"
         },
         "brake_lookup_calibration": {
-          "default": [
-            [
-              0,
-              0
-            ],
-            [
-              1,
-              65535
-            ]
-          ],
-          "description": "Brake lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated",
+          "description": "Brake lookup calibration. Each pair of values define (input [torque], output [brake set-point U16])",
           "items": {
-            "description": "A tuple of two values",
             "items": {
               "type": "number"
             },
@@ -1711,7 +1756,10 @@
           "type": "array"
         }
       },
-      "title": "Treadmill",
+      "required": [
+        "brake_lookup_calibration"
+      ],
+      "title": "TreadmillCalibrationOutput",
       "type": "object"
     },
     "Vector3": {
@@ -2124,7 +2172,7 @@
     "harp_treadmill": {
       "allOf": [
         {
-          "$ref": "#/definitions/HarpTreadmill"
+          "$ref": "#/definitions/Treadmill"
         }
       ],
       "description": "Harp treadmill"
