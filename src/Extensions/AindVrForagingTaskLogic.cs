@@ -770,6 +770,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [JsonInheritanceAttribute("Distance", typeof(BlockEndConditionDistance))]
     [JsonInheritanceAttribute("Choice", typeof(BlockEndConditionChoice))]
     [JsonInheritanceAttribute("Reward", typeof(BlockEndConditionReward))]
+    [JsonInheritanceAttribute("PatchCount", typeof(BlockEndConditionPatchCount))]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class BlockEndCondition
@@ -973,6 +974,64 @@ namespace AindVrForagingDataSchema.TaskLogic
         public System.IObservable<BlockEndConditionDuration> Process<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionDuration(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("value = " + _value);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BlockEndConditionPatchCount : BlockEndCondition
+    {
+    
+        private Distribution _value;
+    
+        public BlockEndConditionPatchCount()
+        {
+        }
+    
+        protected BlockEndConditionPatchCount(BlockEndConditionPatchCount other) : 
+                base(other)
+        {
+            _value = other._value;
+        }
+    
+        /// <summary>
+        /// Number of patches after which the block will end.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Number of patches after which the block will end.")]
+        public Distribution Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+    
+        public System.IObservable<BlockEndConditionPatchCount> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionPatchCount(this)));
+        }
+    
+        public System.IObservable<BlockEndConditionPatchCount> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionPatchCount(this));
         }
     
         protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -6745,6 +6804,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDistance>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionChoice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionReward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionPatchCount>))]
     public partial class MatchBlockEndCondition : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -6983,6 +7043,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         public System.IObservable<string> Process(System.IObservable<BlockEndConditionDuration> source)
         {
             return Process<BlockEndConditionDuration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlockEndConditionPatchCount> source)
+        {
+            return Process<BlockEndConditionPatchCount>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<BlockEndConditionReward> source)
@@ -7280,6 +7345,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionChoice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDistance>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDuration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionPatchCount>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionReward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockStructure>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ConstantFunction>))]

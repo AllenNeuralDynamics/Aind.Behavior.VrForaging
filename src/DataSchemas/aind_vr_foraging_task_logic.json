@@ -244,6 +244,7 @@
           "Choice": "#/definitions/BlockEndConditionChoice",
           "Distance": "#/definitions/BlockEndConditionDistance",
           "Duration": "#/definitions/BlockEndConditionDuration",
+          "PatchCount": "#/definitions/BlockEndConditionPatchCount",
           "Reward": "#/definitions/BlockEndConditionReward"
         },
         "propertyName": "condition_type"
@@ -260,6 +261,9 @@
         },
         {
           "$ref": "#/definitions/BlockEndConditionReward"
+        },
+        {
+          "$ref": "#/definitions/BlockEndConditionPatchCount"
         }
       ],
       "title": "BlockEndCondition"
@@ -319,6 +323,25 @@
         "value"
       ],
       "title": "BlockEndConditionDuration",
+      "type": "object"
+    },
+    "BlockEndConditionPatchCount": {
+      "properties": {
+        "condition_type": {
+          "const": "PatchCount",
+          "default": "PatchCount",
+          "title": "Condition Type",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/definitions/Distribution",
+          "description": "Number of patches after which the block will end."
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "BlockEndConditionPatchCount",
       "type": "object"
     },
     "BlockEndConditionReward": {
