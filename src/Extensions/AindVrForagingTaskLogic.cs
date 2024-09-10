@@ -718,7 +718,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         /// List of end conditions that must be true for the block to end.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("end_conditions", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("end_conditions")]
         [System.ComponentModel.DescriptionAttribute("List of end conditions that must be true for the block to end.")]
         public System.Collections.Generic.List<BlockEndCondition> EndConditions
         {
