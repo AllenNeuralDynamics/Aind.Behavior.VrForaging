@@ -223,6 +223,7 @@
           "description": "Statistics of the environment"
         },
         "end_conditions": {
+          "default": [],
           "description": "List of end conditions that must be true for the block to end.",
           "items": {
             "$ref": "#/definitions/BlockEndCondition"
@@ -232,8 +233,7 @@
         }
       },
       "required": [
-        "environment_statistics",
-        "end_conditions"
+        "environment_statistics"
       ],
       "title": "Block",
       "type": "object"
@@ -370,6 +370,7 @@
           "items": {
             "$ref": "#/definitions/Block"
           },
+          "minItems": 1,
           "title": "Blocks",
           "type": "array"
         },

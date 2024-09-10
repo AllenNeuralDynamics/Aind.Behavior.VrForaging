@@ -418,12 +418,12 @@ class BlockEndCondition(RootModel):
 class Block(BaseModel):
     environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
     end_conditions: List[BlockEndCondition] = Field(
-        ..., description="List of end conditions that must be true for the block to end."
+        [], description="List of end conditions that must be true for the block to end."
     )
 
 
 class BlockStructure(BaseModel):
-    blocks: List[Block] = Field(..., description="Statistics of the environment")
+    blocks: List[Block] = Field(..., description="Statistics of the environment", min_length=1)
     sampling_mode: Literal["Random", "Sequential"] = Field("Sequential", description="Sampling mode of the blocks.")
 
 
