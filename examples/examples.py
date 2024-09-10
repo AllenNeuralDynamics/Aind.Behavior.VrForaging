@@ -306,7 +306,10 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
         task_parameters=AindVrForagingTaskParameters(
             rng_seed=None,
             updaters=updaters,
-            environment_statistics=environment_statistics,
+            environment=vr_task_logic.BlockStructure(
+                blocks=[vr_task_logic.Block(environment_statistics=environment_statistics, end_conditions=[])],
+                sampling_mode="Random",
+            ),
             task_mode_settings=vr_task_logic.ForagingSettings(),
             operation_control=operation_control,
         )
