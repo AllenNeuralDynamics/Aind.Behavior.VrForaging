@@ -373,9 +373,63 @@ class TaskModeSettings(RootModel):
     root: Annotated[Union[HabituationSettings, ForagingSettings, DebugSettings], Field(discriminator="task_mode")]
 
 
+class _BlockEndConditionBase(BaseModel):
+    condition_type: str
+
+
+class BlockEndConditionDuration(_BlockEndConditionBase):
+    condition_type: Literal["Duration"] = "Duration"
+    value: distributions.Distribution = Field(..., description="Time after which the block ends.")
+
+
+class BlockEndConditionDistance(_BlockEndConditionBase):
+    condition_type: Literal["Distance"] = "Distance"
+    value: distributions.Distribution = Field(..., description="Distance after which the block ends.")
+
+
+class BlockEndConditionChoice(_BlockEndConditionBase):
+    condition_type: Literal["Choice"] = "Choice"
+    value: distributions.Distribution = Field(..., description="Number of choices after which the block ends.")
+
+
+class BlockEndConditionReward(_BlockEndConditionBase):
+    condition_type: Literal["Reward"] = "Reward"
+    value: distributions.Distribution = Field(..., description="Number of rewards after which the block ends.")
+
+
+class BlockEndConditionPatchCount(_BlockEndConditionBase):
+    condition_type: Literal["PatchCount"] = "PatchCount"
+    value: distributions.Distribution = Field(..., description="Number of patches after which the block will end.")
+
+
+class BlockEndCondition(RootModel):
+    root: Annotated[
+        Union[
+            BlockEndConditionDuration,
+            BlockEndConditionDistance,
+            BlockEndConditionChoice,
+            BlockEndConditionReward,
+            BlockEndConditionPatchCount,
+        ],
+        Field(discriminator="condition_type"),
+    ]
+
+
+class Block(BaseModel):
+    environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
+    end_conditions: List[BlockEndCondition] = Field(
+        ..., description="List of end conditions that must be true for the block to end."
+    )
+
+
+class BlockStructure(BaseModel):
+    blocks: List[Block] = Field(..., description="Statistics of the environment")
+    sampling_mode: Literal["Random", "Sequential"] = Field("Sequential", description="Sampling mode of the blocks.")
+
+
 class AindVrForagingTaskParameters(TaskParameters):
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
-    environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
+    environment: BlockStructure = Field(..., description="Statistics of the environment")
     task_mode_settings: TaskModeSettings = Field(
         default=ForagingSettings(), description="Settings of the task stage", validate_default=True
     )

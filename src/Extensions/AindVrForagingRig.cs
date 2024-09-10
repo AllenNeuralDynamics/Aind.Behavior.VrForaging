@@ -3689,6 +3689,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private double? _gamma;
     
+        private SpinnakerCameraAdcBitDepth _adcBitDepth = AindVrForagingDataSchema.Rig.SpinnakerCameraAdcBitDepth.Adc8bit;
+    
         private Rect _regionOfInterest;
     
         private VideoWriter _videoWriter;
@@ -3708,6 +3710,7 @@ namespace AindVrForagingDataSchema.Rig
             _exposure = other._exposure;
             _gain = other._gain;
             _gamma = other._gamma;
+            _adcBitDepth = other._adcBitDepth;
             _regionOfInterest = other._regionOfInterest;
             _videoWriter = other._videoWriter;
         }
@@ -3870,6 +3873,24 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         /// <summary>
+        /// ADC bit depth
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("adc_bit_depth")]
+        [System.ComponentModel.DescriptionAttribute("ADC bit depth")]
+        public SpinnakerCameraAdcBitDepth AdcBitDepth
+        {
+            get
+            {
+                return _adcBitDepth;
+            }
+            set
+            {
+                _adcBitDepth = value;
+            }
+        }
+    
+        /// <summary>
         /// Region of interest
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -3926,6 +3947,7 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("exposure = " + _exposure + ", ");
             stringBuilder.Append("gain = " + _gain + ", ");
             stringBuilder.Append("gamma = " + _gamma + ", ");
+            stringBuilder.Append("adc_bit_depth = " + _adcBitDepth + ", ");
             stringBuilder.Append("region_of_interest = " + _regionOfInterest + ", ");
             stringBuilder.Append("video_writer = " + _videoWriter);
             return true;
@@ -3943,6 +3965,21 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("}");
             return stringBuilder.ToString();
         }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    public enum SpinnakerCameraAdcBitDepth
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="0")]
+        Adc8bit = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="1")]
+        Adc10bit = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="2")]
+        Adc12bit = 2,
     }
 
 
