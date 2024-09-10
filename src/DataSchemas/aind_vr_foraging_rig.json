@@ -4,11 +4,7 @@
       "description": "Additional settings for the manipulator device",
       "properties": {
         "spout_axis": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Axis"
-            }
-          ],
+          "$ref": "#/definitions/Axis",
           "default": 2,
           "description": "Spout axis"
         }
@@ -26,19 +22,11 @@
           "type": "string"
         },
         "input": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/AindManipulatorCalibrationInput"
-            }
-          ],
+          "$ref": "#/definitions/AindManipulatorCalibrationInput",
           "title": "Input of the calibration"
         },
         "output": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/AindManipulatorCalibrationOutput"
-            }
-          ],
+          "$ref": "#/definitions/AindManipulatorCalibrationOutput",
           "title": "Output of the calibration."
         },
         "date": {
@@ -83,11 +71,7 @@
     "AindManipulatorCalibrationInput": {
       "properties": {
         "full_step_to_mm": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ManipulatorPosition"
-            }
-          ],
+          "$ref": "#/definitions/ManipulatorPosition",
           "default": {
             "x": 0.01,
             "y1": 0.01,
@@ -159,11 +143,7 @@
           "type": "array"
         },
         "initial_position": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ManipulatorPosition"
-            }
-          ],
+          "$ref": "#/definitions/ManipulatorPosition",
           "default": {
             "x": 0.0,
             "y1": 0.0,
@@ -190,11 +170,7 @@
           "type": "string"
         },
         "additional_settings": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/AindManipulatorAdditionalSettings"
-            }
-          ],
+          "$ref": "#/definitions/AindManipulatorAdditionalSettings",
           "default": {
             "spout_axis": 2
           },
@@ -266,11 +242,7 @@
       "description": "Axis configuration",
       "properties": {
         "axis": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Axis"
-            }
-          ],
+          "$ref": "#/definitions/Axis",
           "title": "Axis to be configured"
         },
         "step_acceleration_interval": {
@@ -290,11 +262,7 @@
           "type": "integer"
         },
         "microstep_resolution": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/MicrostepResolution"
-            }
-          ],
+          "$ref": "#/definitions/MicrostepResolution",
           "default": 0,
           "title": "Microstep resolution"
         },
@@ -306,11 +274,7 @@
           "type": "integer"
         },
         "motor_operation_mode": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/MotorOperationMode"
-            }
-          ],
+          "$ref": "#/definitions/MotorOperationMode",
           "default": 0,
           "title": "Motor operation mode"
         },
@@ -456,6 +420,174 @@
         "cameras"
       ],
       "title": "CameraController[WebCamera]",
+      "type": "object"
+    },
+    "DisplayCalibration": {
+      "properties": {
+        "intrinsics": {
+          "$ref": "#/definitions/DisplayIntrinsics",
+          "default": {
+            "frame_width": 1920,
+            "frame_height": 1080,
+            "display_width": 20.0,
+            "display_height": 15.0
+          },
+          "description": "Intrinsics"
+        },
+        "extrinsics": {
+          "$ref": "#/definitions/DisplayExtrinsics",
+          "default": {
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 1.309016,
+              "z": -13.27
+            }
+          },
+          "description": "Extrinsics"
+        }
+      },
+      "title": "DisplayCalibration",
+      "type": "object"
+    },
+    "DisplayExtrinsics": {
+      "properties": {
+        "rotation": {
+          "$ref": "#/definitions/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "description": "Rotation vector (radians)"
+        },
+        "translation": {
+          "$ref": "#/definitions/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 1.309016,
+            "z": -13.27
+          },
+          "description": "Translation (in cm)"
+        }
+      },
+      "title": "DisplayExtrinsics",
+      "type": "object"
+    },
+    "DisplayIntrinsics": {
+      "properties": {
+        "frame_width": {
+          "default": 1920,
+          "description": "Frame width (px)",
+          "minimum": 0,
+          "title": "Frame Width",
+          "type": "integer"
+        },
+        "frame_height": {
+          "default": 1080,
+          "description": "Frame height (px)",
+          "minimum": 0,
+          "title": "Frame Height",
+          "type": "integer"
+        },
+        "display_width": {
+          "default": 20,
+          "description": "Display width (cm)",
+          "minimum": 0.0,
+          "title": "Display Width",
+          "type": "number"
+        },
+        "display_height": {
+          "default": 15,
+          "description": "Display width (cm)",
+          "minimum": 0.0,
+          "title": "Display Height",
+          "type": "number"
+        }
+      },
+      "title": "DisplayIntrinsics",
+      "type": "object"
+    },
+    "DisplaysCalibration": {
+      "properties": {
+        "left": {
+          "$ref": "#/definitions/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Left display calibration"
+        },
+        "center": {
+          "$ref": "#/definitions/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            }
+          },
+          "description": "Center display calibration"
+        },
+        "right": {
+          "$ref": "#/definitions/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Right display calibration"
+        }
+      },
+      "title": "DisplaysCalibration",
       "type": "object"
     },
     "HarpAnalogInput": {
@@ -837,81 +969,6 @@
       "title": "HarpSniffDetector",
       "type": "object"
     },
-    "HarpTreadmill": {
-      "description": "Overrides the default settings for the treadmill calibration",
-      "properties": {
-        "device_type": {
-          "const": "treadmill",
-          "default": "treadmill",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Treadmill"
-            }
-          ],
-          "default": {
-            "wheel_diameter": 15.0,
-            "pulses_per_revolution": 28800,
-            "invert_direction": false,
-            "brake_lookup_calibration": [
-              [
-                0.0,
-                0.0
-              ],
-              [
-                1.0,
-                65535.0
-              ]
-            ]
-          },
-          "description": "Treadmill calibration settings"
-        },
-        "who_am_i": {
-          "const": 1402,
-          "default": 1402,
-          "title": "Who Am I",
-          "type": "integer"
-        },
-        "serial_number": {
-          "default": null,
-          "description": "Device serial number",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Serial Number"
-        },
-        "port_name": {
-          "description": "Device port name",
-          "title": "Port Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "port_name"
-      ],
-      "title": "HarpTreadmill",
-      "type": "object"
-    },
     "ManipulatorPosition": {
       "properties": {
         "x": {
@@ -1019,19 +1076,11 @@
           "type": "string"
         },
         "input": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/OlfactometerCalibrationInput"
-            }
-          ],
+          "$ref": "#/definitions/OlfactometerCalibrationInput",
           "title": "Input of the calibration"
         },
         "output": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/OlfactometerCalibrationOutput"
-            }
-          ],
+          "$ref": "#/definitions/OlfactometerCalibrationOutput",
           "title": "Output of the calibration"
         },
         "date": {
@@ -1100,11 +1149,7 @@
           "type": "integer"
         },
         "channel_type": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/OlfactometerChannelType"
-            }
-          ],
+          "$ref": "#/definitions/OlfactometerChannelType",
           "default": "Odor",
           "title": "Channel type"
         },
@@ -1163,15 +1208,45 @@
       "title": "OlfactometerChannelType",
       "type": "string"
     },
+    "Rect": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the top-left corner",
+          "minimum": 0,
+          "title": "X",
+          "type": "integer"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the top-left corner",
+          "minimum": 0,
+          "title": "Y",
+          "type": "integer"
+        },
+        "width": {
+          "default": 0,
+          "description": "Width of the rectangle",
+          "minimum": 0,
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "default": 0,
+          "description": "Height of the rectangle",
+          "minimum": 0,
+          "title": "Height",
+          "type": "integer"
+        }
+      },
+      "title": "Rect",
+      "type": "object"
+    },
     "RigCalibration": {
       "description": "Container class for calibration models. In a future release these will be moved to the respective devices",
       "properties": {
         "water_valve": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/WaterValveCalibration"
-            }
-          ],
+          "$ref": "#/definitions/WaterValveCalibration",
           "description": "Water valve calibration"
         }
       },
@@ -1203,16 +1278,70 @@
           ]
         },
         "calibration": {
-          "default": null,
-          "description": "Calibration",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
+          "$ref": "#/definitions/DisplaysCalibration",
+          "default": {
+            "left": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": 1.0472,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": -16.6917756,
+                  "y": 1.309016,
+                  "z": -3.575264
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
             },
-            {
-              "type": "null"
+            "center": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": 0.0,
+                  "y": 1.309016,
+                  "z": -13.27
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
+            },
+            "right": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": -1.0472,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": 16.6917756,
+                  "y": 1.309016,
+                  "z": -3.575264
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
             }
-          ]
+          },
+          "description": "Screen calibration"
         },
         "display_index": {
           "default": 1,
@@ -1231,12 +1360,6 @@
           "description": "Target update frequency",
           "title": "Target Update Frequency",
           "type": "number"
-        },
-        "calibration_directory": {
-          "default": "Calibration\\Monitors\\",
-          "description": "Calibration directory",
-          "title": "Calibration Directory",
-          "type": "string"
         },
         "texture_assets_directory": {
           "default": "Textures",
@@ -1333,6 +1456,35 @@
           "title": "Gain",
           "type": "number"
         },
+        "gamma": {
+          "default": null,
+          "description": "Gamma. If None, will disable gamma correction.",
+          "oneOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Gamma"
+        },
+        "adc_bit_depth": {
+          "$ref": "#/definitions/SpinnakerCameraAdcBitDepth",
+          "default": 0,
+          "description": "ADC bit depth"
+        },
+        "region_of_interest": {
+          "$ref": "#/definitions/Rect",
+          "default": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "description": "Region of interest"
+        },
         "video_writer": {
           "default": null,
           "description": "Video writer. If not provided, no video will be saved.",
@@ -1352,8 +1504,145 @@
       "title": "SpinnakerCamera",
       "type": "object"
     },
+    "SpinnakerCameraAdcBitDepth": {
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "title": "SpinnakerCameraAdcBitDepth",
+      "type": "integer",
+      "x-enumNames": [
+        "Adc8bit",
+        "Adc10bit",
+        "Adc12bit"
+      ]
+    },
     "Treadmill": {
-      "description": "Overrides the default settings for the treadmill calibration by spec'ing brake_lookup_calibration field",
+      "properties": {
+        "device_type": {
+          "const": "treadmill",
+          "default": "treadmill",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TreadmillCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calibration of the treadmill"
+        },
+        "who_am_i": {
+          "const": 1402,
+          "default": 1402,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "Treadmill",
+      "type": "object"
+    },
+    "TreadmillCalibration": {
+      "description": "Treadmill calibration class",
+      "properties": {
+        "device_name": {
+          "default": "Treadmill",
+          "description": "Must match a device name in rig/instrument",
+          "title": "Device name",
+          "type": "string"
+        },
+        "input": {
+          "$ref": "#/definitions/TreadmillCalibrationInput",
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "$ref": "#/definitions/TreadmillCalibrationOutput",
+          "title": "Output of the calibration."
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "const": "Calibration of the treadmill system",
+          "default": "Calibration of the treadmill system",
+          "title": "Description",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "title": "TreadmillCalibration",
+      "type": "object"
+    },
+    "TreadmillCalibrationInput": {
+      "properties": {},
+      "title": "TreadmillCalibrationInput",
+      "type": "object"
+    },
+    "TreadmillCalibrationOutput": {
       "properties": {
         "wheel_diameter": {
           "default": 15,
@@ -1376,19 +1665,8 @@
           "type": "boolean"
         },
         "brake_lookup_calibration": {
-          "default": [
-            [
-              0,
-              0
-            ],
-            [
-              1,
-              65535
-            ]
-          ],
-          "description": "Brake lookup calibration. Each Tuple is (0-1 (percent), 0-full-scale).             Values are linearly interpolated",
+          "description": "Brake lookup calibration. Each pair of values define (input [torque], output [brake set-point U16])",
           "items": {
-            "description": "A tuple of two values",
             "items": {
               "type": "number"
             },
@@ -1401,7 +1679,34 @@
           "type": "array"
         }
       },
-      "title": "Treadmill",
+      "required": [
+        "brake_lookup_calibration"
+      ],
+      "title": "TreadmillCalibrationOutput",
+      "type": "object"
+    },
+    "Vector3": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the point",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the point",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the point",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
       "type": "object"
     },
     "VideoWriter": {
@@ -1494,19 +1799,11 @@
           "type": "string"
         },
         "input": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/WaterValveCalibrationInput"
-            }
-          ],
+          "$ref": "#/definitions/WaterValveCalibrationInput",
           "title": "Input of the calibration"
         },
         "output": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/WaterValveCalibrationOutput"
-            }
-          ],
+          "$ref": "#/definitions/WaterValveCalibrationOutput",
           "title": "Output of the calibration."
         },
         "date": {
@@ -1692,9 +1989,15 @@
     }
   },
   "properties": {
+    "aind_behavior_services_pkg_version": {
+      "default": "0.8.0-rc1",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+      "title": "aind_behavior_services package version",
+      "type": "string"
+    },
     "version": {
-      "const": "0.3.0",
-      "default": "0.3.0",
+      "const": "0.4.0",
+      "default": "0.4.0",
       "title": "Version",
       "type": "string"
     },
@@ -1709,11 +2012,7 @@
       "type": "string"
     },
     "triggered_camera_controller": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/CameraController_SpinnakerCamera_"
-        }
-      ],
+      "$ref": "#/definitions/CameraController_SpinnakerCamera_",
       "description": "Required camera controller to triggered cameras."
     },
     "monitoring_camera_controller": {
@@ -1729,35 +2028,19 @@
       ]
     },
     "harp_behavior": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/HarpBehavior"
-        }
-      ],
+      "$ref": "#/definitions/HarpBehavior",
       "description": "Harp behavior"
     },
     "harp_olfactometer": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/HarpOlfactometer"
-        }
-      ],
+      "$ref": "#/definitions/HarpOlfactometer",
       "description": "Harp olfactometer"
     },
     "harp_lickometer": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/HarpLickometer"
-        }
-      ],
+      "$ref": "#/definitions/HarpLickometer",
       "description": "Harp lickometer"
     },
     "harp_clock_generator": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/HarpClockGenerator"
-        }
-      ],
+      "$ref": "#/definitions/HarpClockGenerator",
       "description": "Harp clock generator"
     },
     "harp_clock_repeaters": {
@@ -1782,11 +2065,7 @@
       ]
     },
     "harp_treadmill": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/HarpTreadmill"
-        }
-      ],
+      "$ref": "#/definitions/Treadmill",
       "description": "Harp treadmill"
     },
     "harp_sniff_detector": {
@@ -1802,27 +2081,79 @@
       ]
     },
     "manipulator": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/AindManipulatorDevice"
-        }
-      ],
+      "$ref": "#/definitions/AindManipulatorDevice",
       "description": "Manipulator"
     },
     "screen": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/Screen"
-        }
-      ],
+      "$ref": "#/definitions/Screen",
       "default": {
         "device_type": "Screen",
         "additional_settings": null,
-        "calibration": null,
+        "calibration": {
+          "center": {
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            },
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            }
+          },
+          "left": {
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            },
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            }
+          },
+          "right": {
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            },
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            }
+          }
+        },
         "display_index": 1,
         "target_render_frequency": 60.0,
         "target_update_frequency": 120.0,
-        "calibration_directory": "Calibration\\Monitors\\",
         "texture_assets_directory": "Textures",
         "brightness": 0.0,
         "contrast": 1.0
@@ -1830,11 +2161,7 @@
       "description": "Screen settings"
     },
     "calibration": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/RigCalibration"
-        }
-      ],
+      "$ref": "#/definitions/RigCalibration",
       "description": "Calibration models"
     }
   },

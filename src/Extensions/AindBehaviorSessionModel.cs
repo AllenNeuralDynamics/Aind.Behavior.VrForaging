@@ -15,6 +15,8 @@ namespace AindVrForagingDataSchema.Session
     public partial class AindBehaviorSessionModel
     {
     
+        private string _aindBehaviorServicesPkgVersion = "0.8.0-rc1";
+    
         private string _version = "0.2.0";
     
         private string _experiment;
@@ -24,6 +26,8 @@ namespace AindVrForagingDataSchema.Session
         private System.DateTimeOffset _date;
     
         private string _rootPath;
+    
+        private string _sessionName;
     
         private string _remotePath;
     
@@ -45,11 +49,13 @@ namespace AindVrForagingDataSchema.Session
     
         protected AindBehaviorSessionModel(AindBehaviorSessionModel other)
         {
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
             _version = other._version;
             _experiment = other._experiment;
             _experimenter = other._experimenter;
             _date = other._date;
             _rootPath = other._rootPath;
+            _sessionName = other._sessionName;
             _remotePath = other._remotePath;
             _subject = other._subject;
             _experimentVersion = other._experimentVersion;
@@ -57,6 +63,19 @@ namespace AindVrForagingDataSchema.Session
             _commitHash = other._commitHash;
             _allowDirtyRepo = other._allowDirtyRepo;
             _skipHardwareValidation = other._skipHardwareValidation;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
+        {
+            get
+            {
+                return _aindBehaviorServicesPkgVersion;
+            }
+            set
+            {
+                _aindBehaviorServicesPkgVersion = value;
+            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("version")]
@@ -139,6 +158,23 @@ namespace AindVrForagingDataSchema.Session
             set
             {
                 _rootPath = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the session. This will be used to create a folder in the root path.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("session_name")]
+        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path.")]
+        public string SessionName
+        {
+            get
+            {
+                return _sessionName;
+            }
+            set
+            {
+                _sessionName = value;
             }
         }
     
@@ -274,11 +310,13 @@ namespace AindVrForagingDataSchema.Session
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
+            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
             stringBuilder.Append("version = " + _version + ", ");
             stringBuilder.Append("experiment = " + _experiment + ", ");
             stringBuilder.Append("experimenter = " + _experimenter + ", ");
             stringBuilder.Append("date = " + _date + ", ");
             stringBuilder.Append("root_path = " + _rootPath + ", ");
+            stringBuilder.Append("session_name = " + _sessionName + ", ");
             stringBuilder.Append("remote_path = " + _remotePath + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
             stringBuilder.Append("experiment_version = " + _experimentVersion + ", ");

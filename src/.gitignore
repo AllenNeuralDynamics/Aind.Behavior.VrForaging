@@ -2,4 +2,4 @@
 .vs
 .vscode
 src.sln
-*bonsai.layout
+.bonsai

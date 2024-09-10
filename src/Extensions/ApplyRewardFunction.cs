@@ -1,8 +1,10 @@
 using Bonsai;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
+using MathNet.Numerics.Interpolation;
 
 namespace AindVrForagingDataSchema.TaskLogic
 {
@@ -24,7 +26,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
 
         public override double Clamp(double value){
-            return Math.Min(Math.Max(value, Mininum), Maximum);
+            return Math.Min(Math.Max(value, Minimum), Maximum);
         }
     }
 
@@ -34,13 +36,38 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
 
         public override double Clamp(double value){
-            return Math.Min(Math.Max(value, Mininum), Maximum);
+            return Math.Min(Math.Max(value, Minimum), Maximum);
         }
     }
 
     partial class ConstantFunction{
         public override double Invoke(double value){
             return Value;
+        }
+
+        public override double Clamp(double value){
+            return value;
+        }
+    }
+
+    partial class LookupTableFunction{
+
+
+        private Dictionary<double, double> LookupTable(){
+            return LutKeys.Zip(LutValues, (key, value) => new { Key = key, Value = value })
+                         .ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        public override double Invoke(double value){
+            Dictionary<double, double> Table = LookupTable();
+            if (value > Table.Keys.Max()){
+                return Table[Table.Keys.Max()];
+            }
+            if (value < Table.Keys.Min()){
+                return Table[Table.Keys.Min()];
+            }
+            IInterpolation interpolation = MathNet.Numerics.Interpolate.Linear(Table.Keys, Table.Values);
+            return interpolation.Interpolate(value);
         }
 
         public override double Clamp(double value){
