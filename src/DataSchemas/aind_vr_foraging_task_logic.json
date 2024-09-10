@@ -2197,8 +2197,8 @@
       "description": "Parameters of the task logic"
     },
     "version": {
-      "const": "0.4.1",
-      "default": "0.4.1",
+      "const": "0.5.0",
+      "default": "0.5.0",
       "title": "Version",
       "type": "string"
     },
