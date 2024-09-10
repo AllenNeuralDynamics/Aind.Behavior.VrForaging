@@ -6425,7 +6425,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
     
-        private string _version = "0.4.1";
+        private string _version = "0.5.0";
     
         private string _stageName;
     
