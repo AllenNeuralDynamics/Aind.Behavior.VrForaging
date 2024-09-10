@@ -397,6 +397,11 @@ class BlockEndConditionReward(_BlockEndConditionBase):
     value: distributions.Distribution = Field(..., description="Number of rewards after which the block ends.")
 
 
+class BlockEndConditionPatchCount(_BlockEndConditionBase):
+    condition_type: Literal["PatchCount"] = "PatchCount"
+    value: distributions.Distribution = Field(..., description="Number of patches after which the block will end.")
+
+
 class BlockEndCondition(RootModel):
     root: Annotated[
         Union[
@@ -404,6 +409,7 @@ class BlockEndCondition(RootModel):
             BlockEndConditionDistance,
             BlockEndConditionChoice,
             BlockEndConditionReward,
+            BlockEndConditionPatchCount,
         ],
         Field(discriminator="condition_type"),
     ]
