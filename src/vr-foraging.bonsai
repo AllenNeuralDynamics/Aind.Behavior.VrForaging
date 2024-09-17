@@ -9914,9 +9914,21 @@ Item1 as Displacement,
             <Expression xsi:type="SubscribeSubject">
               <Name>SubjectSchema</Name>
             </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Subject</Selector>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TaskLogicSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Name,StageName</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
             <Expression xsi:type="Format">
-              <Format>Animal {0} @ Task {1}</Format>
-              <Selector>Subject,Experiment</Selector>
+              <Format>Animal {0} // Task {1} @ Stage {2}</Format>
+              <Selector>Item1,Item2.Item1,Item2.Item2</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -9926,6 +9938,7 @@ Item1 as Displacement,
             <Expression xsi:type="gui:LabelBuilder">
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
+              <gui:Font>Microsoft Sans Serif, 20.25pt</gui:Font>
               <gui:Text />
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
@@ -9994,7 +10007,7 @@ Item2 as TotalReward)</scr:Expression>
             <Edge From="14" To="15" Label="Source1" />
             <Edge From="15" To="16" Label="Source3" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="72" Label="Source1" />
+            <Edge From="17" To="76" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="65" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
@@ -10045,14 +10058,18 @@ Item2 as TotalReward)</scr:Expression>
             <Edge From="63" To="64" Label="Source1" />
             <Edge From="64" To="65" Label="Source8" />
             <Edge From="65" To="66" Label="Source1" />
-            <Edge From="66" To="72" Label="Source2" />
+            <Edge From="66" To="76" Label="Source2" />
             <Edge From="67" To="68" Label="Source1" />
-            <Edge From="68" To="69" Label="Source1" />
+            <Edge From="68" To="71" Label="Source1" />
             <Edge From="69" To="70" Label="Source1" />
-            <Edge From="70" To="71" Label="Source1" />
-            <Edge From="71" To="72" Label="Source3" />
+            <Edge From="70" To="71" Label="Source2" />
+            <Edge From="71" To="72" Label="Source1" />
             <Edge From="72" To="73" Label="Source1" />
+            <Edge From="73" To="74" Label="Source1" />
             <Edge From="74" To="75" Label="Source1" />
+            <Edge From="75" To="76" Label="Source3" />
+            <Edge From="76" To="77" Label="Source1" />
+            <Edge From="78" To="79" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
