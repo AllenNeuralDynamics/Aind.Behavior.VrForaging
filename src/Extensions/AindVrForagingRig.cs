@@ -3689,7 +3689,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private double? _gamma;
     
-        private SpinnakerCameraAdcBitDepth _adcBitDepth = AindVrForagingDataSchema.Rig.SpinnakerCameraAdcBitDepth.Adc8bit;
+        private SpinnakerCameraAdcBitDepth? _adcBitDepth = AindVrForagingDataSchema.Rig.SpinnakerCameraAdcBitDepth.Adc8bit;
     
         private Rect _regionOfInterest;
     
@@ -3873,12 +3873,12 @@ namespace AindVrForagingDataSchema.Rig
         }
     
         /// <summary>
-        /// ADC bit depth
+        /// ADC bit depth. If None will be left as default.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("adc_bit_depth")]
-        [System.ComponentModel.DescriptionAttribute("ADC bit depth")]
-        public SpinnakerCameraAdcBitDepth AdcBitDepth
+        [System.ComponentModel.DescriptionAttribute("ADC bit depth. If None will be left as default.")]
+        public SpinnakerCameraAdcBitDepth? AdcBitDepth
         {
             get
             {
@@ -4638,7 +4638,9 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _containerExtension = "mp4";
     
-        private string _outputArguments = "-c:v hevc_nvenc -pix_fmt x2rgb10le -color_range full -tune hq -preset p3 -rc vbr -cq 16 -rc-lookahead 56 -temporal-aq 1 -qmin 0 -qmax 10";
+        private string _outputArguments = "-vf \"scale=out_color_matrix=bt709:out_range=full\" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M";
+    
+        private string _inputArguments = "-v verbose -colorspace rgb -color_primaries bt709 -color_trc linear";
     
         public VideoWriterFfmpeg()
         {
@@ -4650,6 +4652,7 @@ namespace AindVrForagingDataSchema.Rig
             _frameRate = other._frameRate;
             _containerExtension = other._containerExtension;
             _outputArguments = other._outputArguments;
+            _inputArguments = other._inputArguments;
         }
     
         /// <summary>
@@ -4703,6 +4706,23 @@ namespace AindVrForagingDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Input arguments
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("input_arguments")]
+        [System.ComponentModel.DescriptionAttribute("Input arguments")]
+        public string InputArguments
+        {
+            get
+            {
+                return _inputArguments;
+            }
+            set
+            {
+                _inputArguments = value;
+            }
+        }
+    
         public System.IObservable<VideoWriterFfmpeg> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VideoWriterFfmpeg(this)));
@@ -4721,7 +4741,8 @@ namespace AindVrForagingDataSchema.Rig
             }
             stringBuilder.Append("frame_rate = " + _frameRate + ", ");
             stringBuilder.Append("container_extension = " + _containerExtension + ", ");
-            stringBuilder.Append("output_arguments = " + _outputArguments);
+            stringBuilder.Append("output_arguments = " + _outputArguments + ", ");
+            stringBuilder.Append("input_arguments = " + _inputArguments);
             return true;
         }
     }
@@ -5364,7 +5385,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.0-rc1";
+        private string _aindBehaviorServicesPkgVersion = "0.8.0";
     
         private string _version = "0.4.0";
     
