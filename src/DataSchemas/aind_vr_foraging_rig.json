@@ -4,7 +4,11 @@
       "description": "Additional settings for the manipulator device",
       "properties": {
         "spout_axis": {
-          "$ref": "#/definitions/Axis",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Axis"
+            }
+          ],
           "default": 2,
           "description": "Spout axis"
         }
@@ -22,11 +26,19 @@
           "type": "string"
         },
         "input": {
-          "$ref": "#/definitions/AindManipulatorCalibrationInput",
+          "allOf": [
+            {
+              "$ref": "#/definitions/AindManipulatorCalibrationInput"
+            }
+          ],
           "title": "Input of the calibration"
         },
         "output": {
-          "$ref": "#/definitions/AindManipulatorCalibrationOutput",
+          "allOf": [
+            {
+              "$ref": "#/definitions/AindManipulatorCalibrationOutput"
+            }
+          ],
           "title": "Output of the calibration."
         },
         "date": {
@@ -71,7 +83,11 @@
     "AindManipulatorCalibrationInput": {
       "properties": {
         "full_step_to_mm": {
-          "$ref": "#/definitions/ManipulatorPosition",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ManipulatorPosition"
+            }
+          ],
           "default": {
             "x": 0.01,
             "y1": 0.01,
@@ -143,7 +159,11 @@
           "type": "array"
         },
         "initial_position": {
-          "$ref": "#/definitions/ManipulatorPosition",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ManipulatorPosition"
+            }
+          ],
           "default": {
             "x": 0.0,
             "y1": 0.0,
@@ -170,7 +190,11 @@
           "type": "string"
         },
         "additional_settings": {
-          "$ref": "#/definitions/AindManipulatorAdditionalSettings",
+          "allOf": [
+            {
+              "$ref": "#/definitions/AindManipulatorAdditionalSettings"
+            }
+          ],
           "default": {
             "spout_axis": 2
           },
@@ -242,7 +266,11 @@
       "description": "Axis configuration",
       "properties": {
         "axis": {
-          "$ref": "#/definitions/Axis",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Axis"
+            }
+          ],
           "title": "Axis to be configured"
         },
         "step_acceleration_interval": {
@@ -262,7 +290,11 @@
           "type": "integer"
         },
         "microstep_resolution": {
-          "$ref": "#/definitions/MicrostepResolution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/MicrostepResolution"
+            }
+          ],
           "default": 0,
           "title": "Microstep resolution"
         },
@@ -274,7 +306,11 @@
           "type": "integer"
         },
         "motor_operation_mode": {
-          "$ref": "#/definitions/MotorOperationMode",
+          "allOf": [
+            {
+              "$ref": "#/definitions/MotorOperationMode"
+            }
+          ],
           "default": 0,
           "title": "Motor operation mode"
         },
@@ -425,7 +461,11 @@
     "DisplayCalibration": {
       "properties": {
         "intrinsics": {
-          "$ref": "#/definitions/DisplayIntrinsics",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DisplayIntrinsics"
+            }
+          ],
           "default": {
             "frame_width": 1920,
             "frame_height": 1080,
@@ -435,7 +475,11 @@
           "description": "Intrinsics"
         },
         "extrinsics": {
-          "$ref": "#/definitions/DisplayExtrinsics",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DisplayExtrinsics"
+            }
+          ],
           "default": {
             "rotation": {
               "x": 0.0,
@@ -457,7 +501,11 @@
     "DisplayExtrinsics": {
       "properties": {
         "rotation": {
-          "$ref": "#/definitions/Vector3",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Vector3"
+            }
+          ],
           "default": {
             "x": 0.0,
             "y": 0.0,
@@ -466,7 +514,11 @@
           "description": "Rotation vector (radians)"
         },
         "translation": {
-          "$ref": "#/definitions/Vector3",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Vector3"
+            }
+          ],
           "default": {
             "x": 0.0,
             "y": 1.309016,
@@ -515,7 +567,11 @@
     "DisplaysCalibration": {
       "properties": {
         "left": {
-          "$ref": "#/definitions/DisplayCalibration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DisplayCalibration"
+            }
+          ],
           "default": {
             "intrinsics": {
               "display_height": 15.0,
@@ -539,7 +595,11 @@
           "description": "Left display calibration"
         },
         "center": {
-          "$ref": "#/definitions/DisplayCalibration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DisplayCalibration"
+            }
+          ],
           "default": {
             "intrinsics": {
               "display_height": 15.0,
@@ -563,7 +623,11 @@
           "description": "Center display calibration"
         },
         "right": {
-          "$ref": "#/definitions/DisplayCalibration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DisplayCalibration"
+            }
+          ],
           "default": {
             "intrinsics": {
               "display_height": 15.0,
@@ -1076,11 +1140,19 @@
           "type": "string"
         },
         "input": {
-          "$ref": "#/definitions/OlfactometerCalibrationInput",
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibrationInput"
+            }
+          ],
           "title": "Input of the calibration"
         },
         "output": {
-          "$ref": "#/definitions/OlfactometerCalibrationOutput",
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibrationOutput"
+            }
+          ],
           "title": "Output of the calibration"
         },
         "date": {
@@ -1149,7 +1221,11 @@
           "type": "integer"
         },
         "channel_type": {
-          "$ref": "#/definitions/OlfactometerChannelType",
+          "allOf": [
+            {
+              "$ref": "#/definitions/OlfactometerChannelType"
+            }
+          ],
           "default": "Odor",
           "title": "Channel type"
         },
@@ -1246,7 +1322,11 @@
       "description": "Container class for calibration models. In a future release these will be moved to the respective devices",
       "properties": {
         "water_valve": {
-          "$ref": "#/definitions/WaterValveCalibration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibration"
+            }
+          ],
           "description": "Water valve calibration"
         }
       },
@@ -1278,7 +1358,11 @@
           ]
         },
         "calibration": {
-          "$ref": "#/definitions/DisplaysCalibration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DisplaysCalibration"
+            }
+          ],
           "default": {
             "left": {
               "extrinsics": {
@@ -1471,12 +1555,23 @@
           "title": "Gamma"
         },
         "adc_bit_depth": {
-          "$ref": "#/definitions/SpinnakerCameraAdcBitDepth",
           "default": 0,
-          "description": "ADC bit depth"
+          "description": "ADC bit depth. If None will be left as default.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SpinnakerCameraAdcBitDepth"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "region_of_interest": {
-          "$ref": "#/definitions/Rect",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Rect"
+            }
+          ],
           "default": {
             "x": 0,
             "y": 0,
@@ -1591,11 +1686,19 @@
           "type": "string"
         },
         "input": {
-          "$ref": "#/definitions/TreadmillCalibrationInput",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TreadmillCalibrationInput"
+            }
+          ],
           "title": "Input of the calibration"
         },
         "output": {
-          "$ref": "#/definitions/TreadmillCalibrationOutput",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TreadmillCalibrationOutput"
+            }
+          ],
           "title": "Output of the calibration."
         },
         "date": {
@@ -1749,9 +1852,15 @@
           "type": "string"
         },
         "output_arguments": {
-          "default": "-c:v hevc_nvenc -pix_fmt x2rgb10le -color_range full -tune hq -preset p3 -rc vbr -cq 16 -rc-lookahead 56 -temporal-aq 1 -qmin 0 -qmax 10",
+          "default": "-vf \"scale=out_color_matrix=bt709:out_range=full\" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M",
           "description": "Output arguments",
           "title": "Output Arguments",
+          "type": "string"
+        },
+        "input_arguments": {
+          "default": "-v verbose -colorspace rgb -color_primaries bt709 -color_trc linear",
+          "description": "Input arguments",
+          "title": "Input Arguments",
           "type": "string"
         }
       },
@@ -1799,11 +1908,19 @@
           "type": "string"
         },
         "input": {
-          "$ref": "#/definitions/WaterValveCalibrationInput",
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibrationInput"
+            }
+          ],
           "title": "Input of the calibration"
         },
         "output": {
-          "$ref": "#/definitions/WaterValveCalibrationOutput",
+          "allOf": [
+            {
+              "$ref": "#/definitions/WaterValveCalibrationOutput"
+            }
+          ],
           "title": "Output of the calibration."
         },
         "date": {
@@ -1990,7 +2107,7 @@
   },
   "properties": {
     "aind_behavior_services_pkg_version": {
-      "default": "0.8.0-rc1",
+      "default": "0.8.0",
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "title": "aind_behavior_services package version",
       "type": "string"
@@ -2012,7 +2129,11 @@
       "type": "string"
     },
     "triggered_camera_controller": {
-      "$ref": "#/definitions/CameraController_SpinnakerCamera_",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CameraController_SpinnakerCamera_"
+        }
+      ],
       "description": "Required camera controller to triggered cameras."
     },
     "monitoring_camera_controller": {
@@ -2028,19 +2149,35 @@
       ]
     },
     "harp_behavior": {
-      "$ref": "#/definitions/HarpBehavior",
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpBehavior"
+        }
+      ],
       "description": "Harp behavior"
     },
     "harp_olfactometer": {
-      "$ref": "#/definitions/HarpOlfactometer",
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpOlfactometer"
+        }
+      ],
       "description": "Harp olfactometer"
     },
     "harp_lickometer": {
-      "$ref": "#/definitions/HarpLickometer",
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpLickometer"
+        }
+      ],
       "description": "Harp lickometer"
     },
     "harp_clock_generator": {
-      "$ref": "#/definitions/HarpClockGenerator",
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpClockGenerator"
+        }
+      ],
       "description": "Harp clock generator"
     },
     "harp_clock_repeaters": {
@@ -2065,7 +2202,11 @@
       ]
     },
     "harp_treadmill": {
-      "$ref": "#/definitions/Treadmill",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Treadmill"
+        }
+      ],
       "description": "Harp treadmill"
     },
     "harp_sniff_detector": {
@@ -2081,11 +2222,19 @@
       ]
     },
     "manipulator": {
-      "$ref": "#/definitions/AindManipulatorDevice",
+      "allOf": [
+        {
+          "$ref": "#/definitions/AindManipulatorDevice"
+        }
+      ],
       "description": "Manipulator"
     },
     "screen": {
-      "$ref": "#/definitions/Screen",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Screen"
+        }
+      ],
       "default": {
         "device_type": "Screen",
         "additional_settings": null,
@@ -2161,7 +2310,11 @@
       "description": "Screen settings"
     },
     "calibration": {
-      "$ref": "#/definitions/RigCalibration",
+      "allOf": [
+        {
+          "$ref": "#/definitions/RigCalibration"
+        }
+      ],
       "description": "Calibration models"
     }
   },
