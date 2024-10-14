@@ -17,7 +17,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.8.0-rc1",
+          "default": "0.8.1",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -31,18 +31,30 @@
           "type": "object"
         },
         "environment": {
-          "$ref": "#/definitions/BlockStructure",
+          "allOf": [
+            {
+              "$ref": "#/definitions/BlockStructure"
+            }
+          ],
           "description": "Statistics of the environment"
         },
         "task_mode_settings": {
-          "$ref": "#/definitions/TaskModeSettings",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TaskModeSettings"
+            }
+          ],
           "default": {
             "task_mode": "FORAGING"
           },
           "description": "Settings of the task stage"
         },
         "operation_control": {
-          "$ref": "#/definitions/OperationControl",
+          "allOf": [
+            {
+              "$ref": "#/definitions/OperationControl"
+            }
+          ],
           "description": "Control of the operation"
         }
       },
@@ -82,7 +94,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/BetaDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/BetaDistributionParameters"
+            }
+          ],
           "default": {
             "family": "Beta",
             "alpha": 5.0,
@@ -153,7 +169,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/BinomialDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/BinomialDistributionParameters"
+            }
+          ],
           "default": {
             "family": "Binomial",
             "n": 1,
@@ -219,7 +239,11 @@
     "Block": {
       "properties": {
         "environment_statistics": {
-          "$ref": "#/definitions/EnvironmentStatistics",
+          "allOf": [
+            {
+              "$ref": "#/definitions/EnvironmentStatistics"
+            }
+          ],
           "description": "Statistics of the environment"
         },
         "end_conditions": {
@@ -277,7 +301,11 @@
           "type": "string"
         },
         "value": {
-          "$ref": "#/definitions/Distribution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "description": "Number of choices after which the block ends."
         }
       },
@@ -296,7 +324,11 @@
           "type": "string"
         },
         "value": {
-          "$ref": "#/definitions/Distribution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "description": "Distance after which the block ends."
         }
       },
@@ -315,7 +347,11 @@
           "type": "string"
         },
         "value": {
-          "$ref": "#/definitions/Distribution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "description": "Time after which the block ends."
         }
       },
@@ -334,7 +370,11 @@
           "type": "string"
         },
         "value": {
-          "$ref": "#/definitions/Distribution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "description": "Number of patches after which the block will end."
         }
       },
@@ -353,7 +393,11 @@
           "type": "string"
         },
         "value": {
-          "$ref": "#/definitions/Distribution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "description": "Number of rewards after which the block ends."
         }
       },
@@ -559,7 +603,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/ExponentialDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ExponentialDistributionParameters"
+            }
+          ],
           "default": {
             "family": "Exponential",
             "rate": 0.0
@@ -634,7 +682,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/GammaDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/GammaDistributionParameters"
+            }
+          ],
           "default": {
             "family": "Gamma",
             "shape": 1.0,
@@ -705,11 +757,19 @@
           "type": "string"
         },
         "distance_to_reward": {
-          "$ref": "#/definitions/Distribution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "description": "Distance (cm) to the reward"
         },
         "render_specification": {
-          "$ref": "#/definitions/RenderSpecification",
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
           "default": {
             "contrast": null
           },
@@ -767,7 +827,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/LogNormalDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/LogNormalDistributionParameters"
+            }
+          ],
           "default": {
             "family": "LogNormal",
             "mean": 0.0,
@@ -896,7 +960,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/NormalDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/NormalDistributionParameters"
+            }
+          ],
           "default": {
             "family": "Normal",
             "mean": 0.0,
@@ -959,12 +1027,20 @@
     "NumericalUpdater": {
       "properties": {
         "operation": {
-          "$ref": "#/definitions/NumericalUpdaterOperation",
+          "allOf": [
+            {
+              "$ref": "#/definitions/NumericalUpdaterOperation"
+            }
+          ],
           "default": "None",
           "description": "Operation to perform on the parameter"
         },
         "parameters": {
-          "$ref": "#/definitions/NumericalUpdaterParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/NumericalUpdaterParameters"
+            }
+          ],
           "default": {
             "initial_value": 0.0,
             "increment": 0.0,
@@ -1120,7 +1196,11 @@
     "OperationControl": {
       "properties": {
         "movable_spout_control": {
-          "$ref": "#/definitions/MovableSpoutControl",
+          "allOf": [
+            {
+              "$ref": "#/definitions/MovableSpoutControl"
+            }
+          ],
           "default": {
             "enabled": false,
             "time_to_collect_after_reward": 1.0,
@@ -1129,7 +1209,11 @@
           "description": "Control of the movable spout"
         },
         "odor_control": {
-          "$ref": "#/definitions/OdorControl",
+          "allOf": [
+            {
+              "$ref": "#/definitions/OdorControl"
+            }
+          ],
           "default": {
             "valve_max_open_time": 10.0,
             "target_total_flow": 1000.0,
@@ -1139,7 +1223,11 @@
           "description": "Control of the odor"
         },
         "position_control": {
-          "$ref": "#/definitions/PositionControl",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PositionControl"
+            }
+          ],
           "default": {
             "gain": {
               "x": 1.0,
@@ -1157,7 +1245,11 @@
           "description": "Control of the position"
         },
         "audio_control": {
-          "$ref": "#/definitions/AudioControl",
+          "allOf": [
+            {
+              "$ref": "#/definitions/AudioControl"
+            }
+          ],
           "default": {
             "duration": 0.2,
             "frequency": 1000.0
@@ -1171,7 +1263,11 @@
     "PatchRewardFunction": {
       "properties": {
         "amount": {
-          "$ref": "#/definitions/RewardFunction",
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
           "default": {
             "function_type": "ConstantFunction",
             "value": 1.0
@@ -1179,7 +1275,11 @@
           "description": "Determines the amount of reward to be delivered. The value is in microliters"
         },
         "probability": {
-          "$ref": "#/definitions/RewardFunction",
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
           "default": {
             "function_type": "ConstantFunction",
             "value": 1.0
@@ -1187,7 +1287,11 @@
           "description": "Determines the probability that a reward will be delivered"
         },
         "available": {
-          "$ref": "#/definitions/RewardFunction",
+          "allOf": [
+            {
+              "$ref": "#/definitions/RewardFunction"
+            }
+          ],
           "default": {
             "function_type": "LinearFunction",
             "minimum": 0.0,
@@ -1198,7 +1302,11 @@
           "description": "Determines the total amount of reward available left in the patch. The value is in microliters"
         },
         "depletion_rule": {
-          "$ref": "#/definitions/DepletionRule",
+          "allOf": [
+            {
+              "$ref": "#/definitions/DepletionRule"
+            }
+          ],
           "default": "OnChoice",
           "description": "Depletion"
         }
@@ -1246,7 +1354,11 @@
           ]
         },
         "virtual_site_generation": {
-          "$ref": "#/definitions/VirtualSiteGeneration",
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGeneration"
+            }
+          ],
           "default": {
             "inter_site": {
               "label": "InterSite",
@@ -1313,7 +1425,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/PdfDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PdfDistributionParameters"
+            }
+          ],
           "default": {
             "family": "Pdf",
             "pdf": [
@@ -1397,7 +1513,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/PoissonDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PoissonDistributionParameters"
+            }
+          ],
           "default": {
             "family": "Poisson",
             "rate": 1.0
@@ -1454,7 +1574,11 @@
     "PositionControl": {
       "properties": {
         "gain": {
-          "$ref": "#/definitions/Vector3",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Vector3"
+            }
+          ],
           "default": {
             "x": 1.0,
             "y": 1.0,
@@ -1463,7 +1587,11 @@
           "description": "Gain of the position control."
         },
         "initial_position": {
-          "$ref": "#/definitions/Vector3",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Vector3"
+            }
+          ],
           "default": {
             "x": 0.0,
             "y": 2.56,
@@ -1600,7 +1728,11 @@
           ]
         },
         "delay": {
-          "$ref": "#/definitions/Distribution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1613,7 +1745,11 @@
           "description": "The optional distribution where the delay to reward will be drawn from"
         },
         "reward_function": {
-          "$ref": "#/definitions/PatchRewardFunction",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PatchRewardFunction"
+            }
+          ],
           "default": {
             "amount": {
               "function_type": "ConstantFunction",
@@ -1647,7 +1783,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/ScalarDistributionParameter",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ScalarDistributionParameter"
+            }
+          ],
           "default": {
             "family": "Scalar",
             "value": 0.0
@@ -1755,7 +1895,11 @@
           "type": "string"
         },
         "size": {
-          "$ref": "#/definitions/Size",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Size"
+            }
+          ],
           "default": {
             "width": 40.0,
             "height": 40.0
@@ -1817,7 +1961,11 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "$ref": "#/definitions/UniformDistributionParameters",
+          "allOf": [
+            {
+              "$ref": "#/definitions/UniformDistributionParameters"
+            }
+          ],
           "default": {
             "family": "Uniform",
             "min": 0.0,
@@ -1911,7 +2059,11 @@
           "type": "integer"
         },
         "label": {
-          "$ref": "#/definitions/VirtualSiteLabels",
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteLabels"
+            }
+          ],
           "default": "Unspecified",
           "description": "Label of the virtual site"
         },
@@ -1953,7 +2105,11 @@
           ]
         },
         "render_specification": {
-          "$ref": "#/definitions/RenderSpecification",
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
           "default": {
             "contrast": null
           },
@@ -1978,7 +2134,11 @@
     "VirtualSiteGeneration": {
       "properties": {
         "inter_site": {
-          "$ref": "#/definitions/VirtualSiteGenerator",
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
           "default": {
             "render_specification": {
               "contrast": null
@@ -1998,7 +2158,11 @@
           "description": "Generator of the inter-site virtual sites"
         },
         "inter_patch": {
-          "$ref": "#/definitions/VirtualSiteGenerator",
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
           "default": {
             "render_specification": {
               "contrast": null
@@ -2030,7 +2194,11 @@
           ]
         },
         "reward_site": {
-          "$ref": "#/definitions/VirtualSiteGenerator",
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteGenerator"
+            }
+          ],
           "default": {
             "render_specification": {
               "contrast": null
@@ -2056,19 +2224,31 @@
     "VirtualSiteGenerator": {
       "properties": {
         "render_specification": {
-          "$ref": "#/definitions/RenderSpecification",
+          "allOf": [
+            {
+              "$ref": "#/definitions/RenderSpecification"
+            }
+          ],
           "default": {
             "contrast": null
           },
           "description": "Contrast of the environment"
         },
         "label": {
-          "$ref": "#/definitions/VirtualSiteLabels",
+          "allOf": [
+            {
+              "$ref": "#/definitions/VirtualSiteLabels"
+            }
+          ],
           "default": "Unspecified",
           "description": "Label of the virtual site"
         },
         "length_distribution": {
-          "$ref": "#/definitions/Distribution",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Distribution"
+            }
+          ],
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -2117,7 +2297,11 @@
           "type": "integer"
         },
         "size": {
-          "$ref": "#/definitions/Size",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Size"
+            }
+          ],
           "default": {
             "width": 40.0,
             "height": 40.0
@@ -2139,7 +2323,11 @@
           "type": "number"
         },
         "textures": {
-          "$ref": "#/definitions/WallTextures",
+          "allOf": [
+            {
+              "$ref": "#/definitions/WallTextures"
+            }
+          ],
           "description": "The textures of the corridor"
         }
       },
@@ -2152,19 +2340,35 @@
     "WallTextures": {
       "properties": {
         "floor": {
-          "$ref": "#/definitions/Texture",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
           "description": "The texture of the floor"
         },
         "ceiling": {
-          "$ref": "#/definitions/Texture",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
           "description": "The texture of the ceiling"
         },
         "left": {
-          "$ref": "#/definitions/Texture",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
           "description": "The texture of the left"
         },
         "right": {
-          "$ref": "#/definitions/Texture",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Texture"
+            }
+          ],
           "description": "The texture of the right"
         }
       },
@@ -2193,7 +2397,11 @@
       "type": "string"
     },
     "task_parameters": {
-      "$ref": "#/definitions/AindVrForagingTaskParameters",
+      "allOf": [
+        {
+          "$ref": "#/definitions/AindVrForagingTaskParameters"
+        }
+      ],
       "description": "Parameters of the task logic"
     },
     "version": {

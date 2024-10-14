@@ -15,9 +15,9 @@ namespace AindVrForagingDataSchema.Session
     public partial class AindBehaviorSessionModel
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.0-rc1";
+        private string _aindBehaviorServicesPkgVersion = "0.8.1";
     
-        private string _version = "0.2.0";
+        private string _version = "0.3.0";
     
         private string _experiment;
     
@@ -28,8 +28,6 @@ namespace AindVrForagingDataSchema.Session
         private string _rootPath;
     
         private string _sessionName;
-    
-        private string _remotePath;
     
         private string _subject;
     
@@ -56,7 +54,6 @@ namespace AindVrForagingDataSchema.Session
             _date = other._date;
             _rootPath = other._rootPath;
             _sessionName = other._sessionName;
-            _remotePath = other._remotePath;
             _subject = other._subject;
             _experimentVersion = other._experimentVersion;
             _notes = other._notes;
@@ -175,24 +172,6 @@ namespace AindVrForagingDataSchema.Session
             set
             {
                 _sessionName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Remote path where data will be attempted to be copied to after experiment is done
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("remote_path")]
-        [System.ComponentModel.DescriptionAttribute("Remote path where data will be attempted to be copied to after experiment is done" +
-            "")]
-        public string RemotePath
-        {
-            get
-            {
-                return _remotePath;
-            }
-            set
-            {
-                _remotePath = value;
             }
         }
     
@@ -317,7 +296,6 @@ namespace AindVrForagingDataSchema.Session
             stringBuilder.Append("date = " + _date + ", ");
             stringBuilder.Append("root_path = " + _rootPath + ", ");
             stringBuilder.Append("session_name = " + _sessionName + ", ");
-            stringBuilder.Append("remote_path = " + _remotePath + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
             stringBuilder.Append("experiment_version = " + _experimentVersion + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
