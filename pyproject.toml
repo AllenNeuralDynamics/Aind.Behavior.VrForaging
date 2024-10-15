@@ -41,7 +41,7 @@ where = ["src/DataSchemas"]
 
 [tool.setuptools.dynamic]
 version = {attr = "aind_behavior_vr_foraging.__version__"}
-readme = {file = ["README.md"]}
+readme = {file = "README.md", content-type = "text/markdown"}
 
 [tool.ruff]
 line-length = 120
