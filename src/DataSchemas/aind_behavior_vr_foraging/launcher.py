@@ -1,4 +1,5 @@
 import logging
+from os import PathLike
 from pathlib import Path
 from typing import List, Optional, Self, Type
 
@@ -25,42 +26,28 @@ class VrForagingLauncher(BaseLauncher):
 
     def __init__(
         self,
-        rig_schema_model: Type[AindVrForagingRig],
-        session_schema_model: Type[AindBehaviorSessionModel],
-        task_logic_schema_model: Type[AindVrForagingTaskLogic],
-        data_dir,
-        config_library_dir,
-        temp_dir=...,
-        repository_dir=...,
-        allow_dirty=...,
-        skip_hardware_validation=...,
-        debug_mode=...,
-        logger=...,
-        group_by_subject_log=...,
-        services=...,
-        validate_init=...,
+        data_dir: PathLike,
+        config_library_dir: PathLike,
+        allow_dirty: bool = False,
+        skip_hardware_validation: bool = False,
+        debug_mode: bool = False,
+        services: Services | None = None,
+        group_by_subject_log: bool = True,
+        **kwargs,
     ):
         super().__init__(
-            rig_schema_model,
-            session_schema_model,
-            task_logic_schema_model,
-            data_dir,
-            config_library_dir,
-            temp_dir,
-            repository_dir,
-            allow_dirty,
-            skip_hardware_validation,
-            debug_mode,
-            logger,
-            group_by_subject_log,
-            services,
-            validate_init,
+            rig_schema_model=AindVrForagingRig,
+            session_schema_model=AindBehaviorSessionModel,
+            task_logic_schema_model=AindVrForagingTaskLogic,
+            data_dir=data_dir,
+            config_library_dir=config_library_dir,
+            allow_dirty=allow_dirty,
+            skip_hardware_validation=skip_hardware_validation,
+            debug_mode=debug_mode,
+            services=services,
+            group_by_subject_log=group_by_subject_log,
+            **kwargs,
         )
-
-    def _prompt_session_input(self, directory=...) -> AindBehaviorSessionModel:
-        session: AindBehaviorSessionModel = super()._prompt_session_input(directory)
-        session.experimenter = self._prompt_experimenter()
-        return session
 
     @staticmethod
     def _prompt_experimenter() -> List[str]:
