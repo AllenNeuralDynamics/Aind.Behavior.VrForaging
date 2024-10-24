@@ -28,7 +28,6 @@
                  xmlns:p13="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
                  xmlns:p14="clr-namespace:AllenNeuralDynamics.Treadmill;assembly=AllenNeuralDynamics.Treadmill"
                  xmlns:p15="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:p16="clr-namespace:;assembly=Extensions"
                  xmlns:bv="clr-namespace:BonVision;assembly=BonVision"
                  xmlns:p17="clr-namespace:AllenNeuralDynamics.LicketySplit;assembly=AllenNeuralDynamics.LicketySplit"
@@ -3703,42 +3702,6 @@ Value as IsStopped)</scr:Expression>
                                 <Name>ThisWriter</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisCameraName</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="LogName" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisWriter</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>ContainerExtension</Selector>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="VideoExtension" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>Modality</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Modality" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateSpinnakerLoggingPath.bonsai">
-                                <SubjectName>LoggingRootPath</SubjectName>
-                                <Modality>BehaviorVideos</Modality>
-                                <LogName>FaceCamera</LogName>
-                                <VideoExtension>mp4</VideoExtension>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
                                 <Name>TriggeredCamerasStream</Name>
                               </Expression>
                               <Expression xsi:type="rx:Condition">
@@ -3780,61 +3743,41 @@ Value as IsStopped)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Merge" />
                               </Expression>
-                              <Expression xsi:type="scr:ExpressionTransform">
-                                <scr:Name>Label</scr:Name>
-                                <scr:Expression>new(
-Seconds as ReferenceTime,
-Value.ChunkData.FrameID as CameraFrameNumber,
-Value.ChunkData.Timestamp as CameraFrameTime,
-Value.Image as Image)
-</scr:Expression>
-                              </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Metadata</Selector>
+                                <Name>ThisCameraName</Name>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
                                 <PropertyMappings>
-                                  <Property Name="FileName" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="io:CsvWriter">
-                                <io:Append>false</io:Append>
-                                <io:Overwrite>false</io:Overwrite>
-                                <io:Suffix>None</io:Suffix>
-                                <io:IncludeHeader>true</io:IncludeHeader>
-                                <io:Selector>ReferenceTime,CameraFrameNumber,CameraFrameTime</io:Selector>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Image</Selector>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="FileName" Selector="Video" />
+                                  <Property Name="LogName" />
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>ThisWriter</Name>
                               </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>ContainerExtension</Selector>
+                              </Expression>
                               <Expression xsi:type="PropertyMapping">
                                 <PropertyMappings>
-                                  <Property Name="FrameRate" Selector="FrameRate" />
-                                  <Property Name="OutputArguments" Selector="OutputArguments" />
+                                  <Property Name="VideoExtension" />
                                 </PropertyMappings>
                               </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p7:FfmpegVideoWriter">
-                                  <p7:Overwrite>false</p7:Overwrite>
-                                  <p7:FrameRate>0</p7:FrameRate>
-                                  <p7:Verbosity>Verbose</p7:Verbosity>
-                                  <p7:OutputArguments>-vf "scale=out_color_matrix=bt709:out_range=full" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -maxrate 700M -bufsize 350M</p7:OutputArguments>
-                                  <p7:InputArguments>-colorspace rgb -color_primaries bt709 -color_trc linear</p7:InputArguments>
-                                </Combinator>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>Modality</Name>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Modality" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSpinnakerFfmpeg.bonsai">
+                                <Modality>BehaviorVideos</Modality>
+                                <LogName>FaceCamera</LogName>
+                                <VideoExtension>mp4</VideoExtension>
+                                <OutputArguments>-vf "scale=out_color_matrix=bt709:out_range=full" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -maxrate 700M -bufsize 350M</OutputArguments>
+                                <InputArguments>-colorspace rgb -color_primaries bt709 -color_trc linear</InputArguments>
+                                <Verbosity>Verbose</Verbosity>
+                                <FrameRate>0</FrameRate>
                               </Expression>
                             </Nodes>
                             <Edges>
@@ -3845,27 +3788,16 @@ Value.Image as Image)
                               <Edge From="6" To="7" Label="Source1" />
                               <Edge From="7" To="8" Label="Source1" />
                               <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="10" To="16" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source1" />
                               <Edge From="11" To="12" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source1" />
-                              <Edge From="13" To="16" Label="Source2" />
-                              <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="15" To="16" Label="Source3" />
+                              <Edge From="12" To="20" Label="Source1" />
+                              <Edge From="13" To="14" Label="Source1" />
+                              <Edge From="14" To="20" Label="Source2" />
+                              <Edge From="15" To="16" Label="Source1" />
                               <Edge From="16" To="17" Label="Source1" />
+                              <Edge From="17" To="20" Label="Source3" />
                               <Edge From="18" To="19" Label="Source1" />
-                              <Edge From="19" To="20" Label="Source1" />
-                              <Edge From="20" To="21" Label="Source1" />
-                              <Edge From="21" To="22" Label="Source1" />
-                              <Edge From="22" To="26" Label="Source1" />
-                              <Edge From="23" To="24" Label="Source1" />
-                              <Edge From="24" To="25" Label="Source1" />
-                              <Edge From="25" To="26" Label="Source2" />
-                              <Edge From="26" To="27" Label="Source1" />
-                              <Edge From="27" To="32" Label="Source1" />
-                              <Edge From="28" To="29" Label="Source1" />
-                              <Edge From="29" To="32" Label="Source2" />
-                              <Edge From="30" To="31" Label="Source1" />
-                              <Edge From="31" To="32" Label="Source3" />
+                              <Edge From="19" To="20" Label="Source4" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -3928,42 +3860,6 @@ Value.Image as Image)
                                 <Name>ThisWriter</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisCameraName</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="LogName" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisWriter</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>ContainerExtension</Selector>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="VideoExtension" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>Modality</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Modality" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateSpinnakerLoggingPath.bonsai">
-                                <SubjectName>LoggingRootPath</SubjectName>
-                                <Modality>BehaviorVideos</Modality>
-                                <LogName>FaceCamera</LogName>
-                                <VideoExtension>mp4</VideoExtension>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
                                 <Name>TriggeredCamerasStream</Name>
                               </Expression>
                               <Expression xsi:type="rx:Condition">
@@ -4005,66 +3901,39 @@ Value.Image as Image)
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Merge" />
                               </Expression>
-                              <Expression xsi:type="scr:ExpressionTransform">
-                                <scr:Name>Label</scr:Name>
-                                <scr:Expression>new(
-Seconds as ReferenceTime,
-Value.ChunkData.FrameID as CameraFrameNumber,
-Value.ChunkData.Timestamp as CameraFrameTime,
-Value.Image as Image)
-</scr:Expression>
-                              </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Metadata</Selector>
+                                <Name>ThisCameraName</Name>
                               </Expression>
                               <Expression xsi:type="PropertyMapping">
                                 <PropertyMappings>
-                                  <Property Name="FileName" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="io:CsvWriter">
-                                <io:Append>false</io:Append>
-                                <io:Overwrite>false</io:Overwrite>
-                                <io:Suffix>None</io:Suffix>
-                                <io:IncludeHeader>true</io:IncludeHeader>
-                                <io:Selector>ReferenceTime,CameraFrameNumber,CameraFrameTime</io:Selector>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Image</Selector>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="FileName" Selector="Video" />
+                                  <Property Name="LogName" />
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>ThisWriter</Name>
                               </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>ContainerExtension</Selector>
+                              </Expression>
                               <Expression xsi:type="PropertyMapping">
                                 <PropertyMappings>
-                                  <Property Name="FourCC" Selector="FourCc" />
-                                  <Property Name="FrameRate" Selector="FrameRate" />
+                                  <Property Name="VideoExtension" />
                                 </PropertyMappings>
                               </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="cv:VideoWriter">
-                                  <cv:Suffix>None</cv:Suffix>
-                                  <cv:Buffered>true</cv:Buffered>
-                                  <cv:Overwrite>false</cv:Overwrite>
-                                  <cv:FourCC>FMP4</cv:FourCC>
-                                  <cv:FrameRate>30</cv:FrameRate>
-                                  <cv:FrameSize>
-                                    <cv:Width>0</cv:Width>
-                                    <cv:Height>0</cv:Height>
-                                  </cv:FrameSize>
-                                  <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
-                                </Combinator>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>Modality</Name>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Modality" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSpinnakerOpenCv.bonsai">
+                                <Modality>BehaviorVideos</Modality>
+                                <LogName>FaceCamera</LogName>
+                                <VideoExtension>mp4</VideoExtension>
+                                <FrameRate>30</FrameRate>
+                                <FourCC>FMP4</FourCC>
                               </Expression>
                             </Nodes>
                             <Edges>
@@ -4075,27 +3944,16 @@ Value.Image as Image)
                               <Edge From="6" To="7" Label="Source1" />
                               <Edge From="7" To="8" Label="Source1" />
                               <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="10" To="16" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source1" />
                               <Edge From="11" To="12" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source1" />
-                              <Edge From="13" To="16" Label="Source2" />
-                              <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="15" To="16" Label="Source3" />
+                              <Edge From="12" To="20" Label="Source1" />
+                              <Edge From="13" To="14" Label="Source1" />
+                              <Edge From="14" To="20" Label="Source2" />
+                              <Edge From="15" To="16" Label="Source1" />
                               <Edge From="16" To="17" Label="Source1" />
+                              <Edge From="17" To="20" Label="Source3" />
                               <Edge From="18" To="19" Label="Source1" />
-                              <Edge From="19" To="20" Label="Source1" />
-                              <Edge From="20" To="21" Label="Source1" />
-                              <Edge From="21" To="22" Label="Source1" />
-                              <Edge From="22" To="26" Label="Source1" />
-                              <Edge From="23" To="24" Label="Source1" />
-                              <Edge From="24" To="25" Label="Source1" />
-                              <Edge From="25" To="26" Label="Source2" />
-                              <Edge From="26" To="27" Label="Source1" />
-                              <Edge From="27" To="32" Label="Source1" />
-                              <Edge From="28" To="29" Label="Source1" />
-                              <Edge From="29" To="32" Label="Source2" />
-                              <Edge From="30" To="31" Label="Source1" />
-                              <Edge From="31" To="32" Label="Source3" />
+                              <Edge From="19" To="20" Label="Source4" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -4124,498 +3982,6 @@ Value.Image as Image)
                         <Edge From="16" To="17" Label="Source2" />
                         <Edge From="17" To="18" Label="Source1" />
                         <Edge From="18" To="19" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="GroupWorkflow">
-                    <Name>MonitoringCameras</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>MonitoringCameraController</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Cameras</Selector>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Value.VideoWriter</Selector>
-                        </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
-                        <Expression xsi:type="p2:MatchVideoWriter">
-                          <p2:Type xsi:type="TypeMapping" TypeArguments="p2:VideoWriterFfmpeg" />
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Key</Selector>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:WithLatestFrom" />
-                        </Expression>
-                        <Expression xsi:type="rx:CreateObservable">
-                          <Name>FfmpegWriter</Name>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>This</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>This</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Item2</Selector>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>ThisCameraName</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>This</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Item1</Selector>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>ThisWriter</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisCameraName</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="LogName" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisWriter</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>ContainerExtension</Selector>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="VideoExtension" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>Modality</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Modality" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateSpinnakerLoggingPath.bonsai">
-                                <SubjectName>LoggingRootPath</SubjectName>
-                                <Modality>BehaviorVideos</Modality>
-                                <LogName>FaceCamera</LogName>
-                                <VideoExtension>mp4</VideoExtension>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>MonitoringCamerasStream</Name>
-                              </Expression>
-                              <Expression xsi:type="rx:Condition">
-                                <Workflow>
-                                  <Nodes>
-                                    <Expression xsi:type="WorkflowInput">
-                                      <Name>Source1</Name>
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Key</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>ThisCameraName</Name>
-                                    </Expression>
-                                    <Expression xsi:type="PropertyMapping">
-                                      <PropertyMappings>
-                                        <Property Name="Value" />
-                                      </PropertyMappings>
-                                    </Expression>
-                                    <Expression xsi:type="Equal">
-                                      <Operand xsi:type="StringProperty" />
-                                    </Expression>
-                                    <Expression xsi:type="WorkflowOutput" />
-                                  </Nodes>
-                                  <Edges>
-                                    <Edge From="0" To="1" Label="Source1" />
-                                    <Edge From="1" To="4" Label="Source1" />
-                                    <Edge From="2" To="3" Label="Source1" />
-                                    <Edge From="3" To="4" Label="Source2" />
-                                    <Edge From="4" To="5" Label="Source1" />
-                                  </Edges>
-                                </Workflow>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Merge" />
-                              </Expression>
-                              <Expression xsi:type="scr:ExpressionTransform">
-                                <scr:Name>Label</scr:Name>
-                                <scr:Expression>new(
-Seconds as ReferenceTime,
-Single.NaN as CameraFrameNumber,
-Single.NaN as CameraFrameTime,
-Value as Image)
-</scr:Expression>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Metadata</Selector>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="FileName" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="io:CsvWriter">
-                                <io:Append>false</io:Append>
-                                <io:Overwrite>false</io:Overwrite>
-                                <io:Suffix>None</io:Suffix>
-                                <io:IncludeHeader>true</io:IncludeHeader>
-                                <io:Selector>ReferenceTime,CameraFrameNumber,CameraFrameTime</io:Selector>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Image</Selector>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="FileName" Selector="Video" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisWriter</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="FrameRate" Selector="FrameRate" />
-                                  <Property Name="OutputArguments" Selector="OutputArguments" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p7:FfmpegVideoWriter">
-                                  <p7:Overwrite>false</p7:Overwrite>
-                                  <p7:FrameRate>0</p7:FrameRate>
-                                  <p7:Verbosity>Verbose</p7:Verbosity>
-                                  <p7:OutputArguments>-vf "scale=out_color_matrix=bt709:out_range=full" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -maxrate 700M -bufsize 350M</p7:OutputArguments>
-                                  <p7:InputArguments>-colorspace rgb -color_primaries bt709 -color_trc linear</p7:InputArguments>
-                                </Combinator>
-                              </Expression>
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
-                              <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="10" To="16" Label="Source1" />
-                              <Edge From="11" To="12" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source1" />
-                              <Edge From="13" To="16" Label="Source2" />
-                              <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="15" To="16" Label="Source3" />
-                              <Edge From="16" To="17" Label="Source1" />
-                              <Edge From="18" To="19" Label="Source1" />
-                              <Edge From="19" To="20" Label="Source1" />
-                              <Edge From="20" To="21" Label="Source1" />
-                              <Edge From="21" To="22" Label="Source1" />
-                              <Edge From="22" To="26" Label="Source1" />
-                              <Edge From="23" To="24" Label="Source1" />
-                              <Edge From="24" To="25" Label="Source1" />
-                              <Edge From="25" To="26" Label="Source2" />
-                              <Edge From="26" To="27" Label="Source1" />
-                              <Edge From="27" To="32" Label="Source1" />
-                              <Edge From="28" To="29" Label="Source1" />
-                              <Edge From="29" To="32" Label="Source2" />
-                              <Edge From="30" To="31" Label="Source1" />
-                              <Edge From="31" To="32" Label="Source3" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>MonitoringCameraController</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Cameras</Selector>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Value.VideoWriter</Selector>
-                        </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
-                        <Expression xsi:type="p2:MatchVideoWriter">
-                          <p2:Type xsi:type="TypeMapping" TypeArguments="p2:VideoWriterOpenCv" />
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Key</Selector>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:WithLatestFrom" />
-                        </Expression>
-                        <Expression xsi:type="rx:CreateObservable">
-                          <Name>OpenCvWriter</Name>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>This</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>This</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Item2</Selector>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>ThisCameraName</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>This</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Item1</Selector>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>ThisWriter</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisCameraName</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="LogName" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisWriter</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>ContainerExtension</Selector>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="VideoExtension" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>Modality</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Modality" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateSpinnakerLoggingPath.bonsai">
-                                <SubjectName>LoggingRootPath</SubjectName>
-                                <Modality>BehaviorVideos</Modality>
-                                <LogName>FaceCamera</LogName>
-                                <VideoExtension>mp4</VideoExtension>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>MonitoringCamerasStream</Name>
-                              </Expression>
-                              <Expression xsi:type="rx:Condition">
-                                <Workflow>
-                                  <Nodes>
-                                    <Expression xsi:type="WorkflowInput">
-                                      <Name>Source1</Name>
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Key</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>ThisCameraName</Name>
-                                    </Expression>
-                                    <Expression xsi:type="PropertyMapping">
-                                      <PropertyMappings>
-                                        <Property Name="Value" />
-                                      </PropertyMappings>
-                                    </Expression>
-                                    <Expression xsi:type="Equal">
-                                      <Operand xsi:type="StringProperty" />
-                                    </Expression>
-                                    <Expression xsi:type="WorkflowOutput" />
-                                  </Nodes>
-                                  <Edges>
-                                    <Edge From="0" To="1" Label="Source1" />
-                                    <Edge From="1" To="4" Label="Source1" />
-                                    <Edge From="2" To="3" Label="Source1" />
-                                    <Edge From="3" To="4" Label="Source2" />
-                                    <Edge From="4" To="5" Label="Source1" />
-                                  </Edges>
-                                </Workflow>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Merge" />
-                              </Expression>
-                              <Expression xsi:type="scr:ExpressionTransform">
-                                <scr:Name>Label</scr:Name>
-                                <scr:Expression>new(
-Seconds as ReferenceTime,
-Single.NaN as CameraFrameNumber,
-Single.NaN as CameraFrameTime,
-Value as Image)
-</scr:Expression>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Metadata</Selector>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="FileName" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="io:CsvWriter">
-                                <io:Append>false</io:Append>
-                                <io:Overwrite>false</io:Overwrite>
-                                <io:Suffix>None</io:Suffix>
-                                <io:IncludeHeader>true</io:IncludeHeader>
-                                <io:Selector>ReferenceTime,CameraFrameNumber,CameraFrameTime</io:Selector>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Image</Selector>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>CameraLoggerPath</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="FileName" Selector="Video" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisWriter</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="FourCC" Selector="FourCc" />
-                                  <Property Name="FrameRate" Selector="FrameRate" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="cv:VideoWriter">
-                                  <cv:Suffix>None</cv:Suffix>
-                                  <cv:Buffered>true</cv:Buffered>
-                                  <cv:Overwrite>false</cv:Overwrite>
-                                  <cv:FourCC>FMP4</cv:FourCC>
-                                  <cv:FrameRate>30</cv:FrameRate>
-                                  <cv:FrameSize>
-                                    <cv:Width>0</cv:Width>
-                                    <cv:Height>0</cv:Height>
-                                  </cv:FrameSize>
-                                  <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
-                                </Combinator>
-                              </Expression>
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
-                              <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="10" To="16" Label="Source1" />
-                              <Edge From="11" To="12" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source1" />
-                              <Edge From="13" To="16" Label="Source2" />
-                              <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="15" To="16" Label="Source3" />
-                              <Edge From="16" To="17" Label="Source1" />
-                              <Edge From="18" To="19" Label="Source1" />
-                              <Edge From="19" To="20" Label="Source1" />
-                              <Edge From="20" To="21" Label="Source1" />
-                              <Edge From="21" To="22" Label="Source1" />
-                              <Edge From="22" To="26" Label="Source1" />
-                              <Edge From="23" To="24" Label="Source1" />
-                              <Edge From="24" To="25" Label="Source1" />
-                              <Edge From="25" To="26" Label="Source2" />
-                              <Edge From="26" To="27" Label="Source1" />
-                              <Edge From="27" To="32" Label="Source1" />
-                              <Edge From="28" To="29" Label="Source1" />
-                              <Edge From="29" To="32" Label="Source2" />
-                              <Edge From="30" To="31" Label="Source1" />
-                              <Edge From="31" To="32" Label="Source3" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="3" To="7" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="8" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source2" />
-                        <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="14" To="18" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="19" Label="Source1" />
-                        <Edge From="18" To="19" Label="Source2" />
-                        <Edge From="19" To="20" Label="Source1" />
-                        <Edge From="20" To="21" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
