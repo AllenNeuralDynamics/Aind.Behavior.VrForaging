@@ -15,7 +15,7 @@ namespace AindVrForagingDataSchema.Session
     public partial class AindBehaviorSessionModel
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.1";
+        private string _aindBehaviorServicesPkgVersion = "0.8.2";
     
         private string _version = "0.3.0";
     
