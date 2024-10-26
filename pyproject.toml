@@ -36,6 +36,10 @@ docs = [
     'sphinx-jsonschema'
 ]
 
+[project.scripts]
+clabe = "aind_behavior_vr_foraging.launcher:main"
+regenerate = "aind_behavior_vr_foraging.regenerate:main"
+
 [tool.setuptools.packages.find]
 where = ["src/DataSchemas"]
 
