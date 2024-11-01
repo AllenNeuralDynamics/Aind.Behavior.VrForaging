@@ -52,7 +52,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install -e . --no-cache-dir
+          python -m pip install -e .[launcher] --no-cache-dir
       - name: Run tests
         run: python -m unittest
       - name: Regenerate schemas
