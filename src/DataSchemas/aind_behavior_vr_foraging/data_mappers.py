@@ -42,7 +42,7 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
         *,
         rig_schema_filename: str,
         db_root: os.PathLike,
-        destination_dir: os.PathLike,
+        session_directory: os.PathLike,
         db_suffix: Optional[str] = None,
     ):
         super().__init__()
@@ -50,7 +50,7 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
         self.db_root = db_root
         self.db_dir = db_suffix if db_suffix else f"{_DATABASE_DIR}/{os.environ['COMPUTERNAME']}"
         self.target_file = Path(self.db_root) / self.db_dir / self.filename
-        self.destination_dir = destination_dir
+        self.session_directory = session_directory
         self._mapped: Optional[Rig] = None
 
     def validate(self):
@@ -60,17 +60,23 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
         return file_exists
 
     def map(self) -> Rig:
-        self._mapped = model_from_json_file(self.target_file, Rig)
-        return self.mapped
+        try:
+            self._mapped = model_from_json_file(self.target_file, Rig)
+            if self.session_directory is not None:
+                logger.info("Writing session.json to %s", self.session_directory)
+                self.mapped.write_standard_file(self.session_directory)
+                logger.info("Mapping successful.")
+        except (pydantic.ValidationError, ValueError, IOError) as e:
+            logger.error("Failed to map to aind-data-schema Session. %s", e)
+            raise e
+        else:
+            return self.mapped
 
     @property
     def mapped(self) -> Rig:
         if self._mapped is None:
             raise ValueError("Data has not been mapped yet.")
         return self._mapped
-
-    def write_standard_file(self) -> None:
-        self.mapped.write_standard_file(self.destination_dir)
 
 
 class AindSessionDataMapper(data_mapper_service.DataMapperService):
@@ -95,10 +101,16 @@ class AindSessionDataMapper(data_mapper_service.DataMapperService):
         self.session_end_time = session_end_time
         self.output_parameters = output_parameters
         self.subject_info = subject_info
-        self.mapped: Optional[aind_data_schema.core.session.Session] = None
+        self._mapped: Optional[aind_data_schema.core.session.Session] = None
 
     def validate(self, *args, **kwargs) -> bool:
         return True
+
+    @property
+    def mapped(self) -> aind_data_schema.core.session.Session:
+        if self._mapped is None:
+            raise ValueError("Data has not been mapped yet.")
+        return self._mapped
 
     def is_mapped(self) -> bool:
         return self.mapped is not None
@@ -106,7 +118,7 @@ class AindSessionDataMapper(data_mapper_service.DataMapperService):
     def map(self) -> Optional[aind_data_schema.core.session.Session]:
         logger.info("Mapping to aind-data-schema Session")
         try:
-            ads_session = self._map(
+            self._mapped = self._map(
                 session_model=self.session_model,
                 rig_model=self.rig_model,
                 task_logic_model=self.task_logic_model,
@@ -116,16 +128,15 @@ class AindSessionDataMapper(data_mapper_service.DataMapperService):
                 output_parameters=self.output_parameters,
                 subject_info=self.subject_info,
             )
-            self.mapped = ads_session
             if self.session_directory is not None:
                 logger.info("Writing session.json to %s", self.session_directory)
-                ads_session.write_standard_file(self.session_directory)
+                self._mapped.write_standard_file(self.session_directory)
             logger.info("Mapping successful.")
         except (pydantic.ValidationError, ValueError, IOError) as e:
             logger.error("Failed to map to aind-data-schema Session. %s", e)
             raise e
         else:
-            return ads_session
+            return self._mapped
 
     @classmethod
     def map_from_session_root(
@@ -424,8 +435,8 @@ def aind_rig_data_mapper_factory(
 ) -> AindRigDataMapper:
     rig_schema: AindVrForagingRig = launcher.rig_schema
     return AindRigDataMapper(
-        rig_schema_filename=rig_schema.rig_name,
+        rig_schema_filename=f"{rig_schema.rig_name}.json",
         db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
         db_root=launcher.config_library_dir,
-        destination_dir=launcher.session_directory,
+        session_directory=launcher.session_directory,
     )
