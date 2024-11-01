@@ -42,7 +42,7 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
         *,
         rig_schema_filename: str,
         db_root: os.PathLike,
-        session_directory: os.PathLike,
+        session_directory: Optional[os.PathLike] = None,
         db_suffix: Optional[str] = None,
     ):
         super().__init__()
