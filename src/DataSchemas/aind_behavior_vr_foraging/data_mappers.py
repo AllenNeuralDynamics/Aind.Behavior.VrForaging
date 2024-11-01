@@ -2,7 +2,7 @@ import datetime
 import logging
 import os
 from pathlib import Path
-from typing import Dict, List, Optional, Self, Type, TypeVar, Union
+from typing import Callable, Dict, List, Optional, Self, Tuple, Type, TypeVar, Union
 
 import aind_behavior_services.rig as AbsRig
 import aind_data_schema
@@ -440,3 +440,50 @@ def aind_rig_data_mapper_factory(
         db_root=launcher.config_library_dir,
         session_directory=launcher.session_directory,
     )
+
+
+class AindDataMapperWrapper(data_mapper_service.DataMapperService):
+    def __init__(
+        self,
+        *,
+        launcher: Optional[BehaviorLauncher] = None,
+        rig_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindRigDataMapper]] = None,
+        session_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindSessionDataMapper]] = None,
+    ):
+        super().__init__()
+        self._rig_mapper_factory = rig_data_mapper_factory or aind_rig_data_mapper_factory
+        self._session_mapper_factory = session_data_mapper_factory or aind_session_data_mapper_factory
+
+        self._rig_mapper: Optional[AindRigDataMapper] = None
+        self._session_mapper: Optional[AindSessionDataMapper] = None
+
+        self._launcher = launcher
+        self._mapped: Optional[Rig] = None
+
+    @classmethod
+    def from_launcher(
+        cls,
+        launcher: BehaviorLauncher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
+        rig_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindRigDataMapper]] = None,
+        session_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindSessionDataMapper]] = None,
+    ) -> Self:
+        return cls(
+            launcher=launcher,
+            rig_data_mapper_factory=rig_data_mapper_factory,
+            session_data_mapper_factory=session_data_mapper_factory,
+        )
+
+    def map(self) -> Tuple[Rig, aind_data_schema.core.session.Session]:
+        if self._launcher is None:
+            raise ValueError("Launcher is not set.")
+        self._rig_mapper = self._rig_mapper_factory(self._launcher)
+        self._session_mapper = self._session_mapper_factory(self._launcher)
+        self._rig_mapper.map()
+        self._session_mapper.map()
+        return self.mapped
+
+    @property
+    def mapped(self) -> Tuple[Rig, aind_data_schema.core.session.Session]:
+        if self._rig_mapper is None or self._session_mapper is None:
+            raise ValueError("Data has not been mapped yet.")
+        return (self._rig_mapper.mapped, self._session_mapper.mapped)
