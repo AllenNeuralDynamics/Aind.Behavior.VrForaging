@@ -78,12 +78,12 @@ class TestAindRigDataMapper(unittest.TestCase):
     def setUp(self):
         self.rig_schema_filename = "rig_schema.json"
         self.db_root = MagicMock()
-        self.destination_dir = MagicMock()
+        self.session_directory = MagicMock()
         self.db_suffix = "test_suffix"
         self.mapper = AindRigDataMapper(
             rig_schema_filename=self.rig_schema_filename,
             db_root=self.db_root,
-            destination_dir=self.destination_dir,
+            session_directory=self.session_directory,
             db_suffix=self.db_suffix,
         )
 
