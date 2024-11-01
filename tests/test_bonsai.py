@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import warnings
 from pathlib import Path
 from typing import Generic, List, Optional, TypeVar, Union
 
@@ -43,11 +44,13 @@ class BonsaiTests(unittest.TestCase):
         stdout = completed_proc.stdout.decode().split("\n")
         stdout = [line for line in stdout if (line or line != "")]
 
-        for model in models_to_test:
-            try:
-                model.try_deserialization(stdout)
-            except ValueError:
-                self.fail(f"Could not find a match for {model.input_model.__class__.__name__}.")
+        with warnings.catch_warnings():  # suppress the warnings relative to the coercion of version across schemas
+            warnings.simplefilter("ignore")
+            for model in models_to_test:
+                try:
+                    model.try_deserialization(stdout)
+                except ValueError:
+                    self.fail(f"Could not find a match for {model.input_model.__class__.__name__}.")
 
 
 class TestModel(Generic[TModel]):
