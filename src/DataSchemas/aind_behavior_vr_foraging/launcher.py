@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import aind_behavior_experiment_launcher.launcher.behavior_launcher as behavior_launcher
 from aind_behavior_experiment_launcher.apps.app_service import BonsaiApp
 from aind_behavior_experiment_launcher.resource_monitor.resource_monitor_service import (
@@ -23,7 +25,7 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
         ResourceMonitor(
             constrains=[
                 available_storage_constraint_factory(data_dir, 2e11),
-                remote_dir_exists_constraint_factory(remote_dir),
+                remote_dir_exists_constraint_factory(Path(remote_dir).drive),
             ]
         )
     )
