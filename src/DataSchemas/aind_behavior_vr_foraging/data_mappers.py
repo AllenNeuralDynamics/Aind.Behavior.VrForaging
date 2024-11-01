@@ -10,6 +10,7 @@ import aind_data_schema.base
 import aind_data_schema.components.coordinates
 import aind_data_schema.components.devices
 import aind_data_schema.components.stimulus
+import aind_data_schema.core.rig
 import aind_data_schema.core.session
 import git
 import pydantic
@@ -20,7 +21,6 @@ from aind_behavior_services.calibration import Calibration
 from aind_behavior_services.calibration.olfactometer import OlfactometerChannelType
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file, utcnow
-from aind_data_schema.core.rig import Rig
 from pydantic import BaseModel
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -51,7 +51,7 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
         self.db_dir = db_suffix if db_suffix else f"{_DATABASE_DIR}/{os.environ['COMPUTERNAME']}"
         self.target_file = Path(self.db_root) / self.db_dir / self.filename
         self.session_directory = session_directory
-        self._mapped: Optional[Rig] = None
+        self._mapped: Optional[aind_data_schema.core.rig.Rig] = None
 
     def validate(self):
         file_exists = self.target_file.exists()
@@ -59,9 +59,9 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
             raise FileNotFoundError(f"File {self.target_file} does not exist.")
         return file_exists
 
-    def map(self) -> Rig:
+    def map(self) -> aind_data_schema.core.rig.Rig:
         try:
-            self._mapped = model_from_json_file(self.target_file, Rig)
+            self._mapped = model_from_json_file(self.target_file, aind_data_schema.core.rig.Rig)
             if self.session_directory is not None:
                 logger.info("Writing session.json to %s", self.session_directory)
                 self.mapped.write_standard_file(self.session_directory)
@@ -73,7 +73,7 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
             return self.mapped
 
     @property
-    def mapped(self) -> Rig:
+    def mapped(self) -> aind_data_schema.core.rig.Rig:
         if self._mapped is None:
             raise ValueError("Data has not been mapped yet.")
         return self._mapped
@@ -425,7 +425,6 @@ def aind_session_data_mapper_factory(launcher: BehaviorLauncher) -> AindSessionD
         task_logic_model=launcher.task_logic_schema,
         repository=launcher.repository,
         script_path=launcher.services_factory_manager.bonsai_app.workflow,
-        session_directory=launcher.session_directory,
         session_end_time=now,
     )
 
@@ -438,7 +437,6 @@ def aind_rig_data_mapper_factory(
         rig_schema_filename=f"{rig_schema.rig_name}.json",
         db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
         db_root=launcher.config_library_dir,
-        session_directory=launcher.session_directory,
     )
 
 
@@ -457,8 +455,11 @@ class AindDataMapperWrapper(data_mapper_service.DataMapperService):
         self._rig_mapper: Optional[AindRigDataMapper] = None
         self._session_mapper: Optional[AindSessionDataMapper] = None
 
+        self._session_schema: Optional[aind_data_schema.core.session.Session] = None
+        self._rig_schema: Optional[aind_data_schema.core.rig.Rig] = None
+
         self._launcher = launcher
-        self._mapped: Optional[Rig] = None
+        self._mapped: Optional[aind_data_schema.core.rig.Rig] = None
 
     @classmethod
     def from_launcher(
@@ -473,17 +474,20 @@ class AindDataMapperWrapper(data_mapper_service.DataMapperService):
             session_data_mapper_factory=session_data_mapper_factory,
         )
 
-    def map(self) -> Tuple[Rig, aind_data_schema.core.session.Session]:
+    def map(self) -> Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]:
         if self._launcher is None:
             raise ValueError("Launcher is not set.")
         self._rig_mapper = self._rig_mapper_factory(self._launcher)
         self._session_mapper = self._session_mapper_factory(self._launcher)
-        self._rig_mapper.map()
-        self._session_mapper.map()
+        self._rig_schema = self._rig_mapper.map()
+        self._session_schema = self._session_mapper.map()
+        if self._rig_schema is None or self._session_schema is None:
+            raise ValueError("Failed to map data.")
+        self._session_schema.rig_id = self._rig_schema.rig_id
         return self.mapped
 
     @property
-    def mapped(self) -> Tuple[Rig, aind_data_schema.core.session.Session]:
+    def mapped(self) -> Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]:
         if self._rig_mapper is None or self._session_mapper is None:
             raise ValueError("Data has not been mapped yet.")
-        return (self._rig_mapper.mapped, self._session_mapper.mapped)
+        return (self._rig_schema, self._session_schema)
