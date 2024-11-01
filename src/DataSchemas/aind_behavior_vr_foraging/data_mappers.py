@@ -60,6 +60,7 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
         return file_exists
 
     def map(self) -> aind_data_schema.core.rig.Rig:
+        logger.info("Mapping aind-data-schema Rig.")
         try:
             self._mapped = model_from_json_file(self.target_file, aind_data_schema.core.rig.Rig)
             if self.session_directory is not None:
@@ -116,7 +117,7 @@ class AindSessionDataMapper(data_mapper_service.DataMapperService):
         return self.mapped is not None
 
     def map(self) -> Optional[aind_data_schema.core.session.Session]:
-        logger.info("Mapping to aind-data-schema Session")
+        logger.info("Mapping aind-data-schema Session.")
         try:
             self._mapped = self._map(
                 session_model=self.session_model,
@@ -131,7 +132,6 @@ class AindSessionDataMapper(data_mapper_service.DataMapperService):
             if self.session_directory is not None:
                 logger.info("Writing session.json to %s", self.session_directory)
                 self._mapped.write_standard_file(self.session_directory)
-            logger.info("Mapping successful.")
         except (pydantic.ValidationError, ValueError, IOError) as e:
             logger.error("Failed to map to aind-data-schema Session. %s", e)
             raise e
@@ -484,6 +484,10 @@ class AindDataMapperWrapper(data_mapper_service.DataMapperService):
         if self._rig_schema is None or self._session_schema is None:
             raise ValueError("Failed to map data.")
         self._session_schema.rig_id = self._rig_schema.rig_id
+        logger.info("Writing session.json to %s", self._launcher.session_directory)
+        self._session_schema.write_standard_file(self._launcher.session_directory)
+        logger.info("Writing session.json to %s", self._launcher.session_directory)
+        self._rig_schema.write_standard_file(self._launcher.session_directory)
         return self.mapped
 
     @property
