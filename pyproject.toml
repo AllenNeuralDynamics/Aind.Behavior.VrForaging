@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aind-behavior-vr-foraging"
-description = "A library that defines AIND data schema for the Aind Behavior VR Foraing experiment."
+description = "A library that defines AIND data schema for the Aind Behavior VR Foraging experiment."
 authors = [ {name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"}]
 license = {text = "MIT"}
 requires-python = ">=3.11"
@@ -15,7 +15,7 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_services>=0.8.0",
+  "aind_behavior_services>=0.8, <0.9",
 ]
 
 [project.optional-dependencies]
@@ -25,7 +25,7 @@ linters = [
     'codespell'
 ]
 
-launcher = ["aind_behavior_experiment_launcher[aind-services]@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher@main"]
+launcher = ["aind_behavior_experiment_launcher[aind-services]>=0.2.0rc4"]
 
 docs = [
     'Sphinx<7.3',
