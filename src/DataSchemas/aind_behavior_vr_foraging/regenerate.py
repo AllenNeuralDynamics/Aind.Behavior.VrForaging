@@ -1,14 +1,15 @@
 import inspect
 from pathlib import Path
 
-import aind_behavior_vr_foraging.rig
-import aind_behavior_vr_foraging.task_logic
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import (
     convert_pydantic_to_bonsai,
     pascal_to_snake_case,
     snake_to_pascal_case,
 )
+
+import aind_behavior_vr_foraging.rig
+import aind_behavior_vr_foraging.task_logic
 
 SCHEMA_ROOT = Path("./src/DataSchemas/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")

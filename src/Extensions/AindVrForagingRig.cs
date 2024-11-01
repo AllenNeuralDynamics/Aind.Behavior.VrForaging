@@ -5385,7 +5385,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.1";
+        private string _aindBehaviorServicesPkgVersion = "0.8.2";
     
         private string _version = "0.4.0";
     
