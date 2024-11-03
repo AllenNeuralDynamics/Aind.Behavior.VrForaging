@@ -46,7 +46,6 @@ class AindRigDataMapper(AindDataSchemaRigDataMapper):
         *,
         rig_schema_filename: str,
         db_root: os.PathLike,
-        session_directory: Optional[os.PathLike] = None,
         db_suffix: Optional[str] = None,
     ):
         super().__init__()
@@ -54,19 +53,14 @@ class AindRigDataMapper(AindDataSchemaRigDataMapper):
         self.db_root = db_root
         self.db_dir = db_suffix if db_suffix else f"{_DATABASE_DIR}/{os.environ['COMPUTERNAME']}"
         self.target_file = Path(self.db_root) / self.db_dir / self.filename
-        self._session_directory = session_directory
         self._mapped: Optional[aind_data_schema.core.rig.Rig] = None
 
     @property
     def session_name(self):
         raise NotImplementedError("Method not implemented.")
 
-    @property
-    def session_directory(self) -> Optional[Path]:
-        if self._session_directory:
-            return Path(self._session_directory)
-        else:
-            return None
+    def write_standard_file(self, directory: os.PathLike) -> None:
+        self.mapped.write_standard_file(directory)
 
     def map(self) -> aind_data_schema.core.rig.Rig:
         logger.info("Mapping aind-data-schema Rig.")
@@ -77,10 +71,6 @@ class AindRigDataMapper(AindDataSchemaRigDataMapper):
 
         try:
             self._mapped = model_from_json_file(self.target_file, aind_data_schema.core.rig.Rig)
-            if self.session_directory is not None:
-                logger.info("Writing session.json to %s", self.session_directory)
-                self.mapped.write_standard_file(self.session_directory)
-                logger.info("Mapping successful.")
         except (pydantic.ValidationError, ValueError, IOError) as e:
             logger.error("Failed to map to aind-data-schema Session. %s", e)
             raise e
@@ -108,12 +98,10 @@ class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
         session_end_time: Optional[datetime.datetime] = None,
         output_parameters: Optional[Dict] = None,
         subject_info: Optional[WaterLogResult] = None,
-        session_directory: Optional[os.PathLike] = None,
     ):
         self.session_model = session_model
         self.rig_model = rig_model
         self.task_logic_model = task_logic_model
-        self._session_directory = session_directory
         self.repository = repository
         self.script_path = script_path
         self.session_end_time = session_end_time
@@ -124,13 +112,6 @@ class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
     @property
     def session_name(self):
         raise self.session_model.session_name
-
-    @property
-    def session_directory(self) -> Optional[Path]:
-        if self._session_directory:
-            return Path(self._session_directory)
-        else:
-            return None
 
     @property
     def mapped(self) -> aind_data_schema.core.session.Session:
@@ -154,14 +135,14 @@ class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
                 output_parameters=self.output_parameters,
                 subject_info=self.subject_info,
             )
-            if self.session_directory is not None:
-                logger.info("Writing session.json to %s", self.session_directory)
-                self._mapped.write_standard_file(self.session_directory)
         except (pydantic.ValidationError, ValueError, IOError) as e:
             logger.error("Failed to map to aind-data-schema Session. %s", e)
             raise e
         else:
             return self._mapped
+
+    def write_standard_file(self, directory: os.PathLike) -> None:
+        self.mapped.write_standard_file(directory)
 
     @classmethod
     def _map(
@@ -396,7 +377,6 @@ def aind_session_data_mapper_factory(launcher: BehaviorLauncher) -> AindSessionD
         repository=launcher.repository,
         script_path=launcher.services_factory_manager.bonsai_app.workflow,
         session_end_time=now,
-        session_directory=launcher.session_directory,
     )
 
 
@@ -434,17 +414,14 @@ class AindDataMapperWrapper(data_mapper_service.DataMapperService):
 
     @property
     def session_directory(self):
-        if self._session_mapper:
-            return self._session_mapper.session_directory
-        else:
-            raise ValueError("Session mapper does not exist.")
+        return self._launcher.session_directory
 
     @property
     def session_name(self):
-        if self._session_mapper:
-            return self._session_mapper.session_model.session_name
+        if self._launcher.session_schema_model is not None:
+            return self._launcher.session_schema_model.session_name
         else:
-            raise ValueError("Can't infer session name from session mapper.")
+            raise ValueError("Can't infer session name from _launcher.")
 
     @classmethod
     def from_launcher(
@@ -469,10 +446,10 @@ class AindDataMapperWrapper(data_mapper_service.DataMapperService):
         if self._rig_schema is None or self._session_schema is None:
             raise ValueError("Failed to map data.")
         self._session_schema.rig_id = self._rig_schema.rig_id
-        logger.info("Writing session.json to %s", self._launcher.session_directory)
-        self._session_schema.write_standard_file(self._launcher.session_directory)
-        logger.info("Writing rig.json to %s", self._launcher.session_directory)
-        self._rig_schema.write_standard_file(self._launcher.session_directory)
+        logger.info("Writing session.json to %s", self.session_directory)
+        self._session_schema.write_standard_file(self.session_directory)
+        logger.info("Writing rig.json to %s", self.session_directory)
+        self._rig_schema.write_standard_file(self.session_directory)
         return self.mapped
 
     @property
