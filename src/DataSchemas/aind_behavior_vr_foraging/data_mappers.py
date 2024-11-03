@@ -15,6 +15,10 @@ import aind_data_schema.core.session
 import git
 import pydantic
 from aind_behavior_experiment_launcher.data_mappers import data_mapper_service
+from aind_behavior_experiment_launcher.data_mappers.aind_data_schema import (
+    AindDataSchemaRigDataMapper,
+    AindDataSchemaSessionDataMapper,
+)
 from aind_behavior_experiment_launcher.launcher.behavior_launcher import BehaviorLauncher
 from aind_behavior_experiment_launcher.records.subject import WaterLogResult
 from aind_behavior_services.calibration import Calibration
@@ -36,7 +40,7 @@ logger = logging.getLogger(__name__)
 _DATABASE_DIR = "AindDataSchemaRig"
 
 
-class AindRigDataMapper(data_mapper_service.DataMapperService):
+class AindRigDataMapper(AindDataSchemaRigDataMapper):
     def __init__(
         self,
         *,
@@ -50,17 +54,27 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
         self.db_root = db_root
         self.db_dir = db_suffix if db_suffix else f"{_DATABASE_DIR}/{os.environ['COMPUTERNAME']}"
         self.target_file = Path(self.db_root) / self.db_dir / self.filename
-        self.session_directory = session_directory
+        self._session_directory = session_directory
         self._mapped: Optional[aind_data_schema.core.rig.Rig] = None
 
-    def validate(self):
-        file_exists = self.target_file.exists()
-        if not file_exists:
-            raise FileNotFoundError(f"File {self.target_file} does not exist.")
-        return file_exists
+    @property
+    def session_name(self):
+        raise NotImplementedError("Method not implemented.")
+
+    @property
+    def session_directory(self) -> Optional[Path]:
+        if self._session_directory:
+            return Path(self._session_directory)
+        else:
+            return None
 
     def map(self) -> aind_data_schema.core.rig.Rig:
         logger.info("Mapping aind-data-schema Rig.")
+
+        file_exists = self.target_file.exists()
+        if not file_exists:
+            raise FileNotFoundError(f"File {self.target_file} does not exist.")
+
         try:
             self._mapped = model_from_json_file(self.target_file, aind_data_schema.core.rig.Rig)
             if self.session_directory is not None:
@@ -79,8 +93,11 @@ class AindRigDataMapper(data_mapper_service.DataMapperService):
             raise ValueError("Data has not been mapped yet.")
         return self._mapped
 
+    def is_mapped(self) -> bool:
+        return self.mapped is not None
 
-class AindSessionDataMapper(data_mapper_service.DataMapperService):
+
+class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
     def __init__(
         self,
         session_model: AindBehaviorSessionModel,
@@ -96,7 +113,7 @@ class AindSessionDataMapper(data_mapper_service.DataMapperService):
         self.session_model = session_model
         self.rig_model = rig_model
         self.task_logic_model = task_logic_model
-        self.session_directory = session_directory
+        self._session_directory = session_directory
         self.repository = repository
         self.script_path = script_path
         self.session_end_time = session_end_time
@@ -104,8 +121,16 @@ class AindSessionDataMapper(data_mapper_service.DataMapperService):
         self.subject_info = subject_info
         self._mapped: Optional[aind_data_schema.core.session.Session] = None
 
-    def validate(self, *args, **kwargs) -> bool:
-        return True
+    @property
+    def session_name(self):
+        raise self.session_model.session_name
+
+    @property
+    def session_directory(self) -> Optional[Path]:
+        if self._session_directory:
+            return Path(self._session_directory)
+        else:
+            return None
 
     @property
     def mapped(self) -> aind_data_schema.core.session.Session:
@@ -137,61 +162,6 @@ class AindSessionDataMapper(data_mapper_service.DataMapperService):
             raise e
         else:
             return self._mapped
-
-    @classmethod
-    def map_from_session_root(
-        cls,
-        schema_root: os.PathLike,
-        session_model: Type[AindBehaviorSessionModel],
-        rig_model: Type[AindVrForagingRig],
-        task_logic_model: Type[AindVrForagingTaskLogic],
-        repository: Union[os.PathLike, git.Repo],
-        script_path: os.PathLike,
-        session_end_time: Optional[datetime.datetime] = None,
-        output_parameters: Optional[Dict] = None,
-        subject_info: Optional[WaterLogResult] = None,
-    ) -> Self:
-        return cls(
-            session_model=model_from_json_file(Path(schema_root) / "session_input.json", session_model),
-            rig_model=model_from_json_file(Path(schema_root) / "rig_input.json", rig_model),
-            task_logic_model=model_from_json_file(Path(schema_root) / "tasklogic_input.json", task_logic_model),
-            session_directory=schema_root,
-            repository=repository,
-            script_path=script_path,
-            session_end_time=session_end_time if session_end_time else utcnow(),
-            output_parameters=output_parameters,
-            subject_info=subject_info,
-        )
-
-    @classmethod
-    def map_from_json_files(
-        cls,
-        session_json: os.PathLike,
-        rig_json: os.PathLike,
-        task_logic_json: os.PathLike,
-        session_model: Type[AindBehaviorSessionModel],
-        rig_model: Type[AindVrForagingRig],
-        task_logic_model: Type[AindVrForagingTaskLogic],
-        repository: Union[os.PathLike, git.Repo],
-        script_path: os.PathLike,
-        session_end_time: Optional[datetime.datetime],
-        session_directory: Optional[os.PathLike] = None,
-        output_parameters: Optional[Dict] = None,
-        subject_info: Optional[WaterLogResult] = None,
-        **kwargs,
-    ) -> Self:
-        return cls(
-            session_model=model_from_json_file(session_json, session_model),
-            rig_model=model_from_json_file(rig_json, rig_model),
-            task_logic_model=model_from_json_file(task_logic_json, task_logic_model),
-            session_directory=session_directory,
-            repository=repository,
-            script_path=script_path,
-            session_end_time=session_end_time if session_end_time else utcnow(),
-            output_parameters=output_parameters,
-            subject_info=subject_info,
-            **kwargs,
-        )
 
     @classmethod
     def _map(
@@ -426,6 +396,7 @@ def aind_session_data_mapper_factory(launcher: BehaviorLauncher) -> AindSessionD
         repository=launcher.repository,
         script_path=launcher.services_factory_manager.bonsai_app.workflow,
         session_end_time=now,
+        session_directory=launcher.session_directory,
     )
 
 
@@ -461,6 +432,20 @@ class AindDataMapperWrapper(data_mapper_service.DataMapperService):
         self._launcher = launcher
         self._mapped: Optional[aind_data_schema.core.rig.Rig] = None
 
+    @property
+    def session_directory(self):
+        if self._session_mapper:
+            return self._session_mapper.session_directory
+        else:
+            raise ValueError("Session mapper does not exist.")
+
+    @property
+    def session_name(self):
+        if self._session_mapper:
+            return self._session_mapper.session_model.session_name
+        else:
+            raise ValueError("Can't infer session name from session mapper.")
+
     @classmethod
     def from_launcher(
         cls,
@@ -486,7 +471,7 @@ class AindDataMapperWrapper(data_mapper_service.DataMapperService):
         self._session_schema.rig_id = self._rig_schema.rig_id
         logger.info("Writing session.json to %s", self._launcher.session_directory)
         self._session_schema.write_standard_file(self._launcher.session_directory)
-        logger.info("Writing session.json to %s", self._launcher.session_directory)
+        logger.info("Writing rig.json to %s", self._launcher.session_directory)
         self._rig_schema.write_standard_file(self._launcher.session_directory)
         return self.mapped
 
@@ -495,3 +480,6 @@ class AindDataMapperWrapper(data_mapper_service.DataMapperService):
         if self._rig_mapper is None or self._session_mapper is None:
             raise ValueError("Data has not been mapped yet.")
         return (self._rig_schema, self._session_schema)
+
+    def is_mapped(self) -> bool:
+        return (self._rig_schema is not None) and (self._session_schema is not None)
