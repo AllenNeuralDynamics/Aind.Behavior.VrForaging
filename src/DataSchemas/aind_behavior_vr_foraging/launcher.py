@@ -93,9 +93,9 @@ def _watchdog_data_transfer_factory(
 
     destination = Path(destination)
     if launcher.group_by_subject_log:
-        destination = destination / launcher.session_schema.subject / launcher.session_schema.session_name
+        destination = destination / launcher.session_schema.subject
     else:
-        destination = destination / launcher.session_schema.session_name
+        destination = destination
 
     watchdog = WatchdogDataTransferService(
         source=launcher.session_directory,
