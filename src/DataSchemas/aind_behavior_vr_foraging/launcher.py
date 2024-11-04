@@ -19,41 +19,6 @@ from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 
-def watchdog_data_transfer_factory(
-    destination: os.PathLike,
-    schedule_time: Optional[datetime.time] = datetime.time(hour=20),
-    project_name: Optional[str] = None,
-    **watchdog_kwargs,
-) -> Callable[[behavior_launcher.BehaviorLauncher], WatchdogDataTransferService]:
-    return partial(
-        _watchdog_data_transfer_factory,
-        destination=destination,
-        schedule_time=schedule_time,
-        project_name=project_name,
-        **watchdog_kwargs,
-    )
-
-
-def _watchdog_data_transfer_factory(
-    launcher: behavior_launcher.BehaviorLauncher, **watchdog_kwargs
-) -> WatchdogDataTransferService:
-    if launcher.services_factory_manager.data_mapper is None:
-        raise ValueError("Data mapper service is not set. Cannot create watchdog.")
-    if not isinstance(launcher.services_factory_manager.data_mapper, AindDataMapperWrapper):
-        raise ValueError(
-            "Data mapper service is not of the correct type (AindDataMapperWrapper). Cannot create watchdog."
-        )
-    if not launcher.services_factory_manager.data_mapper.is_mapped():
-        raise ValueError("Data mapper has not mapped yet. Cannot create watchdog.")
-
-    watchdog = WatchdogDataTransferService(
-        source=launcher.session_directory,
-        aind_session_data_mapper=launcher.services_factory_manager.data_mapper._session_mapper,
-        **watchdog_kwargs,
-    )
-    return watchdog
-
-
 def make_launcher() -> behavior_launcher.BehaviorLauncher:
     data_dir = r"C:/Data"
     remote_dir = Path(r"\\allen\aind\scratch\vr-foraging\data")
@@ -87,6 +52,59 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
         services=srv,
         validate_init=True,
     )
+
+
+def watchdog_data_transfer_factory(
+    destination: os.PathLike,
+    schedule_time: Optional[datetime.time] = datetime.time(hour=20),
+    project_name: Optional[str] = None,
+    **watchdog_kwargs,
+) -> Callable[[behavior_launcher.BehaviorLauncher], WatchdogDataTransferService]:
+    return partial(
+        _watchdog_data_transfer_factory,
+        destination=destination,
+        schedule_time=schedule_time,
+        project_name=project_name,
+        **watchdog_kwargs,
+    )
+
+
+def _watchdog_data_transfer_factory(
+    launcher: behavior_launcher.BehaviorLauncher,
+    destination: os.PathLike,
+    **watchdog_kwargs,
+) -> WatchdogDataTransferService:
+    if launcher.services_factory_manager.data_mapper is None:
+        raise ValueError("Data mapper service is not set. Cannot create watchdog.")
+    if not isinstance(launcher.services_factory_manager.data_mapper, AindDataMapperWrapper):
+        raise ValueError(
+            "Data mapper service is not of the correct type (AindDataMapperWrapper). Cannot create watchdog."
+        )
+    if not launcher.services_factory_manager.data_mapper.is_mapped():
+        raise ValueError("Data mapper has not mapped yet. Cannot create watchdog.")
+
+    if not isinstance(launcher.session_schema, AindBehaviorSessionModel):
+        raise ValueError(
+            "Session schema is not of the correct type (AindBehaviorSessionModel). Cannot create watchdog."
+        )
+
+    if not launcher.session_schema.session_name:
+        raise ValueError("Session name is not set. Cannot create watchdog.")
+
+    destination = Path(destination)
+    if launcher.group_by_subject_log:
+        destination = destination / launcher.session_schema.subject / launcher.session_schema.session_name
+    else:
+        destination = destination / launcher.session_schema.session_name
+
+    watchdog = WatchdogDataTransferService(
+        source=launcher.session_directory,
+        aind_session_data_mapper=launcher.services_factory_manager.data_mapper._session_mapper,
+        session_name=launcher.session_schema.session_name,
+        destination=destination,
+        **watchdog_kwargs,
+    )
+    return watchdog
 
 
 def main():
