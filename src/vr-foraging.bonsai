@@ -523,7 +523,7 @@ Item3 as Right)</scr:Expression>
                       <Property Name="PortName" />
                     </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpSniffDetector.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpSniffDetector.bonsai">
                     <PortName>COMx</PortName>
                     <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
                   </Expression>
