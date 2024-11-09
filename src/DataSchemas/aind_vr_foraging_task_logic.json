@@ -17,7 +17,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.8.3",
+          "default": "0.8.5",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -451,7 +451,6 @@
       "type": "string"
     },
     "Distribution": {
-      "description": "Available distributions",
       "discriminator": {
         "mapping": {
           "Beta": "#/definitions/BetaDistribution",
@@ -498,8 +497,7 @@
         {
           "$ref": "#/definitions/PdfDistribution"
         }
-      ],
-      "title": "Distribution"
+      ]
     },
     "EnvironmentStatistics": {
       "properties": {

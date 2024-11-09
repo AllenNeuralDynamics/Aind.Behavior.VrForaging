@@ -1724,8 +1724,7 @@
         {
           "$ref": "#/definitions/VideoWriterOpenCv"
         }
-      ],
-      "title": "VideoWriter"
+      ]
     },
     "VideoWriterFfmpeg": {
       "properties": {
@@ -1755,7 +1754,7 @@
           "type": "string"
         },
         "input_arguments": {
-          "default": "-v verbose -colorspace rgb -color_primaries bt709 -color_trc linear",
+          "default": "-v verbose -colorspace bt709 -color_primaries bt709 -color_range full -color_trc linear",
           "description": "Input arguments",
           "title": "Input Arguments",
           "type": "string"
@@ -1996,7 +1995,7 @@
   },
   "properties": {
     "aind_behavior_services_pkg_version": {
-      "default": "0.8.3",
+      "default": "0.8.5",
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "title": "aind_behavior_services package version",
       "type": "string"
