@@ -4640,7 +4640,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _outputArguments = "-vf \"scale=out_color_matrix=bt709:out_range=full\" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M";
     
-        private string _inputArguments = "-v verbose -colorspace rgb -color_primaries bt709 -color_trc linear";
+        private string _inputArguments = "-v verbose -colorspace bt709 -color_primaries bt709 -color_range full -color_trc linear";
     
         public VideoWriterFfmpeg()
         {
@@ -5385,7 +5385,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.3";
+        private string _aindBehaviorServicesPkgVersion = "0.8.5";
     
         private string _version = "0.4.0";
     
