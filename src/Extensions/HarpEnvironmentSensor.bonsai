@@ -43,7 +43,7 @@
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
-        <Name>HarpSniffDetectorCommands</Name>
+        <Name>HarpEnvironmentSensorCommands</Name>
       </Expression>
     </Nodes>
     <Edges>
