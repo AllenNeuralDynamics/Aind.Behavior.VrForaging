@@ -115,8 +115,8 @@ class ConstantFunction(BaseModel):
 
 class LookupTableFunction(BaseModel):
     function_type: Literal["LookupTableFunction"] = "LookupTableFunction"
-    lut_keys: List[float] = Field(..., description="List of keys of the lookup table", min_items=1)
-    lut_values: List[float] = Field(..., description="List of values of the lookup table", min_items=1)
+    lut_keys: List[float] = Field(..., description="List of keys of the lookup table", min_length=1)
+    lut_values: List[float] = Field(..., description="List of values of the lookup table", min_length=1)
 
     @model_validator(mode="after")
     def _validate_lut(self) -> Self:
