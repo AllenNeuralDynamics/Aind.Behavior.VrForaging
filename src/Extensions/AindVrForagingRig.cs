@@ -1125,6 +1125,92 @@ namespace AindVrForagingDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ConnectedClockOutput
+    {
+    
+        private string _targetDevice;
+    
+        private int _outputChannel;
+    
+        public ConnectedClockOutput()
+        {
+        }
+    
+        protected ConnectedClockOutput(ConnectedClockOutput other)
+        {
+            _targetDevice = other._targetDevice;
+            _outputChannel = other._outputChannel;
+        }
+    
+        /// <summary>
+        /// Optional device name to provide user additional information
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("target_device")]
+        [System.ComponentModel.DescriptionAttribute("Optional device name to provide user additional information")]
+        public string TargetDevice
+        {
+            get
+            {
+                return _targetDevice;
+            }
+            set
+            {
+                _targetDevice = value;
+            }
+        }
+    
+        /// <summary>
+        /// Output channel
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("output_channel", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Output channel")]
+        public int OutputChannel
+        {
+            get
+            {
+                return _outputChannel;
+            }
+            set
+            {
+                _outputChannel = value;
+            }
+        }
+    
+        public System.IObservable<ConnectedClockOutput> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ConnectedClockOutput(this)));
+        }
+    
+        public System.IObservable<ConnectedClockOutput> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ConnectedClockOutput(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("target_device = " + _targetDevice + ", ");
+            stringBuilder.Append("output_channel = " + _outputChannel);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class DisplayCalibration
     {
     
@@ -1882,6 +1968,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _portName;
     
+        private System.Collections.Generic.List<ConnectedClockOutput> _connectedClockOutputs = new System.Collections.Generic.List<ConnectedClockOutput>();
+    
         public HarpClockGenerator()
         {
         }
@@ -1894,6 +1982,7 @@ namespace AindVrForagingDataSchema.Rig
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
             _portName = other._portName;
+            _connectedClockOutputs = other._connectedClockOutputs;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
@@ -1992,6 +2081,24 @@ namespace AindVrForagingDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Connected clock outputs
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("connected_clock_outputs")]
+        [System.ComponentModel.DescriptionAttribute("Connected clock outputs")]
+        public System.Collections.Generic.List<ConnectedClockOutput> ConnectedClockOutputs
+        {
+            get
+            {
+                return _connectedClockOutputs;
+            }
+            set
+            {
+                _connectedClockOutputs = value;
+            }
+        }
+    
         public System.IObservable<HarpClockGenerator> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpClockGenerator(this)));
@@ -2009,7 +2116,8 @@ namespace AindVrForagingDataSchema.Rig
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
             stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("port_name = " + _portName + ", ");
+            stringBuilder.Append("connected_clock_outputs = " + _connectedClockOutputs);
             return true;
         }
     
@@ -5385,7 +5493,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.5";
+        private string _aindBehaviorServicesPkgVersion = "0.8.6";
     
         private string _version = "0.4.0";
     
@@ -6048,6 +6156,11 @@ namespace AindVrForagingDataSchema.Rig
             return Process<CameraControllerWebCamera>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ConnectedClockOutput> source)
+        {
+            return Process<ConnectedClockOutput>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<DisplayCalibration> source)
         {
             return Process<DisplayCalibration>(source);
@@ -6231,6 +6344,7 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BaseModel>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerSpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerWebCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ConnectedClockOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
