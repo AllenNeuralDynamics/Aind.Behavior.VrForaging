@@ -816,6 +816,69 @@
       "title": "HarpClockGenerator",
       "type": "object"
     },
+    "HarpEnvironmentSensor": {
+      "properties": {
+        "device_type": {
+          "const": "environmentsensor",
+          "default": "environmentsensor",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1405,
+          "default": 1405,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpEnvironmentSensor",
+      "type": "object"
+    },
     "HarpLickometer": {
       "properties": {
         "device_type": {
@@ -2116,6 +2179,18 @@
       "oneOf": [
         {
           "$ref": "#/definitions/HarpSniffDetector"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "harp_environment_sensor": {
+      "default": null,
+      "description": "Environment sensor",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/HarpEnvironmentSensor"
         },
         {
           "type": "null"

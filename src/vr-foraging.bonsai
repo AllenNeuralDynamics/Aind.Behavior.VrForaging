@@ -2211,6 +2211,7 @@ Item3 as Right)</scr:Expression>
                       <p7:Message />
                     </Combinator>
                   </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\ValidateClkOutput.bonsai" />
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
