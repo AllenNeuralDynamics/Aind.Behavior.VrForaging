@@ -8,7 +8,7 @@ if (Test-Path -Path ./.venv) {
 &python -m venv ./.venv
 .\.venv\Scripts\Activate.ps1
 Write-Output "Installing python packages..."
-&pip install .
+&pip install .[aind-services]
 Write-Output "Creating a Bonsai environment and installing packages..."
 Set-Location "bonsai"
 .\setup.ps1
