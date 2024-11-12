@@ -136,9 +136,7 @@
 
 ]]></Text>
       </Expression>
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpBehaviorDevice.bonsai">
-        <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
-      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpBehaviorDevice.bonsai" />
       <Expression xsi:type="Annotation">
         <Text><![CDATA[]]></Text>
       </Expression>
@@ -425,7 +423,7 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpOlfactometerDevice.bonsai">
                     <PortName>COM6</PortName>
-                    <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
+                    <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
                     <Channel3AsCarrier>true</Channel3AsCarrier>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -441,7 +439,7 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpLicketySplitDevice.bonsai">
                     <PortName>COMx</PortName>
-                    <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
+                    <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -456,7 +454,7 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpTimestampGeneratorGen3Device.bonsai">
                     <PortName>COMx</PortName>
-                    <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
+                    <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -474,7 +472,6 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpTreadmill.bonsai">
                     <PortName>COMx</PortName>
-                    <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -510,7 +507,6 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\AindManipulator.bonsai">
                     <PortName>COMx</PortName>
-                    <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -525,7 +521,6 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpSniffDetector.bonsai">
                     <PortName>COMx</PortName>
-                    <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -550,7 +545,7 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpAnalogInputDevice.bonsai">
                     <PortName>COMx</PortName>
-                    <StartExperimentSubjectName>StartExperiment</StartExperimentSubjectName>
+                    <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -1488,6 +1483,13 @@ Item3 as Right)</scr:Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>ExperimentState</Name>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>StartExperiment</Name>
+            </Expression>
+            <Expression xsi:type="Unit" />
+            <Expression xsi:type="rx:PublishSubject">
+              <Name>TriggerHarpReadDump</Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="7" To="8" Label="Source1" />
@@ -1499,6 +1501,8 @@ Item3 as Right)</scr:Expression>
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source3" />
             <Edge From="15" To="16" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
