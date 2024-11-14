@@ -7547,9 +7547,22 @@ Item1 as Displacement,
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:ColumnCount>1</gui:ColumnCount>
-              <gui:RowCount>2</gui:RowCount>
+              <gui:RowCount>3</gui:RowCount>
               <gui:ColumnStyles />
-              <gui:RowStyles />
+              <gui:RowStyles>
+                <gui:RowStyle>
+                  <gui:SizeType>Percent</gui:SizeType>
+                  <gui:Height>0.46</gui:Height>
+                </gui:RowStyle>
+                <gui:RowStyle>
+                  <gui:SizeType>Percent</gui:SizeType>
+                  <gui:Height>0.46</gui:Height>
+                </gui:RowStyle>
+                <gui:RowStyle>
+                  <gui:SizeType>Percent</gui:SizeType>
+                  <gui:Height>0.08</gui:Height>
+                </gui:RowStyle>
+              </gui:RowStyles>
               <gui:CellSpans />
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
