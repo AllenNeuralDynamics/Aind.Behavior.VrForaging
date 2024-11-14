@@ -7831,8 +7831,8 @@ Item2 as TotalReward)</scr:Expression>
                           <Selector>Axis</Selector>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
-                          <scr:Name>OffsetRegister86</scr:Name>
-                          <scr:Expression>it + 86</scr:Expression>
+                          <scr:Name>OffsetRegister85</scr:Name>
+                          <scr:Expression>it + 85</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">
