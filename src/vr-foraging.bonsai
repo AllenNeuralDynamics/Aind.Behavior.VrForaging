@@ -436,7 +436,7 @@ Item3 as Right)</scr:Expression>
                       <Property Name="PortName" />
                     </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpLicketySplitDevice.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpLicketySplitDevice.bonsai">
                     <PortName>COMx</PortName>
                     <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
                   </Expression>
@@ -5198,9 +5198,6 @@ Item1 as Displacement,
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\PatchTransitionLogic.bonsai" />
-            <Expression xsi:type="Annotation">
-              <Text><![CDATA[]]></Text>
-            </Expression>
             <Expression xsi:type="rx:Defer">
               <Name>Foraging</Name>
               <Workflow>
@@ -6334,19 +6331,18 @@ Item1 as Displacement,
             </Expression>
           </Nodes>
           <Edges>
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="10" Label="Source1" />
+            <Edge From="3" To="9" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source2" />
-            <Edge From="11" To="17" Label="Source1" />
+            <Edge From="8" To="9" Label="Source2" />
+            <Edge From="10" To="16" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="17" Label="Source2" />
+            <Edge From="15" To="16" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>
