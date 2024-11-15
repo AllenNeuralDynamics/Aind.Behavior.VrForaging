@@ -7548,15 +7548,15 @@ Item1 as Displacement,
               <gui:RowStyles>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.46</gui:Height>
+                  <gui:Height>0.48</gui:Height>
                 </gui:RowStyle>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.46</gui:Height>
+                  <gui:Height>0.48</gui:Height>
                 </gui:RowStyle>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.08</gui:Height>
+                  <gui:Height>0.04</gui:Height>
                 </gui:RowStyle>
               </gui:RowStyles>
               <gui:CellSpans />
