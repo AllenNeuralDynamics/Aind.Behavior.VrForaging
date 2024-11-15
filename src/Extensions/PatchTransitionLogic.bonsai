@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.0-preview1+76e8ce94db5dd636925244a720164ef8694af513"
+<WorkflowBuilder Version="2.8.5"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:;assembly=Extensions"
@@ -151,6 +151,7 @@
                             <Value>1</Value>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="rx:Accumulate" />
                         <Expression xsi:type="Subtract">
                           <Operand xsi:type="IntProperty">
                             <Value>1</Value>
@@ -166,6 +167,7 @@
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
