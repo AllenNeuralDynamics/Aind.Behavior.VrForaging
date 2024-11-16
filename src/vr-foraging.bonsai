@@ -920,6 +920,8 @@ Item3 as Right)</scr:Expression>
                                   <Property Name="Binning" Selector="Binning" />
                                   <Property Name="ColorProcessing" Selector="ColorProcessing" />
                                   <Property Name="Gamma" Selector="Gamma" />
+                                  <Property Name="PixelFormat" Selector="PixelFormat" />
+                                  <Property Name="AdcBitDepth" Selector="AdcBitDepth" />
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
