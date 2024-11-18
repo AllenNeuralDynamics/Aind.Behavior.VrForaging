@@ -9,7 +9,9 @@ authors = [ {name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"}]
 license = {text = "MIT"}
 requires-python = ">=3.11"
 classifiers = [
-    "Programming Language :: Python :: 3"
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
 ]
 readme = "README.md"
 dynamic = ["version"]
@@ -18,14 +20,20 @@ dependencies = [
   "aind_behavior_services>=0.8, <0.9",
 ]
 
+[project.urls]
+Documentation = "https://allenneuraldynamics.github.io/Aind.Behavior.VrForaging/"
+Repository = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/"
+Issues = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/issues"
+Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/releases"
+
 [project.optional-dependencies]
 
-linters = [
-    'ruff',
-    'codespell'
-]
-
 launcher = ["aind_behavior_experiment_launcher[aind-services]>=0.2.0"]
+
+dev = ["aind_behavior_vr_foraging[launcher]",
+    "ruff",
+    "codespell"
+]
 
 docs = [
     'Sphinx<7.3',
@@ -58,5 +66,5 @@ mccabe = { max-complexity = 14 }
 pydocstyle = { convention = 'google' }
 
 [tool.codespell]
-skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build'
+skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock'
 ignore-words-list = 'nd'
