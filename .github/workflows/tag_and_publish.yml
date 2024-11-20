@@ -19,9 +19,9 @@ jobs:
     - name: Extract version from __init__.py and package name from pyproject.toml
       id: get_version_and_name
       run: |
-        package_name=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['name'])")
+        package_name=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['name'])")
         package_name=${package_name//-/_}
-        version=$(python -c "import re; 
+        version=$(uv run python -c "import re; 
         with open(f'./src/${package_name}/__init__.py', 'r') as f: 
           content = f.read(); 
           match = re.search(r'__version__\s*=\s*[\'\"]([^\'\"]+)[\'\"]', content); 
@@ -47,7 +47,7 @@ jobs:
 
   publish:
     needs: tag
-    if: always()  # Enable publishing
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
