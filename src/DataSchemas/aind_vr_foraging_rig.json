@@ -2156,13 +2156,13 @@
           "type": "string"
         },
         "output_arguments": {
-          "default": "-vf \"scale=out_color_matrix=bt709:out_range=full\" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M",
+          "default": "-vf \"scale=out_color_matrix=bt709:out_range=full,format=bgr24,scale=out_range=full\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M",
           "description": "Output arguments",
           "title": "Output Arguments",
           "type": "string"
         },
         "input_arguments": {
-          "default": "-v verbose -colorspace bt709 -color_primaries bt709 -color_range full -color_trc linear",
+          "default": "-colorspace bt709 -color_primaries bt709 -color_range full -color_trc linear",
           "description": "Input arguments",
           "title": "Input Arguments",
           "type": "string"
@@ -2403,7 +2403,7 @@
   },
   "properties": {
     "aind_behavior_services_pkg_version": {
-      "default": "0.8.8",
+      "default": "0.8.9",
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "title": "aind_behavior_services package version",
       "type": "string"
