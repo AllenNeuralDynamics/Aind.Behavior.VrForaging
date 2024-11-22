@@ -1925,7 +1925,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p7:ThrowException">
-                            <p7:Message>Dropped frame detected during pre-session!</p7:Message>
+                            <p7:Message />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
