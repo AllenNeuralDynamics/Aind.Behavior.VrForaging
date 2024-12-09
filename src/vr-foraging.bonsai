@@ -1408,14 +1408,6 @@ Item3 as Right)</scr:Expression>
               <SessionName xsi:nil="true" />
               <SubjectName>LoggingRootPath</SubjectName>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Take">
-                <rx:Count>1</rx:Count>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:AsyncSubject">
-              <Name>CompoundRootPath</Name>
-            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -1443,8 +1435,6 @@ Item3 as Right)</scr:Expression>
             <Edge From="26" To="27" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
             <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
-            <Edge From="31" To="32" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
