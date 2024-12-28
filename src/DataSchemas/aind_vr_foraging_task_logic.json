@@ -2179,6 +2179,7 @@
   "additionalProperties": false,
   "properties": {
     "name": {
+      "const": "AindVrForaging",
       "default": "AindVrForaging",
       "description": "Name of the task logic",
       "title": "Name",
