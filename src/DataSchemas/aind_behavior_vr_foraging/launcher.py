@@ -5,13 +5,9 @@ from pathlib import Path
 from typing import Callable, Optional
 
 import aind_behavior_experiment_launcher.launcher.behavior_launcher as behavior_launcher
-from aind_behavior_experiment_launcher.apps.app_service import BonsaiApp
-from aind_behavior_experiment_launcher.data_transfer.watchdog_service import WatchdogDataTransferService
-from aind_behavior_experiment_launcher.resource_monitor.resource_monitor_service import (
-    ResourceMonitor,
-    available_storage_constraint_factory,
-    remote_dir_exists_constraint_factory,
-)
+from aind_behavior_experiment_launcher import resource_monitor
+from aind_behavior_experiment_launcher.apps import BonsaiApp
+from aind_behavior_experiment_launcher.data_transfer import aind_watchdog
 from aind_behavior_services.session import AindBehaviorSessionModel
 
 from aind_behavior_vr_foraging.data_mappers import AindDataMapperWrapper
@@ -30,10 +26,10 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
     )
 
     srv.attach_resource_monitor(
-        ResourceMonitor(
+        resource_monitor.ResourceMonitor(
             constrains=[
-                available_storage_constraint_factory(data_dir, 2e11),
-                remote_dir_exists_constraint_factory(Path(remote_dir)),
+                resource_monitor.available_storage_constraint_factory(data_dir, 2e11),
+                resource_monitor.remote_dir_exists_constraint_factory(Path(remote_dir)),
             ]
         )
     )
@@ -59,7 +55,7 @@ def watchdog_data_transfer_factory(
     schedule_time: Optional[datetime.time] = datetime.time(hour=20),
     project_name: Optional[str] = None,
     **watchdog_kwargs,
-) -> Callable[[behavior_launcher.BehaviorLauncher], WatchdogDataTransferService]:
+) -> Callable[[behavior_launcher.BehaviorLauncher], aind_watchdog.WatchdogDataTransferService]:
     return partial(
         _watchdog_data_transfer_factory,
         destination=destination,
@@ -73,7 +69,7 @@ def _watchdog_data_transfer_factory(
     launcher: behavior_launcher.BehaviorLauncher,
     destination: os.PathLike,
     **watchdog_kwargs,
-) -> WatchdogDataTransferService:
+) -> aind_watchdog.WatchdogDataTransferService:
     if launcher.services_factory_manager.data_mapper is None:
         raise ValueError("Data mapper service is not set. Cannot create watchdog.")
     if not isinstance(launcher.services_factory_manager.data_mapper, AindDataMapperWrapper):
@@ -94,10 +90,8 @@ def _watchdog_data_transfer_factory(
     destination = Path(destination)
     if launcher.group_by_subject_log:
         destination = destination / launcher.session_schema.subject
-    else:
-        destination = destination
 
-    watchdog = WatchdogDataTransferService(
+    watchdog = aind_watchdog.WatchdogDataTransferService(
         source=launcher.session_directory,
         aind_session_data_mapper=launcher.services_factory_manager.data_mapper._session_mapper,
         session_name=launcher.session_schema.session_name,
