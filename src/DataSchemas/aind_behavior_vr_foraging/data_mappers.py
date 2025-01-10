@@ -14,11 +14,9 @@ import aind_data_schema.core.rig
 import aind_data_schema.core.session
 import git
 import pydantic
-from aind_behavior_experiment_launcher.data_mappers import data_mapper_service
-from aind_behavior_experiment_launcher.data_mappers.aind_data_schema import (
-    AindDataSchemaRigDataMapper,
-    AindDataSchemaSessionDataMapper,
-)
+from aind_behavior_experiment_launcher.data_mapper import DataMapper
+from aind_behavior_experiment_launcher.data_mapper import aind_data_schema as ads
+from aind_behavior_experiment_launcher.data_mapper import helpers as data_mapper_helpers
 from aind_behavior_experiment_launcher.launcher.behavior_launcher import BehaviorLauncher
 from aind_behavior_experiment_launcher.records.subject import WaterLogResult
 from aind_behavior_services.calibration import Calibration
@@ -40,7 +38,7 @@ logger = logging.getLogger(__name__)
 _DATABASE_DIR = "AindDataSchemaRig"
 
 
-class AindRigDataMapper(AindDataSchemaRigDataMapper):
+class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     def __init__(
         self,
         *,
@@ -87,7 +85,7 @@ class AindRigDataMapper(AindDataSchemaRigDataMapper):
         return self.mapped is not None
 
 
-class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
+class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
         self,
         session_model: AindBehaviorSessionModel,
@@ -167,11 +165,11 @@ class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
         # Populate calibrations:
         calibrations = [cls._mapper_calibration(rig_model.calibration.water_valve)]
         # Populate cameras
-        cameras = data_mapper_service.get_cameras(rig_model, exclude_without_video_writer=True)
+        cameras = data_mapper_helpers.get_cameras(rig_model, exclude_without_video_writer=True)
         # populate devices
         devices = [
             device[0]
-            for device in data_mapper_service.get_fields_of_type(rig_model, AbsRig.HarpDeviceGeneric)
+            for device in data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.HarpDeviceGeneric)
             if device[0]
         ]
         # Populate modalities
@@ -203,7 +201,7 @@ class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
             )
         )
 
-        _olfactory_device = data_mapper_service.get_fields_of_type(rig_model, AbsRig.HarpOlfactometer)
+        _olfactory_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.HarpOlfactometer)
         if len(_olfactory_device) > 0:
             if _olfactory_device[0][0]:
                 stimulation_devices.append(_olfactory_device[0][0])
@@ -233,7 +231,7 @@ class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
                 stimulus_parameters={},
             )
         )
-        _screen_device = data_mapper_service.get_fields_of_type(rig_model, AbsRig.Screen)
+        _screen_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.Screen)
         if len(_screen_device) > 0:
             if _screen_device[0][0]:
                 stimulation_devices.append(_screen_device[0][0])
@@ -317,7 +315,7 @@ class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
                             name="Bonsai",
                             version=f"{repository_remote_url}/blob/{repository_sha}/bonsai/Bonsai.config",
                             url=f"{repository_remote_url}/blob/{repository_sha}/bonsai",
-                            parameters=data_mapper_service.snapshot_bonsai_environment(
+                            parameters=data_mapper_helpers.snapshot_bonsai_environment(
                                 config_file=kwargs.get("bonsai_config_path", Path("./bonsai/bonsai.config"))
                             ),
                         ),
@@ -325,7 +323,7 @@ class AindSessionDataMapper(AindDataSchemaSessionDataMapper):
                             name="Python",
                             version=f"{repository_remote_url}/blob/{repository_sha}/pyproject.toml",
                             url=f"{repository_remote_url}/blob/{repository_sha}",
-                            parameters=data_mapper_service.snapshot_python_environment(),
+                            parameters=data_mapper_helpers.snapshot_python_environment(),
                         ),
                     ],
                     script=aind_data_schema.core.session.Software(
@@ -391,7 +389,7 @@ def aind_rig_data_mapper_factory(
     )
 
 
-class AindDataMapperWrapper(data_mapper_service.DataMapperService):
+class AindDataMapperWrapper(DataMapper):
     def __init__(
         self,
         *,
