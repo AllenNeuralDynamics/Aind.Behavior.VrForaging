@@ -28,7 +28,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 
 [project.optional-dependencies]
 
-launcher = ["aind_behavior_experiment_launcher[aind-services]<=0.3.0"]
+launcher = ["aind_behavior_experiment_launcher[aind-services]<0.4"]
 
 dev = ["aind_behavior_vr_foraging[launcher]",
     "ruff",
