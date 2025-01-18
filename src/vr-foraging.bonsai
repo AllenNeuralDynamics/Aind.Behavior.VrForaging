@@ -7240,7 +7240,7 @@ Item1 as Displacement,
             </Expression>
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Name>CameraVisualizer</gui:Name>
-              <gui:Enabled>false</gui:Enabled>
+              <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:ColumnCount>3</gui:ColumnCount>
               <gui:RowCount>1</gui:RowCount>
