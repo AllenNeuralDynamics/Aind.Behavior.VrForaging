@@ -23,13 +23,12 @@ from aind_behavior_services.calibration import Calibration
 from aind_behavior_services.calibration.olfactometer import OlfactometerChannelType
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file, utcnow
-from pydantic import BaseModel
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
-TFrom = TypeVar("TFrom", bound=Union[BaseModel, dict])
-TTo = TypeVar("TTo", bound=BaseModel)
+TFrom = TypeVar("TFrom", bound=Union[pydantic.BaseModel, dict])
+TTo = TypeVar("TTo", bound=pydantic.BaseModel)
 
 T = TypeVar("T")
 
@@ -343,7 +342,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     @staticmethod
     def _mapper_calibration(calibration: Calibration) -> aind_data_schema.components.devices.Calibration:
-        return aind_data_schema.components.devices.Calibration(
+        return ads.create_encoding_model(aind_data_schema.components.devices.Calibration)(
             device_name=calibration.device_name,
             input=calibration.input.model_dump() if calibration.input else {},
             output=calibration.output.model_dump() if calibration.output else {},
@@ -355,12 +354,12 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
 def coerce_to_aind_data_schema(value: TFrom, target_type: Type[TTo]) -> TTo:
     _normalized_input: dict
-    if isinstance(value, BaseModel):
+    if isinstance(value, pydantic.BaseModel):
         _normalized_input = value.model_dump()
     elif isinstance(value, dict):
         _normalized_input = value
     else:
-        raise ValueError(f"Expected value to be a BaseModel or a dict, got {type(value)}")
+        raise ValueError(f"Expected value to be a pydantic.BaseModel or a dict, got {type(value)}")
     target_fields = target_type.model_fields
     _normalized_input = {k: v for k, v in _normalized_input.items() if k in target_fields}
     return target_type(**_normalized_input)
