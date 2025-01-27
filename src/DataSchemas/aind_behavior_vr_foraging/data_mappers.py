@@ -168,7 +168,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         _out = (
             rig_model.calibration.water_valve.output.model_copy(update={"interval_average": None})
             if rig_model.calibration.water_valve.output
-            else {}
+            else None
         )
         water_calibration = aind_data_schema.core.rig.Calibration(
             calibration_date=rig_model.calibration.water_valve.date
@@ -179,7 +179,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             input=rig_model.calibration.water_valve.input.model_dump()
             if rig_model.calibration.water_valve.input
             else {},
-            output=_out,
+            output=_out.model_dump() if _out else {},
         )
         calibrations = [water_calibration]
 
