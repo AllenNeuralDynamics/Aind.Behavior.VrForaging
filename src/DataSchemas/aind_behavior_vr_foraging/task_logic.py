@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, Dict, List, Literal, Optional, Union
+from typing import Annotated, Dict, List, Literal, Optional, Self, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import BaseModel, Field, NonNegativeFloat, RootModel
+from pydantic import BaseModel, Field, NonNegativeFloat, RootModel, model_validator
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -90,7 +90,7 @@ class OperantLogic(BaseModel):
 
 class PowerFunction(BaseModel):
     function_type: Literal["PowerFunction"] = "PowerFunction"
-    mininum: float = Field(default=0, description="Minimum value of the function")
+    minimum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=1, description="Maximum value of the function")
     a: float = Field(default=1, description="Coefficient a of the function: value = a * pow(b, c * x) + d")
     b: float = Field(
@@ -102,7 +102,7 @@ class PowerFunction(BaseModel):
 
 class LinearFunction(BaseModel):
     function_type: Literal["LinearFunction"] = "LinearFunction"
-    mininum: float = Field(default=0, description="Minimum value of the function")
+    minimum: float = Field(default=0, description="Minimum value of the function")
     maximum: float = Field(default=9999, description="Maximum value of the function")
     a: float = Field(default=1, description="Coefficient a of the function: value = a * x + b")
     b: float = Field(default=0, description="Coefficient b of the function: value = a * x + b")
@@ -113,14 +113,29 @@ class ConstantFunction(BaseModel):
     value: float = Field(default=1, description="Value of the function")
 
 
+class LookupTableFunction(BaseModel):
+    function_type: Literal["LookupTableFunction"] = "LookupTableFunction"
+    lut_keys: List[float] = Field(..., description="List of keys of the lookup table", min_length=1)
+    lut_values: List[float] = Field(..., description="List of values of the lookup table", min_length=1)
+
+    @model_validator(mode="after")
+    def _validate_lut(self) -> Self:
+        if len(self.lut_keys) != len(self.lut_values):
+            raise ValueError("The number of keys and values must be the same.")
+        return self
+
+
 class RewardFunction(RootModel):
-    root: Annotated[Union[ConstantFunction, LinearFunction, PowerFunction], Field(discriminator="function_type")]
+    root: Annotated[
+        Union[ConstantFunction, LinearFunction, PowerFunction, LookupTableFunction],
+        Field(discriminator="function_type"),
+    ]
 
 
 class DepletionRule(str, Enum):
-    ON_REWARD = ("OnReward",)
-    ON_CHOICE = ("OnChoice",)
-    ON_TIME = ("OnTime",)
+    ON_REWARD = "OnReward"
+    ON_CHOICE = "OnChoice"
+    ON_TIME = "OnTime"
     ON_DISTANCE = "OnDistance"
 
 
@@ -136,7 +151,7 @@ class PatchRewardFunction(BaseModel):
         validate_default=True,
     )
     available: RewardFunction = Field(
-        default=LinearFunction(mininum=0, a=-1, b=5),
+        default=LinearFunction(minimum=0, a=-1, b=5),
         description="Determines the total amount of reward available left in the patch. The value is in microliters",
         validate_default=True,
     )
@@ -358,9 +373,63 @@ class TaskModeSettings(RootModel):
     root: Annotated[Union[HabituationSettings, ForagingSettings, DebugSettings], Field(discriminator="task_mode")]
 
 
+class _BlockEndConditionBase(BaseModel):
+    condition_type: str
+
+
+class BlockEndConditionDuration(_BlockEndConditionBase):
+    condition_type: Literal["Duration"] = "Duration"
+    value: distributions.Distribution = Field(..., description="Time after which the block ends.")
+
+
+class BlockEndConditionDistance(_BlockEndConditionBase):
+    condition_type: Literal["Distance"] = "Distance"
+    value: distributions.Distribution = Field(..., description="Distance after which the block ends.")
+
+
+class BlockEndConditionChoice(_BlockEndConditionBase):
+    condition_type: Literal["Choice"] = "Choice"
+    value: distributions.Distribution = Field(..., description="Number of choices after which the block ends.")
+
+
+class BlockEndConditionReward(_BlockEndConditionBase):
+    condition_type: Literal["Reward"] = "Reward"
+    value: distributions.Distribution = Field(..., description="Number of rewards after which the block ends.")
+
+
+class BlockEndConditionPatchCount(_BlockEndConditionBase):
+    condition_type: Literal["PatchCount"] = "PatchCount"
+    value: distributions.Distribution = Field(..., description="Number of patches after which the block will end.")
+
+
+class BlockEndCondition(RootModel):
+    root: Annotated[
+        Union[
+            BlockEndConditionDuration,
+            BlockEndConditionDistance,
+            BlockEndConditionChoice,
+            BlockEndConditionReward,
+            BlockEndConditionPatchCount,
+        ],
+        Field(discriminator="condition_type"),
+    ]
+
+
+class Block(BaseModel):
+    environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
+    end_conditions: List[BlockEndCondition] = Field(
+        [], description="List of end conditions that must be true for the block to end."
+    )
+
+
+class BlockStructure(BaseModel):
+    blocks: List[Block] = Field(..., description="Statistics of the environment", min_length=1)
+    sampling_mode: Literal["Random", "Sequential"] = Field("Sequential", description="Sampling mode of the blocks.")
+
+
 class AindVrForagingTaskParameters(TaskParameters):
     updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
-    environment_statistics: EnvironmentStatistics = Field(..., description="Statistics of the environment")
+    environment: BlockStructure = Field(..., description="Statistics of the environment")
     task_mode_settings: TaskModeSettings = Field(
         default=ForagingSettings(), description="Settings of the task stage", validate_default=True
     )
@@ -369,5 +438,5 @@ class AindVrForagingTaskParameters(TaskParameters):
 
 class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     version: Literal[__version__] = __version__
-    name: str = Field(default="AindVrForaging", description="Name of the task logic", frozen=True)
+    name: Literal["AindVrForaging"] = Field(default="AindVrForaging", description="Name of the task logic", frozen=True)
     task_parameters: AindVrForagingTaskParameters = Field(..., description="Parameters of the task logic")

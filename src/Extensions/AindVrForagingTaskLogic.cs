@@ -17,9 +17,11 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private double? _rngSeed;
     
+        private string _aindBehaviorServicesPkgVersion = "0.9.0";
+    
         private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     
-        private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
+        private BlockStructure _environment = new BlockStructure();
     
         private TaskModeSettings _taskModeSettings;
     
@@ -32,8 +34,9 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected AindVrForagingTaskParameters(AindVrForagingTaskParameters other)
         {
             _rngSeed = other._rngSeed;
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
             _updaters = other._updaters;
-            _environmentStatistics = other._environmentStatistics;
+            _environment = other._environment;
             _taskModeSettings = other._taskModeSettings;
             _operationControl = other._operationControl;
         }
@@ -53,6 +56,19 @@ namespace AindVrForagingDataSchema.TaskLogic
             set
             {
                 _rngSeed = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
+        {
+            get
+            {
+                return _aindBehaviorServicesPkgVersion;
+            }
+            set
+            {
+                _aindBehaviorServicesPkgVersion = value;
             }
         }
     
@@ -78,17 +94,17 @@ namespace AindVrForagingDataSchema.TaskLogic
         /// Statistics of the environment
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("environment_statistics", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("environment", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
-        public EnvironmentStatistics EnvironmentStatistics
+        public BlockStructure Environment
         {
             get
             {
-                return _environmentStatistics;
+                return _environment;
             }
             set
             {
-                _environmentStatistics = value;
+                _environment = value;
             }
         }
     
@@ -141,8 +157,9 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
+            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
             stringBuilder.Append("updaters = " + _updaters + ", ");
-            stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
+            stringBuilder.Append("environment = " + _environment + ", ");
             stringBuilder.Append("task_mode_settings = " + _taskModeSettings + ", ");
             stringBuilder.Append("operation_control = " + _operationControl);
             return true;
@@ -662,6 +679,522 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Block
+    {
+    
+        private EnvironmentStatistics _environmentStatistics = new EnvironmentStatistics();
+    
+        private System.Collections.Generic.List<BlockEndCondition> _endConditions = new System.Collections.Generic.List<BlockEndCondition>();
+    
+        public Block()
+        {
+        }
+    
+        protected Block(Block other)
+        {
+            _environmentStatistics = other._environmentStatistics;
+            _endConditions = other._endConditions;
+        }
+    
+        /// <summary>
+        /// Statistics of the environment
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("environment_statistics", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
+        public EnvironmentStatistics EnvironmentStatistics
+        {
+            get
+            {
+                return _environmentStatistics;
+            }
+            set
+            {
+                _environmentStatistics = value;
+            }
+        }
+    
+        /// <summary>
+        /// List of end conditions that must be true for the block to end.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("end_conditions")]
+        [System.ComponentModel.DescriptionAttribute("List of end conditions that must be true for the block to end.")]
+        public System.Collections.Generic.List<BlockEndCondition> EndConditions
+        {
+            get
+            {
+                return _endConditions;
+            }
+            set
+            {
+                _endConditions = value;
+            }
+        }
+    
+        public System.IObservable<Block> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Block(this)));
+        }
+    
+        public System.IObservable<Block> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Block(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
+            stringBuilder.Append("end_conditions = " + _endConditions);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "condition_type")]
+    [JsonInheritanceAttribute("Duration", typeof(BlockEndConditionDuration))]
+    [JsonInheritanceAttribute("Distance", typeof(BlockEndConditionDistance))]
+    [JsonInheritanceAttribute("Choice", typeof(BlockEndConditionChoice))]
+    [JsonInheritanceAttribute("Reward", typeof(BlockEndConditionReward))]
+    [JsonInheritanceAttribute("PatchCount", typeof(BlockEndConditionPatchCount))]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BlockEndCondition
+    {
+    
+        public BlockEndCondition()
+        {
+        }
+    
+        protected BlockEndCondition(BlockEndCondition other)
+        {
+        }
+    
+        public System.IObservable<BlockEndCondition> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndCondition(this)));
+        }
+    
+        public System.IObservable<BlockEndCondition> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndCondition(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BlockEndConditionChoice : BlockEndCondition
+    {
+    
+        private Distribution _value;
+    
+        public BlockEndConditionChoice()
+        {
+        }
+    
+        protected BlockEndConditionChoice(BlockEndConditionChoice other) : 
+                base(other)
+        {
+            _value = other._value;
+        }
+    
+        /// <summary>
+        /// Number of choices after which the block ends.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Number of choices after which the block ends.")]
+        public Distribution Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+    
+        public System.IObservable<BlockEndConditionChoice> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionChoice(this)));
+        }
+    
+        public System.IObservable<BlockEndConditionChoice> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionChoice(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("value = " + _value);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BlockEndConditionDistance : BlockEndCondition
+    {
+    
+        private Distribution _value;
+    
+        public BlockEndConditionDistance()
+        {
+        }
+    
+        protected BlockEndConditionDistance(BlockEndConditionDistance other) : 
+                base(other)
+        {
+            _value = other._value;
+        }
+    
+        /// <summary>
+        /// Distance after which the block ends.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Distance after which the block ends.")]
+        public Distribution Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+    
+        public System.IObservable<BlockEndConditionDistance> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionDistance(this)));
+        }
+    
+        public System.IObservable<BlockEndConditionDistance> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionDistance(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("value = " + _value);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BlockEndConditionDuration : BlockEndCondition
+    {
+    
+        private Distribution _value;
+    
+        public BlockEndConditionDuration()
+        {
+        }
+    
+        protected BlockEndConditionDuration(BlockEndConditionDuration other) : 
+                base(other)
+        {
+            _value = other._value;
+        }
+    
+        /// <summary>
+        /// Time after which the block ends.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Time after which the block ends.")]
+        public Distribution Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+    
+        public System.IObservable<BlockEndConditionDuration> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionDuration(this)));
+        }
+    
+        public System.IObservable<BlockEndConditionDuration> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionDuration(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("value = " + _value);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BlockEndConditionPatchCount : BlockEndCondition
+    {
+    
+        private Distribution _value;
+    
+        public BlockEndConditionPatchCount()
+        {
+        }
+    
+        protected BlockEndConditionPatchCount(BlockEndConditionPatchCount other) : 
+                base(other)
+        {
+            _value = other._value;
+        }
+    
+        /// <summary>
+        /// Number of patches after which the block will end.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Number of patches after which the block will end.")]
+        public Distribution Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+    
+        public System.IObservable<BlockEndConditionPatchCount> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionPatchCount(this)));
+        }
+    
+        public System.IObservable<BlockEndConditionPatchCount> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionPatchCount(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("value = " + _value);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BlockEndConditionReward : BlockEndCondition
+    {
+    
+        private Distribution _value;
+    
+        public BlockEndConditionReward()
+        {
+        }
+    
+        protected BlockEndConditionReward(BlockEndConditionReward other) : 
+                base(other)
+        {
+            _value = other._value;
+        }
+    
+        /// <summary>
+        /// Number of rewards after which the block ends.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Number of rewards after which the block ends.")]
+        public Distribution Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+    
+        public System.IObservable<BlockEndConditionReward> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionReward(this)));
+        }
+    
+        public System.IObservable<BlockEndConditionReward> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionReward(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("value = " + _value);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BlockStructure
+    {
+    
+        private System.Collections.Generic.List<Block> _blocks = new System.Collections.Generic.List<Block>();
+    
+        private BlockStructureSamplingMode _samplingMode = AindVrForagingDataSchema.TaskLogic.BlockStructureSamplingMode.Sequential;
+    
+        public BlockStructure()
+        {
+        }
+    
+        protected BlockStructure(BlockStructure other)
+        {
+            _blocks = other._blocks;
+            _samplingMode = other._samplingMode;
+        }
+    
+        /// <summary>
+        /// Statistics of the environment
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("blocks", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
+        public System.Collections.Generic.List<Block> Blocks
+        {
+            get
+            {
+                return _blocks;
+            }
+            set
+            {
+                _blocks = value;
+            }
+        }
+    
+        /// <summary>
+        /// Sampling mode of the blocks.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("sampling_mode")]
+        [System.ComponentModel.DescriptionAttribute("Sampling mode of the blocks.")]
+        public BlockStructureSamplingMode SamplingMode
+        {
+            get
+            {
+                return _samplingMode;
+            }
+            set
+            {
+                _samplingMode = value;
+            }
+        }
+    
+        public System.IObservable<BlockStructure> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockStructure(this)));
+        }
+    
+        public System.IObservable<BlockStructure> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlockStructure(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("blocks = " + _blocks + ", ");
+            stringBuilder.Append("sampling_mode = " + _samplingMode);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class ConstantFunction : RewardFunction
     {
     
@@ -811,9 +1344,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     }
 
 
-    /// <summary>
-    /// Available distributions
-    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [JsonInheritanceAttribute("Scalar", typeof(Scalar))]
@@ -825,7 +1355,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [JsonInheritanceAttribute("Binomial", typeof(BinomialDistribution))]
     [JsonInheritanceAttribute("Beta", typeof(BetaDistribution))]
     [JsonInheritanceAttribute("Gamma", typeof(GammaDistribution))]
-    [System.ComponentModel.DescriptionAttribute("Available distributions")]
+    [JsonInheritanceAttribute("Pdf", typeof(PdfDistribution))]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Distribution
@@ -1487,7 +2017,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class LinearFunction : RewardFunction
     {
     
-        private double _mininum = 0D;
+        private double _minimum = 0D;
     
         private double _maximum = 9999D;
     
@@ -1502,7 +2032,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected LinearFunction(LinearFunction other) : 
                 base(other)
         {
-            _mininum = other._mininum;
+            _minimum = other._minimum;
             _maximum = other._maximum;
             _a = other._a;
             _b = other._b;
@@ -1511,17 +2041,17 @@ namespace AindVrForagingDataSchema.TaskLogic
         /// <summary>
         /// Minimum value of the function
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("mininum")]
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
         [System.ComponentModel.DescriptionAttribute("Minimum value of the function")]
-        public double Mininum
+        public double Minimum
         {
             get
             {
-                return _mininum;
+                return _minimum;
             }
             set
             {
-                _mininum = value;
+                _minimum = value;
             }
         }
     
@@ -1592,7 +2122,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("mininum = " + _mininum + ", ");
+            stringBuilder.Append("minimum = " + _minimum + ", ");
             stringBuilder.Append("maximum = " + _maximum + ", ");
             stringBuilder.Append("a = " + _a + ", ");
             stringBuilder.Append("b = " + _b);
@@ -1802,6 +2332,86 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
             stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class LookupTableFunction : RewardFunction
+    {
+    
+        private System.Collections.Generic.List<double> _lutKeys = new System.Collections.Generic.List<double>();
+    
+        private System.Collections.Generic.List<double> _lutValues = new System.Collections.Generic.List<double>();
+    
+        public LookupTableFunction()
+        {
+        }
+    
+        protected LookupTableFunction(LookupTableFunction other) : 
+                base(other)
+        {
+            _lutKeys = other._lutKeys;
+            _lutValues = other._lutValues;
+        }
+    
+        /// <summary>
+        /// List of keys of the lookup table
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lut_keys", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("List of keys of the lookup table")]
+        public System.Collections.Generic.List<double> LutKeys
+        {
+            get
+            {
+                return _lutKeys;
+            }
+            set
+            {
+                _lutKeys = value;
+            }
+        }
+    
+        /// <summary>
+        /// List of values of the lookup table
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lut_values", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("List of values of the lookup table")]
+        public System.Collections.Generic.List<double> LutValues
+        {
+            get
+            {
+                return _lutValues;
+            }
+            set
+            {
+                _lutValues = value;
+            }
+        }
+    
+        public System.IObservable<LookupTableFunction> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LookupTableFunction(this)));
+        }
+    
+        public System.IObservable<LookupTableFunction> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new LookupTableFunction(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("lut_keys = " + _lutKeys + ", ");
+            stringBuilder.Append("lut_values = " + _lutValues);
+            return true;
         }
     }
 
@@ -3139,6 +3749,213 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PdfDistribution : Distribution
+    {
+    
+        private PdfDistributionParameters _distributionParameters;
+    
+        private TruncationParameters _truncationParameters;
+    
+        private ScalingParameters _scalingParameters;
+    
+        public PdfDistribution()
+        {
+        }
+    
+        protected PdfDistribution(PdfDistribution other) : 
+                base(other)
+        {
+            _distributionParameters = other._distributionParameters;
+            _truncationParameters = other._truncationParameters;
+            _scalingParameters = other._scalingParameters;
+        }
+    
+        /// <summary>
+        /// Parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("distribution_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Parameters of the distribution")]
+        public PdfDistributionParameters DistributionParameters
+        {
+            get
+            {
+                return _distributionParameters;
+            }
+            set
+            {
+                _distributionParameters = value;
+            }
+        }
+    
+        /// <summary>
+        /// Truncation parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncation_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Truncation parameters of the distribution")]
+        public TruncationParameters TruncationParameters
+        {
+            get
+            {
+                return _truncationParameters;
+            }
+            set
+            {
+                _truncationParameters = value;
+            }
+        }
+    
+        /// <summary>
+        /// Scaling parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scaling_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Scaling parameters of the distribution")]
+        public ScalingParameters ScalingParameters
+        {
+            get
+            {
+                return _scalingParameters;
+            }
+            set
+            {
+                _scalingParameters = value;
+            }
+        }
+    
+        public System.IObservable<PdfDistribution> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PdfDistribution(this)));
+        }
+    
+        public System.IObservable<PdfDistribution> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PdfDistribution(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PdfDistributionParameters
+    {
+    
+        private string _family = "Pdf";
+    
+        private System.Collections.Generic.List<double> _pdf = new System.Collections.Generic.List<double>();
+    
+        private System.Collections.Generic.List<double> _index = new System.Collections.Generic.List<double>();
+    
+        public PdfDistributionParameters()
+        {
+        }
+    
+        protected PdfDistributionParameters(PdfDistributionParameters other)
+        {
+            _family = other._family;
+            _pdf = other._pdf;
+            _index = other._index;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        /// <summary>
+        /// The probability density function
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("pdf")]
+        [System.ComponentModel.DescriptionAttribute("The probability density function")]
+        public System.Collections.Generic.List<double> Pdf
+        {
+            get
+            {
+                return _pdf;
+            }
+            set
+            {
+                _pdf = value;
+            }
+        }
+    
+        /// <summary>
+        /// The index of the probability density function
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("index")]
+        [System.ComponentModel.DescriptionAttribute("The index of the probability density function")]
+        public System.Collections.Generic.List<double> Index
+        {
+            get
+            {
+                return _index;
+            }
+            set
+            {
+                _index = value;
+            }
+        }
+    
+        public System.IObservable<PdfDistributionParameters> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PdfDistributionParameters(this)));
+        }
+    
+        public System.IObservable<PdfDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PdfDistributionParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("family = " + _family + ", ");
+            stringBuilder.Append("pdf = " + _pdf + ", ");
+            stringBuilder.Append("index = " + _index);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class PoissonDistribution : Distribution
     {
     
@@ -3457,7 +4274,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     public partial class PowerFunction : RewardFunction
     {
     
-        private double _mininum = 0D;
+        private double _minimum = 0D;
     
         private double _maximum = 1D;
     
@@ -3476,7 +4293,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         protected PowerFunction(PowerFunction other) : 
                 base(other)
         {
-            _mininum = other._mininum;
+            _minimum = other._minimum;
             _maximum = other._maximum;
             _a = other._a;
             _b = other._b;
@@ -3487,17 +4304,17 @@ namespace AindVrForagingDataSchema.TaskLogic
         /// <summary>
         /// Minimum value of the function
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("mininum")]
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
         [System.ComponentModel.DescriptionAttribute("Minimum value of the function")]
-        public double Mininum
+        public double Minimum
         {
             get
             {
-                return _mininum;
+                return _minimum;
             }
             set
             {
-                _mininum = value;
+                _minimum = value;
             }
         }
     
@@ -3602,7 +4419,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("mininum = " + _mininum + ", ");
+            stringBuilder.Append("minimum = " + _minimum + ", ");
             stringBuilder.Append("maximum = " + _maximum + ", ");
             stringBuilder.Append("a = " + _a + ", ");
             stringBuilder.Append("b = " + _b + ", ");
@@ -3684,6 +4501,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [JsonInheritanceAttribute("ConstantFunction", typeof(ConstantFunction))]
     [JsonInheritanceAttribute("LinearFunction", typeof(LinearFunction))]
     [JsonInheritanceAttribute("PowerFunction", typeof(PowerFunction))]
+    [JsonInheritanceAttribute("LookupTableFunction", typeof(LookupTableFunction))]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class RewardFunction
@@ -5603,7 +6421,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
     
-        private string _version = "0.4.0";
+        private string _version = "0.5.0";
     
         private string _stageName;
     
@@ -5734,6 +6552,19 @@ namespace AindVrForagingDataSchema.TaskLogic
             stringBuilder.Append("}");
             return stringBuilder.ToString();
         }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum BlockStructureSamplingMode
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Random")]
+        Random = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Sequential")]
+        Sequential = 1,
     }
 
 
@@ -5965,6 +6796,50 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDuration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDistance>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionChoice>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionReward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionPatchCount>))]
+    public partial class MatchBlockEndCondition : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(BlockEndCondition);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchBlockEndCondition),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<BlockEndCondition> source)
+            where TResult : BlockEndCondition
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<BlockEndCondition>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
@@ -5974,6 +6849,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistribution>))]
     public partial class MatchDistribution : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -6016,6 +6892,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ConstantFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LinearFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PowerFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LookupTableFunction>))]
     public partial class MatchRewardFunction : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -6139,6 +7016,46 @@ namespace AindVrForagingDataSchema.TaskLogic
             return Process<BinomialDistributionParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Block> source)
+        {
+            return Process<Block>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlockEndCondition> source)
+        {
+            return Process<BlockEndCondition>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlockEndConditionChoice> source)
+        {
+            return Process<BlockEndConditionChoice>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlockEndConditionDistance> source)
+        {
+            return Process<BlockEndConditionDistance>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlockEndConditionDuration> source)
+        {
+            return Process<BlockEndConditionDuration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlockEndConditionPatchCount> source)
+        {
+            return Process<BlockEndConditionPatchCount>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlockEndConditionReward> source)
+        {
+            return Process<BlockEndConditionReward>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlockStructure> source)
+        {
+            return Process<BlockStructure>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<ConstantFunction> source)
         {
             return Process<ConstantFunction>(source);
@@ -6204,6 +7121,11 @@ namespace AindVrForagingDataSchema.TaskLogic
             return Process<LogNormalDistributionParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<LookupTableFunction> source)
+        {
+            return Process<LookupTableFunction>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
         {
             return Process<MovableSpoutControl>(source);
@@ -6257,6 +7179,16 @@ namespace AindVrForagingDataSchema.TaskLogic
         public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
         {
             return Process<PatchStatistics>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PdfDistribution> source)
+        {
+            return Process<PdfDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PdfDistributionParameters> source)
+        {
+            return Process<PdfDistributionParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<PoissonDistribution> source)
@@ -6404,6 +7336,14 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistributionParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Block>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndCondition>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionChoice>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDistance>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDuration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionPatchCount>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionReward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockStructure>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ConstantFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DebugSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Distribution>))]
@@ -6417,6 +7357,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LinearFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistributionParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LookupTableFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistributionParameters>))]
@@ -6428,6 +7369,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]

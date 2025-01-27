@@ -15,7 +15,9 @@ namespace AindVrForagingDataSchema.Session
     public partial class AindBehaviorSessionModel
     {
     
-        private string _version = "0.2.0";
+        private string _aindBehaviorServicesPkgVersion = "0.9.0";
+    
+        private string _version = "0.3.0";
     
         private string _experiment;
     
@@ -25,7 +27,7 @@ namespace AindVrForagingDataSchema.Session
     
         private string _rootPath;
     
-        private string _remotePath;
+        private string _sessionName;
     
         private string _subject;
     
@@ -45,18 +47,32 @@ namespace AindVrForagingDataSchema.Session
     
         protected AindBehaviorSessionModel(AindBehaviorSessionModel other)
         {
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
             _version = other._version;
             _experiment = other._experiment;
             _experimenter = other._experimenter;
             _date = other._date;
             _rootPath = other._rootPath;
-            _remotePath = other._remotePath;
+            _sessionName = other._sessionName;
             _subject = other._subject;
             _experimentVersion = other._experimentVersion;
             _notes = other._notes;
             _commitHash = other._commitHash;
             _allowDirtyRepo = other._allowDirtyRepo;
             _skipHardwareValidation = other._skipHardwareValidation;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
+        {
+            get
+            {
+                return _aindBehaviorServicesPkgVersion;
+            }
+            set
+            {
+                _aindBehaviorServicesPkgVersion = value;
+            }
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("version")]
@@ -143,20 +159,19 @@ namespace AindVrForagingDataSchema.Session
         }
     
         /// <summary>
-        /// Remote path where data will be attempted to be copied to after experiment is done
+        /// Name of the session. This will be used to create a folder in the root path.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("remote_path")]
-        [System.ComponentModel.DescriptionAttribute("Remote path where data will be attempted to be copied to after experiment is done" +
-            "")]
-        public string RemotePath
+        [Newtonsoft.Json.JsonPropertyAttribute("session_name")]
+        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path.")]
+        public string SessionName
         {
             get
             {
-                return _remotePath;
+                return _sessionName;
             }
             set
             {
-                _remotePath = value;
+                _sessionName = value;
             }
         }
     
@@ -274,12 +289,13 @@ namespace AindVrForagingDataSchema.Session
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
+            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
             stringBuilder.Append("version = " + _version + ", ");
             stringBuilder.Append("experiment = " + _experiment + ", ");
             stringBuilder.Append("experimenter = " + _experimenter + ", ");
             stringBuilder.Append("date = " + _date + ", ");
             stringBuilder.Append("root_path = " + _rootPath + ", ");
-            stringBuilder.Append("remote_path = " + _remotePath + ", ");
+            stringBuilder.Append("session_name = " + _sessionName + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
             stringBuilder.Append("experiment_version = " + _experimentVersion + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
