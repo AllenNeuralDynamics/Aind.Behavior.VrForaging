@@ -162,7 +162,27 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         repository_relative_script_path = Path(script_path).resolve().relative_to(repository.working_dir)
 
         # Populate calibrations:
-        calibrations = [cls._mapper_calibration(rig_model.calibration.water_valve)]
+        # calibrations = [cls._mapper_calibration(rig_model.calibration.water_valve)]
+
+        # TODO: Hack until someone solves https://github.com/AllenNeuralDynamics/aind-data-schema/issues/1248
+        _out = (
+            rig_model.calibration.water_valve.output.model_copy(update={"interval_average": None})
+            if rig_model.calibration.water_valve.output
+            else {}
+        )
+        water_calibration = aind_data_schema.core.rig.Calibration(
+            calibration_date=rig_model.calibration.water_valve.date
+            if rig_model.calibration.water_valve.date
+            else utcnow(),
+            device_name=rig_model.calibration.water_valve.device_name,
+            description=rig_model.calibration.water_valve.description,
+            input=rig_model.calibration.water_valve.input.model_dump()
+            if rig_model.calibration.water_valve.input
+            else {},
+            output=_out,
+        )
+        calibrations = [water_calibration]
+
         # Populate cameras
         cameras = data_mapper_helpers.get_cameras(rig_model, exclude_without_video_writer=True)
         # populate devices
