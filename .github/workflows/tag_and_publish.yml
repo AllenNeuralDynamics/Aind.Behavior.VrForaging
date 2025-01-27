@@ -1,0 +1,10 @@
+name: Tag and Publish
+
+on:
+    workflow_dispatch: {}
+
+jobs:
+  tag-and-publish:
+    uses : AllenNeuralDynamics/Aind.Behavior.GitHubActions/.github/workflows/python-package-tag-and-publish.yml@main
+    with:
+        publish: false

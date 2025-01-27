@@ -16,6 +16,12 @@
           ],
           "title": "Rng Seed"
         },
+        "aind_behavior_services_pkg_version": {
+          "default": "0.9.0",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
         "updaters": {
           "additionalProperties": {
             "$ref": "#/definitions/NumericalUpdater"
@@ -24,36 +30,24 @@
           "title": "Updaters",
           "type": "object"
         },
-        "environment_statistics": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/EnvironmentStatistics"
-            }
-          ],
+        "environment": {
+          "$ref": "#/definitions/BlockStructure",
           "description": "Statistics of the environment"
         },
         "task_mode_settings": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/TaskModeSettings"
-            }
-          ],
+          "$ref": "#/definitions/TaskModeSettings",
           "default": {
             "task_mode": "FORAGING"
           },
           "description": "Settings of the task stage"
         },
         "operation_control": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/OperationControl"
-            }
-          ],
+          "$ref": "#/definitions/OperationControl",
           "description": "Control of the operation"
         }
       },
       "required": [
-        "environment_statistics",
+        "environment",
         "operation_control"
       ],
       "title": "AindVrForagingTaskParameters",
@@ -88,11 +82,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/BetaDistributionParameters"
-            }
-          ],
+          "$ref": "#/definitions/BetaDistributionParameters",
           "default": {
             "family": "Beta",
             "alpha": 5.0,
@@ -163,11 +153,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/BinomialDistributionParameters"
-            }
-          ],
+          "$ref": "#/definitions/BinomialDistributionParameters",
           "default": {
             "family": "Binomial",
             "n": 1,
@@ -230,6 +216,181 @@
       "title": "BinomialDistributionParameters",
       "type": "object"
     },
+    "Block": {
+      "properties": {
+        "environment_statistics": {
+          "$ref": "#/definitions/EnvironmentStatistics",
+          "description": "Statistics of the environment"
+        },
+        "end_conditions": {
+          "default": [],
+          "description": "List of end conditions that must be true for the block to end.",
+          "items": {
+            "$ref": "#/definitions/BlockEndCondition"
+          },
+          "title": "End Conditions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "environment_statistics"
+      ],
+      "title": "Block",
+      "type": "object"
+    },
+    "BlockEndCondition": {
+      "discriminator": {
+        "mapping": {
+          "Choice": "#/definitions/BlockEndConditionChoice",
+          "Distance": "#/definitions/BlockEndConditionDistance",
+          "Duration": "#/definitions/BlockEndConditionDuration",
+          "PatchCount": "#/definitions/BlockEndConditionPatchCount",
+          "Reward": "#/definitions/BlockEndConditionReward"
+        },
+        "propertyName": "condition_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BlockEndConditionDuration"
+        },
+        {
+          "$ref": "#/definitions/BlockEndConditionDistance"
+        },
+        {
+          "$ref": "#/definitions/BlockEndConditionChoice"
+        },
+        {
+          "$ref": "#/definitions/BlockEndConditionReward"
+        },
+        {
+          "$ref": "#/definitions/BlockEndConditionPatchCount"
+        }
+      ],
+      "title": "BlockEndCondition"
+    },
+    "BlockEndConditionChoice": {
+      "properties": {
+        "condition_type": {
+          "const": "Choice",
+          "default": "Choice",
+          "title": "Condition Type",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/definitions/Distribution",
+          "description": "Number of choices after which the block ends."
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "BlockEndConditionChoice",
+      "type": "object"
+    },
+    "BlockEndConditionDistance": {
+      "properties": {
+        "condition_type": {
+          "const": "Distance",
+          "default": "Distance",
+          "title": "Condition Type",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/definitions/Distribution",
+          "description": "Distance after which the block ends."
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "BlockEndConditionDistance",
+      "type": "object"
+    },
+    "BlockEndConditionDuration": {
+      "properties": {
+        "condition_type": {
+          "const": "Duration",
+          "default": "Duration",
+          "title": "Condition Type",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/definitions/Distribution",
+          "description": "Time after which the block ends."
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "BlockEndConditionDuration",
+      "type": "object"
+    },
+    "BlockEndConditionPatchCount": {
+      "properties": {
+        "condition_type": {
+          "const": "PatchCount",
+          "default": "PatchCount",
+          "title": "Condition Type",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/definitions/Distribution",
+          "description": "Number of patches after which the block will end."
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "BlockEndConditionPatchCount",
+      "type": "object"
+    },
+    "BlockEndConditionReward": {
+      "properties": {
+        "condition_type": {
+          "const": "Reward",
+          "default": "Reward",
+          "title": "Condition Type",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/definitions/Distribution",
+          "description": "Number of rewards after which the block ends."
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "BlockEndConditionReward",
+      "type": "object"
+    },
+    "BlockStructure": {
+      "properties": {
+        "blocks": {
+          "description": "Statistics of the environment",
+          "items": {
+            "$ref": "#/definitions/Block"
+          },
+          "minItems": 1,
+          "title": "Blocks",
+          "type": "array"
+        },
+        "sampling_mode": {
+          "default": "Sequential",
+          "description": "Sampling mode of the blocks.",
+          "enum": [
+            "Random",
+            "Sequential"
+          ],
+          "title": "Sampling Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "blocks"
+      ],
+      "title": "BlockStructure",
+      "type": "object"
+    },
     "ConstantFunction": {
       "properties": {
         "function_type": {
@@ -290,7 +451,6 @@
       "type": "string"
     },
     "Distribution": {
-      "description": "Available distributions",
       "discriminator": {
         "mapping": {
           "Beta": "#/definitions/BetaDistribution",
@@ -299,6 +459,7 @@
           "Gamma": "#/definitions/GammaDistribution",
           "LogNormal": "#/definitions/LogNormalDistribution",
           "Normal": "#/definitions/NormalDistribution",
+          "Pdf": "#/definitions/PdfDistribution",
           "Poisson": "#/definitions/PoissonDistribution",
           "Scalar": "#/definitions/Scalar",
           "Uniform": "#/definitions/UniformDistribution"
@@ -332,9 +493,11 @@
         },
         {
           "$ref": "#/definitions/GammaDistribution"
+        },
+        {
+          "$ref": "#/definitions/PdfDistribution"
         }
-      ],
-      "title": "Distribution"
+      ]
     },
     "EnvironmentStatistics": {
       "properties": {
@@ -394,11 +557,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ExponentialDistributionParameters"
-            }
-          ],
+          "$ref": "#/definitions/ExponentialDistributionParameters",
           "default": {
             "family": "Exponential",
             "rate": 0.0
@@ -473,11 +632,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/GammaDistributionParameters"
-            }
-          ],
+          "$ref": "#/definitions/GammaDistributionParameters",
           "default": {
             "family": "Gamma",
             "shape": 1.0,
@@ -548,19 +703,11 @@
           "type": "string"
         },
         "distance_to_reward": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Distribution"
-            }
-          ],
+          "$ref": "#/definitions/Distribution",
           "description": "Distance (cm) to the reward"
         },
         "render_specification": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RenderSpecification"
-            }
-          ],
+          "$ref": "#/definitions/RenderSpecification",
           "default": {
             "contrast": null
           },
@@ -581,10 +728,10 @@
           "title": "Function Type",
           "type": "string"
         },
-        "mininum": {
+        "minimum": {
           "default": 0,
           "description": "Minimum value of the function",
-          "title": "Mininum",
+          "title": "Minimum",
           "type": "number"
         },
         "maximum": {
@@ -618,11 +765,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/LogNormalDistributionParameters"
-            }
-          ],
+          "$ref": "#/definitions/LogNormalDistributionParameters",
           "default": {
             "family": "LogNormal",
             "mean": 0.0,
@@ -682,6 +825,40 @@
       "title": "LogNormalDistributionParameters",
       "type": "object"
     },
+    "LookupTableFunction": {
+      "properties": {
+        "function_type": {
+          "const": "LookupTableFunction",
+          "default": "LookupTableFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "lut_keys": {
+          "description": "List of keys of the lookup table",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Lut Keys",
+          "type": "array"
+        },
+        "lut_values": {
+          "description": "List of values of the lookup table",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Lut Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "lut_keys",
+        "lut_values"
+      ],
+      "title": "LookupTableFunction",
+      "type": "object"
+    },
     "MovableSpoutControl": {
       "properties": {
         "enabled": {
@@ -717,11 +894,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/NormalDistributionParameters"
-            }
-          ],
+          "$ref": "#/definitions/NormalDistributionParameters",
           "default": {
             "family": "Normal",
             "mean": 0.0,
@@ -784,20 +957,12 @@
     "NumericalUpdater": {
       "properties": {
         "operation": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/NumericalUpdaterOperation"
-            }
-          ],
+          "$ref": "#/definitions/NumericalUpdaterOperation",
           "default": "None",
           "description": "Operation to perform on the parameter"
         },
         "parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/NumericalUpdaterParameters"
-            }
-          ],
+          "$ref": "#/definitions/NumericalUpdaterParameters",
           "default": {
             "initial_value": 0.0,
             "increment": 0.0,
@@ -953,11 +1118,7 @@
     "OperationControl": {
       "properties": {
         "movable_spout_control": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/MovableSpoutControl"
-            }
-          ],
+          "$ref": "#/definitions/MovableSpoutControl",
           "default": {
             "enabled": false,
             "time_to_collect_after_reward": 1.0,
@@ -966,11 +1127,7 @@
           "description": "Control of the movable spout"
         },
         "odor_control": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/OdorControl"
-            }
-          ],
+          "$ref": "#/definitions/OdorControl",
           "default": {
             "valve_max_open_time": 10.0,
             "target_total_flow": 1000.0,
@@ -980,11 +1137,7 @@
           "description": "Control of the odor"
         },
         "position_control": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/PositionControl"
-            }
-          ],
+          "$ref": "#/definitions/PositionControl",
           "default": {
             "gain": {
               "x": 1.0,
@@ -1002,11 +1155,7 @@
           "description": "Control of the position"
         },
         "audio_control": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/AudioControl"
-            }
-          ],
+          "$ref": "#/definitions/AudioControl",
           "default": {
             "duration": 0.2,
             "frequency": 1000.0
@@ -1020,11 +1169,7 @@
     "PatchRewardFunction": {
       "properties": {
         "amount": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RewardFunction"
-            }
-          ],
+          "$ref": "#/definitions/RewardFunction",
           "default": {
             "function_type": "ConstantFunction",
             "value": 1.0
@@ -1032,11 +1177,7 @@
           "description": "Determines the amount of reward to be delivered. The value is in microliters"
         },
         "probability": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RewardFunction"
-            }
-          ],
+          "$ref": "#/definitions/RewardFunction",
           "default": {
             "function_type": "ConstantFunction",
             "value": 1.0
@@ -1044,14 +1185,10 @@
           "description": "Determines the probability that a reward will be delivered"
         },
         "available": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RewardFunction"
-            }
-          ],
+          "$ref": "#/definitions/RewardFunction",
           "default": {
             "function_type": "LinearFunction",
-            "mininum": 0.0,
+            "minimum": 0.0,
             "maximum": 9999.0,
             "a": -1.0,
             "b": 5.0
@@ -1059,11 +1196,7 @@
           "description": "Determines the total amount of reward available left in the patch. The value is in microliters"
         },
         "depletion_rule": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/DepletionRule"
-            }
-          ],
+          "$ref": "#/definitions/DepletionRule",
           "default": "OnChoice",
           "description": "Depletion"
         }
@@ -1111,11 +1244,7 @@
           ]
         },
         "virtual_site_generation": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/VirtualSiteGeneration"
-            }
-          ],
+          "$ref": "#/definitions/VirtualSiteGeneration",
           "default": {
             "inter_site": {
               "label": "InterSite",
@@ -1173,6 +1302,90 @@
       "title": "PatchStatistics",
       "type": "object"
     },
+    "PdfDistribution": {
+      "properties": {
+        "family": {
+          "const": "Pdf",
+          "default": "Pdf",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "$ref": "#/definitions/PdfDistributionParameters",
+          "default": {
+            "family": "Pdf",
+            "pdf": [
+              1.0
+            ],
+            "index": [
+              0.0
+            ]
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "PdfDistribution",
+      "type": "object"
+    },
+    "PdfDistributionParameters": {
+      "properties": {
+        "family": {
+          "const": "Pdf",
+          "default": "Pdf",
+          "title": "Family",
+          "type": "string"
+        },
+        "pdf": {
+          "default": [
+            1
+          ],
+          "description": "The probability density function",
+          "items": {
+            "minimum": 0.0,
+            "type": "number"
+          },
+          "title": "Pdf",
+          "type": "array"
+        },
+        "index": {
+          "default": [
+            0
+          ],
+          "description": "The index of the probability density function",
+          "items": {
+            "type": "number"
+          },
+          "title": "Index",
+          "type": "array"
+        }
+      },
+      "title": "PdfDistributionParameters",
+      "type": "object"
+    },
     "PoissonDistribution": {
       "properties": {
         "family": {
@@ -1182,11 +1395,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/PoissonDistributionParameters"
-            }
-          ],
+          "$ref": "#/definitions/PoissonDistributionParameters",
           "default": {
             "family": "Poisson",
             "rate": 1.0
@@ -1243,11 +1452,7 @@
     "PositionControl": {
       "properties": {
         "gain": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Vector3"
-            }
-          ],
+          "$ref": "#/definitions/Vector3",
           "default": {
             "x": 1.0,
             "y": 1.0,
@@ -1256,11 +1461,7 @@
           "description": "Gain of the position control."
         },
         "initial_position": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Vector3"
-            }
-          ],
+          "$ref": "#/definitions/Vector3",
           "default": {
             "x": 0.0,
             "y": 2.56,
@@ -1295,10 +1496,10 @@
           "title": "Function Type",
           "type": "string"
         },
-        "mininum": {
+        "minimum": {
           "default": 0,
           "description": "Minimum value of the function",
-          "title": "Mininum",
+          "title": "Minimum",
           "type": "number"
         },
         "maximum": {
@@ -1361,6 +1562,7 @@
         "mapping": {
           "ConstantFunction": "#/definitions/ConstantFunction",
           "LinearFunction": "#/definitions/LinearFunction",
+          "LookupTableFunction": "#/definitions/LookupTableFunction",
           "PowerFunction": "#/definitions/PowerFunction"
         },
         "propertyName": "function_type"
@@ -1374,6 +1576,9 @@
         },
         {
           "$ref": "#/definitions/PowerFunction"
+        },
+        {
+          "$ref": "#/definitions/LookupTableFunction"
         }
       ],
       "title": "RewardFunction"
@@ -1393,11 +1598,7 @@
           ]
         },
         "delay": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Distribution"
-            }
-          ],
+          "$ref": "#/definitions/Distribution",
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1410,11 +1611,7 @@
           "description": "The optional distribution where the delay to reward will be drawn from"
         },
         "reward_function": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/PatchRewardFunction"
-            }
-          ],
+          "$ref": "#/definitions/PatchRewardFunction",
           "default": {
             "amount": {
               "function_type": "ConstantFunction",
@@ -1429,7 +1626,7 @@
               "b": 5.0,
               "function_type": "LinearFunction",
               "maximum": 9999.0,
-              "mininum": 0.0
+              "minimum": 0.0
             },
             "depletion_rule": "OnChoice"
           },
@@ -1448,11 +1645,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/ScalarDistributionParameter"
-            }
-          ],
+          "$ref": "#/definitions/ScalarDistributionParameter",
           "default": {
             "family": "Scalar",
             "value": 0.0
@@ -1560,11 +1753,7 @@
           "type": "string"
         },
         "size": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Size"
-            }
-          ],
+          "$ref": "#/definitions/Size",
           "default": {
             "width": 40.0,
             "height": 40.0
@@ -1626,11 +1815,7 @@
           "type": "string"
         },
         "distribution_parameters": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/UniformDistributionParameters"
-            }
-          ],
+          "$ref": "#/definitions/UniformDistributionParameters",
           "default": {
             "family": "Uniform",
             "min": 0.0,
@@ -1724,11 +1909,7 @@
           "type": "integer"
         },
         "label": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/VirtualSiteLabels"
-            }
-          ],
+          "$ref": "#/definitions/VirtualSiteLabels",
           "default": "Unspecified",
           "description": "Label of the virtual site"
         },
@@ -1770,11 +1951,7 @@
           ]
         },
         "render_specification": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RenderSpecification"
-            }
-          ],
+          "$ref": "#/definitions/RenderSpecification",
           "default": {
             "contrast": null
           },
@@ -1799,11 +1976,7 @@
     "VirtualSiteGeneration": {
       "properties": {
         "inter_site": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/VirtualSiteGenerator"
-            }
-          ],
+          "$ref": "#/definitions/VirtualSiteGenerator",
           "default": {
             "render_specification": {
               "contrast": null
@@ -1823,11 +1996,7 @@
           "description": "Generator of the inter-site virtual sites"
         },
         "inter_patch": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/VirtualSiteGenerator"
-            }
-          ],
+          "$ref": "#/definitions/VirtualSiteGenerator",
           "default": {
             "render_specification": {
               "contrast": null
@@ -1859,11 +2028,7 @@
           ]
         },
         "reward_site": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/VirtualSiteGenerator"
-            }
-          ],
+          "$ref": "#/definitions/VirtualSiteGenerator",
           "default": {
             "render_specification": {
               "contrast": null
@@ -1889,31 +2054,19 @@
     "VirtualSiteGenerator": {
       "properties": {
         "render_specification": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/RenderSpecification"
-            }
-          ],
+          "$ref": "#/definitions/RenderSpecification",
           "default": {
             "contrast": null
           },
           "description": "Contrast of the environment"
         },
         "label": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/VirtualSiteLabels"
-            }
-          ],
+          "$ref": "#/definitions/VirtualSiteLabels",
           "default": "Unspecified",
           "description": "Label of the virtual site"
         },
         "length_distribution": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Distribution"
-            }
-          ],
+          "$ref": "#/definitions/Distribution",
           "default": {
             "family": "Scalar",
             "distribution_parameters": {
@@ -1962,11 +2115,7 @@
           "type": "integer"
         },
         "size": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Size"
-            }
-          ],
+          "$ref": "#/definitions/Size",
           "default": {
             "width": 40.0,
             "height": 40.0
@@ -1988,11 +2137,7 @@
           "type": "number"
         },
         "textures": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/WallTextures"
-            }
-          ],
+          "$ref": "#/definitions/WallTextures",
           "description": "The textures of the corridor"
         }
       },
@@ -2005,35 +2150,19 @@
     "WallTextures": {
       "properties": {
         "floor": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Texture"
-            }
-          ],
+          "$ref": "#/definitions/Texture",
           "description": "The texture of the floor"
         },
         "ceiling": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Texture"
-            }
-          ],
+          "$ref": "#/definitions/Texture",
           "description": "The texture of the ceiling"
         },
         "left": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Texture"
-            }
-          ],
+          "$ref": "#/definitions/Texture",
           "description": "The texture of the left"
         },
         "right": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/Texture"
-            }
-          ],
+          "$ref": "#/definitions/Texture",
           "description": "The texture of the right"
         }
       },
@@ -2050,6 +2179,7 @@
   "additionalProperties": false,
   "properties": {
     "name": {
+      "const": "AindVrForaging",
       "default": "AindVrForaging",
       "description": "Name of the task logic",
       "title": "Name",
@@ -2062,16 +2192,12 @@
       "type": "string"
     },
     "task_parameters": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/AindVrForagingTaskParameters"
-        }
-      ],
+      "$ref": "#/definitions/AindVrForagingTaskParameters",
       "description": "Parameters of the task logic"
     },
     "version": {
-      "const": "0.4.0",
-      "default": "0.4.0",
+      "const": "0.5.0",
+      "default": "0.5.0",
       "title": "Version",
       "type": "string"
     },

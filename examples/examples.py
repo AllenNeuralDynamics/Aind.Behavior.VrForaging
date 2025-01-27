@@ -21,6 +21,12 @@ from aind_behavior_services.calibration.olfactometer import (
     OlfactometerChannelConfig,
     OlfactometerChannelType,
 )
+from aind_behavior_services.calibration.treadmill import (
+    Treadmill,
+    TreadmillCalibration,
+    TreadmillCalibrationInput,
+    TreadmillCalibrationOutput,
+)
 from aind_behavior_services.calibration.water_valve import (
     Measurement,
     WaterValveCalibration,
@@ -36,10 +42,7 @@ from aind_behavior_vr_foraging.rig import (
     HarpLickometer,
     HarpOlfactometer,
     HarpSniffDetector,
-    HarpTreadmill,
     RigCalibration,
-    Screen,
-    Treadmill,
 )
 from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,
@@ -126,7 +129,7 @@ def mock_rig() -> AindVrForagingRig:
         ]
     )
     water_valve_calibration = WaterValveCalibration(
-        input=water_valve_input, output=water_valve_input.calibrate_output(), calibration_date=datetime.datetime.now()
+        input=water_valve_input, output=water_valve_input.calibrate_output(), date=datetime.datetime.now()
     )
     water_valve_calibration.output = WaterValveCalibrationOutput(slope=1, offset=0)  # For testing purposes
 
@@ -152,16 +155,17 @@ def mock_rig() -> AindVrForagingRig:
         harp_clock_generator=HarpClockGenerator(port_name="COM6"),
         harp_analog_input=None,
         harp_sniff_detector=HarpSniffDetector(port_name="COM7"),
-        harp_treadmill=HarpTreadmill(
+        harp_treadmill=Treadmill(
             port_name="COM8",
-            calibration=Treadmill(
-                wheel_diameter=15,
-                pulses_per_revolution=28800,
-                break_lookup_calibration=[[0, 0], [1, 65535]],
+            calibration=TreadmillCalibration(
+                input=TreadmillCalibrationInput(),
+                output=TreadmillCalibrationOutput(
+                    wheel_diameter=15, pulses_per_revolution=28800, brake_lookup_calibration=[[0, 0], [1, 65535]]
+                ),
             ),
         ),
         manipulator=AindManipulatorDevice(port_name="COM9", calibration=manipulator_calibration),
-        screen=Screen(display_index=1),
+        screen=rig.Screen(display_index=1),
         calibration=RigCalibration(water_valve=water_valve_calibration),
     )
 
@@ -302,7 +306,10 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
         task_parameters=AindVrForagingTaskParameters(
             rng_seed=None,
             updaters=updaters,
-            environment_statistics=environment_statistics,
+            environment=vr_task_logic.BlockStructure(
+                blocks=[vr_task_logic.Block(environment_statistics=environment_statistics, end_conditions=[])],
+                sampling_mode="Random",
+            ),
             task_mode_settings=vr_task_logic.ForagingSettings(),
             operation_control=operation_control,
         )

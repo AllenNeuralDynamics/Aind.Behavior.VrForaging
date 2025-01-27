@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.9.0-preview1+76e8ce94db5dd636925244a720164ef8694af513"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:p1="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+                 xmlns:p2="clr-namespace:AindVrForagingDataSchema.TaskLogic;assembly=Extensions"
+                 xmlns:p3="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Mat">
+        <rx:Name>TransitionMatrix</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
+        <rx:Name>DepletionVariable</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="scg:IDictionary(sys:Int32,p2:PatchStatistics)">
+        <rx:Name>PatchStatistics</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+        <rx:Name>PatchRewardProbability</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+        <rx:Name>PatchRewardAmount</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+        <rx:Name>PatchRewardAvailable</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:PatchStatistics">
+        <rx:Name>ActivePatch</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:VirtualSite">
+        <rx:Name>SiteSpecs</rx:Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>SiteSpecs</Name>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\InstantiateSite.bonsai" />
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Merge" />
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>ActiveSite</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p3:CreateSoftwareEvent">
+          <p3:EventName>ActiveSite</p3:EventName>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="MulticastSubject">
+        <Name>SoftwareEvent</Name>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="12" To="13" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
