@@ -3338,6 +3338,27 @@ namespace AindVrForagingDataSchema.Rig
     }
 
 
+    /// <summary>
+    /// Harp Olfactometer available channel
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    public enum OlfactometerChannel
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="0")]
+        Channel0 = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="1")]
+        Channel1 = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="2")]
+        Channel2 = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="3")]
+        Channel3 = 3,
+    }
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
@@ -6117,7 +6138,7 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.9";
+        private string _aindBehaviorServicesPkgVersion = "0.9.0";
     
         private string _version = "0.4.0";
     
