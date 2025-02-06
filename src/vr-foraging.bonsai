@@ -6921,7 +6921,7 @@ Item1 as Displacement,
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:RepeatCount">
-                            <rx:Count>20</rx:Count>
+                            <rx:Count>300</rx:Count>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
