@@ -39,7 +39,7 @@ class AindManipulatorDevice(aind_manipulator.AindManipulatorDevice):
 class HarpOlfactometer(rig.HarpOlfactometer):
     """Overrides the default settings for the olfactometer calibration"""
 
-    calibration: oc.OlfactometerCalibration = Field(default=None, description="Olfactometer calibration")
+    calibration: oc.OlfactometerCalibration = Field(description="Olfactometer calibration")
 
 
 class RigCalibration(BaseModel):
