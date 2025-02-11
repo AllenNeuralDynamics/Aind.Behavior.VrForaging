@@ -2292,7 +2292,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private BaseModel _additionalSettings;
     
-        private OlfactometerCalibration _calibration;
+        private OlfactometerCalibration _calibration = new OlfactometerCalibration();
     
         private int _whoAmI = 1140;
     
@@ -2349,7 +2349,7 @@ namespace AindVrForagingDataSchema.Rig
         /// Olfactometer calibration
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Olfactometer calibration")]
         public OlfactometerCalibration Calibration
         {

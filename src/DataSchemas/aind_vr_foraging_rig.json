@@ -893,7 +893,6 @@
         },
         "calibration": {
           "$ref": "#/definitions/OlfactometerCalibration",
-          "default": null,
           "description": "Olfactometer calibration"
         },
         "who_am_i": {
@@ -922,6 +921,7 @@
         }
       },
       "required": [
+        "calibration",
         "port_name"
       ],
       "title": "HarpOlfactometer",
