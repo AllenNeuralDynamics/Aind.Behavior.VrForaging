@@ -13,13 +13,13 @@ from aind_behavior_services.rig import (
     AindBehaviorRigModel,
     HarpAnalogInput,
     HarpBehavior,
-    HarpClockGenerator,
-    HarpLickometer,
+    HarpWhiteRabbit,
+    HarpLicketySplit,
     HarpSniffDetector,
 )
 from pydantic import BaseModel, Field
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 
 class AindManipulatorAdditionalSettings(BaseModel):
@@ -58,9 +58,8 @@ class AindVrForagingRig(AindBehaviorRigModel):
     )
     harp_behavior: HarpBehavior = Field(..., description="Harp behavior")
     harp_olfactometer: HarpOlfactometer = Field(..., description="Harp olfactometer")
-    harp_lickometer: HarpLickometer = Field(..., description="Harp lickometer")
-    harp_clock_generator: HarpClockGenerator = Field(..., description="Harp clock generator")
-    harp_clock_repeaters: List[HarpClockGenerator] = Field(default=[], description="Harp clock repeaters")
+    harp_lickometer: HarpLicketySplit = Field(..., description="Harp lickometer")
+    harp_clock_generator: HarpWhiteRabbit = Field(..., description="Harp clock generator")
     harp_analog_input: Optional[HarpAnalogInput] = Field(default=None, description="Harp analog input")
     harp_treadmill: Treadmill = Field(..., description="Harp treadmill")
     harp_sniff_detector: Optional[HarpSniffDetector] = Field(default=None, description="Sniff detector settings")
