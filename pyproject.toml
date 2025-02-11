@@ -17,7 +17,7 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_services>=0.9, <0.10",
+  "aind_behavior_services>=0.10, <0.11",
 ]
 
 [project.urls]
@@ -28,7 +28,10 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 
 [project.optional-dependencies]
 
-launcher = ["aind_behavior_experiment_launcher[aind-services]<0.4"]
+launcher = [
+    "aind_behavior_experiment_launcher[aind-services]<0.4",
+    "aind-data-schema<=1.4"
+    ]
 
 dev = ["aind_behavior_vr_foraging[launcher]",
     "ruff",
