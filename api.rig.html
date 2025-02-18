@@ -1,0 +1,576 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="api.task_logic" href="api.task_logic.html" /><link rel="prev" title="api.session" href="api.session.html" />
+
+    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2024.08.06 -->
+        <title>api.rig - Aind VR Foraging</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Aind VR Foraging</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="_static/light-logo.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="_static/dark-logo.svg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Aind VR Foraging</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to the AIND VR Foraging project documentation!</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="api.html">api</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of api</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api.session.html">api.session</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">api.rig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.task_logic.html">api.task_logic</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="json-schemas.html">json-schemas</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of json-schemas</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="json-schemas.session.html">json-schemas.session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json-schemas.rig.html">json-schemas.rig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json-schemas.task_logic.html">json-schemas.task_logic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging">GitHub Source Code</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/api.rig.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-aind_behavior_vr_foraging.rig">
+<span id="api-rig"></span><h1>api.rig<a class="headerlink" href="#module-aind_behavior_vr_foraging.rig" title="Link to this heading">¶</a></h1>
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aind_behavior_vr_foraging.rig.</span></span><span class="sig-name descname"><span class="pre">AindManipulatorAdditionalSettings</span></span><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Additional settings for the manipulator device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings.spout_axis" title="aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings.spout_axis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spout_axis</span> <span class="pre">(aind_behavior_services.calibration.aind_manipulator.Axis)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings.spout_axis">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">spout_axis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">aind_manipulator.Axis</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Axis.Y1</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings.spout_axis" title="Link to this definition">¶</a></dt>
+<dd><p>Spout axis</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindManipulatorDevice">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aind_behavior_vr_foraging.rig.</span></span><span class="sig-name descname"><span class="pre">AindManipulatorDevice</span></span><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindManipulatorDevice" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AindManipulatorDevice</span></code></p>
+<p>Overrides the default settings for the manipulator device by spec’ing additional_settings field</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindManipulatorDevice.additional_settings" title="aind_behavior_vr_foraging.rig.AindManipulatorDevice.additional_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">additional_settings</span> <span class="pre">(aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindManipulatorDevice.additional_settings">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings" title="aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings"><span class="pre">AindManipulatorAdditionalSettings</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">AindManipulatorAdditionalSettings(spout_axis=&lt;Axis.Y1:</span> <span class="pre">2&gt;)</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindManipulatorDevice.additional_settings" title="Link to this definition">¶</a></dt>
+<dd><p>Additional settings</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aind_behavior_vr_foraging.rig.</span></span><span class="sig-name descname"><span class="pre">AindVrForagingRig</span></span><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AindBehaviorRigModel</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.calibration" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calibration</span> <span class="pre">(aind_behavior_vr_foraging.rig.RigCalibration)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_analog_input" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_analog_input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_analog_input</span> <span class="pre">(aind_behavior_services.rig.HarpAnalogInput</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_behavior" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_behavior"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_behavior</span> <span class="pre">(aind_behavior_services.rig.HarpBehavior)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_generator" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_clock_generator</span> <span class="pre">(aind_behavior_services.rig.HarpClockGenerator)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_repeaters" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_repeaters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_clock_repeaters</span> <span class="pre">(List[aind_behavior_services.rig.HarpClockGenerator])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_environment_sensor" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_environment_sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_environment_sensor</span> <span class="pre">(aind_behavior_services.rig.HarpEnvironmentSensor</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_lickometer" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_lickometer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_lickometer</span> <span class="pre">(aind_behavior_services.rig.HarpLickometer)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_olfactometer" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_olfactometer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_olfactometer</span> <span class="pre">(aind_behavior_vr_foraging.rig.HarpOlfactometer)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_sniff_detector" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_sniff_detector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_sniff_detector</span> <span class="pre">(aind_behavior_services.rig.HarpSniffDetector</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_treadmill" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_treadmill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">harp_treadmill</span> <span class="pre">(aind_behavior_services.calibration.treadmill.Treadmill)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.manipulator" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.manipulator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">manipulator</span> <span class="pre">(aind_behavior_vr_foraging.rig.AindManipulatorDevice)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.monitoring_camera_controller" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.monitoring_camera_controller"><code class="xref py py-obj docutils literal notranslate"><span class="pre">monitoring_camera_controller</span> <span class="pre">(aind_behavior_services.rig.CameraController[WebCamera]</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.screen" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.screen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">screen</span> <span class="pre">(aind_behavior_services.rig.Screen)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.triggered_camera_controller" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.triggered_camera_controller"><code class="xref py py-obj docutils literal notranslate"><span class="pre">triggered_camera_controller</span> <span class="pre">(aind_behavior_services.rig.CameraController[SpinnakerCamera])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.version" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version</span> <span class="pre">(Literal['0.4.0'])</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Validators<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">coerce_version</span></code> » <a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.version" title="aind_behavior_vr_foraging.rig.AindVrForagingRig.version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">version</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.calibration">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#aind_behavior_vr_foraging.rig.RigCalibration" title="aind_behavior_vr_foraging.rig.RigCalibration"><span class="pre">RigCalibration</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.calibration" title="Link to this definition">¶</a></dt>
+<dd><p>Calibration models</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_analog_input">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_analog_input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HarpAnalogInput</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_analog_input" title="Link to this definition">¶</a></dt>
+<dd><p>Harp analog input</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_behavior">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_behavior</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HarpBehavior</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_behavior" title="Link to this definition">¶</a></dt>
+<dd><p>Harp behavior</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_generator">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_clock_generator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HarpClockGenerator</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_generator" title="Link to this definition">¶</a></dt>
+<dd><p>Harp clock generator</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_repeaters">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_clock_repeaters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">HarpClockGenerator</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_repeaters" title="Link to this definition">¶</a></dt>
+<dd><p>Harp clock repeaters</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_environment_sensor">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_environment_sensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">rig.HarpEnvironmentSensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_environment_sensor" title="Link to this definition">¶</a></dt>
+<dd><p>Environment sensor</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_lickometer">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_lickometer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HarpLickometer</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_lickometer" title="Link to this definition">¶</a></dt>
+<dd><p>Harp lickometer</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_olfactometer">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_olfactometer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#aind_behavior_vr_foraging.rig.HarpOlfactometer" title="aind_behavior_vr_foraging.rig.HarpOlfactometer"><span class="pre">HarpOlfactometer</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_olfactometer" title="Link to this definition">¶</a></dt>
+<dd><p>Harp olfactometer</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_sniff_detector">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_sniff_detector</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HarpSniffDetector</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_sniff_detector" title="Link to this definition">¶</a></dt>
+<dd><p>Sniff detector settings</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_treadmill">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">harp_treadmill</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Treadmill</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_treadmill" title="Link to this definition">¶</a></dt>
+<dd><p>Harp treadmill</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.manipulator">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">manipulator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindManipulatorDevice" title="aind_behavior_vr_foraging.rig.AindManipulatorDevice"><span class="pre">AindManipulatorDevice</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.manipulator" title="Link to this definition">¶</a></dt>
+<dd><p>Manipulator</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.monitoring_camera_controller">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">monitoring_camera_controller</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">rig.CameraController</span><span class="p"><span class="pre">[</span></span><span class="pre">rig.WebCamera</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.monitoring_camera_controller" title="Link to this definition">¶</a></dt>
+<dd><p>Optional camera controller for monitoring cameras.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.screen">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">screen</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">rig.Screen</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Screen(device_type='Screen',</span> <span class="pre">additional_settings=None,</span> <span class="pre">calibration=DisplaysCalibration(left=DisplayCalibration(intrinsics=DisplayIntrinsics(frame_width=1920,</span> <span class="pre">frame_height=1080,</span> <span class="pre">display_width=20,</span> <span class="pre">display_height=15),</span> <span class="pre">extrinsics=DisplayExtrinsics(rotation=Vector3(x=0.0,</span> <span class="pre">y=1.0472,</span> <span class="pre">z=0.0),</span> <span class="pre">translation=Vector3(x=-16.6917756,</span> <span class="pre">y=1.309016,</span> <span class="pre">z=-3.575264))),</span> <span class="pre">center=DisplayCalibration(intrinsics=DisplayIntrinsics(frame_width=1920,</span> <span class="pre">frame_height=1080,</span> <span class="pre">display_width=20,</span> <span class="pre">display_height=15),</span> <span class="pre">extrinsics=DisplayExtrinsics(rotation=Vector3(x=0.0,</span> <span class="pre">y=0.0,</span> <span class="pre">z=0.0),</span> <span class="pre">translation=Vector3(x=0.0,</span> <span class="pre">y=1.309016,</span> <span class="pre">z=-13.27))),</span> <span class="pre">right=DisplayCalibration(intrinsics=DisplayIntrinsics(frame_width=1920,</span> <span class="pre">frame_height=1080,</span> <span class="pre">display_width=20,</span> <span class="pre">display_height=15),</span> <span class="pre">extrinsics=DisplayExtrinsics(rotation=Vector3(x=0.0,</span> <span class="pre">y=-1.0472,</span> <span class="pre">z=0.0),</span> <span class="pre">translation=Vector3(x=16.6917756,</span> <span class="pre">y=1.309016,</span> <span class="pre">z=-3.575264)))),</span> <span class="pre">display_index=1,</span> <span class="pre">target_render_frequency=60,</span> <span class="pre">target_update_frequency=120,</span> <span class="pre">texture_assets_directory='Textures',</span> <span class="pre">brightness=0,</span> <span class="pre">contrast=1)</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.screen" title="Link to this definition">¶</a></dt>
+<dd><p>Screen settings</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.triggered_camera_controller">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">triggered_camera_controller</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">rig.CameraController</span><span class="p"><span class="pre">[</span></span><span class="pre">rig.SpinnakerCamera</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.triggered_camera_controller" title="Link to this definition">¶</a></dt>
+<dd><p>Required camera controller to triggered cameras.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.AindVrForagingRig.version">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">__version__</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.4.0'</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.version" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">coerce_version</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.HarpOlfactometer">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aind_behavior_vr_foraging.rig.</span></span><span class="sig-name descname"><span class="pre">HarpOlfactometer</span></span><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.HarpOlfactometer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">HarpOlfactometer</span></code></p>
+<p>Overrides the default settings for the olfactometer calibration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.HarpOlfactometer.calibration" title="aind_behavior_vr_foraging.rig.HarpOlfactometer.calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calibration</span> <span class="pre">(aind_behavior_services.calibration.olfactometer.OlfactometerCalibration)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.HarpOlfactometer.calibration">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">oc.OlfactometerCalibration</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.HarpOlfactometer.calibration" title="Link to this definition">¶</a></dt>
+<dd><p>Olfactometer calibration</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.RigCalibration">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aind_behavior_vr_foraging.rig.</span></span><span class="sig-name descname"><span class="pre">RigCalibration</span></span><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.RigCalibration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Container class for calibration models. In a future release these will be moved to the respective devices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#aind_behavior_vr_foraging.rig.RigCalibration.water_valve" title="aind_behavior_vr_foraging.rig.RigCalibration.water_valve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">water_valve</span> <span class="pre">(aind_behavior_services.calibration.water_valve.WaterValveCalibration)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="aind_behavior_vr_foraging.rig.RigCalibration.water_valve">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">water_valve</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">wvc.WaterValveCalibration</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="reference external" href="https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas//aind_behavior_vr_foraging/rig.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aind_behavior_vr_foraging.rig.RigCalibration.water_valve" title="Link to this definition">¶</a></dt>
+<dd><p>Water valve calibration</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="api.task_logic.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">api.task_logic</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="api.session.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">api.session</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">api.rig</a><ul>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings"><code class="docutils literal notranslate"><span class="pre">AindManipulatorAdditionalSettings</span></code></a><ul>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindManipulatorAdditionalSettings.spout_axis"><code class="docutils literal notranslate"><span class="pre">AindManipulatorAdditionalSettings.spout_axis</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindManipulatorDevice"><code class="docutils literal notranslate"><span class="pre">AindManipulatorDevice</span></code></a><ul>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindManipulatorDevice.additional_settings"><code class="docutils literal notranslate"><span class="pre">AindManipulatorDevice.additional_settings</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig</span></code></a><ul>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.calibration"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.calibration</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_analog_input"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_analog_input</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_behavior"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_behavior</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_generator"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_clock_generator</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_clock_repeaters"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_clock_repeaters</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_environment_sensor"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_environment_sensor</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_lickometer"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_lickometer</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_olfactometer"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_olfactometer</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_sniff_detector"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_sniff_detector</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.harp_treadmill"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.harp_treadmill</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.manipulator"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.manipulator</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.monitoring_camera_controller"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.monitoring_camera_controller</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.screen"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.screen</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.triggered_camera_controller"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.triggered_camera_controller</span></code></a></li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.AindVrForagingRig.version"><code class="docutils literal notranslate"><span class="pre">AindVrForagingRig.version</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.HarpOlfactometer"><code class="docutils literal notranslate"><span class="pre">HarpOlfactometer</span></code></a><ul>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.HarpOlfactometer.calibration"><code class="docutils literal notranslate"><span class="pre">HarpOlfactometer.calibration</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.RigCalibration"><code class="docutils literal notranslate"><span class="pre">RigCalibration</span></code></a><ul>
+<li><a class="reference internal" href="#aind_behavior_vr_foraging.rig.RigCalibration.water_valve"><code class="docutils literal notranslate"><span class="pre">RigCalibration.water_valve</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>
