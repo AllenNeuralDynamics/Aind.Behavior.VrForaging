@@ -1,8 +1,9 @@
+import argparse
 import datetime
 import logging
 import os
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Self, Tuple, Type, TypeVar, Union
+from typing import Dict, List, Optional, Self, Tuple, Type, TypeVar, Union
 
 import aind_behavior_services.rig as AbsRig
 import aind_data_schema
@@ -23,6 +24,7 @@ from aind_behavior_services.calibration import Calibration
 from aind_behavior_services.calibration.olfactometer import OlfactometerChannelType
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file, utcnow
+from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
@@ -440,7 +442,6 @@ class AindDataMapperWrapper(DataMapper):
         launcher: BehaviorLauncher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
         **kwargs,
     ) -> Self:
-
         session_name: str
         session_directory: Path
         if launcher.session_schema_model:
@@ -453,7 +454,8 @@ class AindDataMapperWrapper(DataMapper):
             session_name,
             session_directory,
             rig_data_mapper=AindRigDataMapper.from_launcher(launcher),
-            session_data_mapper=AindSessionDataMapper.from_launcher(launcher))
+            session_data_mapper=AindSessionDataMapper.from_launcher(launcher),
+        )
 
     def map(self) -> Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]:
         self._rig_schema = self._rig_mapper.map()
@@ -475,3 +477,41 @@ class AindDataMapperWrapper(DataMapper):
 
     def is_mapped(self) -> bool:
         return (self._rig_schema is not None) and (self._session_schema is not None)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Map session and rig data to AindDataSchema.")
+    parser.add_argument("data_path", type=str, help="Path to the data directory.")
+    parser.add_argument(
+        "--db-root",
+        type=str,
+        default=r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging",
+        help=r"Root directory for the database (default: \\allen\aind\scratch\AindBehavior.db\AindVrForaging).",
+    )
+    args = parser.parse_args()
+
+    data_path = Path(args.data_path)
+    db_root = args.db_root
+
+    abs_schemas_path = data_path / "Behavior" / "Logs"
+    session = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
+    rig = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
+    task_logic = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
+    repo = Repo()
+    session_mapper = AindSessionDataMapper(
+        session_model=session,
+        rig_model=rig,
+        task_logic_model=task_logic,
+        repository=repo,
+        script_path=Path("./src/vr-foraging.py"),
+    )
+    rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(db_root))
+
+    assert session.session_name is not None
+    wrapped_mapper = AindDataMapperWrapper(
+        session_name=session.session_name,
+        session_directory=data_path,
+        rig_data_mapper=rig_mapper,
+        session_data_mapper=session_mapper,
+    )
+    wrapped_mapper.map()
