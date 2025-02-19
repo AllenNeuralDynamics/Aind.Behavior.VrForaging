@@ -83,6 +83,14 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     def is_mapped(self) -> bool:
         return self.mapped is not None
 
+    @classmethod
+    def from_launcher(cls, launcher: BehaviorLauncher) -> Self:
+        return cls(
+            rig_schema_filename=f"{launcher.rig_schema.rig_name}.json",
+            db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
+            db_root=launcher.config_library_dir,
+        )
+
 
 class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
@@ -105,6 +113,18 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.output_parameters = output_parameters
         self.subject_info = subject_info
         self._mapped: Optional[aind_data_schema.core.session.Session] = None
+
+    @classmethod
+    def from_launcher(cls, launcher: BehaviorLauncher) -> Self:
+        now = utcnow()
+        return cls(
+            session_model=launcher.session_schema,
+            rig_model=launcher.rig_schema,
+            task_logic_model=launcher.task_logic_schema,
+            repository=launcher.repository,
+            script_path=launcher.services_factory_manager.bonsai_app.workflow,
+            session_end_time=now,
+        )
 
     @property
     def session_name(self):
@@ -385,79 +405,57 @@ def coerce_to_aind_data_schema(value: TFrom, target_type: Type[TTo]) -> TTo:
     return target_type(**_normalized_input)
 
 
-def aind_session_data_mapper_factory(launcher: BehaviorLauncher) -> AindSessionDataMapper:
-    now = utcnow()
-    return AindSessionDataMapper(
-        session_model=launcher.session_schema,
-        rig_model=launcher.rig_schema,
-        task_logic_model=launcher.task_logic_schema,
-        repository=launcher.repository,
-        script_path=launcher.services_factory_manager.bonsai_app.workflow,
-        session_end_time=now,
-    )
-
-
-def aind_rig_data_mapper_factory(
-    launcher: BehaviorLauncher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
-) -> AindRigDataMapper:
-    rig_schema: AindVrForagingRig = launcher.rig_schema
-    return AindRigDataMapper(
-        rig_schema_filename=f"{rig_schema.rig_name}.json",
-        db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
-        db_root=launcher.config_library_dir,
-    )
-
-
 class AindDataMapperWrapper(DataMapper):
     def __init__(
         self,
-        *,
-        launcher: Optional[BehaviorLauncher] = None,
-        rig_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindRigDataMapper]] = None,
-        session_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindSessionDataMapper]] = None,
+        session_name: str,
+        session_directory: os.PathLike,
+        rig_data_mapper: AindRigDataMapper,
+        session_data_mapper: AindSessionDataMapper,
     ):
         super().__init__()
-        self._rig_mapper_factory = rig_data_mapper_factory or aind_rig_data_mapper_factory
-        self._session_mapper_factory = session_data_mapper_factory or aind_session_data_mapper_factory
 
-        self._rig_mapper: Optional[AindRigDataMapper] = None
-        self._session_mapper: Optional[AindSessionDataMapper] = None
+        self._rig_mapper = rig_data_mapper
+        self._session_mapper = session_data_mapper
 
         self._session_schema: Optional[aind_data_schema.core.session.Session] = None
         self._rig_schema: Optional[aind_data_schema.core.rig.Rig] = None
 
-        self._launcher = launcher
-        self._mapped: Optional[aind_data_schema.core.rig.Rig] = None
+        self._mapped: Optional[Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]] = None
+
+        self._session_directory = session_directory
+        self._session_name = session_name
 
     @property
     def session_directory(self):
-        return self._launcher.session_directory
+        return self._session_directory
 
     @property
     def session_name(self):
-        if self._launcher.session_schema_model is not None:
-            return self._launcher.session_schema_model.session_name
-        else:
-            raise ValueError("Can't infer session name from _launcher.")
+        return self._session_name
 
     @classmethod
     def from_launcher(
         cls,
         launcher: BehaviorLauncher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
-        rig_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindRigDataMapper]] = None,
-        session_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindSessionDataMapper]] = None,
+        **kwargs,
     ) -> Self:
+
+        session_name: str
+        session_directory: Path
+        if launcher.session_schema_model:
+            session_name = launcher.session_schema_model.session_name
+        else:
+            raise ValueError("Can't infer session name from launcher.")
+        session_directory = launcher.session_directory
+
         return cls(
-            launcher=launcher,
-            rig_data_mapper_factory=rig_data_mapper_factory,
-            session_data_mapper_factory=session_data_mapper_factory,
-        )
+            session_name,
+            session_directory,
+            rig_data_mapper=AindRigDataMapper.from_launcher(launcher),
+            session_data_mapper=AindSessionDataMapper.from_launcher(launcher))
 
     def map(self) -> Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]:
-        if self._launcher is None:
-            raise ValueError("Launcher is not set.")
-        self._rig_mapper = self._rig_mapper_factory(self._launcher)
-        self._session_mapper = self._session_mapper_factory(self._launcher)
         self._rig_schema = self._rig_mapper.map()
         self._session_schema = self._session_mapper.map()
         if self._rig_schema is None or self._session_schema is None:
