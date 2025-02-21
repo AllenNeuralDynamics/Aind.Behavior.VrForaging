@@ -17,7 +17,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private double? _rngSeed;
     
-        private string _aindBehaviorServicesPkgVersion = "0.10.0";
+        private string _aindBehaviorServicesPkgVersion = "0.10.2";
     
         private System.Collections.Generic.IDictionary<string, NumericalUpdater> _updaters;
     
