@@ -145,7 +145,7 @@
                           <HarpDeviceName>SniffDetector</HarpDeviceName>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>HarpClockGenEvents</Name>
+                          <Name>HarpWhiteRabbitEvents</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>Modality</Name>
@@ -410,7 +410,7 @@
                           <HarpDeviceName>SniffDetector</HarpDeviceName>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>HarpClockGenCommands</Name>
+                          <Name>HarpWhiteRabbitCommands</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpSeconds</Name>
