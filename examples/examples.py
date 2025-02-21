@@ -38,10 +38,10 @@ from aind_behavior_vr_foraging.rig import (
     AindManipulatorDevice,
     AindVrForagingRig,
     HarpBehavior,
-    HarpWhiteRabbit,
     HarpLicketySplit,
     HarpOlfactometer,
     HarpSniffDetector,
+    HarpWhiteRabbit,
     RigCalibration,
 )
 from aind_behavior_vr_foraging.task_logic import (

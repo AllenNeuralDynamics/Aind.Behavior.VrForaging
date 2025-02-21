@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 # Import core types
-from typing import List, Literal, Optional
+from typing import Literal, Optional
 
 import aind_behavior_services.calibration.olfactometer as oc
 import aind_behavior_services.calibration.water_valve as wvc
@@ -13,9 +13,9 @@ from aind_behavior_services.rig import (
     AindBehaviorRigModel,
     HarpAnalogInput,
     HarpBehavior,
-    HarpWhiteRabbit,
     HarpLicketySplit,
     HarpSniffDetector,
+    HarpWhiteRabbit,
 )
 from pydantic import BaseModel, Field
 
