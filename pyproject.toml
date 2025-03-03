@@ -30,7 +30,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 
 launcher = [
     "aind_behavior_experiment_launcher[aind-services]",
-    "aind-data-schema<=1.4"
+    "aind-data-schema>=1.4"
     ]
 
 dev = ["aind_behavior_vr_foraging[launcher]",
