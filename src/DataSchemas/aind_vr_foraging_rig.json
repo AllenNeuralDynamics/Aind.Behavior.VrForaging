@@ -164,8 +164,8 @@
       "description": "Overrides the default settings for the manipulator device by spec'ing additional_settings field",
       "properties": {
         "device_type": {
-          "const": "stepperdriver",
-          "default": "stepperdriver",
+          "const": "StepperDriver",
+          "default": "StepperDriver",
           "title": "Device Type",
           "type": "string"
         },
@@ -621,8 +621,8 @@
     "HarpAnalogInput": {
       "properties": {
         "device_type": {
-          "const": "analoginput",
-          "default": "analoginput",
+          "const": "AnalogInput",
+          "default": "AnalogInput",
           "title": "Device Type",
           "type": "string"
         },
@@ -684,8 +684,8 @@
     "HarpBehavior": {
       "properties": {
         "device_type": {
-          "const": "behavior",
-          "default": "behavior",
+          "const": "Behavior",
+          "default": "Behavior",
           "title": "Device Type",
           "type": "string"
         },
@@ -744,83 +744,11 @@
       "title": "HarpBehavior",
       "type": "object"
     },
-    "HarpClockGenerator": {
-      "properties": {
-        "device_type": {
-          "const": "clockgenerator",
-          "default": "clockgenerator",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "default": null,
-          "description": "Calibration",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "who_am_i": {
-          "const": 1158,
-          "default": 1158,
-          "title": "Who Am I",
-          "type": "integer"
-        },
-        "serial_number": {
-          "default": null,
-          "description": "Device serial number",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Serial Number"
-        },
-        "port_name": {
-          "description": "Device port name",
-          "title": "Port Name",
-          "type": "string"
-        },
-        "connected_clock_outputs": {
-          "default": [],
-          "description": "Connected clock outputs",
-          "items": {
-            "$ref": "#/definitions/ConnectedClockOutput"
-          },
-          "title": "Connected Clock Outputs",
-          "type": "array"
-        }
-      },
-      "required": [
-        "port_name"
-      ],
-      "title": "HarpClockGenerator",
-      "type": "object"
-    },
     "HarpEnvironmentSensor": {
       "properties": {
         "device_type": {
-          "const": "environmentsensor",
-          "default": "environmentsensor",
+          "const": "EnvironmentSensor",
+          "default": "EnvironmentSensor",
           "title": "Device Type",
           "type": "string"
         },
@@ -879,11 +807,11 @@
       "title": "HarpEnvironmentSensor",
       "type": "object"
     },
-    "HarpLickometer": {
+    "HarpLicketySplit": {
       "properties": {
         "device_type": {
-          "const": "lickometer",
-          "default": "lickometer",
+          "const": "LicketySplit",
+          "default": "LicketySplit",
           "title": "Device Type",
           "type": "string"
         },
@@ -939,15 +867,15 @@
       "required": [
         "port_name"
       ],
-      "title": "HarpLickometer",
+      "title": "HarpLicketySplit",
       "type": "object"
     },
     "HarpOlfactometer": {
       "description": "Overrides the default settings for the olfactometer calibration",
       "properties": {
         "device_type": {
-          "const": "olfactometer",
-          "default": "olfactometer",
+          "const": "Olfactometer",
+          "default": "Olfactometer",
           "title": "Device Type",
           "type": "string"
         },
@@ -965,7 +893,6 @@
         },
         "calibration": {
           "$ref": "#/definitions/OlfactometerCalibration",
-          "default": null,
           "description": "Olfactometer calibration"
         },
         "who_am_i": {
@@ -994,6 +921,7 @@
         }
       },
       "required": [
+        "calibration",
         "port_name"
       ],
       "title": "HarpOlfactometer",
@@ -1002,8 +930,8 @@
     "HarpSniffDetector": {
       "properties": {
         "device_type": {
-          "const": "sniffdetector",
-          "default": "sniffdetector",
+          "const": "SniffDetector",
+          "default": "SniffDetector",
           "title": "Device Type",
           "type": "string"
         },
@@ -1060,6 +988,78 @@
         "port_name"
       ],
       "title": "HarpSniffDetector",
+      "type": "object"
+    },
+    "HarpWhiteRabbit": {
+      "properties": {
+        "device_type": {
+          "const": "WhiteRabbit",
+          "default": "WhiteRabbit",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1404,
+          "default": 1404,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "connected_clock_outputs": {
+          "default": [],
+          "description": "Connected clock outputs",
+          "items": {
+            "$ref": "#/definitions/ConnectedClockOutput"
+          },
+          "title": "Connected Clock Outputs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpWhiteRabbit",
       "type": "object"
     },
     "ManipulatorPosition": {
@@ -1949,8 +1949,8 @@
     "Treadmill": {
       "properties": {
         "device_type": {
-          "const": "treadmill",
-          "default": "treadmill",
+          "const": "Treadmill",
+          "default": "Treadmill",
           "title": "Device Type",
           "type": "string"
         },
@@ -2423,14 +2423,14 @@
   },
   "properties": {
     "aind_behavior_services_pkg_version": {
-      "default": "0.9.0",
+      "default": "0.10.2",
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "title": "aind_behavior_services package version",
       "type": "string"
     },
     "version": {
-      "const": "0.4.0",
-      "default": "0.4.0",
+      "const": "0.5.0",
+      "default": "0.5.0",
       "title": "Version",
       "type": "string"
     },
@@ -2469,21 +2469,12 @@
       "description": "Harp olfactometer"
     },
     "harp_lickometer": {
-      "$ref": "#/definitions/HarpLickometer",
+      "$ref": "#/definitions/HarpLicketySplit",
       "description": "Harp lickometer"
     },
     "harp_clock_generator": {
-      "$ref": "#/definitions/HarpClockGenerator",
+      "$ref": "#/definitions/HarpWhiteRabbit",
       "description": "Harp clock generator"
-    },
-    "harp_clock_repeaters": {
-      "default": [],
-      "description": "Harp clock repeaters",
-      "items": {
-        "$ref": "#/definitions/HarpClockGenerator"
-      },
-      "title": "Harp Clock Repeaters",
-      "type": "array"
     },
     "harp_analog_input": {
       "default": null,

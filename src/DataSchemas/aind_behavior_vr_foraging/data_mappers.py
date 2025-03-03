@@ -1,8 +1,9 @@
+import argparse
 import datetime
 import logging
 import os
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Self, Tuple, Type, TypeVar, Union
+from typing import Dict, List, Optional, Self, Tuple, Type, TypeVar, Union
 
 import aind_behavior_services.rig as AbsRig
 import aind_data_schema
@@ -23,6 +24,7 @@ from aind_behavior_services.calibration import Calibration
 from aind_behavior_services.calibration.olfactometer import OlfactometerChannelType
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file, utcnow
+from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
@@ -83,6 +85,14 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     def is_mapped(self) -> bool:
         return self.mapped is not None
 
+    @classmethod
+    def from_launcher(cls, launcher: BehaviorLauncher) -> Self:
+        return cls(
+            rig_schema_filename=f"{launcher.rig_schema.rig_name}.json",
+            db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
+            db_root=launcher.config_library_dir,
+        )
+
 
 class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
@@ -105,6 +115,18 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.output_parameters = output_parameters
         self.subject_info = subject_info
         self._mapped: Optional[aind_data_schema.core.session.Session] = None
+
+    @classmethod
+    def from_launcher(cls, launcher: BehaviorLauncher) -> Self:
+        now = utcnow()
+        return cls(
+            session_model=launcher.session_schema,
+            rig_model=launcher.rig_schema,
+            task_logic_model=launcher.task_logic_schema,
+            repository=launcher.repository,
+            script_path=launcher.services_factory_manager.bonsai_app.workflow,
+            session_end_time=now,
+        )
 
     @property
     def session_name(self):
@@ -385,79 +407,57 @@ def coerce_to_aind_data_schema(value: TFrom, target_type: Type[TTo]) -> TTo:
     return target_type(**_normalized_input)
 
 
-def aind_session_data_mapper_factory(launcher: BehaviorLauncher) -> AindSessionDataMapper:
-    now = utcnow()
-    return AindSessionDataMapper(
-        session_model=launcher.session_schema,
-        rig_model=launcher.rig_schema,
-        task_logic_model=launcher.task_logic_schema,
-        repository=launcher.repository,
-        script_path=launcher.services_factory_manager.bonsai_app.workflow,
-        session_end_time=now,
-    )
-
-
-def aind_rig_data_mapper_factory(
-    launcher: BehaviorLauncher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
-) -> AindRigDataMapper:
-    rig_schema: AindVrForagingRig = launcher.rig_schema
-    return AindRigDataMapper(
-        rig_schema_filename=f"{rig_schema.rig_name}.json",
-        db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
-        db_root=launcher.config_library_dir,
-    )
-
-
 class AindDataMapperWrapper(DataMapper):
     def __init__(
         self,
-        *,
-        launcher: Optional[BehaviorLauncher] = None,
-        rig_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindRigDataMapper]] = None,
-        session_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindSessionDataMapper]] = None,
+        session_name: str,
+        session_directory: os.PathLike,
+        rig_data_mapper: AindRigDataMapper,
+        session_data_mapper: AindSessionDataMapper,
     ):
         super().__init__()
-        self._rig_mapper_factory = rig_data_mapper_factory or aind_rig_data_mapper_factory
-        self._session_mapper_factory = session_data_mapper_factory or aind_session_data_mapper_factory
 
-        self._rig_mapper: Optional[AindRigDataMapper] = None
-        self._session_mapper: Optional[AindSessionDataMapper] = None
+        self._rig_mapper = rig_data_mapper
+        self._session_mapper = session_data_mapper
 
         self._session_schema: Optional[aind_data_schema.core.session.Session] = None
         self._rig_schema: Optional[aind_data_schema.core.rig.Rig] = None
 
-        self._launcher = launcher
-        self._mapped: Optional[aind_data_schema.core.rig.Rig] = None
+        self._mapped: Optional[Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]] = None
+
+        self._session_directory = session_directory
+        self._session_name = session_name
 
     @property
     def session_directory(self):
-        return self._launcher.session_directory
+        return self._session_directory
 
     @property
     def session_name(self):
-        if self._launcher.session_schema_model is not None:
-            return self._launcher.session_schema_model.session_name
-        else:
-            raise ValueError("Can't infer session name from _launcher.")
+        return self._session_name
 
     @classmethod
     def from_launcher(
         cls,
         launcher: BehaviorLauncher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
-        rig_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindRigDataMapper]] = None,
-        session_data_mapper_factory: Optional[Callable[[BehaviorLauncher], AindSessionDataMapper]] = None,
+        **kwargs,
     ) -> Self:
+        session_name: str
+        session_directory: Path
+        if launcher.session_schema_model:
+            session_name = launcher.session_schema_model.session_name
+        else:
+            raise ValueError("Can't infer session name from launcher.")
+        session_directory = launcher.session_directory
+
         return cls(
-            launcher=launcher,
-            rig_data_mapper_factory=rig_data_mapper_factory,
-            session_data_mapper_factory=session_data_mapper_factory,
+            session_name,
+            session_directory,
+            rig_data_mapper=AindRigDataMapper.from_launcher(launcher),
+            session_data_mapper=AindSessionDataMapper.from_launcher(launcher),
         )
 
     def map(self) -> Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]:
-        if self._launcher is None:
-            raise ValueError("Launcher is not set.")
-        self._rig_mapper = self._rig_mapper_factory(self._launcher)
-        self._session_mapper = self._session_mapper_factory(self._launcher)
         self._rig_schema = self._rig_mapper.map()
         self._session_schema = self._session_mapper.map()
         if self._rig_schema is None or self._session_schema is None:
@@ -477,3 +477,41 @@ class AindDataMapperWrapper(DataMapper):
 
     def is_mapped(self) -> bool:
         return (self._rig_schema is not None) and (self._session_schema is not None)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Map session and rig data to AindDataSchema.")
+    parser.add_argument("data_path", type=str, help="Path to the data directory.")
+    parser.add_argument(
+        "--db-root",
+        type=str,
+        default=r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging",
+        help=r"Root directory for the database (default: \\allen\aind\scratch\AindBehavior.db\AindVrForaging).",
+    )
+    args = parser.parse_args()
+
+    data_path = Path(args.data_path)
+    db_root = args.db_root
+
+    abs_schemas_path = data_path / "Behavior" / "Logs"
+    session = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
+    rig = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
+    task_logic = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
+    repo = Repo()
+    session_mapper = AindSessionDataMapper(
+        session_model=session,
+        rig_model=rig,
+        task_logic_model=task_logic,
+        repository=repo,
+        script_path=Path("./src/vr-foraging.py"),
+    )
+    rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(db_root))
+
+    assert session.session_name is not None
+    wrapped_mapper = AindDataMapperWrapper(
+        session_name=session.session_name,
+        session_directory=data_path,
+        rig_data_mapper=rig_mapper,
+        session_data_mapper=session_mapper,
+    )
+    wrapped_mapper.map()

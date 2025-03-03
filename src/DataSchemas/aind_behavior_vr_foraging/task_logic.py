@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Annotated, Dict, List, Literal, Optional, Self, Union
+from typing import TYPE_CHECKING, Annotated, Dict, List, Literal, Optional, Self, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import BaseModel, Field, NonNegativeFloat, RootModel, model_validator
+from pydantic import BaseModel, Field, NonNegativeFloat, model_validator
+from typing_extensions import TypeAliasType
 
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -125,11 +126,16 @@ class LookupTableFunction(BaseModel):
         return self
 
 
-class RewardFunction(RootModel):
-    root: Annotated[
-        Union[ConstantFunction, LinearFunction, PowerFunction, LookupTableFunction],
-        Field(discriminator="function_type"),
-    ]
+if TYPE_CHECKING:
+    RewardFunction = Union[ConstantFunction, LinearFunction, PowerFunction, LookupTableFunction]
+else:
+    RewardFunction = TypeAliasType(
+        "RewardFunction",
+        Annotated[
+            Union[ConstantFunction, LinearFunction, PowerFunction, LookupTableFunction],
+            Field(discriminator="function_type"),
+        ],
+    )
 
 
 class DepletionRule(str, Enum):
@@ -274,7 +280,7 @@ class VisualCorridor(BaseModel):
 
 
 class EnvironmentStatistics(BaseModel):
-    patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches", min_items=1)
+    patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches", min_length=1)
     transition_matrix: List[List[NonNegativeFloat]] = Field(
         default=[[1]], description="Determines the transition probabilities between patches"
     )
@@ -369,8 +375,13 @@ class ForagingSettings(TaskModeSettingsBase):
     task_mode: Literal[TaskMode.FORAGING] = TaskMode.FORAGING
 
 
-class TaskModeSettings(RootModel):
-    root: Annotated[Union[HabituationSettings, ForagingSettings, DebugSettings], Field(discriminator="task_mode")]
+if TYPE_CHECKING:
+    TaskModeSettings = Union[HabituationSettings, ForagingSettings, DebugSettings]
+else:
+    TaskModeSettings = TypeAliasType(
+        "TaskModeSettings",
+        Annotated[Union[HabituationSettings, ForagingSettings, DebugSettings], Field(discriminator="task_mode")],
+    )
 
 
 class _BlockEndConditionBase(BaseModel):
@@ -402,17 +413,24 @@ class BlockEndConditionPatchCount(_BlockEndConditionBase):
     value: distributions.Distribution = Field(..., description="Number of patches after which the block will end.")
 
 
-class BlockEndCondition(RootModel):
-    root: Annotated[
-        Union[
-            BlockEndConditionDuration,
-            BlockEndConditionDistance,
-            BlockEndConditionChoice,
-            BlockEndConditionReward,
-            BlockEndConditionPatchCount,
-        ],
-        Field(discriminator="condition_type"),
+if TYPE_CHECKING:
+    BlockEndCondition = Union[
+        BlockEndConditionDuration, BlockEndConditionDistance, BlockEndConditionChoice, BlockEndConditionReward
     ]
+else:
+    BlockEndCondition = TypeAliasType(
+        "BlockEndCondition",
+        Annotated[
+            Union[
+                BlockEndConditionDuration,
+                BlockEndConditionDistance,
+                BlockEndConditionChoice,
+                BlockEndConditionReward,
+                BlockEndConditionPatchCount,
+            ],
+            Field(discriminator="condition_type"),
+        ],
+    )
 
 
 class Block(BaseModel):
