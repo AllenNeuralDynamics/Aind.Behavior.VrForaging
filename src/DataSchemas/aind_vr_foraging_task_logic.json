@@ -26,7 +26,10 @@
           "additionalProperties": {
             "$ref": "#/definitions/NumericalUpdater"
           },
-          "description": "List of numerical updaters",
+          "description": "Look-up table for numeric updaters",
+          "propertyNames": {
+            "$ref": "#/definitions/UpdaterTarget"
+          },
           "title": "Updaters",
           "type": "object"
         },
@@ -1871,6 +1874,15 @@
       },
       "title": "UniformDistributionParameters",
       "type": "object"
+    },
+    "UpdaterTarget": {
+      "enum": [
+        "StopDurationOffset",
+        "StopVelocityThreshold",
+        "RewardDelayOffset"
+      ],
+      "title": "UpdaterTarget",
+      "type": "string"
     },
     "Vector3": {
       "properties": {
