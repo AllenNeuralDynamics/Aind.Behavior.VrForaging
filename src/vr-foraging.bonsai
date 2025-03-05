@@ -996,6 +996,7 @@ Item3 as Right)</scr:Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>MonitoringCameraController</Selector>
                         </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
                         <Expression xsi:type="MemberSelector">
                           <Selector>Cameras</Selector>
                         </Expression>
@@ -1096,6 +1097,7 @@ Item3 as Right)</scr:Expression>
                         <Edge From="5" To="6" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
