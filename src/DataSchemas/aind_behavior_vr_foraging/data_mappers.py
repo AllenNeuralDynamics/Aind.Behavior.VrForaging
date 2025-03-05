@@ -444,8 +444,8 @@ class AindDataMapperWrapper(DataMapper):
     ) -> Self:
         session_name: str
         session_directory: Path
-        if launcher.session_schema_model:
-            session_name = launcher.session_schema_model.session_name
+        if launcher.session_schema:
+            session_name = launcher.session_schema.session_name
         else:
             raise ValueError("Can't infer session name from launcher.")
         session_directory = launcher.session_directory
