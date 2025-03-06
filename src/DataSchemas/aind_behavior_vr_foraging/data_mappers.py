@@ -184,26 +184,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         repository_relative_script_path = Path(script_path).resolve().relative_to(repository.working_dir)
 
         # Populate calibrations:
-        # calibrations = [cls._mapper_calibration(rig_model.calibration.water_valve)]
-
-        # TODO: Hack until someone solves https://github.com/AllenNeuralDynamics/aind-data-schema/issues/1248
-        _out = (
-            rig_model.calibration.water_valve.output.model_copy(update={"interval_average": None})
-            if rig_model.calibration.water_valve.output
-            else None
-        )
-        water_calibration = aind_data_schema.core.rig.Calibration(
-            calibration_date=rig_model.calibration.water_valve.date
-            if rig_model.calibration.water_valve.date
-            else utcnow(),
-            device_name=rig_model.calibration.water_valve.device_name,
-            description=rig_model.calibration.water_valve.description,
-            input=rig_model.calibration.water_valve.input.model_dump()
-            if rig_model.calibration.water_valve.input
-            else {},
-            output=_out.model_dump() if _out else {},
-        )
-        calibrations = [water_calibration]
+        calibrations: List[aind_data_schema.components.devices.Calibration] = []
+        calibrations.append(cls._mapper_calibration(rig_model.calibration.water_valve))
 
         # Populate cameras
         cameras = data_mapper_helpers.get_cameras(rig_model, exclude_without_video_writer=True)
@@ -384,12 +366,14 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     @staticmethod
     def _mapper_calibration(calibration: Calibration) -> aind_data_schema.components.devices.Calibration:
-        return ads.create_encoding_model(aind_data_schema.components.devices.Calibration)(
+        return aind_data_schema.components.devices.Calibration(
             device_name=calibration.device_name,
             input=calibration.input.model_dump() if calibration.input else {},
             output=calibration.output.model_dump() if calibration.output else {},
             calibration_date=calibration.date if calibration.date else utcnow(),
-            description=calibration.description if calibration.description else "",
+            description=calibration.description
+            if calibration.description
+            else f"Calibration for {calibration.device_name}",
             notes=calibration.notes,
         )
 
@@ -444,8 +428,8 @@ class AindDataMapperWrapper(DataMapper):
     ) -> Self:
         session_name: str
         session_directory: Path
-        if launcher.session_schema_model:
-            session_name = launcher.session_schema_model.session_name
+        if launcher.session_schema:
+            session_name = launcher.session_schema.session_name
         else:
             raise ValueError("Can't infer session name from launcher.")
         session_directory = launcher.session_directory

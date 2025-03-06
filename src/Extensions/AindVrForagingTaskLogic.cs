@@ -73,11 +73,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// List of numerical updaters
+        /// Look-up table for numeric updaters
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("updaters")]
-        [System.ComponentModel.DescriptionAttribute("List of numerical updaters")]
+        [System.ComponentModel.DescriptionAttribute("Look-up table for numeric updaters")]
         public System.Collections.Generic.IDictionary<string, NumericalUpdater> Updaters
         {
             get
@@ -5513,6 +5513,22 @@ namespace AindVrForagingDataSchema.TaskLogic
             stringBuilder.Append("}");
             return stringBuilder.ToString();
         }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum UpdaterTarget
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="StopDurationOffset")]
+        StopDurationOffset = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="StopVelocityThreshold")]
+        StopVelocityThreshold = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="RewardDelayOffset")]
+        RewardDelayOffset = 2,
     }
 
 

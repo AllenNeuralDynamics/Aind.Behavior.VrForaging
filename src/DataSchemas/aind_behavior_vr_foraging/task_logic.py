@@ -66,6 +66,12 @@ class NumericalUpdater(BaseModel):
     )
 
 
+class UpdaterTarget(str, Enum):
+    STOP_DURATION_OFFSET = "StopDurationOffset"
+    STOP_VELOCITY_THRESHOLD = "StopVelocityThreshold"
+    REWARD_DELAY_OFFSET = "RewardDelayOffset"
+
+
 class Texture(BaseModel):
     name: str = Field(default="default", description="Name of the texture")
     size: Size = Field(default=Size(width=40, height=40), description="Size of the texture")
@@ -446,7 +452,9 @@ class BlockStructure(BaseModel):
 
 
 class AindVrForagingTaskParameters(TaskParameters):
-    updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
+    updaters: Dict[UpdaterTarget, NumericalUpdater] = Field(
+        default_factory=dict, description="Look-up table for numeric updaters"
+    )
     environment: BlockStructure = Field(..., description="Statistics of the environment")
     task_mode_settings: TaskModeSettings = Field(
         default=ForagingSettings(), description="Settings of the task stage", validate_default=True
