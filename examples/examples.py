@@ -178,15 +178,15 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
         )
 
     updaters = {
-        "RewardDelayOffset": vr_task_logic.NumericalUpdater(
+        vr_task_logic.UpdaterTarget.REWARD_DELAY_OFFSET: vr_task_logic.NumericalUpdater(
             operation=vr_task_logic.NumericalUpdaterOperation.OFFSET,
             parameters=NumericalUpdaterParametersHelper(0, 0.005, 0, 0, 0.2),
         ),
-        "StopDurationOffset": vr_task_logic.NumericalUpdater(
+        vr_task_logic.UpdaterTarget.STOP_DURATION_OFFSET: vr_task_logic.NumericalUpdater(
             operation=vr_task_logic.NumericalUpdaterOperation.OFFSET,
             parameters=NumericalUpdaterParametersHelper(0, 0.005, 0, 0, 0.5),
         ),
-        "StopVelocityThreshold": vr_task_logic.NumericalUpdater(
+        vr_task_logic.UpdaterTarget.STOP_VELOCITY_THRESHOLD: vr_task_logic.NumericalUpdater(
             operation=vr_task_logic.NumericalUpdaterOperation.OFFSETPERCENTAGE,
             parameters=NumericalUpdaterParametersHelper(40, 0, -0.25, 10, 40),
         ),
