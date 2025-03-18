@@ -30,7 +30,7 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
         watchdog_data_transfer_factory(
             remote_dir,
             project_name="Cognitive flexibility in patch foraging",
-            upload_job_configs=[video_compression_job],
+            upload_job_configs=[video_compression_job()],
         )
     )
 
