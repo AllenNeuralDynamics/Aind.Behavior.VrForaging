@@ -119,8 +119,8 @@ def video_compression_job(
     def _video_compression_job_factory(watchdog: aind_watchdog.WatchdogDataTransferService) -> BasicUploadJobConfigs:
         return ModalityConfigs(
             modality=aind_watchdog.Modality.BEHAVIOR_VIDEOS,
-            source=watchdog.source / aind_watchdog.Modality.BEHAVIOR_VIDEOS.abbreviation,
-            job_settings=compression_request_settings,
+            source=Path(watchdog.source / aind_watchdog.Modality.BEHAVIOR_VIDEOS.abbreviation).as_posix(),
+            job_settings=compression_request_settings.model_dump(mode="json"),
             compress_raw_data=True,
         )
 
