@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version >= '3.12'",
@@ -21,8 +22,8 @@ wheels = [
 
 [[package]]
 name = "aind-behavior-experiment-launcher"
-version = "0.3.4"
-source = { registry = "https://pypi.org/simple" }
+version = "0.4.0rc2"
+source = { git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher?rev=v0.4.0-rc2#805ad9b8a6b8218b42e7782b4a25dd3ce606a6e7" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "aind-slims-api" },
@@ -31,14 +32,9 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/25/d7/d852552a6ee110b7bf6e12104e54cb94c4f2e71efec3a04e2ec3b713abc3/aind_behavior_experiment_launcher-0.3.4.tar.gz", hash = "sha256:dcc7fe819c30ae294212e101756bc07b3708cd3ac8de98b3182cd52ca72a11b8", size = 114617 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b5/51/89f15c39ca7a488dc419256f6dba6326880e85f28664690a7badff6b0ac0/aind_behavior_experiment_launcher-0.3.4-py3-none-any.whl", hash = "sha256:e67101f6eb93800aad43ac05051ac9e07e243f350857e0cfd6e96ded65754082", size = 32283 },
-]
 
 [package.optional-dependencies]
 aind-services = [
-    { name = "aind-behavior-video-transformation" },
     { name = "aind-data-schema" },
     { name = "aind-watchdog-service" },
 ]
@@ -58,18 +54,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d0/d8/2fbae3376c1e70d2e3e4c39926d0b0290bdb1e9267fb5d331a2d9644f73b/aind_behavior_services-0.10.2.tar.gz", hash = "sha256:6f84521e91377056444de1896d86864729624aa94eccf164b54cb0f8b30f6a43", size = 135934 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/07/ce/c3bc2c74dc27553dc656b7a7ee89ec7425de7eacd13be7b490a9c2025b1f/aind_behavior_services-0.10.2-py3-none-any.whl", hash = "sha256:ee4f5365db6ecd427b3fffe43688db79105b7244582262a36b38f6d7dafc25c2", size = 49479 },
-]
-
-[[package]]
-name = "aind-behavior-video-transformation"
-version = "0.1.6"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "aind-data-transformation" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c7/dd/8b377119685163d3ffc4704c9e403cc60f6bca42420b91b09f2a22a0cdc4/aind_behavior_video_transformation-0.1.6.tar.gz", hash = "sha256:1d1d01ade2ffa4c4993931c89ad6c688bcbd330e9a68113f2192ed4d8bab6640", size = 590008 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c1/64/abba18b73f359fe254644b6e27209250f82bbaca01e1aa17523f4acea5b6/aind_behavior_video_transformation-0.1.6-py3-none-any.whl", hash = "sha256:c67726b1944d665007742a4a500c7b2b6e3af7c67a56087ac85004347ab257ba", size = 12430 },
 ]
 
 [[package]]
@@ -101,7 +85,7 @@ launcher = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aind-behavior-experiment-launcher", extras = ["aind-services"], marker = "extra == 'launcher'" },
+    { name = "aind-behavior-experiment-launcher", extras = ["aind-services"], marker = "extra == 'launcher'", git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher?rev=v0.4.0-rc2" },
     { name = "aind-behavior-services", specifier = ">=0.10,<0.11" },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"], marker = "extra == 'dev'" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=1.4" },
@@ -114,6 +98,7 @@ requires-dist = [
     { name = "sphinx-jinja", marker = "extra == 'docs'" },
     { name = "sphinx-jsonschema", marker = "extra == 'docs'" },
 ]
+provides-extras = ["launcher", "dev", "docs"]
 
 [[package]]
 name = "aind-codeocean-pipeline-monitor"
@@ -173,19 +158,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/e0/a0/4e96d2fdbc4a90ed4db7e18d9d18f6e6fa903bd7abddb0cb0021469ce613/aind_data_transfer_models-0.17.0.tar.gz", hash = "sha256:41963e417b3f25fb2106174979fec91f737c88fd470aa3a5943153d91f334c6d", size = 49363 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0a/16/78b414d802a75e0bcba8248e5f18b418470a5c405e736fe24da993e1a303/aind_data_transfer_models-0.17.0-py3-none-any.whl", hash = "sha256:7291e5caf105be1f17fbaad8bc54f8fe9ccc19173c07a91441aee5d74d18c867", size = 14514 },
-]
-
-[[package]]
-name = "aind-data-transformation"
-version = "0.1.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pydantic" },
-    { name = "pydantic-settings" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/74/51/6aa20d6ddc8bd9783fa6403998f02bfb5235f70673684254baf2a189de4c/aind_data_transformation-0.1.1.tar.gz", hash = "sha256:a8825dea7bb56241ff22b4bebe29812f75080c563c8cab4fc3ef2bc39b428f04", size = 36038 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a6/0c/bf4c9bd1df7ea4ea270c6fcd6fe6bca8f57fa382cde5e8270818c5e40538/aind_data_transformation-0.1.1-py3-none-any.whl", hash = "sha256:76e32dfa9f767915ed2baf284ebeef0929dcbf6ef5d4ab08c0ee30374b72e96c", size = 5727 },
 ]
 
 [[package]]
