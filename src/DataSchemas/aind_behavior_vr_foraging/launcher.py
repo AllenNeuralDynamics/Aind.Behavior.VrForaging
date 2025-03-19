@@ -31,7 +31,9 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
             remote_dir,
             project_name="Cognitive flexibility in patch foraging",
             upload_job_configs=[
-                ModalityConfigs(Modality.BEHAVIOR_VIDEOS, source="This will get replaced later", compress_raw_data=True)
+                ModalityConfigs(
+                    modality=Modality.BEHAVIOR_VIDEOS, source="This will get replaced later", compress_raw_data=True
+                )
             ],
         )
     )
