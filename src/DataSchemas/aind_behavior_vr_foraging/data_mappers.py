@@ -15,10 +15,11 @@ import aind_data_schema.core.rig
 import aind_data_schema.core.session
 import git
 import pydantic
+from aind_behavior_experiment_launcher.apps import BonsaiApp
 from aind_behavior_experiment_launcher.data_mapper import DataMapper
 from aind_behavior_experiment_launcher.data_mapper import aind_data_schema as ads
 from aind_behavior_experiment_launcher.data_mapper import helpers as data_mapper_helpers
-from aind_behavior_experiment_launcher.launcher.behavior_launcher import BehaviorLauncher
+from aind_behavior_experiment_launcher.launcher.behavior_launcher import BehaviorLauncher, DefaultBehaviorPicker
 from aind_behavior_experiment_launcher.records.subject import WaterLogResult
 from aind_behavior_services.calibration import Calibration
 from aind_behavior_services.calibration.olfactometer import OlfactometerChannelType
@@ -87,11 +88,15 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
 
     @classmethod
     def from_launcher(cls, launcher: BehaviorLauncher) -> Self:
-        return cls(
-            rig_schema_filename=f"{launcher.rig_schema.rig_name}.json",
-            db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
-            db_root=launcher.config_library_dir,
-        )
+        picker = launcher.picker
+        if isinstance(picker, DefaultBehaviorPicker):
+            return cls(
+                rig_schema_filename=f"{launcher.rig_schema.rig_name}.json",
+                db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
+                db_root=picker.config_library_dir,
+            )
+        else:
+            raise NotImplementedError("Only DefaultBehaviorPicker is supported.")
 
 
 class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
@@ -118,14 +123,22 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     @classmethod
     def from_launcher(cls, launcher: BehaviorLauncher) -> Self:
-        now = utcnow()
+        script_path: os.PathLike
+
+        if isinstance(launcher.services_factory_manager.app, BonsaiApp):
+            script_path = launcher.services_factory_manager.app.workflow
+        else:
+            raise NotImplementedError(
+                f"Type of app is not supported for mapping. Got {type(launcher.services_factory_manager.app)}"
+            )
+
         return cls(
             session_model=launcher.session_schema,
             rig_model=launcher.rig_schema,
             task_logic_model=launcher.task_logic_schema,
             repository=launcher.repository,
-            script_path=launcher.services_factory_manager.bonsai_app.workflow,
-            session_end_time=now,
+            script_path=script_path,
+            session_end_time=utcnow(),
         )
 
     @property
@@ -391,7 +404,7 @@ def coerce_to_aind_data_schema(value: TFrom, target_type: Type[TTo]) -> TTo:
     return target_type(**_normalized_input)
 
 
-class AindDataMapperWrapper(DataMapper):
+class AindDataMapperWrapper(DataMapper[Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]]):
     def __init__(
         self,
         session_name: str,
@@ -424,12 +437,11 @@ class AindDataMapperWrapper(DataMapper):
     def from_launcher(
         cls,
         launcher: BehaviorLauncher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
-        **kwargs,
     ) -> Self:
         session_name: str
         session_directory: Path
         if launcher.session_schema:
-            session_name = launcher.session_schema.session_name
+            session_name = launcher.session_schema.session_name  # type: ignore  # this is guaranteed to be set
         else:
             raise ValueError("Can't infer session name from launcher.")
         session_directory = launcher.session_directory
@@ -475,7 +487,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     data_path = Path(args.data_path)
-    db_root = args.db_root
 
     abs_schemas_path = data_path / "Behavior" / "Logs"
     session = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
@@ -489,7 +500,7 @@ if __name__ == "__main__":
         repository=repo,
         script_path=Path("./src/vr-foraging.py"),
     )
-    rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(db_root))
+    rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(args.db_root))
 
     assert session.session_name is not None
     wrapped_mapper = AindDataMapperWrapper(

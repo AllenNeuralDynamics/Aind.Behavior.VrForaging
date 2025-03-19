@@ -8,7 +8,12 @@ import aind_behavior_experiment_launcher.launcher.behavior_launcher as behavior_
 from aind_behavior_experiment_launcher import resource_monitor
 from aind_behavior_experiment_launcher.apps import BonsaiApp
 from aind_behavior_experiment_launcher.data_transfer import aind_watchdog
+from aind_behavior_experiment_launcher.launcher import BaseCliArgs
 from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_data_schema_models.modalities import Modality
+from aind_watchdog_service.models.manifest_config import (
+    ModalityConfigs,
+)
 
 from aind_behavior_vr_foraging.data_mappers import AindDataMapperWrapper
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -19,16 +24,22 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
     data_dir = r"C:/Data"
     remote_dir = Path(r"\\allen\aind\scratch\vr-foraging\data")
     srv = behavior_launcher.BehaviorServicesFactoryManager()
-    srv.attach_bonsai_app(BonsaiApp(r"./src/vr-foraging.bonsai"))
+    srv.attach_app(BonsaiApp(Path(r"./src/vr-foraging.bonsai")))
     srv.attach_data_mapper(AindDataMapperWrapper.from_launcher)
     srv.attach_data_transfer(
-        watchdog_data_transfer_factory(remote_dir, project_name="Cognitive flexibility in patch foraging")
+        watchdog_data_transfer_factory(
+            remote_dir,
+            project_name="Cognitive flexibility in patch foraging",
+            upload_job_configs=[
+                ModalityConfigs(Modality.BEHAVIOR_VIDEOS, source="This will get replaced later", compress_raw_data=True)
+            ],
+        )
     )
 
     srv.attach_resource_monitor(
         resource_monitor.ResourceMonitor(
             constrains=[
-                resource_monitor.available_storage_constraint_factory(data_dir, 2e11),
+                resource_monitor.available_storage_constraint_factory(Path(data_dir), 2e11),
                 resource_monitor.remote_dir_exists_constraint_factory(Path(remote_dir)),
             ]
         )
@@ -38,15 +49,11 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
         rig_schema_model=AindVrForagingRig,
         session_schema_model=AindBehaviorSessionModel,
         task_logic_schema_model=AindVrForagingTaskLogic,
-        data_dir=data_dir,
-        config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging",
-        temp_dir=r"./local/.temp",
-        allow_dirty=False,
-        skip_hardware_validation=False,
-        debug_mode=False,
-        group_by_subject_log=True,
         services=srv,
-        validate_init=True,
+        settings=BaseCliArgs(),  # type: ignore  # We need to account for situations where a yml file is present
+        picker=behavior_launcher.DefaultBehaviorPicker(
+            config_library_dir=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging")
+        ),
     )
 
 
