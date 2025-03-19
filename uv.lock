@@ -23,7 +23,7 @@ wheels = [
 [[package]]
 name = "aind-behavior-experiment-launcher"
 version = "0.4.0rc2"
-source = { git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher?rev=v0.4.0-rc2#805ad9b8a6b8218b42e7782b4a25dd3ce606a6e7" }
+source = { git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher?rev=1af8c821db6844471d53db8ca02d90eb800dfa52#1af8c821db6844471d53db8ca02d90eb800dfa52" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "aind-slims-api" },
@@ -85,7 +85,7 @@ launcher = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aind-behavior-experiment-launcher", extras = ["aind-services"], marker = "extra == 'launcher'", git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher?rev=v0.4.0-rc2" },
+    { name = "aind-behavior-experiment-launcher", extras = ["aind-services"], marker = "extra == 'launcher'", git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher?rev=1af8c821db6844471d53db8ca02d90eb800dfa52" },
     { name = "aind-behavior-services", specifier = ">=0.10,<0.11" },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"], marker = "extra == 'dev'" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=1.4" },
