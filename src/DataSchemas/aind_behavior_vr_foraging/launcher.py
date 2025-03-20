@@ -6,7 +6,7 @@ from typing import Callable, Optional
 
 import aind_behavior_experiment_launcher.launcher.behavior_launcher as behavior_launcher
 from aind_behavior_experiment_launcher import resource_monitor
-from aind_behavior_experiment_launcher.apps import BonsaiApp
+from aind_behavior_experiment_launcher.apps import AindBehaviorServicesBonsaiApp
 from aind_behavior_experiment_launcher.data_transfer import aind_watchdog
 from aind_behavior_experiment_launcher.launcher import BaseCliArgs
 from aind_behavior_services.session import AindBehaviorSessionModel
@@ -24,7 +24,7 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
     data_dir = r"C:/Data"
     remote_dir = Path(r"\\allen\aind\scratch\vr-foraging\data")
     srv = behavior_launcher.BehaviorServicesFactoryManager()
-    srv.attach_app(BonsaiApp(Path(r"./src/vr-foraging.bonsai")))
+    srv.attach_app(AindBehaviorServicesBonsaiApp(Path(r"./src/vr-foraging.bonsai")))
     srv.attach_data_mapper(AindDataMapperWrapper.from_launcher)
     srv.attach_data_transfer(
         watchdog_data_transfer_factory(
