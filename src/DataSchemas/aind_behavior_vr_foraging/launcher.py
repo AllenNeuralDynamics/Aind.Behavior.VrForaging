@@ -8,7 +8,6 @@ import aind_behavior_experiment_launcher.launcher.behavior_launcher as behavior_
 from aind_behavior_experiment_launcher import resource_monitor
 from aind_behavior_experiment_launcher.apps import AindBehaviorServicesBonsaiApp
 from aind_behavior_experiment_launcher.data_transfer import aind_watchdog
-from aind_behavior_experiment_launcher.launcher import BaseCliArgs
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_data_schema_models.modalities import Modality
 from aind_watchdog_service.models.manifest_config import (
@@ -53,7 +52,7 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
         session_schema_model=AindBehaviorSessionModel,
         task_logic_schema_model=AindVrForagingTaskLogic,
         services=srv,
-        settings=BaseCliArgs(),  # type: ignore  # We need to account for situations where a yml file is present
+        settings=behavior_launcher.BehaviorCliArgs(),  # type: ignore  # We need to account for situations where a yml file is present
         picker=behavior_launcher.DefaultBehaviorPicker(
             config_library_dir=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging")
         ),
