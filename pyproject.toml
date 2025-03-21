@@ -29,7 +29,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 [project.optional-dependencies]
 
 launcher = [
-    "aind_behavior_experiment_launcher[aind-services] @ git+https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher@46b96f9",
+    "aind_behavior_experiment_launcher[aind-services]",
     "aind-data-schema>=1.4"
     ]
 
