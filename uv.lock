@@ -21,19 +21,20 @@ wheels = [
 
 [[package]]
 name = "aind-behavior-experiment-launcher"
-version = "0.4.0"
+version = "0.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "aind-slims-api" },
     { name = "gitpython" },
     { name = "pydantic" },
+    { name = "pydantic-settings" },
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/77/85/9991d5acf483faa6494c7b1a17fbd375d4f4e167260b922a44358333c18a/aind_behavior_experiment_launcher-0.4.0.tar.gz", hash = "sha256:ed40e2a4545a0df9b5a18e9edc96d643355284069c14ce77305738bdd9a3ba3d", size = 124506 }
+sdist = { url = "https://files.pythonhosted.org/packages/ca/6c/449f9450ddb265a9382b2a8fe943dc3943a623af99e41dde7c2234664528/aind_behavior_experiment_launcher-0.4.1.tar.gz", hash = "sha256:b6e1a9ec016b393edb12989a5dbf4d119e5a94ee71a1499052b26d019e3c4d2d", size = 124337 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/31/ae/63e7fc30f52a079bb8d271a6c08aa7c7f852e97a5292186d70d78979941d/aind_behavior_experiment_launcher-0.4.0-py3-none-any.whl", hash = "sha256:eeade5beffd8c696d3448fd2c35cf5512bd6eb1cd3077b06d06ebfc2cd20ceb3", size = 45003 },
+    { url = "https://files.pythonhosted.org/packages/ba/62/c9387a44401bc73ad79007bc36f2a13e43e1ee323d7c0aae9667f612f5d2/aind_behavior_experiment_launcher-0.4.1-py3-none-any.whl", hash = "sha256:b8d2494cf4848cbe59d0bb33069501182827cc0ee225142040b4b26b190b5c8f", size = 44881 },
 ]
 
 [package.optional-dependencies]
@@ -517,15 +518,15 @@ wheels = [
 
 [[package]]
 name = "harp-python"
-version = "0.3.0"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pandas" },
     { name = "pydantic-yaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/eb/a7/104dcb4978e9d485c38677227c0252b0dacd2bd086066a41fce95ce7068c/harp_python-0.3.0.tar.gz", hash = "sha256:af6d406b9b7f697deabd6e70a9ed8bf1b0619bdc5672d8ed0a2eb645dbe1e79d", size = 13372 }
+sdist = { url = "https://files.pythonhosted.org/packages/96/06/76f8f5880a529da914ecb90a808aa54c460f740ab1716c22215e7c8f5b6e/harp_python-0.4.0.tar.gz", hash = "sha256:d2fddb6890e2d52897a3a6d8d5932c0ea569f44340c17c43c7a34c69ef69bbe8", size = 15483 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/68/a3/ec29a871fb25f2399cd74161a31c30fc028258ee2e2f50c599119659f53e/harp_python-0.3.0-py3-none-any.whl", hash = "sha256:a5eac6e460ba3b2d9aa52626d37cf57c4a43c59ec4a741ca55950c339945238f", size = 10939 },
+    { url = "https://files.pythonhosted.org/packages/1c/4c/0b0829ec8444fa995f3719563ff16352ef21c02e665f4f9dc764e085901e/harp_python-0.4.0-py3-none-any.whl", hash = "sha256:1c9f00236dcd9ee4a9ba76087c86ddf5644c20b28b9a211531db9e3897993eea", size = 12599 },
 ]
 
 [[package]]
@@ -1467,11 +1468,11 @@ wheels = [
 
 [[package]]
 name = "tzdata"
-version = "2025.1"
+version = "2025.2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/43/0f/fa4723f22942480be4ca9527bbde8d43f6c3f2fe8412f00e7f5f6746bc8b/tzdata-2025.1.tar.gz", hash = "sha256:24894909e88cdb28bd1636c6887801df64cb485bd593f2fd83ef29075a81d694", size = 194950 }
+sdist = { url = "https://files.pythonhosted.org/packages/95/32/1a225d6164441be760d75c2c42e2780dc0873fe382da3e98a2e1e48361e5/tzdata-2025.2.tar.gz", hash = "sha256:b60a638fcc0daffadf82fe0f57e53d06bdec2f36c4df66280ae79bce6bd6f2b9", size = 196380 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0f/dd/84f10e23edd882c6f968c21c2434fe67bd4a528967067515feca9e611e5e/tzdata-2025.1-py2.py3-none-any.whl", hash = "sha256:7e127113816800496f027041c570f50bcd464a020098a3b6b199517772303639", size = 346762 },
+    { url = "https://files.pythonhosted.org/packages/5c/23/c7abc0ca0a1526a0774eca151daeb8de62ec457e77262b66b359c3c7679e/tzdata-2025.2-py2.py3-none-any.whl", hash = "sha256:1a403fada01ff9221ca8044d701868fa132215d84beb92242d9acd2147f667a8", size = 347839 },
 ]
 
 [[package]]
