@@ -13,13 +13,14 @@ from aind_data_schema_models.modalities import Modality
 from aind_watchdog_service.models.manifest_config import (
     ModalityConfigs,
 )
+from pydantic_settings import CliApp
 
 from aind_behavior_vr_foraging.data_mappers import AindDataMapperWrapper
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 
-def make_launcher() -> behavior_launcher.BehaviorLauncher:
+def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launcher.BehaviorLauncher:
     data_dir = r"C:/Data"
     remote_dir = Path(r"\\allen\aind\scratch\vr-foraging\data")
     srv = behavior_launcher.BehaviorServicesFactoryManager()
@@ -52,7 +53,7 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
         session_schema_model=AindBehaviorSessionModel,
         task_logic_schema_model=AindVrForagingTaskLogic,
         services=srv,
-        settings=behavior_launcher.BehaviorCliArgs(),  # type: ignore  # We need to account for situations where a yml file is present
+        settings=settings,
         picker=behavior_launcher.DefaultBehaviorPicker(
             config_library_dir=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging")
         ),
@@ -111,7 +112,8 @@ def _watchdog_data_transfer_factory(
 
 
 def main():
-    launcher = make_launcher()
+    args = CliApp().run(behavior_launcher.BehaviorCliArgs)
+    launcher = make_launcher(args)
     launcher.main()
     return None
 
