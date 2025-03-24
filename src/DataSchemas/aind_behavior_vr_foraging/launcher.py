@@ -30,7 +30,7 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
         watchdog_data_transfer_factory(
             remote_dir,
             project_name="Cognitive flexibility in patch foraging",
-            transfer_endpoint="http://aind-data-transfer-service-dev/api/v1/submit_jobs",
+            transfer_endpoint="http://aind-data-transfer-service/api/v1/submit_jobs",
             upload_job_configs=[
                 ModalityConfigs(
                     modality=Modality.BEHAVIOR_VIDEOS, source="This will get replaced later", compress_raw_data=True
