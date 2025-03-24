@@ -1,4 +1,3 @@
-import argparse
 import datetime
 import logging
 import os
@@ -15,6 +14,7 @@ import aind_data_schema.core.rig
 import aind_data_schema.core.session
 import git
 import pydantic
+import pydantic_settings
 from aind_behavior_experiment_launcher.apps import BonsaiApp
 from aind_behavior_experiment_launcher.data_mapper import DataMapper
 from aind_behavior_experiment_launcher.data_mapper import aind_data_schema as ads
@@ -475,20 +475,18 @@ class AindDataMapperWrapper(DataMapper[Tuple[aind_data_schema.core.rig.Rig, aind
         return (self._rig_schema is not None) and (self._session_schema is not None)
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Map session and rig data to AindDataSchema.")
-    parser.add_argument("data_path", type=str, help="Path to the data directory.")
-    parser.add_argument(
-        "--db-root",
-        type=str,
-        default=r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging",
-        help=r"Root directory for the database (default: \\allen\aind\scratch\AindBehavior.db\AindVrForaging).",
+class _MapperCli(pydantic_settings.BaseSettings, cli_prog_name="data-mapper", cli_kebab_case=True):
+    data_path: os.PathLike = pydantic.Field(description="Path to the session data directory.")
+    db_root: os.PathLike = pydantic.Field(
+        default=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging"),
+        description="Root directory for the database for additional metadata.",
     )
-    args = parser.parse_args()
 
-    data_path = Path(args.data_path)
 
-    abs_schemas_path = data_path / "Behavior" / "Logs"
+if __name__ == "__main__":
+    cli = pydantic_settings.CliApp()
+    parsed_args = cli.run(_MapperCli)
+    abs_schemas_path = parsed_args.data_path / "Behavior" / "Logs"
     session = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
     rig = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
     task_logic = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
@@ -500,12 +498,12 @@ if __name__ == "__main__":
         repository=repo,
         script_path=Path("./src/vr-foraging.py"),
     )
-    rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(args.db_root))
+    rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(parsed_args.db_root))
 
     assert session.session_name is not None
     wrapped_mapper = AindDataMapperWrapper(
         session_name=session.session_name,
-        session_directory=data_path,
+        session_directory=parsed_args.data_path,
         rig_data_mapper=rig_mapper,
         session_data_mapper=session_mapper,
     )
