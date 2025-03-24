@@ -486,7 +486,7 @@ class _MapperCli(pydantic_settings.BaseSettings, cli_prog_name="data-mapper", cl
 if __name__ == "__main__":
     cli = pydantic_settings.CliApp()
     parsed_args = cli.run(_MapperCli)
-    abs_schemas_path = parsed_args.data_path / "Behavior" / "Logs"
+    abs_schemas_path = Path(parsed_args.data_path) / "Behavior" / "Logs"
     session = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
     rig = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
     task_logic = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
