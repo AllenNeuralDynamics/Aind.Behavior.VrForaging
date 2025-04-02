@@ -8,7 +8,9 @@ from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskPa
 from pydantic import BaseModel, Field, NonNegativeFloat, model_validator
 from typing_extensions import TypeAliasType
 
-__version__ = "0.5.1"
+from aind_behavior_vr_foraging import (
+    __version__,
+)  # TODO refactor this once https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher/issues/73 is fixed
 
 
 def scalar_value(value: float) -> distributions.Scalar:
