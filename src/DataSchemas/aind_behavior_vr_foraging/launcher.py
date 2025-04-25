@@ -36,6 +36,7 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
                     modality=Modality.BEHAVIOR_VIDEOS, source="This will get replaced later", compress_raw_data=True
                 )
             ],
+            delete_modalities_source_after_success=True,
         )
     )
 
