@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version >= '3.12'",
@@ -22,7 +23,7 @@ wheels = [
 [[package]]
 name = "aind-behavior-experiment-launcher"
 version = "0.4.1"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher.git?rev=feat-upgrade-watchdog#57cf40378438afa56664effa1350bc940b30789a" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "aind-slims-api" },
@@ -31,10 +32,6 @@ dependencies = [
     { name = "pydantic-settings" },
     { name = "rich" },
     { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ca/6c/449f9450ddb265a9382b2a8fe943dc3943a623af99e41dde7c2234664528/aind_behavior_experiment_launcher-0.4.1.tar.gz", hash = "sha256:b6e1a9ec016b393edb12989a5dbf4d119e5a94ee71a1499052b26d019e3c4d2d", size = 124337 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ba/62/c9387a44401bc73ad79007bc36f2a13e43e1ee323d7c0aae9667f612f5d2/aind_behavior_experiment_launcher-0.4.1-py3-none-any.whl", hash = "sha256:b8d2494cf4848cbe59d0bb33069501182827cc0ee225142040b4b26b190b5c8f", size = 44881 },
 ]
 
 [package.optional-dependencies]
@@ -89,7 +86,7 @@ launcher = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aind-behavior-experiment-launcher", extras = ["aind-services"], marker = "extra == 'launcher'" },
+    { name = "aind-behavior-experiment-launcher", extras = ["aind-services"], marker = "extra == 'launcher'", git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher.git?rev=feat-upgrade-watchdog" },
     { name = "aind-behavior-services", specifier = ">=0.10,<0.11" },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"], marker = "extra == 'dev'" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=1.4" },
@@ -102,6 +99,7 @@ requires-dist = [
     { name = "sphinx-jinja", marker = "extra == 'docs'" },
     { name = "sphinx-jsonschema", marker = "extra == 'docs'" },
 ]
+provides-extras = ["launcher", "dev", "docs"]
 
 [[package]]
 name = "aind-codeocean-pipeline-monitor"
@@ -207,16 +205,16 @@ wheels = [
 
 [[package]]
 name = "aind-watchdog-service"
-version = "0.1.4"
+version = "0.1.5.dev8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-data-schema-models" },
     { name = "aind-data-transfer-models" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/56/c9/2ef15e05eb8ad53a1b29fcc41d262f65e26d4aafe9e4dddd728c6b49829c/aind_watchdog_service-0.1.4.tar.gz", hash = "sha256:9e4d256ef4724c8c6c182e29bc0438ec3dcafd8369dcd5204e2e78aa07988762", size = 402285 }
+sdist = { url = "https://files.pythonhosted.org/packages/e5/3f/67af36b53cb3dd8eb8d108d9309792050d06b6c62b789614e2cbd7ec5640/aind_watchdog_service-0.1.5.dev8.tar.gz", hash = "sha256:c91759b33572f46153227f658010f5c849fb6dae9601e0a23888bf2f8d11ec9e", size = 404124 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/36/07/27ae97292be5569d7c947e035e9e193c183e278d47970c3b94a7f7962357/aind_watchdog_service-0.1.4-py3-none-any.whl", hash = "sha256:5cb1ec5f680b0c5029c995f22cd2cf44494486b68042854a4bdfa55ed37994f4", size = 50685 },
+    { url = "https://files.pythonhosted.org/packages/9e/a7/4e34414dc256d4aec6ac6fd7c62f319cd6969aa20601550a67ee90faa938/aind_watchdog_service-0.1.5.dev8-py3-none-any.whl", hash = "sha256:14741f228164d44948e8e13201737ab12d946530cfce8ba46a878b8eac220853", size = 52301 },
 ]
 
 [[package]]
