@@ -3,11 +3,11 @@ name: Deploy Sphinx documentation to Pages
 on:
   workflow_dispatch:
   push:
-    branches: main
+    branches: [main]
 
 jobs:
   pages:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: Setup Graphviz
       uses: ts-graphviz/setup-graphviz@v2.0.2
