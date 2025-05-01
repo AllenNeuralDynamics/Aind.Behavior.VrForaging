@@ -61,14 +61,14 @@
         "duration": {
           "default": 0.2,
           "description": "Duration",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Duration",
           "type": "number"
         },
         "frequency": {
           "default": 1000,
           "description": "Frequency",
-          "minimum": 100.0,
+          "minimum": 100,
           "title": "Frequency",
           "type": "number"
         }
@@ -132,14 +132,14 @@
         "alpha": {
           "default": 5,
           "description": "Alpha parameter of the distribution",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Alpha",
           "type": "number"
         },
         "beta": {
           "default": 5,
           "description": "Beta parameter of the distribution",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Beta",
           "type": "number"
         }
@@ -210,8 +210,8 @@
         "p": {
           "default": 0.5,
           "description": "Probability of success",
-          "maximum": 1.0,
-          "minimum": 0.0,
+          "maximum": 1,
+          "minimum": 0,
           "title": "P",
           "type": "number"
         }
@@ -453,6 +453,7 @@
       "type": "string"
     },
     "Distribution": {
+      "description": "Available distributions",
       "discriminator": {
         "mapping": {
           "Beta": "#/definitions/BetaDistribution",
@@ -499,7 +500,8 @@
         {
           "$ref": "#/definitions/PdfDistribution"
         }
-      ]
+      ],
+      "title": "Distribution"
     },
     "EnvironmentStatistics": {
       "properties": {
@@ -521,7 +523,7 @@
           "description": "Determines the transition probabilities between patches",
           "items": {
             "items": {
-              "minimum": 0.0,
+              "minimum": 0,
               "type": "number"
             },
             "type": "array"
@@ -535,7 +537,7 @@
           "oneOf": [
             {
               "items": {
-                "minimum": 0.0,
+                "minimum": 0,
                 "type": "number"
               },
               "type": "array"
@@ -605,7 +607,7 @@
         "rate": {
           "default": 0,
           "description": "Rate parameter of the distribution",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Rate",
           "type": "number"
         }
@@ -681,14 +683,14 @@
         "shape": {
           "default": 1,
           "description": "Shape parameter of the distribution",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Shape",
           "type": "number"
         },
         "rate": {
           "default": 1,
           "description": "Rate parameter of the distribution",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Rate",
           "type": "number"
         }
@@ -872,14 +874,14 @@
         "time_to_collect_after_reward": {
           "default": 1,
           "description": "Time (s) to collect after reward",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Time To Collect After Reward",
           "type": "number"
         },
         "retracting_distance": {
           "default": 0,
           "description": "The distance, relative to the default position, the spout will be retracted by",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Retracting Distance",
           "type": "number"
         }
@@ -1030,15 +1032,15 @@
         "valve_max_open_time": {
           "default": 10,
           "description": "Maximum time (s) the valve can be open continuously",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Valve Max Open Time",
           "type": "number"
         },
         "target_total_flow": {
           "default": 1000,
           "description": "Target total flow (ml/s) of the odor mixture",
-          "maximum": 1000.0,
-          "minimum": 100.0,
+          "maximum": 1000,
+          "minimum": 100,
           "title": "Target Total Flow",
           "type": "number"
         },
@@ -1051,8 +1053,8 @@
         "target_odor_flow": {
           "default": 100,
           "description": "Target odor flow (ml/s) in the odor mixture",
-          "maximum": 100.0,
-          "minimum": 0.0,
+          "maximum": 100,
+          "minimum": 0,
           "title": "Target Odor Flow",
           "type": "number"
         }
@@ -1072,8 +1074,8 @@
         "concentration": {
           "default": 1,
           "description": "Concentration of the odor",
-          "maximum": 1.0,
-          "minimum": 0.0,
+          "maximum": 1,
+          "minimum": 0,
           "title": "Concentration",
           "type": "number"
         }
@@ -1095,21 +1097,21 @@
         "stop_duration": {
           "default": 0,
           "description": "Duration (s) the animal must stop for to lock its choice",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Stop Duration",
           "type": "number"
         },
         "time_to_collect_reward": {
           "default": 100000,
           "description": "Time(s) the animal has to collect the reward",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Time To Collect Reward",
           "type": "number"
         },
         "grace_distance_threshold": {
           "default": 10,
           "description": "Virtual distance (cm) the animal must be within to not abort the current choice",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Grace Distance Threshold",
           "type": "number"
         }
@@ -1367,7 +1369,7 @@
           ],
           "description": "The probability density function",
           "items": {
-            "minimum": 0.0,
+            "minimum": 0,
             "type": "number"
           },
           "title": "Pdf",
@@ -1443,7 +1445,7 @@
         "rate": {
           "default": 1,
           "description": "Rate parameter of the Poisson process that generates the distribution",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Rate",
           "type": "number"
         }
@@ -1474,15 +1476,15 @@
         "frequency_filter_cutoff": {
           "default": 0.5,
           "description": "Cutoff frequency (Hz) of the low-pass filter used to filter the velocity signal.",
-          "maximum": 100.0,
-          "minimum": 0.0,
+          "maximum": 100,
+          "minimum": 0,
           "title": "Frequency Filter Cutoff",
           "type": "number"
         },
         "velocity_threshold": {
           "default": 1,
           "description": "Threshold (cm/s) of the velocity signal used to detect when the animal is moving.",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Velocity Threshold",
           "type": "number"
         }
@@ -1545,8 +1547,8 @@
           "description": "Contrast of the texture",
           "oneOf": [
             {
-              "maximum": 1.0,
-              "minimum": 0.0,
+              "maximum": 1,
+              "minimum": 0,
               "type": "number"
             },
             {
@@ -1931,7 +1933,7 @@
         "start_position": {
           "default": 0,
           "description": "Start position of the virtual site (cm)",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Start Position",
           "type": "number"
         },
@@ -2134,14 +2136,14 @@
         "start_position": {
           "default": 0,
           "description": "Start position of the corridor (cm)",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Start Position",
           "type": "number"
         },
         "length": {
           "default": 120,
           "description": "Length of the corridor site (cm)",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Length",
           "type": "number"
         },
@@ -2205,8 +2207,8 @@
       "description": "Parameters of the task logic"
     },
     "version": {
-      "const": "0.5.1",
-      "default": "0.5.1",
+      "const": "0.5.2",
+      "default": "0.5.2",
       "title": "Version",
       "type": "string"
     },
