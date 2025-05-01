@@ -525,14 +525,14 @@
         "display_width": {
           "default": 20,
           "description": "Display width (cm)",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Display Width",
           "type": "number"
         },
         "display_height": {
           "default": 15,
           "description": "Display width (cm)",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Display Height",
           "type": "number"
         }
@@ -1095,20 +1095,20 @@
       "properties": {
         "valve_open_interval": {
           "description": "Time between two consecutive valve openings (s)",
-          "exclusiveMinimum": 0.0,
+          "exclusiveMinimum": 0,
           "title": "Valve open interval",
           "type": "number"
         },
         "valve_open_time": {
           "description": "Valve open interval (s)",
-          "exclusiveMinimum": 0.0,
+          "exclusiveMinimum": 0,
           "title": "Valve open time",
           "type": "number"
         },
         "water_weight": {
           "description": "Weight of water delivered (g)",
           "items": {
-            "exclusiveMinimum": 0.0,
+            "exclusiveMinimum": 0,
             "type": "number"
           },
           "minItems": 1,
@@ -1277,7 +1277,7 @@
         },
         "flow_rate": {
           "default": 100,
-          "maximum": 100.0,
+          "maximum": 100,
           "title": "Target flow rate. mL/min. If channel_type == CARRIER, this value is ignored.",
           "type": "number"
         },
@@ -1483,16 +1483,16 @@
         "brightness": {
           "default": 0,
           "description": "Brightness",
-          "maximum": 1.0,
-          "minimum": -1.0,
+          "maximum": 1,
+          "minimum": -1,
           "title": "Brightness",
           "type": "number"
         },
         "contrast": {
           "default": 1,
           "description": "Contrast",
-          "maximum": 1.0,
-          "minimum": -1.0,
+          "maximum": 1,
+          "minimum": -1,
           "title": "Contrast",
           "type": "number"
         }
@@ -1565,7 +1565,7 @@
         "gain": {
           "default": 0,
           "description": "Gain",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Gain",
           "type": "number"
         },
@@ -1574,7 +1574,7 @@
           "description": "Gamma. If None, will disable gamma correction.",
           "oneOf": [
             {
-              "minimum": 0.0,
+              "minimum": 0,
               "type": "number"
             },
             {
@@ -2075,7 +2075,7 @@
         "wheel_diameter": {
           "default": 15,
           "description": "Wheel diameter",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Wheel Diameter",
           "type": "number"
         },
@@ -2302,7 +2302,7 @@
           "oneOf": [
             {
               "additionalProperties": {
-                "exclusiveMinimum": 0.0,
+                "exclusiveMinimum": 0,
                 "type": "number"
               },
               "type": "object"
@@ -2328,8 +2328,8 @@
           "description": "R2 metric from the linear model.",
           "oneOf": [
             {
-              "maximum": 1.0,
-              "minimum": 0.0,
+              "maximum": 1,
+              "minimum": 0,
               "type": "number"
             },
             {
@@ -2344,7 +2344,7 @@
           "oneOf": [
             {
               "items": {
-                "exclusiveMinimum": 0.0,
+                "exclusiveMinimum": 0,
                 "type": "number"
               },
               "minItems": 2,

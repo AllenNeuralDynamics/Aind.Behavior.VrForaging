@@ -1344,6 +1344,9 @@ namespace AindVrForagingDataSchema.TaskLogic
     }
 
 
+    /// <summary>
+    /// Available distributions
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [JsonInheritanceAttribute("Scalar", typeof(Scalar))]
@@ -1356,6 +1359,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [JsonInheritanceAttribute("Beta", typeof(BetaDistribution))]
     [JsonInheritanceAttribute("Gamma", typeof(GammaDistribution))]
     [JsonInheritanceAttribute("Pdf", typeof(PdfDistribution))]
+    [System.ComponentModel.DescriptionAttribute("Available distributions")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Distribution
@@ -6437,7 +6441,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private AindVrForagingTaskParameters _taskParameters = new AindVrForagingTaskParameters();
     
-        private string _version = "0.5.1";
+        private string _version = "0.5.2";
     
         private string _stageName;
     
