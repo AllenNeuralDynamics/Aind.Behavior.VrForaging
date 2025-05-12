@@ -5709,7 +5709,7 @@ Item1 as Displacement,
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p7:CreateSoftwareEvent">
-                            <p7:EventName>TaskLogic_RewardAvailable</p7:EventName>
+                            <p7:EventName>GiveReward</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -5982,7 +5982,7 @@ Item1 as Displacement,
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p7:CreateSoftwareEvent">
-                            <p7:EventName>TaskLogic_RewardDelivery</p7:EventName>
+                            <p7:EventName>HabituationRewardAvailable</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
