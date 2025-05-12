@@ -7,6 +7,18 @@ resolution-markers = [
 ]
 
 [[package]]
+name = "aind-behavior-core-analysis"
+version = "0.0.0"
+source = { git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.CoreAnalysis?rev=main#688c4a0e660c97a892c5a85a9ff2d4dea09aeb67" }
+dependencies = [
+    { name = "aind-behavior-services" },
+    { name = "harp-python" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+    { name = "requests" },
+]
+
+[[package]]
 name = "aind-behavior-curriculum"
 version = "0.0.33"
 source = { registry = "https://pypi.org/simple" }
@@ -65,6 +77,7 @@ wheels = [
 name = "aind-behavior-vr-foraging"
 source = { editable = "." }
 dependencies = [
+    { name = "aind-behavior-core-analysis" },
     { name = "aind-behavior-services" },
 ]
 
@@ -90,6 +103,7 @@ launcher = [
 
 [package.metadata]
 requires-dist = [
+    { name = "aind-behavior-core-analysis", git = "https://github.com/AllenNeuralDynamics/Aind.Behavior.CoreAnalysis?rev=main" },
     { name = "aind-behavior-experiment-launcher", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.4.2" },
     { name = "aind-behavior-services", specifier = ">=0.10,<0.11" },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"], marker = "extra == 'dev'" },
