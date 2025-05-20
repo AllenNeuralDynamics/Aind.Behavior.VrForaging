@@ -7,6 +7,23 @@ resolution-markers = [
 ]
 
 [[package]]
+name = "aind-behavior-core-analysis"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aind-behavior-services" },
+    { name = "harp-python" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "rich" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1f/84/5ce64709a99c974561272e987ee6d54c8f6328154cb3dbdbfb2deeff3b18/aind_behavior_core_analysis-0.1.0.tar.gz", hash = "sha256:376c5a4b2160e5e1f3a0c338c5ad40e8e8a07f1bbe53299ce19dfc45a1dac056", size = 102165 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/7c/1ec8f406da62687b3426e820ffc75dae90a516dae157ed1d64f11581a095/aind_behavior_core_analysis-0.1.0-py3-none-any.whl", hash = "sha256:33aac6cedb5d525f97fe07ac104f1f4424fce8d4c628d06ad7bbd28ea2260f2d", size = 18366 },
+]
+
+[[package]]
 name = "aind-behavior-curriculum"
 version = "0.0.33"
 source = { registry = "https://pypi.org/simple" }
@@ -41,6 +58,7 @@ wheels = [
 name = "aind-behavior-vr-foraging"
 source = { editable = "." }
 dependencies = [
+    { name = "aind-behavior-core-analysis" },
     { name = "aind-behavior-services" },
 ]
 
