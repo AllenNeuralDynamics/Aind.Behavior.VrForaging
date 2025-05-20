@@ -77,9 +77,12 @@ def linkcode_resolve(domain, info):
 # -- Class diagram generation
 
 _static_path = "_static"
+
+
 def export_model_diagram(model: BaseModel, root: str = _static_path) -> None:
     diagram = erd.create(model)
     diagram.draw(f"{root}/{model.__name__}.svg")
+
 
 export_model_diagram(aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic, _static_path)
 
