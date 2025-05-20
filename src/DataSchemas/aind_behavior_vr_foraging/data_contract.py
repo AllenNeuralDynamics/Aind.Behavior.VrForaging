@@ -391,3 +391,9 @@ def dataset(
             ],
         ),
     )
+
+
+def render_dataset() -> str:
+    from aind_behavior_core_analysis.contract.utils import print_data_stream_tree
+
+    return print_data_stream_tree(dataset(Path("<RootPath>")).data_streams)
