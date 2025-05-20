@@ -4,6 +4,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import aind_behavior_vr_foraging
+import aind_behavior_vr_foraging.data_contract as contract
 import aind_behavior_vr_foraging.rig
 import aind_behavior_vr_foraging.task_logic
 import erdantic as erd
@@ -87,7 +88,6 @@ def export_model_diagram(model: BaseModel, root: str = _static_path) -> None:
 export_model_diagram(aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic, _static_path)
 
 # -- Dataset rendering
-import aind_behavior_vr_foraging.data_contract as contract
 
 with open(f"{_static_path}/dataset.txt", "w", encoding="utf-8") as f:
     f.write(contract.render_dataset())
