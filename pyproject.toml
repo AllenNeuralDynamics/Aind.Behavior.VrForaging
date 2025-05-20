@@ -18,7 +18,6 @@ dynamic = ["version"]
 
 dependencies = [
   "aind_behavior_services>=0.10, <0.11",
-  "aind_behavior_core_analysis @ git+https://github.com/AllenNeuralDynamics/Aind.Behavior.CoreAnalysis@main"
 ]
 
 [project.urls]
