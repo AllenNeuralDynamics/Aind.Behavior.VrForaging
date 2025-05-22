@@ -8,11 +8,11 @@ from aind_behavior_core_analysis.contract.harp import (
 )
 from aind_behavior_core_analysis.contract.json import PydanticModel, SoftwareEvents
 from aind_behavior_core_analysis.contract.text import Text
-from aind_behavior_services.rig import AindBehaviorRigModel
 from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel
 
 from aind_behavior_vr_foraging import __version__
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 
 def dataset(
@@ -366,14 +366,14 @@ def dataset(
                                 PydanticModel(
                                     name="Rig",
                                     reader_params=PydanticModel.make_params(
-                                        model=AindBehaviorRigModel,
+                                        model=AindVrForagingRig,
                                         path=root_path / "behavior/Logs/rig_input.json",
                                     ),
                                 ),
                                 PydanticModel(
                                     name="TaskLogic",
                                     reader_params=PydanticModel.make_params(
-                                        model=AindBehaviorTaskLogicModel,
+                                        model=AindVrForagingTaskLogic,
                                         path=root_path / "behavior/Logs/tasklogic_input.json",
                                     ),
                                 ),
