@@ -72,12 +72,16 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
 
     return runner
 
+
 class _QCCli(pydantic_settings.BaseSettings, cli_prog_name="data-mapper", cli_kebab_case=True):
-    data_path: pydantic_settings.CliPositionalArg[os.PathLike] = pydantic.Field(description="Path to the session data directory.")
+    data_path: pydantic_settings.CliPositionalArg[os.PathLike] = pydantic.Field(
+        description="Path to the session data directory."
+    )
+
 
 if __name__ == "__main__":
     cli = pydantic_settings.CliApp()
     parsed_args = cli.run(_QCCli)
     vr_dataset = dataset(Path(parsed_args.data_path))
     runner = make_qc_runner(vr_dataset)
-    runner.run_all_with_progress()    
+    results = runner.run_all_with_progress()
