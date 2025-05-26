@@ -26,12 +26,16 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 
 [project.optional-dependencies]
 
+data = ["contraqctor<0.4.0"]
+
 launcher = [
     "aind-clabe[aind-services]>=0.5",
     "aind-data-schema>=1.4"
     ]
 
-dev = ["aind_behavior_vr_foraging[launcher]",
+dev = [
+    "aind_behavior_vr_foraging[launcher]",
+    "aind_behavior_vr_foraging[data]",
     "ruff",
     "codespell"
 ]
