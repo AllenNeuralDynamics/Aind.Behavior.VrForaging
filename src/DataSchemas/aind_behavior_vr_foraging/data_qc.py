@@ -8,8 +8,8 @@ import pydantic_settings
 from contraqctor import contract, qc
 from contraqctor.contract.harp import HarpDevice
 
-from .data_contract import dataset
-from .rig import AindVrForagingRig
+from aind_behavior_vr_foraging.data_contract import dataset
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
 
 class VrForagingQcSuite(qc.Suite):
@@ -21,12 +21,12 @@ class VrForagingQcSuite(qc.Suite):
         end_session = self.dataset["Behavior"]["Logs"]["EndSession"]
         assert isinstance(end_session.data, pd.DataFrame)
         if end_session.data.empty:
-            self.fail_test(None, "No data in EndSession. Session may be corrupted or not ended properly.")
+            return self.fail_test(None, "No data in EndSession. Session may be corrupted or not ended properly.")
         else:
-            self.pass_test(None, "EndSession event exists with data.")
+            return self.pass_test(None, "EndSession event exists with data.")
 
 
-def run_qc(dataset: contract.Dataset):
+def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     runner = qc.Runner()
     loading_errors = dataset.load_all(strict=False)
     exclude: list[contract.DataStream] = []
@@ -70,13 +70,14 @@ def run_qc(dataset: contract.Dataset):
     for stream in csv_streams:
         runner.add_suite(qc.csv.CsvTestSuite(stream), stream.name)
 
+    return runner
 
 class _QCCli(pydantic_settings.BaseSettings, cli_prog_name="data-mapper", cli_kebab_case=True):
-    data_path: os.PathLike = pydantic.Field(description="Path to the session data directory.")
-
+    data_path: pydantic_settings.CliPositionalArg[os.PathLike] = pydantic.Field(description="Path to the session data directory.")
 
 if __name__ == "__main__":
     cli = pydantic_settings.CliApp()
     parsed_args = cli.run(_QCCli)
     vr_dataset = dataset(Path(parsed_args.data_path))
-    run_qc(vr_dataset)
+    runner = make_qc_runner(vr_dataset)
+    runner.run_all_with_progress()    
