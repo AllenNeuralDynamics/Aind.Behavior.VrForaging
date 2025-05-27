@@ -455,7 +455,7 @@ wheels = [
 
 [[package]]
 name = "contraqctor"
-version = "0.4.0"
+version = "0.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -470,9 +470,9 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b6/86/563a5b923d8bd8b075a64190a6d3d6e3cfb1b7edc9e703df8583e7d9f09c/contraqctor-0.4.0.tar.gz", hash = "sha256:2cb85f7c96241bc78fd5430279fef45a460beee3a0838e9b9de1a57f6e235907", size = 141791 }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/34/1df768b561f6ff0f943632a030407cc47525e16a4b739b407e3b1bf3f910/contraqctor-0.4.1.tar.gz", hash = "sha256:72dddf064f049531edc3834bc3a49da4a9f5031c7d8eda64712c8acbcd86f17d", size = 142742 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1e/06/d9f88b1ce814f23378f2571026e18d9708b5b1e21031b337eacd90ef7c8b/contraqctor-0.4.0-py3-none-any.whl", hash = "sha256:1defd42c9964afceef8a1b63f9294d1e8bb252e89548ff2ba94f3a5fc589a169", size = 41739 },
+    { url = "https://files.pythonhosted.org/packages/b1/2c/96d5ef098a511687db215d7cfbff9701d8c38e9768e5335b6bf01547d83a/contraqctor-0.4.1-py3-none-any.whl", hash = "sha256:4893dbb98dc322ffeca6e69e9d51f69ce3f85bf2907b0467c6ca77da2afe08eb", size = 42572 },
 ]
 
 [[package]]
