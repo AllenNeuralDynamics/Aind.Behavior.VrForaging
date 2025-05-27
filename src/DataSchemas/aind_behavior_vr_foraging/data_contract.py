@@ -187,122 +187,134 @@ def dataset(
                             SoftwareEvents(
                                 name="ActivePatch",
                                 description="An event emitted when a patch threshold is crossed.",
-                                reader_params=SoftwareEvents.make_params(root_path / "SoftwareEvents/ActivePatch.json"),
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/ActivePatch.json"
+                                ),
                             ),
                             SoftwareEvents(
                                 name="ActiveSite",
                                 description="An event emitted when a site becomes active.",
-                                reader_params=SoftwareEvents.make_params(root_path / "SoftwareEvents/ActiveSite.json"),
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/ActiveSite.json"
+                                ),
                             ),
                             SoftwareEvents(
                                 name="ArmOdor",
                                 description="An event sent each time an Odor mixture messaged is sent to arm at the olfactometer.",
-                                reader_params=SoftwareEvents.make_params(root_path / "SoftwareEvents/ArmOdor.json"),
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/ArmOdor.json"
+                                ),
                             ),
                             SoftwareEvents(
                                 name="Block",
                                 description="An event signaling block transitions.",
-                                reader_params=SoftwareEvents.make_params(root_path / "SoftwareEvents/Block.json"),
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/Block.json"
+                                ),
                             ),
                             SoftwareEvents(
                                 name="ChoiceFeedback",
                                 description="A unit event that is emitted when the subject receives feedback about their choice.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/ChoiceFeedback.json"
+                                    root_path / "behavior/SoftwareEvents/ChoiceFeedback.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="DepletionVariable",
                                 description="The value of the variable used to determine the depletion state of the current patch.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/DepletionVariable.json"
+                                    root_path / "behavior/SoftwareEvents/DepletionVariable.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="GiveReward",
                                 description="The amount of rward given to a subject. The value can be null if no reward was given (P=0) or 0.0 if the reward was delivered but calculated to be 0.",
-                                reader_params=SoftwareEvents.make_params(root_path / "SoftwareEvents/GiveReward.json"),
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/GiveReward.json"
+                                ),
                             ),
                             SoftwareEvents(
                                 name="PatchRewardAmount",
                                 description="Amount of reward available to be collected in the upcoming site.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/PatchRewardAmount.json"
+                                    root_path / "behavior/SoftwareEvents/PatchRewardAmount.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="PatchRewardAvailable",
                                 description="Amount of reward left in the patch.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/PatchRewardAvailable.json"
+                                    root_path / "behavior/SoftwareEvents/PatchRewardAvailable.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="PatchRewardProbability",
                                 description="Probability of reward being available to be collected in the upcoming site.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/PatchRewardProbability.json"
+                                    root_path / "behavior/SoftwareEvents/PatchRewardProbability.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="RngSeed",
                                 description="The value of the random number generator seed.",
-                                reader_params=SoftwareEvents.make_params(root_path / "SoftwareEvents/RngSeed.json"),
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/RngSeed.json"
+                                ),
                             ),
                             SoftwareEvents(
                                 name="StopVelocityThreshold",
                                 description="The velocity threshold used to determine if the subject is stopped or not. In cm/s.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/StopVelocityTreshold.json"
+                                    root_path / "behavior/SoftwareEvents/StopVelocityTreshold.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="VisualCorridorSpecs",
                                 description="Specification of the visual corridor instantiated to be rendered.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/VisualCorridorSpecs.json"
+                                    root_path / "behavior/SoftwareEvents/VisualCorridorSpecs.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="WaitRewardOutcome",
                                 description="The outcome of the period between choice and reward delivery.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/WaitRewardOutcome.json"
+                                    root_path / "behavior/SoftwareEvents/WaitRewardOutcome.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="WaitLickOutcome",
                                 description="The outcome of the period between reward availability and lick detection.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/WaitLickOutcome.json"
+                                    root_path / "behavior/SoftwareEvents/WaitLickOutcome.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="UpdaterStopDurationOffset",
                                 description="Metadata for the updater of the StopDurationOffset parameter.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/UpdaterStopDurationOffset.json"
+                                    root_path / "behavior/SoftwareEvents/UpdaterStopDurationOffset.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="UpdaterStopVelocityThreshold",
                                 description="Metadata for the updater of the StopVelocityThreshold parameter.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/UpdaterStopVelocityThreshold.json"
+                                    root_path / "behavior/SoftwareEvents/UpdaterStopVelocityThreshold.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="UpdaterRewardDelayOffset",
                                 description="Metadata for the updater of the RewardDelayOffset parameter.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/UpdaterRewardDelayOffset.json"
+                                    root_path / "behavior/SoftwareEvents/UpdaterRewardDelayOffset.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="HabituationRewardAvailable",
                                 description="In the habituation task mode, this event will be emitted whenever a reward is available to be collected.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "SoftwareEvents/HabituationRewardAvailable.json"
+                                    root_path / "behavior/SoftwareEvents/HabituationRewardAvailable.json"
                                 ),
                             ),
                         ],
