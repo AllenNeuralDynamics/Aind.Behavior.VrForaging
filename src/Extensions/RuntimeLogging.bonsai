@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.2"
+<WorkflowBuilder Version="2.8.5"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
@@ -57,7 +57,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p2:CreateSoftwareEvent">
-                <p2:EventName>SoftwareEvent</p2:EventName>
+                <p2:EventName>RuntimeLog</p2:EventName>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
