@@ -307,31 +307,39 @@ def dataset(
                             ),
                         ],
                     ),
-                    Csv(
-                        "CurrentPosition",
-                        description="The position of the animal in VR coordinates (cm). The timestamp is derived from the encoder reading that gave rise to the position change.",
-                        reader_params=Csv.make_params(
-                            path=root_path / "behavior/OperationControl/CurrentPosition.csv",
-                        ),
-                    ),
-                    Csv(
-                        "IsStopped",
-                        description="The result of the ongoing stop detection algorithm. The timestamp is derived from the encoder reading that gave rise to the position change.",
-                        reader_params=Csv.make_params(
-                            path=root_path / "behavior/OperationControl/IsStopped.csv",
-                        ),
-                    ),
-                    Csv(
-                        "Torque",
-                        description="The torque instructed to be applied to the treadmill. Timestamps are software-derived, use the Harp device events for hardware timestamps.",
-                        reader_params=Csv.make_params(
-                            path=root_path / "behavior/OperationControl/CurrentPosition.csv",
-                        ),
-                    ),
-                    Csv(
-                        name="RendererSynchState",
-                        description="Contains information that allows the post-hoc alignment of visual stimuli to the behavior data.",
-                        reader_params=Csv.make_params(path=root_path / "behavior/Renderer/RendererSynchState.csv"),
+                    DataStreamCollection(
+                        name="OperationControl",
+                        description="Streams associated with online operation of the task.",
+                        data_streams=[
+                            Csv(
+                                "CurrentPosition",
+                                description="The position of the animal in VR coordinates (cm). The timestamp is derived from the encoder reading that gave rise to the position change.",
+                                reader_params=Csv.make_params(
+                                    path=root_path / "behavior/OperationControl/CurrentPosition.csv",
+                                ),
+                            ),
+                            Csv(
+                                "IsStopped",
+                                description="The result of the ongoing stop detection algorithm. The timestamp is derived from the encoder reading that gave rise to the position change.",
+                                reader_params=Csv.make_params(
+                                    path=root_path / "behavior/OperationControl/IsStopped.csv",
+                                ),
+                            ),
+                            Csv(
+                                "Torque",
+                                description="The torque instructed to be applied to the treadmill. Timestamps are software-derived, use the Harp device events for hardware timestamps.",
+                                reader_params=Csv.make_params(
+                                    path=root_path / "behavior/OperationControl/CurrentPosition.csv",
+                                ),
+                            ),
+                            Csv(
+                                name="RendererSynchState",
+                                description="Contains information that allows the post-hoc alignment of visual stimuli to the behavior data.",
+                                reader_params=Csv.make_params(
+                                    path=root_path / "behavior/Renderer/RendererSynchState.csv"
+                                ),
+                            ),
+                        ],
                     ),
                     DataStreamCollection(
                         name="Logs",
