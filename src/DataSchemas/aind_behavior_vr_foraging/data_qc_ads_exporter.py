@@ -1,4 +1,5 @@
 import itertools
+import os
 import typing as t
 import uuid
 from datetime import datetime, timezone
@@ -28,7 +29,9 @@ status_converter = {
 }
 
 
-def result_to_qc_metric(result: qc.Result, create_assets: bool = False) -> t.Optional[QCMetric]:
+def result_to_qc_metric(
+    result: qc.Result, create_assets: bool = False, asset_root: os.PathLike = Path(".")
+) -> t.Optional[QCMetric]:
     status = QCStatus(evaluator=EVALUATOR, status=status_converter[result.status], timestamp=NOW)
 
     return QCMetric(
@@ -36,24 +39,24 @@ def result_to_qc_metric(result: qc.Result, create_assets: bool = False) -> t.Opt
         description=f"Test: {result.description} // Message: {result.message}",
         value=result.result,
         status_history=[status],
-        reference=_resolve_reference(result) if create_assets else None,
+        reference=_resolve_reference(result, asset_root) if create_assets else None,
     )
 
 
-def _resolve_reference(result: qc.Result) -> t.Optional[str]:
+def _resolve_reference(result: qc.Result, asset_root: os.PathLike = Path(".")) -> t.Optional[str]:
     if not isinstance(result.context, dict):
-        return
+        return None
     asset = result.context.get("asset", None)
     if isinstance(asset, qc._context_extensions.ContextExportableObj):
         if isinstance(asset.asset, Figure):
             random_hash = uuid.uuid4().hex
             path = f"{result.suite_name}_{result.test_name}_{random_hash}.png"
-            asset.asset.savefig(path)
+            asset.asset.savefig(Path(asset_root) / path)
             return path
     return None
 
 
-def to_ads(results: t.Dict[str | None, t.List[qc.Result]]) -> QualityControl:
+def to_ads(results: t.Dict[str | None, t.List[qc.Result]], cli_args: "_QCCli") -> QualityControl:
     evals = []
     for group_name, group in results.items():
         groupby_test_suite = itertools.groupby(group, lambda x: x.suite_name)
@@ -61,7 +64,9 @@ def to_ads(results: t.Dict[str | None, t.List[qc.Result]]) -> QualityControl:
             if not test_results:
                 continue
             _test_results = list(test_results)
-            metrics = [result_to_qc_metric(r, create_assets=True) for r in _test_results]
+            metrics = [
+                result_to_qc_metric(r, create_assets=True, asset_root=cli_args.asset_path) for r in _test_results
+            ]
             metrics = [m for m in metrics if m is not None]
             evals.append(
                 QCEvaluation(
@@ -76,9 +81,13 @@ def to_ads(results: t.Dict[str | None, t.List[qc.Result]]) -> QualityControl:
 
 
 class _QCCli(data_qc._QCCli):
-    export_path: t.Optional[Path] = pydantic.Field(
-        default="qc.json",
+    qc_json_path: Path = pydantic.Field(
+        default=Path("qc.json"),
         description="Path to export the QC results in ADS format. If not provided, results will not be exported.",
+    )
+    asset_path: Path = pydantic.Field(
+        default=Path("."),
+        description="Path to the asset root directory. If not provided, the current working directory will be used.",
     )
 
 
@@ -88,9 +97,9 @@ if __name__ == "__main__":
     vr_dataset = data_qc.dataset(Path(parsed_args.data_path))
     runner = data_qc.make_qc_runner(vr_dataset)
     results = runner.run_all_with_progress()
-    qc_json = to_ads(results)
-    if parsed_args.export_path is not None:
-        with open(parsed_args.export_path, "w") as f:
+    qc_json = to_ads(results, parsed_args)
+    if parsed_args.qc_json_path is not None:
+        with open(parsed_args.qc_json_path, "w", encoding="utf-8") as f:
             f.write(qc_json.model_dump_json(indent=2))
 
     # uv run .\src\DataSchemas\aind_behavior_vr_foraging\data_qc_ads_exporter.py C:\users\bruno.cruz\Downloads\789924_2025-04-14T175107Z
