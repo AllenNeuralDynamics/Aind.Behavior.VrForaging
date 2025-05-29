@@ -293,21 +293,21 @@ def dataset(
                                 name="UpdaterStopDurationOffset",
                                 description="Metadata for the updater of the StopDurationOffset parameter.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/SoftwareEvents/UpdaterStopDurationOffset.json"
+                                    root_path / "behavior/UpdaterEvents/UpdaterStopDurationOffset.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="UpdaterStopVelocityThreshold",
                                 description="Metadata for the updater of the StopVelocityThreshold parameter.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/SoftwareEvents/UpdaterStopVelocityThreshold.json"
+                                    root_path / "behavior/UpdaterEvents/UpdaterStopVelocityThreshold.json"
                                 ),
                             ),
                             SoftwareEvents(
                                 name="UpdaterRewardDelayOffset",
                                 description="Metadata for the updater of the RewardDelayOffset parameter.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/SoftwareEvents/UpdaterRewardDelayOffset.json"
+                                    root_path / "behavior/UpdaterEvents/UpdaterRewardDelayOffset.json"
                                 ),
                             ),
                             SoftwareEvents(
