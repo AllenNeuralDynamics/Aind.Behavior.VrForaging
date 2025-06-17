@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.5"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema.Session;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -37,7 +37,7 @@
                  xmlns:p21="clr-namespace:Bonsai.Numerics.Interpolation;assembly=Bonsai.Numerics"
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
-                 xmlns:p22="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
+                 xmlns:ui="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -8677,7 +8677,7 @@ Item1 as Displacement,
               <Name>QCDiagnosis</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p22:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="ui:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateFrame" />
@@ -8696,7 +8696,7 @@ Item1 as Displacement,
               <Combinator xsi:type="rx:SubscribeWhen" />
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p22:ObjectTextVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="ui:ObjectTextVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>LickometerState</Name>
