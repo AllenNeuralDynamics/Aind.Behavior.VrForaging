@@ -8635,6 +8635,13 @@ Item1 as Displacement,
           </Edges>
         </Workflow>
       </Expression>
+      <Expression xsi:type="ui:VisualizerWindow">
+        <ui:Text>UserInterface</ui:Text>
+        <ui:Visible>true</ui:Visible>
+        <ui:Location xsi:nil="true" />
+        <ui:Size xsi:nil="true" />
+        <ui:WindowState>Normal</ui:WindowState>
+      </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>TaskVisualizer</Name>
         <Workflow>
@@ -9095,6 +9102,13 @@ Item2 as TotalReward)</scr:Expression>
           </Edges>
         </Workflow>
       </Expression>
+      <Expression xsi:type="ui:VisualizerWindow">
+        <ui:Text>TaskVisualizer</ui:Text>
+        <ui:Visible>true</ui:Visible>
+        <ui:Location xsi:nil="true" />
+        <ui:Size xsi:nil="true" />
+        <ui:WindowState>Normal</ui:WindowState>
+      </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>EndExperiment</Name>
       </Expression>
@@ -9396,11 +9410,13 @@ Item2 as TotalReward)</scr:Expression>
       <Edge From="19" To="20" Label="Source2" />
       <Edge From="20" To="22" Label="Source1" />
       <Edge From="21" To="22" Label="Source2" />
+      <Edge From="25" To="26" Label="Source1" />
       <Edge From="27" To="28" Label="Source1" />
-      <Edge From="28" To="29" Label="Source1" />
       <Edge From="29" To="30" Label="Source1" />
       <Edge From="30" To="31" Label="Source1" />
       <Edge From="31" To="32" Label="Source1" />
+      <Edge From="32" To="33" Label="Source1" />
+      <Edge From="33" To="34" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
