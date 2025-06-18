@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Annotated, Dict, List, Literal, Optional, Self
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import BaseModel, Field, NonNegativeFloat, model_validator
+from pydantic import BaseModel, Field, NonNegativeFloat, field_validator, model_validator
 from typing_extensions import TypeAliasType
 
 from aind_behavior_vr_foraging import (
@@ -290,12 +290,21 @@ class VisualCorridor(BaseModel):
 class EnvironmentStatistics(BaseModel):
     patches: List[PatchStatistics] = Field(default_factory=list, description="List of patches", min_length=1)
     transition_matrix: List[List[NonNegativeFloat]] = Field(
-        default=[[1]], description="Determines the transition probabilities between patches"
+        default=[[1]],
+        description="Determines the transition probabilities between patches",
+        validate_default=True,
     )
     first_state_occupancy: Optional[List[NonNegativeFloat]] = Field(
         default=None,
         description="Determines the first state the animal will be in. If null, it will be randomly drawn.",
     )
+
+    @field_validator("transition_matrix", mode="after")
+    @classmethod
+    def _validate_transition_matrix(cls, value: List[List[NonNegativeFloat]]) -> List[List[NonNegativeFloat]]:
+        if any(len(row) != len(value) for row in value):
+            raise ValueError("Transition matrix must be square.")
+        return value
 
 
 class MovableSpoutControl(BaseModel):

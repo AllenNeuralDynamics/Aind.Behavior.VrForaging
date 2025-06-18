@@ -5,6 +5,7 @@ bin
 obj
 Packages
 Bonsai.exe.WebView2
+Bonsai/Settings/
 *.bin
 *.avi
 *.dll
