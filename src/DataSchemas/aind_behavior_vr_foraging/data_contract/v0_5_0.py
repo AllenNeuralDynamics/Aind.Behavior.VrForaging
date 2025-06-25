@@ -12,7 +12,6 @@ from contraqctor.contract.json import PydanticModel, SoftwareEvents
 from contraqctor.contract.mux import MapFromPaths
 from contraqctor.contract.text import Text
 
-from aind_behavior_vr_foraging import __version__
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
@@ -21,7 +20,7 @@ def dataset(
     root_path: Path,
     name: str = "VrForagingDataset",
     description: str = "A VrForaging dataset",
-    version: str = __version__,
+    version: str = "0.5.0",
 ) -> Dataset:
     """
     Creates a Dataset object for the VR Foraging experiment.
@@ -228,7 +227,7 @@ def dataset(
                             ),
                             SoftwareEvents(
                                 name="GiveReward",
-                                description="The amount of rward given to a subject. The value can be null if no reward was given (P=0) or 0.0 if the reward was delivered but calculated to be 0.",
+                                description="The amount of reward given to a subject. The value can be null if no reward was given (P=0) or 0.0 if the reward was delivered but calculated to be 0.",
                                 reader_params=SoftwareEvents.make_params(
                                     root_path / "behavior/SoftwareEvents/GiveReward.json"
                                 ),
@@ -415,9 +414,3 @@ def dataset(
             ),
         ],
     )
-
-
-def render_dataset() -> str:
-    from contraqctor.contract.utils import print_data_stream_tree
-
-    return print_data_stream_tree(dataset(Path("<RootPath>")))
