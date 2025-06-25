@@ -27,27 +27,27 @@ class VrForagingQcSuite(qc.Suite):
 
 
 def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
-    runner = qc.Runner()
+    _runner = qc.Runner()
     loading_errors = dataset.load_all(strict=False)
     exclude: list[contract.DataStream] = []
 
-    # Exclude harp registers from commands
+    # Exclude commands to Harp boards as these are tested separately
     for cmd in dataset["Behavior"]["HarpCommands"]:
         for stream in cmd:
             if isinstance(stream, contract.harp.HarpRegister):
                 exclude.append(stream)
 
-    runner.add_suite(qc.contract.ContractTestSuite(loading_errors, exclude=exclude))
-    # Add Harp tests for ALL Harp devices in the dataset
-    runner.add_suite(VrForagingQcSuite(dataset))
+    # Add the outcome of the dataset loading step to the automatic qc
+    _runner.add_suite(qc.contract.ContractTestSuite(loading_errors, exclude=exclude))
 
+    # Add Harp tests for ALL Harp devices in the dataset
     for stream in (_r := dataset["Behavior"]):
         if isinstance(stream, HarpDevice):
             commands = t.cast(HarpDevice, _r["HarpCommands"][stream.name])
-            runner.add_suite(qc.harp.HarpDeviceTestSuite(stream, commands), stream.name)
+            _runner.add_suite(qc.harp.HarpDeviceTestSuite(stream, commands), stream.name)
 
-    ## Add Harp Hub tests
-    runner.add_suite(
+    # Add Harp Hub tests
+    _runner.add_suite(
         qc.harp.HarpHubTestSuite(
             dataset["Behavior"]["HarpClockGenerator"],
             [harp_device for harp_device in dataset["Behavior"] if isinstance(harp_device, HarpDevice)],
@@ -56,21 +56,24 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     )
 
     # Add harp board specific tests
-    runner.add_suite(qc.harp.HarpSniffDetectorTestSuite(dataset["Behavior"]["HarpSniffDetector"]), "HarpSniffDetector")
+    _runner.add_suite(qc.harp.HarpSniffDetectorTestSuite(dataset["Behavior"]["HarpSniffDetector"]), "HarpSniffDetector")
 
     # Add camera qc
     rig: AindVrForagingRig = dataset["Behavior"]["InputSchemas"]["Rig"].data
     for camera in dataset["BehaviorVideos"]:
-        runner.add_suite(
+        _runner.add_suite(
             qc.camera.CameraTestSuite(camera, expected_fps=rig.triggered_camera_controller.frame_rate), camera.name
         )
 
-    ## Add Csv tests
+    # Add Csv tests
     csv_streams = [stream for stream in dataset.iter_all() if isinstance(stream, contract.csv.Csv)]
     for stream in csv_streams:
-        runner.add_suite(qc.csv.CsvTestSuite(stream), stream.name)
+        _runner.add_suite(qc.csv.CsvTestSuite(stream), stream.name)
 
-    return runner
+    # Add the VR foraging specific tests
+    _runner.add_suite(VrForagingQcSuite(dataset), "VrForaging")
+
+    return _runner
 
 
 class _QCCli(pydantic_settings.BaseSettings, cli_prog_name="data-mapper", cli_kebab_case=True):
