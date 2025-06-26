@@ -21,7 +21,7 @@ class TestAindSessionDataMapper(unittest.TestCase):
         self.rig_model = mock_rig()
         self.task_logic_model = mock_task_logic()
         self.repository = Repo(Path("./"))
-        self.script_path = Path("./src/vr-foraging.bonsai")
+        self.script_path = Path("./src/main.bonsai")
         self.session_end_time = datetime.now()
         self.session_directory = None
 
