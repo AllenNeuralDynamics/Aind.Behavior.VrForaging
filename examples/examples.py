@@ -18,6 +18,7 @@ from aind_behavior_services.calibration.olfactometer import (
     OlfactometerChannel,
     OlfactometerChannelConfig,
     OlfactometerChannelType,
+    Olfactometer,
 )
 from aind_behavior_services.calibration.treadmill import (
     Treadmill,
@@ -153,7 +154,7 @@ def mock_rig() -> AindVrForagingRig:
             cameras={"WebCam0": rig.cameras.WebCamera(index=0)}
         ),
         harp_behavior=HarpBehavior(port_name="COM3"),
-        harp_olfactometer=HarpOlfactometer(port_name="COM4", calibration=olfactometer_calibration),
+        harp_olfactometer=Olfactometer(port_name="COM4", calibration=olfactometer_calibration),
         harp_lickometer=HarpLicketySplit(port_name="COM5"),
         harp_clock_generator=HarpWhiteRabbit(port_name="COM6"),
         harp_analog_input=None,
