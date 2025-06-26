@@ -24,7 +24,7 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
     data_dir = r"C:/Data"
     remote_dir = Path(r"\\allen\aind\scratch\vr-foraging\data")
     srv = behavior_launcher.BehaviorServicesFactoryManager()
-    srv.attach_app(AindBehaviorServicesBonsaiApp(Path(r"./src/vr-foraging.bonsai")))
+    srv.attach_app(AindBehaviorServicesBonsaiApp(Path(r"./src/main.bonsai")))
     srv.attach_data_mapper(AindDataMapperWrapper.from_launcher)
     srv.attach_data_transfer(
         watchdog_data_transfer_factory(
