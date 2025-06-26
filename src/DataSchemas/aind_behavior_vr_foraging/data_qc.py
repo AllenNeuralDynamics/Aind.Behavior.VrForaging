@@ -19,6 +19,12 @@ class VrForagingQcSuite(qc.Suite):
     def test_end_session_exists(self):
         """Check that the session has an end event."""
         end_session = self.dataset["Behavior"]["Logs"]["EndSession"]
+
+        if not end_session.has_data:
+            return self.fail_test(
+                None, "EndSession event does not exist. Session may be corrupted or not ended properly."
+            )
+
         assert isinstance(end_session.data, pd.DataFrame)
         if end_session.data.empty:
             return self.fail_test(None, "No data in EndSession. Session may be corrupted or not ended properly.")
@@ -38,7 +44,7 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
                 exclude.append(stream)
 
     # Add the outcome of the dataset loading step to the automatic qc
-    _runner.add_suite(qc.contract.ContractTestSuite(loading_errors, exclude=exclude))
+    _runner.add_suite(qc.contract.ContractTestSuite(loading_errors, exclude=exclude), group="Data contract")
 
     # Add Harp tests for ALL Harp devices in the dataset
     for stream in (_r := dataset["Behavior"]):
