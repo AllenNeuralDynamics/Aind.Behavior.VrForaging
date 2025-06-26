@@ -961,82 +961,6 @@
       "title": "HarpLicketySplit",
       "type": "object"
     },
-    "HarpOlfactometer": {
-      "properties": {
-        "device_type": {
-          "const": "Olfactometer",
-          "default": "Olfactometer",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "default": null,
-          "description": "Calibration",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "who_am_i": {
-          "const": 1140,
-          "default": 1140,
-          "title": "Who Am I",
-          "type": "integer"
-        },
-        "serial_number": {
-          "default": null,
-          "description": "Device serial number",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Serial Number"
-        },
-        "port_name": {
-          "description": "Device port name",
-          "title": "Port Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "port_name"
-      ],
-      "title": "HarpOlfactometer",
-      "type": "object"
-    },
     "HarpSniffDetector": {
       "properties": {
         "device_type": {
@@ -1294,6 +1218,244 @@
         "Quiet",
         "Dynamic"
       ]
+    },
+    "Olfactometer": {
+      "properties": {
+        "device_type": {
+          "const": "Olfactometer",
+          "default": "Olfactometer",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calibration of the olfactometer"
+        },
+        "who_am_i": {
+          "const": 1140,
+          "default": 1140,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "Olfactometer",
+      "type": "object"
+    },
+    "OlfactometerCalibration": {
+      "description": "Olfactometer calibration class",
+      "properties": {
+        "device_name": {
+          "default": "Olfactometer",
+          "description": "Name of the device being calibrated",
+          "title": "Device name",
+          "type": "string"
+        },
+        "input": {
+          "$ref": "#/definitions/OlfactometerCalibrationInput",
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "$ref": "#/definitions/OlfactometerCalibrationOutput",
+          "title": "Output of the calibration"
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "const": "Calibration of the harp olfactometer device",
+          "default": "Calibration of the harp olfactometer device",
+          "title": "Description",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "title": "OlfactometerCalibration",
+      "type": "object"
+    },
+    "OlfactometerCalibrationInput": {
+      "properties": {
+        "channel_config": {
+          "additionalProperties": {
+            "$ref": "#/definitions/OlfactometerChannelConfig"
+          },
+          "default": {},
+          "description": "Configuration of olfactometer channels",
+          "propertyNames": {
+            "$ref": "#/definitions/OlfactometerChannel"
+          },
+          "title": "Channel Config",
+          "type": "object"
+        }
+      },
+      "title": "OlfactometerCalibrationInput",
+      "type": "object"
+    },
+    "OlfactometerCalibrationOutput": {
+      "properties": {},
+      "title": "OlfactometerCalibrationOutput",
+      "type": "object"
+    },
+    "OlfactometerChannel": {
+      "description": "Harp Olfactometer available channel",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "title": "OlfactometerChannel",
+      "type": "integer",
+      "x-enumNames": [
+        "Channel0",
+        "Channel1",
+        "Channel2",
+        "Channel3"
+      ]
+    },
+    "OlfactometerChannelConfig": {
+      "properties": {
+        "channel_index": {
+          "title": "Channel index",
+          "type": "integer"
+        },
+        "channel_type": {
+          "$ref": "#/definitions/OlfactometerChannelType",
+          "default": "Odor",
+          "title": "Channel type"
+        },
+        "flow_rate_capacity": {
+          "default": 100,
+          "enum": [
+            100,
+            1000
+          ],
+          "title": "Flow capacity. mL/min",
+          "type": "integer"
+        },
+        "flow_rate": {
+          "default": 100,
+          "maximum": 100,
+          "title": "Target flow rate. mL/min. If channel_type == CARRIER, this value is ignored.",
+          "type": "number"
+        },
+        "odorant": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Odorant name"
+        },
+        "odorant_dilution": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Odorant dilution (%v/v)"
+        }
+      },
+      "required": [
+        "channel_index"
+      ],
+      "title": "OlfactometerChannelConfig",
+      "type": "object"
+    },
+    "OlfactometerChannelType": {
+      "description": "Channel type",
+      "enum": [
+        "Odor",
+        "Carrier"
+      ],
+      "title": "OlfactometerChannelType",
+      "type": "string"
     },
     "Rect": {
       "properties": {
@@ -2491,7 +2653,7 @@
       "description": "Harp behavior"
     },
     "harp_olfactometer": {
-      "$ref": "#/definitions/HarpOlfactometer",
+      "$ref": "#/definitions/Olfactometer",
       "description": "Harp olfactometer"
     },
     "harp_lickometer": {
