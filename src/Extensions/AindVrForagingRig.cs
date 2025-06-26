@@ -6426,7 +6426,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _aindBehaviorServicesPkgVersion = "0.11.0";
     
-        private string _version = "0.5.2";
+        private string _version = "0.6.0";
     
         private string _computerName;
     
