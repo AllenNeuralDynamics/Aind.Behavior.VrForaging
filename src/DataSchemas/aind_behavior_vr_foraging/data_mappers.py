@@ -235,7 +235,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 stimulus_name="Olfactory", channels=olfactory_stimulus_channel_config
             )
         )
-        
+
         _olfactory_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.harp.HarpOlfactometer)
         if len(_olfactory_device) > 0:
             if _olfactory_device[0][0]:
