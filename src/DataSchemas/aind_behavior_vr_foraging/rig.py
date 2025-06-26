@@ -43,7 +43,7 @@ class AindVrForagingRig(rig.AindBehaviorRigModel):
         default=None, description="Optional camera controller for monitoring cameras."
     )
     harp_behavior: rig.harp.HarpBehavior = Field(..., description="Harp behavior")
-    harp_olfactometer: oc.HarpOlfactometer = Field(..., description="Harp olfactometer")
+    harp_olfactometer: oc.Olfactometer = Field(..., description="Harp olfactometer")
     harp_lickometer: rig.harp.HarpLicketySplit = Field(..., description="Harp lickometer")
     harp_clock_generator: rig.harp.HarpWhiteRabbit = Field(..., description="Harp clock generator")
     harp_analog_input: Optional[rig.harp.HarpAnalogInput] = Field(default=None, description="Harp analog input")
