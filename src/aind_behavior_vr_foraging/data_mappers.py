@@ -494,7 +494,7 @@ if __name__ == "__main__":
         rig_model=rig,
         task_logic_model=task_logic,
         repository=repo,
-        script_path=Path("./src/vr-foraging.bonsai"),
+        script_path=Path("./src/main.bonsai"),
     )
     rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(parsed_args.db_root))
 
