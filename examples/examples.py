@@ -3,8 +3,6 @@ import os
 
 import aind_behavior_services.rig as rig
 import aind_behavior_services.task_logic.distributions as distributions
-import aind_behavior_vr_foraging.task_logic as vr_task_logic
-from aind_behavior_services import db_utils as db
 from aind_behavior_services.calibration.aind_manipulator import (
     AindManipulatorCalibration,
     AindManipulatorCalibrationInput,
@@ -20,6 +18,7 @@ from aind_behavior_services.calibration.olfactometer import (
     OlfactometerChannel,
     OlfactometerChannelConfig,
     OlfactometerChannelType,
+    Olfactometer,
 )
 from aind_behavior_services.calibration.treadmill import (
     Treadmill,
@@ -33,15 +32,19 @@ from aind_behavior_services.calibration.water_valve import (
     WaterValveCalibrationInput,
     WaterValveCalibrationOutput,
 )
-from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_vr_foraging.rig import (
-    AindManipulatorDevice,
-    AindVrForagingRig,
+from aind_behavior_services.rig.harp import (
     HarpBehavior,
     HarpLicketySplit,
     HarpOlfactometer,
     HarpSniffDetector,
     HarpWhiteRabbit,
+)
+from aind_behavior_services.session import AindBehaviorSessionModel
+
+import aind_behavior_vr_foraging.task_logic as vr_task_logic
+from aind_behavior_vr_foraging.rig import (
+    AindManipulatorDevice,
+    AindVrForagingRig,
     RigCalibration,
 )
 from aind_behavior_vr_foraging.task_logic import (
@@ -132,24 +135,26 @@ def mock_rig() -> AindVrForagingRig:
     )
     water_valve_calibration.output = WaterValveCalibrationOutput(slope=1, offset=0)  # For testing purposes
 
-    video_writer = rig.VideoWriterFfmpeg(frame_rate=120, container_extension="mp4")
+    video_writer = rig.cameras.VideoWriterFfmpeg(frame_rate=120, container_extension="mp4")
 
     return AindVrForagingRig(
         rig_name="test_rig",
-        triggered_camera_controller=rig.CameraController[rig.SpinnakerCamera](
+        triggered_camera_controller=rig.cameras.CameraController[rig.cameras.SpinnakerCamera](
             frame_rate=120,
             cameras={
-                "FaceCamera": rig.SpinnakerCamera(
+                "FaceCamera": rig.cameras.SpinnakerCamera(
                     serial_number="SerialNumber", binning=1, exposure=5000, gain=0, video_writer=video_writer
                 ),
-                "SideCamera": rig.SpinnakerCamera(
+                "SideCamera": rig.cameras.SpinnakerCamera(
                     serial_number="SerialNumber", binning=1, exposure=5000, gain=0, video_writer=video_writer
                 ),
             },
         ),
-        monitoring_camera_controller=rig.CameraController[rig.WebCamera](cameras={"WebCam0": rig.WebCamera(index=0)}),
+        monitoring_camera_controller=rig.cameras.CameraController[rig.cameras.WebCamera](
+            cameras={"WebCam0": rig.cameras.WebCamera(index=0)}
+        ),
         harp_behavior=HarpBehavior(port_name="COM3"),
-        harp_olfactometer=HarpOlfactometer(port_name="COM4", calibration=olfactometer_calibration),
+        harp_olfactometer=Olfactometer(port_name="COM4", calibration=olfactometer_calibration),
         harp_lickometer=HarpLicketySplit(port_name="COM5"),
         harp_clock_generator=HarpWhiteRabbit(port_name="COM6"),
         harp_analog_input=None,
@@ -164,7 +169,7 @@ def mock_rig() -> AindVrForagingRig:
             ),
         ),
         manipulator=AindManipulatorDevice(port_name="COM9", calibration=manipulator_calibration),
-        screen=rig.Screen(display_index=1),
+        screen=rig.visual_stimulation.Screen(display_index=1),
         calibration=RigCalibration(water_valve=water_valve_calibration),
     )
 
@@ -315,23 +320,14 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
     )
 
 
-def mock_subject_database() -> db.SubjectDataBase:
-    """Generates a mock database object"""
-    database = db.SubjectDataBase()
-    database.add_subject("test", db.SubjectEntry(task_logic_target="preward_intercept_stageA"))
-    database.add_subject("test2", db.SubjectEntry(task_logic_target="does_notexist"))
-    return database
-
-
 def main(path_seed: str = "./local/{schema}.json"):
     example_session = mock_session()
     example_rig = mock_rig()
     example_task_logic = mock_task_logic()
-    example_database = mock_subject_database()
 
     os.makedirs(os.path.dirname(path_seed), exist_ok=True)
 
-    models = [example_task_logic, example_session, example_rig, example_database]
+    models = [example_task_logic, example_session, example_rig]
 
     for model in models:
         with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:

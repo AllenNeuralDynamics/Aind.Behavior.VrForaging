@@ -409,6 +409,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "StepperDriver";
     
+        private string _deviceName;
+    
         private AindManipulatorAdditionalSettings _additionalSettings;
     
         private AindManipulatorCalibration _calibration;
@@ -426,6 +428,7 @@ namespace AindVrForagingDataSchema.Rig
         protected AindManipulatorDevice(AindManipulatorDevice other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -443,6 +446,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -538,6 +558,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -832,6 +853,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "CameraController";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -847,6 +870,7 @@ namespace AindVrForagingDataSchema.Rig
         protected CameraControllerSpinnakerCamera(CameraControllerSpinnakerCamera other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _cameras = other._cameras;
@@ -863,6 +887,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -951,6 +992,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("cameras = " + _cameras + ", ");
@@ -981,6 +1023,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "CameraController";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -996,6 +1040,7 @@ namespace AindVrForagingDataSchema.Rig
         protected CameraControllerWebCamera(CameraControllerWebCamera other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _cameras = other._cameras;
@@ -1012,6 +1057,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1100,6 +1162,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("cameras = " + _cameras + ", ");
@@ -1630,6 +1693,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "AnalogInput";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -1647,6 +1712,7 @@ namespace AindVrForagingDataSchema.Rig
         protected HarpAnalogInput(HarpAnalogInput other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -1664,6 +1730,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1763,6 +1846,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -1794,6 +1878,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "Behavior";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -1811,6 +1897,7 @@ namespace AindVrForagingDataSchema.Rig
         protected HarpBehavior(HarpBehavior other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -1828,6 +1915,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1927,6 +2031,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -1958,6 +2063,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "EnvironmentSensor";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -1975,6 +2082,7 @@ namespace AindVrForagingDataSchema.Rig
         protected HarpEnvironmentSensor(HarpEnvironmentSensor other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -1992,6 +2100,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -2091,6 +2216,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -2122,6 +2248,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "LicketySplit";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -2139,6 +2267,7 @@ namespace AindVrForagingDataSchema.Rig
         protected HarpLicketySplit(HarpLicketySplit other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -2156,6 +2285,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -2255,174 +2401,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
-    /// Overrides the default settings for the olfactometer calibration
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the olfactometer calibration")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpOlfactometer
-    {
-    
-        private string _deviceType = "Olfactometer";
-    
-        private BaseModel _additionalSettings;
-    
-        private OlfactometerCalibration _calibration = new OlfactometerCalibration();
-    
-        private int _whoAmI = 1140;
-    
-        private string _serialNumber;
-    
-        private string _portName;
-    
-        public HarpOlfactometer()
-        {
-        }
-    
-        protected HarpOlfactometer(HarpOlfactometer other)
-        {
-            _deviceType = other._deviceType;
-            _additionalSettings = other._additionalSettings;
-            _calibration = other._calibration;
-            _whoAmI = other._whoAmI;
-            _serialNumber = other._serialNumber;
-            _portName = other._portName;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Olfactometer calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Olfactometer calibration")]
-        public OlfactometerCalibration Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        public int WhoAmI
-        {
-            get
-            {
-                return _whoAmI;
-            }
-            set
-            {
-                _whoAmI = value;
-            }
-        }
-    
-        /// <summary>
-        /// Device serial number
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [System.ComponentModel.DescriptionAttribute("Device serial number")]
-        public string SerialNumber
-        {
-            get
-            {
-                return _serialNumber;
-            }
-            set
-            {
-                _serialNumber = value;
-            }
-        }
-    
-        /// <summary>
-        /// Device port name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Device port name")]
-        public string PortName
-        {
-            get
-            {
-                return _portName;
-            }
-            set
-            {
-                _portName = value;
-            }
-        }
-    
-        public System.IObservable<HarpOlfactometer> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpOlfactometer(this)));
-        }
-    
-        public System.IObservable<HarpOlfactometer> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new HarpOlfactometer(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -2454,6 +2433,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "SniffDetector";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -2471,6 +2452,7 @@ namespace AindVrForagingDataSchema.Rig
         protected HarpSniffDetector(HarpSniffDetector other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -2488,6 +2470,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -2587,6 +2586,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -2618,6 +2618,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "WhiteRabbit";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -2637,6 +2639,7 @@ namespace AindVrForagingDataSchema.Rig
         protected HarpWhiteRabbit(HarpWhiteRabbit other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -2655,6 +2658,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -2772,6 +2792,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -3068,6 +3089,187 @@ namespace AindVrForagingDataSchema.Rig
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="1")]
         Dynamic = 1,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Olfactometer
+    {
+    
+        private string _deviceType = "Olfactometer";
+    
+        private string _deviceName;
+    
+        private BaseModel _additionalSettings;
+    
+        private OlfactometerCalibration _calibration;
+    
+        private int _whoAmI = 1140;
+    
+        private string _serialNumber;
+    
+        private string _portName;
+    
+        public Olfactometer()
+        {
+        }
+    
+        protected Olfactometer(Olfactometer other)
+        {
+            _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
+            _additionalSettings = other._additionalSettings;
+            _calibration = other._calibration;
+            _whoAmI = other._whoAmI;
+            _serialNumber = other._serialNumber;
+            _portName = other._portName;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
+            }
+        }
+    
+        /// <summary>
+        /// Additional settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
+        [System.ComponentModel.DescriptionAttribute("Additional settings")]
+        public BaseModel AdditionalSettings
+        {
+            get
+            {
+                return _additionalSettings;
+            }
+            set
+            {
+                _additionalSettings = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        public OlfactometerCalibration Calibration
+        {
+            get
+            {
+                return _calibration;
+            }
+            set
+            {
+                _calibration = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
+        public int WhoAmI
+        {
+            get
+            {
+                return _whoAmI;
+            }
+            set
+            {
+                _whoAmI = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device serial number
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
+        [System.ComponentModel.DescriptionAttribute("Device serial number")]
+        public string SerialNumber
+        {
+            get
+            {
+                return _serialNumber;
+            }
+            set
+            {
+                _serialNumber = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device port name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Device port name")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        public System.IObservable<Olfactometer> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Olfactometer(this)));
+        }
+    
+        public System.IObservable<Olfactometer> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Olfactometer(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
+            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
+            stringBuilder.Append("calibration = " + _calibration + ", ");
+            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
+            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
+            stringBuilder.Append("port_name = " + _portName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
     }
 
 
@@ -3731,6 +3933,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "Screen";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private DisplaysCalibration _calibration;
@@ -3754,6 +3958,7 @@ namespace AindVrForagingDataSchema.Rig
         protected Screen(Screen other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _displayIndex = other._displayIndex;
@@ -3778,6 +3983,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -3932,6 +4154,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("display_index = " + _displayIndex + ", ");
@@ -3966,6 +4189,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "SpinnakerCamera";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -3997,6 +4222,7 @@ namespace AindVrForagingDataSchema.Rig
         protected SpinnakerCamera(SpinnakerCamera other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _serialNumber = other._serialNumber;
@@ -4025,6 +4251,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -4253,6 +4496,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("serial_number = " + _serialNumber + ", ");
@@ -4744,6 +4988,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "Treadmill";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private TreadmillCalibration _calibration;
@@ -4761,6 +5007,7 @@ namespace AindVrForagingDataSchema.Rig
         protected Treadmill(Treadmill other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -4778,6 +5025,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -4873,6 +5137,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -5988,6 +6253,8 @@ namespace AindVrForagingDataSchema.Rig
     
         private string _deviceType = "WebCamera";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -6003,6 +6270,7 @@ namespace AindVrForagingDataSchema.Rig
         protected WebCamera(WebCamera other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _index = other._index;
@@ -6023,6 +6291,23 @@ namespace AindVrForagingDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -6110,6 +6395,7 @@ namespace AindVrForagingDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("index = " + _index + ", ");
@@ -6138,9 +6424,9 @@ namespace AindVrForagingDataSchema.Rig
     public partial class AindVrForagingRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.10.2";
+        private string _aindBehaviorServicesPkgVersion = "0.11.0";
     
-        private string _version = "0.5.0";
+        private string _version = "0.5.2";
     
         private string _computerName;
     
@@ -6152,7 +6438,7 @@ namespace AindVrForagingDataSchema.Rig
     
         private HarpBehavior _harpBehavior = new HarpBehavior();
     
-        private HarpOlfactometer _harpOlfactometer = new HarpOlfactometer();
+        private Olfactometer _harpOlfactometer = new Olfactometer();
     
         private HarpLicketySplit _harpLickometer = new HarpLicketySplit();
     
@@ -6317,7 +6603,7 @@ namespace AindVrForagingDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_olfactometer", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Harp olfactometer")]
-        public HarpOlfactometer HarpOlfactometer
+        public Olfactometer HarpOlfactometer
         {
             get
             {
@@ -6846,11 +7132,6 @@ namespace AindVrForagingDataSchema.Rig
             return Process<HarpLicketySplit>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<HarpOlfactometer> source)
-        {
-            return Process<HarpOlfactometer>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<HarpSniffDetector> source)
         {
             return Process<HarpSniffDetector>(source);
@@ -6869,6 +7150,11 @@ namespace AindVrForagingDataSchema.Rig
         public System.IObservable<string> Process(System.IObservable<Measurement> source)
         {
             return Process<Measurement>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Olfactometer> source)
+        {
+            return Process<Olfactometer>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<OlfactometerCalibration> source)
@@ -7003,11 +7289,11 @@ namespace AindVrForagingDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpEnvironmentSensor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLicketySplit>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpOlfactometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpSniffDetector>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpWhiteRabbit>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ManipulatorPosition>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Olfactometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibrationOutput>))]
