@@ -169,6 +169,19 @@
           "title": "Device Type",
           "type": "string"
         },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
         "additional_settings": {
           "$ref": "#/definitions/AindManipulatorAdditionalSettings",
           "default": {
@@ -308,6 +321,19 @@
           "title": "Device Type",
           "type": "string"
         },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
         "additional_settings": {
           "default": null,
           "description": "Additional settings",
@@ -368,6 +394,19 @@
           "default": "CameraController",
           "title": "Device Type",
           "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
         },
         "additional_settings": {
           "default": null,
@@ -626,6 +665,19 @@
           "title": "Device Type",
           "type": "string"
         },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
         "additional_settings": {
           "default": null,
           "description": "Additional settings",
@@ -688,6 +740,19 @@
           "default": "Behavior",
           "title": "Device Type",
           "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
         },
         "additional_settings": {
           "default": null,
@@ -752,6 +817,19 @@
           "title": "Device Type",
           "type": "string"
         },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
         "additional_settings": {
           "default": null,
           "description": "Additional settings",
@@ -815,6 +893,19 @@
           "title": "Device Type",
           "type": "string"
         },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
         "additional_settings": {
           "default": null,
           "description": "Additional settings",
@@ -870,40 +961,17 @@
       "title": "HarpLicketySplit",
       "type": "object"
     },
-    "HarpOlfactometer": {
-      "description": "Overrides the default settings for the olfactometer calibration",
+    "HarpSniffDetector": {
       "properties": {
         "device_type": {
-          "const": "Olfactometer",
-          "default": "Olfactometer",
+          "const": "SniffDetector",
+          "default": "SniffDetector",
           "title": "Device Type",
           "type": "string"
         },
-        "additional_settings": {
+        "device_name": {
           "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "$ref": "#/definitions/OlfactometerCalibration",
-          "description": "Olfactometer calibration"
-        },
-        "who_am_i": {
-          "const": 1140,
-          "default": 1140,
-          "title": "Who Am I",
-          "type": "integer"
-        },
-        "serial_number": {
-          "default": null,
-          "description": "Device serial number",
+          "description": "Device name",
           "oneOf": [
             {
               "type": "string"
@@ -912,28 +980,7 @@
               "type": "null"
             }
           ],
-          "title": "Serial Number"
-        },
-        "port_name": {
-          "description": "Device port name",
-          "title": "Port Name",
-          "type": "string"
-        }
-      },
-      "required": [
-        "calibration",
-        "port_name"
-      ],
-      "title": "HarpOlfactometer",
-      "type": "object"
-    },
-    "HarpSniffDetector": {
-      "properties": {
-        "device_type": {
-          "const": "SniffDetector",
-          "default": "SniffDetector",
-          "title": "Device Type",
-          "type": "string"
+          "title": "Device Name"
         },
         "additional_settings": {
           "default": null,
@@ -997,6 +1044,19 @@
           "default": "WhiteRabbit",
           "title": "Device Type",
           "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
         },
         "additional_settings": {
           "default": null,
@@ -1158,6 +1218,82 @@
         "Quiet",
         "Dynamic"
       ]
+    },
+    "Olfactometer": {
+      "properties": {
+        "device_type": {
+          "const": "Olfactometer",
+          "default": "Olfactometer",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OlfactometerCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calibration of the olfactometer"
+        },
+        "who_am_i": {
+          "const": 1140,
+          "default": 1140,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "Olfactometer",
+      "type": "object"
     },
     "OlfactometerCalibration": {
       "description": "Olfactometer calibration class",
@@ -1378,6 +1514,19 @@
           "title": "Device Type",
           "type": "string"
         },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
         "additional_settings": {
           "default": null,
           "description": "Additional settings",
@@ -1508,6 +1657,19 @@
           "description": "Device type",
           "title": "Device Type",
           "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
         },
         "additional_settings": {
           "default": null,
@@ -1954,6 +2116,19 @@
           "title": "Device Type",
           "type": "string"
         },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
         "additional_settings": {
           "default": null,
           "description": "Additional settings",
@@ -2373,6 +2548,19 @@
           "title": "Device Type",
           "type": "string"
         },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
         "additional_settings": {
           "default": null,
           "description": "Additional settings",
@@ -2423,14 +2611,14 @@
   },
   "properties": {
     "aind_behavior_services_pkg_version": {
-      "default": "0.10.2",
+      "default": "0.11.0",
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "title": "aind_behavior_services package version",
       "type": "string"
     },
     "version": {
-      "const": "0.5.0",
-      "default": "0.5.0",
+      "const": "0.5.2",
+      "default": "0.5.2",
       "title": "Version",
       "type": "string"
     },
@@ -2465,7 +2653,7 @@
       "description": "Harp behavior"
     },
     "harp_olfactometer": {
-      "$ref": "#/definitions/HarpOlfactometer",
+      "$ref": "#/definitions/Olfactometer",
       "description": "Harp olfactometer"
     },
     "harp_lickometer": {
@@ -2524,6 +2712,7 @@
       "$ref": "#/definitions/Screen",
       "default": {
         "device_type": "Screen",
+        "device_name": "Screen",
         "additional_settings": null,
         "calibration": {
           "center": {

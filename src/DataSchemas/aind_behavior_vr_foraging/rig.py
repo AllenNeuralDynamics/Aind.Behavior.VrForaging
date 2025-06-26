@@ -4,42 +4,28 @@ from __future__ import annotations
 # Import core types
 from typing import Literal, Optional
 
+import aind_behavior_services.calibration.aind_manipulator as man
 import aind_behavior_services.calibration.olfactometer as oc
+import aind_behavior_services.calibration.treadmill as treadmill
 import aind_behavior_services.calibration.water_valve as wvc
 import aind_behavior_services.rig as rig
-from aind_behavior_services.calibration import aind_manipulator
-from aind_behavior_services.calibration.treadmill import Treadmill
-from aind_behavior_services.rig import (
-    AindBehaviorRigModel,
-    HarpAnalogInput,
-    HarpBehavior,
-    HarpLicketySplit,
-    HarpSniffDetector,
-    HarpWhiteRabbit,
-)
 from pydantic import BaseModel, Field
 
-__version__ = "0.5.0"
+from aind_behavior_vr_foraging import __version__
 
 
 class AindManipulatorAdditionalSettings(BaseModel):
     """Additional settings for the manipulator device"""
 
-    spout_axis: aind_manipulator.Axis = Field(default=aind_manipulator.Axis.Y1, description="Spout axis")
+    spout_axis: man.Axis = Field(default=man.Axis.Y1, description="Spout axis")
 
 
-class AindManipulatorDevice(aind_manipulator.AindManipulatorDevice):
+class AindManipulatorDevice(man.AindManipulatorDevice):
     """Overrides the default settings for the manipulator device by spec'ing additional_settings field"""
 
     additional_settings: AindManipulatorAdditionalSettings = Field(
         default=AindManipulatorAdditionalSettings(), description="Additional settings"
     )
-
-
-class HarpOlfactometer(rig.HarpOlfactometer):
-    """Overrides the default settings for the olfactometer calibration"""
-
-    calibration: oc.OlfactometerCalibration = Field(description="Olfactometer calibration")
 
 
 class RigCalibration(BaseModel):
@@ -48,22 +34,28 @@ class RigCalibration(BaseModel):
     water_valve: wvc.WaterValveCalibration = Field(..., description="Water valve calibration")
 
 
-class AindVrForagingRig(AindBehaviorRigModel):
+class AindVrForagingRig(rig.AindBehaviorRigModel):
     version: Literal[__version__] = __version__
-    triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
+    triggered_camera_controller: rig.cameras.CameraController[rig.cameras.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
     )
-    monitoring_camera_controller: Optional[rig.CameraController[rig.WebCamera]] = Field(
+    monitoring_camera_controller: Optional[rig.cameras.CameraController[rig.cameras.WebCamera]] = Field(
         default=None, description="Optional camera controller for monitoring cameras."
     )
-    harp_behavior: HarpBehavior = Field(..., description="Harp behavior")
-    harp_olfactometer: HarpOlfactometer = Field(..., description="Harp olfactometer")
-    harp_lickometer: HarpLicketySplit = Field(..., description="Harp lickometer")
-    harp_clock_generator: HarpWhiteRabbit = Field(..., description="Harp clock generator")
-    harp_analog_input: Optional[HarpAnalogInput] = Field(default=None, description="Harp analog input")
-    harp_treadmill: Treadmill = Field(..., description="Harp treadmill")
-    harp_sniff_detector: Optional[HarpSniffDetector] = Field(default=None, description="Sniff detector settings")
-    harp_environment_sensor: Optional[rig.HarpEnvironmentSensor] = Field(default=None, description="Environment sensor")
+    harp_behavior: rig.harp.HarpBehavior = Field(..., description="Harp behavior")
+    harp_olfactometer: oc.Olfactometer = Field(..., description="Harp olfactometer")
+    harp_lickometer: rig.harp.HarpLicketySplit = Field(..., description="Harp lickometer")
+    harp_clock_generator: rig.harp.HarpWhiteRabbit = Field(..., description="Harp clock generator")
+    harp_analog_input: Optional[rig.harp.HarpAnalogInput] = Field(default=None, description="Harp analog input")
+    harp_treadmill: treadmill.Treadmill = Field(..., description="Harp treadmill")
+    harp_sniff_detector: Optional[rig.harp.HarpSniffDetector] = Field(
+        default=None, description="Sniff detector settings"
+    )
+    harp_environment_sensor: Optional[rig.harp.HarpEnvironmentSensor] = Field(
+        default=None, description="Environment sensor"
+    )
     manipulator: AindManipulatorDevice = Field(..., description="Manipulator")
-    screen: rig.Screen = Field(default=rig.Screen(), description="Screen settings")
+    screen: rig.visual_stimulation.Screen = Field(
+        default=rig.visual_stimulation.Screen(), description="Screen settings"
+    )
     calibration: RigCalibration = Field(..., description="Calibration models")
