@@ -10,7 +10,7 @@ from typing_extensions import TypeAliasType
 
 from aind_behavior_vr_foraging import (
     __version__,
-)  # TODO refactor this once https://github.com/AllenNeuralDynamics/Aind.Behavior.ExperimentLauncher/issues/73 is fixed
+)
 
 
 def scalar_value(value: float) -> distributions.Scalar:
