@@ -6,18 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "aind-behavior-vr-foraging"
 description = "A library that defines AIND data schema for the Aind Behavior VR Foraging experiment."
 authors = [ {name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"}]
-license = {text = "MIT"}
+license = "MIT"
 requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3.11",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: Microsoft :: Windows",
 ]
-readme = "README.md"
-dynamic = ["version"]
+dynamic = ["version", "readme"]
 
 dependencies = [
-  "aind_behavior_services>=0.10, <0.11",
+  "aind_behavior_services>=0.11, <0.12",
 ]
 
 [project.urls]
@@ -29,7 +27,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 [project.optional-dependencies]
 
 launcher = [
-    "aind_behavior_experiment_launcher[aind-services] >= 0.4.2",
+    "aind-clabe[aind-services]>=0.5",
     "aind-data-schema>=1.4"
     ]
 
@@ -52,7 +50,7 @@ clabe = "aind_behavior_vr_foraging.launcher:main"
 regenerate = "aind_behavior_vr_foraging.regenerate:main"
 
 [tool.setuptools.packages.find]
-where = ["src/DataSchemas"]
+where = ["src"]
 
 [tool.setuptools.dynamic]
 version = {attr = "aind_behavior_vr_foraging.__version__"}
