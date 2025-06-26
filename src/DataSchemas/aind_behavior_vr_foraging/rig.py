@@ -19,7 +19,7 @@ from aind_behavior_services.rig import (
 )
 from pydantic import BaseModel, Field
 
-__version__ = "0.5.0"
+from aind_behavior_vr_foraging import __version__
 
 
 class AindManipulatorAdditionalSettings(BaseModel):
