@@ -4,10 +4,10 @@ from functools import partial
 from pathlib import Path
 from typing import Callable, Optional
 
-import aind_behavior_experiment_launcher.launcher.behavior_launcher as behavior_launcher
-from aind_behavior_experiment_launcher import resource_monitor
-from aind_behavior_experiment_launcher.apps import AindBehaviorServicesBonsaiApp
-from aind_behavior_experiment_launcher.data_transfer import aind_watchdog
+import clabe.behavior_launcher as behavior_launcher
+from clabe import resource_monitor
+from clabe.apps import AindBehaviorServicesBonsaiApp
+from clabe.data_transfer import aind_watchdog
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_data_schema_models.modalities import Modality
 from aind_watchdog_service.models.manifest_config import (
