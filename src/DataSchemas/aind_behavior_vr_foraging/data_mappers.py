@@ -201,7 +201,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         # populate devices
         devices = [
             device[0]
-            for device in data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.harp.HarpDevice)
+            for device in data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.harp._HarpDeviceBase)
             if device[0]
         ]
         # Populate modalities
