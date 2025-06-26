@@ -10,7 +10,7 @@ import aind_behavior_vr_foraging.task_logic
 import erdantic as erd
 from pydantic import BaseModel
 
-SOURCE_ROOT = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas/"
+SOURCE_ROOT = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/"
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
