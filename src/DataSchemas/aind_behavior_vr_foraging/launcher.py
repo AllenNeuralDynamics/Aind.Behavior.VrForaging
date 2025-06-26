@@ -5,14 +5,14 @@ from pathlib import Path
 from typing import Callable, Optional
 
 import clabe.behavior_launcher as behavior_launcher
-from clabe import resource_monitor
-from clabe.apps import AindBehaviorServicesBonsaiApp
-from clabe.data_transfer import aind_watchdog
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_data_schema_models.modalities import Modality
 from aind_watchdog_service.models.manifest_config import (
     ModalityConfigs,
 )
+from clabe import resource_monitor
+from clabe.apps import AindBehaviorServicesBonsaiApp
+from clabe.data_transfer import aind_watchdog
 from pydantic_settings import CliApp
 
 from aind_behavior_vr_foraging.data_mappers import AindDataMapperWrapper
