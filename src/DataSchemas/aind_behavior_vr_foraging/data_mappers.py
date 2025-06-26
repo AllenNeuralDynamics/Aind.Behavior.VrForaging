@@ -15,15 +15,15 @@ import aind_data_schema.core.session
 import git
 import pydantic
 import pydantic_settings
-from clabe.apps import BonsaiApp
-from clabe.data_mapper import DataMapper
-from clabe.data_mapper import aind_data_schema as ads
-from clabe.data_mapper import helpers as data_mapper_helpers
-from clabe.behavior_launcher import BehaviorLauncher, DefaultBehaviorPicker
 from aind_behavior_services.calibration import Calibration
 from aind_behavior_services.calibration.olfactometer import OlfactometerChannelType
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file, utcnow
+from clabe.apps import BonsaiApp
+from clabe.behavior_launcher import BehaviorLauncher, DefaultBehaviorPicker
+from clabe.data_mapper import DataMapper
+from clabe.data_mapper import aind_data_schema as ads
+from clabe.data_mapper import helpers as data_mapper_helpers
 from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig

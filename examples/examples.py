@@ -3,6 +3,7 @@ import os
 
 import aind_behavior_services.rig as rig
 import aind_behavior_services.task_logic.distributions as distributions
+import aind_behavior_vr_foraging.task_logic as vr_task_logic
 from aind_behavior_services.calibration.aind_manipulator import (
     AindManipulatorCalibration,
     AindManipulatorCalibrationInput,
@@ -12,13 +13,13 @@ from aind_behavior_services.calibration.aind_manipulator import (
     ManipulatorPosition,
 )
 from aind_behavior_services.calibration.olfactometer import (
+    Olfactometer,
     OlfactometerCalibration,
     OlfactometerCalibrationInput,
     OlfactometerCalibrationOutput,
     OlfactometerChannel,
     OlfactometerChannelConfig,
     OlfactometerChannelType,
-    Olfactometer,
 )
 from aind_behavior_services.calibration.treadmill import (
     Treadmill,
@@ -35,13 +36,10 @@ from aind_behavior_services.calibration.water_valve import (
 from aind_behavior_services.rig.harp import (
     HarpBehavior,
     HarpLicketySplit,
-    HarpOlfactometer,
     HarpSniffDetector,
     HarpWhiteRabbit,
 )
 from aind_behavior_services.session import AindBehaviorSessionModel
-
-import aind_behavior_vr_foraging.task_logic as vr_task_logic
 from aind_behavior_vr_foraging.rig import (
     AindManipulatorDevice,
     AindVrForagingRig,
