@@ -13,8 +13,10 @@ from aind_watchdog_service.models.manifest_config import (
 from clabe import resource_monitor
 from clabe.apps import AindBehaviorServicesBonsaiApp
 from clabe.data_transfer import aind_watchdog
+from clabe.logging_helper import aibs as aibs_logging
 from pydantic_settings import CliApp
 
+from aind_behavior_vr_foraging import __version__
 from aind_behavior_vr_foraging.data_mappers import AindDataMapperWrapper
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
@@ -23,13 +25,14 @@ from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launcher.BehaviorLauncher:
     data_dir = r"C:/Data"
     remote_dir = Path(r"\\allen\aind\scratch\vr-foraging\data")
+    project_name = "Cognitive flexibility in patch foraging"
     srv = behavior_launcher.BehaviorServicesFactoryManager()
     srv.attach_app(AindBehaviorServicesBonsaiApp(Path(r"./src/main.bonsai")))
     srv.attach_data_mapper(AindDataMapperWrapper.from_launcher)
     srv.attach_data_transfer(
         watchdog_data_transfer_factory(
             remote_dir,
-            project_name="Cognitive flexibility in patch foraging",
+            project_name=project_name,
             transfer_endpoint="http://aind-data-transfer-service/api/v1/submit_jobs",
             upload_job_configs=[
                 ModalityConfigs(
@@ -49,7 +52,7 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
         )
     )
 
-    return behavior_launcher.BehaviorLauncher(
+    launcher: behavior_launcher.BehaviorLauncher = behavior_launcher.BehaviorLauncher(
         rig_schema_model=AindVrForagingRig,
         session_schema_model=AindBehaviorSessionModel,
         task_logic_schema_model=AindVrForagingTaskLogic,
@@ -59,6 +62,13 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
             config_library_dir=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging")
         ),
     )
+    aibs_logging.attach_to_launcher(
+        launcher,
+        logserver_url="eng-logtools.corp.alleninstitute.org:9000",
+        project_name=project_name,
+        version=__version__,
+    )
+    return launcher
 
 
 def watchdog_data_transfer_factory(
