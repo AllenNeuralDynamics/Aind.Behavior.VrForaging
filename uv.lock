@@ -97,7 +97,7 @@ requires-dist = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.5.1"
+version = "0.5.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -107,9 +107,9 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/34/25/49082639bdb119765f190c53a6b3869dfc6e4fd490e609723d790a885d73/aind_clabe-0.5.1.tar.gz", hash = "sha256:c358cd24d2928034cb0f7041147659f6050114562fc414bbd22931cf180fa951", size = 163520 }
+sdist = { url = "https://files.pythonhosted.org/packages/81/42/94cb08fb93698b3ddd1307b468174ad9a355dddab590884af876054af8ae/aind_clabe-0.5.2.tar.gz", hash = "sha256:056438de73b593d7872ecc239187d351dffae286a13c6195bd9a540fe24d9daf", size = 165585 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d3/69/431e2e5faf635a0d0de2c855e2d97329019b629a80e20acd17e0ae014726/aind_clabe-0.5.1-py3-none-any.whl", hash = "sha256:e1b548fe141c0f52a645f69234103690d656d8d83b990139fc604b8d340d2929", size = 67139 },
+    { url = "https://files.pythonhosted.org/packages/91/27/739395f8d9b4f96d2d6629305be48860cfdd44808a570b72bcdcf63773ff/aind_clabe-0.5.2-py3-none-any.whl", hash = "sha256:4e7324052726f9577115c90b6a9101c7474c1863457068162472ae07345c44b4", size = 69630 },
 ]
 
 [package.optional-dependencies]
