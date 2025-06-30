@@ -187,7 +187,8 @@ def dataset(
                                 name="ActivePatch",
                                 description="An event emitted when a patch threshold is crossed.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/SoftwareEvents/ActivePatch.json"
+                                    root_path / "behavior/SoftwareEvents/ActivePatch.json",
+                                    index="Timestamp",
                                 ),
                             ),
                             SoftwareEvents(
@@ -327,6 +328,7 @@ def dataset(
                                 description="The position of the animal in VR coordinates (cm). The timestamp is derived from the encoder reading that gave rise to the position change.",
                                 reader_params=Csv.make_params(
                                     path=root_path / "behavior/OperationControl/CurrentPosition.csv",
+                                    index="Seconds",
                                 ),
                             ),
                             Csv(
@@ -334,6 +336,7 @@ def dataset(
                                 description="The result of the ongoing stop detection algorithm. The timestamp is derived from the encoder reading that gave rise to the position change.",
                                 reader_params=Csv.make_params(
                                     path=root_path / "behavior/OperationControl/IsStopped.csv",
+                                    index="Seconds",
                                 ),
                             ),
                             Csv(
@@ -341,6 +344,7 @@ def dataset(
                                 description="The torque instructed to be applied to the treadmill. Timestamps are software-derived, use the Harp device events for hardware timestamps.",
                                 reader_params=Csv.make_params(
                                     path=root_path / "behavior/OperationControl/CurrentPosition.csv",
+                                    index="Seconds",
                                 ),
                             ),
                             Csv(
