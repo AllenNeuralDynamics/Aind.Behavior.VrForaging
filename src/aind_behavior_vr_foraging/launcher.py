@@ -21,18 +21,18 @@ from aind_behavior_vr_foraging.data_mappers import AindDataMapperWrapper
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
+REMOTE_DIR = Path(r"\\allen\aind\scratch\vr-foraging\data")
+PROJECT_NAME = "Cognitive flexibility in patch foraging"
+
 
 def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launcher.BehaviorLauncher:
-    data_dir = r"C:/Data"
-    remote_dir = Path(r"\\allen\aind\scratch\vr-foraging\data")
-    project_name = "Cognitive flexibility in patch foraging"
     srv = behavior_launcher.BehaviorServicesFactoryManager()
     srv.attach_app(AindBehaviorServicesBonsaiApp(Path(r"./src/main.bonsai")))
     srv.attach_data_mapper(AindDataMapperWrapper.from_launcher)
     srv.attach_data_transfer(
         watchdog_data_transfer_factory(
-            remote_dir,
-            project_name=project_name,
+            REMOTE_DIR,
+            project_name=PROJECT_NAME,
             transfer_endpoint="http://aind-data-transfer-service/api/v1/submit_jobs",
             upload_job_configs=[
                 ModalityConfigs(
@@ -46,8 +46,8 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
     srv.attach_resource_monitor(
         resource_monitor.ResourceMonitor(
             constrains=[
-                resource_monitor.available_storage_constraint_factory(Path(data_dir), 2e11),
-                resource_monitor.remote_dir_exists_constraint_factory(Path(remote_dir)),
+                resource_monitor.available_storage_constraint_factory(settings.data_dir, 2e11),
+                resource_monitor.remote_dir_exists_constraint_factory(REMOTE_DIR),
             ]
         )
     )
@@ -65,7 +65,7 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
     aibs_logging.attach_to_launcher(
         launcher,
         logserver_url="eng-logtools.corp.alleninstitute.org:9000",
-        project_name=project_name,
+        project_name=PROJECT_NAME,
         version=__version__,
     )
     return launcher
