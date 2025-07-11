@@ -482,7 +482,7 @@ Item3 as Right)</scr:Expression>
                       <Property Name="PortName" />
                     </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpLicketySplitDevice.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\HarpLicketySplitDevice.bonsai">
                     <PortName>COMx</PortName>
                     <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
                   </Expression>
