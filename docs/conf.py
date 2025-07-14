@@ -3,19 +3,21 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import aind_behavior_vr_foraging
-import aind_behavior_vr_foraging.rig
-import aind_behavior_vr_foraging.task_logic
 import erdantic as erd
 from pydantic import BaseModel
 
-SOURCE_ROOT = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/DataSchemas/"
+import aind_behavior_vr_foraging
+import aind_behavior_vr_foraging.data_contract as contract
+import aind_behavior_vr_foraging.rig
+import aind_behavior_vr_foraging.task_logic
+
+SOURCE_ROOT = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/tree/main/src/"
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "AIND VR Foraging"
-copyright = "2024, Allen Institute for Neural Dynamics"
+copyright = "2025, Allen Institute for Neural Dynamics"
 author = "Bruno Cruz"
 release = aind_behavior_vr_foraging.__version__
 
@@ -76,11 +78,19 @@ def linkcode_resolve(domain, info):
 
 # -- Class diagram generation
 
+_static_path = "_static"
 
-def export_model_diagram(model: BaseModel, root: str = "_static") -> None:
+
+def export_model_diagram(model: BaseModel, root: str = _static_path) -> None:
     diagram = erd.create(model)
     diagram.draw(f"{root}/{model.__name__}.svg")
 
 
-_diagram_root = "_static"
-export_model_diagram(aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic, _diagram_root)
+export_model_diagram(aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic, _static_path)
+
+export_model_diagram(aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic, _static_path)
+
+# -- Dataset rendering
+
+with open(f"{_static_path}/dataset.txt", "w", encoding="utf-8") as f:
+    f.write(contract.render_dataset())
