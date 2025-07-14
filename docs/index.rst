@@ -11,6 +11,7 @@ Welcome to the AIND VR Foraging project documentation!
    self
    api
    json-schemas
+   dataset
    GitHub Source Code <https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging>
 
 Indices and tables

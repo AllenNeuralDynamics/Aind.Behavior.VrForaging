@@ -15,22 +15,20 @@ import aind_data_schema.core.session
 import git
 import pydantic
 import pydantic_settings
-from aind_behavior_experiment_launcher.apps import BonsaiApp
-from aind_behavior_experiment_launcher.data_mapper import DataMapper
-from aind_behavior_experiment_launcher.data_mapper import aind_data_schema as ads
-from aind_behavior_experiment_launcher.data_mapper import helpers as data_mapper_helpers
-from aind_behavior_experiment_launcher.launcher.behavior_launcher import BehaviorLauncher, DefaultBehaviorPicker
-from aind_behavior_experiment_launcher.records.subject import WaterLogResult
 from aind_behavior_services.calibration import Calibration
 from aind_behavior_services.calibration.olfactometer import OlfactometerChannelType
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file, utcnow
+from clabe.apps import BonsaiApp
+from clabe.behavior_launcher import BehaviorLauncher, DefaultBehaviorPicker
+from clabe.data_mapper import DataMapper
+from clabe.data_mapper import aind_data_schema as ads
+from clabe.data_mapper import helpers as data_mapper_helpers
 from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
-TFrom = TypeVar("TFrom", bound=Union[pydantic.BaseModel, dict])
 TTo = TypeVar("TTo", bound=pydantic.BaseModel)
 
 T = TypeVar("T")
@@ -109,7 +107,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         script_path: os.PathLike,
         session_end_time: Optional[datetime.datetime] = None,
         output_parameters: Optional[Dict] = None,
-        subject_info: Optional[WaterLogResult] = None,
     ):
         self.session_model = session_model
         self.rig_model = rig_model
@@ -118,7 +115,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.script_path = script_path
         self.session_end_time = session_end_time
         self.output_parameters = output_parameters
-        self.subject_info = subject_info
         self._mapped: Optional[aind_data_schema.core.session.Session] = None
 
     @classmethod
@@ -142,8 +138,10 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
 
     @property
-    def session_name(self):
-        raise self.session_model.session_name
+    def session_name(self) -> str:
+        if self.session_model.session_name is None:
+            raise ValueError("Session name is not set in the session model.")
+        return self.session_model.session_name
 
     @property
     def mapped(self) -> aind_data_schema.core.session.Session:
@@ -165,7 +163,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 script_path=self.script_path,
                 session_end_time=self.session_end_time,
                 output_parameters=self.output_parameters,
-                subject_info=self.subject_info,
             )
         except (pydantic.ValidationError, ValueError, IOError) as e:
             logger.error("Failed to map to aind-data-schema Session. %s", e)
@@ -174,7 +171,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             return self._mapped
 
     def write_standard_file(self, directory: os.PathLike) -> None:
-        self.mapped.write_standard_file(directory)
+        self.mapped.write_standard_file(Path(directory))
 
     @classmethod
     def _map(
@@ -186,7 +183,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         script_path: os.PathLike,
         session_end_time: Optional[datetime.datetime] = None,
         output_parameters: Optional[Dict] = None,
-        subject_info: Optional[WaterLogResult] = None,
         **kwargs,
     ) -> aind_data_schema.core.session.Session:
         # Normalize repository
@@ -205,7 +201,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         # populate devices
         devices = [
             device[0]
-            for device in data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.HarpDeviceGeneric)
+            for device in data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.harp._HarpDeviceBase)
             if device[0]
         ]
         # Populate modalities
@@ -226,7 +222,10 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         # Olfactory Stimulation
         stimulus_modalities.append(aind_data_schema.core.session.StimulusModality.OLFACTORY)
         olfactory_stimulus_channel_config: List[aind_data_schema.components.stimulus.OlfactometerChannelConfig] = []
-        for _, channel in rig_model.harp_olfactometer.calibration.input.channel_config.items():
+        olf_calibration = rig_model.harp_olfactometer.calibration
+        if olf_calibration is None:
+            raise ValueError("Olfactometer calibration is not set in the rig model.")
+        for _, channel in olf_calibration.input.channel_config.items():
             if channel.channel_type == OlfactometerChannelType.ODOR:
                 olfactory_stimulus_channel_config.append(
                     coerce_to_aind_data_schema(channel, aind_data_schema.components.stimulus.OlfactometerChannelConfig)
@@ -237,7 +236,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             )
         )
 
-        _olfactory_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.HarpOlfactometer)
+        _olfactory_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.harp.HarpOlfactometer)
         if len(_olfactory_device) > 0:
             if _olfactory_device[0][0]:
                 stimulation_devices.append(_olfactory_device[0][0])
@@ -267,7 +266,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 stimulus_parameters={},
             )
         )
-        _screen_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.Screen)
+        _screen_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.visual_stimulation.Screen)
         if len(_screen_device) > 0:
             if _screen_device[0][0]:
                 stimulation_devices.append(_screen_device[0][0])
@@ -317,8 +316,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
         # Construct aind-data-schema session
         aind_data_schema_session = aind_data_schema.core.session.Session(
-            animal_weight_post=subject_info.weight_g if subject_info else None,
-            reward_consumed_total=subject_info.water_earned_ml if subject_info else None,
+            animal_weight_post=None,
+            reward_consumed_total=None,
             reward_delivery=reward_delivery_config,
             experimenter_full_name=session_model.experimenter,
             session_start_time=session_model.date,
@@ -370,7 +369,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                     ),
                     output_parameters=output_parameters if output_parameters else {},
                     speaker_config=speaker_config,
-                    reward_consumed_during_epoch=subject_info.total_water_ml if subject_info else None,
+                    reward_consumed_during_epoch=None,
                     stimulus_device_names=stimulation_devices,
                 )  # type: ignore
             ],
@@ -391,8 +390,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
 
 
-def coerce_to_aind_data_schema(value: TFrom, target_type: Type[TTo]) -> TTo:
-    _normalized_input: dict
+def coerce_to_aind_data_schema(value: Union[pydantic.BaseModel, dict], target_type: Type[TTo]) -> TTo:
     if isinstance(value, pydantic.BaseModel):
         _normalized_input = value.model_dump()
     elif isinstance(value, dict):
@@ -460,9 +458,9 @@ class AindDataMapperWrapper(DataMapper[Tuple[aind_data_schema.core.rig.Rig, aind
             raise ValueError("Failed to map data.")
         self._session_schema.rig_id = self._rig_schema.rig_id
         logger.info("Writing session.json to %s", self.session_directory)
-        self._session_schema.write_standard_file(self.session_directory)
+        self._session_schema.write_standard_file(Path(self.session_directory))
         logger.info("Writing rig.json to %s", self.session_directory)
-        self._rig_schema.write_standard_file(self.session_directory)
+        self._rig_schema.write_standard_file(Path(self.session_directory))
         return self.mapped
 
     @property
@@ -496,7 +494,7 @@ if __name__ == "__main__":
         rig_model=rig,
         task_logic_model=task_logic,
         repository=repo,
-        script_path=Path("./src/vr-foraging.py"),
+        script_path=Path("./src/main.bonsai"),
     )
     rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(parsed_args.db_root))
 
