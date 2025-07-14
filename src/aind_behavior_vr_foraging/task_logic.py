@@ -182,6 +182,10 @@ class RewardSpecification(BaseModel):
     reward_function: PatchRewardFunction = Field(
         default=PatchRewardFunction(), description="Reward function of the patch."
     )
+    latent_reward_function: Optional[PatchRewardFunction] = Field(
+        default=None,
+        description="Reward function that is continuously applied to the patch even when not active.",
+    )
 
 
 class VirtualSiteLabels(str, Enum):

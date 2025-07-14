@@ -1635,6 +1635,18 @@
             "depletion_rule": "OnChoice"
           },
           "description": "Reward function of the patch."
+        },
+        "latent_reward_function": {
+          "default": null,
+          "description": "Reward function of the latent virtual site. If None, the latent virtual site will not deliver rewards.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/PatchRewardFunction"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "RewardSpecification",

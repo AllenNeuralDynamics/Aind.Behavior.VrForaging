@@ -4561,6 +4561,8 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private PatchRewardFunction _rewardFunction;
     
+        private PatchRewardFunction _latentRewardFunction;
+    
         public RewardSpecification()
         {
         }
@@ -4570,6 +4572,7 @@ namespace AindVrForagingDataSchema.TaskLogic
             _operantLogic = other._operantLogic;
             _delay = other._delay;
             _rewardFunction = other._rewardFunction;
+            _latentRewardFunction = other._latentRewardFunction;
         }
     
         /// <summary>
@@ -4626,6 +4629,25 @@ namespace AindVrForagingDataSchema.TaskLogic
             }
         }
     
+        /// <summary>
+        /// Reward function of the latent virtual site. If None, the latent virtual site will not deliver rewards.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("latent_reward_function")]
+        [System.ComponentModel.DescriptionAttribute("Reward function of the latent virtual site. If None, the latent virtual site will" +
+            " not deliver rewards.")]
+        public PatchRewardFunction LatentRewardFunction
+        {
+            get
+            {
+                return _latentRewardFunction;
+            }
+            set
+            {
+                _latentRewardFunction = value;
+            }
+        }
+    
         public System.IObservable<RewardSpecification> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RewardSpecification(this)));
@@ -4640,7 +4662,8 @@ namespace AindVrForagingDataSchema.TaskLogic
         {
             stringBuilder.Append("operant_logic = " + _operantLogic + ", ");
             stringBuilder.Append("delay = " + _delay + ", ");
-            stringBuilder.Append("reward_function = " + _rewardFunction);
+            stringBuilder.Append("reward_function = " + _rewardFunction + ", ");
+            stringBuilder.Append("latent_reward_function = " + _latentRewardFunction);
             return true;
         }
     
