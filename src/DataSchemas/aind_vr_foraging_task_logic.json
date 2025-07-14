@@ -699,6 +699,7 @@
       "type": "object"
     },
     "HabituationSettings": {
+      "deprecated": true,
       "properties": {
         "task_mode": {
           "const": "HABITUATION",
