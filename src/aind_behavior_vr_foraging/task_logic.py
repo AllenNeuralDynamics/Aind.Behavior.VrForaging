@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Annotated, Dict, List, Literal, Optional, Self
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
 from pydantic import BaseModel, Field, NonNegativeFloat, field_validator, model_validator
-from typing_extensions import TypeAliasType
+from typing_extensions import TypeAliasType, deprecated
 
 from aind_behavior_vr_foraging import (
     __version__,
@@ -370,6 +370,7 @@ class TaskModeSettingsBase(BaseModel):
     task_mode: TaskMode = Field(default=TaskMode.FORAGING, description="Stage of the task")
 
 
+@deprecated("HabituationSettings is deprecated, use ForagingSettings instead.")
 class HabituationSettings(TaskModeSettingsBase):
     task_mode: Literal[TaskMode.HABITUATION] = TaskMode.HABITUATION
     distance_to_reward: distributions.Distribution = Field(..., description="Distance (cm) to the reward")
