@@ -9,7 +9,6 @@ from contraqctor.contract.harp import (
 )
 from contraqctor.contract.json import Json, SoftwareEvents
 from contraqctor.contract.mux import MapFromPaths
-from contraqctor.contract.text import Text
 
 
 def dataset(
@@ -326,13 +325,6 @@ def dataset(
                     DataStreamCollection(
                         name="Logs",
                         data_streams=[
-                            Text(
-                                name="Launcher",
-                                description="Contains the console log of the launcher process.",
-                                reader_params=Text.make_params(
-                                    path=root_path / "behavior/Logs/launcher.log",
-                                ),
-                            ),
                             SoftwareEvents(
                                 name="EndSession",
                                 description="A file that determines the end of the session. If the file is empty, the session is still running or it was not closed properly.",
