@@ -369,7 +369,7 @@ def dataset(
                                 name="Launcher",
                                 description="Contains the console log of the launcher process.",
                                 reader_params=Text.make_params(
-                                    path=root_path / "behavior/Logs/launcher.log",
+                                    path=root_path / "behavior/Logs/.launcher/launcher.log",
                                 ),
                             ),
                             SoftwareEvents(
