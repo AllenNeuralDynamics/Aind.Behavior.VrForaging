@@ -197,7 +197,6 @@ def dataset(
                                 description="An event emitted when a patch threshold is crossed.",
                                 reader_params=SoftwareEvents.make_params(
                                     root_path / "behavior/SoftwareEvents/ActivePatch.json",
-                                    index="Timestamp",
                                 ),
                             ),
                             SoftwareEvents(
