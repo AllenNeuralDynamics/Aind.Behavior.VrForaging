@@ -120,6 +120,7 @@ class LinearFunction(BaseModel):
 class ConstantFunction(BaseModel):
     function_type: Literal["ConstantFunction"] = "ConstantFunction"
     value: float = Field(default=1, description="Value of the function")
+    
 
 
 class LookupTableFunction(BaseModel):
@@ -153,6 +154,11 @@ class DepletionRule(str, Enum):
     ON_DISTANCE = "OnDistance"
 
 
+class ReplenishmentRule(str, Enum):
+    ON_TIME = "OnTime"
+    ON_DISTANCE = "OnDistance"
+
+
 class PatchRewardFunction(BaseModel):
     amount: RewardFunction = Field(
         default=ConstantFunction(value=1),
@@ -170,6 +176,39 @@ class PatchRewardFunction(BaseModel):
         validate_default=True,
     )
     depletion_rule: DepletionRule = Field(default=DepletionRule.ON_CHOICE, description="Depletion")
+
+
+class ClampedRate(BaseModel):
+    minimum: float = Field(description="Minimum value of the rate")
+    maximum: float = Field(description="Maximum value of the rate")
+    rate: float = Field(description="Rate of the replenishment. The value is in microliters / rule_unit.")
+
+class PatchReplenishmentFunction(BaseModel):
+    """Replenishment function of the patch. The units of the rate are always relative to the rule unit.
+    For example:
+        ReplenishmentRule.ON_TIME: The replenishment rate is in microliters / second.
+        ReplenishmentRule.ON_DISTANCE: The replenishment rate is in microliters / cm.
+
+    The updated values will always be clamped to the minimum and maximum values of the corresponding
+    patch reward function.
+    """
+
+    amount_rate: ClampedRate = Field(
+        default=ClampedRate(minimum=0, maximum=9999, rate=1),
+        description="Determines the rate at which the reward amount is replenished. The value is in microliters / rule_unit.",
+        validate_default=True,
+    )
+    probability_rate: ClampedRate = Field(
+        default=ClampedRate(minimum=0, maximum=9999, rate=1),
+        description="Determines the rate at which the probability of reward delivery is replenished. The value is in microliters / rule_unit.",
+        validate_default=True,
+    )
+    available_rate: ClampedRate = Field(
+        default=ClampedRate(minimum=0, maximum=9999, rate=0),
+        description="Determines the rate at which the total amount of reward available is replenished. The value is in microliters / rule_unit.",
+        validate_default=True,
+    )
+    rule: ReplenishmentRule = Field(default=ReplenishmentRule.ON_TIME, description="Replenishment rule")
 
 
 class RewardSpecification(BaseModel):
