@@ -393,22 +393,30 @@
       "title": "BlockStructure",
       "type": "object"
     },
-    "ConstantFunction": {
+    "ClampedRate": {
       "properties": {
-        "function_type": {
-          "const": "ConstantFunction",
-          "default": "ConstantFunction",
-          "title": "Function Type",
-          "type": "string"
+        "minimum": {
+          "default": 0,
+          "description": "Minimum value of the rate",
+          "title": "Minimum",
+          "type": "number"
         },
-        "value": {
-          "default": 1,
-          "description": "Value of the function",
-          "title": "Value",
+        "maximum": {
+          "description": "Maximum value of the rate",
+          "title": "Maximum",
+          "type": "number"
+        },
+        "rate": {
+          "description": "Rate of the replenishment. The value is in microliters / rule_unit.",
+          "title": "Rate",
           "type": "number"
         }
       },
-      "title": "ConstantFunction",
+      "required": [
+        "maximum",
+        "rate"
+      ],
+      "title": "ClampedRate",
       "type": "object"
     },
     "DebugSettings": {
@@ -441,16 +449,6 @@
       ],
       "title": "DebugSettings",
       "type": "object"
-    },
-    "DepletionRule": {
-      "enum": [
-        "OnReward",
-        "OnChoice",
-        "OnTime",
-        "OnDistance"
-      ],
-      "title": "DepletionRule",
-      "type": "string"
     },
     "Distribution": {
       "description": "Available distributions",
@@ -725,40 +723,51 @@
       "title": "HabituationSettings",
       "type": "object"
     },
-    "LinearFunction": {
+    "InsideRewardFunction": {
       "properties": {
-        "function_type": {
-          "const": "LinearFunction",
-          "default": "LinearFunction",
-          "title": "Function Type",
-          "type": "string"
+        "amount": {
+          "default": null,
+          "description": "Defines the amount of reward replenished per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "minimum": {
-          "default": 0,
-          "description": "Minimum value of the function",
-          "title": "Minimum",
-          "type": "number"
+        "probability": {
+          "default": null,
+          "description": "Defines the probability of reward replenished per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "maximum": {
-          "default": 9999,
-          "description": "Maximum value of the function",
-          "title": "Maximum",
-          "type": "number"
+        "available": {
+          "default": null,
+          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "a": {
-          "default": 1,
-          "description": "Coefficient a of the function: value = a * x + b",
-          "title": "A",
-          "type": "number"
-        },
-        "b": {
-          "default": 0,
-          "description": "Coefficient b of the function: value = a * x + b",
-          "title": "B",
-          "type": "number"
+        "rule": {
+          "$ref": "#/definitions/RewardFunctionRule",
+          "default": "OnReward",
+          "description": "Rule to trigger reward function"
         }
       },
-      "title": "LinearFunction",
+      "title": "InsideRewardFunction",
       "type": "object"
     },
     "LogNormalDistribution": {
@@ -828,40 +837,6 @@
         }
       },
       "title": "LogNormalDistributionParameters",
-      "type": "object"
-    },
-    "LookupTableFunction": {
-      "properties": {
-        "function_type": {
-          "const": "LookupTableFunction",
-          "default": "LookupTableFunction",
-          "title": "Function Type",
-          "type": "string"
-        },
-        "lut_keys": {
-          "description": "List of keys of the lookup table",
-          "items": {
-            "type": "number"
-          },
-          "minItems": 1,
-          "title": "Lut Keys",
-          "type": "array"
-        },
-        "lut_values": {
-          "description": "List of values of the lookup table",
-          "items": {
-            "type": "number"
-          },
-          "minItems": 1,
-          "title": "Lut Values",
-          "type": "array"
-        }
-      },
-      "required": [
-        "lut_keys",
-        "lut_values"
-      ],
-      "title": "LookupTableFunction",
       "type": "object"
     },
     "MovableSpoutControl": {
@@ -1171,42 +1146,60 @@
       "title": "OperationControl",
       "type": "object"
     },
-    "PatchRewardFunction": {
+    "OutsideRewardFunction": {
       "properties": {
         "amount": {
-          "$ref": "#/definitions/RewardFunction",
-          "default": {
-            "function_type": "ConstantFunction",
-            "value": 1.0
-          },
-          "description": "Determines the amount of reward to be delivered. The value is in microliters"
+          "default": null,
+          "description": "Defines the amount of reward replenished per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "probability": {
-          "$ref": "#/definitions/RewardFunction",
-          "default": {
-            "function_type": "ConstantFunction",
-            "value": 1.0
-          },
-          "description": "Determines the probability that a reward will be delivered"
+          "default": null,
+          "description": "Defines the probability of reward replenished per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "available": {
-          "$ref": "#/definitions/RewardFunction",
-          "default": {
-            "function_type": "LinearFunction",
-            "minimum": 0.0,
-            "maximum": 9999.0,
-            "a": -1.0,
-            "b": 5.0
-          },
-          "description": "Determines the total amount of reward available left in the patch. The value is in microliters"
+          "default": null,
+          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "depletion_rule": {
-          "$ref": "#/definitions/DepletionRule",
-          "default": "OnChoice",
-          "description": "Depletion"
+        "rule": {
+          "const": "OnTime",
+          "default": "OnTime",
+          "description": "Rule to trigger reward function",
+          "title": "Rule",
+          "type": "string"
+        },
+        "delay": {
+          "default": 0,
+          "description": "Delay (s) before the replenishment starts after the rule is triggered.",
+          "minimum": 0,
+          "title": "Delay",
+          "type": "number"
         }
       },
-      "title": "PatchRewardFunction",
+      "title": "OutsideRewardFunction",
       "type": "object"
     },
     "PatchStatistics": {
@@ -1493,54 +1486,6 @@
       "title": "PositionControl",
       "type": "object"
     },
-    "PowerFunction": {
-      "properties": {
-        "function_type": {
-          "const": "PowerFunction",
-          "default": "PowerFunction",
-          "title": "Function Type",
-          "type": "string"
-        },
-        "minimum": {
-          "default": 0,
-          "description": "Minimum value of the function",
-          "title": "Minimum",
-          "type": "number"
-        },
-        "maximum": {
-          "default": 1,
-          "description": "Maximum value of the function",
-          "title": "Maximum",
-          "type": "number"
-        },
-        "a": {
-          "default": 1,
-          "description": "Coefficient a of the function: value = a * pow(b, c * x) + d",
-          "title": "A",
-          "type": "number"
-        },
-        "b": {
-          "default": 2.718281828459045,
-          "description": "Coefficient b of the function: value = a * pow(b, c * x) + d",
-          "title": "B",
-          "type": "number"
-        },
-        "c": {
-          "default": -1,
-          "description": "Coefficient c of the function: value = a * pow(b, c * x) + d",
-          "title": "C",
-          "type": "number"
-        },
-        "d": {
-          "default": 0,
-          "description": "Coefficient d of the function: value = a * pow(b, c * x) + d",
-          "title": "D",
-          "type": "number"
-        }
-      },
-      "title": "PowerFunction",
-      "type": "object"
-    },
     "RenderSpecification": {
       "properties": {
         "contrast": {
@@ -1562,30 +1507,15 @@
       "title": "RenderSpecification",
       "type": "object"
     },
-    "RewardFunction": {
-      "discriminator": {
-        "mapping": {
-          "ConstantFunction": "#/definitions/ConstantFunction",
-          "LinearFunction": "#/definitions/LinearFunction",
-          "LookupTableFunction": "#/definitions/LookupTableFunction",
-          "PowerFunction": "#/definitions/PowerFunction"
-        },
-        "propertyName": "function_type"
-      },
-      "oneOf": [
-        {
-          "$ref": "#/definitions/ConstantFunction"
-        },
-        {
-          "$ref": "#/definitions/LinearFunction"
-        },
-        {
-          "$ref": "#/definitions/PowerFunction"
-        },
-        {
-          "$ref": "#/definitions/LookupTableFunction"
-        }
-      ]
+    "RewardFunctionRule": {
+      "enum": [
+        "OnReward",
+        "OnChoice",
+        "OnTime",
+        "OnDistance"
+      ],
+      "title": "RewardFunctionRule",
+      "type": "string"
     },
     "RewardSpecification": {
       "properties": {
@@ -1614,34 +1544,46 @@
           },
           "description": "The optional distribution where the delay to reward will be drawn from"
         },
-        "reward_function": {
-          "$ref": "#/definitions/PatchRewardFunction",
-          "default": {
-            "amount": {
-              "function_type": "ConstantFunction",
-              "value": 1.0
-            },
-            "probability": {
-              "function_type": "ConstantFunction",
-              "value": 1.0
-            },
-            "available": {
-              "a": -1.0,
-              "b": 5.0,
-              "function_type": "LinearFunction",
-              "maximum": 9999.0,
-              "minimum": 0.0
-            },
-            "depletion_rule": "OnChoice"
-          },
-          "description": "Reward function of the patch."
+        "amount": {
+          "default": 5,
+          "description": "Initial amount of reward in microliters",
+          "minimum": 0,
+          "title": "Amount",
+          "type": "number"
         },
-        "latent_reward_function": {
+        "probability": {
+          "default": 1,
+          "description": "Initial probability of reward delivery",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Probability",
+          "type": "number"
+        },
+        "available": {
+          "default": 5,
+          "description": "Initial amount of reward available in the patch in microliters",
+          "minimum": 0,
+          "title": "Available",
+          "type": "number"
+        },
+        "patch_reward_function": {
           "default": null,
-          "description": "Reward function of the latent virtual site. If None, the latent virtual site will not deliver rewards.",
+          "description": "Reward function that is applied when the patch is active.",
           "oneOf": [
             {
-              "$ref": "#/definitions/PatchRewardFunction"
+              "$ref": "#/definitions/InsideRewardFunction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outside_reward_function": {
+          "default": null,
+          "description": "Reward function that is continuously applied to the patch when not active.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/OutsideRewardFunction"
             },
             {
               "type": "null"
@@ -1924,6 +1866,7 @@
       "type": "object"
     },
     "VirtualSite": {
+      "description": "This is a class that is not meant to be instantiated in the DSL. It is used to define the virtual sites in the task logic.",
       "properties": {
         "id": {
           "default": 0,

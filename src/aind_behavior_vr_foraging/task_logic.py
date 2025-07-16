@@ -147,68 +147,42 @@ else:
     )
 
 
-class DepletionRule(str, Enum):
+class ClampedRate(BaseModel):
+    minimum: float = Field(default=0, description="Minimum value of the rate")
+    maximum: float = Field(description="Maximum value of the rate")
+    rate: float = Field(description="Rate of the replenishment. The value is in microliters / rule_unit.")
+
+class RewardFunctionRule(str, Enum):
     ON_REWARD = "OnReward"
     ON_CHOICE = "OnChoice"
     ON_TIME = "OnTime"
     ON_DISTANCE = "OnDistance"
 
 
-class ReplenishmentRule(str, Enum):
-    ON_TIME = "OnTime"
-    ON_DISTANCE = "OnDistance"
-
-
-class PatchRewardFunction(BaseModel):
-    amount: RewardFunction = Field(
-        default=ConstantFunction(value=1),
-        description="Determines the amount of reward to be delivered. The value is in microliters",
-        validate_default=True,
-    )
-    probability: RewardFunction = Field(
-        default=ConstantFunction(value=1),
-        description="Determines the probability that a reward will be delivered",
-        validate_default=True,
-    )
-    available: RewardFunction = Field(
-        default=LinearFunction(minimum=0, a=-1, b=5),
-        description="Determines the total amount of reward available left in the patch. The value is in microliters",
-        validate_default=True,
-    )
-    depletion_rule: DepletionRule = Field(default=DepletionRule.ON_CHOICE, description="Depletion")
-
-
-class ClampedRate(BaseModel):
-    minimum: float = Field(description="Minimum value of the rate")
-    maximum: float = Field(description="Maximum value of the rate")
-    rate: float = Field(description="Rate of the replenishment. The value is in microliters / rule_unit.")
-
-class PatchReplenishmentFunction(BaseModel):
+class _RewardFunction(BaseModel):
     """Replenishment function of the patch. The units of the rate are always relative to the rule unit.
     For example:
         ReplenishmentRule.ON_TIME: The replenishment rate is in microliters / second.
         ReplenishmentRule.ON_DISTANCE: The replenishment rate is in microliters / cm.
-
-    The updated values will always be clamped to the minimum and maximum values of the corresponding
-    patch reward function.
+        ReplenishmentRule.ON_CHOICE: The replenishment rate is in microliters / choice.
+        ReplenishmentRule.ON_REWARD: The replenishment rate is in microliters / reward.
     """
 
-    amount_rate: ClampedRate = Field(
-        default=ClampedRate(minimum=0, maximum=9999, rate=1),
-        description="Determines the rate at which the reward amount is replenished. The value is in microliters / rule_unit.",
-        validate_default=True,
+    amount: Optional[ClampedRate] = Field(default=None, description="Defines the amount of reward replenished per rule unit.")
+    probability: Optional[ClampedRate] = Field(default=None, description="Defines the probability of reward replenished per rule unit.")
+    available: Optional[ClampedRate] = Field(default=None, description="Defines the amount of reward available replenished in the patch per rule unit.")
+    rule: RewardFunctionRule = Field(
+        default=RewardFunctionRule.ON_REWARD, description="Rule to trigger reward function", validate_default=True
     )
-    probability_rate: ClampedRate = Field(
-        default=ClampedRate(minimum=0, maximum=9999, rate=1),
-        description="Determines the rate at which the probability of reward delivery is replenished. The value is in microliters / rule_unit.",
-        validate_default=True,
-    )
-    available_rate: ClampedRate = Field(
-        default=ClampedRate(minimum=0, maximum=9999, rate=0),
-        description="Determines the rate at which the total amount of reward available is replenished. The value is in microliters / rule_unit.",
-        validate_default=True,
-    )
-    rule: ReplenishmentRule = Field(default=ReplenishmentRule.ON_TIME, description="Replenishment rule")
+
+
+class InsideRewardFunction(_RewardFunction):
+    ...
+
+
+class OutsideRewardFunction(_RewardFunction):
+    rule: Literal[RewardFunctionRule.ON_TIME] = Field(default=RewardFunctionRule.ON_TIME, description="Rule to trigger reward function")
+    delay: float = Field(default=0, ge=0, description="Delay (s) before the replenishment starts after the rule is triggered.")
 
 
 class RewardSpecification(BaseModel):
@@ -218,12 +192,15 @@ class RewardSpecification(BaseModel):
         description="The optional distribution where the delay to reward will be drawn from",
         validate_default=True,
     )
-    reward_function: PatchRewardFunction = Field(
-        default=PatchRewardFunction(), description="Reward function of the patch."
+    amount: float = Field(default=5, ge=0, description="Initial amount of reward in microliters")
+    probability: float = Field(default=1, ge=0, le=1, description="Initial probability of reward delivery")
+    available: float = Field(
+        default=5, ge=0, description="Initial amount of reward available in the patch in microliters"
     )
-    latent_reward_function: Optional[PatchRewardFunction] = Field(
+    patch_reward_function: Optional[InsideRewardFunction] = Field(default=None, description="Reward function that is applied when the patch is active.")
+    outside_reward_function: Optional[OutsideRewardFunction] = Field(
         default=None,
-        description="Reward function that is continuously applied to the patch even when not active.",
+        description="Reward function that is continuously applied to the patch when not active.",
     )
 
 
@@ -283,6 +260,7 @@ class VirtualSiteGeneration(BaseModel):
 
 
 class VirtualSite(BaseModel):
+    """This is a class that is not meant to be instantiated in the DSL. It is used to define the virtual sites in the task logic."""
     id: int = Field(default=0, ge=0, description="Id of the virtual site")
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length: float = Field(default=20, description="Length of the virtual site (cm)")
@@ -307,8 +285,8 @@ class PatchStatistics(BaseModel):
     odor_specification: Optional[OdorSpecification] = Field(
         default=None, description="The optional odor specification of the patch"
     )
-    reward_specification: Optional[RewardSpecification] = Field(
-        default=None, description="The optional reward specification of the patch"
+    reward_specification: RewardSpecification = Field(
+        default=RewardSpecification(), description="The optional reward specification of the patch", validate_default=True
     )
     virtual_site_generation: VirtualSiteGeneration = Field(
         default=VirtualSiteGeneration(), validate_default=True, description="Virtual site generation specification"

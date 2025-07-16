@@ -265,7 +265,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
         amount=vr_task_logic.ConstantFunction(value=1),
         probability=vr_task_logic.ConstantFunction(value=1),
         available=vr_task_logic.LinearFunction(a=-1, b=5),
-        depletion_rule=vr_task_logic.DepletionRule.ON_CHOICE,
+        depletion_rule=vr_task_logic.RewardFunctionRule.ON_CHOICE,
     )
 
     patch1 = vr_task_logic.PatchStatistics(
