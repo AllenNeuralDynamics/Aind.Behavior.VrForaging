@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using AindVrForagingDataSchema.TaskLogic;
-using System.Collections.ObjectModel;
-using System.CodeDom;
+using System.Linq;
 
 
-public class PatchManager
+public class PatchManager : IEnumerable<PatchState>
 {
     private readonly ConcurrentDictionary<int, PatchState> _patchStates = new ConcurrentDictionary<int, PatchState>();
 
@@ -87,6 +86,16 @@ public class PatchManager
             newPatchManager.AddPatchState(kvp.Key, patchState);
         }
         return newPatchManager;
+    }
+
+    public IEnumerator<PatchState> GetEnumerator()
+    {
+        return _patchStates.Values.Select(ps => ps.Clone()).GetEnumerator();
+    }
+
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 
 }
