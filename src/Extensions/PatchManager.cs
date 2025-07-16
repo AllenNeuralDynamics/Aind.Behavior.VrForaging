@@ -1,27 +1,36 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using AindVrForagingDataSchema.TaskLogic;
+using System.Collections.ObjectModel;
+using System.CodeDom;
 
 
 public class PatchManager
 {
-    private readonly Dictionary<int, PatchState> _patchStates = new Dictionary<int, PatchState>();
+    private readonly ConcurrentDictionary<int, PatchState> _patchStates = new ConcurrentDictionary<int, PatchState>();
 
     public PatchState this[int patchId]
     {
         get
         {
-            PatchState patchState;
-            if (_patchStates.TryGetValue(patchId, out patchState))
-            {
-                return patchState.Clone();
-            }
-            throw new ArgumentException(string.Format("Patch state not found for index: {0}", patchId));
+            return GetPatchState(patchId);
         }
-        private set
+    }
+
+    public PatchState GetPatchState(int patchId)
+    {
+        PatchState patchState;
+        if (_patchStates.TryGetValue(patchId, out patchState))
         {
-            _patchStates[patchId] = value;
+            return patchState.Clone();
         }
+        throw new ArgumentException(string.Format("Patch state not found for index: {0}", patchId));
+    }
+
+    private void AddPatchState(int patchId, PatchState patchState)
+    {
+        _patchStates[patchId] = patchState;
     }
 
     public PatchManager Clone()
@@ -34,33 +43,31 @@ public class PatchManager
         return newPatchManager;
     }
 
-    public PatchManager UpdatePatchState(int patchId, double tickValue, ClampedRate amount, ClampedRate probability, ClampedRate available)
+    public void UpdatePatchState(int patchId, double tickValue, ClampedRate amount, ClampedRate probability, ClampedRate available)
     {
-        var patch = this[patchId].Clone();
-        if (patch == null)
+        PatchState currentState;
+        if (!_patchStates.TryGetValue(patchId, out currentState))
         {
             throw new ArgumentException(string.Format("Patch state not found for index: {0}", patchId));
         }
-        patch.UpdateFromRates(tickValue, amount, probability, available);
-        var newPatchManager = Clone();
-        newPatchManager[patchId] = patch;
-        return newPatchManager;
+        var updatedState = currentState.UpdateFromRates(tickValue, amount, probability, available);
+        _patchStates[patchId] = updatedState;
     }
 
-    public PatchManager SetPatchState(int patchId, double probability, double amount, double available)
+    public void SetPatchState(int patchId, double amount, double probability, double available)
     {
-        var patchState = new PatchState(probability, amount, available);
-        var newPatchManager = Clone();
-        newPatchManager[patchId] = patchState;
-        return newPatchManager;
+        var patchState = new PatchState(amount, probability, available);
+        AddPatchState(patchId, patchState);
     }
 
-    public PatchManager PopPatchState(int patchId, out PatchState removedState)
+    public PatchState PopPatchState(int patchId)
     {
-        var newPatchManager = Clone();
-        newPatchManager._patchStates.Remove(patchId);
-        removedState = this[patchId].Clone();
-        return newPatchManager;
+        PatchState removedState;
+        if (!_patchStates.TryRemove(patchId, out removedState))
+        {
+            throw new ArgumentException(string.Format("Patch state not found for index: {0}", patchId));
+        }
+        return removedState.Clone();
     }
 
     public static PatchManager FromPatchStatistics(IDictionary<int, PatchStatistics> patchStatistics)
@@ -77,10 +84,9 @@ public class PatchManager
                 kvp.Value.RewardSpecification.Probability,
                 kvp.Value.RewardSpecification.Available
             );
-            newPatchManager[kvp.Key] = patchState;
+            newPatchManager.AddPatchState(kvp.Key, patchState);
         }
         return newPatchManager;
     }
 
 }
-

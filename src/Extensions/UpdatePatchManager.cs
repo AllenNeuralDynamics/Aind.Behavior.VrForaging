@@ -6,18 +6,18 @@ using System.Reactive.Linq;
 using AindVrForagingDataSchema.TaskLogic;
 
 [Description("Updates the state of a patch in the PatchManager based on tick value and rates.")]
-public class UpdatePatchManager : Transform<Tuple<double, Tuple<int, ClampedRate, ClampedRate, ClampedRate>>, PatchManager>
+public class UpdatePatchManager : Sink<Tuple<double, Tuple<int, ClampedRate, ClampedRate, ClampedRate>>>
 {
     public PatchManager PatchManager { get; set; }
 
-    public override IObservable<PatchManager> Process(IObservable<Tuple<double, Tuple<int, ClampedRate, ClampedRate, ClampedRate>>> source)
+    public override IObservable<Tuple<double, Tuple<int, ClampedRate, ClampedRate, ClampedRate>>> Process(IObservable<Tuple<double, Tuple<int, ClampedRate, ClampedRate, ClampedRate>>> source)
     {
         var patchManager = PatchManager;
         if (patchManager == null)
         {
             throw new InvalidOperationException("PatchManager property must be set before processing.");
         }
-        return source.Select(value =>
+        return source.Do(value =>
         {
             var tickValue = value.Item1;
             var patchId = value.Item2.Item1;
@@ -26,7 +26,6 @@ public class UpdatePatchManager : Transform<Tuple<double, Tuple<int, ClampedRate
             var available = value.Item2.Item4;
 
             patchManager.UpdatePatchState(patchId, tickValue, amount, probability, available);
-            return patchManager;
         });
     }
 }
