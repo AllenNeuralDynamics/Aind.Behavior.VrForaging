@@ -2049,138 +2049,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class InsideRewardFunction
-    {
-    
-        private ClampedRate _amount;
-    
-        private ClampedRate _probability;
-    
-        private ClampedRate _available;
-    
-        private RewardFunctionRule _rule = AindVrForagingDataSchema.TaskLogic.RewardFunctionRule.OnReward;
-    
-        public InsideRewardFunction()
-        {
-        }
-    
-        protected InsideRewardFunction(InsideRewardFunction other)
-        {
-            _amount = other._amount;
-            _probability = other._probability;
-            _available = other._available;
-            _rule = other._rule;
-        }
-    
-        /// <summary>
-        /// Defines the amount of reward replenished per rule unit.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("amount")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward replenished per rule unit.")]
-        public ClampedRate Amount
-        {
-            get
-            {
-                return _amount;
-            }
-            set
-            {
-                _amount = value;
-            }
-        }
-    
-        /// <summary>
-        /// Defines the probability of reward replenished per rule unit.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("probability")]
-        [System.ComponentModel.DescriptionAttribute("Defines the probability of reward replenished per rule unit.")]
-        public ClampedRate Probability
-        {
-            get
-            {
-                return _probability;
-            }
-            set
-            {
-                _probability = value;
-            }
-        }
-    
-        /// <summary>
-        /// Defines the amount of reward available replenished in the patch per rule unit.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("available")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available replenished in the patch per rule unit.")]
-        public ClampedRate Available
-        {
-            get
-            {
-                return _available;
-            }
-            set
-            {
-                _available = value;
-            }
-        }
-    
-        /// <summary>
-        /// Rule to trigger reward function
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("rule")]
-        [System.ComponentModel.DescriptionAttribute("Rule to trigger reward function")]
-        public RewardFunctionRule Rule
-        {
-            get
-            {
-                return _rule;
-            }
-            set
-            {
-                _rule = value;
-            }
-        }
-    
-        public System.IObservable<InsideRewardFunction> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new InsideRewardFunction(this)));
-        }
-    
-        public System.IObservable<InsideRewardFunction> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new InsideRewardFunction(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("amount = " + _amount + ", ");
-            stringBuilder.Append("probability = " + _probability + ", ");
-            stringBuilder.Append("available = " + _available + ", ");
-            stringBuilder.Append("rule = " + _rule);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class LogNormalDistribution : Distribution
     {
     
@@ -3583,6 +3451,138 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class PatchRewardFunction
+    {
+    
+        private ClampedRate _amount;
+    
+        private ClampedRate _probability;
+    
+        private ClampedRate _available;
+    
+        private RewardFunctionRule _rule = AindVrForagingDataSchema.TaskLogic.RewardFunctionRule.OnReward;
+    
+        public PatchRewardFunction()
+        {
+        }
+    
+        protected PatchRewardFunction(PatchRewardFunction other)
+        {
+            _amount = other._amount;
+            _probability = other._probability;
+            _available = other._available;
+            _rule = other._rule;
+        }
+    
+        /// <summary>
+        /// Defines the amount of reward replenished per rule unit.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("amount")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward replenished per rule unit.")]
+        public ClampedRate Amount
+        {
+            get
+            {
+                return _amount;
+            }
+            set
+            {
+                _amount = value;
+            }
+        }
+    
+        /// <summary>
+        /// Defines the probability of reward replenished per rule unit.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("probability")]
+        [System.ComponentModel.DescriptionAttribute("Defines the probability of reward replenished per rule unit.")]
+        public ClampedRate Probability
+        {
+            get
+            {
+                return _probability;
+            }
+            set
+            {
+                _probability = value;
+            }
+        }
+    
+        /// <summary>
+        /// Defines the amount of reward available replenished in the patch per rule unit.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("available")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available replenished in the patch per rule unit.")]
+        public ClampedRate Available
+        {
+            get
+            {
+                return _available;
+            }
+            set
+            {
+                _available = value;
+            }
+        }
+    
+        /// <summary>
+        /// Rule to trigger reward function
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rule")]
+        [System.ComponentModel.DescriptionAttribute("Rule to trigger reward function")]
+        public RewardFunctionRule Rule
+        {
+            get
+            {
+                return _rule;
+            }
+            set
+            {
+                _rule = value;
+            }
+        }
+    
+        public System.IObservable<PatchRewardFunction> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchRewardFunction(this)));
+        }
+    
+        public System.IObservable<PatchRewardFunction> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchRewardFunction(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("amount = " + _amount + ", ");
+            stringBuilder.Append("probability = " + _probability + ", ");
+            stringBuilder.Append("available = " + _available + ", ");
+            stringBuilder.Append("rule = " + _rule);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class PatchStatistics
     {
     
@@ -4355,7 +4355,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     
         private double _available = 5D;
     
-        private InsideRewardFunction _patchRewardFunction;
+        private PatchRewardFunction _patchRewardFunction;
     
         private OutsideRewardFunction _outsideRewardFunction;
     
@@ -4467,7 +4467,7 @@ namespace AindVrForagingDataSchema.TaskLogic
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("patch_reward_function")]
         [System.ComponentModel.DescriptionAttribute("Reward function that is applied when the patch is active.")]
-        public InsideRewardFunction PatchRewardFunction
+        public PatchRewardFunction PatchRewardFunction
         {
             get
             {
@@ -6963,11 +6963,6 @@ namespace AindVrForagingDataSchema.TaskLogic
             return Process<HabituationSettings>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<InsideRewardFunction> source)
-        {
-            return Process<InsideRewardFunction>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<LogNormalDistribution> source)
         {
             return Process<LogNormalDistribution>(source);
@@ -7026,6 +7021,11 @@ namespace AindVrForagingDataSchema.TaskLogic
         public System.IObservable<string> Process(System.IObservable<OutsideRewardFunction> source)
         {
             return Process<OutsideRewardFunction>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchRewardFunction> source)
+        {
+            return Process<PatchRewardFunction>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<PatchStatistics> source)
@@ -7196,7 +7196,6 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GammaDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HabituationSettings>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InsideRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
@@ -7209,6 +7208,7 @@ namespace AindVrForagingDataSchema.TaskLogic
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OutsideRewardFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchStatistics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistributionParameters>))]

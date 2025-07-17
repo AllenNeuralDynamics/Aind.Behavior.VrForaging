@@ -262,18 +262,24 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
         )
 
     reward_function = vr_task_logic.PatchRewardFunction(
-        amount=vr_task_logic.ConstantFunction(value=1),
-        probability=vr_task_logic.ConstantFunction(value=1),
-        available=vr_task_logic.LinearFunction(a=-1, b=5),
-        depletion_rule=vr_task_logic.RewardFunctionRule.ON_CHOICE,
+        available=vr_task_logic.ClampedRate(minimum=0, maximum=5, rate=-1),
+        rule=vr_task_logic.RewardFunctionRule.ON_REWARD,
     )
-
+    
+    replenishment_function = vr_task_logic.OutsideRewardFunction(
+        available=vr_task_logic.ClampedRate(minimum=0, maximum=5, rate=0.1),
+        rule=vr_task_logic.RewardFunctionRule.ON_TIME)
+    
     patch1 = vr_task_logic.PatchStatistics(
         label="Amyl Acetate",
         state_index=0,
         odor_specification=vr_task_logic.OdorSpecification(index=1, concentration=1),
         reward_specification=vr_task_logic.RewardSpecification(
-            reward_function=reward_function,
+            amount=1,
+            probability=1,
+            available=5,
+            patch_reward_function=reward_function,
+            outside_reward_function=replenishment_function,
             operant_logic=OperantLogicHelper(),
             delay=ExponentialDistributionHelper(1, 0, 10),
         ),
@@ -290,7 +296,8 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
         state_index=1,
         odor_specification=vr_task_logic.OdorSpecification(index=0, concentration=1),
         reward_specification=vr_task_logic.RewardSpecification(
-            reward_function=reward_function,
+            patch_reward_function=reward_function,
+            outside_reward_function=replenishment_function,
             operant_logic=OperantLogicHelper(),
             delay=ExponentialDistributionHelper(1, 0, 10),
         ),

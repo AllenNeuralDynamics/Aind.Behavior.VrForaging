@@ -723,53 +723,6 @@
       "title": "HabituationSettings",
       "type": "object"
     },
-    "InsideRewardFunction": {
-      "properties": {
-        "amount": {
-          "default": null,
-          "description": "Defines the amount of reward replenished per rule unit.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/ClampedRate"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "probability": {
-          "default": null,
-          "description": "Defines the probability of reward replenished per rule unit.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/ClampedRate"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "available": {
-          "default": null,
-          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/ClampedRate"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "rule": {
-          "$ref": "#/definitions/RewardFunctionRule",
-          "default": "OnReward",
-          "description": "Rule to trigger reward function"
-        }
-      },
-      "title": "InsideRewardFunction",
-      "type": "object"
-    },
     "LogNormalDistribution": {
       "properties": {
         "family": {
@@ -1202,6 +1155,53 @@
       "title": "OutsideRewardFunction",
       "type": "object"
     },
+    "PatchRewardFunction": {
+      "properties": {
+        "amount": {
+          "default": null,
+          "description": "Defines the amount of reward replenished per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "probability": {
+          "default": null,
+          "description": "Defines the probability of reward replenished per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "available": {
+          "default": null,
+          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ClampedRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rule": {
+          "$ref": "#/definitions/RewardFunctionRule",
+          "default": "OnReward",
+          "description": "Rule to trigger reward function"
+        }
+      },
+      "title": "PatchRewardFunction",
+      "type": "object"
+    },
     "PatchStatistics": {
       "properties": {
         "label": {
@@ -1230,16 +1230,25 @@
           ]
         },
         "reward_specification": {
-          "default": null,
-          "description": "The optional reward specification of the patch",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/RewardSpecification"
+          "$ref": "#/definitions/RewardSpecification",
+          "default": {
+            "operant_logic": null,
+            "delay": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "value": 0.0
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
             },
-            {
-              "type": "null"
-            }
-          ]
+            "amount": 5.0,
+            "probability": 1.0,
+            "available": 5.0,
+            "patch_reward_function": null,
+            "outside_reward_function": null
+          },
+          "description": "The optional reward specification of the patch"
         },
         "virtual_site_generation": {
           "$ref": "#/definitions/VirtualSiteGeneration",
@@ -1571,7 +1580,7 @@
           "description": "Reward function that is applied when the patch is active.",
           "oneOf": [
             {
-              "$ref": "#/definitions/InsideRewardFunction"
+              "$ref": "#/definitions/PatchRewardFunction"
             },
             {
               "type": "null"

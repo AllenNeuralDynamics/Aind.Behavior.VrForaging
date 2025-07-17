@@ -176,7 +176,7 @@ class _RewardFunction(BaseModel):
     )
 
 
-class InsideRewardFunction(_RewardFunction):
+class PatchRewardFunction(_RewardFunction):
     ...
 
 
@@ -197,7 +197,7 @@ class RewardSpecification(BaseModel):
     available: float = Field(
         default=5, ge=0, description="Initial amount of reward available in the patch in microliters"
     )
-    patch_reward_function: Optional[InsideRewardFunction] = Field(default=None, description="Reward function that is applied when the patch is active.")
+    patch_reward_function: Optional[PatchRewardFunction] = Field(default=None, description="Reward function that is applied when the patch is active.")
     outside_reward_function: Optional[OutsideRewardFunction] = Field(
         default=None,
         description="Reward function that is continuously applied to the patch when not active.",
