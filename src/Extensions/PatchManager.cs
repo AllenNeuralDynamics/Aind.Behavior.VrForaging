@@ -5,7 +5,7 @@ using AindVrForagingDataSchema.TaskLogic;
 using System.Linq;
 
 
-public class PatchManager : IEnumerable<PatchState>
+public class PatchManager
 {
     private readonly ConcurrentDictionary<int, PatchState> _patchStates = new ConcurrentDictionary<int, PatchState>();
 
@@ -55,8 +55,8 @@ public class PatchManager : IEnumerable<PatchState>
 
     public void SetPatchState(int patchId, double amount, double probability, double available)
     {
-        var patchState = new PatchState(amount, probability, available);
-        AddPatchState(patchId, patchState);
+        var patchState = new PatchState(amount, probability, available, patchId);
+        AddPatchState(patchState.PatchId, patchState);
     }
 
     public PatchState PopPatchState(int patchId)
@@ -81,21 +81,16 @@ public class PatchManager : IEnumerable<PatchState>
             var patchState = new PatchState(
                 kvp.Value.RewardSpecification.Amount,
                 kvp.Value.RewardSpecification.Probability,
-                kvp.Value.RewardSpecification.Available
+                kvp.Value.RewardSpecification.Available,
+                kvp.Key
             );
-            newPatchManager.AddPatchState(kvp.Key, patchState);
+            newPatchManager.AddPatchState(patchState.PatchId, patchState);
         }
         return newPatchManager;
     }
 
-    public IEnumerator<PatchState> GetEnumerator()
+    public List<PatchState> ConvertToList()
     {
-        return _patchStates.Values.Select(ps => ps.Clone()).GetEnumerator();
+        return _patchStates.Values.Select(ps => ps.Clone()).ToList();
     }
-
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
 }

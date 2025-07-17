@@ -3,11 +3,20 @@ using AindVrForagingDataSchema.TaskLogic;
 
 public class PatchState
 {
+    private int _patchId;
+
+    public int PatchId
+    {
+        get { return _patchId; }
+        set { _patchId = value; }
+    }
+
     private double _amount;
 
     private double _probability;
 
     private double _available;
+
 
     public double Amount
     {
@@ -26,21 +35,24 @@ public class PatchState
     }
 
 
-    public PatchState() : this(0, 0, 0) { }
 
-    public PatchState(double amount, double probability,  double available)
+    public PatchState() : this(0, 0, 0, -1) { }
+
+    public PatchState(double amount, double probability, double available, int patchId)
     {
         _amount = amount;
         _probability = probability;
         _available = available;
+        _patchId = patchId;
     }
 
-    public static PatchState FromRewardSpecification(RewardSpecification rewardSpecification)
+    public static PatchState FromRewardSpecification(RewardSpecification rewardSpecification, int patchId)
     {
         return new PatchState(
             rewardSpecification.Amount,
             rewardSpecification.Probability,
-            rewardSpecification.Available
+            rewardSpecification.Available,
+            patchId
         );
     }
 
@@ -56,13 +68,14 @@ public class PatchState
         return new PatchState(
             UpdateWithRate(_amount, tickValue, amountRate),
             UpdateWithRate(_probability, tickValue, probabilityRate),
-            UpdateWithRate(_available, tickValue, availableRate)
+            UpdateWithRate(_available, tickValue, availableRate),
+            _patchId
         );
     }
 
     public PatchState Clone()
     {
-        return new PatchState(_amount, _probability, _available);
+        return new PatchState(_amount, _probability, _available, _patchId);
     }
 }
 
