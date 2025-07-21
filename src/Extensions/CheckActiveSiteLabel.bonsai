@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.1"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.TaskLogic;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
       <Expression xsi:type="SubscribeSubject">
-        <Name>ActiveSite</Name>
+        <Name>GlobalActiveSite</Name>
       </Expression>
       <Expression xsi:type="MemberSelector">
         <Selector>Label</Selector>
@@ -17,7 +17,7 @@
       </Expression>
       <Expression xsi:type="Equal">
         <Operand xsi:type="WorkflowProperty" TypeArguments="p1:VirtualSiteLabels">
-          <Value>Unspecified</Value>
+          <Value>InterPatch</Value>
         </Operand>
       </Expression>
       <Expression xsi:type="rx:Condition">
