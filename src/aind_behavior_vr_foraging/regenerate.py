@@ -1,11 +1,12 @@
-import inspect
+import json
 from pathlib import Path
+from typing import Union
 
+import pydantic
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import (
-    convert_pydantic_to_bonsai,
-    pascal_to_snake_case,
-    snake_to_pascal_case,
+    CustomGenerateJsonSchema,
+    bonsai_sgen,
 )
 
 import aind_behavior_vr_foraging.rig
@@ -21,18 +22,30 @@ def main():
         aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic,
         aind_behavior_vr_foraging.rig.AindVrForagingRig,
         AindBehaviorSessionModel,
+        aind_behavior_vr_foraging.task_logic.VirtualSite,
+        aind_behavior_vr_foraging.task_logic.VisualCorridor,
     ]
+    model = pydantic.RootModel[Union[tuple(models)]]
+    json_schema = model.model_json_schema(schema_generator=CustomGenerateJsonSchema, mode="serialization")
+    for to_remove in ["$schema", "title", "description", "properties", "required", "type", "oneOf"]:
+        json_schema.pop(to_remove, None)
 
-    for model in models:
-        module_name = inspect.getmodule(model).__name__
-        module_name = module_name.split(".")[-1]
-        schema_name = f"{pascal_to_snake_case(model.__name__)}"
-        namespace = f"{NAMESPACE_PREFIX}.{snake_to_pascal_case(module_name)}"
+    with open(schema_path := SCHEMA_ROOT / "aind-vr-foraging.json", "w", encoding="utf-8") as f:
+        literal = json.dumps(json_schema, indent=2)
+        f.write(literal)
 
-        print((schema_name, namespace))
-        convert_pydantic_to_bonsai(
-            {schema_name: model}, schema_path=SCHEMA_ROOT, output_path=EXTENSIONS_ROOT, namespace=namespace
-        )
+    bonsai_sgen(
+        schema_path=schema_path,
+        root_element="Root",
+        namespace=NAMESPACE_PREFIX,
+        output_path=EXTENSIONS_ROOT / "AindBehaviorVrForaging.cs",
+    )
+    with open(EXTENSIONS_ROOT / "AindBehaviorVrForaging.cs", "r+", encoding="utf-8") as f:
+        raw = f.read()
+        raw = raw.replace("IDictionary", "Dictionary")
+        f.seek(0)
+        f.write(raw)
+        f.truncate()
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 
-namespace AindVrForagingDataSchema.TaskLogic
+namespace AindVrForagingDataSchema
 {
 [Combinator]
 [Description("Applies a updater object to a value.")]

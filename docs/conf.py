@@ -88,8 +88,6 @@ def export_model_diagram(model: BaseModel, root: str = _static_path) -> None:
 
 export_model_diagram(aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic, _static_path)
 
-export_model_diagram(aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic, _static_path)
-
 # -- Dataset rendering
 
 with open(f"{_static_path}/dataset.txt", "w", encoding="utf-8") as f:
