@@ -13,10 +13,8 @@ from aind_watchdog_service.models.manifest_config import (
 from clabe import resource_monitor
 from clabe.apps import AindBehaviorServicesBonsaiApp
 from clabe.data_transfer import aind_watchdog
-from clabe.logging_helper import aibs as aibs_logging
 from pydantic_settings import CliApp
 
-from aind_behavior_vr_foraging import __version__
 from aind_behavior_vr_foraging.data_mappers import AindDataMapperWrapper
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
@@ -33,7 +31,7 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
         watchdog_data_transfer_factory(
             REMOTE_DIR,
             project_name=PROJECT_NAME,
-            transfer_endpoint="http://aind-data-transfer-service/api/v1/submit_jobs",
+            transfer_endpoint="http://aind-data-transfer-service-dev/api/v2/submit_jobs",
             upload_job_configs=[
                 ModalityConfigs(
                     modality=Modality.BEHAVIOR_VIDEOS, source="This will get replaced later", compress_raw_data=True
@@ -62,12 +60,7 @@ def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launc
             config_library_dir=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging")
         ),
     )
-    aibs_logging.attach_to_launcher(
-        launcher,
-        logserver_url="eng-logtools.corp.alleninstitute.org:9000",
-        project_name=PROJECT_NAME,
-        version=__version__,
-    )
+
     return launcher
 
 
