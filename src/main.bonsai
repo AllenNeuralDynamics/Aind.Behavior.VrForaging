@@ -497,7 +497,9 @@ Item3 as Right)</scr:Expression>
                     <Selector>Input</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:SerializeToJson" />
+                    <Combinator xsi:type="p1:SerializeToJson">
+                      <p1:Formatting>None</p1:Formatting>
+                    </Combinator>
                   </Expression>
                   <Expression xsi:type="p3:DeserializeFromJson">
                     <p3:Type xsi:type="TypeMapping" TypeArguments="p3:AindManipulatorCalibrationInput" />
@@ -6963,7 +6965,9 @@ Item2 as TotalReward)</scr:Expression>
                     <Selector>Input</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:SerializeToJson" />
+                    <Combinator xsi:type="p1:SerializeToJson">
+                      <p1:Formatting>None</p1:Formatting>
+                    </Combinator>
                   </Expression>
                   <Expression xsi:type="p3:DeserializeFromJson">
                     <p3:Type xsi:type="TypeMapping" TypeArguments="p3:AindManipulatorCalibrationInput" />
