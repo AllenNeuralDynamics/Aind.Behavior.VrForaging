@@ -9,9 +9,9 @@ namespace AindVrForagingDataSchema
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindBehaviorSessionModel
     {
     
@@ -43,7 +43,7 @@ namespace AindVrForagingDataSchema
     
         public AindBehaviorSessionModel()
         {
-            _aindBehaviorServicesPkgVersion = "0.11.0";
+            _aindBehaviorServicesPkgVersion = "0.12.0";
             _version = "0.3.1";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
@@ -282,31 +282,31 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindBehaviorSessionModel> Process()
+        public System.IObservable<AindBehaviorSessionModel> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorSessionModel(this)));
         }
     
-        public System.IObservable<AindBehaviorSessionModel> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindBehaviorSessionModel> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorSessionModel(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
-            stringBuilder.Append("version = " + _version + ", ");
-            stringBuilder.Append("experiment = " + _experiment + ", ");
-            stringBuilder.Append("experimenter = " + _experimenter + ", ");
-            stringBuilder.Append("date = " + _date + ", ");
-            stringBuilder.Append("root_path = " + _rootPath + ", ");
-            stringBuilder.Append("session_name = " + _sessionName + ", ");
-            stringBuilder.Append("subject = " + _subject + ", ");
-            stringBuilder.Append("experiment_version = " + _experimentVersion + ", ");
-            stringBuilder.Append("notes = " + _notes + ", ");
-            stringBuilder.Append("commit_hash = " + _commitHash + ", ");
-            stringBuilder.Append("allow_dirty_repo = " + _allowDirtyRepo + ", ");
-            stringBuilder.Append("skip_hardware_validation = " + _skipHardwareValidation);
+            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
+            stringBuilder.Append("Version = " + _version + ", ");
+            stringBuilder.Append("Experiment = " + _experiment + ", ");
+            stringBuilder.Append("Experimenter = " + _experimenter + ", ");
+            stringBuilder.Append("Date = " + _date + ", ");
+            stringBuilder.Append("RootPath = " + _rootPath + ", ");
+            stringBuilder.Append("SessionName = " + _sessionName + ", ");
+            stringBuilder.Append("Subject = " + _subject + ", ");
+            stringBuilder.Append("ExperimentVersion = " + _experimentVersion + ", ");
+            stringBuilder.Append("Notes = " + _notes + ", ");
+            stringBuilder.Append("CommitHash = " + _commitHash + ", ");
+            stringBuilder.Append("AllowDirtyRepo = " + _allowDirtyRepo + ", ");
+            stringBuilder.Append("SkipHardwareValidation = " + _skipHardwareValidation);
             return true;
         }
     
@@ -328,10 +328,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Additional settings for the manipulator device
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Additional settings for the manipulator device")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindManipulatorAdditionalSettings
     {
     
@@ -365,19 +365,19 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindManipulatorAdditionalSettings> Process()
+        public System.IObservable<AindManipulatorAdditionalSettings> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorAdditionalSettings(this)));
         }
     
-        public System.IObservable<AindManipulatorAdditionalSettings> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindManipulatorAdditionalSettings> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorAdditionalSettings(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("spout_axis = " + _spoutAxis);
+            stringBuilder.Append("SpoutAxis = " + _spoutAxis);
             return true;
         }
     
@@ -399,10 +399,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Aind manipulator calibration class
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Aind manipulator calibration class")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindManipulatorCalibration
     {
     
@@ -521,24 +521,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindManipulatorCalibration> Process()
+        public System.IObservable<AindManipulatorCalibration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorCalibration(this)));
         }
     
-        public System.IObservable<AindManipulatorCalibration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindManipulatorCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("input = " + _input + ", ");
-            stringBuilder.Append("output = " + _output + ", ");
-            stringBuilder.Append("date = " + _date + ", ");
-            stringBuilder.Append("description = " + _description + ", ");
-            stringBuilder.Append("notes = " + _notes);
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("Input = " + _input + ", ");
+            stringBuilder.Append("Output = " + _output + ", ");
+            stringBuilder.Append("Date = " + _date + ", ");
+            stringBuilder.Append("Description = " + _description + ", ");
+            stringBuilder.Append("Notes = " + _notes);
             return true;
         }
     
@@ -557,9 +557,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindManipulatorCalibrationInput
     {
     
@@ -643,22 +643,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindManipulatorCalibrationInput> Process()
+        public System.IObservable<AindManipulatorCalibrationInput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorCalibrationInput(this)));
         }
     
-        public System.IObservable<AindManipulatorCalibrationInput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindManipulatorCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorCalibrationInput(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("full_step_to_mm = " + _fullStepToMm + ", ");
-            stringBuilder.Append("axis_configuration = " + _axisConfiguration + ", ");
-            stringBuilder.Append("homing_order = " + _homingOrder + ", ");
-            stringBuilder.Append("initial_position = " + _initialPosition);
+            stringBuilder.Append("FullStepToMm = " + _fullStepToMm + ", ");
+            stringBuilder.Append("AxisConfiguration = " + _axisConfiguration + ", ");
+            stringBuilder.Append("HomingOrder = " + _homingOrder + ", ");
+            stringBuilder.Append("InitialPosition = " + _initialPosition);
             return true;
         }
     
@@ -677,9 +677,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindManipulatorCalibrationOutput
     {
     
@@ -691,12 +691,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<AindManipulatorCalibrationOutput> Process()
+        public System.IObservable<AindManipulatorCalibrationOutput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorCalibrationOutput(this)));
         }
     
-        public System.IObservable<AindManipulatorCalibrationOutput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindManipulatorCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorCalibrationOutput(this));
         }
@@ -724,11 +724,11 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Overrides the default settings for the manipulator device by spec'ing additional_settings field
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the manipulator device by spec\'ing additional_" +
         "settings field")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindManipulatorDevice
     {
     
@@ -873,25 +873,25 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindManipulatorDevice> Process()
+        public System.IObservable<AindManipulatorDevice> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorDevice(this)));
         }
     
-        public System.IObservable<AindManipulatorDevice> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindManipulatorDevice> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorDevice(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName);
             return true;
         }
     
@@ -910,9 +910,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindVrForagingRig
     {
     
@@ -952,7 +952,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.11.0";
+            _aindBehaviorServicesPkgVersion = "0.12.0";
             _version = "0.6.0";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -1280,35 +1280,35 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindVrForagingRig> Process()
+        public System.IObservable<AindVrForagingRig> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingRig(this)));
         }
     
-        public System.IObservable<AindVrForagingRig> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindVrForagingRig> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindVrForagingRig(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
-            stringBuilder.Append("version = " + _version + ", ");
-            stringBuilder.Append("computer_name = " + _computerName + ", ");
-            stringBuilder.Append("rig_name = " + _rigName + ", ");
-            stringBuilder.Append("triggered_camera_controller = " + _triggeredCameraController + ", ");
-            stringBuilder.Append("monitoring_camera_controller = " + _monitoringCameraController + ", ");
-            stringBuilder.Append("harp_behavior = " + _harpBehavior + ", ");
-            stringBuilder.Append("harp_olfactometer = " + _harpOlfactometer + ", ");
-            stringBuilder.Append("harp_lickometer = " + _harpLickometer + ", ");
-            stringBuilder.Append("harp_clock_generator = " + _harpClockGenerator + ", ");
-            stringBuilder.Append("harp_analog_input = " + _harpAnalogInput + ", ");
-            stringBuilder.Append("harp_treadmill = " + _harpTreadmill + ", ");
-            stringBuilder.Append("harp_sniff_detector = " + _harpSniffDetector + ", ");
-            stringBuilder.Append("harp_environment_sensor = " + _harpEnvironmentSensor + ", ");
-            stringBuilder.Append("manipulator = " + _manipulator + ", ");
-            stringBuilder.Append("screen = " + _screen + ", ");
-            stringBuilder.Append("calibration = " + _calibration);
+            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
+            stringBuilder.Append("Version = " + _version + ", ");
+            stringBuilder.Append("ComputerName = " + _computerName + ", ");
+            stringBuilder.Append("RigName = " + _rigName + ", ");
+            stringBuilder.Append("TriggeredCameraController = " + _triggeredCameraController + ", ");
+            stringBuilder.Append("MonitoringCameraController = " + _monitoringCameraController + ", ");
+            stringBuilder.Append("HarpBehavior = " + _harpBehavior + ", ");
+            stringBuilder.Append("HarpOlfactometer = " + _harpOlfactometer + ", ");
+            stringBuilder.Append("HarpLickometer = " + _harpLickometer + ", ");
+            stringBuilder.Append("HarpClockGenerator = " + _harpClockGenerator + ", ");
+            stringBuilder.Append("HarpAnalogInput = " + _harpAnalogInput + ", ");
+            stringBuilder.Append("HarpTreadmill = " + _harpTreadmill + ", ");
+            stringBuilder.Append("HarpSniffDetector = " + _harpSniffDetector + ", ");
+            stringBuilder.Append("HarpEnvironmentSensor = " + _harpEnvironmentSensor + ", ");
+            stringBuilder.Append("Manipulator = " + _manipulator + ", ");
+            stringBuilder.Append("Screen = " + _screen + ", ");
+            stringBuilder.Append("Calibration = " + _calibration);
             return true;
         }
     
@@ -1334,14 +1334,14 @@ namespace AindVrForagingDataSchema
     ///specification for the virtual reality foraging behavioral experiment.
     ///It includes all task parameters, environment specifications, and control settings.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Main task logic model for the AIND VR Foraging task.
 
     This is the top-level class that encapsulates the complete task logic
     specification for the virtual reality foraging behavioral experiment.
     It includes all task parameters, environment specifications, and control settings.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindVrForagingTaskLogic
     {
     
@@ -1454,23 +1454,23 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindVrForagingTaskLogic> Process()
+        public System.IObservable<AindVrForagingTaskLogic> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingTaskLogic(this)));
         }
     
-        public System.IObservable<AindVrForagingTaskLogic> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindVrForagingTaskLogic> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindVrForagingTaskLogic(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("name = " + _name + ", ");
-            stringBuilder.Append("description = " + _description + ", ");
-            stringBuilder.Append("task_parameters = " + _taskParameters + ", ");
-            stringBuilder.Append("version = " + _version + ", ");
-            stringBuilder.Append("stage_name = " + _stageName);
+            stringBuilder.Append("Name = " + _name + ", ");
+            stringBuilder.Append("Description = " + _description + ", ");
+            stringBuilder.Append("TaskParameters = " + _taskParameters + ", ");
+            stringBuilder.Append("Version = " + _version + ", ");
+            stringBuilder.Append("StageName = " + _stageName);
             return true;
         }
     
@@ -1496,14 +1496,14 @@ namespace AindVrForagingDataSchema
     ///including environment structure, task mode settings, operation control,
     ///and numerical updaters for dynamic parameter modification.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Complete parameter specification for the AIND VR Foraging task.
 
     This class contains all configurable parameters for the VR foraging task,
     including environment structure, task mode settings, operation control,
     and numerical updaters for dynamic parameter modification.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindVrForagingTaskParameters
     {
     
@@ -1519,7 +1519,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.11.0";
+            _aindBehaviorServicesPkgVersion = "0.12.0";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
@@ -1618,23 +1618,23 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindVrForagingTaskParameters> Process()
+        public System.IObservable<AindVrForagingTaskParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindVrForagingTaskParameters(this)));
         }
     
-        public System.IObservable<AindVrForagingTaskParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindVrForagingTaskParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindVrForagingTaskParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
-            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
-            stringBuilder.Append("updaters = " + _updaters + ", ");
-            stringBuilder.Append("environment = " + _environment + ", ");
-            stringBuilder.Append("operation_control = " + _operationControl);
+            stringBuilder.Append("RngSeed = " + _rngSeed + ", ");
+            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
+            stringBuilder.Append("Updaters = " + _updaters + ", ");
+            stringBuilder.Append("Environment = " + _environment + ", ");
+            stringBuilder.Append("OperationControl = " + _operationControl);
             return true;
         }
     
@@ -1659,12 +1659,12 @@ namespace AindVrForagingDataSchema
     ///This class manages audio cue generation including tone duration and frequency
     ///for auditory feedback during the behavioral task.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Controls audio feedback parameters for the task.\n\nThis class manages audio cue ge" +
         "neration including tone duration and frequency\nfor auditory feedback during the " +
         "behavioral task.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AudioControl
     {
     
@@ -1718,20 +1718,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AudioControl> Process()
+        public System.IObservable<AudioControl> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AudioControl(this)));
         }
     
-        public System.IObservable<AudioControl> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AudioControl> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AudioControl(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("duration = " + _duration + ", ");
-            stringBuilder.Append("frequency = " + _frequency);
+            stringBuilder.Append("Duration = " + _duration + ", ");
+            stringBuilder.Append("Frequency = " + _frequency);
             return true;
         }
     
@@ -1753,7 +1753,7 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Motor axis available
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum Axis
     {
     
@@ -1777,10 +1777,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Axis configuration
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Axis configuration")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AxisConfiguration
     {
     
@@ -1938,26 +1938,26 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AxisConfiguration> Process()
+        public System.IObservable<AxisConfiguration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AxisConfiguration(this)));
         }
     
-        public System.IObservable<AxisConfiguration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AxisConfiguration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AxisConfiguration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("axis = " + _axis + ", ");
-            stringBuilder.Append("step_acceleration_interval = " + _stepAccelerationInterval + ", ");
-            stringBuilder.Append("step_interval = " + _stepInterval + ", ");
-            stringBuilder.Append("microstep_resolution = " + _microstepResolution + ", ");
-            stringBuilder.Append("maximum_step_interval = " + _maximumStepInterval + ", ");
-            stringBuilder.Append("motor_operation_mode = " + _motorOperationMode + ", ");
-            stringBuilder.Append("max_limit = " + _maxLimit + ", ");
-            stringBuilder.Append("min_limit = " + _minLimit);
+            stringBuilder.Append("Axis = " + _axis + ", ");
+            stringBuilder.Append("StepAccelerationInterval = " + _stepAccelerationInterval + ", ");
+            stringBuilder.Append("StepInterval = " + _stepInterval + ", ");
+            stringBuilder.Append("MicrostepResolution = " + _microstepResolution + ", ");
+            stringBuilder.Append("MaximumStepInterval = " + _maximumStepInterval + ", ");
+            stringBuilder.Append("MotorOperationMode = " + _motorOperationMode + ", ");
+            stringBuilder.Append("MaxLimit = " + _maxLimit + ", ");
+            stringBuilder.Append("MinLimit = " + _minLimit);
             return true;
         }
     
@@ -1976,9 +1976,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BaseModel
     {
     
@@ -1990,12 +1990,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<BaseModel> Process()
+        public System.IObservable<BaseModel> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BaseModel(this)));
         }
     
-        public System.IObservable<BaseModel> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BaseModel> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BaseModel(this));
         }
@@ -2020,9 +2020,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BetaDistribution : Distribution
     {
     
@@ -2099,12 +2099,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BetaDistribution> Process()
+        public System.IObservable<BetaDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BetaDistribution(this)));
         }
     
-        public System.IObservable<BetaDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BetaDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BetaDistribution(this));
         }
@@ -2115,17 +2115,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BetaDistributionParameters
     {
     
@@ -2196,21 +2196,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BetaDistributionParameters> Process()
+        public System.IObservable<BetaDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BetaDistributionParameters(this)));
         }
     
-        public System.IObservable<BetaDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BetaDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BetaDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("alpha = " + _alpha + ", ");
-            stringBuilder.Append("beta = " + _beta);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Alpha = " + _alpha + ", ");
+            stringBuilder.Append("Beta = " + _beta);
             return true;
         }
     
@@ -2229,9 +2229,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BinomialDistribution : Distribution
     {
     
@@ -2308,12 +2308,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BinomialDistribution> Process()
+        public System.IObservable<BinomialDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BinomialDistribution(this)));
         }
     
-        public System.IObservable<BinomialDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BinomialDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BinomialDistribution(this));
         }
@@ -2324,17 +2324,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BinomialDistributionParameters
     {
     
@@ -2405,21 +2405,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BinomialDistributionParameters> Process()
+        public System.IObservable<BinomialDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BinomialDistributionParameters(this)));
         }
     
-        public System.IObservable<BinomialDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BinomialDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BinomialDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("n = " + _n + ", ");
-            stringBuilder.Append("p = " + _p);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("N = " + _n + ", ");
+            stringBuilder.Append("P = " + _p);
             return true;
         }
     
@@ -2445,13 +2445,13 @@ namespace AindVrForagingDataSchema
     ///statistics and ending conditions. Each block defines the environmental
     ///parameters and termination criteria for that experimental phase.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Configuration for a single experimental block.\n\nA block represents a period of th" +
         "e experiment with specific environment\nstatistics and ending conditions. Each bl" +
         "ock defines the environmental\nparameters and termination criteria for that exper" +
         "imental phase.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Block
     {
     
@@ -2507,20 +2507,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Block> Process()
+        public System.IObservable<Block> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Block(this)));
         }
     
-        public System.IObservable<Block> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Block> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Block(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("environment_statistics = " + _environmentStatistics + ", ");
-            stringBuilder.Append("end_conditions = " + _endConditions);
+            stringBuilder.Append("EnvironmentStatistics = " + _environmentStatistics + ", ");
+            stringBuilder.Append("EndConditions = " + _endConditions);
             return true;
         }
     
@@ -2544,7 +2544,7 @@ namespace AindVrForagingDataSchema
     ///
     ///This condition ends a block after a specified amount of time has elapsed.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "condition_type")]
     [JsonInheritanceAttribute("Duration", typeof(BlockEndConditionDuration))]
     [JsonInheritanceAttribute("Distance", typeof(BlockEndConditionDistance))]
@@ -2553,8 +2553,8 @@ namespace AindVrForagingDataSchema
     [JsonInheritanceAttribute("PatchCount", typeof(BlockEndConditionPatchCount))]
     [System.ComponentModel.DescriptionAttribute("Block end condition based on time duration.\n\nThis condition ends a block after a " +
         "specified amount of time has elapsed.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockEndCondition
     {
     
@@ -2566,12 +2566,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<BlockEndCondition> Process()
+        public System.IObservable<BlockEndCondition> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndCondition(this)));
         }
     
-        public System.IObservable<BlockEndCondition> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BlockEndCondition> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndCondition(this));
         }
@@ -2602,12 +2602,12 @@ namespace AindVrForagingDataSchema
     ///This condition ends a block after the animal has made a specified number
     ///of choices (e.g., patch visits or reward attempts).
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Block end condition based on number of choices made.\n\nThis condition ends a block" +
         " after the animal has made a specified number\nof choices (e.g., patch visits or " +
         "reward attempts).")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockEndConditionChoice : BlockEndCondition
     {
     
@@ -2641,12 +2641,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BlockEndConditionChoice> Process()
+        public System.IObservable<BlockEndConditionChoice> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionChoice(this)));
         }
     
-        public System.IObservable<BlockEndConditionChoice> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BlockEndConditionChoice> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionChoice(this));
         }
@@ -2657,7 +2657,7 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("value = " + _value);
+            stringBuilder.Append("Value = " + _value);
             return true;
         }
     }
@@ -2668,11 +2668,11 @@ namespace AindVrForagingDataSchema
     ///
     ///This condition ends a block after the animal has traveled a specified distance.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Block end condition based on distance traveled.\n\nThis condition ends a block afte" +
         "r the animal has traveled a specified distance.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockEndConditionDistance : BlockEndCondition
     {
     
@@ -2706,12 +2706,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BlockEndConditionDistance> Process()
+        public System.IObservable<BlockEndConditionDistance> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionDistance(this)));
         }
     
-        public System.IObservable<BlockEndConditionDistance> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BlockEndConditionDistance> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionDistance(this));
         }
@@ -2722,7 +2722,7 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("value = " + _value);
+            stringBuilder.Append("Value = " + _value);
             return true;
         }
     }
@@ -2733,11 +2733,11 @@ namespace AindVrForagingDataSchema
     ///
     ///This condition ends a block after a specified amount of time has elapsed.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Block end condition based on time duration.\n\nThis condition ends a block after a " +
         "specified amount of time has elapsed.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockEndConditionDuration : BlockEndCondition
     {
     
@@ -2771,12 +2771,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BlockEndConditionDuration> Process()
+        public System.IObservable<BlockEndConditionDuration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionDuration(this)));
         }
     
-        public System.IObservable<BlockEndConditionDuration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BlockEndConditionDuration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionDuration(this));
         }
@@ -2787,7 +2787,7 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("value = " + _value);
+            stringBuilder.Append("Value = " + _value);
             return true;
         }
     }
@@ -2799,11 +2799,11 @@ namespace AindVrForagingDataSchema
     ///This condition ends a block after the animal has visited a specified
     ///number of unique patches.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Block end condition based on number of patches visited.\n\nThis condition ends a bl" +
         "ock after the animal has visited a specified\nnumber of unique patches.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockEndConditionPatchCount : BlockEndCondition
     {
     
@@ -2837,12 +2837,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BlockEndConditionPatchCount> Process()
+        public System.IObservable<BlockEndConditionPatchCount> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionPatchCount(this)));
         }
     
-        public System.IObservable<BlockEndConditionPatchCount> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BlockEndConditionPatchCount> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionPatchCount(this));
         }
@@ -2853,7 +2853,7 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("value = " + _value);
+            stringBuilder.Append("Value = " + _value);
             return true;
         }
     }
@@ -2865,11 +2865,11 @@ namespace AindVrForagingDataSchema
     ///This condition ends a block after the animal has obtained a specified
     ///number of rewards.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Block end condition based on number of rewards obtained.\n\nThis condition ends a b" +
         "lock after the animal has obtained a specified\nnumber of rewards.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockEndConditionReward : BlockEndCondition
     {
     
@@ -2903,12 +2903,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BlockEndConditionReward> Process()
+        public System.IObservable<BlockEndConditionReward> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockEndConditionReward(this)));
         }
     
-        public System.IObservable<BlockEndConditionReward> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BlockEndConditionReward> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionReward(this));
         }
@@ -2919,7 +2919,7 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("value = " + _value);
+            stringBuilder.Append("Value = " + _value);
             return true;
         }
     }
@@ -2931,12 +2931,12 @@ namespace AindVrForagingDataSchema
     ///This class manages multiple experimental blocks and determines how they
     ///are presented during the experiment (sequentially or randomly).
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Structure defining the sequence and sampling of experimental blocks.\n\nThis class " +
         "manages multiple experimental blocks and determines how they\nare presented durin" +
         "g the experiment (sequentially or randomly).")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockStructure
     {
     
@@ -2992,20 +2992,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<BlockStructure> Process()
+        public System.IObservable<BlockStructure> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlockStructure(this)));
         }
     
-        public System.IObservable<BlockStructure> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BlockStructure> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockStructure(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("blocks = " + _blocks + ", ");
-            stringBuilder.Append("sampling_mode = " + _samplingMode);
+            stringBuilder.Append("Blocks = " + _blocks + ", ");
+            stringBuilder.Append("SamplingMode = " + _samplingMode);
             return true;
         }
     
@@ -3024,9 +3024,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class CameraControllerSpinnakerCamera
     {
     
@@ -3160,24 +3160,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<CameraControllerSpinnakerCamera> Process()
+        public System.IObservable<CameraControllerSpinnakerCamera> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CameraControllerSpinnakerCamera(this)));
         }
     
-        public System.IObservable<CameraControllerSpinnakerCamera> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<CameraControllerSpinnakerCamera> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new CameraControllerSpinnakerCamera(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("cameras = " + _cameras + ", ");
-            stringBuilder.Append("frame_rate = " + _frameRate);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("Cameras = " + _cameras + ", ");
+            stringBuilder.Append("FrameRate = " + _frameRate);
             return true;
         }
     
@@ -3196,9 +3196,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class CameraControllerWebCamera
     {
     
@@ -3332,24 +3332,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<CameraControllerWebCamera> Process()
+        public System.IObservable<CameraControllerWebCamera> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CameraControllerWebCamera(this)));
         }
     
-        public System.IObservable<CameraControllerWebCamera> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<CameraControllerWebCamera> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new CameraControllerWebCamera(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("cameras = " + _cameras + ", ");
-            stringBuilder.Append("frame_rate = " + _frameRate);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("Cameras = " + _cameras + ", ");
+            stringBuilder.Append("FrameRate = " + _frameRate);
             return true;
         }
     
@@ -3375,14 +3375,14 @@ namespace AindVrForagingDataSchema
     ///the result within specified minimum and maximum bounds. Useful for percentage-
     ///based changes and exponential decay/growth patterns.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"A patch update function that applies multiplicative rate updates with bounds.
 
     This function multiplies the current value by the rate parameter, maintaining
     the result within specified minimum and maximum bounds. Useful for percentage-
     based changes and exponential decay/growth patterns.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ClampedMultiplicativeRateFunction : PatchUpdateFunction
     {
     
@@ -3458,12 +3458,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<ClampedMultiplicativeRateFunction> Process()
+        public System.IObservable<ClampedMultiplicativeRateFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ClampedMultiplicativeRateFunction(this)));
         }
     
-        public System.IObservable<ClampedMultiplicativeRateFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ClampedMultiplicativeRateFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ClampedMultiplicativeRateFunction(this));
         }
@@ -3474,9 +3474,9 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("minimum = " + _minimum + ", ");
-            stringBuilder.Append("maximum = " + _maximum + ", ");
-            stringBuilder.Append("rate = " + _rate);
+            stringBuilder.Append("Minimum = " + _minimum + ", ");
+            stringBuilder.Append("Maximum = " + _maximum + ", ");
+            stringBuilder.Append("Rate = " + _rate);
             return true;
         }
     }
@@ -3489,13 +3489,13 @@ namespace AindVrForagingDataSchema
     ///defined minimum and maximum bounds. The rate is applied per rule unit (e.g.,
     ///time, distance, choices).
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("A patch update function that applies a clamped rate-based update.\n\nThis function " +
         "updates values at a specified rate while keeping results within\ndefined minimum " +
         "and maximum bounds. The rate is applied per rule unit (e.g.,\ntime, distance, cho" +
         "ices).")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ClampedRateFunction : PatchUpdateFunction
     {
     
@@ -3571,12 +3571,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<ClampedRateFunction> Process()
+        public System.IObservable<ClampedRateFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ClampedRateFunction(this)));
         }
     
-        public System.IObservable<ClampedRateFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ClampedRateFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ClampedRateFunction(this));
         }
@@ -3587,17 +3587,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("minimum = " + _minimum + ", ");
-            stringBuilder.Append("maximum = " + _maximum + ", ");
-            stringBuilder.Append("rate = " + _rate);
+            stringBuilder.Append("Minimum = " + _minimum + ", ");
+            stringBuilder.Append("Maximum = " + _maximum + ", ");
+            stringBuilder.Append("Rate = " + _rate);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ConnectedClockOutput
     {
     
@@ -3649,20 +3649,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<ConnectedClockOutput> Process()
+        public System.IObservable<ConnectedClockOutput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ConnectedClockOutput(this)));
         }
     
-        public System.IObservable<ConnectedClockOutput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ConnectedClockOutput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ConnectedClockOutput(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("target_device = " + _targetDevice + ", ");
-            stringBuilder.Append("output_channel = " + _outputChannel);
+            stringBuilder.Append("TargetDevice = " + _targetDevice + ", ");
+            stringBuilder.Append("OutputChannel = " + _outputChannel);
             return true;
         }
     
@@ -3681,9 +3681,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class DisplayCalibration
     {
     
@@ -3739,20 +3739,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<DisplayCalibration> Process()
+        public System.IObservable<DisplayCalibration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayCalibration(this)));
         }
     
-        public System.IObservable<DisplayCalibration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<DisplayCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new DisplayCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("intrinsics = " + _intrinsics + ", ");
-            stringBuilder.Append("extrinsics = " + _extrinsics);
+            stringBuilder.Append("Intrinsics = " + _intrinsics + ", ");
+            stringBuilder.Append("Extrinsics = " + _extrinsics);
             return true;
         }
     
@@ -3771,9 +3771,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class DisplayExtrinsics
     {
     
@@ -3829,20 +3829,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<DisplayExtrinsics> Process()
+        public System.IObservable<DisplayExtrinsics> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayExtrinsics(this)));
         }
     
-        public System.IObservable<DisplayExtrinsics> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<DisplayExtrinsics> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new DisplayExtrinsics(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("rotation = " + _rotation + ", ");
-            stringBuilder.Append("translation = " + _translation);
+            stringBuilder.Append("Rotation = " + _rotation + ", ");
+            stringBuilder.Append("Translation = " + _translation);
             return true;
         }
     
@@ -3861,9 +3861,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class DisplayIntrinsics
     {
     
@@ -3959,22 +3959,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<DisplayIntrinsics> Process()
+        public System.IObservable<DisplayIntrinsics> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayIntrinsics(this)));
         }
     
-        public System.IObservable<DisplayIntrinsics> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<DisplayIntrinsics> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new DisplayIntrinsics(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("frame_width = " + _frameWidth + ", ");
-            stringBuilder.Append("frame_height = " + _frameHeight + ", ");
-            stringBuilder.Append("display_width = " + _displayWidth + ", ");
-            stringBuilder.Append("display_height = " + _displayHeight);
+            stringBuilder.Append("FrameWidth = " + _frameWidth + ", ");
+            stringBuilder.Append("FrameHeight = " + _frameHeight + ", ");
+            stringBuilder.Append("DisplayWidth = " + _displayWidth + ", ");
+            stringBuilder.Append("DisplayHeight = " + _displayHeight);
             return true;
         }
     
@@ -3993,9 +3993,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class DisplaysCalibration
     {
     
@@ -4073,21 +4073,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<DisplaysCalibration> Process()
+        public System.IObservable<DisplaysCalibration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplaysCalibration(this)));
         }
     
-        public System.IObservable<DisplaysCalibration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<DisplaysCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new DisplaysCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("left = " + _left + ", ");
-            stringBuilder.Append("center = " + _center + ", ");
-            stringBuilder.Append("right = " + _right);
+            stringBuilder.Append("Left = " + _left + ", ");
+            stringBuilder.Append("Center = " + _center + ", ");
+            stringBuilder.Append("Right = " + _right);
             return true;
         }
     
@@ -4106,7 +4106,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [JsonInheritanceAttribute("Scalar", typeof(Scalar))]
     [JsonInheritanceAttribute("Beta", typeof(BetaDistribution))]
@@ -4118,8 +4118,8 @@ namespace AindVrForagingDataSchema
     [JsonInheritanceAttribute("Pdf", typeof(PdfDistribution))]
     [JsonInheritanceAttribute("Uniform", typeof(UniformDistribution))]
     [JsonInheritanceAttribute("Poisson", typeof(PoissonDistribution))]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Distribution
     {
     
@@ -4131,12 +4131,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<Distribution> Process()
+        public System.IObservable<Distribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Distribution(this)));
         }
     
-        public System.IObservable<Distribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Distribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Distribution(this));
         }
@@ -4168,14 +4168,14 @@ namespace AindVrForagingDataSchema
     ///probabilities, and initial state occupancy. It forms the core specification
     ///for the foraging environment structure.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Defines the statistical properties of the foraging environment.
 
     This class specifies the patches available in the environment, their transition
     probabilities, and initial state occupancy. It forms the core specification
     for the foraging environment structure.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class EnvironmentStatistics
     {
     
@@ -4253,21 +4253,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<EnvironmentStatistics> Process()
+        public System.IObservable<EnvironmentStatistics> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new EnvironmentStatistics(this)));
         }
     
-        public System.IObservable<EnvironmentStatistics> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<EnvironmentStatistics> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new EnvironmentStatistics(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("patches = " + _patches + ", ");
-            stringBuilder.Append("transition_matrix = " + _transitionMatrix + ", ");
-            stringBuilder.Append("first_state_occupancy = " + _firstStateOccupancy);
+            stringBuilder.Append("Patches = " + _patches + ", ");
+            stringBuilder.Append("TransitionMatrix = " + _transitionMatrix + ", ");
+            stringBuilder.Append("FirstStateOccupancy = " + _firstStateOccupancy);
             return true;
         }
     
@@ -4286,9 +4286,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ExponentialDistribution : Distribution
     {
     
@@ -4365,12 +4365,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<ExponentialDistribution> Process()
+        public System.IObservable<ExponentialDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ExponentialDistribution(this)));
         }
     
-        public System.IObservable<ExponentialDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ExponentialDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ExponentialDistribution(this));
         }
@@ -4381,17 +4381,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ExponentialDistributionParameters
     {
     
@@ -4441,20 +4441,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<ExponentialDistributionParameters> Process()
+        public System.IObservable<ExponentialDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ExponentialDistributionParameters(this)));
         }
     
-        public System.IObservable<ExponentialDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ExponentialDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ExponentialDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("rate = " + _rate);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Rate = " + _rate);
             return true;
         }
     
@@ -4473,9 +4473,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class GammaDistribution : Distribution
     {
     
@@ -4552,12 +4552,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<GammaDistribution> Process()
+        public System.IObservable<GammaDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new GammaDistribution(this)));
         }
     
-        public System.IObservable<GammaDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<GammaDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new GammaDistribution(this));
         }
@@ -4568,17 +4568,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class GammaDistributionParameters
     {
     
@@ -4649,21 +4649,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<GammaDistributionParameters> Process()
+        public System.IObservable<GammaDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new GammaDistributionParameters(this)));
         }
     
-        public System.IObservable<GammaDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<GammaDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new GammaDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("shape = " + _shape + ", ");
-            stringBuilder.Append("rate = " + _rate);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Shape = " + _shape + ", ");
+            stringBuilder.Append("Rate = " + _rate);
             return true;
         }
     
@@ -4682,9 +4682,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpAnalogInput
     {
     
@@ -4832,25 +4832,25 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<HarpAnalogInput> Process()
+        public System.IObservable<HarpAnalogInput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpAnalogInput(this)));
         }
     
-        public System.IObservable<HarpAnalogInput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<HarpAnalogInput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpAnalogInput(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName);
             return true;
         }
     
@@ -4869,9 +4869,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpBehavior
     {
     
@@ -5019,25 +5019,25 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<HarpBehavior> Process()
+        public System.IObservable<HarpBehavior> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpBehavior(this)));
         }
     
-        public System.IObservable<HarpBehavior> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<HarpBehavior> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpBehavior(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName);
             return true;
         }
     
@@ -5056,9 +5056,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpEnvironmentSensor
     {
     
@@ -5206,25 +5206,25 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<HarpEnvironmentSensor> Process()
+        public System.IObservable<HarpEnvironmentSensor> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpEnvironmentSensor(this)));
         }
     
-        public System.IObservable<HarpEnvironmentSensor> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<HarpEnvironmentSensor> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpEnvironmentSensor(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName);
             return true;
         }
     
@@ -5243,9 +5243,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpLicketySplit
     {
     
@@ -5393,25 +5393,25 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<HarpLicketySplit> Process()
+        public System.IObservable<HarpLicketySplit> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpLicketySplit(this)));
         }
     
-        public System.IObservable<HarpLicketySplit> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<HarpLicketySplit> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpLicketySplit(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName);
             return true;
         }
     
@@ -5430,9 +5430,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpSniffDetector
     {
     
@@ -5580,25 +5580,25 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<HarpSniffDetector> Process()
+        public System.IObservable<HarpSniffDetector> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpSniffDetector(this)));
         }
     
-        public System.IObservable<HarpSniffDetector> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<HarpSniffDetector> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpSniffDetector(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName);
             return true;
         }
     
@@ -5617,9 +5617,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpWhiteRabbit
     {
     
@@ -5789,26 +5789,26 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<HarpWhiteRabbit> Process()
+        public System.IObservable<HarpWhiteRabbit> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpWhiteRabbit(this)));
         }
     
-        public System.IObservable<HarpWhiteRabbit> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<HarpWhiteRabbit> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpWhiteRabbit(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName + ", ");
-            stringBuilder.Append("connected_clock_outputs = " + _connectedClockOutputs);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName + ", ");
+            stringBuilder.Append("ConnectedClockOutputs = " + _connectedClockOutputs);
             return true;
         }
     
@@ -5827,9 +5827,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LogNormalDistribution : Distribution
     {
     
@@ -5906,12 +5906,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<LogNormalDistribution> Process()
+        public System.IObservable<LogNormalDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LogNormalDistribution(this)));
         }
     
-        public System.IObservable<LogNormalDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<LogNormalDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new LogNormalDistribution(this));
         }
@@ -5922,17 +5922,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LogNormalDistributionParameters
     {
     
@@ -6003,21 +6003,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<LogNormalDistributionParameters> Process()
+        public System.IObservable<LogNormalDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LogNormalDistributionParameters(this)));
         }
     
-        public System.IObservable<LogNormalDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<LogNormalDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new LogNormalDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("mean = " + _mean + ", ");
-            stringBuilder.Append("std = " + _std);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Mean = " + _mean + ", ");
+            stringBuilder.Append("Std = " + _std);
             return true;
         }
     
@@ -6043,13 +6043,13 @@ namespace AindVrForagingDataSchema
     ///linear interpolation between defined points. Useful for complex, non-linear
     ///reward schedules or parameter updates.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("A patch update function that uses lookup table interpolation.\n\nThis function maps" +
         " input values to output values using a lookup table with\nlinear interpolation be" +
         "tween defined points. Useful for complex, non-linear\nreward schedules or paramet" +
         "er updates.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LookupTableFunction : PatchUpdateFunction
     {
     
@@ -6106,12 +6106,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<LookupTableFunction> Process()
+        public System.IObservable<LookupTableFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LookupTableFunction(this)));
         }
     
-        public System.IObservable<LookupTableFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<LookupTableFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new LookupTableFunction(this));
         }
@@ -6122,16 +6122,16 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("lut_keys = " + _lutKeys + ", ");
-            stringBuilder.Append("lut_values = " + _lutValues);
+            stringBuilder.Append("LutKeys = " + _lutKeys + ", ");
+            stringBuilder.Append("LutValues = " + _lutValues);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ManipulatorPosition
     {
     
@@ -6207,22 +6207,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<ManipulatorPosition> Process()
+        public System.IObservable<ManipulatorPosition> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ManipulatorPosition(this)));
         }
     
-        public System.IObservable<ManipulatorPosition> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ManipulatorPosition> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ManipulatorPosition(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("x = " + _x + ", ");
-            stringBuilder.Append("y1 = " + _y1 + ", ");
-            stringBuilder.Append("y2 = " + _y2 + ", ");
-            stringBuilder.Append("z = " + _z);
+            stringBuilder.Append("X = " + _x + ", ");
+            stringBuilder.Append("Y1 = " + _y1 + ", ");
+            stringBuilder.Append("Y2 = " + _y2 + ", ");
+            stringBuilder.Append("Z = " + _z);
             return true;
         }
     
@@ -6244,10 +6244,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Input for water valve calibration class
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Input for water valve calibration class")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Measurement
     {
     
@@ -6341,22 +6341,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Measurement> Process()
+        public System.IObservable<Measurement> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Measurement(this)));
         }
     
-        public System.IObservable<Measurement> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Measurement> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Measurement(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("valve_open_interval = " + _valveOpenInterval + ", ");
-            stringBuilder.Append("valve_open_time = " + _valveOpenTime + ", ");
-            stringBuilder.Append("water_weight = " + _waterWeight + ", ");
-            stringBuilder.Append("repeat_count = " + _repeatCount);
+            stringBuilder.Append("ValveOpenInterval = " + _valveOpenInterval + ", ");
+            stringBuilder.Append("ValveOpenTime = " + _valveOpenTime + ", ");
+            stringBuilder.Append("WaterWeight = " + _waterWeight + ", ");
+            stringBuilder.Append("RepeatCount = " + _repeatCount);
             return true;
         }
     
@@ -6375,7 +6375,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum MicrostepResolution
     {
     
@@ -6393,7 +6393,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum MotorOperationMode
     {
     
@@ -6412,12 +6412,12 @@ namespace AindVrForagingDataSchema
     ///enabled, timing for reward collection, and retraction distance for operant
     ///conditioning protocols.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Controls the movable water spout behavior for reward delivery.\n\nThis class config" +
         "ures how the movable spout operates, including when it\'s\nenabled, timing for rew" +
         "ard collection, and retraction distance for operant\nconditioning protocols.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class MovableSpoutControl
     {
     
@@ -6492,21 +6492,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<MovableSpoutControl> Process()
+        public System.IObservable<MovableSpoutControl> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MovableSpoutControl(this)));
         }
     
-        public System.IObservable<MovableSpoutControl> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<MovableSpoutControl> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new MovableSpoutControl(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("enabled = " + _enabled + ", ");
-            stringBuilder.Append("time_to_collect_after_reward = " + _timeToCollectAfterReward + ", ");
-            stringBuilder.Append("retracting_distance = " + _retractingDistance);
+            stringBuilder.Append("Enabled = " + _enabled + ", ");
+            stringBuilder.Append("TimeToCollectAfterReward = " + _timeToCollectAfterReward + ", ");
+            stringBuilder.Append("RetractingDistance = " + _retractingDistance);
             return true;
         }
     
@@ -6525,9 +6525,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class NormalDistribution : Distribution
     {
     
@@ -6604,12 +6604,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<NormalDistribution> Process()
+        public System.IObservable<NormalDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new NormalDistribution(this)));
         }
     
-        public System.IObservable<NormalDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<NormalDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new NormalDistribution(this));
         }
@@ -6620,17 +6620,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class NormalDistributionParameters
     {
     
@@ -6701,21 +6701,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<NormalDistributionParameters> Process()
+        public System.IObservable<NormalDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new NormalDistributionParameters(this)));
         }
     
-        public System.IObservable<NormalDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<NormalDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new NormalDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("mean = " + _mean + ", ");
-            stringBuilder.Append("std = " + _std);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Mean = " + _mean + ", ");
+            stringBuilder.Append("Std = " + _std);
             return true;
         }
     
@@ -6741,14 +6741,14 @@ namespace AindVrForagingDataSchema
     ///should be updated dynamically during the task, enabling adaptive behavior
     ///based on animal performance or other criteria.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"A numerical updater that modifies task parameters during execution.
 
     This class combines an operation type with parameters to define how values
     should be updated dynamically during the task, enabling adaptive behavior
     based on animal performance or other criteria.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class NumericalUpdater
     {
     
@@ -6804,20 +6804,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<NumericalUpdater> Process()
+        public System.IObservable<NumericalUpdater> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new NumericalUpdater(this)));
         }
     
-        public System.IObservable<NumericalUpdater> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<NumericalUpdater> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new NumericalUpdater(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("operation = " + _operation + ", ");
-            stringBuilder.Append("parameters = " + _parameters);
+            stringBuilder.Append("Operation = " + _operation + ", ");
+            stringBuilder.Append("Parameters = " + _parameters);
             return true;
         }
     
@@ -6842,7 +6842,7 @@ namespace AindVrForagingDataSchema
     ///These operations define how parameter values are modified during task execution,
     ///allowing for dynamic adjustment of task parameters based on performance or other criteria.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum NumericalUpdaterOperation
     {
@@ -6870,12 +6870,12 @@ namespace AindVrForagingDataSchema
     ///These parameters define the bounds and increments for updating numerical values
     ///during task execution, ensuring values stay within acceptable ranges.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Parameters that control how numerical updates are applied to task values.\n\nThese " +
         "parameters define the bounds and increments for updating numerical values\nduring" +
         " task execution, ensuring values stay within acceptable ranges.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class NumericalUpdaterParameters
     {
     
@@ -6992,23 +6992,23 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<NumericalUpdaterParameters> Process()
+        public System.IObservable<NumericalUpdaterParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new NumericalUpdaterParameters(this)));
         }
     
-        public System.IObservable<NumericalUpdaterParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<NumericalUpdaterParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new NumericalUpdaterParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("initial_value = " + _initialValue + ", ");
-            stringBuilder.Append("increment = " + _increment + ", ");
-            stringBuilder.Append("decrement = " + _decrement + ", ");
-            stringBuilder.Append("minimum = " + _minimum + ", ");
-            stringBuilder.Append("maximum = " + _maximum);
+            stringBuilder.Append("InitialValue = " + _initialValue + ", ");
+            stringBuilder.Append("Increment = " + _increment + ", ");
+            stringBuilder.Append("Decrement = " + _decrement + ", ");
+            stringBuilder.Append("Minimum = " + _minimum + ", ");
+            stringBuilder.Append("Maximum = " + _maximum);
             return true;
         }
     
@@ -7034,13 +7034,13 @@ namespace AindVrForagingDataSchema
     ///valve timing, and carrier gas configuration. It ensures proper odor concentration
     ///and delivery timing for the behavioral task.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Controls the odor delivery system parameters.\n\nThis class manages the olfactory s" +
         "timulus delivery system, including flow rates,\nvalve timing, and carrier gas con" +
         "figuration. It ensures proper odor concentration\nand delivery timing for the beh" +
         "avioral task.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OdorControl
     {
     
@@ -7136,22 +7136,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OdorControl> Process()
+        public System.IObservable<OdorControl> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OdorControl(this)));
         }
     
-        public System.IObservable<OdorControl> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OdorControl> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OdorControl(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("valve_max_open_time = " + _valveMaxOpenTime + ", ");
-            stringBuilder.Append("target_total_flow = " + _targetTotalFlow + ", ");
-            stringBuilder.Append("use_channel_3_as_carrier = " + _useChannel3AsCarrier + ", ");
-            stringBuilder.Append("target_odor_flow = " + _targetOdorFlow);
+            stringBuilder.Append("ValveMaxOpenTime = " + _valveMaxOpenTime + ", ");
+            stringBuilder.Append("TargetTotalFlow = " + _targetTotalFlow + ", ");
+            stringBuilder.Append("UseChannel3AsCarrier = " + _useChannel3AsCarrier + ", ");
+            stringBuilder.Append("TargetOdorFlow = " + _targetOdorFlow);
             return true;
         }
     
@@ -7176,12 +7176,12 @@ namespace AindVrForagingDataSchema
     ///Odors can be delivered at specific locations to provide additional sensory
     ///information for navigation and foraging decisions.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Specifies odor delivery parameters for olfactory cues in the VR environment.\n\nOdo" +
         "rs can be delivered at specific locations to provide additional sensory\ninformat" +
         "ion for navigation and foraging decisions.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OdorSpecification
     {
     
@@ -7234,20 +7234,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OdorSpecification> Process()
+        public System.IObservable<OdorSpecification> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OdorSpecification(this)));
         }
     
-        public System.IObservable<OdorSpecification> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OdorSpecification> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OdorSpecification(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("index = " + _index + ", ");
-            stringBuilder.Append("concentration = " + _concentration);
+            stringBuilder.Append("Index = " + _index + ", ");
+            stringBuilder.Append("Concentration = " + _concentration);
             return true;
         }
     
@@ -7266,9 +7266,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Olfactometer
     {
     
@@ -7412,25 +7412,25 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Olfactometer> Process()
+        public System.IObservable<Olfactometer> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Olfactometer(this)));
         }
     
-        public System.IObservable<Olfactometer> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Olfactometer> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Olfactometer(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName);
             return true;
         }
     
@@ -7452,10 +7452,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Olfactometer calibration class
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Olfactometer calibration class")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OlfactometerCalibration
     {
     
@@ -7574,24 +7574,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OlfactometerCalibration> Process()
+        public System.IObservable<OlfactometerCalibration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OlfactometerCalibration(this)));
         }
     
-        public System.IObservable<OlfactometerCalibration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OlfactometerCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OlfactometerCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("input = " + _input + ", ");
-            stringBuilder.Append("output = " + _output + ", ");
-            stringBuilder.Append("date = " + _date + ", ");
-            stringBuilder.Append("description = " + _description + ", ");
-            stringBuilder.Append("notes = " + _notes);
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("Input = " + _input + ", ");
+            stringBuilder.Append("Output = " + _output + ", ");
+            stringBuilder.Append("Date = " + _date + ", ");
+            stringBuilder.Append("Description = " + _description + ", ");
+            stringBuilder.Append("Notes = " + _notes);
             return true;
         }
     
@@ -7610,9 +7610,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OlfactometerCalibrationInput
     {
     
@@ -7646,19 +7646,19 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OlfactometerCalibrationInput> Process()
+        public System.IObservable<OlfactometerCalibrationInput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OlfactometerCalibrationInput(this)));
         }
     
-        public System.IObservable<OlfactometerCalibrationInput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OlfactometerCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OlfactometerCalibrationInput(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("channel_config = " + _channelConfig);
+            stringBuilder.Append("ChannelConfig = " + _channelConfig);
             return true;
         }
     
@@ -7677,9 +7677,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OlfactometerCalibrationOutput
     {
     
@@ -7691,12 +7691,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<OlfactometerCalibrationOutput> Process()
+        public System.IObservable<OlfactometerCalibrationOutput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OlfactometerCalibrationOutput(this)));
         }
     
-        public System.IObservable<OlfactometerCalibrationOutput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OlfactometerCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OlfactometerCalibrationOutput(this));
         }
@@ -7724,7 +7724,7 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Harp Olfactometer available channel
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum OlfactometerChannel
     {
     
@@ -7742,9 +7742,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OlfactometerChannelConfig
     {
     
@@ -7858,24 +7858,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OlfactometerChannelConfig> Process()
+        public System.IObservable<OlfactometerChannelConfig> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OlfactometerChannelConfig(this)));
         }
     
-        public System.IObservable<OlfactometerChannelConfig> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OlfactometerChannelConfig> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OlfactometerChannelConfig(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("channel_index = " + _channelIndex + ", ");
-            stringBuilder.Append("channel_type = " + _channelType + ", ");
-            stringBuilder.Append("flow_rate_capacity = " + _flowRateCapacity + ", ");
-            stringBuilder.Append("flow_rate = " + _flowRate + ", ");
-            stringBuilder.Append("odorant = " + _odorant + ", ");
-            stringBuilder.Append("odorant_dilution = " + _odorantDilution);
+            stringBuilder.Append("ChannelIndex = " + _channelIndex + ", ");
+            stringBuilder.Append("ChannelType = " + _channelType + ", ");
+            stringBuilder.Append("FlowRateCapacity = " + _flowRateCapacity + ", ");
+            stringBuilder.Append("FlowRate = " + _flowRate + ", ");
+            stringBuilder.Append("Odorant = " + _odorant + ", ");
+            stringBuilder.Append("OdorantDilution = " + _odorantDilution);
             return true;
         }
     
@@ -7897,7 +7897,7 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Channel type
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum OlfactometerChannelType
     {
@@ -7913,10 +7913,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// A RewardFunction that is applied when the animal enters the patch.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("A RewardFunction that is applied when the animal enters the patch.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OnThisPatchEntryFunction : RewardFunction
     {
     
@@ -8013,12 +8013,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OnThisPatchEntryFunction> Process()
+        public System.IObservable<OnThisPatchEntryFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OnThisPatchEntryFunction(this)));
         }
     
-        public System.IObservable<OnThisPatchEntryFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OnThisPatchEntryFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OnThisPatchEntryFunction(this));
         }
@@ -8029,10 +8029,10 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("amount = " + _amount + ", ");
-            stringBuilder.Append("probability = " + _probability + ", ");
-            stringBuilder.Append("available = " + _available + ", ");
-            stringBuilder.Append("rule = " + _rule);
+            stringBuilder.Append("Amount = " + _amount + ", ");
+            stringBuilder.Append("Probability = " + _probability + ", ");
+            stringBuilder.Append("Available = " + _available + ", ");
+            stringBuilder.Append("Rule = " + _rule);
             return true;
         }
     }
@@ -8044,13 +8044,13 @@ namespace AindVrForagingDataSchema
     ///This class controls when and how rewards are delivered based on animal behavior,
     ///implementing stopping requirements, collection timeouts, and spatial constraints.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Defines operant conditioning logic for reward delivery in the VR foraging task.\n\n" +
         "This class controls when and how rewards are delivered based on animal behavior," +
         "\nimplementing stopping requirements, collection timeouts, and spatial constraint" +
         "s.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OperantLogic
     {
     
@@ -8146,22 +8146,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OperantLogic> Process()
+        public System.IObservable<OperantLogic> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OperantLogic(this)));
         }
     
-        public System.IObservable<OperantLogic> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OperantLogic> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OperantLogic(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("is_operant = " + _isOperant + ", ");
-            stringBuilder.Append("stop_duration = " + _stopDuration + ", ");
-            stringBuilder.Append("time_to_collect_reward = " + _timeToCollectReward + ", ");
-            stringBuilder.Append("grace_distance_threshold = " + _graceDistanceThreshold);
+            stringBuilder.Append("IsOperant = " + _isOperant + ", ");
+            stringBuilder.Append("StopDuration = " + _stopDuration + ", ");
+            stringBuilder.Append("TimeToCollectReward = " + _timeToCollectReward + ", ");
+            stringBuilder.Append("GraceDistanceThreshold = " + _graceDistanceThreshold);
             return true;
         }
     
@@ -8187,14 +8187,14 @@ namespace AindVrForagingDataSchema
     ///movable spout, odor delivery, position tracking, and audio systems.
     ///It provides a centralized configuration point for all task hardware.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Master control class for all operational hardware systems.
 
     This class aggregates all the hardware control specifications including
     movable spout, odor delivery, position tracking, and audio systems.
     It provides a centralized configuration point for all task hardware.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OperationControl
     {
     
@@ -8294,22 +8294,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OperationControl> Process()
+        public System.IObservable<OperationControl> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OperationControl(this)));
         }
     
-        public System.IObservable<OperationControl> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OperationControl> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OperationControl(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("movable_spout_control = " + _movableSpoutControl + ", ");
-            stringBuilder.Append("odor_control = " + _odorControl + ", ");
-            stringBuilder.Append("position_control = " + _positionControl + ", ");
-            stringBuilder.Append("audio_control = " + _audioControl);
+            stringBuilder.Append("MovableSpoutControl = " + _movableSpoutControl + ", ");
+            stringBuilder.Append("OdorControl = " + _odorControl + ", ");
+            stringBuilder.Append("PositionControl = " + _positionControl + ", ");
+            stringBuilder.Append("AudioControl = " + _audioControl);
             return true;
         }
     
@@ -8331,10 +8331,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// A RewardFunction that is applied when the animal is outside of the patch.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("A RewardFunction that is applied when the animal is outside of the patch.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OutsideRewardFunction : RewardFunction
     {
     
@@ -8452,12 +8452,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OutsideRewardFunction> Process()
+        public System.IObservable<OutsideRewardFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OutsideRewardFunction(this)));
         }
     
-        public System.IObservable<OutsideRewardFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OutsideRewardFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new OutsideRewardFunction(this));
         }
@@ -8468,11 +8468,11 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("amount = " + _amount + ", ");
-            stringBuilder.Append("probability = " + _probability + ", ");
-            stringBuilder.Append("available = " + _available + ", ");
-            stringBuilder.Append("rule = " + _rule + ", ");
-            stringBuilder.Append("delay = " + _delay);
+            stringBuilder.Append("Amount = " + _amount + ", ");
+            stringBuilder.Append("Probability = " + _probability + ", ");
+            stringBuilder.Append("Available = " + _available + ", ");
+            stringBuilder.Append("Rule = " + _rule + ", ");
+            stringBuilder.Append("Delay = " + _delay);
             return true;
         }
     }
@@ -8481,10 +8481,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Represents statistics for a patch in the VR foraging task.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Represents statistics for a patch in the VR foraging task.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Patch
     {
     
@@ -8603,23 +8603,23 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Patch> Process()
+        public System.IObservable<Patch> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Patch(this)));
         }
     
-        public System.IObservable<Patch> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Patch> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Patch(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("label = " + _label + ", ");
-            stringBuilder.Append("state_index = " + _stateIndex + ", ");
-            stringBuilder.Append("odor_specification = " + _odorSpecification + ", ");
-            stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
-            stringBuilder.Append("patch_virtual_sites_generator = " + _patchVirtualSitesGenerator);
+            stringBuilder.Append("Label = " + _label + ", ");
+            stringBuilder.Append("StateIndex = " + _stateIndex + ", ");
+            stringBuilder.Append("OdorSpecification = " + _odorSpecification + ", ");
+            stringBuilder.Append("RewardSpecification = " + _rewardSpecification + ", ");
+            stringBuilder.Append("PatchVirtualSitesGenerator = " + _patchVirtualSitesGenerator);
             return true;
         }
     
@@ -8642,11 +8642,11 @@ namespace AindVrForagingDataSchema
     /// A RewardFunction that is applied when the animal is inside the patch.
     ///For the purposes of this function post-patch and inter-patch are excluded.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("A RewardFunction that is applied when the animal is inside the patch.\nFor the pur" +
         "poses of this function post-patch and inter-patch are excluded.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PatchRewardFunction : RewardFunction
     {
     
@@ -8744,12 +8744,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<PatchRewardFunction> Process()
+        public System.IObservable<PatchRewardFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchRewardFunction(this)));
         }
     
-        public System.IObservable<PatchRewardFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<PatchRewardFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchRewardFunction(this));
         }
@@ -8760,10 +8760,10 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("amount = " + _amount + ", ");
-            stringBuilder.Append("probability = " + _probability + ", ");
-            stringBuilder.Append("available = " + _available + ", ");
-            stringBuilder.Append("rule = " + _rule);
+            stringBuilder.Append("Amount = " + _amount + ", ");
+            stringBuilder.Append("Probability = " + _probability + ", ");
+            stringBuilder.Append("Available = " + _available + ", ");
+            stringBuilder.Append("Rule = " + _rule);
             return true;
         }
     }
@@ -8776,7 +8776,7 @@ namespace AindVrForagingDataSchema
     ///defined minimum and maximum bounds. The rate is applied per rule unit (e.g.,
     ///time, distance, choices).
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "function_type")]
     [JsonInheritanceAttribute("ClampedRateFunction", typeof(ClampedRateFunction))]
     [JsonInheritanceAttribute("ClampedMultiplicativeRateFunction", typeof(ClampedMultiplicativeRateFunction))]
@@ -8786,8 +8786,8 @@ namespace AindVrForagingDataSchema
         "updates values at a specified rate while keeping results within\ndefined minimum " +
         "and maximum bounds. The rate is applied per rule unit (e.g.,\ntime, distance, cho" +
         "ices).")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PatchUpdateFunction
     {
     
@@ -8799,12 +8799,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<PatchUpdateFunction> Process()
+        public System.IObservable<PatchUpdateFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchUpdateFunction(this)));
         }
     
-        public System.IObservable<PatchUpdateFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<PatchUpdateFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchUpdateFunction(this));
         }
@@ -8836,14 +8836,14 @@ namespace AindVrForagingDataSchema
     ///that can appear within a patch environment. Each generator defines how sites
     ///of that type should be created with their properties and distributions.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Defines the generation specifications for all virtual site types within a patch.
 
     This class contains generators for all the different types of virtual sites
     that can appear within a patch environment. Each generator defines how sites
     of that type should be created with their properties and distributions.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PatchVirtualSitesGenerator
     {
     
@@ -8942,22 +8942,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<PatchVirtualSitesGenerator> Process()
+        public System.IObservable<PatchVirtualSitesGenerator> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchVirtualSitesGenerator(this)));
         }
     
-        public System.IObservable<PatchVirtualSitesGenerator> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<PatchVirtualSitesGenerator> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchVirtualSitesGenerator(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("inter_site = " + _interSite + ", ");
-            stringBuilder.Append("inter_patch = " + _interPatch + ", ");
-            stringBuilder.Append("post_patch = " + _postPatch + ", ");
-            stringBuilder.Append("reward_site = " + _rewardSite);
+            stringBuilder.Append("InterSite = " + _interSite + ", ");
+            stringBuilder.Append("InterPatch = " + _interPatch + ", ");
+            stringBuilder.Append("PostPatch = " + _postPatch + ", ");
+            stringBuilder.Append("RewardSite = " + _rewardSite);
             return true;
         }
     
@@ -8976,9 +8976,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PdfDistribution : Distribution
     {
     
@@ -9055,12 +9055,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<PdfDistribution> Process()
+        public System.IObservable<PdfDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PdfDistribution(this)));
         }
     
-        public System.IObservable<PdfDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<PdfDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PdfDistribution(this));
         }
@@ -9071,17 +9071,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PdfDistributionParameters
     {
     
@@ -9154,21 +9154,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<PdfDistributionParameters> Process()
+        public System.IObservable<PdfDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PdfDistributionParameters(this)));
         }
     
-        public System.IObservable<PdfDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<PdfDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PdfDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("pdf = " + _pdf + ", ");
-            stringBuilder.Append("index = " + _index);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Pdf = " + _pdf + ", ");
+            stringBuilder.Append("Index = " + _index);
             return true;
         }
     
@@ -9187,9 +9187,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PoissonDistribution : Distribution
     {
     
@@ -9266,12 +9266,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<PoissonDistribution> Process()
+        public System.IObservable<PoissonDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PoissonDistribution(this)));
         }
     
-        public System.IObservable<PoissonDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<PoissonDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PoissonDistribution(this));
         }
@@ -9282,17 +9282,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PoissonDistributionParameters
     {
     
@@ -9342,20 +9342,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<PoissonDistributionParameters> Process()
+        public System.IObservable<PoissonDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PoissonDistributionParameters(this)));
         }
     
-        public System.IObservable<PoissonDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<PoissonDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PoissonDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("rate = " + _rate);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Rate = " + _rate);
             return true;
         }
     
@@ -9381,14 +9381,14 @@ namespace AindVrForagingDataSchema
     ///initial positioning, signal filtering, and movement detection thresholds for the
     ///virtual reality foraging task.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Controls the position tracking and movement detection parameters.
 
     This class manages the position control system including coordinate transformations,
     initial positioning, signal filtering, and movement detection thresholds for the
     virtual reality foraging task.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PositionControl
     {
     
@@ -9487,22 +9487,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<PositionControl> Process()
+        public System.IObservable<PositionControl> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PositionControl(this)));
         }
     
-        public System.IObservable<PositionControl> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<PositionControl> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PositionControl(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("gain = " + _gain + ", ");
-            stringBuilder.Append("initial_position = " + _initialPosition + ", ");
-            stringBuilder.Append("frequency_filter_cutoff = " + _frequencyFilterCutoff + ", ");
-            stringBuilder.Append("velocity_threshold = " + _velocityThreshold);
+            stringBuilder.Append("Gain = " + _gain + ", ");
+            stringBuilder.Append("InitialPosition = " + _initialPosition + ", ");
+            stringBuilder.Append("FrequencyFilterCutoff = " + _frequencyFilterCutoff + ", ");
+            stringBuilder.Append("VelocityThreshold = " + _velocityThreshold);
             return true;
         }
     
@@ -9521,9 +9521,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Rect
     {
     
@@ -9619,22 +9619,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Rect> Process()
+        public System.IObservable<Rect> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rect(this)));
         }
     
-        public System.IObservable<Rect> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Rect> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Rect(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("x = " + _x + ", ");
-            stringBuilder.Append("y = " + _y + ", ");
-            stringBuilder.Append("width = " + _width + ", ");
-            stringBuilder.Append("height = " + _height);
+            stringBuilder.Append("X = " + _x + ", ");
+            stringBuilder.Append("Y = " + _y + ", ");
+            stringBuilder.Append("Width = " + _width + ", ");
+            stringBuilder.Append("Height = " + _height);
             return true;
         }
     
@@ -9660,12 +9660,12 @@ namespace AindVrForagingDataSchema
     ///contrast and other visual parameters that affect how elements are rendered
     ///in the VR environment.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Defines visual rendering properties for virtual environment elements.\n\nThis class" +
         " controls the visual appearance of virtual sites, including\ncontrast and other v" +
         "isual parameters that affect how elements are rendered\nin the VR environment.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class RenderSpecification
     {
     
@@ -9698,19 +9698,19 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<RenderSpecification> Process()
+        public System.IObservable<RenderSpecification> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RenderSpecification(this)));
         }
     
-        public System.IObservable<RenderSpecification> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<RenderSpecification> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new RenderSpecification(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("contrast = " + _contrast);
+            stringBuilder.Append("Contrast = " + _contrast);
             return true;
         }
     
@@ -9729,13 +9729,13 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "function_type")]
     [JsonInheritanceAttribute("PatchRewardFunction", typeof(PatchRewardFunction))]
     [JsonInheritanceAttribute("OnThisPatchEntryFunction", typeof(OnThisPatchEntryFunction))]
     [JsonInheritanceAttribute("OutsideRewardFunction", typeof(OutsideRewardFunction))]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class RewardFunction
     {
     
@@ -9747,12 +9747,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<RewardFunction> Process()
+        public System.IObservable<RewardFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RewardFunction(this)));
         }
     
-        public System.IObservable<RewardFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<RewardFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new RewardFunction(this));
         }
@@ -9784,14 +9784,14 @@ namespace AindVrForagingDataSchema
     ///delays, operant logic, and dynamic update functions. It serves as the complete
     ///specification for how rewards are managed in a given Patch.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Specifies reward parameters and behavior for a patch.
 
     This class defines all aspects of reward delivery including amounts, probabilities,
     delays, operant logic, and dynamic update functions. It serves as the complete
     specification for how rewards are managed in a given Patch.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class RewardSpecification
     {
     
@@ -9934,24 +9934,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<RewardSpecification> Process()
+        public System.IObservable<RewardSpecification> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RewardSpecification(this)));
         }
     
-        public System.IObservable<RewardSpecification> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<RewardSpecification> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new RewardSpecification(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("operant_logic = " + _operantLogic + ", ");
-            stringBuilder.Append("delay = " + _delay + ", ");
-            stringBuilder.Append("amount = " + _amount + ", ");
-            stringBuilder.Append("probability = " + _probability + ", ");
-            stringBuilder.Append("available = " + _available + ", ");
-            stringBuilder.Append("reward_function = " + _rewardFunction);
+            stringBuilder.Append("OperantLogic = " + _operantLogic + ", ");
+            stringBuilder.Append("Delay = " + _delay + ", ");
+            stringBuilder.Append("Amount = " + _amount + ", ");
+            stringBuilder.Append("Probability = " + _probability + ", ");
+            stringBuilder.Append("Available = " + _available + ", ");
+            stringBuilder.Append("RewardFunction = " + _rewardFunction);
             return true;
         }
     
@@ -9973,11 +9973,11 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Container class for calibration models. In a future release these will be moved to the respective devices
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Container class for calibration models. In a future release these will be moved t" +
         "o the respective devices")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class RigCalibration
     {
     
@@ -10011,19 +10011,19 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<RigCalibration> Process()
+        public System.IObservable<RigCalibration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RigCalibration(this)));
         }
     
-        public System.IObservable<RigCalibration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<RigCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new RigCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("water_valve = " + _waterValve);
+            stringBuilder.Append("WaterValve = " + _waterValve);
             return true;
         }
     
@@ -10042,9 +10042,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Scalar : Distribution
     {
     
@@ -10113,12 +10113,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Scalar> Process()
+        public System.IObservable<Scalar> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Scalar(this)));
         }
     
-        public System.IObservable<Scalar> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Scalar> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Scalar(this));
         }
@@ -10129,17 +10129,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ScalarDistributionParameter
     {
     
@@ -10189,20 +10189,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<ScalarDistributionParameter> Process()
+        public System.IObservable<ScalarDistributionParameter> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ScalarDistributionParameter(this)));
         }
     
-        public System.IObservable<ScalarDistributionParameter> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ScalarDistributionParameter> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ScalarDistributionParameter(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("value = " + _value);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Value = " + _value);
             return true;
         }
     
@@ -10221,9 +10221,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ScalingParameters
     {
     
@@ -10277,20 +10277,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<ScalingParameters> Process()
+        public System.IObservable<ScalingParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ScalingParameters(this)));
         }
     
-        public System.IObservable<ScalingParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ScalingParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ScalingParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("scale = " + _scale + ", ");
-            stringBuilder.Append("offset = " + _offset);
+            stringBuilder.Append("Scale = " + _scale + ", ");
+            stringBuilder.Append("Offset = " + _offset);
             return true;
         }
     
@@ -10309,9 +10309,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Screen
     {
     
@@ -10533,28 +10533,28 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Screen> Process()
+        public System.IObservable<Screen> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Screen(this)));
         }
     
-        public System.IObservable<Screen> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Screen> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Screen(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("display_index = " + _displayIndex + ", ");
-            stringBuilder.Append("target_render_frequency = " + _targetRenderFrequency + ", ");
-            stringBuilder.Append("target_update_frequency = " + _targetUpdateFrequency + ", ");
-            stringBuilder.Append("texture_assets_directory = " + _textureAssetsDirectory + ", ");
-            stringBuilder.Append("brightness = " + _brightness + ", ");
-            stringBuilder.Append("contrast = " + _contrast);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("DisplayIndex = " + _displayIndex + ", ");
+            stringBuilder.Append("TargetRenderFrequency = " + _targetRenderFrequency + ", ");
+            stringBuilder.Append("TargetUpdateFrequency = " + _targetUpdateFrequency + ", ");
+            stringBuilder.Append("TextureAssetsDirectory = " + _textureAssetsDirectory + ", ");
+            stringBuilder.Append("Brightness = " + _brightness + ", ");
+            stringBuilder.Append("Contrast = " + _contrast);
             return true;
         }
     
@@ -10580,13 +10580,13 @@ namespace AindVrForagingDataSchema
     ///specified distribution, ignoring the current value. Useful for resetting
     ///parameters or applying discrete changes.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("A patch update function that sets the target to a specific value.\n\nThis function " +
         "directly sets the target parameter to a value drawn from the\nspecified distribut" +
         "ion, ignoring the current value. Useful for resetting\nparameters or applying dis" +
         "crete changes.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class SetValueFunction : PatchUpdateFunction
     {
     
@@ -10620,12 +10620,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<SetValueFunction> Process()
+        public System.IObservable<SetValueFunction> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SetValueFunction(this)));
         }
     
-        public System.IObservable<SetValueFunction> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<SetValueFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new SetValueFunction(this));
         }
@@ -10636,7 +10636,7 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("value = " + _value);
+            stringBuilder.Append("Value = " + _value);
             return true;
         }
     }
@@ -10648,11 +10648,11 @@ namespace AindVrForagingDataSchema
     ///Used for defining texture sizes, corridor dimensions, and other 2D measurements
     ///in the VR foraging environment.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Represents 2D dimensions with width and height.\n\nUsed for defining texture sizes," +
         " corridor dimensions, and other 2D measurements\nin the VR foraging environment.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Size
     {
     
@@ -10706,20 +10706,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Size> Process()
+        public System.IObservable<Size> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Size(this)));
         }
     
-        public System.IObservable<Size> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Size> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Size(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("width = " + _width + ", ");
-            stringBuilder.Append("height = " + _height);
+            stringBuilder.Append("Width = " + _width + ", ");
+            stringBuilder.Append("Height = " + _height);
             return true;
         }
     
@@ -10738,9 +10738,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class SpinnakerCamera
     {
     
@@ -11048,32 +11048,32 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<SpinnakerCamera> Process()
+        public System.IObservable<SpinnakerCamera> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SpinnakerCamera(this)));
         }
     
-        public System.IObservable<SpinnakerCamera> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<SpinnakerCamera> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new SpinnakerCamera(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("binning = " + _binning + ", ");
-            stringBuilder.Append("color_processing = " + _colorProcessing + ", ");
-            stringBuilder.Append("exposure = " + _exposure + ", ");
-            stringBuilder.Append("gain = " + _gain + ", ");
-            stringBuilder.Append("gamma = " + _gamma + ", ");
-            stringBuilder.Append("adc_bit_depth = " + _adcBitDepth + ", ");
-            stringBuilder.Append("pixel_format = " + _pixelFormat + ", ");
-            stringBuilder.Append("region_of_interest = " + _regionOfInterest + ", ");
-            stringBuilder.Append("video_writer = " + _videoWriter);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("Binning = " + _binning + ", ");
+            stringBuilder.Append("ColorProcessing = " + _colorProcessing + ", ");
+            stringBuilder.Append("Exposure = " + _exposure + ", ");
+            stringBuilder.Append("Gain = " + _gain + ", ");
+            stringBuilder.Append("Gamma = " + _gamma + ", ");
+            stringBuilder.Append("AdcBitDepth = " + _adcBitDepth + ", ");
+            stringBuilder.Append("PixelFormat = " + _pixelFormat + ", ");
+            stringBuilder.Append("RegionOfInterest = " + _regionOfInterest + ", ");
+            stringBuilder.Append("VideoWriter = " + _videoWriter);
             return true;
         }
     
@@ -11092,7 +11092,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum SpinnakerCameraAdcBitDepth
     {
     
@@ -11107,7 +11107,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum SpinnakerCameraPixelFormat
     {
     
@@ -11553,15 +11553,15 @@ namespace AindVrForagingDataSchema
     ///
     ///Texture name must correspond to a valid texture asset loaded in the workflow.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Defines visual texture properties for VR environment surfaces.
 
     Textures are applied to walls, floors, and other surfaces in the virtual
     environment to provide visual cues and context for the foraging task.
 
     Texture name must correspond to a valid texture asset loaded in the workflow.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Texture
     {
     
@@ -11616,20 +11616,20 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Texture> Process()
+        public System.IObservable<Texture> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Texture(this)));
         }
     
-        public System.IObservable<Texture> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Texture> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Texture(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("name = " + _name + ", ");
-            stringBuilder.Append("size = " + _size);
+            stringBuilder.Append("Name = " + _name + ", ");
+            stringBuilder.Append("Size = " + _size);
             return true;
         }
     
@@ -11648,9 +11648,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Treadmill
     {
     
@@ -11794,25 +11794,25 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<Treadmill> Process()
+        public System.IObservable<Treadmill> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Treadmill(this)));
         }
     
-        public System.IObservable<Treadmill> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Treadmill> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Treadmill(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("PortName = " + _portName);
             return true;
         }
     
@@ -11834,10 +11834,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Treadmill calibration class
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Treadmill calibration class")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TreadmillCalibration
     {
     
@@ -11956,24 +11956,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<TreadmillCalibration> Process()
+        public System.IObservable<TreadmillCalibration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillCalibration(this)));
         }
     
-        public System.IObservable<TreadmillCalibration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<TreadmillCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("input = " + _input + ", ");
-            stringBuilder.Append("output = " + _output + ", ");
-            stringBuilder.Append("date = " + _date + ", ");
-            stringBuilder.Append("description = " + _description + ", ");
-            stringBuilder.Append("notes = " + _notes);
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("Input = " + _input + ", ");
+            stringBuilder.Append("Output = " + _output + ", ");
+            stringBuilder.Append("Date = " + _date + ", ");
+            stringBuilder.Append("Description = " + _description + ", ");
+            stringBuilder.Append("Notes = " + _notes);
             return true;
         }
     
@@ -11992,9 +11992,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TreadmillCalibrationInput
     {
     
@@ -12006,12 +12006,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<TreadmillCalibrationInput> Process()
+        public System.IObservable<TreadmillCalibrationInput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillCalibrationInput(this)));
         }
     
-        public System.IObservable<TreadmillCalibrationInput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<TreadmillCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillCalibrationInput(this));
         }
@@ -12036,9 +12036,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TreadmillCalibrationOutput
     {
     
@@ -12136,22 +12136,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<TreadmillCalibrationOutput> Process()
+        public System.IObservable<TreadmillCalibrationOutput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillCalibrationOutput(this)));
         }
     
-        public System.IObservable<TreadmillCalibrationOutput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<TreadmillCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillCalibrationOutput(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("wheel_diameter = " + _wheelDiameter + ", ");
-            stringBuilder.Append("pulses_per_revolution = " + _pulsesPerRevolution + ", ");
-            stringBuilder.Append("invert_direction = " + _invertDirection + ", ");
-            stringBuilder.Append("brake_lookup_calibration = " + _brakeLookupCalibration);
+            stringBuilder.Append("WheelDiameter = " + _wheelDiameter + ", ");
+            stringBuilder.Append("PulsesPerRevolution = " + _pulsesPerRevolution + ", ");
+            stringBuilder.Append("InvertDirection = " + _invertDirection + ", ");
+            stringBuilder.Append("BrakeLookupCalibration = " + _brakeLookupCalibration);
             return true;
         }
     
@@ -12177,13 +12177,13 @@ namespace AindVrForagingDataSchema
     ///through different virtual sites, allowing for varied locomotion dynamics
     ///across different regions of the environment.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Defines treadmill friction properties for virtual sites.\n\nThis class controls the" +
         " friction experienced by the animal when moving\nthrough different virtual sites," +
         " allowing for varied locomotion dynamics\nacross different regions of the environ" +
         "ment.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TreadmillSpecification
     {
     
@@ -12216,19 +12216,19 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<TreadmillSpecification> Process()
+        public System.IObservable<TreadmillSpecification> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TreadmillSpecification(this)));
         }
     
-        public System.IObservable<TreadmillSpecification> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<TreadmillSpecification> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new TreadmillSpecification(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("friction = " + _friction);
+            stringBuilder.Append("Friction = " + _friction);
             return true;
         }
     
@@ -12247,9 +12247,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TruncationParameters
     {
     
@@ -12324,21 +12324,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<TruncationParameters> Process()
+        public System.IObservable<TruncationParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TruncationParameters(this)));
         }
     
-        public System.IObservable<TruncationParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<TruncationParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new TruncationParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("is_truncated = " + _isTruncated + ", ");
-            stringBuilder.Append("min = " + _min + ", ");
-            stringBuilder.Append("max = " + _max);
+            stringBuilder.Append("IsTruncated = " + _isTruncated + ", ");
+            stringBuilder.Append("Min = " + _min + ", ");
+            stringBuilder.Append("Max = " + _max);
             return true;
         }
     
@@ -12357,9 +12357,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UniformDistribution : Distribution
     {
     
@@ -12436,12 +12436,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<UniformDistribution> Process()
+        public System.IObservable<UniformDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UniformDistribution(this)));
         }
     
-        public System.IObservable<UniformDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<UniformDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new UniformDistribution(this));
         }
@@ -12452,17 +12452,17 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("distribution_parameters = " + _distributionParameters + ", ");
-            stringBuilder.Append("truncation_parameters = " + _truncationParameters + ", ");
-            stringBuilder.Append("scaling_parameters = " + _scalingParameters);
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UniformDistributionParameters
     {
     
@@ -12533,21 +12533,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<UniformDistributionParameters> Process()
+        public System.IObservable<UniformDistributionParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UniformDistributionParameters(this)));
         }
     
-        public System.IObservable<UniformDistributionParameters> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<UniformDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new UniformDistributionParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("family = " + _family + ", ");
-            stringBuilder.Append("min = " + _min + ", ");
-            stringBuilder.Append("max = " + _max);
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Min = " + _min + ", ");
+            stringBuilder.Append("Max = " + _max);
             return true;
         }
     
@@ -12572,7 +12572,7 @@ namespace AindVrForagingDataSchema
     ///These targets define which task parameters can be dynamically modified
     ///during task execution to adapt to animal performance or experimental needs.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum UpdaterTarget
     {
@@ -12588,12 +12588,12 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "video_writer_type")]
     [JsonInheritanceAttribute("FFMPEG", typeof(VideoWriterFfmpeg))]
     [JsonInheritanceAttribute("OPENCV", typeof(VideoWriterOpenCv))]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VideoWriter
     {
     
@@ -12605,12 +12605,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<VideoWriter> Process()
+        public System.IObservable<VideoWriter> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VideoWriter(this)));
         }
     
-        public System.IObservable<VideoWriter> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<VideoWriter> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new VideoWriter(this));
         }
@@ -12635,9 +12635,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VideoWriterFfmpeg : VideoWriter
     {
     
@@ -12734,12 +12734,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<VideoWriterFfmpeg> Process()
+        public System.IObservable<VideoWriterFfmpeg> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VideoWriterFfmpeg(this)));
         }
     
-        public System.IObservable<VideoWriterFfmpeg> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<VideoWriterFfmpeg> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new VideoWriterFfmpeg(this));
         }
@@ -12750,18 +12750,18 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("frame_rate = " + _frameRate + ", ");
-            stringBuilder.Append("container_extension = " + _containerExtension + ", ");
-            stringBuilder.Append("output_arguments = " + _outputArguments + ", ");
-            stringBuilder.Append("input_arguments = " + _inputArguments);
+            stringBuilder.Append("FrameRate = " + _frameRate + ", ");
+            stringBuilder.Append("ContainerExtension = " + _containerExtension + ", ");
+            stringBuilder.Append("OutputArguments = " + _outputArguments + ", ");
+            stringBuilder.Append("InputArguments = " + _inputArguments);
             return true;
         }
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VideoWriterOpenCv : VideoWriter
     {
     
@@ -12837,12 +12837,12 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<VideoWriterOpenCv> Process()
+        public System.IObservable<VideoWriterOpenCv> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VideoWriterOpenCv(this)));
         }
     
-        public System.IObservable<VideoWriterOpenCv> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<VideoWriterOpenCv> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new VideoWriterOpenCv(this));
         }
@@ -12853,9 +12853,9 @@ namespace AindVrForagingDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("frame_rate = " + _frameRate + ", ");
-            stringBuilder.Append("container_extension = " + _containerExtension + ", ");
-            stringBuilder.Append("four_cc = " + _fourCc);
+            stringBuilder.Append("FrameRate = " + _frameRate + ", ");
+            stringBuilder.Append("ContainerExtension = " + _containerExtension + ", ");
+            stringBuilder.Append("FourCc = " + _fourCc);
             return true;
         }
     }
@@ -12872,7 +12872,7 @@ namespace AindVrForagingDataSchema
     ///Note: This class is primarily used internally for runtime site generation
     ///and is not meant to be directly instantiated in task configuration DSL.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"THIS CLASS IS NOT MEANT TO BE DIRECTLY INSTANTIATED.
     Represents a specific virtual site instance in the VR environment.
 
@@ -12882,8 +12882,8 @@ namespace AindVrForagingDataSchema
 
     Note: This class is primarily used internally for runtime site generation
     and is not meant to be directly instantiated in task configuration DSL.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VirtualSite
     {
     
@@ -13065,26 +13065,26 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<VirtualSite> Process()
+        public System.IObservable<VirtualSite> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VirtualSite(this)));
         }
     
-        public System.IObservable<VirtualSite> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<VirtualSite> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new VirtualSite(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("id = " + _id + ", ");
-            stringBuilder.Append("label = " + _label + ", ");
-            stringBuilder.Append("length = " + _length + ", ");
-            stringBuilder.Append("start_position = " + _startPosition + ", ");
-            stringBuilder.Append("odor_specification = " + _odorSpecification + ", ");
-            stringBuilder.Append("reward_specification = " + _rewardSpecification + ", ");
-            stringBuilder.Append("render_specification = " + _renderSpecification + ", ");
-            stringBuilder.Append("treadmill_specification = " + _treadmillSpecification);
+            stringBuilder.Append("Id = " + _id + ", ");
+            stringBuilder.Append("Label = " + _label + ", ");
+            stringBuilder.Append("Length = " + _length + ", ");
+            stringBuilder.Append("StartPosition = " + _startPosition + ", ");
+            stringBuilder.Append("OdorSpecification = " + _odorSpecification + ", ");
+            stringBuilder.Append("RewardSpecification = " + _rewardSpecification + ", ");
+            stringBuilder.Append("RenderSpecification = " + _renderSpecification + ", ");
+            stringBuilder.Append("TreadmillSpecification = " + _treadmillSpecification);
             return true;
         }
     
@@ -13110,14 +13110,14 @@ namespace AindVrForagingDataSchema
     ///like length and rendering specifications. It's used to generate diverse virtual
     ///environments for the foraging task.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Generates virtual site specifications with randomized properties.
 
     This class defines templates for creating virtual sites with variable properties
     like length and rendering specifications. It's used to generate diverse virtual
     environments for the foraging task.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VirtualSiteGenerator
     {
     
@@ -13216,22 +13216,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<VirtualSiteGenerator> Process()
+        public System.IObservable<VirtualSiteGenerator> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VirtualSiteGenerator(this)));
         }
     
-        public System.IObservable<VirtualSiteGenerator> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<VirtualSiteGenerator> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new VirtualSiteGenerator(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("render_specification = " + _renderSpecification + ", ");
-            stringBuilder.Append("label = " + _label + ", ");
-            stringBuilder.Append("length_distribution = " + _lengthDistribution + ", ");
-            stringBuilder.Append("treadmill_specification = " + _treadmillSpecification);
+            stringBuilder.Append("RenderSpecification = " + _renderSpecification + ", ");
+            stringBuilder.Append("Label = " + _label + ", ");
+            stringBuilder.Append("LengthDistribution = " + _lengthDistribution + ", ");
+            stringBuilder.Append("TreadmillSpecification = " + _treadmillSpecification);
             return true;
         }
     
@@ -13256,7 +13256,7 @@ namespace AindVrForagingDataSchema
     ///These labels categorize different regions of the virtual environment,
     ///each serving different functional roles in the foraging task.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum VirtualSiteLabels
     {
@@ -13284,12 +13284,12 @@ namespace AindVrForagingDataSchema
     ///Visual corridors are the basic building blocks of the VR environment,
     ///defining spatial regions with specific textures, dimensions, and positions.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Defines a visual corridor segment in the VR environment.\n\nVisual corridors are th" +
         "e basic building blocks of the VR environment,\ndefining spatial regions with spe" +
         "cific textures, dimensions, and positions.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VisualCorridor
     {
     
@@ -13408,23 +13408,23 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<VisualCorridor> Process()
+        public System.IObservable<VisualCorridor> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VisualCorridor(this)));
         }
     
-        public System.IObservable<VisualCorridor> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<VisualCorridor> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new VisualCorridor(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("id = " + _id + ", ");
-            stringBuilder.Append("size = " + _size + ", ");
-            stringBuilder.Append("start_position = " + _startPosition + ", ");
-            stringBuilder.Append("length = " + _length + ", ");
-            stringBuilder.Append("textures = " + _textures);
+            stringBuilder.Append("Id = " + _id + ", ");
+            stringBuilder.Append("Size = " + _size + ", ");
+            stringBuilder.Append("StartPosition = " + _startPosition + ", ");
+            stringBuilder.Append("Length = " + _length + ", ");
+            stringBuilder.Append("Textures = " + _textures);
             return true;
         }
     
@@ -13450,14 +13450,14 @@ namespace AindVrForagingDataSchema
     ///floor, ceiling, and side walls, allowing for complex visual environments
     ///with different textures on each surface.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"Defines textures for all walls of a visual corridor in the VR environment.
 
     This class specifies the visual appearance of corridor surfaces including
     floor, ceiling, and side walls, allowing for complex visual environments
     with different textures on each surface.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class WallTextures
     {
     
@@ -13557,22 +13557,22 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<WallTextures> Process()
+        public System.IObservable<WallTextures> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WallTextures(this)));
         }
     
-        public System.IObservable<WallTextures> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<WallTextures> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new WallTextures(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("floor = " + _floor + ", ");
-            stringBuilder.Append("ceiling = " + _ceiling + ", ");
-            stringBuilder.Append("left = " + _left + ", ");
-            stringBuilder.Append("right = " + _right);
+            stringBuilder.Append("Floor = " + _floor + ", ");
+            stringBuilder.Append("Ceiling = " + _ceiling + ", ");
+            stringBuilder.Append("Left = " + _left + ", ");
+            stringBuilder.Append("Right = " + _right);
             return true;
         }
     
@@ -13594,10 +13594,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Water valve calibration class
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Water valve calibration class")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class WaterValveCalibration
     {
     
@@ -13716,24 +13716,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<WaterValveCalibration> Process()
+        public System.IObservable<WaterValveCalibration> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibration(this)));
         }
     
-        public System.IObservable<WaterValveCalibration> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<WaterValveCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("input = " + _input + ", ");
-            stringBuilder.Append("output = " + _output + ", ");
-            stringBuilder.Append("date = " + _date + ", ");
-            stringBuilder.Append("description = " + _description + ", ");
-            stringBuilder.Append("notes = " + _notes);
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("Input = " + _input + ", ");
+            stringBuilder.Append("Output = " + _output + ", ");
+            stringBuilder.Append("Date = " + _date + ", ");
+            stringBuilder.Append("Description = " + _description + ", ");
+            stringBuilder.Append("Notes = " + _notes);
             return true;
         }
     
@@ -13752,9 +13752,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class WaterValveCalibrationInput
     {
     
@@ -13788,19 +13788,19 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<WaterValveCalibrationInput> Process()
+        public System.IObservable<WaterValveCalibrationInput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibrationInput(this)));
         }
     
-        public System.IObservable<WaterValveCalibrationInput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<WaterValveCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibrationInput(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("measurements = " + _measurements);
+            stringBuilder.Append("Measurements = " + _measurements);
             return true;
         }
     
@@ -13822,10 +13822,10 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Output for water valve calibration class
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Output for water valve calibration class")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class WaterValveCalibrationOutput
     {
     
@@ -13941,23 +13941,23 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<WaterValveCalibrationOutput> Process()
+        public System.IObservable<WaterValveCalibrationOutput> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibrationOutput(this)));
         }
     
-        public System.IObservable<WaterValveCalibrationOutput> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<WaterValveCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibrationOutput(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("interval_average = " + _intervalAverage + ", ");
-            stringBuilder.Append("slope = " + _slope + ", ");
-            stringBuilder.Append("offset = " + _offset + ", ");
-            stringBuilder.Append("r2 = " + _r2 + ", ");
-            stringBuilder.Append("valid_domain = " + _validDomain);
+            stringBuilder.Append("IntervalAverage = " + _intervalAverage + ", ");
+            stringBuilder.Append("Slope = " + _slope + ", ");
+            stringBuilder.Append("Offset = " + _offset + ", ");
+            stringBuilder.Append("R2 = " + _r2 + ", ");
+            stringBuilder.Append("ValidDomain = " + _validDomain);
             return true;
         }
     
@@ -13976,9 +13976,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class WebCamera
     {
     
@@ -14115,24 +14115,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<WebCamera> Process()
+        public System.IObservable<WebCamera> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WebCamera(this)));
         }
     
-        public System.IObservable<WebCamera> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<WebCamera> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new WebCamera(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("device_name = " + _deviceName + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("index = " + _index + ", ");
-            stringBuilder.Append("video_writer = " + _videoWriter);
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("Index = " + _index + ", ");
+            stringBuilder.Append("VideoWriter = " + _videoWriter);
             return true;
         }
     
@@ -14151,9 +14151,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindBehaviorServicesRigVisualStimulationVector3
     {
     
@@ -14228,21 +14228,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindBehaviorServicesRigVisualStimulationVector3> Process()
+        public System.IObservable<AindBehaviorServicesRigVisualStimulationVector3> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorServicesRigVisualStimulationVector3(this)));
         }
     
-        public System.IObservable<AindBehaviorServicesRigVisualStimulationVector3> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindBehaviorServicesRigVisualStimulationVector3> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorServicesRigVisualStimulationVector3(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("x = " + _x + ", ");
-            stringBuilder.Append("y = " + _y + ", ");
-            stringBuilder.Append("z = " + _z);
+            stringBuilder.Append("X = " + _x + ", ");
+            stringBuilder.Append("Y = " + _y + ", ");
+            stringBuilder.Append("Z = " + _z);
             return true;
         }
     
@@ -14267,12 +14267,12 @@ namespace AindVrForagingDataSchema
     ///Used for 3D positioning and movement in the virtual reality environment,
     ///including camera positions, object locations, and 3D transformations.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Represents a 3D point or vector with x, y, and z coordinates.\n\nUsed for 3D positi" +
         "oning and movement in the virtual reality environment,\nincluding camera position" +
         "s, object locations, and 3D transformations.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindBehaviorVrForagingTaskLogicVector3
     {
     
@@ -14347,21 +14347,21 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<AindBehaviorVrForagingTaskLogicVector3> Process()
+        public System.IObservable<AindBehaviorVrForagingTaskLogicVector3> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorVrForagingTaskLogicVector3(this)));
         }
     
-        public System.IObservable<AindBehaviorVrForagingTaskLogicVector3> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindBehaviorVrForagingTaskLogicVector3> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorVrForagingTaskLogicVector3(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("x = " + _x + ", ");
-            stringBuilder.Append("y = " + _y + ", ");
-            stringBuilder.Append("z = " + _z);
+            stringBuilder.Append("X = " + _x + ", ");
+            stringBuilder.Append("Y = " + _y + ", ");
+            stringBuilder.Append("Z = " + _z);
             return true;
         }
     
@@ -14380,10 +14380,10 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Amount
     {
     
@@ -14395,12 +14395,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<Amount> Process()
+        public System.IObservable<Amount> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Amount(this)));
         }
     
-        public System.IObservable<Amount> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Amount> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Amount(this));
         }
@@ -14425,10 +14425,10 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Probability
     {
     
@@ -14440,12 +14440,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<Probability> Process()
+        public System.IObservable<Probability> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Probability(this)));
         }
     
-        public System.IObservable<Probability> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Probability> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Probability(this));
         }
@@ -14470,10 +14470,10 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Available
     {
     
@@ -14485,12 +14485,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<Available> Process()
+        public System.IObservable<Available> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Available(this)));
         }
     
-        public System.IObservable<Available> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Available> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Available(this));
         }
@@ -14515,10 +14515,10 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Rate
     {
     
@@ -14530,12 +14530,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<Rate> Process()
+        public System.IObservable<Rate> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rate(this)));
         }
     
-        public System.IObservable<Rate> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Rate> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Rate(this));
         }
@@ -14560,10 +14560,10 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Value
     {
     
@@ -14575,12 +14575,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<Value> Process()
+        public System.IObservable<Value> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Value(this)));
         }
     
-        public System.IObservable<Value> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<Value> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Value(this));
         }
@@ -14605,10 +14605,10 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LengthDistribution
     {
     
@@ -14620,12 +14620,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<LengthDistribution> Process()
+        public System.IObservable<LengthDistribution> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LengthDistribution(this)));
         }
     
-        public System.IObservable<LengthDistribution> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<LengthDistribution> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new LengthDistribution(this));
         }
@@ -14650,7 +14650,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum BlockStructureSamplingMode
     {
@@ -14663,7 +14663,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum OlfactometerChannelConfigFlowRateCapacity
     {
     
@@ -14675,7 +14675,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum PatchRewardFunctionRule
     {
@@ -14700,9 +14700,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TruncationParameters2
     {
     
@@ -14714,12 +14714,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<TruncationParameters2> Process()
+        public System.IObservable<TruncationParameters2> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TruncationParameters2(this)));
         }
     
-        public System.IObservable<TruncationParameters2> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<TruncationParameters2> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new TruncationParameters2(this));
         }
@@ -14744,9 +14744,9 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ScalingParameters2
     {
     
@@ -14758,12 +14758,12 @@ namespace AindVrForagingDataSchema
         {
         }
     
-        public System.IObservable<ScalingParameters2> Process()
+        public System.IObservable<ScalingParameters2> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ScalingParameters2(this)));
         }
     
-        public System.IObservable<ScalingParameters2> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ScalingParameters2> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ScalingParameters2(this));
         }
@@ -14788,7 +14788,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SpinnakerCameraColorProcessing
     {
@@ -14938,7 +14938,7 @@ namespace AindVrForagingDataSchema
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDuration>))]
@@ -14982,7 +14982,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
@@ -15031,7 +15031,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ClampedRateFunction>))]
@@ -15074,7 +15074,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
@@ -15116,7 +15116,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
@@ -15157,7 +15157,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     public partial class MatchAmount : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -15196,7 +15196,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     public partial class MatchProbability : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -15235,7 +15235,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     public partial class MatchAvailable : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -15274,7 +15274,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     public partial class MatchRate : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -15313,7 +15313,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     public partial class MatchValue : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -15352,7 +15352,7 @@ namespace AindVrForagingDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     public partial class MatchLengthDistribution : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -15394,16 +15394,19 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into JSON strings.")]
-    [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [Bonsai.CombinatorAttribute()]
     public partial class SerializeToJson
     {
     
+        public Newtonsoft.Json.Formatting Formatting { get; set; }
+
         private System.IObservable<string> Process<T>(System.IObservable<T> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
+            var formatting = Formatting;
+            return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value, formatting));
         }
 
         public System.IObservable<string> Process(System.IObservable<AindBehaviorSessionModel> source)
@@ -15996,7 +15999,7 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// Deserializes a sequence of JSON strings into data model objects.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.5.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
