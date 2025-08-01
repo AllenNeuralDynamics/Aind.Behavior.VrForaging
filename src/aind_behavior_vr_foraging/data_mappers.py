@@ -2,7 +2,7 @@ import datetime
 import logging
 import os
 from pathlib import Path
-from typing import Dict, List, Optional, Self, Tuple, Type, TypeVar, Union
+from typing import Callable, Dict, List, Optional, Self, Type, TypeVar, Union
 
 import aind_behavior_services.rig as AbsRig
 import aind_data_schema
@@ -18,12 +18,12 @@ import pydantic_settings
 from aind_behavior_services.calibration import Calibration
 from aind_behavior_services.calibration.olfactometer import OlfactometerChannelType
 from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services.utils import model_from_json_file, utcnow
+from aind_behavior_services.utils import get_fields_of_type, model_from_json_file, utcnow
 from clabe.apps import BonsaiApp
-from clabe.behavior_launcher import BehaviorLauncher, DefaultBehaviorPicker
-from clabe.data_mapper import DataMapper
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
+from clabe.launcher import DefaultBehaviorPicker, Launcher
+from clabe.launcher._callable_manager import _Promise
 from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -52,6 +52,9 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         self.db_dir = db_suffix if db_suffix else f"{_DATABASE_DIR}/{os.environ['COMPUTERNAME']}"
         self.target_file = Path(self.db_root) / self.db_dir / self.filename
         self._mapped: Optional[aind_data_schema.core.rig.Rig] = None
+
+    def rig_schema(self):
+        return self.mapped
 
     @property
     def session_name(self):
@@ -85,16 +88,17 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         return self.mapped is not None
 
     @classmethod
-    def from_launcher(cls, launcher: BehaviorLauncher) -> Self:
-        picker = launcher.picker
-        if isinstance(picker, DefaultBehaviorPicker):
-            return cls(
-                rig_schema_filename=f"{launcher.rig_schema.rig_name}.json",
+    def build_runner(cls, picker: DefaultBehaviorPicker) -> Callable[[Launcher], Self]:
+        def _run(launcher: Launcher) -> Self:
+            new = cls(
+                rig_schema_filename=f"{launcher.get_rig(strict=True).rig_name}.json",
                 db_suffix=f"{_DATABASE_DIR}/{launcher.computer_name}",
                 db_root=picker.config_library_dir,
             )
-        else:
-            raise NotImplementedError("Only DefaultBehaviorPicker is supported.")
+            new.map()
+            return new
+
+        return _run
 
 
 class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
@@ -117,25 +121,23 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.output_parameters = output_parameters
         self._mapped: Optional[aind_data_schema.core.session.Session] = None
 
-    @classmethod
-    def from_launcher(cls, launcher: BehaviorLauncher) -> Self:
-        script_path: os.PathLike
+    def session_schema(self):
+        return self.mapped
 
-        if isinstance(launcher.services_factory_manager.app, BonsaiApp):
-            script_path = launcher.services_factory_manager.app.workflow
-        else:
-            raise NotImplementedError(
-                f"Type of app is not supported for mapping. Got {type(launcher.services_factory_manager.app)}"
+    @classmethod
+    def build_runner(cls, app: BonsaiApp) -> Callable[[Launcher], Self]:
+        def _new(launcher: Launcher) -> Self:
+            script_path = app.workflow
+            return cls(
+                session_model=launcher.get_session(strict=True),
+                rig_model=launcher.get_rig(strict=True),
+                task_logic_model=launcher.get_task_logic(strict=True),
+                repository=launcher.repository,
+                script_path=script_path,
+                session_end_time=utcnow(),
             )
 
-        return cls(
-            session_model=launcher.session_schema,
-            rig_model=launcher.rig_schema,
-            task_logic_model=launcher.task_logic_schema,
-            repository=launcher.repository,
-            script_path=script_path,
-            session_end_time=utcnow(),
-        )
+        return _new
 
     @property
     def session_name(self) -> str:
@@ -199,11 +201,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         # Populate cameras
         cameras = data_mapper_helpers.get_cameras(rig_model, exclude_without_video_writer=True)
         # populate devices
-        devices = [
-            device[0]
-            for device in data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.harp._HarpDeviceBase)
-            if device[0]
-        ]
+        devices = [device[0] for device in get_fields_of_type(rig_model, AbsRig.harp._HarpDeviceBase) if device[0]]
         # Populate modalities
         modalities: list[aind_data_schema.core.session.Modality] = [
             getattr(aind_data_schema.core.session.Modality, "BEHAVIOR")
@@ -236,7 +234,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             )
         )
 
-        _olfactory_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.harp.HarpOlfactometer)
+        _olfactory_device = get_fields_of_type(rig_model, AbsRig.harp.HarpOlfactometer)
         if len(_olfactory_device) > 0:
             if _olfactory_device[0][0]:
                 stimulation_devices.append(_olfactory_device[0][0])
@@ -250,7 +248,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         stimulation_parameters.append(
             aind_data_schema.core.session.AuditoryStimulation(sitmulus_name="Beep", sample_frequency=0)
         )
-        speaker_config = aind_data_schema.core.session.SpeakerConfig(name="Speaker", volume=60)
+        speaker_config = aind_data_schema.core.session.SpeakerConfig(name="Speaker", volume=60.0)
         stimulation_devices.append("speaker")
         # Visual/VR Stimulation
         stimulus_modalities.extend(
@@ -266,7 +264,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 stimulus_parameters={},
             )
         )
-        _screen_device = data_mapper_helpers.get_fields_of_type(rig_model, AbsRig.visual_stimulation.Screen)
+        _screen_device = get_fields_of_type(rig_model, AbsRig.visual_stimulation.Screen)
         if len(_screen_device) > 0:
             if _screen_device[0][0]:
                 stimulation_devices.append(_screen_device[0][0])
@@ -402,75 +400,20 @@ def coerce_to_aind_data_schema(value: Union[pydantic.BaseModel, dict], target_ty
     return target_type(**_normalized_input)
 
 
-class AindDataMapperWrapper(DataMapper[Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]]):
-    def __init__(
-        self,
-        session_name: str,
-        session_directory: os.PathLike,
-        rig_data_mapper: AindRigDataMapper,
-        session_data_mapper: AindSessionDataMapper,
-    ):
-        super().__init__()
-
-        self._rig_mapper = rig_data_mapper
-        self._session_mapper = session_data_mapper
-
-        self._session_schema: Optional[aind_data_schema.core.session.Session] = None
-        self._rig_schema: Optional[aind_data_schema.core.rig.Rig] = None
-
-        self._mapped: Optional[Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]] = None
-
-        self._session_directory = session_directory
-        self._session_name = session_name
-
-    @property
-    def session_directory(self):
-        return self._session_directory
-
-    @property
-    def session_name(self):
-        return self._session_name
-
-    @classmethod
-    def from_launcher(
-        cls,
-        launcher: BehaviorLauncher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
-    ) -> Self:
-        session_name: str
-        session_directory: Path
-        if launcher.session_schema:
-            session_name = launcher.session_schema.session_name  # type: ignore  # this is guaranteed to be set
-        else:
-            raise ValueError("Can't infer session name from launcher.")
+def write_ads_mappers(
+    session_mapper: _Promise[Launcher, AindSessionDataMapper], rig_mapper: _Promise[Launcher, AindRigDataMapper]
+) -> Callable[[Launcher], None]:
+    def _run(launcher: Launcher) -> None:
         session_directory = launcher.session_directory
+        _session = session_mapper.result.mapped
+        _rig = rig_mapper.result.mapped
+        _session.rig_id = _rig.rig_id
+        logger.info("Writing session.json to %s", session_directory)
+        _session.write_standard_file(Path(session_directory))
+        logger.info("Writing rig.json to %s", session_directory)
+        _rig.write_standard_file(Path(session_directory))
 
-        return cls(
-            session_name,
-            session_directory,
-            rig_data_mapper=AindRigDataMapper.from_launcher(launcher),
-            session_data_mapper=AindSessionDataMapper.from_launcher(launcher),
-        )
-
-    def map(self) -> Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]:
-        self._rig_schema = self._rig_mapper.map()
-        self._session_schema = self._session_mapper.map()
-        if self._rig_schema is None or self._session_schema is None:
-            raise ValueError("Failed to map data.")
-        self._session_schema.rig_id = self._rig_schema.rig_id
-        logger.info("Writing session.json to %s", self.session_directory)
-        self._session_schema.write_standard_file(Path(self.session_directory))
-        logger.info("Writing rig.json to %s", self.session_directory)
-        self._rig_schema.write_standard_file(Path(self.session_directory))
-        return self.mapped
-
-    @property
-    def mapped(self) -> Tuple[aind_data_schema.core.rig.Rig, aind_data_schema.core.session.Session]:
-        if self._rig_mapper is None or self._session_mapper is None:
-            raise ValueError("Data has not been mapped yet.")
-        return (self._rig_schema, self._session_schema)
-
-    def is_mapped(self) -> bool:
-        return (self._rig_schema is not None) and (self._session_schema is not None)
+    return _run
 
 
 class _MapperCli(pydantic_settings.BaseSettings, cli_prog_name="data-mapper", cli_kebab_case=True):
@@ -482,6 +425,8 @@ class _MapperCli(pydantic_settings.BaseSettings, cli_prog_name="data-mapper", cl
 
 
 if __name__ == "__main__":
+    logger.info("Mapping metadata directly from dataset.")
+
     cli = pydantic_settings.CliApp()
     parsed_args = cli.run(_MapperCli)
     abs_schemas_path = Path(parsed_args.data_path) / "Behavior" / "Logs"
@@ -489,20 +434,21 @@ if __name__ == "__main__":
     rig = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
     task_logic = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
     repo = Repo()
-    session_mapper = AindSessionDataMapper(
+    session_mapped = AindSessionDataMapper(
         session_model=session,
         rig_model=rig,
         task_logic_model=task_logic,
         repository=repo,
         script_path=Path("./src/main.bonsai"),
-    )
-    rig_mapper = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(parsed_args.db_root))
+    ).map()
+    rig_mapped = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(parsed_args.db_root)).map()
 
     assert session.session_name is not None
-    wrapped_mapper = AindDataMapperWrapper(
-        session_name=session.session_name,
-        session_directory=parsed_args.data_path,
-        rig_data_mapper=rig_mapper,
-        session_data_mapper=session_mapper,
-    )
-    wrapped_mapper.map()
+    assert session_mapped is not None
+
+    session_mapped.rig_id = rig_mapped.rig_id
+    logger.info("Writing session.json to %s", parsed_args.data_path)
+    session_mapped.write_standard_file(Path(parsed_args.data_path))
+    logger.info("Writing rig.json to %s", parsed_args.data_path)
+    rig_mapped.write_standard_file(Path(parsed_args.data_path))
+    logger.info("Mapping completed!")

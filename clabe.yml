@@ -1,0 +1,14 @@
+clabe:
+  data_dir: C:/Data
+
+watchdog:
+  project_name: "Cognitive flexibility in patch foraging"
+  destination: "\\\\allen\\aind\\scratch\\vr-foraging\\data"
+  delete_modalities_source_after_success: true
+  upload_job_configs:
+    - modality: behavior_videos
+      source: "This will get replaced later"
+      compress_raw_data: true
+
+default_behavior_picker:
+  config_library_dir: "C:/git/AllenNeuralDynamics/Aind.Behavior.VrForaging/src/config_library"
