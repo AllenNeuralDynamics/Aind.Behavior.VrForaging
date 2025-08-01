@@ -7,7 +7,7 @@ from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, Watch
 from clabe.launcher import DefaultBehaviorPicker, DefaultBehaviorPickerSettings, Launcher, LauncherCliArgs
 from pydantic_settings import CliApp
 
-from .data_mappers import AindRigDataMapper, AindSessionDataMapper
+from .data_mappers import AindRigDataMapper, AindSessionDataMapper, write_ads_mappers
 from .rig import AindVrForagingRig
 from .task_logic import AindVrForagingTaskLogic
 
@@ -41,7 +41,8 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     launcher.register_callable(monitor.build_runner())
     launcher.register_callable(app.build_runner(allow_std_error=True))
     session_mapper_promise = launcher.register_callable(AindSessionDataMapper.build_runner(app))
-    launcher.register_callable(AindRigDataMapper.build_runner(picker))
+    rig_mapper_promise = launcher.register_callable(AindRigDataMapper.build_runner(picker))
+    launcher.register_callable(write_ads_mappers(session_mapper_promise, rig_mapper_promise))
     launcher.register_callable(
         WatchdogDataTransferService.build_runner(
             settings=watchdog_settings, aind_session_data_mapper=session_mapper_promise
