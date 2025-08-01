@@ -1,3 +1,5 @@
+# In order to get picked up, move this file to the root of the project or ./local
+
 clabe:
   data_dir: C:/Data
 
