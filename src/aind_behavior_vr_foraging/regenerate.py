@@ -1,13 +1,9 @@
-import json
 from pathlib import Path
 from typing import Union
 
 import pydantic
 from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services.utils import (
-    CustomGenerateJsonSchema,
-    bonsai_sgen,
-)
+from aind_behavior_services.utils import BonsaiSgenSerializers, convert_pydantic_to_bonsai
 
 import aind_behavior_vr_foraging.rig
 import aind_behavior_vr_foraging.task_logic
@@ -26,19 +22,15 @@ def main():
         aind_behavior_vr_foraging.task_logic.VisualCorridor,
     ]
     model = pydantic.RootModel[Union[tuple(models)]]
-    json_schema = model.model_json_schema(schema_generator=CustomGenerateJsonSchema, mode="serialization")
-    for to_remove in ["$schema", "title", "description", "properties", "required", "type", "oneOf"]:
-        json_schema.pop(to_remove, None)
 
-    with open(schema_path := SCHEMA_ROOT / "aind-vr-foraging.json", "w", encoding="utf-8") as f:
-        literal = json.dumps(json_schema, indent=2)
-        f.write(literal)
-
-    bonsai_sgen(
-        schema_path=schema_path,
+    convert_pydantic_to_bonsai(
+        model,
+        model_name="aind_behavior_vr_foraging",
         root_element="Root",
-        namespace=NAMESPACE_PREFIX,
-        output_path=EXTENSIONS_ROOT / "AindBehaviorVrForaging.cs",
+        cs_namespace=NAMESPACE_PREFIX,
+        json_schema_output_dir=SCHEMA_ROOT,
+        cs_output_dir=EXTENSIONS_ROOT,
+        cs_serializer=[BonsaiSgenSerializers.JSON],
     )
 
 
