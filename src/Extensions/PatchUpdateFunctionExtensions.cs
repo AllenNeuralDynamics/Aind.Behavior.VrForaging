@@ -7,6 +7,7 @@ namespace AindVrForagingDataSchema
 {
     public partial class PatchUpdateFunction
     {
+        public readonly Random defaultRandom = new Random();
         public virtual double Invoke(double value, double tickValue, Random random = null)
         {
             throw new NotImplementedException();
@@ -17,7 +18,7 @@ namespace AindVrForagingDataSchema
     {
         public override double Invoke(double value, double tickValue, Random random = null)
         {
-            if (random == null) random = new Random();
+            if (random == null) random = defaultRandom;
             return this.Value.SampleDistribution(random);
         }
     }
@@ -26,7 +27,7 @@ namespace AindVrForagingDataSchema
     {
         public override double Invoke(double value, double tickValue, Random random = null)
         {
-            if (random == null) random = new Random();
+            if (random == null) random = defaultRandom;
             double newValue = value + this.Rate.SampleDistribution(random) * tickValue;
 
             newValue = Math.Min(this.Maximum.HasValue ? this.Maximum.Value : newValue, newValue);
@@ -39,7 +40,7 @@ namespace AindVrForagingDataSchema
     {
         public override double Invoke(double value, double tickValue, Random random = null)
         {
-            if (random == null) random = new Random();
+            if (random == null) random = defaultRandom;
             double newValue = value * this.Rate.SampleDistribution(random) * tickValue;
 
             newValue = Math.Min(this.Maximum.HasValue ? this.Maximum.Value : newValue, newValue);
