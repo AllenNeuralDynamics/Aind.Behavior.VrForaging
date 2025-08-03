@@ -41,7 +41,7 @@ namespace AindVrForagingDataSchema
         public override double Invoke(double value, double tickValue, Random random = null)
         {
             if (random == null) random = defaultRandom;
-            double newValue = value * this.Rate.SampleDistribution(random) * tickValue;
+            double newValue = value * Math.Pow(this.Rate.SampleDistribution(random), tickValue);
 
             newValue = Math.Min(this.Maximum.HasValue ? this.Maximum.Value : newValue, newValue);
             newValue = Math.Max(this.Minimum.HasValue ? this.Minimum.Value : newValue, newValue);
