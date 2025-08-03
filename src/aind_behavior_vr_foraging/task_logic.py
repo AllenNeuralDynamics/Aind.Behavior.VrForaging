@@ -244,7 +244,7 @@ class LookupTableFunction(_PatchUpdateFunction):
 class ClampedRateFunction(_PatchUpdateFunction):
     """
     A patch update function that applies a clamped rate-based update.
-    
+
     Update in the form of x = clamp(x + rate * tick_value).
     This function updates values at a specified rate while keeping results within
     defined minimum and maximum bounds. The rate is applied per rule unit (e.g.,
