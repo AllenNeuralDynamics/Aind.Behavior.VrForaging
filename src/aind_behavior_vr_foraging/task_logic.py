@@ -224,6 +224,7 @@ class LookupTableFunction(_PatchUpdateFunction):
     """
     A patch update function that uses lookup table interpolation.
 
+    Update in the form of x = lut_values[lerp(lut_keys, lut_values, tick_value)].
     This function maps input values to output values using a lookup table with
     linear interpolation between defined points. Useful for complex, non-linear
     reward schedules or parameter updates.
@@ -243,7 +244,8 @@ class LookupTableFunction(_PatchUpdateFunction):
 class ClampedRateFunction(_PatchUpdateFunction):
     """
     A patch update function that applies a clamped rate-based update.
-
+    
+    Update in the form of x = clamp(x + rate * tick_value).
     This function updates values at a specified rate while keeping results within
     defined minimum and maximum bounds. The rate is applied per rule unit (e.g.,
     time, distance, choices).
@@ -259,6 +261,7 @@ class ClampedMultiplicativeRateFunction(_PatchUpdateFunction):
     """
     A patch update function that applies multiplicative rate updates with bounds.
 
+    Update in the form of x = clamp(x * rate ** tick_value).
     This function multiplies the current value by the rate parameter, maintaining
     the result within specified minimum and maximum bounds. Useful for percentage-
     based changes and exponential decay/growth patterns.
@@ -274,6 +277,7 @@ class SetValueFunction(_PatchUpdateFunction):
     """
     A patch update function that sets the target to a specific value.
 
+    Update in the form of x = value.
     This function directly sets the target parameter to a value drawn from the
     specified distribution, ignoring the current value. Useful for resetting
     parameters or applying discrete changes.

@@ -3371,6 +3371,7 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// A patch update function that applies multiplicative rate updates with bounds.
     ///
+    ///Update in the form of x = clamp(x * rate ** tick_value).
     ///This function multiplies the current value by the rate parameter, maintaining
     ///the result within specified minimum and maximum bounds. Useful for percentage-
     ///based changes and exponential decay/growth patterns.
@@ -3378,6 +3379,7 @@ namespace AindVrForagingDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute(@"A patch update function that applies multiplicative rate updates with bounds.
 
+    Update in the form of x = clamp(x * rate ** tick_value).
     This function multiplies the current value by the rate parameter, maintaining
     the result within specified minimum and maximum bounds. Useful for percentage-
     based changes and exponential decay/growth patterns.")]
@@ -3485,15 +3487,18 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// A patch update function that applies a clamped rate-based update.
     ///
+    ///Update in the form of x = clamp(x + rate * tick_value).
     ///This function updates values at a specified rate while keeping results within
     ///defined minimum and maximum bounds. The rate is applied per rule unit (e.g.,
     ///time, distance, choices).
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("A patch update function that applies a clamped rate-based update.\n\nThis function " +
-        "updates values at a specified rate while keeping results within\ndefined minimum " +
-        "and maximum bounds. The rate is applied per rule unit (e.g.,\ntime, distance, cho" +
-        "ices).")]
+    [System.ComponentModel.DescriptionAttribute(@"A patch update function that applies a clamped rate-based update.
+
+    Update in the form of x = clamp(x + rate * tick_value).
+    This function updates values at a specified rate while keeping results within
+    defined minimum and maximum bounds. The rate is applied per rule unit (e.g.,
+    time, distance, choices).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ClampedRateFunction : PatchUpdateFunction
@@ -6039,15 +6044,18 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// A patch update function that uses lookup table interpolation.
     ///
+    ///Update in the form of x = lut_values[lerp(lut_keys, lut_values, tick_value)].
     ///This function maps input values to output values using a lookup table with
     ///linear interpolation between defined points. Useful for complex, non-linear
     ///reward schedules or parameter updates.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("A patch update function that uses lookup table interpolation.\n\nThis function maps" +
-        " input values to output values using a lookup table with\nlinear interpolation be" +
-        "tween defined points. Useful for complex, non-linear\nreward schedules or paramet" +
-        "er updates.")]
+    [System.ComponentModel.DescriptionAttribute(@"A patch update function that uses lookup table interpolation.
+
+    Update in the form of x = lut_values[lerp(lut_keys, lut_values, tick_value)].
+    This function maps input values to output values using a lookup table with
+    linear interpolation between defined points. Useful for complex, non-linear
+    reward schedules or parameter updates.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LookupTableFunction : PatchUpdateFunction
@@ -8772,6 +8780,7 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// A patch update function that applies a clamped rate-based update.
     ///
+    ///Update in the form of x = clamp(x + rate * tick_value).
     ///This function updates values at a specified rate while keeping results within
     ///defined minimum and maximum bounds. The rate is applied per rule unit (e.g.,
     ///time, distance, choices).
@@ -8782,10 +8791,12 @@ namespace AindVrForagingDataSchema
     [JsonInheritanceAttribute("ClampedMultiplicativeRateFunction", typeof(ClampedMultiplicativeRateFunction))]
     [JsonInheritanceAttribute("SetValueFunction", typeof(SetValueFunction))]
     [JsonInheritanceAttribute("LookupTableFunction", typeof(LookupTableFunction))]
-    [System.ComponentModel.DescriptionAttribute("A patch update function that applies a clamped rate-based update.\n\nThis function " +
-        "updates values at a specified rate while keeping results within\ndefined minimum " +
-        "and maximum bounds. The rate is applied per rule unit (e.g.,\ntime, distance, cho" +
-        "ices).")]
+    [System.ComponentModel.DescriptionAttribute(@"A patch update function that applies a clamped rate-based update.
+
+    Update in the form of x = clamp(x + rate * tick_value).
+    This function updates values at a specified rate while keeping results within
+    defined minimum and maximum bounds. The rate is applied per rule unit (e.g.,
+    time, distance, choices).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PatchUpdateFunction
@@ -10576,15 +10587,18 @@ namespace AindVrForagingDataSchema
     /// <summary>
     /// A patch update function that sets the target to a specific value.
     ///
+    ///Update in the form of x = value.
     ///This function directly sets the target parameter to a value drawn from the
     ///specified distribution, ignoring the current value. Useful for resetting
     ///parameters or applying discrete changes.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("A patch update function that sets the target to a specific value.\n\nThis function " +
-        "directly sets the target parameter to a value drawn from the\nspecified distribut" +
-        "ion, ignoring the current value. Useful for resetting\nparameters or applying dis" +
-        "crete changes.")]
+    [System.ComponentModel.DescriptionAttribute(@"A patch update function that sets the target to a specific value.
+
+    Update in the form of x = value.
+    This function directly sets the target parameter to a value drawn from the
+    specified distribution, ignoring the current value. Useful for resetting
+    parameters or applying discrete changes.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class SetValueFunction : PatchUpdateFunction

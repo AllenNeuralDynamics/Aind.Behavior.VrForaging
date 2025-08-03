@@ -1211,7 +1211,7 @@
       "type": "object"
     },
     "ClampedMultiplicativeRateFunction": {
-      "description": "A patch update function that applies multiplicative rate updates with bounds.\n\nThis function multiplies the current value by the rate parameter, maintaining\nthe result within specified minimum and maximum bounds. Useful for percentage-\nbased changes and exponential decay/growth patterns.",
+      "description": "A patch update function that applies multiplicative rate updates with bounds.\n\nUpdate in the form of x = clamp(x * rate ** tick_value).\nThis function multiplies the current value by the rate parameter, maintaining\nthe result within specified minimum and maximum bounds. Useful for percentage-\nbased changes and exponential decay/growth patterns.",
       "properties": {
         "function_type": {
           "const": "ClampedMultiplicativeRateFunction",
@@ -1257,7 +1257,7 @@
       "type": "object"
     },
     "ClampedRateFunction": {
-      "description": "A patch update function that applies a clamped rate-based update.\n\nThis function updates values at a specified rate while keeping results within\ndefined minimum and maximum bounds. The rate is applied per rule unit (e.g.,\ntime, distance, choices).",
+      "description": "A patch update function that applies a clamped rate-based update.\n\nUpdate in the form of x = clamp(x + rate * tick_value).\nThis function updates values at a specified rate while keeping results within\ndefined minimum and maximum bounds. The rate is applied per rule unit (e.g.,\ntime, distance, choices).",
       "properties": {
         "function_type": {
           "const": "ClampedRateFunction",
@@ -2268,7 +2268,7 @@
       "type": "object"
     },
     "LookupTableFunction": {
-      "description": "A patch update function that uses lookup table interpolation.\n\nThis function maps input values to output values using a lookup table with\nlinear interpolation between defined points. Useful for complex, non-linear\nreward schedules or parameter updates.",
+      "description": "A patch update function that uses lookup table interpolation.\n\nUpdate in the form of x = lut_values[lerp(lut_keys, lut_values, tick_value)].\nThis function maps input values to output values using a lookup table with\nlinear interpolation between defined points. Useful for complex, non-linear\nreward schedules or parameter updates.",
       "properties": {
         "function_type": {
           "const": "LookupTableFunction",
@@ -3940,7 +3940,7 @@
       "type": "object"
     },
     "SetValueFunction": {
-      "description": "A patch update function that sets the target to a specific value.\n\nThis function directly sets the target parameter to a value drawn from the\nspecified distribution, ignoring the current value. Useful for resetting\nparameters or applying discrete changes.",
+      "description": "A patch update function that sets the target to a specific value.\n\nUpdate in the form of x = value.\nThis function directly sets the target parameter to a value drawn from the\nspecified distribution, ignoring the current value. Useful for resetting\nparameters or applying discrete changes.",
       "properties": {
         "function_type": {
           "const": "SetValueFunction",
