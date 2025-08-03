@@ -61,7 +61,7 @@ Additional arguments can be passed to the script as needed:
 uv run clabe -h
 ```
 
-or via a `./local/clabe_custom.yml` file.
+or via a `./local/clabe.yml` file. (An example can be found in `./Examples/clabe.yml`.)
 
 In order to run the launcher script, optional dependencies should be installed via:
 
