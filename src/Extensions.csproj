@@ -2,14 +2,21 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Bonsai.Core" Version="2.9.0" />
+	<PackageReference Include="AllenNeuralDynamics.Core.Design" Version="0.3.0" />
     <PackageReference Include="OpenCV.Net" Version="3.4.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Bonsai.Harp" Version="3.5.0" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
     <PackageReference Include="Harp.Olfactometer" Version="0.1.0-build231127" />
     <PackageReference Include="AllenNeuralDynamics.AindManipulator" Version="0.1.6" />
+	<PackageReference Include="Hexa.NET.ImGui" Version="2.2.8.4" />
+    <PackageReference Include="Hexa.NET.ImPlot" Version="2.2.8.4" />
+    <PackageReference Include="OpenTK.GLControl" Version="3.1.0" />
+    <PackageReference Include="Bonsai.Dsp.Design" Version="2.9.0" />
+    <PackageReference Include="Hexa.NET.ImGui.Backends" Version="1.0.17" />
   </ItemGroup>
 </Project>
