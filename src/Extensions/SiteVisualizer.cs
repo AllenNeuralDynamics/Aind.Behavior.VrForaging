@@ -25,16 +25,13 @@ namespace AllenNeuralDynamics.VrForaging
 
         ImGuiControl imGuiCanvas;
 
-        private static readonly Dictionary<VirtualSiteLabels, Vector4> siteColors = new Dictionary<VirtualSiteLabels, Vector4>()
+        private static readonly Dictionary<VirtualSiteLabels, Vector4> siteColors = new Dictionary<VirtualSiteLabels, Vector4>
         {
             { VirtualSiteLabels.RewardSite,   new Vector4(27 / 255f, 158 / 255f, 119 / 255f, 1f) },
             { VirtualSiteLabels.InterSite,    new Vector4(217 / 255f, 95 / 255f, 2 / 255f, 1f) },
             { VirtualSiteLabels.InterPatch,   new Vector4(117 / 255f, 112 / 255f, 179 / 255f, 1f) },
             { VirtualSiteLabels.PostPatch,    new Vector4(231 / 255f, 41 / 255f, 138 / 255f, 1f) },
             { VirtualSiteLabels.Unspecified,  new Vector4(102 / 255f, 166 / 255f, 30 / 255f, 1f) },
-            // { VirtualSiteLabels.Unspecified2, new Vector4(230 / 255f, 171 / 255f, 2 / 255f, 1f) },
-            // { VirtualSiteLabels.Unspecified3, new Vector4(166 / 255f, 118 / 255f, 29 / 255f, 1f) },
-            // { VirtualSiteLabels.Unspecified4, new Vector4(102 / 255f, 102 / 255f, 102 / 255f, 1f) },
         };
 
         private VirtualSiteEventBuffer buffer = new VirtualSiteEventBuffer();
@@ -42,10 +39,10 @@ namespace AllenNeuralDynamics.VrForaging
         /// <inheritdoc/>
         public override void Show(object value)
         {
-            if (value is Bonsai.Harp.Timestamped<VirtualSite> data)
+            var data = value as Bonsai.Harp.Timestamped<VirtualSite>?;
+            if (data.HasValue)
             {
-                this.buffer.AddEvent(data);
-
+                this.buffer.AddEvent(data.Value);
             }
         }
 
@@ -88,7 +85,7 @@ namespace AllenNeuralDynamics.VrForaging
                 for (int i = 0; i < visibleEvents.Count(); i++)
                 {
                     var e1 = visibleEvents.ElementAt(i);
-                    var timestamps = new double[] { e1.Start, e1.End ?? e1.Start };
+                    var timestamps = new double[] { e1.Start, e1.End.HasValue ? e1.End.Value : e1.Start };
                     var labelId = e1.Label;
                     var labelText = string.Format("{0}", e1.Label);
 
@@ -105,7 +102,7 @@ namespace AllenNeuralDynamics.VrForaging
                     {
 
                         ImPlot.PlotShaded(string.Format("##{0}_{1}", e1.Label, i), x, y2, 2);
-                        double mid = (e1.Start + e1.End ?? e1.Start) / 2;
+                        double mid = (e1.Start + (e1.End.HasValue ? e1.End.Value : e1.Start)) / 2;
                         ImPlot.PlotText(labelText, mid, 0.5f, 0);
 
                     }
@@ -122,7 +119,8 @@ namespace AllenNeuralDynamics.VrForaging
         public override void Load(IServiceProvider provider)
         {
             var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
-            if (ExpressionBuilder.GetVisualizerElement(context.Source).Builder is SiteVisualizerBuilder visualizerBuilder)
+            var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as SiteVisualizerBuilder;
+            if (visualizerBuilder != null)
             {
                 XAxisWindowSize = visualizerBuilder.XAxisWindowSize;
             }
@@ -132,14 +130,14 @@ namespace AllenNeuralDynamics.VrForaging
             imGuiCanvas.Render += (sender, e) =>
             {
                 var dockspaceId = ImGui.DockSpaceOverViewport(
-                    dockspaceId: 0,
+                    0,
                     ImGui.GetMainViewport(),
                     ImGuiDockNodeFlags.AutoHideTabBar | ImGuiDockNodeFlags.NoUndocking);
 
                 StyleColors();
 
 
-                if (ImGui.Begin(nameof(SiteVisualizer)))
+                if (ImGui.Begin("SiteVisualizer"))
                 {
                     var avail = ImGui.GetContentRegionAvail();
                     ImGui.BeginChild("..data", new Vector2(avail.X, avail.Y));
@@ -149,22 +147,32 @@ namespace AllenNeuralDynamics.VrForaging
 
                 ImGui.End();
 
-                if (!ImGui.IsWindowDocked() &&
-                    ImGuiP.DockBuilderGetCentralNode(dockspaceId) is ImGuiDockNodePtr node &&
-                    !node.IsNull)
+                var centralNode = ImGuiP.DockBuilderGetCentralNode(dockspaceId);
+                if (!ImGui.IsWindowDocked() && !centralNode.IsNull)
                 {
-                    ImGuiP.DockBuilderDockWindow(nameof(SiteVisualizer), node.ID);
+                    unsafe
+                    {
+                        var handle = centralNode.Handle;
+                        uint dockId = handle->ID;
+                        ImGuiP.DockBuilderDockWindow("SiteVisualizer", dockId);
+                    }
                 }
             };
 
             var visualizerService = (IDialogTypeVisualizerService)provider.GetService(typeof(IDialogTypeVisualizerService));
-            visualizerService?.AddControl(imGuiCanvas);
+            if (visualizerService != null)
+            {
+                visualizerService.AddControl(imGuiCanvas);
+            }
         }
 
         /// <inheritdoc/>
         public override void Unload()
         {
-            imGuiCanvas?.Dispose();
+            if (imGuiCanvas != null)
+            {
+                imGuiCanvas.Dispose();
+            }
         }
     }
 
@@ -237,7 +245,7 @@ namespace AllenNeuralDynamics.VrForaging
 
         public void RemovePast(double seconds)
         {
-            while (head != null && ((head.End < seconds) || head.Start < seconds))
+            while (head != null && ((head.End.HasValue && head.End.Value < seconds) || head.Start < seconds))
             {
                 head = head.Next;
                 if (head != null) head.Prev = null;
