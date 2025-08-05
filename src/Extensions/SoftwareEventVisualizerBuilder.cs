@@ -8,13 +8,14 @@ using System.Linq.Expressions;
 using Bonsai;
 using AindVrForagingDataSchema;
 using Bonsai.Harp;
+using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
 
 namespace AllenNeuralDynamics.VrForaging
 {
-    [TypeVisualizer(typeof(SiteVisualizer))]
+    [TypeVisualizer(typeof(SoftwareEventVisualizer))]
     [WorkflowElementCategory(ElementCategory.Combinator)]
     [Description("")]
-    public class SiteVisualizerBuilder : SingleArgumentExpressionBuilder
+    public class SoftwareEventVisualizerBuilder : SingleArgumentExpressionBuilder
     {
         private int xAxisWindowSize = 1000;
         public int XAxisWindowSize
@@ -28,14 +29,12 @@ namespace AllenNeuralDynamics.VrForaging
         {
             var source = arguments.First();
 
-            return Expression.Call(typeof(SiteVisualizerBuilder), "Process", null, source);
+            return Expression.Call(typeof(SoftwareEventVisualizerBuilder), "Process", null, source);
         }
 
-        static IObservable<Timestamped<VirtualSite>> Process(IObservable<Timestamped<VirtualSite>> source)
+        static IObservable<SoftwareEvent> Process(IObservable<SoftwareEvent> source)
         {
             return source;
         }
-
-
     }
 }
