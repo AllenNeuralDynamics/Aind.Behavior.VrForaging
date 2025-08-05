@@ -9,10 +9,13 @@ using System.Numerics;
 using System.Windows.Forms;
 using AindVrForagingDataSchema;
 using AllenNeuralDynamics.Core.Design;
+using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
+using Bonsai.Reactive;
+using ZedGraph;
 
 namespace AllenNeuralDynamics.VrForaging
 {
-    public class SiteVisualizer : BufferedVisualizer
+    public class SoftwareEventVisualizer : BufferedVisualizer
     {
         const float TextBoxWidth = 80;
 
@@ -34,22 +37,30 @@ namespace AllenNeuralDynamics.VrForaging
             { VirtualSiteLabels.Unspecified,  new Vector4(102 / 255f, 166 / 255f, 30 / 255f, 1f) },
         };
 
-        private VirtualSiteEventBuffer buffer = new VirtualSiteEventBuffer();
+        private static readonly List<SoftwareEventPlotter> eventPlotters = new List<SoftwareEventPlotter>()
+        {
+            new SoftwareEventPlotter(new SoftwareEventBuffer("GiveReward"), new Vector4(1, 0, 0, 1)),
+            new SoftwareEventPlotter(new SoftwareEventBuffer("Lick"), new Vector4(0, 1, 0, 1)),
+            new SoftwareEventPlotter(new SoftwareEventBuffer("Choice"), new Vector4(0, 0, 1, 1)),
+        };
+
+        private VirtualSiteEventBuffer virtualSiteBuffer = new VirtualSiteEventBuffer();
 
         /// <inheritdoc/>
         public override void Show(object value)
         {
-            var data = value as Bonsai.Harp.Timestamped<VirtualSite>?;
-            if (data.HasValue)
-            {
-                this.buffer.AddEvent(data.Value);
-            }
         }
 
         /// <inheritdoc/>
         protected override void ShowBuffer(IList<System.Reactive.Timestamped<object>> values)
         {
             imGuiCanvas.Invalidate();
+            var casted = values.Select(v => v.Value as SoftwareEvent).Where(v => v != null);
+            foreach (var plotter in eventPlotters)
+            {
+                plotter.Buffer.TryAddEvents(casted);
+            }
+            virtualSiteBuffer.AddEvents(casted);
             base.ShowBuffer(values);
         }
 
@@ -119,7 +130,7 @@ namespace AllenNeuralDynamics.VrForaging
         public override void Load(IServiceProvider provider)
         {
             var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
-            var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as SiteVisualizerBuilder;
+            var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as SoftwareEventVisualizerBuilder;
             if (visualizerBuilder != null)
             {
                 XAxisWindowSize = visualizerBuilder.XAxisWindowSize;
@@ -141,7 +152,7 @@ namespace AllenNeuralDynamics.VrForaging
                 {
                     var avail = ImGui.GetContentRegionAvail();
                     ImGui.BeginChild("..data", new Vector2(avail.X, avail.Y));
-                    EthogramPlot(this.buffer);
+                    EthogramPlot(this.virtualSiteBuffer);
                     ImGui.EndChild();
                 }
 
@@ -187,11 +198,13 @@ namespace AllenNeuralDynamics.VrForaging
         public VirtualSiteEvent Prev { get; set; }
         public VirtualSiteEvent Next { get; set; }
 
-        public VirtualSiteEvent(Bonsai.Harp.Timestamped<VirtualSite> site)
+        public VirtualSiteEvent(SoftwareEvent site)
         {
-            Start = site.Seconds;
-            Site = site.Value;
+            Start = site.Timestamp.HasValue ? site.Timestamp.Value : 0;
+            Site = Newtonsoft.Json.JsonConvert.DeserializeObject<VirtualSite>(
+                Newtonsoft.Json.JsonConvert.SerializeObject(site.Data));
             End = null;
+            
         }
 
         public void SetNext(VirtualSiteEvent next)
@@ -202,15 +215,14 @@ namespace AllenNeuralDynamics.VrForaging
         }
     }
 
-
-
-
     class VirtualSiteEventBuffer
     {
         private VirtualSiteEvent head;
         private VirtualSiteEvent tail;
 
-        public int Length { get { return GetEvents().Count(); } }
+        private const string EVENT_NAME = "VirtualSite";
+
+        public int Count() { return GetEvents().Count(); }
 
         public VirtualSiteEventBuffer() { }
         public void Clear()
@@ -228,9 +240,16 @@ namespace AllenNeuralDynamics.VrForaging
             }
         }
 
-        public void AddEvent(Bonsai.Harp.Timestamped<VirtualSite> site)
+        public void AddEvents(IEnumerable<SoftwareEvent> softwareEvents)
         {
-            var newEvent = new VirtualSiteEvent(site);
+            foreach (var eventItem in softwareEvents.Where(s => s != null && s.Name == EVENT_NAME))
+            {
+                AddEvent(eventItem);
+            }
+        }
+        public void AddEvent(SoftwareEvent softwareEvent)
+        {
+            var newEvent = new VirtualSiteEvent(softwareEvent);
 
             if (tail != null)
             {
