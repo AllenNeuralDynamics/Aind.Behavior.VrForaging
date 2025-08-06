@@ -16,17 +16,16 @@ namespace AllenNeuralDynamics.VrForaging
     {
         const float TextBoxWidth = 80;
 
-        private double xAxisWindowSize = 1000;
-        public double XAxisWindowSize
+        private double windowSize = 1000;
+        public double WindowSize
         {
-            get { return xAxisWindowSize; }
-            set { xAxisWindowSize = value; }
+            get { return windowSize; }
+            set { windowSize = value; }
         }
 
         private double latestTimestamp = 0;
 
         ImGuiControl imGuiCanvas;
-
 
         private static readonly List<ScatterSoftwareEventPlotter> eventPlotters = new List<ScatterSoftwareEventPlotter>()
         {
@@ -52,10 +51,10 @@ namespace AllenNeuralDynamics.VrForaging
             foreach (var plotter in eventPlotters)
             {
                 plotter.Buffer.TryAddEvents(casted);
-                plotter.Buffer.RemovePast(latestTimestamp - XAxisWindowSize);
+                plotter.Buffer.RemovePast(latestTimestamp - WindowSize);
             }
             ethogramPlotter.Buffer.TryAddEvents(casted);
-            ethogramPlotter.Buffer.RemovePast(latestTimestamp - XAxisWindowSize);
+            ethogramPlotter.Buffer.RemovePast(latestTimestamp - WindowSize);
             ethogramPlotter.SetLatestTimestamp(latestTimestamp);
             base.ShowBuffer(values);
         }
@@ -69,15 +68,17 @@ namespace AllenNeuralDynamics.VrForaging
         unsafe void MakeAxis()
         {
             ImPlot.PushStyleVar(ImPlotStyleVar.FitPadding, new Vector2(0, 0));
-            ImPlot.PushStyleVar(ImPlotStyleVar.Padding, new Vector2(0, 0));
+            ImPlot.PushStyleVar(ImPlotStyleVar.Padding, new Vector2(40, 2));
             ImPlot.PushStyleVar(ImPlotStyleVar.BorderSize, 0);
-            //ImPlot.SetupAxesLimits(latestTimestamp - XAxisWindowSize, latestTimestamp, 0, 1);
+            ImGui.PushFont(ImGui.GetFont(), 30f);
 
             var axesFlags = ImPlotAxisFlags.NoHighlight | ImPlotAxisFlags.NoInitialFit | ImPlotAxisFlags.AutoFit;
-            if (ImPlot.BeginPlot("VirtualSites", new Vector2(-1, -1)))
+            if (ImPlot.BeginPlot("EthogramVisualizer", new Vector2(-1, -1), ImPlotFlags.NoTitle))
             {
                 ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 0.5f);
-                ImPlot.SetupAxes("Seconds", "NA", axesFlags, axesFlags | ImPlotAxisFlags.NoDecorations);
+                ImPlot.SetupAxes("Seconds", "", axesFlags, axesFlags | ImPlotAxisFlags.NoDecorations);
+                ImPlot.SetupAxesLimits(latestTimestamp - windowSize, latestTimestamp, 0, 1, ImPlotCond.Always);
+                ImPlot.SetupAxisTicks(ImAxis.X1, latestTimestamp - windowSize, latestTimestamp, 2, new string[] {"-" + windowSize.ToString(), "0"});
 
                 ethogramPlotter.Plot();
                 foreach (var plotter in eventPlotters)
@@ -87,6 +88,7 @@ namespace AllenNeuralDynamics.VrForaging
                 ImPlot.PopStyleVar(1);
                 ImPlot.EndPlot();
             }
+            ImGui.PopFont();
             ImPlot.PopStyleVar(3);
         }
 
@@ -97,7 +99,7 @@ namespace AllenNeuralDynamics.VrForaging
             var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as SoftwareEventVisualizerBuilder;
             if (visualizerBuilder != null)
             {
-                XAxisWindowSize = visualizerBuilder.XAxisWindowSize;
+                WindowSize = visualizerBuilder.WindowSize;
             }
 
             imGuiCanvas = new ImGuiControl();
