@@ -6,8 +6,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Bonsai;
-using AindVrForagingDataSchema;
-using Bonsai.Harp;
 using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
 
 namespace AllenNeuralDynamics.VrForaging
