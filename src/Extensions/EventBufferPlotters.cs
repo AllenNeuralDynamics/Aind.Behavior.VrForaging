@@ -4,12 +4,7 @@ using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
 using System.Numerics;
 using System;
 using AindVrForagingDataSchema;
-using Hexa.NET.ImGui;
 using Hexa.NET.ImPlot;
-using System.Security.Policy;
-using Harp.StepperDriver;
-using OpenCV.Net;
-using Bonsai.Reactive;
 
 namespace AllenNeuralDynamics.VrForaging
 {
@@ -138,7 +133,7 @@ namespace AllenNeuralDynamics.VrForaging
                     fixed (double* _x = _xx)
                     fixed (double* _y = _yy)
                     {
-                        ImPlot.PlotLine(string.Format("Lick", Buffer.Name, x.ToString()), _x, _y, 2);
+                        ImPlot.PlotLine(Buffer.Name, _x, _y, 2);
                     }
                 }
                 ImPlot.PopStyleColor(2);
@@ -192,9 +187,7 @@ namespace AllenNeuralDynamics.VrForaging
                 fixed (double* y1 = yLow)
                 fixed (double* y2 = yHigh)
                 {
-
                     ImPlot.PlotShaded(string.Format("##{0}_{1}", e1.Label, i), x, y2, 2);
-
                 }
                 ImPlot.PopStyleColor(2);
                 ImPlot.PopStyleVar(2);
@@ -210,8 +203,6 @@ namespace AllenNeuralDynamics.VrForaging
         public double EndPosition { get { return StartPosition + Site.Length; } }
         public VirtualSiteLabels Label { get { return Site.Label; } }
         public VirtualSite Site { get; set; }
-        public VirtualSiteEvent Prev { get; set; }
-        public VirtualSiteEvent Next { get; set; }
 
         public SoftwareEvent SoftwareEvent { get; set; }
 
@@ -223,20 +214,10 @@ namespace AllenNeuralDynamics.VrForaging
                 Newtonsoft.Json.JsonConvert.SerializeObject(site.Data));
             End = null;
         }
-
-        public void SetNext(VirtualSiteEvent next)
-        {
-            End = next.Start;
-            Next = next;
-            next.Prev = this;
-        }
     }
 
     class VirtualSiteEventBuffer : ISoftwareEventBuffer
     {
-        private VirtualSiteEvent head;
-        private VirtualSiteEvent tail;
-
         private const string EVENT_NAME = "VirtualSite";
 
         public string Name { get { return EVENT_NAME; } }
@@ -245,20 +226,17 @@ namespace AllenNeuralDynamics.VrForaging
 
         public int Count() { return GetEvents().Count(); }
 
+        private readonly List<VirtualSiteEvent> events = new List<VirtualSiteEvent>();
+
         public VirtualSiteEventBuffer() { }
         public void Clear()
         {
-            head = tail = null;
+            events.Clear();
         }
 
         public IEnumerable<VirtualSiteEvent> GetEvents()
         {
-            var current = head;
-            while (current != null)
-            {
-                yield return current;
-                current = current.Next;
-            }
+            return events;
         }
 
         public void TryAddEvents(IEnumerable<SoftwareEvent> softwareEvents)
@@ -272,58 +250,22 @@ namespace AllenNeuralDynamics.VrForaging
         {
             if (softwareEvent == null) throw new ArgumentNullException("softwareEvent");
             var newEvent = new VirtualSiteEvent(softwareEvent);
-
-            if (tail != null)
+            events.Add(newEvent);
+            events.Sort((a, b) => a.Start.CompareTo(b.Start));
+            if (events.Count > 1)
             {
-                tail.SetNext(newEvent);
-                tail = newEvent;
+                events[events.Count - 2].End = newEvent.Start;
             }
-            else
-            {
-                head = tail = newEvent;
-            }
-        }
-
-
-        public enum RemoveFrom
-        {
-            Start,
-            End
-        }
-        public void RemovePast(double seconds, RemoveFrom removeFrom = RemoveFrom.End)
-        {
-            switch (removeFrom)
-            {
-                case RemoveFrom.Start:
-                    while (head != null && head.Start < seconds)
-                    {
-                        head = head.Next;
-                        if (head != null) head.Prev = null;
-                    }
-                                        break;
-
-                case RemoveFrom.End:
-                    while (tail != null && tail.End.HasValue && tail.End.Value < seconds)
-                    {
-                        tail = tail.Prev;
-                        if (tail != null) tail.Next = null;
-                    }
-                                        break;
-
-                default:
-                    throw new ArgumentOutOfRangeException("removeFrom", "Invalid removeFrom value. Use RemoveFrom.Start or RemoveFrom.End.");
-            }
-if (head == null) tail = null;
-        }
-
-        IEnumerable<SoftwareEvent> ISoftwareEventBuffer.GetEvents()
-        {
-            return GetEvents().Select(e => e.SoftwareEvent);
         }
 
         public void RemovePast(double seconds)
         {
-            RemovePast(seconds, RemoveFrom.End);
+            events.RemoveAll(e => e.End.HasValue && e.End.Value < seconds);
+        }
+
+        IEnumerable<SoftwareEvent> ISoftwareEventBuffer.GetEvents()
+        {
+            return events.Select(e => e.SoftwareEvent);
         }
     }
 }
