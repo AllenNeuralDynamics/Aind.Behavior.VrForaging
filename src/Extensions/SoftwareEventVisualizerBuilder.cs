@@ -15,11 +15,11 @@ namespace AllenNeuralDynamics.VrForaging
     [Description("")]
     public class SoftwareEventVisualizerBuilder : SingleArgumentExpressionBuilder
     {
-        private double xAxisWindowSize = 1000;
-        public double XAxisWindowSize
+        private double windowSize = 1000;
+        public double WindowSize
         {
-            get { return xAxisWindowSize; }
-            set { xAxisWindowSize = value; }
+            get { return windowSize; }
+            set { windowSize = value; }
         }
 
         /// <inheritdoc/>
