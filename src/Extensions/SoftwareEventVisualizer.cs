@@ -10,8 +10,6 @@ using System.Windows.Forms;
 using AindVrForagingDataSchema;
 using AllenNeuralDynamics.Core.Design;
 using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
-using Bonsai.Reactive;
-using ZedGraph;
 
 namespace AllenNeuralDynamics.VrForaging
 {
@@ -19,12 +17,14 @@ namespace AllenNeuralDynamics.VrForaging
     {
         const float TextBoxWidth = 80;
 
-        private float xAxisWindowSize = 1000;
-        public float XAxisWindowSize
+        private double xAxisWindowSize = 1000;
+        public double XAxisWindowSize
         {
             get { return xAxisWindowSize; }
             set { xAxisWindowSize = value; }
         }
+
+        private double latestTimestamp = 0;
 
         ImGuiControl imGuiCanvas;
 
@@ -42,9 +42,8 @@ namespace AllenNeuralDynamics.VrForaging
             new SoftwareEventPlotter(new SoftwareEventBuffer("GiveReward"), new Vector4(1, 0, 0, 1)),
             new SoftwareEventPlotter(new SoftwareEventBuffer("Lick"), new Vector4(0, 1, 0, 1)),
             new SoftwareEventPlotter(new SoftwareEventBuffer("Choice"), new Vector4(0, 0, 1, 1)),
+            new SoftwareEventPlotter(new VirtualSiteEventBuffer(), new Vector4(1, 1, 0, 1))
         };
-
-        private VirtualSiteEventBuffer virtualSiteBuffer = new VirtualSiteEventBuffer();
 
         /// <inheritdoc/>
         public override void Show(object value)
@@ -56,11 +55,12 @@ namespace AllenNeuralDynamics.VrForaging
         {
             imGuiCanvas.Invalidate();
             var casted = values.Select(v => v.Value as SoftwareEvent).Where(v => v != null);
+            latestTimestamp = casted.Any() ? casted.Max(v => v.Timestamp.HasValue ? v.Timestamp.Value : 0) : latestTimestamp;
             foreach (var plotter in eventPlotters)
             {
                 plotter.Buffer.TryAddEvents(casted);
+                plotter.Buffer.RemovePast(latestTimestamp - XAxisWindowSize);
             }
-            virtualSiteBuffer.AddEvents(casted);
             base.ShowBuffer(values);
         }
 
@@ -180,6 +180,10 @@ namespace AllenNeuralDynamics.VrForaging
         /// <inheritdoc/>
         public override void Unload()
         {
+            foreach (var plotter in eventPlotters)
+            {
+                plotter.Buffer.Clear();
+            }
             if (imGuiCanvas != null)
             {
                 imGuiCanvas.Dispose();
@@ -187,90 +191,4 @@ namespace AllenNeuralDynamics.VrForaging
         }
     }
 
-    class VirtualSiteEvent
-    {
-        public double Start { get; set; }
-        public double? End { get; set; }
-        public double StartPosition { get { return Site.StartPosition; } }
-        public double EndPosition { get { return StartPosition + Site.Length; } }
-        public VirtualSiteLabels Label { get { return Site.Label; } }
-        public VirtualSite Site { get; set; }
-        public VirtualSiteEvent Prev { get; set; }
-        public VirtualSiteEvent Next { get; set; }
-
-        public VirtualSiteEvent(SoftwareEvent site)
-        {
-            Start = site.Timestamp.HasValue ? site.Timestamp.Value : 0;
-            Site = Newtonsoft.Json.JsonConvert.DeserializeObject<VirtualSite>(
-                Newtonsoft.Json.JsonConvert.SerializeObject(site.Data));
-            End = null;
-            
-        }
-
-        public void SetNext(VirtualSiteEvent next)
-        {
-            End = next.Start;
-            Next = next;
-            next.Prev = this;
-        }
-    }
-
-    class VirtualSiteEventBuffer
-    {
-        private VirtualSiteEvent head;
-        private VirtualSiteEvent tail;
-
-        private const string EVENT_NAME = "VirtualSite";
-
-        public int Count() { return GetEvents().Count(); }
-
-        public VirtualSiteEventBuffer() { }
-        public void Clear()
-        {
-            head = tail = null;
-        }
-
-        public IEnumerable<VirtualSiteEvent> GetEvents()
-        {
-            var current = head;
-            while (current != null)
-            {
-                yield return current;
-                current = current.Next;
-            }
-        }
-
-        public void AddEvents(IEnumerable<SoftwareEvent> softwareEvents)
-        {
-            foreach (var eventItem in softwareEvents.Where(s => s != null && s.Name == EVENT_NAME))
-            {
-                AddEvent(eventItem);
-            }
-        }
-        public void AddEvent(SoftwareEvent softwareEvent)
-        {
-            var newEvent = new VirtualSiteEvent(softwareEvent);
-
-            if (tail != null)
-            {
-                tail.SetNext(newEvent);
-                tail = newEvent;
-            }
-            else
-            {
-                head = tail = newEvent;
-            }
-        }
-
-        public void RemovePast(double seconds)
-        {
-            while (head != null && ((head.End.HasValue && head.End.Value < seconds) || head.Start < seconds))
-            {
-                head = head.Next;
-                if (head != null) head.Prev = null;
-            }
-
-            if (head == null) tail = null;
-        }
-    }
 }

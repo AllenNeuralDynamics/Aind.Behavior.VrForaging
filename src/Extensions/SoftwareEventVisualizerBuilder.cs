@@ -17,8 +17,8 @@ namespace AllenNeuralDynamics.VrForaging
     [Description("")]
     public class SoftwareEventVisualizerBuilder : SingleArgumentExpressionBuilder
     {
-        private int xAxisWindowSize = 1000;
-        public int XAxisWindowSize
+        private double xAxisWindowSize = 1000;
+        public double XAxisWindowSize
         {
             get { return xAxisWindowSize; }
             set { xAxisWindowSize = value; }
@@ -37,4 +37,6 @@ namespace AllenNeuralDynamics.VrForaging
             return source;
         }
     }
+
 }
+
