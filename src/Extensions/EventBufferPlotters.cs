@@ -147,10 +147,11 @@ namespace AllenNeuralDynamics.VrForaging
             }
         }
     }
-    
+
     class EthogramPlotter : SoftwareEventPlotter<VirtualSiteEventBuffer>
     {
 
+        private double latestTimestamp = 0;
         public EthogramPlotter(VirtualSiteEventBuffer buffer) : base(buffer)
         {
         }
@@ -163,6 +164,10 @@ namespace AllenNeuralDynamics.VrForaging
                 { VirtualSiteLabels.Unspecified, new Vector4(0.0f, 0.0f, 0.0f, 1f) },
             };
 
+        public void SetLatestTimestamp(double timestamp)
+        {
+            latestTimestamp = timestamp;
+        }
 
         public unsafe override void Plot()
         {
@@ -172,13 +177,14 @@ namespace AllenNeuralDynamics.VrForaging
             for (int i = 0; i < events.Count(); i++)
             {
                 var e1 = events[i];
-                var timestamps = new double[] { e1.Start, e1.End.HasValue ? e1.End.Value : e1.Start };
+                var timestamps = new double[] { e1.Start, e1.End.HasValue ? e1.End.Value : latestTimestamp };
                 var color = siteColors[e1.Label];
 
-                ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 0.8f);
                 ImPlot.PushStyleColor(ImPlotCol.Line, color);
-                ImPlot.PushStyleVar(ImPlotStyleVar.LineWeight, 2f);
                 ImPlot.PushStyleColor(ImPlotCol.Fill, color);
+                ImPlot.PushStyleVar(ImPlotStyleVar.LineWeight, 2f);
+                ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 0.8f);
+
                 double[] yLow = new double[] { 0, 0 };
                 double[] yHigh = new double[] { 1, 1 };
 
@@ -188,7 +194,6 @@ namespace AllenNeuralDynamics.VrForaging
                 {
 
                     ImPlot.PlotShaded(string.Format("##{0}_{1}", e1.Label, i), x, y2, 2);
-                    double mid = (e1.Start + (e1.End.HasValue ? e1.End.Value : e1.Start)) / 2;
 
                 }
                 ImPlot.PopStyleColor(2);
@@ -295,7 +300,7 @@ namespace AllenNeuralDynamics.VrForaging
                         head = head.Next;
                         if (head != null) head.Prev = null;
                     }
-                    break;
+                                        break;
 
                 case RemoveFrom.End:
                     while (tail != null && tail.End.HasValue && tail.End.Value < seconds)
@@ -303,12 +308,12 @@ namespace AllenNeuralDynamics.VrForaging
                         tail = tail.Prev;
                         if (tail != null) tail.Next = null;
                     }
-                    break;
+                                        break;
 
                 default:
                     throw new ArgumentOutOfRangeException("removeFrom", "Invalid removeFrom value. Use RemoveFrom.Start or RemoveFrom.End.");
             }
-            if (head == null) tail = null;
+if (head == null) tail = null;
         }
 
         IEnumerable<SoftwareEvent> ISoftwareEventBuffer.GetEvents()
