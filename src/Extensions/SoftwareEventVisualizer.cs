@@ -28,22 +28,16 @@ namespace AllenNeuralDynamics.VrForaging
 
         ImGuiControl imGuiCanvas;
 
-        private static readonly Dictionary<VirtualSiteLabels, Vector4> siteColors = new Dictionary<VirtualSiteLabels, Vector4>
+
+        private static readonly List<ScatterSoftwareEventPlotter> eventPlotters = new List<ScatterSoftwareEventPlotter>()
         {
-            { VirtualSiteLabels.RewardSite,   new Vector4(27 / 255f, 158 / 255f, 119 / 255f, 1f) },
-            { VirtualSiteLabels.InterSite,    new Vector4(217 / 255f, 95 / 255f, 2 / 255f, 1f) },
-            { VirtualSiteLabels.InterPatch,   new Vector4(117 / 255f, 112 / 255f, 179 / 255f, 1f) },
-            { VirtualSiteLabels.PostPatch,    new Vector4(231 / 255f, 41 / 255f, 138 / 255f, 1f) },
-            { VirtualSiteLabels.Unspecified,  new Vector4(102 / 255f, 166 / 255f, 30 / 255f, 1f) },
+            new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("GiveReward"), new Vector4(0.12f, 0.56f, 1f, 1), yPoint: 0.45f),
+            new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("Choice"), new Vector4(0.95f, 0.1f, 0.2f, 1), yPoint: 0.5f),
+            new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("Lick"), new Vector4(0.05f, 0.05f, 0.05f, 1), marker: null, size: 0.05f, yPoint: 0.45f),
         };
 
-        private static readonly List<SoftwareEventPlotter> eventPlotters = new List<SoftwareEventPlotter>()
-        {
-            new SoftwareEventPlotter(new SoftwareEventBuffer("GiveReward"), new Vector4(1, 0, 0, 1)),
-            new SoftwareEventPlotter(new SoftwareEventBuffer("Lick"), new Vector4(0, 1, 0, 1)),
-            new SoftwareEventPlotter(new SoftwareEventBuffer("Choice"), new Vector4(0, 0, 1, 1)),
-            new SoftwareEventPlotter(new VirtualSiteEventBuffer(), new Vector4(1, 1, 0, 1))
-        };
+        private readonly EthogramPlotter ethogramPlotter = new EthogramPlotter(new VirtualSiteEventBuffer());
+
 
         /// <inheritdoc/>
         public override void Show(object value)
@@ -61,6 +55,8 @@ namespace AllenNeuralDynamics.VrForaging
                 plotter.Buffer.TryAddEvents(casted);
                 plotter.Buffer.RemovePast(latestTimestamp - XAxisWindowSize);
             }
+            ethogramPlotter.Buffer.TryAddEvents(casted);
+            ethogramPlotter.Buffer.RemovePast(latestTimestamp - XAxisWindowSize);
             base.ShowBuffer(values);
         }
 
@@ -70,22 +66,12 @@ namespace AllenNeuralDynamics.VrForaging
             ImPlot.StyleColorsLight(ImPlot.GetStyle());
         }
 
-        unsafe void EthogramPlot(VirtualSiteEventBuffer ethogram)
+        unsafe void MakeAxis()
         {
-            double[] yLow = new double[] { 0, 0 };
-            double[] yHigh = new double[] { 1, 1 };
-
-            var events = ethogram.GetEvents().ToList();
-            if (events.Count < 2) return;
-
-            double latestTimestamp = events.Last().Start;
-            double windowStart = latestTimestamp - XAxisWindowSize;
-            ethogram.RemovePast(windowStart);
-            var visibleEvents = ethogram.GetEvents().ToList();
-
             ImPlot.PushStyleVar(ImPlotStyleVar.FitPadding, new Vector2(0, 0));
             ImPlot.PushStyleVar(ImPlotStyleVar.Padding, new Vector2(0, 0));
             ImPlot.PushStyleVar(ImPlotStyleVar.BorderSize, 0);
+            //ImPlot.SetupAxesLimits(latestTimestamp - XAxisWindowSize, latestTimestamp, 0, 1);
 
             var axesFlags = ImPlotAxisFlags.NoHighlight | ImPlotAxisFlags.NoInitialFit | ImPlotAxisFlags.AutoFit;
             if (ImPlot.BeginPlot("VirtualSites", new Vector2(-1, -1)))
@@ -93,32 +79,10 @@ namespace AllenNeuralDynamics.VrForaging
                 ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 0.5f);
                 ImPlot.SetupAxes("Seconds", "NA", axesFlags, axesFlags | ImPlotAxisFlags.NoDecorations);
 
-                for (int i = 0; i < visibleEvents.Count(); i++)
+                ethogramPlotter.Plot();
+                foreach (var plotter in eventPlotters)
                 {
-                    var e1 = visibleEvents.ElementAt(i);
-                    var timestamps = new double[] { e1.Start, e1.End.HasValue ? e1.End.Value : e1.Start };
-                    var labelId = e1.Label;
-                    var labelText = string.Format("{0}", e1.Label);
-
-
-                    var color = siteColors[labelId];
-
-                    ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 0.25f);
-                    ImPlot.PushStyleColor(ImPlotCol.Line, color);
-                    ImPlot.PushStyleColor(ImPlotCol.Fill, color);
-
-                    fixed (double* x = timestamps)
-                    fixed (double* y1 = yLow)
-                    fixed (double* y2 = yHigh)
-                    {
-
-                        ImPlot.PlotShaded(string.Format("##{0}_{1}", e1.Label, i), x, y2, 2);
-                        double mid = (e1.Start + (e1.End.HasValue ? e1.End.Value : e1.Start)) / 2;
-                        ImPlot.PlotText(labelText, mid, 0.5f, 0);
-
-                    }
-                    ImPlot.PopStyleColor(2);
-                    ImPlot.PopStyleVar(1);
+                    plotter.Plot();
                 }
                 ImPlot.PopStyleVar(1);
                 ImPlot.EndPlot();
@@ -152,7 +116,7 @@ namespace AllenNeuralDynamics.VrForaging
                 {
                     var avail = ImGui.GetContentRegionAvail();
                     ImGui.BeginChild("..data", new Vector2(avail.X, avail.Y));
-                    EthogramPlot(this.virtualSiteBuffer);
+                    MakeAxis();
                     ImGui.EndChild();
                 }
 
@@ -184,6 +148,7 @@ namespace AllenNeuralDynamics.VrForaging
             {
                 plotter.Buffer.Clear();
             }
+            ethogramPlotter.Buffer.Clear();
             if (imGuiCanvas != null)
             {
                 imGuiCanvas.Dispose();
