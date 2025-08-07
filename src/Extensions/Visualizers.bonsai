@@ -1310,11 +1310,11 @@ Item2 as TotalReward)</scr:Expression>
               <gui:ColumnStyles>
                 <gui:ColumnStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Width>0.75</gui:Width>
+                  <gui:Width>0.25</gui:Width>
                 </gui:ColumnStyle>
                 <gui:ColumnStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Width>0</gui:Width>
+                  <gui:Width>0.75</gui:Width>
                 </gui:ColumnStyle>
               </gui:ColumnStyles>
               <gui:RowStyles />
