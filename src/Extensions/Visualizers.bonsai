@@ -9,8 +9,10 @@
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
                  xmlns:p1="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p2="clr-namespace:AllenNeuralDynamics.VrForaging;assembly=Extensions"
                  xmlns:p3="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
+                 xmlns:ui="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -94,11 +96,11 @@
                           <gui:Visible>true</gui:Visible>
                           <gui:Font>Microsoft Sans Serif, 26pt</gui:Font>
                           <gui:ColumnCount>2</gui:ColumnCount>
-                          <gui:RowCount>2</gui:RowCount>
+                          <gui:RowCount>4</gui:RowCount>
                           <gui:ColumnStyles />
                           <gui:RowStyles />
                           <gui:CellSpans>
-                            <gui:CellSpan ColumnSpan="1" RowSpan="2" />
+                            <gui:CellSpan ColumnSpan="2" RowSpan="3" />
                             <gui:CellSpan ColumnSpan="1" RowSpan="1" />
                             <gui:CellSpan ColumnSpan="1" RowSpan="1" />
                           </gui:CellSpans>
@@ -684,7 +686,9 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TabControlVisualizer" />
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
                 <Value>0</Value>
@@ -937,14 +941,94 @@
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
-                        <Expression xsi:type="Annotation">
-                          <Name>THIS IS NOT MEANT TO BE LOGGED</Name>
-                          <Text><![CDATA[]]></Text>
-                        </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p1:CreateSoftwareEvent">
                             <p1:EventName>##PatchVirtualSite</p1:EventName>
                           </Combinator>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>SoftwareEvent</Name>
+                        </Expression>
+                        <Expression xsi:type="rx:Condition">
+                          <Name>GiveReward</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Name</Selector>
+                              </Expression>
+                              <Expression xsi:type="ExternalizedMapping">
+                                <Property Name="Value" />
+                              </Expression>
+                              <Expression xsi:type="Equal">
+                                <Operand xsi:type="StringProperty">
+                                  <Value>GiveReward</Value>
+                                </Operand>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="3" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source2" />
+                              <Edge From="3" To="4" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>SoftwareEvent</Name>
+                        </Expression>
+                        <Expression xsi:type="rx:Condition">
+                          <Name>ChoiceFeedback</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Name</Selector>
+                              </Expression>
+                              <Expression xsi:type="ExternalizedMapping">
+                                <Property Name="Value" />
+                              </Expression>
+                              <Expression xsi:type="Equal">
+                                <Operand xsi:type="StringProperty">
+                                  <Value>ChoiceFeedback</Value>
+                                </Operand>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="3" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source2" />
+                              <Edge From="3" To="4" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>LickEvent</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:CreateSoftwareEvent">
+                            <p1:EventName>##Lick</p1:EventName>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:Timer">
+                            <gl:DueTime>PT0S</gl:DueTime>
+                            <gl:Period>PT0.1S</gl:Period>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:CreateSoftwareEvent">
+                            <p1:EventName>##UpdateTick</p1:EventName>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
@@ -953,13 +1037,10 @@
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:TimestampSoftwareEvent" />
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>SoftwareEvent</Name>
+                          <Combinator xsi:type="harp:CreateTimestamped" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
+                          <Combinator xsi:type="p1:TimestampSoftwareEvent" />
                         </Expression>
                         <Expression xsi:type="p2:SoftwareEventVisualizerBuilder">
                           <p2:WindowSize>60</p2:WindowSize>
@@ -970,15 +1051,22 @@
                         <Edge From="0" To="3" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="5" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source2" />
-                        <Edge From="5" To="7" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="13" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="13" Label="Source2" />
                         <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="10" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source2" />
-                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="8" To="13" Label="Source3" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="13" Label="Source4" />
                         <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source5" />
+                        <Edge From="13" To="15" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source2" />
+                        <Edge From="15" To="16" Label="Source1" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -1211,7 +1299,9 @@ Item2 as TotalReward)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+            </Expression>
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
@@ -1230,6 +1320,13 @@ Item2 as TotalReward)</scr:Expression>
               <gui:RowStyles />
               <gui:CellSpans />
             </Expression>
+            <Expression xsi:type="ui:VisualizerWindow">
+              <ui:Text>VrForaging</ui:Text>
+              <ui:Visible>true</ui:Visible>
+              <ui:Location xsi:nil="true" />
+              <ui:Size xsi:nil="true" />
+              <ui:WindowState>Maximized</ui:WindowState>
+            </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
@@ -1240,6 +1337,7 @@ Item2 as TotalReward)</scr:Expression>
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source2" />
             <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>

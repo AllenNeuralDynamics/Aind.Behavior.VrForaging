@@ -111,7 +111,7 @@ namespace AllenNeuralDynamics.VrForaging
                 fixed (double* x = xxs)
                 fixed (double* y = yys)
                 {
-                    ImPlot.PlotScatter(Buffer.Name, x, y, xxs.Length);
+                    ImPlot.PlotScatter(Buffer.Name.Replace("#", ""), x, y, xxs.Length);
                 }
                 ImPlot.PopStyleVar(1);
                 return;
@@ -127,7 +127,7 @@ namespace AllenNeuralDynamics.VrForaging
                     fixed (double* _x = _xx)
                     fixed (double* _y = _yy)
                     {
-                        ImPlot.PlotLine(Buffer.Name, _x, _y, 2);
+                        ImPlot.PlotLine(Buffer.Name.Replace("#", ""), _x, _y, 2);
                     }
                 }
                 ImPlot.PopStyleVar(1);
@@ -181,7 +181,7 @@ namespace AllenNeuralDynamics.VrForaging
                 fixed (double* y1 = yLow)
                 fixed (double* y2 = yHigh)
                 {
-                    ImPlot.PlotShaded(string.Format("##{0}_{1}", e1.Label, i), x, y2, 2);
+                    ImPlot.PlotShaded(string.Format("##{0}_{1}", e1.Label.ToString().Replace("#", ""), i), x, y2, 2);
                 }
             }
         }
