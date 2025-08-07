@@ -91,16 +91,17 @@ namespace AllenNeuralDynamics.VrForaging
                     ImPlot.SetupAxisTicks(ImAxis.X1, x, xxs.Count, xxs.Select(v => v.ToString()).ToArray());
                 }
 
-                foreach (var patchIdx in xxs)
+                for (int i = 0; i < xxs.Count; i++)
                 {
+                    var patchIdx = xxs[i];
                     var color = ColorExtensions.PatchColors[patchIdx % ColorExtensions.PatchColors.Count];
                     ImPlot.SetNextLineStyle(color, 4.0f);
                     ImPlot.SetNextFillStyle(color, 0.95f);
 
-                    fixed (double* y = new double[1] { yys[patchIdx] })
+                    fixed (double* y = new double[1] { yys[i] })
                     fixed (double* x = new double[1] { patchIdx })
                     {
-                        ImPlot.PlotBars(string.Format("Patch_{0}_{1}", patchIdx, fieldName), x, y, 1, 0.9f);
+                        ImPlot.PlotBars(string.Format("Patch{0}", patchIdx), x, y, 1, 0.9f);
                     }
                 }
                 ImPlot.EndPlot();
