@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.5"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:p1="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:String">
-          <p1:Value>%YAML 1.1
+        <Combinator xsi:type="StringProperty">
+          <Value>%YAML 1.1
 ---
 # yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/device.json
 device: Behavior
@@ -523,7 +522,7 @@ groupMasks:
     description: Specifies the type of reading made from the quadrature encoder.
     values:
       Position: 0
-      Displacement: 1</p1:Value>
+      Displacement: 1</Value>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">

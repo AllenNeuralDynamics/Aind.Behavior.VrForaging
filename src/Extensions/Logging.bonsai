@@ -16,9 +16,7 @@
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p10="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
                  xmlns:p11="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
-                 xmlns:p12="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
-                 xmlns:p13="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
-                 xmlns:p14="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
+                 xmlns:p12="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -1219,57 +1217,6 @@ Value as IsStopped)</scr:Expression>
                             </Edges>
                           </Workflow>
                         </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>GlobalPatchState</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>HarpTimestampSource</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:WithLatestFrom" />
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="harp:CreateTimestamped" />
-                        </Expression>
-                        <Expression xsi:type="scr:ExpressionTransform">
-                          <scr:Expression>new(
-Seconds as Seconds,
-Value.PatchId as PatchId,
-Value.Amount as Amount,
-Value.Probability as Probability,
-Value.Available as Available)</scr:Expression>
-                        </Expression>
-                        <Expression xsi:type="rx:Defer">
-                          <Name>LogCsv</Name>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>Modality</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Modality" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogCsv.bonsai">
-                                <SubjectName>LoggingRootPath</SubjectName>
-                                <Modality xsi:nil="true" />
-                                <LogName>PatchState</LogName>
-                                <DeviceName>OperationControl</DeviceName>
-                              </Expression>
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="3" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source2" />
-                              <Edge From="3" To="4" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
@@ -1282,11 +1229,6 @@ Value.Available as Available)</scr:Expression>
                         <Edge From="8" To="9" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
                         <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="13" To="15" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source2" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -1315,7 +1257,9 @@ Value.Available as Available)</scr:Expression>
                                 <Name>SubjectSchema</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p11:SerializeToJson" />
+                                <Combinator xsi:type="p11:SerializeToJson">
+                                  <p11:Formatting>None</p11:Formatting>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Modality</Name>
@@ -1343,7 +1287,9 @@ Value.Available as Available)</scr:Expression>
                                 <Name>TaskLogicSchema</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p12:SerializeToJson" />
+                                <Combinator xsi:type="p11:SerializeToJson">
+                                  <p11:Formatting>None</p11:Formatting>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Modality</Name>
@@ -1371,7 +1317,9 @@ Value.Available as Available)</scr:Expression>
                                 <Name>RigSchema</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p13:SerializeToJson" />
+                                <Combinator xsi:type="p11:SerializeToJson">
+                                  <p11:Formatting>None</p11:Formatting>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Modality</Name>
@@ -1541,7 +1489,9 @@ Value.Available as Available)</scr:Expression>
                                 <Combinator xsi:type="p1:TimestampSoftwareEvent" />
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p14:SerializeToJson" />
+                                <Combinator xsi:type="p12:SerializeToJson">
+                                  <p12:Formatting>None</p12:Formatting>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Modality</Name>
