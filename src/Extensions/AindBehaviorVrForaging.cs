@@ -65,16 +65,16 @@ namespace AindVrForagingDataSchema
         public override double Invoke(double value, double tickValue, Random random = null)
         {
             Dictionary<double, double> Table = ToLookupTable();
-            if (value > Table.Keys.Max())
+            if (tickValue > Table.Keys.Max())
             {
                 return Table[Table.Keys.Max()];
             }
-            if (value < Table.Keys.Min())
+            if (tickValue < Table.Keys.Min())
             {
                 return Table[Table.Keys.Min()];
             }
             IInterpolation interpolation = MathNet.Numerics.Interpolate.Linear(Table.Keys, Table.Values);
-            return interpolation.Interpolate(value);
+            return interpolation.Interpolate(tickValue);
         }
     }
 
