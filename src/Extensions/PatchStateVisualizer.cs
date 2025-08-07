@@ -8,22 +8,12 @@ using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using AllenNeuralDynamics.Core.Design;
-using Bonsai.IO;
 
 namespace AllenNeuralDynamics.VrForaging
 {
 
     public class PatchStateVisualizer : BufferedVisualizer
     {
-        private double windowSize = 30;
-        public double WindowSize
-        {
-            get { return windowSize; }
-            set { windowSize = value; }
-        }
-
-        private double latestTimestamp = 0;
-
         ImGuiControl imGuiCanvas;
 
         private readonly Dictionary<int, PatchState> patchStateManager = new Dictionary<int, PatchState>();
@@ -37,11 +27,10 @@ namespace AllenNeuralDynamics.VrForaging
         protected override void ShowBuffer(IList<System.Reactive.Timestamped<object>> values)
         {
             imGuiCanvas.Invalidate();
-            var casted = values.Select(v => (Bonsai.Harp.Timestamped<PatchState>)v.Value).Where(v => v.Seconds > latestTimestamp - WindowSize);
-            latestTimestamp = casted.Any() ? casted.Max(v => v.Seconds) : latestTimestamp;
+            var casted = values.Select(v => (PatchState)v.Value);
             foreach (var patchState in casted)
             {
-                patchStateManager[patchState.Value.PatchId] = patchState.Value;
+                patchStateManager[patchState.PatchId] = patchState;
             }
             base.ShowBuffer(values);
         }
@@ -115,11 +104,6 @@ namespace AllenNeuralDynamics.VrForaging
         {
             var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
             var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as SoftwareEventVisualizerBuilder;
-            if (visualizerBuilder != null)
-            {
-                WindowSize = visualizerBuilder.WindowSize;
-            }
-
             imGuiCanvas = new ImGuiControl();
             imGuiCanvas.Dock = DockStyle.Fill;
             imGuiCanvas.Render += (sender, e) =>
@@ -171,78 +155,6 @@ namespace AllenNeuralDynamics.VrForaging
             {
                 imGuiCanvas.Dispose();
             }
-        }
-    }
-
-
-    public class PatchStateManager
-    {
-        public PatchStateManager()
-        {
-        }
-
-        public int UniquePatchCount { get { return patchStates.Select(p => p.Value.PatchId).Distinct().Count(); } }
-        private static readonly List<Bonsai.Harp.Timestamped<PatchState>> patchStates = new List<Bonsai.Harp.Timestamped<PatchState>>();
-
-        public void AddPatchState(Bonsai.Harp.Timestamped<PatchState> patchState)
-        {
-            patchStates.Add(patchState);
-        }
-
-        public void RemovePast(double seconds)
-        {
-            patchStates.RemoveAll(p => p.Seconds < seconds);
-        }
-
-        public double[][] TryGetPatchAmount(int patchIndex)
-        {
-            var patchData = patchStates.Where(p => p.Value.PatchId == patchIndex).ToArray();
-            if (patchData.Length == 0) return new double[2][] { new double[0], new double[0] };
-
-            var seconds = new double[patchData.Length];
-            var amounts = new double[patchData.Length];
-
-            for (int i = 0; i < patchData.Length; i++)
-            {
-                seconds[i] = patchData[i].Seconds;
-                amounts[i] = patchData[i].Value.Amount;
-            }
-
-            return new double[2][] { seconds, amounts };
-        }
-
-        public double[][] TryGetPatchProbability(int patchIndex)
-        {
-            var patchData = patchStates.Where(p => p.Value.PatchId == patchIndex).ToArray();
-            if (patchData.Length == 0) return new double[2][] { new double[0], new double[0] };
-
-            var seconds = new double[patchData.Length];
-            var probabilities = new double[patchData.Length];
-
-            for (int i = 0; i < patchData.Length; i++)
-            {
-                seconds[i] = patchData[i].Seconds;
-                probabilities[i] = patchData[i].Value.Probability;
-            }
-
-            return new double[2][] { seconds, probabilities };
-        }
-
-        public double[][] TryGetPatchAvailable(int patchIndex)
-        {
-            var patchData = patchStates.Where(p => p.Value.PatchId == patchIndex).ToArray();
-            if (patchData.Length == 0) return new double[2][] { new double[0], new double[0] };
-
-            var seconds = new double[patchData.Length];
-            var available = new double[patchData.Length];
-
-            for (int i = 0; i < patchData.Length; i++)
-            {
-                seconds[i] = patchData[i].Seconds;
-                available[i] = patchData[i].Value.Available;
-            }
-
-            return new double[2][] { seconds, available };
         }
     }
 }

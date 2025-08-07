@@ -213,7 +213,7 @@ namespace AllenNeuralDynamics.VrForaging
 
     class VirtualSiteEventBuffer : ISoftwareEventBuffer
     {
-        private const string EVENT_NAME = "PatchVirtualSite";
+        private const string EVENT_NAME = "##PatchVirtualSite";
 
         public string Name { get { return EVENT_NAME; } }
 
