@@ -14,8 +14,6 @@ namespace AllenNeuralDynamics.VrForaging
 {
     public class SoftwareEventVisualizer : BufferedVisualizer
     {
-        const float TextBoxWidth = 80;
-
         private double windowSize = 1000;
         public double WindowSize
         {
