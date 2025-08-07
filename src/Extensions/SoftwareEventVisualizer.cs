@@ -28,7 +28,7 @@ namespace AllenNeuralDynamics.VrForaging
         private static readonly List<ScatterSoftwareEventPlotter> eventPlotters = new List<ScatterSoftwareEventPlotter>()
         {
             new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("GiveReward"), new Vector4(0.12f, 0.56f, 1f, 1), yPoint: 0.45f),
-            new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("Choice"), new Vector4(0.95f, 0.1f, 0.2f, 1), yPoint: 0.55f),
+            new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("ChoiceFeedback"), new Vector4(0.95f, 0.1f, 0.2f, 1), yPoint: 0.55f),
             new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("Lick"), new Vector4(0.05f, 0.05f, 0.05f, 1), marker: null, size: 0.05f, yPoint: 0.5f),
         };
 
