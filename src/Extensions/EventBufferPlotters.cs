@@ -102,30 +102,24 @@ namespace AllenNeuralDynamics.VrForaging
         {
             var buffer = Buffer.GetEvents().ToList();
             var xxs = Buffer.Seconds;
+            if (xxs.Length == 0) return;
             if (marker.HasValue)
             {
                 var yys = Enumerable.Repeat(yPoint, xxs.Length).ToArray();
-                ImPlot.PushStyleColor(ImPlotCol.Line, this.color);
-                ImPlot.PushStyleColor(ImPlotCol.Fill, this.color);
                 ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 1f);
-                ImPlot.PushStyleVar(ImPlotStyleVar.Marker, (int)this.marker); // Only the int overload is supported for markers
-                ImPlot.PushStyleVar(ImPlotStyleVar.MarkerSize, this.size);
-                ImPlot.PushStyleVar(ImPlotStyleVar.MarkerWeight, 1f);
+                ImPlot.SetNextMarkerStyle(marker.HasValue? marker.Value : ImPlotMarker.Circle, size, color, 1.0f, color);
                 fixed (double* x = xxs)
                 fixed (double* y = yys)
                 {
                     ImPlot.PlotScatter(Buffer.Name, x, y, xxs.Length);
                 }
-                ImPlot.PopStyleColor(2);
-                ImPlot.PopStyleVar(3);
+                ImPlot.PopStyleVar(1);
                 return;
             }
             else
             {
-                ImPlot.PushStyleColor(ImPlotCol.Line, this.color);
-                ImPlot.PushStyleColor(ImPlotCol.Fill, this.color);
-                ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 1f);
                 ImPlot.PushStyleVar(ImPlotStyleVar.LineWeight, 5f);
+                ImPlot.SetNextLineStyle(color, 5.0f);
                 foreach (var x in xxs)
                 {
                     double[] _xx = new double[] { x, x };
@@ -136,8 +130,7 @@ namespace AllenNeuralDynamics.VrForaging
                         ImPlot.PlotLine(Buffer.Name, _x, _y, 2);
                     }
                 }
-                ImPlot.PopStyleColor(2);
-                ImPlot.PopStyleVar(2);
+                ImPlot.PopStyleVar(1);
                 return;
             }
         }
@@ -152,12 +145,35 @@ namespace AllenNeuralDynamics.VrForaging
         }
         private static readonly Dictionary<VirtualSiteLabels, Vector4> siteColors = new Dictionary<VirtualSiteLabels, Vector4>
             {
-                { VirtualSiteLabels.RewardSite, new Vector4(27 / 255f, 158 / 255f, 119 / 255f, 1f) },
-                { VirtualSiteLabels.InterSite, new Vector4(0.3f, 0.3f, 0.3f, 1f) },
-                { VirtualSiteLabels.InterPatch, new Vector4(0.8f, 0.8f, 0.8f, 1f) },
-                { VirtualSiteLabels.PostPatch, new Vector4(0.8f, 0.8f, 0.8f, 1f) },
-                { VirtualSiteLabels.Unspecified, new Vector4(0.0f, 0.0f, 0.0f, 1f) },
+                { VirtualSiteLabels.RewardSite, Vector4.Zero},
+                { VirtualSiteLabels.InterSite, new Vector4(0.3f, 0.3f, 0.3f, 1f) }, // #4d4d4d
+                { VirtualSiteLabels.InterPatch, new Vector4(0.8f, 0.8f, 0.8f, 1f) }, // #ccccccff
+                { VirtualSiteLabels.PostPatch, new Vector4(0.8f, 0.8f, 0.8f, 1f) }, // #cccccc
+                { VirtualSiteLabels.Unspecified, new Vector4(0.0f, 0.0f, 0.0f, 1f) }, // #000000
             };
+
+        private static readonly List<Vector4> patchColors = new List<Vector4>
+        {
+            new Vector4(0.105f, 0.620f, 0.467f, 1f), // #1b9e77
+            new Vector4(0.851f, 0.373f, 0.008f, 1f), // #d95f02
+            new Vector4(0.459f, 0.439f, 0.702f, 1f), // #7570b3
+            new Vector4(0.906f, 0.161f, 0.541f, 1f), // #e7298a
+            new Vector4(0.400f, 0.647f, 0.118f, 1f), // #66a61e
+            new Vector4(0.902f, 0.671f, 0.008f, 1f), // #e6ab02
+            new Vector4(0.651f, 0.463f, 0.114f, 1f), // #a6761d
+        };
+
+
+        private Vector4 getColor(VirtualSiteEvent virtualSite)
+        {
+            switch (virtualSite.Label)
+            {
+                case VirtualSiteLabels.RewardSite:
+                    return patchColors[virtualSite.PatchIndex % patchColors.Count];
+                default:
+                    return siteColors[virtualSite.Label];
+            }
+        }
 
         public void SetLatestTimestamp(double timestamp)
         {
@@ -173,13 +189,9 @@ namespace AllenNeuralDynamics.VrForaging
             {
                 var e1 = events[i];
                 var timestamps = new double[] { e1.Start, e1.End.HasValue ? e1.End.Value : latestTimestamp };
-                var color = siteColors[e1.Label];
+                var color = getColor(e1);
 
-                ImPlot.PushStyleColor(ImPlotCol.Line, color);
-                ImPlot.PushStyleColor(ImPlotCol.Fill, color);
-                ImPlot.PushStyleVar(ImPlotStyleVar.LineWeight, 2f);
-                ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 0.8f);
-
+                ImPlot.SetNextFillStyle(color, 0.8f);
                 double[] yLow = new double[] { 0, 0 };
                 double[] yHigh = new double[] { 1, 1 };
 
@@ -189,8 +201,6 @@ namespace AllenNeuralDynamics.VrForaging
                 {
                     ImPlot.PlotShaded(string.Format("##{0}_{1}", e1.Label, i), x, y2, 2);
                 }
-                ImPlot.PopStyleColor(2);
-                ImPlot.PopStyleVar(2);
             }
         }
     }
@@ -203,22 +213,25 @@ namespace AllenNeuralDynamics.VrForaging
         public double EndPosition { get { return StartPosition + Site.Length; } }
         public VirtualSiteLabels Label { get { return Site.Label; } }
         public VirtualSite Site { get; set; }
+        public int PatchIndex { get; private set; }
 
         public SoftwareEvent SoftwareEvent { get; set; }
 
-        public VirtualSiteEvent(SoftwareEvent site)
+        public VirtualSiteEvent(SoftwareEvent site, int patchIndex = -1)
         {
             SoftwareEvent = site;
             Start = site.Timestamp.HasValue ? site.Timestamp.Value : 0;
-            Site = Newtonsoft.Json.JsonConvert.DeserializeObject<VirtualSite>(
+            var patch_virtualSite = Newtonsoft.Json.JsonConvert.DeserializeObject<Tuple<VirtualSite, int>>(
                 Newtonsoft.Json.JsonConvert.SerializeObject(site.Data));
+            PatchIndex = patch_virtualSite.Item2;
+            Site = patch_virtualSite.Item1;
             End = null;
         }
     }
 
     class VirtualSiteEventBuffer : ISoftwareEventBuffer
     {
-        private const string EVENT_NAME = "VirtualSite";
+        private const string EVENT_NAME = "PatchVirtualSite";
 
         public string Name { get { return EVENT_NAME; } }
 
