@@ -8352,13 +8352,13 @@ namespace AindVrForagingDataSchema
     
         private PatchUpdateFunction _available;
     
-        private string _rule;
+        private OutsideRewardFunctionRule _rule;
     
         private double _delay;
     
         public OutsideRewardFunction()
         {
-            _rule = "OnTime";
+            _rule = AindVrForagingDataSchema.OutsideRewardFunctionRule.OnTime;
             _delay = 0D;
         }
     
@@ -8429,9 +8429,10 @@ namespace AindVrForagingDataSchema
         /// <summary>
         /// Rule to trigger reward function
         /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rule")]
         [System.ComponentModel.DescriptionAttribute("Rule to trigger reward function")]
-        public string Rule
+        public OutsideRewardFunctionRule Rule
         {
             get
             {
@@ -14691,6 +14692,25 @@ namespace AindVrForagingDataSchema
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum OutsideRewardFunctionRule
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnTime")]
+        OnTime = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnDistance")]
+        OnDistance = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnTimeAccumulated")]
+        OnTimeAccumulated = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnDistanceAccumulated")]
+        OnDistanceAccumulated = 3,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum PatchRewardFunctionRule
     {
     
@@ -14711,6 +14731,12 @@ namespace AindVrForagingDataSchema
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnRewardAccumulated")]
         OnRewardAccumulated = 5,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnTimeAccumulated")]
+        OnTimeAccumulated = 6,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnDistanceAccumulated")]
+        OnDistanceAccumulated = 7,
     }
 
 
