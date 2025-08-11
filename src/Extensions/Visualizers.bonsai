@@ -760,7 +760,7 @@
                           <Name>QCDiagnosis</Name>
                         </Expression>
                         <Expression xsi:type="Format">
-                          <Format>HB:{0} || WaterConsumed{1}</Format>
+                          <Format>Harp: {0} || WaterConsumed: {1}</Format>
                           <Selector>Heartbeat,TotalReward</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
@@ -793,9 +793,8 @@
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:SubscribeWhen" />
                         </Expression>
-                        <Expression xsi:type="Format">
-                          <Format>{0:T}</Format>
-                          <Selector>it</Selector>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>it.ToString("hh\:mm\:ss")</scr:Expression>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -815,6 +814,7 @@
                           <gui:Name>OnlineLabels</gui:Name>
                           <gui:Enabled>true</gui:Enabled>
                           <gui:Visible>true</gui:Visible>
+                          <gui:Font>Consolas, 22.125pt</gui:Font>
                           <gui:ColumnCount>2</gui:ColumnCount>
                           <gui:RowCount>1</gui:RowCount>
                           <gui:ColumnStyles />
