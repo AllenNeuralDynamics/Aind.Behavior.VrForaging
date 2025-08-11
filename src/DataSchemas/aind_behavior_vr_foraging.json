@@ -3054,9 +3054,14 @@
           ]
         },
         "rule": {
-          "const": "OnTime",
           "default": "OnTime",
           "description": "Rule to trigger reward function",
+          "enum": [
+            "OnTime",
+            "OnDistance",
+            "OnTimeAccumulated",
+            "OnDistanceAccumulated"
+          ],
           "title": "Rule",
           "type": "string"
         },
@@ -3256,7 +3261,9 @@
             "OnTime",
             "OnDistance",
             "OnChoiceAccumulated",
-            "OnRewardAccumulated"
+            "OnRewardAccumulated",
+            "OnTimeAccumulated",
+            "OnDistanceAccumulated"
           ],
           "title": "Rule",
           "type": "string"
