@@ -316,6 +316,8 @@ class RewardFunctionRule(str, Enum):
     ON_THIS_PATCH_ENTRY = "OnThisPatchEntry"
     ON_CHOICE_ACCUMULATED = "OnChoiceAccumulated"
     ON_REWARD_ACCUMULATED = "OnRewardAccumulated"
+    ON_TIME_ACCUMULATED = "OnTimeAccumulated"
+    ON_DISTANCE_ACCUMULATED = "OnDistanceAccumulated"
 
 
 class _RewardFunction(BaseModel):
@@ -352,6 +354,8 @@ class PatchRewardFunction(_RewardFunction):
         RewardFunctionRule.ON_DISTANCE,
         RewardFunctionRule.ON_CHOICE_ACCUMULATED,
         RewardFunctionRule.ON_REWARD_ACCUMULATED,
+        RewardFunctionRule.ON_TIME_ACCUMULATED,
+        RewardFunctionRule.ON_DISTANCE_ACCUMULATED,
     ] = Field(
         default=RewardFunctionRule.ON_REWARD, description="Rule to trigger reward function", validate_default=True
     )
@@ -363,7 +367,11 @@ class OutsideRewardFunction(_RewardFunction):
     """
 
     function_type: Literal["OutsideRewardFunction"] = "OutsideRewardFunction"
-    rule: Literal[RewardFunctionRule.ON_TIME] = Field(
+    rule: Literal[
+        RewardFunctionRule.ON_TIME,
+        RewardFunctionRule.ON_DISTANCE,
+        RewardFunctionRule.ON_TIME_ACCUMULATED,
+        RewardFunctionRule.ON_DISTANCE_ACCUMULATED] = Field(
         default=RewardFunctionRule.ON_TIME, description="Rule to trigger reward function"
     )
     delay: float = Field(
