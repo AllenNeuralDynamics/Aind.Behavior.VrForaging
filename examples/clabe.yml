@@ -1,16 +1,15 @@
 # In order to get picked up, move this file to the root of the project or ./local
 
-clabe:
-  data_dir: C:/Data
+data_dir: C:/Data
+allow_dirty: true
+
+curriculum:
+  module_path: C:\git\AllenNeuralDynamics\clabe\tests\assets\Aind.Behavior.curriculumTemplate\src\aind_behavior_curriculum_template
 
 watchdog:
   project_name: "Cognitive flexibility in patch foraging"
-  destination: "\\\\allen\\aind\\scratch\\vr-foraging\\data"
+  destination: '\\allen\\aind\\scratch\\vr-foraging\\data'
   delete_modalities_source_after_success: true
-  upload_job_configs:
-    - modality: behavior_videos
-      source: "This will get replaced later"
-      compress_raw_data: true
 
 default_behavior_picker:
-  config_library_dir: "C:/git/AllenNeuralDynamics/Aind.Behavior.VrForaging/src/config_library"
+  config_library_dir: '\\allen\aind\scratch\AindBehavior.db\AindVrForaging'
