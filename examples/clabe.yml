@@ -3,9 +3,6 @@
 data_dir: C:/Data
 allow_dirty: true
 
-curriculum:
-  module_path: C:\git\AllenNeuralDynamics\clabe\tests\assets\Aind.Behavior.curriculumTemplate\src\aind_behavior_curriculum_template
-
 watchdog:
   project_name: "Cognitive flexibility in patch foraging"
   destination: '\\allen\\aind\\scratch\\vr-foraging\\data'
