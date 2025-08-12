@@ -371,9 +371,8 @@ class OutsideRewardFunction(_RewardFunction):
         RewardFunctionRule.ON_TIME,
         RewardFunctionRule.ON_DISTANCE,
         RewardFunctionRule.ON_TIME_ACCUMULATED,
-        RewardFunctionRule.ON_DISTANCE_ACCUMULATED] = Field(
-        default=RewardFunctionRule.ON_TIME, description="Rule to trigger reward function"
-    )
+        RewardFunctionRule.ON_DISTANCE_ACCUMULATED,
+    ] = Field(default=RewardFunctionRule.ON_TIME, description="Rule to trigger reward function")
     delay: float = Field(
         default=0, ge=0, description="Delay (s) before the replenishment starts after the rule is triggered."
     )
