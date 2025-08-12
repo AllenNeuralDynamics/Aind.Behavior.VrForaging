@@ -22,8 +22,7 @@ from aind_behavior_services.utils import get_fields_of_type, model_from_json_fil
 from clabe.apps import BonsaiApp
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
-from clabe.launcher import DefaultBehaviorPicker, Launcher
-from clabe.launcher import Promise
+from clabe.launcher import DefaultBehaviorPicker, Launcher, Promise
 from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -125,8 +124,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         return self.mapped
 
     @classmethod
-    def build_runner(cls, app: BonsaiApp) -> Callable[[Launcher], 'AindSessionDataMapper']:
-        def _new(launcher: Launcher) -> 'AindSessionDataMapper':
+    def build_runner(cls, app: BonsaiApp) -> Callable[[Launcher], "AindSessionDataMapper"]:
+        def _new(launcher: Launcher) -> "AindSessionDataMapper":
             script_path = app.settings.workflow
             return cls(
                 session_model=launcher.get_session(strict=True),
