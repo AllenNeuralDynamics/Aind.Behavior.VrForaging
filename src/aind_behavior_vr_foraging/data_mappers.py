@@ -23,7 +23,7 @@ from clabe.apps import BonsaiApp
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
 from clabe.launcher import DefaultBehaviorPicker, Launcher
-from clabe.launcher._callable_manager import _Promise
+from clabe.launcher import Promise
 from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -125,9 +125,9 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         return self.mapped
 
     @classmethod
-    def build_runner(cls, app: BonsaiApp) -> Callable[[Launcher], Self]:
-        def _new(launcher: Launcher) -> Self:
-            script_path = app.workflow
+    def build_runner(cls, app: BonsaiApp) -> Callable[[Launcher], 'AindSessionDataMapper']:
+        def _new(launcher: Launcher) -> 'AindSessionDataMapper':
+            script_path = app.settings.workflow
             return cls(
                 session_model=launcher.get_session(strict=True),
                 rig_model=launcher.get_rig(strict=True),
@@ -401,7 +401,7 @@ def coerce_to_aind_data_schema(value: Union[pydantic.BaseModel, dict], target_ty
 
 
 def write_ads_mappers(
-    session_mapper: _Promise[Launcher, AindSessionDataMapper], rig_mapper: _Promise[Launcher, AindRigDataMapper]
+    session_mapper: Promise[[Launcher], AindSessionDataMapper], rig_mapper: Promise[[Launcher], AindRigDataMapper]
 ) -> Callable[[Launcher], None]:
     def _run(launcher: Launcher) -> None:
         session_directory = launcher.session_directory
