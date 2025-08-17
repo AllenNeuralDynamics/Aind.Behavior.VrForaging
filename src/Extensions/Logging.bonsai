@@ -12,8 +12,8 @@
                  xmlns:p7="clr-namespace:Harp.AnalogInput;assembly=Harp.AnalogInput"
                  xmlns:p8="clr-namespace:AllenNeuralDynamics.EnvironmentSensor;assembly=AllenNeuralDynamics.EnvironmentSensor"
                  xmlns:p9="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
-                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:p10="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
                  xmlns:p11="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:p12="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
@@ -801,12 +801,22 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>RendererSynchState</Name>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>HarpTimestampSource</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:CreateTimestamped" />
+                        </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Name>Label</scr:Name>
                           <scr:Expression>new(
-it.FrameIndex.Value as FrameIndex,
-it.FrameTimestamp.Value as FrameTimestamp,
-it.SyncQuadValue.Value as SyncQuadValue)</scr:Expression>
+it.Seconds as Seconds,
+it.Value.FrameIndex.Value as FrameIndex,
+it.Value.FrameTimestamp.Value as FrameTimestamp,
+it.Value.SyncQuadValue.Value as SyncQuadValue)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>Modality</Name>
@@ -824,10 +834,13 @@ it.SyncQuadValue.Value as SyncQuadValue)</scr:Expression>
                         </Expression>
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="4" Label="Source1" />
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="7" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>
