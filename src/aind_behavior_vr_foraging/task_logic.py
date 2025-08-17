@@ -606,18 +606,30 @@ class PatchTerminatorOnDistance(_PatchTerminator):
     """Terminates the patch after a "count" distance."""
 
     terminator_type: Literal["OnDistance"] = "OnDistance"
-    count: distributions.Distribution = Field(description="Number of distance units to wait before terminating the patch")
+    count: distributions.Distribution = Field(
+        description="Number of distance units to wait before terminating the patch"
+    )
 
 
 if TYPE_CHECKING:
     PatchTerminator = Union[
-        PatchTerminatorOnRejection, PatchTerminatorOnChoice, PatchTerminatorOnReward, PatchTerminatorOnTime, PatchTerminatorOnDistance
+        PatchTerminatorOnRejection,
+        PatchTerminatorOnChoice,
+        PatchTerminatorOnReward,
+        PatchTerminatorOnTime,
+        PatchTerminatorOnDistance,
     ]
 else:
     PatchTerminator = TypeAliasType(
         "PatchTerminator",
         Annotated[
-            Union[PatchTerminatorOnRejection, PatchTerminatorOnChoice, PatchTerminatorOnReward, PatchTerminatorOnTime, PatchTerminatorOnDistance],
+            Union[
+                PatchTerminatorOnRejection,
+                PatchTerminatorOnChoice,
+                PatchTerminatorOnReward,
+                PatchTerminatorOnTime,
+                PatchTerminatorOnDistance,
+            ],
             Field(discriminator="terminator_type"),
         ],
     )
