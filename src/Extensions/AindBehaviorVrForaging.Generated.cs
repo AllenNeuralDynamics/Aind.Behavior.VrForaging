@@ -4121,8 +4121,8 @@ namespace AindVrForagingDataSchema
     [JsonInheritanceAttribute("LogNormal", typeof(LogNormalDistribution))]
     [JsonInheritanceAttribute("Normal", typeof(NormalDistribution))]
     [JsonInheritanceAttribute("Pdf", typeof(PdfDistribution))]
-    [JsonInheritanceAttribute("Uniform", typeof(UniformDistribution))]
     [JsonInheritanceAttribute("Poisson", typeof(PoissonDistribution))]
+    [JsonInheritanceAttribute("Uniform", typeof(UniformDistribution))]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Distribution
@@ -8507,12 +8507,15 @@ namespace AindVrForagingDataSchema
     
         private PatchVirtualSitesGenerator _patchVirtualSitesGenerator;
     
+        private System.Collections.Generic.List<PatchTerminator> _patchTerminators;
+    
         public Patch()
         {
             _label = "";
             _stateIndex = 0;
             _rewardSpecification = new RewardSpecification();
             _patchVirtualSitesGenerator = new PatchVirtualSitesGenerator();
+            _patchTerminators = new System.Collections.Generic.List<PatchTerminator>();
         }
     
         protected Patch(Patch other)
@@ -8522,6 +8525,7 @@ namespace AindVrForagingDataSchema
             _odorSpecification = other._odorSpecification;
             _rewardSpecification = other._rewardSpecification;
             _patchVirtualSitesGenerator = other._patchVirtualSitesGenerator;
+            _patchTerminators = other._patchTerminators;
         }
     
         /// <summary>
@@ -8612,6 +8616,24 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        /// <summary>
+        /// The optional termination specification of the patch
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("patch_terminators")]
+        [System.ComponentModel.DescriptionAttribute("The optional termination specification of the patch")]
+        public System.Collections.Generic.List<PatchTerminator> PatchTerminators
+        {
+            get
+            {
+                return _patchTerminators;
+            }
+            set
+            {
+                _patchTerminators = value;
+            }
+        }
+    
         public System.IObservable<Patch> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Patch(this)));
@@ -8628,7 +8650,8 @@ namespace AindVrForagingDataSchema
             stringBuilder.Append("StateIndex = " + _stateIndex + ", ");
             stringBuilder.Append("OdorSpecification = " + _odorSpecification + ", ");
             stringBuilder.Append("RewardSpecification = " + _rewardSpecification + ", ");
-            stringBuilder.Append("PatchVirtualSitesGenerator = " + _patchVirtualSitesGenerator);
+            stringBuilder.Append("PatchVirtualSitesGenerator = " + _patchVirtualSitesGenerator + ", ");
+            stringBuilder.Append("PatchTerminators = " + _patchTerminators);
             return true;
         }
     
@@ -8773,6 +8796,375 @@ namespace AindVrForagingDataSchema
             stringBuilder.Append("Probability = " + _probability + ", ");
             stringBuilder.Append("Available = " + _available + ", ");
             stringBuilder.Append("Rule = " + _rule);
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// Terminates the patch after a reward site where the animal does not stop in "count" reward sites.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "terminator_type")]
+    [JsonInheritanceAttribute("OnRejection", typeof(PatchTerminatorOnRejection))]
+    [JsonInheritanceAttribute("OnChoice", typeof(PatchTerminatorOnChoice))]
+    [JsonInheritanceAttribute("OnReward", typeof(PatchTerminatorOnReward))]
+    [JsonInheritanceAttribute("OnTime", typeof(PatchTerminatorOnTime))]
+    [JsonInheritanceAttribute("OnDistance", typeof(PatchTerminatorOnDistance))]
+    [System.ComponentModel.DescriptionAttribute("Terminates the patch after a reward site where the animal does not stop in \"count" +
+        "\" reward sites.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchTerminator
+    {
+    
+        public PatchTerminator()
+        {
+        }
+    
+        protected PatchTerminator(PatchTerminator other)
+        {
+        }
+    
+        public System.IObservable<PatchTerminator> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchTerminator(this)));
+        }
+    
+        public System.IObservable<PatchTerminator> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminator(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Terminates the patch after "count" choices.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Terminates the patch after \"count\" choices.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchTerminatorOnChoice : PatchTerminator
+    {
+    
+        private Distribution _count;
+    
+        public PatchTerminatorOnChoice()
+        {
+            _count = new Distribution();
+        }
+    
+        protected PatchTerminatorOnChoice(PatchTerminatorOnChoice other) : 
+                base(other)
+        {
+            _count = other._count;
+        }
+    
+        /// <summary>
+        /// Number of choices the animal must make to terminate the patch
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("count")]
+        [System.ComponentModel.DescriptionAttribute("Number of choices the animal must make to terminate the patch")]
+        public Distribution Count
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                _count = value;
+            }
+        }
+    
+        public System.IObservable<PatchTerminatorOnChoice> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchTerminatorOnChoice(this)));
+        }
+    
+        public System.IObservable<PatchTerminatorOnChoice> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnChoice(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Count = " + _count);
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// Terminates the patch after a "count" distance.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Terminates the patch after a \"count\" distance.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchTerminatorOnDistance : PatchTerminator
+    {
+    
+        private Distribution _count;
+    
+        public PatchTerminatorOnDistance()
+        {
+        }
+    
+        protected PatchTerminatorOnDistance(PatchTerminatorOnDistance other) : 
+                base(other)
+        {
+            _count = other._count;
+        }
+    
+        /// <summary>
+        /// Number of distance units to wait before terminating the patch
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("count", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Number of distance units to wait before terminating the patch")]
+        public Distribution Count
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                _count = value;
+            }
+        }
+    
+        public System.IObservable<PatchTerminatorOnDistance> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchTerminatorOnDistance(this)));
+        }
+    
+        public System.IObservable<PatchTerminatorOnDistance> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnDistance(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Count = " + _count);
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// Terminates the patch after a reward site where the animal does not stop in "count" reward sites.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Terminates the patch after a reward site where the animal does not stop in \"count" +
+        "\" reward sites.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchTerminatorOnRejection : PatchTerminator
+    {
+    
+        private Distribution _count;
+    
+        public PatchTerminatorOnRejection()
+        {
+            _count = new Distribution();
+        }
+    
+        protected PatchTerminatorOnRejection(PatchTerminatorOnRejection other) : 
+                base(other)
+        {
+            _count = other._count;
+        }
+    
+        /// <summary>
+        /// Number of reward sites the animal must not stop in to terminate the patch
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("count")]
+        [System.ComponentModel.DescriptionAttribute("Number of reward sites the animal must not stop in to terminate the patch")]
+        public Distribution Count
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                _count = value;
+            }
+        }
+    
+        public System.IObservable<PatchTerminatorOnRejection> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchTerminatorOnRejection(this)));
+        }
+    
+        public System.IObservable<PatchTerminatorOnRejection> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnRejection(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Count = " + _count);
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// Terminates the patch after "count" rewards.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Terminates the patch after \"count\" rewards.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchTerminatorOnReward : PatchTerminator
+    {
+    
+        private Distribution _count;
+    
+        public PatchTerminatorOnReward()
+        {
+            _count = new Distribution();
+        }
+    
+        protected PatchTerminatorOnReward(PatchTerminatorOnReward other) : 
+                base(other)
+        {
+            _count = other._count;
+        }
+    
+        /// <summary>
+        /// Number of rewards the animal must collect to terminate the patch
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("count")]
+        [System.ComponentModel.DescriptionAttribute("Number of rewards the animal must collect to terminate the patch")]
+        public Distribution Count
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                _count = value;
+            }
+        }
+    
+        public System.IObservable<PatchTerminatorOnReward> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchTerminatorOnReward(this)));
+        }
+    
+        public System.IObservable<PatchTerminatorOnReward> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnReward(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Count = " + _count);
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// Terminates the patch after a "count" seconds.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Terminates the patch after a \"count\" seconds.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchTerminatorOnTime : PatchTerminator
+    {
+    
+        private Distribution _count;
+    
+        public PatchTerminatorOnTime()
+        {
+        }
+    
+        protected PatchTerminatorOnTime(PatchTerminatorOnTime other) : 
+                base(other)
+        {
+            _count = other._count;
+        }
+    
+        /// <summary>
+        /// Number of seconds to wait before terminating the patch
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("count", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Number of seconds to wait before terminating the patch")]
+        public Distribution Count
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                _count = value;
+            }
+        }
+    
+        public System.IObservable<PatchTerminatorOnTime> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchTerminatorOnTime(this)));
+        }
+    
+        public System.IObservable<PatchTerminatorOnTime> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnTime(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Count = " + _count);
             return true;
         }
     }
@@ -14666,6 +15058,51 @@ namespace AindVrForagingDataSchema
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Count
+    {
+    
+        public Count()
+        {
+        }
+    
+        protected Count(Count other)
+        {
+        }
+    
+        public System.IObservable<Count> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Count(this)));
+        }
+    
+        public System.IObservable<Count> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Count(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum BlockStructureSamplingMode
     {
@@ -15033,8 +15470,8 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistribution>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
     public partial class MatchDistribution : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -15058,6 +15495,50 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Create<TResult>(observer =>
             {
                 var sourceObserver = System.Reactive.Observer.Create<Distribution>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnRejection>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnChoice>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnReward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnTime>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnDistance>))]
+    public partial class MatchPatchTerminator : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(PatchTerminator);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchPatchTerminator),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<PatchTerminator> source)
+            where TResult : PatchTerminator
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<PatchTerminator>(
                     value =>
                     {
                         var match = value as TResult;
@@ -15431,6 +15912,45 @@ namespace AindVrForagingDataSchema
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    public partial class MatchCount : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Count);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchCount),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Count> source)
+            where TResult : Count
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Count>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
@@ -15789,6 +16309,36 @@ namespace AindVrForagingDataSchema
             return Process<PatchRewardFunction>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<PatchTerminator> source)
+        {
+            return Process<PatchTerminator>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchTerminatorOnChoice> source)
+        {
+            return Process<PatchTerminatorOnChoice>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchTerminatorOnDistance> source)
+        {
+            return Process<PatchTerminatorOnDistance>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchTerminatorOnRejection> source)
+        {
+            return Process<PatchTerminatorOnRejection>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchTerminatorOnReward> source)
+        {
+            return Process<PatchTerminatorOnReward>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchTerminatorOnTime> source)
+        {
+            return Process<PatchTerminatorOnTime>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PatchUpdateFunction> source)
         {
             return Process<PatchUpdateFunction>(source);
@@ -16024,6 +16574,11 @@ namespace AindVrForagingDataSchema
             return Process<LengthDistribution>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Count> source)
+        {
+            return Process<Count>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<TruncationParameters2> source)
         {
             return Process<TruncationParameters2>(source);
@@ -16111,6 +16666,12 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OutsideRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Patch>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnChoice>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnDistance>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnRejection>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnReward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnTime>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchUpdateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchVirtualSitesGenerator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistribution>))]
@@ -16158,6 +16719,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rate>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Value>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LengthDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Count>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters2>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters2>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder

@@ -3202,6 +3202,28 @@
             }
           },
           "description": "Virtual site generation specification"
+        },
+        "patch_terminators": {
+          "default": [
+            {
+              "terminator_type": "OnRejection",
+              "count": {
+                "distribution_parameters": {
+                  "family": "Scalar",
+                  "value": 1.0
+                },
+                "family": "Scalar",
+                "scaling_parameters": null,
+                "truncation_parameters": null
+              }
+            }
+          ],
+          "description": "The optional termination specification of the patch",
+          "items": {
+            "$ref": "#/$defs/PatchTerminator"
+          },
+          "title": "Patch Terminators",
+          "type": "array"
         }
       },
       "title": "Patch",
@@ -3270,6 +3292,153 @@
         }
       },
       "title": "PatchRewardFunction",
+      "type": "object"
+    },
+    "PatchTerminator": {
+      "discriminator": {
+        "mapping": {
+          "OnChoice": "#/$defs/PatchTerminatorOnChoice",
+          "OnDistance": "#/$defs/PatchTerminatorOnDistance",
+          "OnRejection": "#/$defs/PatchTerminatorOnRejection",
+          "OnReward": "#/$defs/PatchTerminatorOnReward",
+          "OnTime": "#/$defs/PatchTerminatorOnTime"
+        },
+        "propertyName": "terminator_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PatchTerminatorOnRejection"
+        },
+        {
+          "$ref": "#/$defs/PatchTerminatorOnChoice"
+        },
+        {
+          "$ref": "#/$defs/PatchTerminatorOnReward"
+        },
+        {
+          "$ref": "#/$defs/PatchTerminatorOnTime"
+        },
+        {
+          "$ref": "#/$defs/PatchTerminatorOnDistance"
+        }
+      ]
+    },
+    "PatchTerminatorOnChoice": {
+      "description": "Terminates the patch after \"count\" choices.",
+      "properties": {
+        "terminator_type": {
+          "const": "OnChoice",
+          "default": "OnChoice",
+          "title": "Terminator Type",
+          "type": "string"
+        },
+        "count": {
+          "$ref": "#/$defs/Distribution",
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 1.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "Number of choices the animal must make to terminate the patch"
+        }
+      },
+      "title": "PatchTerminatorOnChoice",
+      "type": "object"
+    },
+    "PatchTerminatorOnDistance": {
+      "description": "Terminates the patch after a \"count\" distance.",
+      "properties": {
+        "terminator_type": {
+          "const": "OnDistance",
+          "default": "OnDistance",
+          "title": "Terminator Type",
+          "type": "string"
+        },
+        "count": {
+          "$ref": "#/$defs/Distribution",
+          "description": "Number of distance units to wait before terminating the patch"
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "title": "PatchTerminatorOnDistance",
+      "type": "object"
+    },
+    "PatchTerminatorOnRejection": {
+      "description": "Terminates the patch after a reward site where the animal does not stop in \"count\" reward sites.",
+      "properties": {
+        "terminator_type": {
+          "const": "OnRejection",
+          "default": "OnRejection",
+          "title": "Terminator Type",
+          "type": "string"
+        },
+        "count": {
+          "$ref": "#/$defs/Distribution",
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 1.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "Number of reward sites the animal must not stop in to terminate the patch"
+        }
+      },
+      "title": "PatchTerminatorOnRejection",
+      "type": "object"
+    },
+    "PatchTerminatorOnReward": {
+      "description": "Terminates the patch after \"count\" rewards.",
+      "properties": {
+        "terminator_type": {
+          "const": "OnReward",
+          "default": "OnReward",
+          "title": "Terminator Type",
+          "type": "string"
+        },
+        "count": {
+          "$ref": "#/$defs/Distribution",
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 1.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "Number of rewards the animal must collect to terminate the patch"
+        }
+      },
+      "title": "PatchTerminatorOnReward",
+      "type": "object"
+    },
+    "PatchTerminatorOnTime": {
+      "description": "Terminates the patch after a \"count\" seconds.",
+      "properties": {
+        "terminator_type": {
+          "const": "OnTime",
+          "default": "OnTime",
+          "title": "Terminator Type",
+          "type": "string"
+        },
+        "count": {
+          "$ref": "#/$defs/Distribution",
+          "description": "Number of seconds to wait before terminating the patch"
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "title": "PatchTerminatorOnTime",
       "type": "object"
     },
     "PatchUpdateFunction": {

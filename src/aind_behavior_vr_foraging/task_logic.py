@@ -371,9 +371,8 @@ class OutsideRewardFunction(_RewardFunction):
         RewardFunctionRule.ON_TIME,
         RewardFunctionRule.ON_DISTANCE,
         RewardFunctionRule.ON_TIME_ACCUMULATED,
-        RewardFunctionRule.ON_DISTANCE_ACCUMULATED] = Field(
-        default=RewardFunctionRule.ON_TIME, description="Rule to trigger reward function"
-    )
+        RewardFunctionRule.ON_DISTANCE_ACCUMULATED,
+    ] = Field(default=RewardFunctionRule.ON_TIME, description="Rule to trigger reward function")
     delay: float = Field(
         default=0, ge=0, description="Delay (s) before the replenishment starts after the rule is triggered."
     )
@@ -559,6 +558,83 @@ class VirtualSite(BaseModel):
     )
 
 
+class _PatchTerminator(BaseModel):
+    terminator_type: str
+
+
+class PatchTerminatorOnRejection(_PatchTerminator):
+    """Terminates the patch after a reward site where the animal does not stop in "count" reward sites."""
+
+    terminator_type: Literal["OnRejection"] = "OnRejection"
+    count: distributions.Distribution = Field(
+        default=scalar_value(1),
+        validate_default=True,
+        description="Number of reward sites the animal must not stop in to terminate the patch",
+    )
+
+
+class PatchTerminatorOnChoice(_PatchTerminator):
+    """Terminates the patch after "count" choices."""
+
+    terminator_type: Literal["OnChoice"] = "OnChoice"
+    count: distributions.Distribution = Field(
+        default=scalar_value(1),
+        validate_default=True,
+        description="Number of choices the animal must make to terminate the patch",
+    )
+
+
+class PatchTerminatorOnReward(_PatchTerminator):
+    """Terminates the patch after "count" rewards."""
+
+    terminator_type: Literal["OnReward"] = "OnReward"
+    count: distributions.Distribution = Field(
+        default=scalar_value(1),
+        validate_default=True,
+        description="Number of rewards the animal must collect to terminate the patch",
+    )
+
+
+class PatchTerminatorOnTime(_PatchTerminator):
+    """Terminates the patch after a "count" seconds."""
+
+    terminator_type: Literal["OnTime"] = "OnTime"
+    count: distributions.Distribution = Field(description="Number of seconds to wait before terminating the patch")
+
+
+class PatchTerminatorOnDistance(_PatchTerminator):
+    """Terminates the patch after a "count" distance."""
+
+    terminator_type: Literal["OnDistance"] = "OnDistance"
+    count: distributions.Distribution = Field(
+        description="Number of distance units to wait before terminating the patch"
+    )
+
+
+if TYPE_CHECKING:
+    PatchTerminator = Union[
+        PatchTerminatorOnRejection,
+        PatchTerminatorOnChoice,
+        PatchTerminatorOnReward,
+        PatchTerminatorOnTime,
+        PatchTerminatorOnDistance,
+    ]
+else:
+    PatchTerminator = TypeAliasType(
+        "PatchTerminator",
+        Annotated[
+            Union[
+                PatchTerminatorOnRejection,
+                PatchTerminatorOnChoice,
+                PatchTerminatorOnReward,
+                PatchTerminatorOnTime,
+                PatchTerminatorOnDistance,
+            ],
+            Field(discriminator="terminator_type"),
+        ],
+    )
+
+
 class Patch(BaseModel):
     """
     Represents statistics for a patch in the VR foraging task.
@@ -576,6 +652,11 @@ class Patch(BaseModel):
     )
     patch_virtual_sites_generator: PatchVirtualSitesGenerator = Field(
         default=PatchVirtualSitesGenerator(), validate_default=True, description="Virtual site generation specification"
+    )
+    patch_terminators: List[PatchTerminator] = Field(
+        default=[PatchTerminatorOnRejection()],
+        validate_default=True,
+        description="The optional termination specification of the patch",
     )
 
 
