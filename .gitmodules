@@ -1,3 +1,0 @@
-[submodule "src/aind_behavior_vr_foraging/curricula/aind_behavior_curriculum_template"]
-	path = src/aind_behavior_vr_foraging/curricula/aind_behavior_curriculum_template
-	url = https://github.com/AllenNeuralDynamics/Aind.Behavior.CurriculumTemplate.git
