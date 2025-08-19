@@ -103,3 +103,9 @@ Once modified, changes to the DSL must be propagated to `json-schema` and `cshar
 ```powershell
 uv run ./src/aind_behavior_vr_foraging/regenerate.py
 ```
+
+## 📖 Curricula
+
+The VrForaging platform supports a curricula structure that allows for the organization and management of different learning paths and experiences. The implementation relies on the a common definition of "curriculum" progression provided by [`aind-behavior-curriculum`](https://github.com/AllenNeuralDynamics/aind-behavior-curriculum).
+
+Curricula are expected to be defined in `src/aind_behavior_vr_foraging/curricula/` by adding individual submodules that follow the structure of [`https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging.Curricula`](https://allenneuraldynamics.github.io/Aind.Behavior.VrForaging.Curricula/). Updates to the curriculum will therefore require, by design, explicitly updating the submodule reference via a reviewed pull request.
