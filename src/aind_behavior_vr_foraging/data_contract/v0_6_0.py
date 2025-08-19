@@ -357,8 +357,7 @@ def dataset(
                                 name="RendererSynchState",
                                 description="Contains information that allows the post-hoc alignment of visual stimuli to the behavior data. Seconds are software derived.",
                                 reader_params=Csv.make_params(
-                                    path=root_path / "behavior/Renderer/RendererSynchState.csv",
-                                    index="Seconds"
+                                    path=root_path / "behavior/Renderer/RendererSynchState.csv", index="Seconds"
                                 ),
                             ),
                         ],
