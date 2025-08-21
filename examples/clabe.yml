@@ -7,6 +7,12 @@ watchdog:
   project_name: "Cognitive flexibility in patch foraging"
   destination: '\\allen\\aind\\scratch\\vr-foraging\\data'
   delete_modalities_source_after_success: true
+  job_type: "vr_foraging"
+  transfer_endpoint: "http://aind-data-transfer-service/api/v2/submit_jobs"
 
 default_behavior_picker:
   config_library_dir: '\\allen\aind\scratch\AindBehavior.db\AindVrForaging'
+
+curriculum:
+  script: "curriculum run"
+  project_directory: "./src/aind_behavior_vr_foraging/curricula/aind.Behavior.VrForaging.Curricula"
