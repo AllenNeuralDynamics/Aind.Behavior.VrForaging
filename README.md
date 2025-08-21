@@ -35,11 +35,20 @@ from the root of the repository.
 ## ⚙️ Generating settings files
 
 The VR Foraging tasks is instantiated by a set of three settings files that strictly follow a DSL schema. These files are:
+
 - `task_logic.json`
 - `rig.json`
 - `session.json`
 
 Examples on how to generate these files can be found in the `./Examples` directory of the repository. Once generated, these are the the only required inputs to run the Bonsai workflow in `./src/main.bonsai`.
+
+The workflow can thus be executed using the [Bonsai CLI](https://bonsai-rx.org/docs/articles/cli.html):
+
+```powershell
+"./bonsai/bonsai.exe" "./src/main.bonsai" -p SessionPath=<path-to-session.json> -p RigPath=<path-to-rig.json> -p TaskLogicPath=<path-to-task_logic.json>
+```
+
+However, for a better experiment management user experience, it is recommended to use the provided experiment launcher below.
 
 ## 🎮 Experiment launcher (CLABE)
 
@@ -94,3 +103,9 @@ Once modified, changes to the DSL must be propagated to `json-schema` and `cshar
 ```powershell
 uv run ./src/aind_behavior_vr_foraging/regenerate.py
 ```
+
+## 📖 Curricula
+
+The VrForaging platform supports a curricula structure that allows for the organization and management of different learning paths and experiences. The implementation relies on the a common definition of "curriculum" progression provided by [`aind-behavior-curriculum`](https://github.com/AllenNeuralDynamics/aind-behavior-curriculum).
+
+Curricula are expected to be defined in `src/aind_behavior_vr_foraging/curricula/` by adding individual submodules that follow the structure of [`https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging.Curricula`](https://allenneuraldynamics.github.io/Aind.Behavior.VrForaging.Curricula/). Updates to the curriculum will therefore require, by design, explicitly updating the submodule reference via a reviewed pull request.
