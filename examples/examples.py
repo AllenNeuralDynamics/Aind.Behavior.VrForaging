@@ -3,6 +3,7 @@ import os
 
 import aind_behavior_services.rig as rig
 import aind_behavior_services.task_logic.distributions as distributions
+from aind_behavior_curriculum import Stage, TrainerState
 from aind_behavior_services.calibration.aind_manipulator import (
     AindManipulatorCalibration,
     AindManipulatorCalibrationInput,
@@ -332,10 +333,12 @@ def main(path_seed: str = "./local/{schema}.json"):
     example_session = mock_session()
     example_rig = mock_rig()
     example_task_logic = mock_task_logic()
-
+    example_trainer_state = TrainerState(
+        stage=Stage(name="example_stage", task=example_task_logic), curriculum=None, is_on_curriculum=False
+    )
     os.makedirs(os.path.dirname(path_seed), exist_ok=True)
 
-    models = [example_task_logic, example_session, example_rig]
+    models = [example_task_logic, example_session, example_rig, example_trainer_state]
 
     for model in models:
         with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
