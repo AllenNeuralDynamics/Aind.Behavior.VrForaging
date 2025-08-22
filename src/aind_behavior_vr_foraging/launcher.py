@@ -62,7 +62,7 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
 
     # Curriculum
     suggestion = launcher.register_callable(
-        trainer.build_runner(input_trainer_state=Promise.from_value(picker.trainer_state))
+        trainer.build_runner(input_trainer_state=Promise(lambda x: picker.trainer_state))
     )
     launcher.register_callable(lambda launcher: _dump_suggestion(launcher, suggestion))
 
