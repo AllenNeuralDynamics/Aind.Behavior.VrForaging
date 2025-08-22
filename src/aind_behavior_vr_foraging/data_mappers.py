@@ -127,7 +127,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def build_runner(cls, app: BonsaiApp) -> Callable[[Launcher], "AindSessionDataMapper"]:
         def _new(launcher: Launcher) -> "AindSessionDataMapper":
             script_path = app.settings.workflow
-            return cls(
+            new = cls(
                 session_model=launcher.get_session(strict=True),
                 rig_model=launcher.get_rig(strict=True),
                 task_logic_model=launcher.get_task_logic(strict=True),
@@ -135,6 +135,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 script_path=script_path,
                 session_end_time=utcnow(),
             )
+            new.map()
+            return new
 
         return _new
 
