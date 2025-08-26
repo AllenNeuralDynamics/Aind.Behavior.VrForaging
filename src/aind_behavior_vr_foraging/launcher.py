@@ -1,132 +1,99 @@
-import datetime
-import os
-from functools import partial
 from pathlib import Path
-from typing import Callable, Optional
+from typing import Any
 
-import clabe.behavior_launcher as behavior_launcher
 from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_data_schema_models.modalities import Modality
-from aind_watchdog_service.models.manifest_config import (
-    ModalityConfigs,
-)
 from clabe import resource_monitor
-from clabe.apps import AindBehaviorServicesBonsaiApp
-from clabe.data_transfer import aind_watchdog
-from clabe.logging_helper import aibs as aibs_logging
+from clabe.apps import (
+    AindBehaviorServicesBonsaiApp,
+    BonsaiAppSettings,
+    CurriculumApp,
+    CurriculumSettings,
+    CurriculumSuggestion,
+)
+from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
+from clabe.launcher import (
+    DefaultBehaviorPicker,
+    DefaultBehaviorPickerSettings,
+    Launcher,
+    LauncherCliArgs,
+    Promise,
+)
 from pydantic_settings import CliApp
 
-from aind_behavior_vr_foraging import __version__
-from aind_behavior_vr_foraging.data_mappers import AindDataMapperWrapper
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
-
-REMOTE_DIR = Path(r"\\allen\aind\scratch\vr-foraging\data")
-PROJECT_NAME = "Cognitive flexibility in patch foraging"
+from .data_mappers import AindRigDataMapper, AindSessionDataMapper, write_ads_mappers
+from .rig import AindVrForagingRig
+from .task_logic import AindVrForagingTaskLogic
 
 
-def make_launcher(settings: behavior_launcher.BehaviorCliArgs) -> behavior_launcher.BehaviorLauncher:
-    srv = behavior_launcher.BehaviorServicesFactoryManager()
-    srv.attach_app(AindBehaviorServicesBonsaiApp(Path(r"./src/main.bonsai")))
-    srv.attach_data_mapper(AindDataMapperWrapper.from_launcher)
-    srv.attach_data_transfer(
-        watchdog_data_transfer_factory(
-            REMOTE_DIR,
-            project_name=PROJECT_NAME,
-            transfer_endpoint="http://aind-data-transfer-service/api/v1/submit_jobs",
-            upload_job_configs=[
-                ModalityConfigs(
-                    modality=Modality.BEHAVIOR_VIDEOS, source="This will get replaced later", compress_raw_data=True
-                )
-            ],
-            delete_modalities_source_after_success=True,
-        )
+def make_launcher(settings: LauncherCliArgs) -> Launcher:
+    monitor = resource_monitor.ResourceMonitor(
+        constrains=[
+            resource_monitor.available_storage_constraint_factory(settings.data_dir, 2e11),
+        ]
     )
-
-    srv.attach_resource_monitor(
-        resource_monitor.ResourceMonitor(
-            constrains=[
-                resource_monitor.available_storage_constraint_factory(settings.data_dir, 2e11),
-                resource_monitor.remote_dir_exists_constraint_factory(REMOTE_DIR),
-            ]
-        )
+    bonsai_app = AindBehaviorServicesBonsaiApp(BonsaiAppSettings(workflow=Path(r"./src/main.bonsai")))
+    trainer = CurriculumApp(settings=CurriculumSettings())
+    watchdog_settings = WatchdogSettings()  # type: ignore[call-arg]
+    picker = DefaultBehaviorPicker[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic](
+        settings=DefaultBehaviorPickerSettings()  # type: ignore[call-arg]
     )
-
-    launcher: behavior_launcher.BehaviorLauncher = behavior_launcher.BehaviorLauncher(
-        rig_schema_model=AindVrForagingRig,
-        session_schema_model=AindBehaviorSessionModel,
-        task_logic_schema_model=AindVrForagingTaskLogic,
-        services=srv,
+    launcher = Launcher(
+        rig=AindVrForagingRig,
+        session=AindBehaviorSessionModel,
+        task_logic=AindVrForagingTaskLogic,
         settings=settings,
-        picker=behavior_launcher.DefaultBehaviorPicker(
-            config_library_dir=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging")
-        ),
     )
-    aibs_logging.attach_to_launcher(
-        launcher,
-        logserver_url="eng-logtools.corp.alleninstitute.org:9000",
-        project_name=PROJECT_NAME,
-        version=__version__,
+
+    # Get user input
+    launcher.register_callable(
+        [
+            picker.initialize,
+            picker.pick_session,
+            picker.pick_trainer_state,
+            picker.pick_rig,
+        ]
+    )
+
+    # Check resources
+    launcher.register_callable(monitor.build_runner())
+
+    # Run the task via Bonsai
+    launcher.register_callable(bonsai_app.build_runner(allow_std_error=True))
+
+    # Curriculum
+    suggestion = launcher.register_callable(
+        trainer.build_runner(input_trainer_state=Promise(lambda x: picker.trainer_state))
+    )
+    launcher.register_callable(lambda launcher: _dump_suggestion(launcher, suggestion))
+
+    # Mappers
+    session_mapper_promise = launcher.register_callable(AindSessionDataMapper.build_runner(bonsai_app))
+    rig_mapper_promise = launcher.register_callable(AindRigDataMapper.build_runner(picker))
+    launcher.register_callable(write_ads_mappers(session_mapper_promise, rig_mapper_promise))
+
+    # Watchdog
+    launcher.register_callable(
+        WatchdogDataTransferService.build_runner(
+            settings=watchdog_settings, aind_session_data_mapper=session_mapper_promise
+        )
     )
     return launcher
 
 
-def watchdog_data_transfer_factory(
-    destination: os.PathLike,
-    schedule_time: Optional[datetime.time] = datetime.time(hour=20),
-    project_name: Optional[str] = None,
-    **watchdog_kwargs,
-) -> Callable[[behavior_launcher.BehaviorLauncher], aind_watchdog.WatchdogDataTransferService]:
-    return partial(
-        _watchdog_data_transfer_factory,
-        destination=destination,
-        schedule_time=schedule_time,
-        project_name=project_name,
-        **watchdog_kwargs,
-    )
+def _dump_suggestion(launcher: Launcher[Any, Any, Any], suggestion: Promise[Any, CurriculumSuggestion]) -> None:
+    with open(launcher.session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
+        f.write(suggestion.result.model_dump_json(indent=2))
 
 
-def _watchdog_data_transfer_factory(
-    launcher: behavior_launcher.BehaviorLauncher,
-    destination: os.PathLike,
-    **watchdog_kwargs,
-) -> aind_watchdog.WatchdogDataTransferService:
-    if launcher.services_factory_manager.data_mapper is None:
-        raise ValueError("Data mapper service is not set. Cannot create watchdog.")
-    if not isinstance(launcher.services_factory_manager.data_mapper, AindDataMapperWrapper):
-        raise ValueError(
-            "Data mapper service is not of the correct type (AindDataMapperWrapper). Cannot create watchdog."
-        )
-    if not launcher.services_factory_manager.data_mapper.is_mapped():
-        raise ValueError("Data mapper has not mapped yet. Cannot create watchdog.")
-
-    if not isinstance(launcher.session_schema, AindBehaviorSessionModel):
-        raise ValueError(
-            "Session schema is not of the correct type (AindBehaviorSessionModel). Cannot create watchdog."
-        )
-
-    if not launcher.session_schema.session_name:
-        raise ValueError("Session name is not set. Cannot create watchdog.")
-
-    destination = Path(destination)
-    if launcher.group_by_subject_log:
-        destination = destination / launcher.session_schema.subject
-
-    watchdog = aind_watchdog.WatchdogDataTransferService(
-        source=launcher.session_directory,
-        aind_session_data_mapper=launcher.services_factory_manager.data_mapper._session_mapper,
-        session_name=launcher.session_schema.session_name,
-        destination=destination,
-        **watchdog_kwargs,
-    )
-    return watchdog
+class ClabeCli(LauncherCliArgs):
+    def cli_cmd(self):
+        launcher = make_launcher(self)
+        launcher.main()
+        return None
 
 
-def main():
-    args = CliApp().run(behavior_launcher.BehaviorCliArgs)
-    launcher = make_launcher(args)
-    launcher.main()
-    return None
+def main() -> None:
+    CliApp().run(ClabeCli)
 
 
 if __name__ == "__main__":

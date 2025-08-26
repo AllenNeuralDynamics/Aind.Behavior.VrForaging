@@ -11,33 +11,52 @@ using OpenCV.Net;
 [WorkflowElementCategory(ElementCategory.Transform)]
 public class DrawFirstState
 {
+    private Random random;
+
+    [System.Xml.Serialization.XmlIgnore]
+    public Random Random
+    {
+        get { return random; }
+        set { random = value; }
+    }
+
     public IObservable<int> Process(IObservable<Tuple<List<double>, Mat>> source)
     {
-        return source.Select(value => {
+        Random random = Random == null ? new Random() : Random;
+        return source.Select(value =>
+        {
             List<double> initialState = value.Item1;
             Mat transitionMatrix = value.Item2;
             int nStates = transitionMatrix.Rows;
             int nInitialStates = initialState == null ? 0 : initialState.Count;
-            if (nInitialStates == 0) {
-                return new Random().Next(nStates);
+            if (nInitialStates == 0)
+            {
+                return random.Next(nStates);
             }
-            else{
-                if (nInitialStates != nStates) {
+            else
+            {
+                if (nInitialStates != nStates)
+                {
                     throw new InvalidOperationException("The number of initial states must match the number of states in the transition matrix.");
                 }
-                else{
-                    if (initialState.Any(p => p < 0)) {
+                else
+                {
+                    if (initialState.Any(p => p < 0))
+                    {
                         throw new InvalidOperationException("Initial state probabilities must be non-negative.");
                     }
-                    if (initialState.Sum() == 0) {
+                    if (initialState.Sum() == 0)
+                    {
                         throw new InvalidOperationException("Initial state probabilities must sum to a non-zero value.");
                     }
                     var normalizedInitialState = initialState.Select(p => p / initialState.Sum()).ToArray();
-                    var randomCoin = new Random().NextDouble();
+                    var randomCoin = random.NextDouble();
                     int state = -1;
-                    for (int i = 0; i < nStates; i++){
+                    for (int i = 0; i < nStates; i++)
+                    {
                         randomCoin -= normalizedInitialState[i];
-                        if (randomCoin <= 0){
+                        if (randomCoin <= 0)
+                        {
                             state = i;
                             break;
                         }

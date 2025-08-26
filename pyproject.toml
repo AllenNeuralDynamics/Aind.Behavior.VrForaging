@@ -15,7 +15,8 @@ classifiers = [
 dynamic = ["version", "readme"]
 
 dependencies = [
-  "aind_behavior_services>=0.11, <0.12",
+  "aind_behavior_services>=0.12, <0.13",
+  "pydantic-settings"
 ]
 
 [project.urls]
@@ -27,12 +28,11 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 [project.optional-dependencies]
 
 data = [
-  "contraqctor<0.5.0",
-  "pydantic-settings"]
+  "contraqctor<0.5.0"]
 
 launcher = [
-    "aind-clabe[aind-services]>=0.5",
-    "aind-data-schema>=1.4"
+    "aind-clabe[aind-services]",
+    "aind-data-schema==1.4"
     ]
 
 dev = [
@@ -53,8 +53,8 @@ docs = [
 ]
 
 [project.scripts]
-clabe = "aind_behavior_vr_foraging.launcher:main"
 regenerate = "aind_behavior_vr_foraging.regenerate:main"
+vr-foraging = "aind_behavior_vr_foraging.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -74,5 +74,5 @@ mccabe = { max-complexity = 14 }
 pydocstyle = { convention = 'google' }
 
 [tool.codespell]
-skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock'
+skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock,*Generated.cs'
 ignore-words-list = 'nd'

@@ -1,4 +1,4 @@
-name: ci/cd
+name: VrForaging test suite
 
 on:
   workflow_dispatch:
@@ -10,15 +10,50 @@ on:
       - main
 
 jobs:
+  tests:
+    runs-on: windows-latest
+    name: VrForaging unit tests
+    steps:
+      - uses: actions/checkout@v5
 
-  python-linting:
-    uses: AllenNeuralDynamics/Aind.Behavior.GitHubActions/.github/workflows/python-linting.yml@main
-    with:
-        runs-on: ubuntu-latest
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
 
-  aind-behavior-framework-testing:
-    uses: AllenNeuralDynamics/Aind.Behavior.GitHubActions/.github/workflows/test-aind-behavior-framework.yml@main
-    with:
-        python-version-path: .python-version
-        run-coverage: false
-        run-schema: true
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install python dependencies
+        run: uv sync --extra dev
+
+      - name: Run ruff format
+        run: uv run ruff format
+
+      - name: Run ruff check
+        run: uv run ruff check
+
+      - name: Run codespell
+        run: uv run codespell
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      - name: Restore dotnet tools
+        run: dotnet tool restore
+
+      - name: Setup Bonsai environment
+        working-directory: ./bonsai
+        run: ./setup.ps1
+
+      - name: Run python unit tests
+        run: uv run python -m unittest
+
+      - name: Regenerate schemas
+        run: uv run vr-foraging regenerate
+
+      - name: Check for uncommitted changes
+        run: |
+          git config --global core.safecrlf false
+          git diff --exit-code || (echo "Untracked changes found" && exit 1)

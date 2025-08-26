@@ -1,6 +1,10 @@
 $scriptPath = $MyInvocation.MyCommand.Path
 $scriptDirectory = Split-Path -Parent $scriptPath
 Set-Location (Split-Path -Parent $scriptDirectory)
+
+Write-Output "Initializing and updating submodules..."
+&git submodule update --init --recursive
+
 Write-Output "Creating a Python  environment..."
 
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
