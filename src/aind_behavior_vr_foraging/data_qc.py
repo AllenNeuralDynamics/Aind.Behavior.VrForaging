@@ -256,11 +256,11 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     _runner.add_suite(VrForagingQcSuite(dataset), "VrForaging")
 
     _rendering = Rendering(
-        render_sync_state=vr_dataset["Behavior"]["OperationControl"]["RendererSynchState"],
-        photodiode_events=t.cast(pd.DataFrame, vr_dataset["Behavior"]["HarpBehavior"]["DigitalInputState"].data).query(
+        render_sync_state=dataset["Behavior"]["OperationControl"]["RendererSynchState"],
+        photodiode_events=t.cast(pd.DataFrame, dataset["Behavior"]["HarpBehavior"]["DigitalInputState"].data).query(
             "MessageType == 'EVENT'"
         )["DIPort0"],
-        expected_fps=vr_dataset["Behavior"]["InputSchemas"]["Rig"].data["screen"]["target_render_frequency"],
+        expected_fps=dataset["Behavior"]["InputSchemas"]["Rig"].data["screen"]["target_render_frequency"],
     )
 
     _runner.add_suite(_rendering, "Rendering")
@@ -268,16 +268,17 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     return _runner
 
 
-class _QCCli(pydantic_settings.BaseSettings, cli_prog_name="data-mapper", cli_kebab_case=True):
+class QcCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
     data_path: pydantic_settings.CliPositionalArg[os.PathLike] = pydantic.Field(
         description="Path to the session data directory."
     )
     version: str = pydantic.Field(default=__version__, description="Version of the dataset.")
 
+    def cli_cmd(self):
+        vr_dataset = dataset(Path(self.data_path), self.version)
+        runner = make_qc_runner(vr_dataset)
+        runner.run_all_with_progress()
+
 
 if __name__ == "__main__":
-    cli = pydantic_settings.CliApp()
-    parsed_args = cli.run(_QCCli)
-    vr_dataset = dataset(Path(parsed_args.data_path), parsed_args.version)
-    runner = make_qc_runner(vr_dataset)
-    results = runner.run_all_with_progress()
+    cli = pydantic_settings.CliApp().run(QcCli)

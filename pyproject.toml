@@ -55,6 +55,7 @@ docs = [
 [project.scripts]
 clabe = "aind_behavior_vr_foraging.launcher:main"
 regenerate = "aind_behavior_vr_foraging.regenerate:main"
+vr-foraging = "aind_behavior_vr_foraging.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

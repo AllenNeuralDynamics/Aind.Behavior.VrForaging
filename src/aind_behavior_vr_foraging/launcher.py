@@ -85,11 +85,15 @@ def _dump_suggestion(launcher: Launcher[Any, Any, Any], suggestion: Promise[Any,
         f.write(suggestion.result.model_dump_json(indent=2))
 
 
-def main():
-    args = CliApp().run(LauncherCliArgs)
-    launcher = make_launcher(args)
-    launcher.main()
-    return None
+class ClabeCli(LauncherCliArgs):
+    def cli_cmd(self):
+        launcher = make_launcher(self)
+        launcher.main()
+        return None
+
+
+def main() -> None:
+    CliApp().run(ClabeCli)
 
 
 if __name__ == "__main__":
