@@ -32,7 +32,7 @@ data = [
 
 launcher = [
     "aind-clabe[aind-services]",
-    "aind-data-schema>=1.4"
+    "aind-data-schema==1.4"
     ]
 
 dev = [
