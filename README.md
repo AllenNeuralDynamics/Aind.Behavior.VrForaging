@@ -18,7 +18,7 @@ This repository follows the project structure laid out in the [Aind.Behavior.Ser
 
 ## 🔧 Prerequisites
 
-Pre-requisites for running the project can be found [here](https://github.com/AllenNeuralDynamics/Aind.Behavior.Services?tab=readme-ov-file#prerequisites).
+[Pre-requisites for running the project can be found here](https://allenneuraldynamics.github.io/Aind.Behavior.Services/articles/requirements.html).
 
 ---
 
@@ -50,33 +50,39 @@ The workflow can thus be executed using the [Bonsai CLI](https://bonsai-rx.org/d
 
 However, for a better experiment management user experience, it is recommended to use the provided experiment launcher below.
 
+## [> ] CLI tools
+
+The platform exposes a few CLI tools to facilitate various tasks. Tools are available via:
+
+```powershell
+uv run vr-foraging <subcommand>
+```
+
+for a list of all sub commands available:
+
+```powershell
+uv run vr-foraging -h
+```
+
+You may need to install optional dependencies depending on the sub-commands you run.
+
 ## 🎮 Experiment launcher (CLABE)
 
 To manage experiments and input files, this repository contains a launcher script that can be used to run the VR Foraging task. This script is located at `./src/aind_behavior_vr_foraging/launcher.py`. It can be run from the command line as follows:
 
 ```powershell
-uv run ./src/aind_behavior_vr_foraging/launcher.py
-```
-
-or via the registered `clabe` command:
-
-```powershell
-uv run clabe
+uv run vr-foraging clabe
 ```
 
 Additional arguments can be passed to the script as needed:
 
 ```powershell
-uv run clabe -h
+uv run vr-foraging clabe -h
 ```
 
-or via a `./local/clabe.yml` file. (An example can be found in `./Examples/clabe.yml`.)
+or via a `./local/clabe.yml` file. (An example can be found in `./Examples/clabe.yml`)
 
 In order to run the launcher script, optional dependencies should be installed via:
-
-```powershell
-uv sync --extra launcher
-```
 
 Additional custom launcher scripts can be created and used as needed.
 
@@ -85,13 +91,15 @@ Additional custom launcher scripts can be created and used as needed.
 Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launcher using:
 
 ```powershell
-uv run ./src/aind_behavior_vr_foraging/data_qc.py <path-to-data-dir>
+uv run vr-foraging data-qc <path-to-data-dir>
 ```
 
-In order to run the script, optional dependencies should be installed via:
+## 🌉 Mapping to aind-data-schema
+
+Once an experiment is collected, data can be mapped to aind-data-schema using the `data-mapper` sub-command:
 
 ```powershell
-uv sync --extra data
+uv run vr-foraging data-mapper
 ```
 
 ## 🔄 Regenerating schemas
@@ -101,7 +109,7 @@ DSL schemas can be modified in `./src/aind_behavior_vr_foraging/rig.py` (or `(..
 Once modified, changes to the DSL must be propagated to `json-schema` and `csharp` API. This can be done by running:
 
 ```powershell
-uv run ./src/aind_behavior_vr_foraging/regenerate.py
+uv run vr-foraging regenerate
 ```
 
 ## 📖 Curricula
