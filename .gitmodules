@@ -1,0 +1,3 @@
+[submodule "src/aind_behavior_vr_foraging/curricula/aind.Behavior.VrForaging.Curricula"]
+	path = src/aind_behavior_vr_foraging/curricula/aind.Behavior.VrForaging.Curricula
+	url = https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging.Curricula

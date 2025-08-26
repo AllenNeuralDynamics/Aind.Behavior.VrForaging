@@ -3,6 +3,7 @@ import os
 
 import aind_behavior_services.rig as rig
 import aind_behavior_services.task_logic.distributions as distributions
+from aind_behavior_curriculum import Stage, TrainerState
 from aind_behavior_services.calibration.aind_manipulator import (
     AindManipulatorCalibration,
     AindManipulatorCalibrationInput,
@@ -125,14 +126,14 @@ def mock_rig() -> AindVrForagingRig:
 
     water_valve_input = WaterValveCalibrationInput(
         measurements=[
-            Measurement(valve_open_interval=1, valve_open_time=1, water_weight=[1, 1], repeat_count=200),
-            Measurement(valve_open_interval=2, valve_open_time=2, water_weight=[2, 2], repeat_count=200),
+            Measurement(valve_open_interval=0.2, valve_open_time=0.01, water_weight=[0.6, 0.6], repeat_count=200),
+            Measurement(valve_open_interval=0.2, valve_open_time=0.02, water_weight=[1.2, 1.2], repeat_count=200),
         ]
     )
     water_valve_calibration = WaterValveCalibration(
         input=water_valve_input, output=water_valve_input.calibrate_output(), date=datetime.datetime.now()
     )
-    water_valve_calibration.output = WaterValveCalibrationOutput(slope=1, offset=0)  # For testing purposes
+    water_valve_calibration.output = WaterValveCalibrationOutput(slope=30, offset=0)  # For testing purposes
 
     video_writer = rig.cameras.VideoWriterFfmpeg(frame_rate=120, container_extension="mp4")
 
@@ -202,7 +203,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
             time_to_collect_after_reward=1,
             retracting_distance=2000,
         ),
-        audio_control=vr_task_logic.AudioControl(),
+        audio_control=vr_task_logic.AudioControl(frequency=1000, duration=0.2),
         odor_control=vr_task_logic.OdorControl(
             valve_max_open_time=100000, target_odor_flow=100, target_total_flow=1000, use_channel_3_as_carrier=True
         ),
@@ -229,7 +230,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
             scaling_parameters=distributions.ScalingParameters(scale=1.0, offset=0.0),
         )
 
-    def Reward_VirtualSiteGeneratorHelper(contrast: float = 0.5, friction: float = 0):
+    def RewardVirtualSiteGeneratorHelper(contrast: float = 0.5, friction: float = 0):
         return vr_task_logic.VirtualSiteGenerator(
             render_specification=vr_task_logic.RenderSpecification(contrast=contrast),
             label=vr_task_logic.VirtualSiteLabels.REWARDSITE,
@@ -237,7 +238,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
             treadmill_specification=vr_task_logic.TreadmillSpecification(friction=vr_task_logic.scalar_value(friction)),
         )
 
-    def InterSite_VirtualSiteGeneratorHelper(contrast: float = 0.5, friction: float = 0):
+    def InterSiteVirtualSiteGeneratorHelper(contrast: float = 0.5, friction: float = 0):
         return vr_task_logic.VirtualSiteGenerator(
             render_specification=vr_task_logic.RenderSpecification(contrast=contrast),
             label=vr_task_logic.VirtualSiteLabels.INTERSITE,
@@ -245,7 +246,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
             treadmill_specification=vr_task_logic.TreadmillSpecification(friction=vr_task_logic.scalar_value(friction)),
         )
 
-    def InterPatch_VirtualSiteGeneratorHelper(contrast: float = 1, friction: float = 0):
+    def InterPatchVirtualSiteGeneratorHelper(contrast: float = 1, friction: float = 0):
         return vr_task_logic.VirtualSiteGenerator(
             render_specification=vr_task_logic.RenderSpecification(contrast=contrast),
             label=vr_task_logic.VirtualSiteLabels.INTERPATCH,
@@ -253,7 +254,7 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
             treadmill_specification=vr_task_logic.TreadmillSpecification(friction=vr_task_logic.scalar_value(friction)),
         )
 
-    def PostPatch_VirtualSiteGeneratorHelper(contrast: float = 1, friction: float = 0.5):
+    def PostPatchVirtualSiteGeneratorHelper(contrast: float = 1, friction: float = 0.5):
         return vr_task_logic.VirtualSiteGenerator(
             render_specification=vr_task_logic.RenderSpecification(contrast=contrast),
             label=vr_task_logic.VirtualSiteLabels.POSTPATCH,
@@ -262,42 +263,52 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
         )
 
     reward_function = vr_task_logic.PatchRewardFunction(
-        amount=vr_task_logic.ConstantFunction(value=1),
-        probability=vr_task_logic.ConstantFunction(value=1),
-        available=vr_task_logic.LinearFunction(a=-1, b=5),
-        depletion_rule=vr_task_logic.DepletionRule.ON_CHOICE,
+        available=vr_task_logic.ClampedRateFunction(minimum=0, maximum=5, rate=vr_task_logic.scalar_value(-1)),
+        rule=vr_task_logic.RewardFunctionRule.ON_REWARD,
     )
 
-    patch1 = vr_task_logic.PatchStatistics(
-        label="Amyl Acetate",
+    reset_function = vr_task_logic.OnThisPatchEntryFunction(
+        available=vr_task_logic.SetValueFunction(value=vr_task_logic.scalar_value(0.1))
+    )
+
+    replenish_function = vr_task_logic.OutsideRewardFunction(
+        available=vr_task_logic.ClampedRateFunction(minimum=0, maximum=5, rate=vr_task_logic.scalar_value(1)),
+        rule=vr_task_logic.RewardFunctionRule.ON_TIME,
+    )
+
+    patch1 = vr_task_logic.Patch(
+        label="reset",
         state_index=0,
         odor_specification=vr_task_logic.OdorSpecification(index=1, concentration=1),
         reward_specification=vr_task_logic.RewardSpecification(
-            reward_function=reward_function,
+            amount=vr_task_logic.scalar_value(1),
+            probability=vr_task_logic.scalar_value(1),
+            available=vr_task_logic.scalar_value(5),
+            reward_function=[reward_function, reset_function],
             operant_logic=OperantLogicHelper(),
             delay=ExponentialDistributionHelper(1, 0, 10),
         ),
-        virtual_site_generation=vr_task_logic.VirtualSiteGeneration(
-            inter_patch=InterPatch_VirtualSiteGeneratorHelper(),
-            inter_site=InterSite_VirtualSiteGeneratorHelper(),
-            reward_site=Reward_VirtualSiteGeneratorHelper(),
-            post_patch=PostPatch_VirtualSiteGeneratorHelper(),
+        patch_virtual_sites_generator=vr_task_logic.PatchVirtualSitesGenerator(
+            inter_patch=InterPatchVirtualSiteGeneratorHelper(),
+            inter_site=InterSiteVirtualSiteGeneratorHelper(),
+            reward_site=RewardVirtualSiteGeneratorHelper(),
+            post_patch=PostPatchVirtualSiteGeneratorHelper(),
         ),
     )
 
-    patch2 = vr_task_logic.PatchStatistics(
-        label="Alpha-pinene",
+    patch2 = vr_task_logic.Patch(
+        label="slow-replenish",
         state_index=1,
         odor_specification=vr_task_logic.OdorSpecification(index=0, concentration=1),
         reward_specification=vr_task_logic.RewardSpecification(
-            reward_function=reward_function,
+            reward_function=[reward_function, replenish_function],
             operant_logic=OperantLogicHelper(),
             delay=ExponentialDistributionHelper(1, 0, 10),
         ),
-        virtual_site_generation=vr_task_logic.VirtualSiteGeneration(
-            inter_patch=InterPatch_VirtualSiteGeneratorHelper(),
-            inter_site=InterSite_VirtualSiteGeneratorHelper(),
-            reward_site=Reward_VirtualSiteGeneratorHelper(),
+        patch_virtual_sites_generator=vr_task_logic.PatchVirtualSitesGenerator(
+            inter_patch=InterPatchVirtualSiteGeneratorHelper(),
+            inter_site=InterSiteVirtualSiteGeneratorHelper(),
+            reward_site=RewardVirtualSiteGeneratorHelper(),
         ),
     )
 
@@ -307,15 +318,14 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
 
     return AindVrForagingTaskLogic(
         task_parameters=AindVrForagingTaskParameters(
-            rng_seed=None,
+            rng_seed=42,
             updaters=updaters,
             environment=vr_task_logic.BlockStructure(
                 blocks=[vr_task_logic.Block(environment_statistics=environment_statistics, end_conditions=[])],
                 sampling_mode="Random",
             ),
-            task_mode_settings=vr_task_logic.ForagingSettings(),
             operation_control=operation_control,
-        )
+        ),
     )
 
 
@@ -323,10 +333,12 @@ def main(path_seed: str = "./local/{schema}.json"):
     example_session = mock_session()
     example_rig = mock_rig()
     example_task_logic = mock_task_logic()
-
+    example_trainer_state = TrainerState(
+        stage=Stage(name="example_stage", task=example_task_logic), curriculum=None, is_on_curriculum=False
+    )
     os.makedirs(os.path.dirname(path_seed), exist_ok=True)
 
-    models = [example_task_logic, example_session, example_rig]
+    models = [example_task_logic, example_session, example_rig, example_trainer_state]
 
     for model in models:
         with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
