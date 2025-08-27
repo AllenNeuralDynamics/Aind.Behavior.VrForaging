@@ -93,7 +93,7 @@ requires-dist = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'docs'" },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"], marker = "extra == 'dev'" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'" },
-    { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = "==1.4" },
+    { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">2" },
     { name = "autodoc-pydantic", extras = ["erdantic"], marker = "extra == 'docs'" },
     { name = "codespell", marker = "extra == 'dev'" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.5.0" },
@@ -138,29 +138,30 @@ aind-services = [
 
 [[package]]
 name = "aind-data-schema"
-version = "1.4.0"
+version = "2.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-data-schema-models" },
     { name = "pydantic" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/34/d3/b8c49737c207966eef2a19f74f599b69f4b7fc3d8abfc33a164397252088/aind_data_schema-1.4.0.tar.gz", hash = "sha256:9768e00ee1f7ea4da72abc4b365ee807c2129dd30da96e759ae17ed93824b40e", size = 858325, upload-time = "2025-02-28T18:55:56.25Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0f/f2/e13e585741c771f42442e937e83bd822eb911806d90878e63356ab71aa2a/aind_data_schema-2.0.1.tar.gz", hash = "sha256:c1d36b9e1b19f628ed018812941de41edb397f17798db717ed08096117231e75", size = 735731, upload-time = "2025-08-25T18:30:03.94Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/02/da/bce4b9d3122cb98e055d7a9d3159117eb810992605aa849bef4b9e8069fc/aind_data_schema-1.4.0-py3-none-any.whl", hash = "sha256:d82fbbd96f3588a9b03b0275bb89831a1b901c5b63e8790f07583d0fd4a4c732", size = 65020, upload-time = "2025-02-28T18:55:53.068Z" },
+    { url = "https://files.pythonhosted.org/packages/b1/11/44c204c962df41abe584f682ee665fe492c7e8f8c3877bfd64c059761a5d/aind_data_schema-2.0.1-py3-none-any.whl", hash = "sha256:4e6165ac34ec7ff0ebbe72dc56d6fb62725c7b95cb25ddd3149c7df578c6c356", size = 84339, upload-time = "2025-08-25T18:30:02.188Z" },
 ]
 
 [[package]]
 name = "aind-data-schema-models"
-version = "0.7.5"
+version = "4.2.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "importlib-resources" },
     { name = "pydantic" },
+    { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9a/41/142150bb66ce16856e75469945a3e1ec21ea4c6cdaac27bacf962854e3ac/aind_data_schema_models-0.7.5.tar.gz", hash = "sha256:9605f0999930b595b9d92316ada0b3a8fa8d28c537330cc5f6198cc8e59d3dee", size = 552889, upload-time = "2025-01-05T23:53:17.974Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/56/10/e5b57c454b84342a10d38b5e83bdf4eece5d3489b60d0c986eab31fd4f75/aind_data_schema_models-4.2.10.tar.gz", hash = "sha256:c78453b859f479fc82ad81e3b3f8a945908624cc89badba15a903233065baba7", size = 324097, upload-time = "2025-08-11T21:34:45.618Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f3/c1/e2177d7e0fa1102e4dcd4563d519c9ed56177d0b6df552dd9e50aacb1367/aind_data_schema_models-0.7.5-py3-none-any.whl", hash = "sha256:f6d934451c672e3c48691759cd5cfb615306c40f30625ef0323285dc69cfceff", size = 532063, upload-time = "2025-01-05T23:53:15.685Z" },
+    { url = "https://files.pythonhosted.org/packages/03/02/26efbfb459ad9c226c0b5c3c58b67d4be0f2ed6423c7efb3d6e3cccb6a6f/aind_data_schema_models-4.2.10-py3-none-any.whl", hash = "sha256:4cd10321b6cc19604a5e4b57b338ad6234ba7a24f9f7bc79e673d795822af624", size = 297719, upload-time = "2025-08-11T21:34:44.414Z" },
 ]
 
 [[package]]
