@@ -4,11 +4,9 @@ from datetime import datetime
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from aind_data_schema.core import instrument
 from git import Repo
 
 from aind_behavior_vr_foraging.data_mappers import (
-    AindRigDataMapper,
     AindSessionDataMapper,
 )
 
@@ -45,28 +43,6 @@ class TestAindSessionDataMapper(unittest.TestCase):
     def test_map(self):
         mapped = self.mapper.map()
         self.assertIsNotNone(mapped)
-
-
-class TestAindRigDataMapper(unittest.TestCase):
-    def setUp(self):
-        self.rig_schema_filename = "rig_schema.json"
-        self.db_root = MagicMock()
-        self.session_directory = MagicMock()
-        self.db_suffix = "test_suffix"
-        self.mapper = AindRigDataMapper(
-            rig_schema_filename=self.rig_schema_filename,
-            db_root=self.db_root,
-            db_suffix=self.db_suffix,
-        )
-
-    @patch("pathlib.Path.exists", return_value=True)
-    @patch("aind_behavior_vr_foraging.data_mappers.model_from_json_file")
-    def test_mock_map(self, mock_model_from_json_file, mock_path_exists):
-        mock_model_from_json_file.return_value = MagicMock(spec=instrument.Instrument)
-        result = self.mapper.map()
-        self.assertIsNotNone(result)
-        self.assertTrue(self.mapper.mapped)
-        self.assertIsInstance(result, instrument.Instrument)
 
 
 if __name__ == "__main__":

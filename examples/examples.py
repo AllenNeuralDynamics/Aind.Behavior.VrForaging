@@ -31,7 +31,6 @@ from aind_behavior_services.calibration.water_valve import (
     Measurement,
     WaterValveCalibration,
     WaterValveCalibrationInput,
-    WaterValveCalibrationOutput,
 )
 from aind_behavior_services.rig.harp import (
     HarpBehavior,
