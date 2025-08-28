@@ -42,11 +42,19 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.rig_model = rig_model
         self.task_logic_model = task_logic_model
         self.repository = repository
+        if isinstance(self.repository, os.PathLike | str):
+            self.repository = git.Repo(Path(self.repository))
         self.script_path = script_path
-        self.session_end_time = session_end_time
+        self._session_end_time = session_end_time
         self.output_parameters = output_parameters
         self._mapped: Optional[acquisition.Acquisition] = None
         self.curriculum = curriculum
+
+    @property
+    def session_end_time(self) -> datetime.datetime:
+        if self._session_end_time is None:
+            raise ValueError("Session end time is not set.")
+        return self._session_end_time
 
     def session_schema(self):
         return self.mapped
@@ -93,17 +101,37 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         else:
             return self._mapped
 
+    def _map(self) -> acquisition.Acquisition:
+        if self._session_end_time is None:
+            logger.warning("Session end time is not set. Using current time as end time.")
+            self._session_end_time = utcnow()
+
+        # Construct aind-data-schema session
+        aind_data_schema_session = acquisition.Acquisition(
+            subject_id=self.session_model.subject,
+            instrument_id=self.rig_model.rig_name,
+            acquisition_end_time=utcnow(),
+            acquisition_start_time=self.session_model.date,
+            experimenters=self.session_model.experimenter,
+            acquisition_type=self.session_model.experiment,
+            coordinate_system=self._make_coordinate_system(),
+            data_streams=self._get_data_streams(),
+            calibrations=self._get_calibrations(),
+            stimulus_epochs=self._get_stimulus_epochs(),
+        )
+        return aind_data_schema_session
+
     def write_standard_file(self, directory: os.PathLike) -> None:
         self.mapped.write_standard_file(Path(directory))
 
-    def get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
+    def _get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
         calibrations = []
-        calibrations += self.get_water_calibration()
-        calibrations += self.get_other_calibrations()
+        calibrations += self._get_water_calibration()
+        calibrations += self._get_other_calibrations()
         return calibrations
 
-    def get_other_calibrations(
-        self, exclude: List[Type] = [AbsCalibration.water_valve.WaterValveCalibration]
+    def _get_other_calibrations(
+        self, exclude: tuple[Type] = (AbsCalibration.water_valve.WaterValveCalibration,)
     ) -> List[measurements.Calibration]:
         def _mapper(device_name: Optional[str], calibration: AbsCalibration.Calibration) -> measurements.Calibration:
             device_name = device_name or calibration.device_name
@@ -125,7 +153,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         calibrations = [c for c in calibrations if not (isinstance(c[1], tuple(exclude)))]
         return list(map(lambda tup: _mapper(*tup), calibrations)) if len(calibrations) > 0 else []
 
-    def get_water_calibration(self) -> List[measurements.VolumeCalibration]:
+    def _get_water_calibration(self) -> List[measurements.VolumeCalibration]:
         def _mapper(
             device_name: Optional[str], water_calibration: AbsCalibration.water_valve.WaterValveCalibration
         ) -> measurements.VolumeCalibration:
@@ -145,34 +173,75 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 output=list(c.interval_average.values()),
                 input_unit=units.TimeUnit.S,
                 output_unit=units.VolumeUnit.ML,
-                fit=measurements.CalibrationFit(fit_type=measurements.FitType.LINEAR, fit_parameters=c.model_dump()),
+                fit=measurements.CalibrationFit(
+                    fit_type=measurements.FitType.LINEAR,
+                    fit_parameters=acquisition.GenericModel.model_validate(c.model_dump()),
+                ),
             )
 
         water_calibration = get_fields_of_type(self.rig_model, AbsCalibration.water_valve.WaterValveCalibration)
         return list(map(lambda tup: _mapper(*tup), water_calibration)) if len(water_calibration) > 0 else []
 
-    def _map(self) -> acquisition.Acquisition:
-        # Normalize repository
-        if isinstance(self.repository, os.PathLike | str):
-            self.repository = git.Repo(Path(self.repository))
+    def _get_data_streams(self) -> List[acquisition.DataStream]:
+        assert self.session_end_time is not None, "Session end time is not set."
 
-        if self.session_end_time is None:
-            self.session_end_time = utcnow()
-
-        calibrations = self.get_calibrations()
-
-        # Populate cameras
-        # populate devices
-        # Populate modalities
         modalities: list[Modality] = [getattr(Modality, "BEHAVIOR")]
-        if len(self.get_cameras_config()) > 0:
+        if len(self._get_cameras_config()) > 0:
             modalities.append(getattr(Modality, "BEHAVIOR_VIDEOS"))
         modalities = list(set(modalities))
+        data_streams: list[acquisition.DataStream] = [
+            acquisition.DataStream(
+                stream_start_time=self.session_model.date,
+                stream_end_time=self.session_end_time,
+                code=[self._get_bonsai_as_code(), self._get_python_as_code()],
+                active_devices=[
+                    _device[0]
+                    for _device in get_fields_of_type(self.rig_model, AbsRig.Device, stop_recursion_on_type=False)
+                    if _device[0] is not None
+                ],
+                modalities=modalities,
+                configurations=self._get_cameras_config() + self._get_manipulators_config(),
+                notes=self.session_model.notes,
+            )
+        ]
+        return data_streams
 
-        # Populate stimulus modalities
+    def _get_stimulus_epochs(self) -> List[acquisition.StimulusEpoch]:
         stimulus_modalities: list[acquisition.StimulusModality] = []
         active_devices: List[str] = []
         stimulus_epoch_configurations: List = []
+
+        # Auditory Stimulation
+        stimulus_modalities.append(acquisition.StimulusModality.AUDITORY)
+        stimulus_epoch_configurations.append(
+            acquisition.SpeakerConfig(device_name="Speaker", volume=60.0, volume_unit=units.SoundIntensityUnit.DB)
+        )
+        active_devices.append("Speaker")
+
+        # Visual/VR Stimulation
+        stimulus_modalities.extend(
+            [
+                acquisition.StimulusModality.VISUAL,
+                acquisition.StimulusModality.VIRTUAL_REALITY,
+            ]
+        )
+
+        # Mouse platform
+        stimulus_modalities.append(acquisition.StimulusModality.WHEEL_FRICTION)
+        stimulus_epoch_configurations.append(acquisition.MousePlatformConfig(device_name="wheel", active_control=True))
+
+        # Stimulus code
+        # Note: According to this discussion, if stimuli are programmatically generated, we can use this instead of configuration.
+        # https://github.com/AllenNeuralDynamics/aind-data-schema/discussions/1550#discussioncomment-14246854
+        _stim_code = self._get_bonsai_as_code()
+        _stim_code.parameters = acquisition.GenericModel.model_validate(
+            {
+                "task_logic": self.task_logic_model.model_dump(),
+                "rig": self.rig_model.model_dump(),
+                "session": self.session_model.model_dump(),
+            }
+        )
+
         # Olfactory Stimulation
         # TODO needs aind-data-schema to be updated
         # stimulus_modalities.append(acquisition.StimulusModality.OLFACTORY)
@@ -199,27 +268,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         #     logger.error("Olfactometer device not found in rig model.")
         #     raise ValueError("Olfactometer device not found in rig model.")
 
-        # Auditory Stimulation
-        stimulus_modalities.append(acquisition.StimulusModality.AUDITORY)
-        stimulus_epoch_configurations.append(
-            acquisition.SpeakerConfig(device_name="Speaker", volume=60.0, volume_unit=units.SoundIntensityUnit.DB)
-        )
-        active_devices.append("Speaker")
-
-        # Visual/VR Stimulation
-        stimulus_modalities.extend(
-            [
-                acquisition.StimulusModality.VISUAL,
-                acquisition.StimulusModality.VIRTUAL_REALITY,
-            ]
-        )
-
-        stimulus_modalities.append(acquisition.StimulusModality.WHEEL_FRICTION)
-        # Mouse platform
-        stimulus_epoch_configurations.append(acquisition.MousePlatformConfig(device_name="wheel", active_control=True))
-        _stim_code = self.get_bonsai_as_code()
-        _stim_code.parameters = self.task_logic_model.model_dump()
-
         stimulus_epochs: list[acquisition.StimulusEpoch] = [
             acquisition.StimulusEpoch(
                 active_devices=active_devices,
@@ -231,39 +279,11 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 stimulus_modalities=stimulus_modalities,
             )
         ]
+        return stimulus_epochs
 
-        data_streams: list[acquisition.DataStream] = [
-            acquisition.DataStream(
-                stream_start_time=self.session_model.date,
-                stream_end_time=self.session_end_time,
-                code=[self.get_bonsai_as_code(), self.get_python_as_code()],
-                active_devices=[
-                    d[0]
-                    for d in get_fields_of_type(self.rig_model, AbsRig.Device, stop_recursion_on_type=False)
-                    if d[0] is not None
-                ],
-                modalities=modalities,
-                configurations=self.get_cameras_config() + self.get_manipulators_config(),
-                notes=self.session_model.notes,
-            )
-        ]
-        # Construct aind-data-schema session
-        aind_data_schema_session = acquisition.Acquisition(
-            subject_id=self.session_model.subject,
-            instrument_id=self.rig_model.rig_name,
-            acquisition_end_time=utcnow(),
-            acquisition_start_time=self.session_model.date,
-            experimenters=self.session_model.experimenter,
-            acquisition_type=self.session_model.experiment,
-            coordinate_system=self.make_coordinate_system(),
-            data_streams=data_streams,
-            calibrations=calibrations,
-            stimulus_epochs=stimulus_epochs,
-        )
-        return aind_data_schema_session
-
-    def get_cameras_config(self) -> List[acquisition.DetectorConfig]:
+    def _get_cameras_config(self) -> List[acquisition.DetectorConfig]:
         def _map_camera(name: str, camera: AbsRig.cameras.CameraTypes) -> acquisition.DetectorConfig:
+            assert camera.video_writer is not None, "Camera does not have a video writer configured."
             return acquisition.DetectorConfig(
                 device_name=name,
                 exposure_time=getattr(camera, "exposure", -1),
@@ -272,14 +292,18 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 compression=_map_compression(camera.video_writer),
             )
 
-        def _map_compression(compression: AbsRig.cameras.VideoWriter):
+        def _map_compression(compression: AbsRig.cameras.VideoWriter) -> acquisition.Code:
             if compression is None:
                 raise ValueError("Camera does not have a video writer configured.")
             if isinstance(compression, AbsRig.cameras.VideoWriterFfmpeg):
-                return acquisition.Code(url="https://ffmpeg.org/", name="FFMPEG", parameters=compression.model_dump())
+                return acquisition.Code(
+                    url="https://ffmpeg.org/",
+                    name="FFMPEG",
+                    parameters=acquisition.GenericModel.model_validate(compression.model_dump()),
+                )
             elif isinstance(compression, AbsRig.cameras.VideoWriterOpenCv):
-                bonsai = self.get_bonsai_as_code()
-                bonsai.parameters = compression.model_dump()
+                bonsai = self._get_bonsai_as_code()
+                bonsai.parameters = acquisition.GenericModel.model_validate(compression.model_dump())
                 return bonsai
             else:
                 raise ValueError("Camera does not have a valid video writer configured.")
@@ -288,13 +312,13 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
         return list(map(_map_camera, cameras.keys(), cameras.values()))
 
-    def get_manipulators_config(self) -> List[acquisition.ManipulatorConfig]:
+    def _get_manipulators_config(self) -> List[acquisition.ManipulatorConfig]:
         def _mapper(name: Optional[str], manipulator: AindManipulatorDevice) -> acquisition.ManipulatorConfig:
             if name is None:
                 raise ValueError("Manipulator device name is None.")
             return acquisition.ManipulatorConfig(
                 device_name=name,
-                coordinate_system=self.make_coordinate_system(),
+                coordinate_system=self._make_coordinate_system(),
                 local_axis_positions=coordinates.Translation(translation=[0, 0, 0]),
             )  # TODO what should this be?
 
@@ -303,7 +327,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             raise ValueError("Manipulator device not found in rig model.")
         return list(map(lambda tup: _mapper(*tup), _manipulator))
 
-    def get_bonsai_as_code(self) -> acquisition.Code:
+    def _get_bonsai_as_code(self) -> acquisition.Code:
         bonsai_env = data_mapper_helpers.snapshot_bonsai_environment(Path("./bonsai/bonsai.config"))
         bonsai_version = bonsai_env.get("Bonsai", "unknown")
         assert isinstance(self.repository, git.Repo)
@@ -315,12 +339,11 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             language="Bonsai",
             language_version=bonsai_version,
             run_script=Path("./src/main.bonsai"),
-            parameters=bonsai_env,
         )
 
-    def get_python_as_code(self) -> acquisition.Code:
+    def _get_python_as_code(self) -> acquisition.Code:
         assert isinstance(self.repository, git.Repo)
-        python_env = data_mapper_helpers.snapshot_python_environment()
+        # python_env = data_mapper_helpers.snapshot_python_environment()
         v = sys.version_info
         semver = f"{v.major}.{v.minor}.{v.micro}"
         if v.releaselevel != "final":
@@ -331,11 +354,10 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             version=self.repository.head.commit.hexsha,
             language="Python",
             language_version=semver,
-            parameters=python_env,
         )
 
     @staticmethod
-    def make_coordinate_system() -> coordinates.CoordinateSystem:
+    def _make_coordinate_system() -> coordinates.CoordinateSystem:
         return coordinates.CoordinateSystem(
             name="origin",
             origin=coordinates.Origin.BREGMA,
