@@ -3447,7 +3447,8 @@
           "ClampedMultiplicativeRateFunction": "#/$defs/ClampedMultiplicativeRateFunction",
           "ClampedRateFunction": "#/$defs/ClampedRateFunction",
           "LookupTableFunction": "#/$defs/LookupTableFunction",
-          "SetValueFunction": "#/$defs/SetValueFunction"
+          "SetValueFunction": "#/$defs/SetValueFunction",
+          "StochasticTransitionFunction": "#/$defs/StochasticTransitionFunction"
         },
         "propertyName": "function_type"
       },
@@ -3463,6 +3464,9 @@
         },
         {
           "$ref": "#/$defs/LookupTableFunction"
+        },
+        {
+          "$ref": "#/$defs/StochasticTransitionFunction"
         }
       ]
     },
@@ -4612,6 +4616,52 @@
         "Confidence16",
         "Confidence32f"
       ]
+    },
+    "StochasticTransitionFunction": {
+      "description": "A patch update function that applies a stochastic transition.\n\nIt expects a transition matrix that takes the current value of the variable\nof interest (e.g. Probability), and outputs a new value based on the defined\nstochastic process in the transition matrix.",
+      "properties": {
+        "function_type": {
+          "const": "StochasticTransitionFunction",
+          "default": "StochasticTransitionFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "transition_matrix": {
+          "description": "Transition matrix between states",
+          "items": {
+            "items": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "title": "Transition Matrix",
+          "type": "array"
+        },
+        "rho": {
+          "description": "The underlying value goverining the stochastic process",
+          "title": "Rho",
+          "type": "number"
+        },
+        "minimum": {
+          "default": 1,
+          "description": "Maximum value after update",
+          "title": "Minimum",
+          "type": "number"
+        },
+        "maximum": {
+          "default": 0,
+          "description": "Minimum value after update",
+          "title": "Maximum",
+          "type": "number"
+        }
+      },
+      "required": [
+        "transition_matrix",
+        "rho"
+      ],
+      "title": "StochasticTransitionFunction",
+      "type": "object"
     },
     "Texture": {
       "description": "Defines visual texture properties for VR environment surfaces.\n\nTextures are applied to walls, floors, and other surfaces in the virtual\nenvironment to provide visual cues and context for the foraging task.\n\nTexture name must correspond to a valid texture asset loaded in the workflow.",

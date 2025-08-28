@@ -6,7 +6,8 @@ using Bonsai;
 using System.Reactive.Linq;
 using MathNet.Numerics.Distributions;
 using System.ComponentModel;
-
+using MathNet.Numerics;
+using MathNet.Numerics.Optimization;
 
 namespace AindVrForagingDataSchema
 {
@@ -75,6 +76,28 @@ namespace AindVrForagingDataSchema
             }
             IInterpolation interpolation = MathNet.Numerics.Interpolate.Linear(Table.Keys, Table.Values);
             return interpolation.Interpolate(tickValue);
+        }
+    }
+
+    public partial class StochasticTransitionFunction
+    {
+        public override double Invoke(double value, double tickValue, Random random = null)
+        {
+            if (random == null) random = defaultRandom;
+            int nStates = TransitionMatrix.Count();
+            int i = nStates - 1 - (int)Math.Round(Math.Log(value / Maximum) / Math.Log(Rho));
+            var coin = random.NextDouble();
+            var currentState = TransitionMatrix[i];
+            double cumulativeProbability = 0;
+            for (int j = 0; j < nStates; j++)
+            {
+                cumulativeProbability += currentState[j];
+                if (coin < cumulativeProbability)
+                {
+                    return (value - Minimum) / Math.Pow(Rho, i - j) + Minimum;
+                }
+            }
+            return value / Math.Pow(Rho, i - (nStates - 1)); //Should never get here, but just in case of numerical issues...
         }
     }
 

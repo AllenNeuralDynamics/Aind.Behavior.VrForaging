@@ -287,15 +287,55 @@ class SetValueFunction(_PatchUpdateFunction):
     value: distributions.Distribution = Field(description="Sets the value of the target to this value.")
 
 
+class StochasticTransitionFunction(_PatchUpdateFunction):
+    """
+    A patch update function that applies a stochastic transition.
+
+    It expects a transition matrix that takes the current value of the variable
+    of interest (e.g. Probability), and outputs a new value based on the defined
+    stochastic process in the transition matrix.
+    """
+
+    function_type: Literal["StochasticTransitionFunction"] = "StochasticTransitionFunction"
+    transition_matrix: List[List[NonNegativeFloat]] = Field(description="Transition matrix between states")
+    rho: float = Field(description="The underlying value goverining the stochastic process")
+    minimum: float = Field(default=1, description="Maximum value after update")
+    maximum: float = Field(default=0, description="Minimum value after update")
+
+    @field_validator("transition_matrix", mode="after")
+    @classmethod
+    def validate_transition_matrix(cls, value):
+        """Ensures matrix is of valid format and normalized to 1 within rows"""
+        if not value:
+            raise ValueError("Transition matrix must not be empty.")
+        if any(len(row) != len(value) for row in value):
+            raise ValueError("Transition matrix must be square (same number of rows and columns).")
+        for row in value:
+            row_sum = sum(row)
+            for col in row:
+                col /= row_sum
+        return value
+
+
 if TYPE_CHECKING:
     PatchUpdateFunction = Union[
-        ClampedRateFunction, ClampedMultiplicativeRateFunction, SetValueFunction, LookupTableFunction
+        ClampedRateFunction,
+        ClampedMultiplicativeRateFunction,
+        SetValueFunction,
+        LookupTableFunction,
+        StochasticTransitionFunction,
     ]
 else:
     PatchUpdateFunction = TypeAliasType(
         "PatchUpdateFunction",
         Annotated[
-            Union[ClampedRateFunction, ClampedMultiplicativeRateFunction, SetValueFunction, LookupTableFunction],
+            Union[
+                ClampedRateFunction,
+                ClampedMultiplicativeRateFunction,
+                SetValueFunction,
+                LookupTableFunction,
+                StochasticTransitionFunction,
+            ],
             Field(discriminator="function_type"),
         ],
     )
