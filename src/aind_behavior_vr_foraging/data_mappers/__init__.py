@@ -17,7 +17,7 @@ from ._session import AindSessionDataMapper
 logger = logging.getLogger(__name__)
 
 
-class MapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
+class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
     data_path: os.PathLike = pydantic.Field(description="Path to the session data directory.")
     db_root: os.PathLike = pydantic.Field(
         default=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging"),
@@ -46,7 +46,7 @@ class MapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
         assert session.session_name is not None
         assert session_mapped is not None
 
-        session_mapped.rig_id = rig_mapped.rig_id
+        session_mapped.instrument_id = rig_mapped.instrument_id
         logger.info("Writing session.json to %s", self.data_path)
         session_mapped.write_standard_file(Path(self.data_path))
         logger.info("Writing rig.json to %s", self.data_path)
@@ -55,4 +55,4 @@ class MapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
 
 
 if __name__ == "__main__":
-    pydantic_settings.CliApp().run(MapperCli)
+    pydantic_settings.CliApp().run(DataMapperCli)
