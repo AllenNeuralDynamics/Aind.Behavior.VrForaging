@@ -133,7 +133,6 @@ def mock_rig() -> AindVrForagingRig:
     water_valve_calibration = WaterValveCalibration(
         input=water_valve_input, output=water_valve_input.calibrate_output(), date=datetime.datetime.now()
     )
-    water_valve_calibration.output = WaterValveCalibrationOutput(slope=30, offset=0)  # For testing purposes
 
     video_writer = rig.cameras.VideoWriterFfmpeg(frame_rate=120, container_extension="mp4")
 
