@@ -32,7 +32,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         session_model: AindBehaviorSessionModel,
         rig_model: AindVrForagingRig,
         task_logic_model: AindVrForagingTaskLogic,
-        repository: Union[os.PathLike, git.Repo],
+        repository: Union[os.PathLike, git.Repo] = Path("."),
         script_path: os.PathLike = Path("./src/main.bonsai"),
         session_end_time: Optional[datetime.datetime] = None,
         curriculum: Optional[CurriculumSuggestion] = None,
@@ -109,6 +109,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         # Construct aind-data-schema session
         aind_data_schema_session = acquisition.Acquisition(
             subject_id=self.session_model.subject,
+            subject_details=self._get_subject_details(),
             instrument_id=self.rig_model.rig_name,
             acquisition_end_time=utcnow(),
             acquisition_start_time=self.session_model.date,
@@ -123,6 +124,9 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     def write_standard_file(self, directory: os.PathLike) -> None:
         self.mapped.write_standard_file(Path(directory))
+
+    def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
+        return acquisition.AcquisitionSubjectDetails(mouse_platform_name="wheel")
 
     def _get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
         calibrations = []
