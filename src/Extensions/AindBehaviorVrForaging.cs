@@ -79,7 +79,7 @@ namespace AindVrForagingDataSchema
         }
     }
 
-    public partial class StochasticTransitionFunction
+    public partial class CtcmFunction
     {
         public override double Invoke(double value, double tickValue, Random random = null)
         {
