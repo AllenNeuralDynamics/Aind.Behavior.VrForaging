@@ -22,6 +22,7 @@ from clabe.launcher import Launcher, Promise
 
 from aind_behavior_vr_foraging.rig import AindManipulatorDevice, AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
+from aind_behavior_vr_foraging.data_mappers._utils import _get_water_calibration, _get_other_calibrations
 
 logger = logging.getLogger(__name__)
 
@@ -130,61 +131,11 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     def _get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
         calibrations = []
-        calibrations += self._get_water_calibration()
-        calibrations += self._get_other_calibrations()
+        calibrations += _get_water_calibration(self.rig_model)
+        calibrations += _get_other_calibrations(self.rig_model)
         return calibrations
 
-    def _get_other_calibrations(
-        self, exclude: tuple[Type] = (AbsCalibration.water_valve.WaterValveCalibration,)
-    ) -> List[measurements.Calibration]:
-        def _mapper(device_name: Optional[str], calibration: AbsCalibration.Calibration) -> measurements.Calibration:
-            device_name = device_name or calibration.device_name
-            if device_name is None:
-                raise ValueError("Device name is not set.")
-            description = calibration.description or calibration.__doc__ or ""
-            return measurements.Calibration(
-                device_name=device_name,
-                calibration_date=calibration.date if calibration.date else utcnow(),
-                description=description,
-                notes=calibration.notes,
-                input=[calibration.input.model_dump_json() if calibration.input else ""],
-                output=[calibration.output.model_dump_json() if calibration.output else ""],
-                output_unit=units.UnitlessUnit.PERCENT,
-                input_unit=units.UnitlessUnit.PERCENT,
-            )
 
-        calibrations = get_fields_of_type(self.rig_model, AbsCalibration.Calibration)
-        calibrations = [c for c in calibrations if not (isinstance(c[1], tuple(exclude)))]
-        return list(map(lambda tup: _mapper(*tup), calibrations)) if len(calibrations) > 0 else []
-
-    def _get_water_calibration(self) -> List[measurements.VolumeCalibration]:
-        def _mapper(
-            device_name: Optional[str], water_calibration: AbsCalibration.water_valve.WaterValveCalibration
-        ) -> measurements.VolumeCalibration:
-            device_name = device_name or water_calibration.device_name
-            if device_name is None:
-                raise ValueError("Device name is not set.")
-            c = water_calibration.output
-            if c is None:
-                c = water_calibration.input.calibrate_output()
-            assert c.interval_average is not None
-
-            return measurements.VolumeCalibration(
-                device_name=device_name,
-                calibration_date=water_calibration.date if water_calibration.date else utcnow(),
-                notes=water_calibration.notes,
-                input=list(c.interval_average.keys()),
-                output=list(c.interval_average.values()),
-                input_unit=units.TimeUnit.S,
-                output_unit=units.VolumeUnit.ML,
-                fit=measurements.CalibrationFit(
-                    fit_type=measurements.FitType.LINEAR,
-                    fit_parameters=acquisition.GenericModel.model_validate(c.model_dump()),
-                ),
-            )
-
-        water_calibration = get_fields_of_type(self.rig_model, AbsCalibration.water_valve.WaterValveCalibration)
-        return list(map(lambda tup: _mapper(*tup), water_calibration)) if len(water_calibration) > 0 else []
 
     def _get_data_streams(self) -> List[acquisition.DataStream]:
         assert self.session_end_time is not None, "Session end time is not set."

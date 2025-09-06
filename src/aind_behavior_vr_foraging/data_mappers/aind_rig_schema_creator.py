@@ -63,13 +63,14 @@ class AindRigSchemaMapper:
             operating_system="Windows 11"
         )
 
+    def _get_enclosure(self):
         enclosure = Enclosure(
             name="Behavior enclosure",
-            size=Scale(scale = [568, 540, 506]),
+            size=Scale(scale=[568, 540, 506]),
             size_unit=SizeUnit.MM,
             manufacturer=Organization.AIND,
             internal_material="High density foam",
-            external_material="Wood and aluminium frame",
+            external_material="Wood and aluminum frame",
             grounded=True,
             air_filtration=False,
             laser_interlock=False
