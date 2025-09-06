@@ -287,16 +287,17 @@ class SetValueFunction(_PatchUpdateFunction):
     value: distributions.Distribution = Field(description="Sets the value of the target to this value.")
 
 
-class StochasticTransitionFunction(_PatchUpdateFunction):
+class CtcmFunction(_PatchUpdateFunction):
     """
-    A patch update function that applies a stochastic transition.
+    A patch update function that uses a continuous-time Markov chain (CTMC)
+    to determine patch updates based on a transition probability matrix.
 
     It expects a transition matrix that takes the current value of the variable
     of interest (e.g. Probability), and outputs a new value based on the defined
     stochastic process in the transition matrix.
     """
 
-    function_type: Literal["StochasticTransitionFunction"] = "StochasticTransitionFunction"
+    function_type: Literal["CtcmFunction"] = "CtcmFunction"
     transition_matrix: List[List[NonNegativeFloat]] = Field(description="Transition matrix between states")
     rho: float = Field(description="The underlying value goverining the stochastic process")
     minimum: float = Field(default=1, description="Maximum value after update")
@@ -323,7 +324,7 @@ if TYPE_CHECKING:
         ClampedMultiplicativeRateFunction,
         SetValueFunction,
         LookupTableFunction,
-        StochasticTransitionFunction,
+        CtcmFunction,
     ]
 else:
     PatchUpdateFunction = TypeAliasType(
@@ -334,7 +335,7 @@ else:
                 ClampedMultiplicativeRateFunction,
                 SetValueFunction,
                 LookupTableFunction,
-                StochasticTransitionFunction,
+                CtcmFunction,
             ],
             Field(discriminator="function_type"),
         ],

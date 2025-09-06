@@ -104,7 +104,7 @@ def make_patch(
     )
 
     replenishment = vr_task_logic.OutsideRewardFunction(
-        probability=vr_task_logic.StochasticTransitionFunction(
+        probability=vr_task_logic.CtcmFunction(
             transition_matrix=cast(list[list[float]], compute_cmc_transition_probability(n_states, rep_rate).tolist()),
             maximum=p_max,
             minimum=p_min,
