@@ -78,7 +78,7 @@ p_maxs = [
     0.7,
     0.4,
 ]  # maximum reward probability of each patch, in order for patch A, B and C (they come in order A, B, C, A, ...)
-p_min = [0.2, 0.2, 0.2]  # minumum reward proability only used for stopping depletion
+p_min = [0.2, 0.2, 0.2]  # minimum reward probability only used for stopping depletion
 dep_rates = [0.9, 0.81, 0.73]  # depletion rate of each patch
 inter_patch_time = [3, 2, 1]  # delay before replenishment starts for each patch
 rhos = [0.9, 0.9, 0.9]
