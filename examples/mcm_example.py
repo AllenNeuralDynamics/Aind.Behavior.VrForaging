@@ -74,7 +74,7 @@ reward_amount = 5  # microliters
 rep_rates = [0.2, 0.02, 0.001]  # replenishment rate of each patch
 num_ps_states = [16, 12, 7]  # number of discrete reward states within each patch
 p_maxs = [
-    1,
+    0.9,
     0.7,
     0.4,
 ]  # maximum reward probability of each patch, in order for patch A, B and C (they come in order A, B, C, A, ...)

@@ -86,18 +86,23 @@ namespace AindVrForagingDataSchema
             if (random == null) random = defaultRandom;
             int nStates = TransitionMatrix.Count();
             int i = nStates - 1 - (int)Math.Round(Math.Log(value / Maximum) / Math.Log(Rho));
+            i = Math.Max(0, Math.Min(nStates - 1, i));
             var coin = random.NextDouble();
             var currentState = TransitionMatrix[i];
             double cumulativeProbability = 0;
-            for (int j = 0; j < nStates; j++)
+            int j;
+            double updatedValue;
+            for (j = 0; j < nStates; j++)
             {
                 cumulativeProbability += currentState[j];
                 if (coin < cumulativeProbability)
                 {
-                    return (value - Minimum) / Math.Pow(Rho, i - j) + Minimum;
+                    break;
                 }
             }
-            return value / Math.Pow(Rho, i - (nStates - 1)); //Should never get here, but just in case of numerical issues...
+            j = Math.Min(nStates - 1, j);
+            updatedValue = value / Math.Pow(Rho, j - i);
+            return Math.Max(Math.Min(updatedValue, Maximum), Minimum);
         }
     }
 
