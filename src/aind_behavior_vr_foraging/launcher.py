@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Any
 
+from aind_behavior_curriculum import TrainerState
 from aind_behavior_services.session import AindBehaviorSessionModel
 from clabe import resource_monitor
 from clabe.apps import (
@@ -17,6 +18,7 @@ from clabe.launcher import (
     Launcher,
     LauncherCliArgs,
     Promise,
+    run_if,
 )
 from pydantic_settings import CliApp
 
@@ -62,9 +64,16 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
 
     # Curriculum
     suggestion = launcher.register_callable(
-        trainer.build_runner(input_trainer_state=Promise(lambda x: picker.trainer_state))
+        run_if(lambda: trainer_state_exists_predicate(picker.trainer_state))(
+            trainer.build_runner(input_trainer_state=Promise(lambda x: picker.trainer_state))
+        )
     )
-    launcher.register_callable(lambda launcher: _dump_suggestion(launcher, suggestion))
+    launcher.register_callable(
+        run_if(lambda: suggestion.result is not None)(lambda launcher: _dump_suggestion(launcher, suggestion))
+    )
+    launcher.register_callable(
+        run_if(lambda: suggestion.result is not None)(lambda launcher: picker.dump_model(launcher, suggestion.result))
+    )
 
     # Mappers
     session_mapper_promise = launcher.register_callable(AindSessionDataMapper.build_runner(bonsai_app))
@@ -83,6 +92,18 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
 def _dump_suggestion(launcher: Launcher[Any, Any, Any], suggestion: Promise[Any, CurriculumSuggestion]) -> None:
     with open(launcher.session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
         f.write(suggestion.result.model_dump_json(indent=2))
+
+
+def trainer_state_exists_predicate(input_trainer_state: TrainerState | Promise[Any, TrainerState]) -> bool:
+    if isinstance(input_trainer_state, Promise):
+        input_trainer_state = input_trainer_state.result
+    if input_trainer_state is None:
+        return False
+    if input_trainer_state.is_on_curriculum is False:
+        return False
+    if input_trainer_state.stage is None:
+        return False
+    return True
 
 
 class ClabeCli(LauncherCliArgs):
