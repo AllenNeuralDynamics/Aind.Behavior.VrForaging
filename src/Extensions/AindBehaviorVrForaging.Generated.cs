@@ -3686,6 +3686,144 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A patch update function that uses a continuous-time Markov chain (CTMC)
+    ///to determine patch updates based on a transition probability matrix.
+    ///
+    ///It expects a transition matrix that takes the current value of the variable
+    ///of interest (e.g. Probability), and outputs a new value based on the defined
+    ///stochastic process in the transition matrix.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute(@"A patch update function that uses a continuous-time Markov chain (CTMC)
+    to determine patch updates based on a transition probability matrix.
+
+    It expects a transition matrix that takes the current value of the variable
+    of interest (e.g. Probability), and outputs a new value based on the defined
+    stochastic process in the transition matrix.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class CtcmFunction : PatchUpdateFunction
+    {
+    
+        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _transitionMatrix;
+    
+        private double _rho;
+    
+        private double _minimum;
+    
+        private double _maximum;
+    
+        public CtcmFunction()
+        {
+            _transitionMatrix = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
+            _minimum = 1D;
+            _maximum = 0D;
+        }
+    
+        protected CtcmFunction(CtcmFunction other) : 
+                base(other)
+        {
+            _transitionMatrix = other._transitionMatrix;
+            _rho = other._rho;
+            _minimum = other._minimum;
+            _maximum = other._maximum;
+        }
+    
+        /// <summary>
+        /// Transition matrix between states
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("transition_matrix", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Transition matrix between states")]
+        public System.Collections.Generic.List<System.Collections.Generic.List<double>> TransitionMatrix
+        {
+            get
+            {
+                return _transitionMatrix;
+            }
+            set
+            {
+                _transitionMatrix = value;
+            }
+        }
+    
+        /// <summary>
+        /// The underlying value goverining the stochastic process
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rho", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The underlying value goverining the stochastic process")]
+        public double Rho
+        {
+            get
+            {
+                return _rho;
+            }
+            set
+            {
+                _rho = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum value after update
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
+        [System.ComponentModel.DescriptionAttribute("Maximum value after update")]
+        public double Minimum
+        {
+            get
+            {
+                return _minimum;
+            }
+            set
+            {
+                _minimum = value;
+            }
+        }
+    
+        /// <summary>
+        /// Minimum value after update
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("maximum")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value after update")]
+        public double Maximum
+        {
+            get
+            {
+                return _maximum;
+            }
+            set
+            {
+                _maximum = value;
+            }
+        }
+    
+        public System.IObservable<CtcmFunction> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CtcmFunction(this)));
+        }
+    
+        public System.IObservable<CtcmFunction> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new CtcmFunction(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("TransitionMatrix = " + _transitionMatrix + ", ");
+            stringBuilder.Append("Rho = " + _rho + ", ");
+            stringBuilder.Append("Minimum = " + _minimum + ", ");
+            stringBuilder.Append("Maximum = " + _maximum);
+            return true;
+        }
+    }
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
@@ -9184,6 +9322,7 @@ namespace AindVrForagingDataSchema
     [JsonInheritanceAttribute("ClampedMultiplicativeRateFunction", typeof(ClampedMultiplicativeRateFunction))]
     [JsonInheritanceAttribute("SetValueFunction", typeof(SetValueFunction))]
     [JsonInheritanceAttribute("LookupTableFunction", typeof(LookupTableFunction))]
+    [JsonInheritanceAttribute("CtcmFunction", typeof(CtcmFunction))]
     [System.ComponentModel.DescriptionAttribute(@"A patch update function that applies a clamped rate-based update.
 
     Update in the form of x = clamp(x + rate * tick_value).
@@ -15559,6 +15698,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ClampedMultiplicativeRateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SetValueFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LookupTableFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CtcmFunction>))]
     public partial class MatchPatchUpdateFunction : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -16114,6 +16254,11 @@ namespace AindVrForagingDataSchema
             return Process<ConnectedClockOutput>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<CtcmFunction> source)
+        {
+            return Process<CtcmFunction>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<DisplayCalibration> source)
         {
             return Process<DisplayCalibration>(source);
@@ -16627,6 +16772,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ClampedMultiplicativeRateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ClampedRateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ConnectedClockOutput>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CtcmFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
