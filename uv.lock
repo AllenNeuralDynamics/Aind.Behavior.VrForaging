@@ -84,6 +84,7 @@ docs = [
 launcher = [
     { name = "aind-clabe", extra = ["aind-services"] },
     { name = "aind-data-schema" },
+    { name = "contraqctor" },
 ]
 
 [package.metadata]
@@ -91,6 +92,7 @@ requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'dev'" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'docs'" },
+    { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"], marker = "extra == 'dev'" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = "==1.4" },

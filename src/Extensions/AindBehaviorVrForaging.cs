@@ -6,7 +6,8 @@ using Bonsai;
 using System.Reactive.Linq;
 using MathNet.Numerics.Distributions;
 using System.ComponentModel;
-
+using MathNet.Numerics;
+using MathNet.Numerics.Optimization;
 
 namespace AindVrForagingDataSchema
 {
@@ -75,6 +76,33 @@ namespace AindVrForagingDataSchema
             }
             IInterpolation interpolation = MathNet.Numerics.Interpolate.Linear(Table.Keys, Table.Values);
             return interpolation.Interpolate(tickValue);
+        }
+    }
+
+    public partial class CtcmFunction
+    {
+        public override double Invoke(double value, double tickValue, Random random = null)
+        {
+            if (random == null) random = defaultRandom;
+            int nStates = TransitionMatrix.Count();
+            int i = nStates - 1 - (int)Math.Round(Math.Log(value / Maximum) / Math.Log(Rho));
+            i = Math.Max(0, Math.Min(nStates - 1, i));
+            var coin = random.NextDouble();
+            var currentState = TransitionMatrix[i];
+            double cumulativeProbability = 0;
+            int j;
+            double updatedValue;
+            for (j = 0; j < nStates; j++)
+            {
+                cumulativeProbability += currentState[j];
+                if (coin < cumulativeProbability)
+                {
+                    break;
+                }
+            }
+            j = Math.Min(nStates - 1, j);
+            updatedValue = value / Math.Pow(Rho, j - i);
+            return Math.Max(Math.Min(updatedValue, Maximum), Minimum);
         }
     }
 
