@@ -45,7 +45,67 @@
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>EnableExperimentUI</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.AindManipulator:AindManipulatorGui.bonsai" />
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>Manipulator</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.AindManipulator:AindManipulatorGui.bonsai" />
+                        <Expression xsi:type="VisualizerMapping">
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TriggeredCamerasStream</Name>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core.Design:SpinnakerCameraControllerVisualizer.bonsai" />
+                        <Expression xsi:type="VisualizerMapping">
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>MonitoringCamerasStream</Name>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\WebCameraControllerVisualizer.bonsai" />
+                        <Expression xsi:type="VisualizerMapping">
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+                        </Expression>
+                        <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                          <gui:Enabled>true</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:ColumnCount>1</gui:ColumnCount>
+                          <gui:RowCount>2</gui:RowCount>
+                          <gui:ColumnStyles />
+                          <gui:RowStyles />
+                          <gui:CellSpans />
+                        </Expression>
+                        <Expression xsi:type="VisualizerMapping">
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+                        </Expression>
+                        <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                          <gui:Name>Manipulator</gui:Name>
+                          <gui:Enabled>true</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:ColumnCount>2</gui:ColumnCount>
+                          <gui:RowCount>1</gui:RowCount>
+                          <gui:ColumnStyles />
+                          <gui:RowStyles />
+                          <gui:CellSpans />
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="10" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="8" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source2" />
+                        <Edge From="10" To="11" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
                   <Expression xsi:type="VisualizerMapping">
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
@@ -1302,23 +1362,11 @@ Item2 as TotalReward)</scr:Expression>
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
             </Expression>
-            <Expression xsi:type="gui:TableLayoutPanelBuilder">
+            <Expression xsi:type="gui:TabControlBuilder">
+              <gui:Name>VrForaging</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
-              <gui:ColumnCount>2</gui:ColumnCount>
-              <gui:RowCount>1</gui:RowCount>
-              <gui:ColumnStyles>
-                <gui:ColumnStyle>
-                  <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Width>0.25</gui:Width>
-                </gui:ColumnStyle>
-                <gui:ColumnStyle>
-                  <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Width>0.75</gui:Width>
-                </gui:ColumnStyle>
-              </gui:ColumnStyles>
-              <gui:RowStyles />
-              <gui:CellSpans />
+              <gui:Font>Microsoft Sans Serif, 10pt</gui:Font>
             </Expression>
             <Expression xsi:type="ui:VisualizerWindow">
               <ui:Text>VrForaging</ui:Text>
