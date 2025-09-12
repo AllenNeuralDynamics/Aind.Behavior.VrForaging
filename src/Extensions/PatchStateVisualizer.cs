@@ -51,7 +51,7 @@ namespace AllenNeuralDynamics.VrForaging
             ImPlot.PushStyleVar(ImPlotStyleVar.BorderSize, 0);
             ImGui.PushFont(ImGui.GetFont(), 20f);
 
-            if (ImPlot.BeginPlot(fieldName, new Vector2(-1, -1)))
+            if (ImPlot.BeginPlot(fieldName, new Vector2(-1, -1), ImPlotFlags.NoLegend))
             {
                 var xxs = patchStateManager.Keys.ToList();
                 xxs.Sort();
@@ -90,7 +90,7 @@ namespace AllenNeuralDynamics.VrForaging
                     fixed (double* y = new double[1] { yys[i] })
                     fixed (double* x = new double[1] { patchIdx })
                     {
-                        ImPlot.PlotBars(string.Format("Patch{0}", patchIdx), x, y, 1, 0.9f);
+                        ImPlot.PlotBars(string.Format("Index_{0}", patchIdx), x, y, 1, 0.9f);
                     }
                 }
                 ImPlot.EndPlot();
