@@ -170,10 +170,10 @@
                           <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:ButtonVisualizer" />
                         </Expression>
                         <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                          <gui:Name>OnlineLabels</gui:Name>
+                          <gui:Name>TextLabels</gui:Name>
                           <gui:Enabled>true</gui:Enabled>
                           <gui:Visible>true</gui:Visible>
-                          <gui:Font>Consolas, 18pt</gui:Font>
+                          <gui:Font>Consolas, 16pt</gui:Font>
                           <gui:ColumnCount>2</gui:ColumnCount>
                           <gui:RowCount>1</gui:RowCount>
                           <gui:ColumnStyles />
