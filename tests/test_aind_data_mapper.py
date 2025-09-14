@@ -4,11 +4,10 @@ from datetime import datetime
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+from aind_data_schema.core import acquisition, instrument
 from git import Repo
 
-from aind_behavior_vr_foraging.data_mappers import (
-    AindSessionDataMapper,
-)
+from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
 
 sys.path.append(".")
 from examples.examples import mock_rig, mock_session, mock_task_logic  # isort:skip # pylint: disable=wrong-import-position
@@ -43,6 +42,35 @@ class TestAindSessionDataMapper(unittest.TestCase):
     def test_map(self):
         mapped = self.mapper.map()
         self.assertIsNotNone(mapped)
+
+    def test_round_trip(self):
+        mapped = self.mapper.map()
+        assert mapped is not None
+        acquisition.Acquisition.model_validate_json(mapped.model_dump_json())
+
+
+class TestAindRigDataMapper(unittest.TestCase):
+    def setUp(self):
+        self.rig_model = mock_rig()
+        self.mapper = AindRigDataMapper(
+            rig_model=self.rig_model,
+        )
+
+    @patch("aind_behavior_vr_foraging.data_mappers.AindRigDataMapper._map")
+    def test_mock_map(self, mock_map):
+        mock_map.return_value = MagicMock()
+        result = self.mapper.map()
+        self.assertIsNotNone(result)
+        self.assertTrue(self.mapper.is_mapped())
+
+    def test_map(self):
+        mapped = self.mapper.map()
+        self.assertIsNotNone(mapped)
+
+    def test_round_trip(self):
+        mapped = self.mapper.map()
+        assert mapped is not None
+        instrument.Instrument.model_validate_json(mapped.model_dump_json())
 
 
 if __name__ == "__main__":

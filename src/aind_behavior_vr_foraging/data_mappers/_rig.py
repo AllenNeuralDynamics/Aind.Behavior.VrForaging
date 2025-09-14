@@ -18,7 +18,7 @@ from clabe.launcher import Launcher
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
-from ._utils import TrackedDevices, get_fields_of_type, utcnow
+from ._utils import TrackedDevices, utcnow
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +92,6 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     @classmethod
     def _map(cls, rig: AindVrForagingRig) -> instrument.Instrument:
         _modalities = [modalities.Modality.BEHAVIOR, modalities.Modality.BEHAVIOR_VIDEOS]
-
         _components, _connections = cls._get_all_components_and_connections(rig)
         _calibrations: list[measurements.Calibration] = cls._get_calibrations(rig)
 
@@ -151,7 +150,10 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     @staticmethod
     def _get_computer(rig: AindVrForagingRig) -> devices.Computer:
         return devices.Computer(
-            name=rig.computer_name, manufacturer=devices.Organization.AIND, operating_system=platform.platform()
+            name=TrackedDevices.COMPUTER,
+            manufacturer=devices.Organization.AIND,
+            operating_system=platform.platform(),
+            serial_number=rig.computer_name,
         )
 
     @staticmethod
@@ -289,18 +291,18 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         )
 
     @staticmethod
-    def _get_harp_clock_generate_node(rig: AindVrForagingRig) -> _DeviceNode:
+    def _get_harp_clock_generate_node(rig: AindVrForagingRig, components: list[devices.Device]) -> _DeviceNode:
         source_device = rig.harp_clock_generator.name or "harp_clock_generator"
-        all_harp_devices = get_fields_of_type(rig, AbsRig.harp._HarpDeviceBase)  # TODO May need to fix this
+        harp_devices = [d for d in components if isinstance(d, devices.HarpDevice)]
         _connections = [
             connections.Connection(
                 source_device=source_device,
-                target_device=name or device.name or device.device_type,
+                target_device=device.name,
                 source_port="ClkOut",
                 target_port="ClkIn",
             )
-            for name, device in all_harp_devices
-            if device != rig.harp_clock_generator
+            for device in harp_devices
+            if device.name != source_device
         ]
 
         harp_device = devices.HarpDevice(
@@ -355,10 +357,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         _components.extend(harp_treadmill_node.spawned_devices)
         _connections.extend(harp_treadmill_node.connections_from)
 
-        harp_clock_generator_node = cls._get_harp_clock_generate_node(rig)
-        _components.append(harp_clock_generator_node.device)
         _components.append(cls._get_olfactometer(rig))
-        _connections.extend(harp_clock_generator_node.connections_from)
 
         # Get all other harp devices
         harp_lickometer = devices.HarpDevice(
@@ -385,6 +384,11 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
                     is_clock_generator=False,
                 )
             )
+
+        # Leave the clock for last to bind all the devices to it
+        harp_clock_generator_node = cls._get_harp_clock_generate_node(rig, _components)
+        _components.append(harp_clock_generator_node.device)
+        _connections.extend(harp_clock_generator_node.connections_from)
 
         _components.append(
             cls._get_wheel(
@@ -513,7 +517,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
                 model="HM-VS-1150",
                 filter_type=devices.FilterType.DICHROIC,
                 cut_off_wavelength=750,
-                notes="Dichroic filter to reflect visible light and pass infrared light; used to combine IR illumination with visible stimulus on the same screen",
+                notes="Dichroic filter to reflect visible light and pass infrared light; used to combine IR illumination with visible stimulus on the same screen.",
             )
         ]
 
@@ -570,11 +574,13 @@ class _PartialCameraAssembly:
     target: devices.CameraTarget
     relative_position: list[aind_schema_model_coordinates.AnatomicalRelative]
     lens: devices.Lens
-    filter: devices.Filter = devices.Filter(
-        name="long_pass_camera_filter",
-        filter_type=devices.FilterType.LONGPASS,
-        cut_on_wavelength=810,
-        manufacturer=devices.Organization.THORLABS,
+    filter: devices.Filter = dataclasses.field(
+        default_factory=lambda: devices.Filter(
+            name="long_pass_camera_filter",
+            filter_type=devices.FilterType.LONGPASS,
+            cut_on_wavelength=810,
+            manufacturer=devices.Organization.THORLABS,
+        )
     )
 
 
@@ -597,9 +603,7 @@ _camera_assembly_lookup = {
         target=devices.CameraTarget.BODY,
         relative_position=[aind_schema_model_coordinates.AnatomicalRelative.LATERAL],
         lens=devices.Lens(
-            name="side_camera_lens",
-            manufacturer=devices.Organization.OTHER,
-            model="LM5JCM",
+            name="side_camera_lens", manufacturer=devices.Organization.OTHER, model="LM5JCM", notes="manufacturer=Kowa"
         ),
     ),
     "FrontCamera": _PartialCameraAssembly(
@@ -610,9 +614,7 @@ _camera_assembly_lookup = {
             aind_schema_model_coordinates.AnatomicalRelative.SUPERIOR,
         ],
         lens=devices.Lens(
-            name="front_camera_lens",
-            manufacturer=devices.Organization.OTHER,
-            model="LM5JCM",
+            name="front_camera_lens", manufacturer=devices.Organization.OTHER, model="LM5JCM", notes="manufacturer=Kowa"
         ),
     ),
 }
