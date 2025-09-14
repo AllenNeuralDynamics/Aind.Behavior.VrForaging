@@ -119,3 +119,4 @@ class TrackedDevices(enum.StrEnum):
     MOTORIZED_STAGE = "motorized_stage"
     LICK_SPOUT = "lick_spout"
     SCREEN = "screen"
+    COMPUTER = "computer"
