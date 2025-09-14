@@ -3,15 +3,14 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Type, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
-import aind_behavior_services.calibration as AbsCalibration
 import aind_behavior_services.rig as AbsRig
 import git
 import pydantic
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import get_fields_of_type, utcnow
-from aind_data_schema.components import configs, coordinates, measurements
+from aind_data_schema.components import configs, coordinates
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
 from aind_data_schema_models.modalities import Modality
@@ -22,7 +21,8 @@ from clabe.launcher import Launcher, Promise
 
 from aind_behavior_vr_foraging.rig import AindManipulatorDevice, AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
-from aind_behavior_vr_foraging.data_mappers._utils import _get_water_calibration, _get_other_calibrations
+
+from ._utils import TrackedDevices, _get_other_calibrations, _get_water_calibration
 
 logger = logging.getLogger(__name__)
 
@@ -61,9 +61,14 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         return self.mapped
 
     @classmethod
-    def build_runner(cls) -> Callable[[Launcher], "AindSessionDataMapper"]:
+    def build_runner(
+        cls,
+    ) -> Callable[
+        [Launcher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic]], "AindSessionDataMapper"
+    ]:
         def _new(
-            launcher: Launcher, curriculum: Optional[Promise[[Any], CurriculumSuggestion]] = None
+            launcher: Launcher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
+            curriculum: Optional[Promise[[Any], CurriculumSuggestion]] = None,
         ) -> "AindSessionDataMapper":
             new = cls(
                 session_model=launcher.get_session(strict=True),
@@ -127,15 +132,13 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.mapped.write_standard_file(Path(directory))
 
     def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
-        return acquisition.AcquisitionSubjectDetails(mouse_platform_name="wheel")
+        return acquisition.AcquisitionSubjectDetails(mouse_platform_name=TrackedDevices.WHEEL)
 
     def _get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
         calibrations = []
         calibrations += _get_water_calibration(self.rig_model)
         calibrations += _get_other_calibrations(self.rig_model)
         return calibrations
-
-
 
     def _get_data_streams(self) -> List[acquisition.DataStream]:
         assert self.session_end_time is not None, "Session end time is not set."
@@ -169,9 +172,11 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         # Auditory Stimulation
         stimulus_modalities.append(acquisition.StimulusModality.AUDITORY)
         stimulus_epoch_configurations.append(
-            acquisition.SpeakerConfig(device_name="Speaker", volume=60.0, volume_unit=units.SoundIntensityUnit.DB)
+            acquisition.SpeakerConfig(
+                device_name=TrackedDevices.SPEAKER, volume=60.0, volume_unit=units.SoundIntensityUnit.DB
+            )
         )
-        active_devices.append("Speaker")
+        active_devices.append(TrackedDevices.SPEAKER)
 
         # Visual/VR Stimulation
         stimulus_modalities.extend(
@@ -183,7 +188,9 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
         # Mouse platform
         stimulus_modalities.append(acquisition.StimulusModality.WHEEL_FRICTION)
-        stimulus_epoch_configurations.append(acquisition.MousePlatformConfig(device_name="wheel", active_control=True))
+        stimulus_epoch_configurations.append(
+            acquisition.MousePlatformConfig(device_name=TrackedDevices.WHEEL, active_control=True)
+        )
 
         # Stimulus code
         # Note: According to this discussion, if stimuli are programmatically generated, we can use this instead of configuration.
