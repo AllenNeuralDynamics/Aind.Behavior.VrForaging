@@ -118,11 +118,12 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>QCDiagnosis</Name>
                         </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Heartbeat</Selector>
+                        </Expression>
                         <Expression xsi:type="Format">
-                          <Format>Harp: {0}
-WaterConsumed: {1}
-TSinceChoice: {2:mm\:ss}</Format>
-                          <Selector>Heartbeat,TotalReward,SecondsSinceChoice</Selector>
+                          <Format>Harp: {0}</Format>
+                          <Selector>it</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -137,6 +138,67 @@ TSinceChoice: {2:mm\:ss}</Format>
                         </Expression>
                         <Expression xsi:type="VisualizerMapping">
                           <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TextBoxVisualizer" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>QCDiagnosis</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>TotalReward</Selector>
+                        </Expression>
+                        <Expression xsi:type="Format">
+                          <Format>WaterConsumed: {0}</Format>
+                          <Selector>it</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Text" Selector="it" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="gui:TextBoxBuilder">
+                          <gui:Enabled>false</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:Text />
+                          <gui:Multiline>true</gui:Multiline>
+                        </Expression>
+                        <Expression xsi:type="VisualizerMapping">
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TextBoxVisualizer" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>QCDiagnosis</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>SecondsSinceChoice</Selector>
+                        </Expression>
+                        <Expression xsi:type="Format">
+                          <Format>TSinceChoice: {0:mm\:ss}</Format>
+                          <Selector>it</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Text" Selector="it" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="gui:TextBoxBuilder">
+                          <gui:Enabled>false</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:Text />
+                          <gui:Multiline>true</gui:Multiline>
+                        </Expression>
+                        <Expression xsi:type="VisualizerMapping">
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TextBoxVisualizer" />
+                        </Expression>
+                        <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                          <gui:Name>Labels</gui:Name>
+                          <gui:Enabled>true</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:ColumnCount>1</gui:ColumnCount>
+                          <gui:RowCount>3</gui:RowCount>
+                          <gui:ColumnStyles />
+                          <gui:RowStyles />
+                          <gui:CellSpans />
+                        </Expression>
+                        <Expression xsi:type="VisualizerMapping">
+                          <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="gl:RenderFrame" />
@@ -318,19 +380,34 @@ Item2.Item2 as SecondsSinceChoice)</scr:Expression>
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="15" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="18" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="10" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="11" To="18" Label="Source2" />
                         <Edge From="12" To="13" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source2" />
+                        <Edge From="14" To="15" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source3" />
+                        <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="19" To="30" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
+                        <Edge From="22" To="23" Label="Source1" />
+                        <Edge From="23" To="25" Label="Source1" />
+                        <Edge From="24" To="25" Label="Source2" />
+                        <Edge From="25" To="26" Label="Source1" />
+                        <Edge From="26" To="27" Label="Source1" />
+                        <Edge From="27" To="28" Label="Source1" />
+                        <Edge From="28" To="29" Label="Source1" />
+                        <Edge From="29" To="30" Label="Source2" />
+                        <Edge From="30" To="31" Label="Source1" />
+                        <Edge From="32" To="33" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
