@@ -351,8 +351,8 @@
           "type": "string"
         },
         "version": {
-          "const": "0.6.0",
-          "default": "0.6.0",
+          "const": "0.6.0-rc1",
+          "default": "0.6.0-rc1",
           "title": "Version",
           "type": "string"
         },
@@ -560,8 +560,8 @@
           "description": "Parameters of the task logic"
         },
         "version": {
-          "const": "0.6.0",
-          "default": "0.6.0",
+          "const": "0.6.0-rc1",
+          "default": "0.6.0-rc1",
           "title": "Version",
           "type": "string"
         },
@@ -1328,6 +1328,52 @@
         "output_channel"
       ],
       "title": "ConnectedClockOutput",
+      "type": "object"
+    },
+    "CtcmFunction": {
+      "description": "A patch update function that uses a continuous-time Markov chain (CTMC)\nto determine patch updates based on a transition probability matrix.\n\nIt expects a transition matrix that takes the current value of the variable\nof interest (e.g. Probability), and outputs a new value based on the defined\nstochastic process in the transition matrix.",
+      "properties": {
+        "function_type": {
+          "const": "CtcmFunction",
+          "default": "CtcmFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "transition_matrix": {
+          "description": "Transition matrix between states",
+          "items": {
+            "items": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "title": "Transition Matrix",
+          "type": "array"
+        },
+        "rho": {
+          "description": "The underlying value goverining the stochastic process",
+          "title": "Rho",
+          "type": "number"
+        },
+        "minimum": {
+          "default": 1,
+          "description": "Maximum value after update",
+          "title": "Minimum",
+          "type": "number"
+        },
+        "maximum": {
+          "default": 0,
+          "description": "Minimum value after update",
+          "title": "Maximum",
+          "type": "number"
+        }
+      },
+      "required": [
+        "transition_matrix",
+        "rho"
+      ],
+      "title": "CtcmFunction",
       "type": "object"
     },
     "DisplayCalibration": {
@@ -3446,6 +3492,7 @@
         "mapping": {
           "ClampedMultiplicativeRateFunction": "#/$defs/ClampedMultiplicativeRateFunction",
           "ClampedRateFunction": "#/$defs/ClampedRateFunction",
+          "CtcmFunction": "#/$defs/CtcmFunction",
           "LookupTableFunction": "#/$defs/LookupTableFunction",
           "SetValueFunction": "#/$defs/SetValueFunction"
         },
@@ -3463,6 +3510,9 @@
         },
         {
           "$ref": "#/$defs/LookupTableFunction"
+        },
+        {
+          "$ref": "#/$defs/CtcmFunction"
         }
       ]
     },
