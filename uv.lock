@@ -84,6 +84,7 @@ docs = [
 launcher = [
     { name = "aind-clabe", extra = ["aind-services"] },
     { name = "aind-data-schema" },
+    { name = "contraqctor" },
 ]
 
 [package.metadata]
@@ -91,6 +92,7 @@ requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'dev'" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'docs'" },
+    { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"], marker = "extra == 'dev'" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">2" },
@@ -109,7 +111,7 @@ provides-extras = ["data", "launcher", "dev", "docs"]
 
 [[package]]
 name = "aind-clabe"
-version = "0.6.11"
+version = "0.6.13"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -119,9 +121,9 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c4/84/bf49e767f295a6a8dc103975e2b62a3148a9291cef355739352ed70ab923/aind_clabe-0.6.11.tar.gz", hash = "sha256:f45724c82c82ab6ca93e802f5df1f75c4e84f987a947219e08508ce04960c226", size = 180412, upload-time = "2025-08-26T00:36:23.144Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c2/ff/c7414b578388968fc5c6327dcdec9e0c493561aeb3ba357f51c40b3fb667/aind_clabe-0.6.13.tar.gz", hash = "sha256:33ab8338a260ecea2d1afbefa7171578a023d0c98a413a4badd8ed696ce2f552", size = 180808, upload-time = "2025-09-08T16:52:04.19Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/94/f7/fca39465b219f08ab338eb828859a0f4188cf0f5c1557e51b420148512a9/aind_clabe-0.6.11-py3-none-any.whl", hash = "sha256:9fbc8306e7a4b1a5a977196667579af6ba141e114ff1a1b10233ff9e02bf5d35", size = 64672, upload-time = "2025-08-26T00:36:21.849Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/42/c43cef4f6b2b8748c313d34e650ed061a78d7b67732ff1129fe4cfcb0e6d/aind_clabe-0.6.13-py3-none-any.whl", hash = "sha256:dbe500d4d3ae41f3ac838f04c3988fdc452ac59e93e8c6907ba8c4f007118fbb", size = 65110, upload-time = "2025-09-08T16:52:02.646Z" },
 ]
 
 [package.optional-dependencies]
@@ -530,11 +532,11 @@ wheels = [
 
 [[package]]
 name = "dnspython"
-version = "2.7.0"
+version = "2.8.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b5/4a/263763cb2ba3816dd94b08ad3a33d5fdae34ecb856678773cc40a3605829/dnspython-2.7.0.tar.gz", hash = "sha256:ce9c432eda0dc91cf618a5cedf1a4e142651196bbcd2c80e89ed5a907e5cfaf1", size = 345197, upload-time = "2024-10-05T20:14:59.362Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8c/8b/57666417c0f90f08bcafa776861060426765fdb422eb10212086fb811d26/dnspython-2.8.0.tar.gz", hash = "sha256:181d3c6996452cb1189c4046c61599b84a5a86e099562ffde77d26984ff26d0f", size = 368251, upload-time = "2025-09-07T18:58:00.022Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/68/1b/e0a87d256e40e8c888847551b20a017a6b98139178505dc7ffb96f04e954/dnspython-2.7.0-py3-none-any.whl", hash = "sha256:b4c34b7d10b51bcc3a5071e7b8dee77939f1e878477eeecc965e9835f63c6c86", size = 313632, upload-time = "2024-10-05T20:14:57.687Z" },
+    { url = "https://files.pythonhosted.org/packages/ba/5a/18ad964b0086c6e62e2e7500f7edc89e3faa45033c71c1893d34eed2b2de/dnspython-2.8.0-py3-none-any.whl", hash = "sha256:01d9bbc4a2d76bf0db7c1f729812ded6d912bd318d3b1cf81d30c0f845dbf3af", size = 331094, upload-time = "2025-09-07T18:57:58.071Z" },
 ]
 
 [[package]]
@@ -1917,7 +1919,7 @@ wheels = [
 
 [[package]]
 name = "typer"
-version = "0.17.3"
+version = "0.17.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -1925,9 +1927,9 @@ dependencies = [
     { name = "shellingham" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/dd/82/f4bfed3bc18c6ebd6f828320811bbe4098f92a31adf4040bee59c4ae02ea/typer-0.17.3.tar.gz", hash = "sha256:0c600503d472bcf98d29914d4dcd67f80c24cc245395e2e00ba3603c9332e8ba", size = 103517, upload-time = "2025-08-30T12:35:24.05Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/92/e8/2a73ccf9874ec4c7638f172efc8972ceab13a0e3480b389d6ed822f7a822/typer-0.17.4.tar.gz", hash = "sha256:b77dc07d849312fd2bb5e7f20a7af8985c7ec360c45b051ed5412f64d8dc1580", size = 103734, upload-time = "2025-09-05T18:14:40.746Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/e8/b3d537470e8404659a6335e7af868e90657efb73916ef31ddf3d8b9cb237/typer-0.17.3-py3-none-any.whl", hash = "sha256:643919a79182ab7ac7581056d93c6a2b865b026adf2872c4d02c72758e6f095b", size = 46494, upload-time = "2025-08-30T12:35:22.391Z" },
+    { url = "https://files.pythonhosted.org/packages/93/72/6b3e70d32e89a5cbb6a4513726c1ae8762165b027af569289e19ec08edd8/typer-0.17.4-py3-none-any.whl", hash = "sha256:015534a6edaa450e7007eba705d5c18c3349dcea50a6ad79a5ed530967575824", size = 46643, upload-time = "2025-09-05T18:14:39.166Z" },
 ]
 
 [[package]]
