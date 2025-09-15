@@ -119,9 +119,9 @@
                           <Name>QCDiagnosis</Name>
                         </Expression>
                         <Expression xsi:type="Format">
-                          <Format>Harp: {0}
-WaterConsumed: {1}
-TSinceChoice: {2:mm\:ss}</Format>
+                        <Format>Harp: {0}
+                WaterConsumed: {1}
+                TSinceChoice: {2:mm\:ss}</Format>
                           <Selector>Heartbeat,TotalReward,SecondsSinceChoice</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
