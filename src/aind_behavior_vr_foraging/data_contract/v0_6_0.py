@@ -219,13 +219,6 @@ def dataset(
                                 ),
                             ),
                             SoftwareEvents(
-                                name="DepletionVariable",
-                                description="The value of the variable used to determine the depletion state of the current patch.",
-                                reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/SoftwareEvents/DepletionVariable.json"
-                                ),
-                            ),
-                            SoftwareEvents(
                                 name="ForceGiveReward",
                                 description="An event that is emitted when the experimenter manually delivers a reward to the subject, overriding the task logic.",
                                 reader_params=SoftwareEvents.make_params(
@@ -323,6 +316,20 @@ def dataset(
                                     root_path / "behavior/SoftwareEvents/HabituationRewardAvailable.json"
                                 ),
                             ),
+                            SoftwareEvents(
+                                name="PatchState",
+                                description="An event emitted whenever the state of a patch changes.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/GlobalPatchState.json"
+                                ),
+                            ),
+                            SoftwareEvents(
+                                name="PatchTermination",
+                                description="An event emitted whenever a patch is terminated by the task logic.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/PatchTerminationEvent.json"
+                                ),
+                            ),
                         ],
                     ),
                     DataStreamCollection(
@@ -389,21 +396,21 @@ def dataset(
                                 name="Rig",
                                 reader_params=PydanticModel.make_params(
                                     model=AindVrForagingRig,
-                                    path=root_path / "behavior/Logs/rig_input.json",
+                                    path=root_path / "behavior/Logs/rig_output.json",
                                 ),
                             ),
                             PydanticModel(
                                 name="TaskLogic",
                                 reader_params=PydanticModel.make_params(
                                     model=AindVrForagingTaskLogic,
-                                    path=root_path / "behavior/Logs/tasklogic_input.json",
+                                    path=root_path / "behavior/Logs/tasklogic_output.json",
                                 ),
                             ),
                             PydanticModel(
                                 name="Session",
                                 reader_params=PydanticModel.make_params(
                                     model=AindBehaviorSessionModel,
-                                    path=root_path / "behavior/Logs/session_input.json",
+                                    path=root_path / "behavior/Logs/session_output.json",
                                 ),
                             ),
                         ],
