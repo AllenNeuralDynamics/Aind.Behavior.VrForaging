@@ -36,7 +36,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         repository: Union[os.PathLike, git.Repo] = Path("."),
         script_path: os.PathLike = Path("./src/main.bonsai"),
         session_end_time: Optional[datetime.datetime] = None,
-        curriculum: Optional[CurriculumSuggestion] = None,
+        curriculum_suggestion: Optional[CurriculumSuggestion] = None,
         output_parameters: Optional[Dict] = None,
     ):
         self.session_model = session_model
@@ -49,7 +49,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self._session_end_time = session_end_time
         self.output_parameters = output_parameters
         self._mapped: Optional[acquisition.Acquisition] = None
-        self.curriculum = curriculum
+        self.curriculum = curriculum_suggestion
 
     @property
     def session_end_time(self) -> datetime.datetime:
@@ -63,19 +63,19 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     @classmethod
     def build_runner(
         cls,
+        curriculum_suggestion: Optional[Promise[[Any], CurriculumSuggestion]] = None,
     ) -> Callable[
         [Launcher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic]], "AindSessionDataMapper"
     ]:
         def _new(
             launcher: Launcher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
-            curriculum: Optional[Promise[[Any], CurriculumSuggestion]] = None,
         ) -> "AindSessionDataMapper":
             new = cls(
                 session_model=launcher.get_session(strict=True),
                 rig_model=launcher.get_rig(strict=True),
                 task_logic_model=launcher.get_task_logic(strict=True),
                 repository=launcher.repository,
-                curriculum=curriculum.result if curriculum is not None else None,
+                curriculum=curriculum_suggestion.result if curriculum_suggestion is not None else None,
             )
             new.map()
             return new

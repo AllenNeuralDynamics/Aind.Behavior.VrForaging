@@ -77,8 +77,10 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     )
 
     # Mappers
-    session_mapper_promise = launcher.register_callable(AindSessionDataMapper.build_runner(bonsai_app))
-    rig_mapper_promise = launcher.register_callable(AindRigDataMapper.build_runner(picker))
+    session_mapper_promise = launcher.register_callable(
+        AindSessionDataMapper.build_runner(curriculum_suggestion=suggestion)
+    )
+    rig_mapper_promise = launcher.register_callable(AindRigDataMapper.build_runner())
     launcher.register_callable(write_ads_mappers(session_mapper_promise, rig_mapper_promise))
 
     # Watchdog

@@ -184,7 +184,10 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             for _name in rig.triggered_camera_controller.cameras.keys():
                 _connections.append(
                     connections.Connection(
-                        source_device=source_device, source_port="DO0", target_device=_name, target_port="OPTOIN"  # codespell:ignore
+                        source_device=source_device,
+                        source_port="DO0",
+                        target_device=_name,
+                        target_port="OPTOIN",  # codespell:ignore
                     )
                 )
         # speaker
