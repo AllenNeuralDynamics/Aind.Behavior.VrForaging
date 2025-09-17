@@ -208,6 +208,15 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             )
         )
 
+        # solenoid
+        _connections.append(
+            connections.Connection(
+                source_device=source_device,
+                source_port="SupplyPort0",
+                target_device=TrackedDevices.WATER_VALVE_SOLENOID,
+            )
+        )
+
         speaker = devices.Speaker(
             name=TrackedDevices.SPEAKER,
             relative_position=[aind_schema_model_coordinates.AnatomicalRelative.SUPERIOR],
