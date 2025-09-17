@@ -217,8 +217,14 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
 
         photodiode = devices.Device(
             name=TrackedDevices.PHOTODIODE,
-            manufacturer=devices.Organization.from_name("AIND"),
+            manufacturer=devices.Organization.AIND,
             model="",
+        )
+
+        water_valve = devices.Device(
+            name=TrackedDevices.WATER_VALVE_SOLENOID,
+            manufacturer=devices.Organization.THE_LEE_COMPANY,
+            model="LHDB1233518H",
         )
 
         _daq_channels = [
@@ -238,7 +244,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         return _DeviceNode(
             device=_harp_device,
             connections_from=_connections,
-            spawned_devices=[speaker, photodiode],
+            spawned_devices=[speaker, photodiode, water_valve],
         )
 
     @staticmethod
@@ -408,7 +414,13 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         _components.extend(cls._get_optics())
 
         # Manipulator and lick spout assembly
-        _components.append(cls._get_lickspout_assembly(rig=rig, harp_lickometer=harp_lickometer))
+        _components.append(
+            cls._get_lickspout_assembly(
+                rig=rig,
+                harp_lickometer=harp_lickometer,
+                water_valve=harp_behavior_node.get_spawned_device(TrackedDevices.WATER_VALVE_SOLENOID),
+            )
+        )
 
         return _components, _connections
 
@@ -453,7 +465,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
 
     @staticmethod
     def _get_lickspout_assembly(
-        rig: AindVrForagingRig, harp_lickometer: devices.HarpDevice
+        rig: AindVrForagingRig, harp_lickometer: devices.HarpDevice, water_valve: devices.Device
     ) -> devices.LickSpoutAssembly:
         manipulator = rig.manipulator
         calibration = manipulator.calibration
@@ -477,11 +489,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
                     model="89875K27",
                     spout_diameter=Decimal("1.2"),
                     spout_diameter_unit=units.SizeUnit.MM,
-                    solenoid_valve=devices.Device(
-                        name="Solenoid",
-                        manufacturer=devices.Organization.THE_LEE_COMPANY,
-                        model="LHDB1233518H",
-                    ),
+                    solenoid_valve=water_valve,
                     lick_sensor_type=devices.LickSensorType("Capacitive"),
                     lick_sensor=harp_lickometer,
                     notes="Lick spout for water delivery, the tube is ordered from McMaster, cut to size and shaped by AIND",
