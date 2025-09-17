@@ -75,7 +75,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 rig_model=launcher.get_rig(strict=True),
                 task_logic_model=launcher.get_task_logic(strict=True),
                 repository=launcher.repository,
-                curriculum=curriculum_suggestion.result if curriculum_suggestion is not None else None,
+                curriculum_suggestion=curriculum_suggestion.result if curriculum_suggestion is not None else None,
             )
             new.map()
             return new
