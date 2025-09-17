@@ -577,7 +577,7 @@ def _get_channel_type(connection: connections.Connection) -> devices.DaqChannelT
     source_port = connection.source_port
     if source_port is None:
         raise ValueError("Source port is not set for connection {}".format(connection))
-    if any(s in source_port for s in ["DO", "DigitalOutput"]):
+    if any(s in source_port for s in ["DO", "DigitalOutput", "SupplyPort"]):
         return devices.DaqChannelType.DO
     if any(s in source_port for s in ["DI", "DigitalInput"]):
         return devices.DaqChannelType.DI
