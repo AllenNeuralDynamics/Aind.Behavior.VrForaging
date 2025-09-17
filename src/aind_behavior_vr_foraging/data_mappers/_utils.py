@@ -81,7 +81,11 @@ def _get_water_calibration(rig_model: AindVrForagingRig) -> List[measurements.Vo
         )
 
     water_calibration = get_fields_of_type(rig_model, AbsCalibration.water_valve.WaterValveCalibration)
-    return list(map(lambda tup: _mapper(*tup), water_calibration)) if len(water_calibration) > 0 else []
+    return (
+        list(map(lambda tup: _mapper(TrackedDevices.WATER_VALVE_SOLENOID, tup[1]), water_calibration))
+        if len(water_calibration) > 0
+        else []
+    )
 
 
 def _get_other_calibrations(
@@ -120,3 +124,4 @@ class TrackedDevices(enum.StrEnum):
     LICK_SPOUT = "lick_spout"
     SCREEN = "screen"
     COMPUTER = "computer"
+    WATER_VALVE_SOLENOID = "water_valve_solenoid"
