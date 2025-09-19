@@ -5,6 +5,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 from aind_data_schema.core import acquisition, instrument
+from aind_data_schema.utils import compatibility_check
 from git import Repo
 
 from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
@@ -71,6 +72,33 @@ class TestAindRigDataMapper(unittest.TestCase):
         mapped = self.mapper.map()
         assert mapped is not None
         instrument.Instrument.model_validate_json(mapped.model_dump_json())
+
+
+class TestInstrumentAcquisitionCompatibility(unittest.TestCase):
+    def setUp(self):
+        self.rig_model = mock_rig()
+        self.session_model = mock_session()
+        self.task_logic_model = mock_task_logic()
+        self.rig_mapper = AindRigDataMapper(
+            rig_model=self.rig_model,
+        )
+        self.session_mapper = AindSessionDataMapper(
+            session_model=self.session_model,
+            rig_model=self.rig_model,
+            task_logic_model=self.task_logic_model,
+            repository=Repo(Path("./")),
+            script_path=Path("./src/main.bonsai"),
+            session_end_time=datetime.now(),
+        )
+
+    def test_compatibility(self):
+        session_mapped = self.session_mapper.map()
+        assert session_mapped is not None
+        rig_mapped = self.rig_mapper.map()
+        assert rig_mapped is not None
+        compatibility_check.InstrumentAcquisitionCompatibility(
+            instrument=rig_mapped, acquisition=session_mapped
+        ).run_compatibility_check()
 
 
 if __name__ == "__main__":
