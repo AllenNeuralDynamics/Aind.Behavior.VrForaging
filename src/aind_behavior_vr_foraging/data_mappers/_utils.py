@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Callable, List, Optional, Type, TypeVar, 
 import aind_behavior_services.calibration as AbsCalibration
 import pydantic
 from aind_behavior_services.utils import get_fields_of_type, utcnow
-from aind_data_schema.components import measurements
+from aind_data_schema.components import coordinates, measurements
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
 from clabe.launcher import Launcher, Promise
@@ -88,28 +88,38 @@ def _get_water_calibration(rig_model: AindVrForagingRig) -> List[measurements.Vo
     )
 
 
-def _get_other_calibrations(
-    rig_model: AindVrForagingRig, exclude: tuple[Type] = (AbsCalibration.water_valve.WaterValveCalibration,)
-) -> List[measurements.Calibration]:
-    def _mapper(device_name: Optional[str], calibration: AbsCalibration.Calibration) -> measurements.Calibration:
-        device_name = device_name or calibration.device_name
-        if device_name is None:
-            raise ValueError("Device name is not set.")
-        description = calibration.description or calibration.__doc__ or ""
-        return measurements.Calibration(
-            device_name=device_name,
-            calibration_date=calibration.date if calibration.date else utcnow(),
-            description=description,
-            notes=calibration.notes,
-            input=[calibration.input.model_dump_json() if calibration.input else ""],
-            output=[calibration.output.model_dump_json() if calibration.output else ""],
-            output_unit=units.UnitlessUnit.PERCENT,
-            input_unit=units.UnitlessUnit.PERCENT,
-        )
+def _get_treadmill_brake_calibration(rig_model: AindVrForagingRig) -> List[measurements.Calibration]:
+    treadmill = rig_model.harp_treadmill
+    if treadmill.calibration is None:
+        raise ValueError("Treadmill calibration is not set.")
+    calibration = treadmill.calibration.output.brake_lookup_calibration
+    calibration_ads = measurements.Calibration(
+        device_name=TrackedDevices.MAGNETIC_BRAKE,
+        calibration_date=treadmill.calibration.date if treadmill.calibration.date else utcnow(),
+        description=type(treadmill.calibration.output).model_fields["brake_lookup_calibration"].description
+        or "brake calibration",
+        input=[pair[0] for pair in calibration],
+        input_unit=units.MassUnit.G,  # torque in gram-force cm
+        output=[pair[1] / 2**16 * 100 for pair in calibration],  # normalize to percentages
+        output_unit=units.UnitlessUnit.PERCENT,
+        fit=None,
+        notes="This is used as a lookup table that is linearly interpolated between existing points.\
+            The unit of the input is arbitrary and corresponds to the digital value sent to the brake controller.",
+    )
+    return [calibration_ads]
 
-    calibrations = get_fields_of_type(rig_model, AbsCalibration.Calibration)
-    calibrations = [c for c in calibrations if not (isinstance(c[1], tuple(exclude)))]
-    return list(map(lambda tup: _mapper(*tup), calibrations)) if len(calibrations) > 0 else []
+
+def _make_origin_coordinate_system() -> coordinates.CoordinateSystem:
+    return coordinates.CoordinateSystem(
+        name="origin",
+        origin=coordinates.Origin.BREGMA,
+        axis_unit=coordinates.SizeUnit.MM,
+        axes=[
+            coordinates.Axis(name=coordinates.AxisName.X, direction=coordinates.Direction.LR),
+            coordinates.Axis(name=coordinates.AxisName.Y, direction=coordinates.Direction.AP),
+            coordinates.Axis(name=coordinates.AxisName.Z, direction=coordinates.Direction.IS),
+        ],
+    )
 
 
 class TrackedDevices(enum.StrEnum):

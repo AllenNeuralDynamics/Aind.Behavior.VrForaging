@@ -10,7 +10,7 @@ import git
 import pydantic
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import get_fields_of_type, utcnow
-from aind_data_schema.components import configs, coordinates
+from aind_data_schema.components import configs
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
 from aind_data_schema_models.modalities import Modality
@@ -19,10 +19,10 @@ from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
 from clabe.launcher import Launcher, Promise
 
-from aind_behavior_vr_foraging.rig import AindManipulatorDevice, AindVrForagingRig
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
-from ._utils import TrackedDevices, _get_other_calibrations, _get_water_calibration
+from ._utils import TrackedDevices, _get_water_calibration, _make_origin_coordinate_system
 
 logger = logging.getLogger(__name__)
 
@@ -121,7 +121,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             acquisition_start_time=self.session_model.date,
             experimenters=self.session_model.experimenter,
             acquisition_type=self.session_model.experiment,
-            coordinate_system=self._make_coordinate_system(),
+            coordinate_system=_make_origin_coordinate_system(),
             data_streams=self._get_data_streams(),
             calibrations=self._get_calibrations(),
             stimulus_epochs=self._get_stimulus_epochs(),
@@ -137,7 +137,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def _get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
         calibrations = []
         calibrations += _get_water_calibration(self.rig_model)
-        calibrations += _get_other_calibrations(self.rig_model)
         return calibrations
 
     def _get_data_streams(self) -> List[acquisition.DataStream]:
@@ -158,7 +157,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                     if _device[0] is not None
                 ],
                 modalities=modalities,
-                configurations=self._get_cameras_config() + self._get_manipulators_config(),
+                configurations=self._get_cameras_config(),
                 notes=self.session_model.notes,
             )
         ]
@@ -274,21 +273,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
         return list(map(_map_camera, cameras.keys(), cameras.values()))
 
-    def _get_manipulators_config(self) -> List[acquisition.ManipulatorConfig]:
-        def _mapper(name: Optional[str], manipulator: AindManipulatorDevice) -> acquisition.ManipulatorConfig:
-            if name is None:
-                raise ValueError("Manipulator device name is None.")
-            return acquisition.ManipulatorConfig(
-                device_name=name,
-                coordinate_system=self._make_coordinate_system(),
-                local_axis_positions=coordinates.Translation(translation=[0, 0, 0]),
-            )  # TODO what should this be?
-
-        _manipulator = get_fields_of_type(self.rig_model, AindManipulatorDevice)
-        if len(_manipulator) == 0:
-            raise ValueError("Manipulator device not found in rig model.")
-        return list(map(lambda tup: _mapper(*tup), _manipulator))
-
     def _get_bonsai_as_code(self) -> acquisition.Code:
         bonsai_env = data_mapper_helpers.snapshot_bonsai_environment(Path("./bonsai/bonsai.config"))
         bonsai_version = bonsai_env.get("Bonsai", "unknown")
@@ -316,17 +300,4 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             version=self.repository.head.commit.hexsha,
             language="Python",
             language_version=semver,
-        )
-
-    @staticmethod
-    def _make_coordinate_system() -> coordinates.CoordinateSystem:
-        return coordinates.CoordinateSystem(
-            name="origin",
-            origin=coordinates.Origin.BREGMA,
-            axis_unit=coordinates.SizeUnit.MM,
-            axes=[
-                coordinates.Axis(name=coordinates.AxisName.X, direction=coordinates.Direction.LR),
-                coordinates.Axis(name=coordinates.AxisName.Y, direction=coordinates.Direction.FB),
-                coordinates.Axis(name=coordinates.AxisName.Z, direction=coordinates.Direction.UD),
-            ],
         )
