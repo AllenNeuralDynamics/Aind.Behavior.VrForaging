@@ -71,16 +71,17 @@ maximum_intersite_length = 100
 rewardsite_length = 50
 cm_second_average_speed = 40  # cm/s
 reward_amount = 5  # microliters
-rep_rates = [0.2, 0.02, 0.001]  # replenishment rate of each patch
+rep_rates = [0.2, 0.2, 0.2]  # replenishment rate of each patch (5min, 4min, 2min to full replenishment)
+# rep_rates = [0.2, 0.1, 0.1] #  alternatively  (5min, 8min, 5min to full replenishment)
 num_ps_states = [16, 12, 7]  # number of discrete reward states within each patch
 p_maxs = [
-    0.9,
+    1.0,
     0.7,
     0.4,
 ]  # maximum reward probability of each patch, in order for patch A, B and C (they come in order A, B, C, A, ...)
 p_min = [0.2, 0.2, 0.2]  # minimum reward probability only used for stopping depletion
 dep_rates = [0.9, 0.81, 0.73]  # depletion rate of each patch
-inter_patch_time = [3, 2, 1]  # delay before replenishment starts for each patch
+inter_patch_time = np.array([3, 2, 1]) * 3.5  # delay before replenishment starts for each patch
 rhos = [0.9, 0.9, 0.9]
 
 
@@ -135,11 +136,7 @@ def make_patch(
             inter_patch=vr_task_logic.VirtualSiteGenerator(
                 render_specification=vr_task_logic.RenderSpecification(contrast=1),
                 label=vr_task_logic.VirtualSiteLabels.INTERPATCH,
-                length_distribution=ExponentialDistributionHelper(
-                    rate=1.0 / (inter_patch_time * cm_second_average_speed),
-                    minimum=minimum_interpatch_length,
-                    maximum=maximum_interpatch_length,
-                ),
+                length_distribution=vr_task_logic.scalar_value(inter_patch_time * cm_second_average_speed),
                 treadmill_specification=None,
             ),
             inter_site=vr_task_logic.VirtualSiteGenerator(
@@ -148,6 +145,7 @@ def make_patch(
                 length_distribution=ExponentialDistributionHelper(
                     rate=0.05, minimum=minimum_intersite_length, maximum=maximum_intersite_length
                 ),
+                # length_distribution=vr_task_logic.scalar_value(1/0.05 * 2) # Consider using deterministic intersite distance
                 treadmill_specification=None,
             ),
             reward_site=vr_task_logic.VirtualSiteGenerator(

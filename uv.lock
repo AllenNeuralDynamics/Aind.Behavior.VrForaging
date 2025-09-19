@@ -38,7 +38,7 @@ wheels = [
 
 [[package]]
 name = "aind-behavior-services"
-version = "0.12.0"
+version = "0.12.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-curriculum" },
@@ -48,9 +48,9 @@ dependencies = [
     { name = "scikit-learn" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f7/41/dc03d8bd1aa615b0665e699e6886d693c74c8a30c2989867c6379ee49573/aind_behavior_services-0.12.0.tar.gz", hash = "sha256:6b7fc2400dc1b859b45e37c55bc75cd53c0ea5c28122f4fbdeadbfd9e7d53731", size = 141873, upload-time = "2025-07-31T03:32:42.698Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/34/45/29a36e272dfc2f43b3ddb0deaea5bf58f606d8009af9ed853381123b259c/aind_behavior_services-0.12.1.tar.gz", hash = "sha256:a1f8541e474c1f721fdb5176b23892398cd133f29f8d3355d259a32b2c6554ef", size = 144533, upload-time = "2025-09-18T15:06:01.848Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f2/dc/ff7e9bec0e26bdb4f00974aa4edefd2b6f60d99e1ffbbd7aa02f38de721f/aind_behavior_services-0.12.0-py3-none-any.whl", hash = "sha256:8dd9d27a140862e34477410a14d0702de5472593b0957173c5fcb517f2c3eee3", size = 48598, upload-time = "2025-07-31T03:32:41.748Z" },
+    { url = "https://files.pythonhosted.org/packages/c7/a8/4b7808ad187ccee01f926ec8c28328d676297ba7be53c72a4b4b14d71f1e/aind_behavior_services-0.12.1-py3-none-any.whl", hash = "sha256:5dbb46c6a960e8cb52faf2eeb205ac4546d281a52b44a4eb13ad3fcc5953e948", size = 48677, upload-time = "2025-09-18T15:06:00.401Z" },
 ]
 
 [[package]]
@@ -373,14 +373,14 @@ wheels = [
 
 [[package]]
 name = "click"
-version = "8.2.1"
+version = "8.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/60/6c/8ca2efa64cf75a977a0d7fac081354553ebe483345c734fb6b6515d96bbc/click-8.2.1.tar.gz", hash = "sha256:27c491cc05d968d271d5a1db13e3b5a184636d9d930f148c50b038f0d0646202", size = 286342, upload-time = "2025-05-20T23:19:49.832Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/46/61/de6cd827efad202d7057d93e0fed9294b96952e188f7384832791c7b2254/click-8.3.0.tar.gz", hash = "sha256:e7b8232224eba16f4ebe410c25ced9f7875cb5f3263ffc93cc3e8da705e229c4", size = 276943, upload-time = "2025-09-18T17:32:23.696Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/85/32/10bb5764d90a8eee674e9dc6f4db6a0ab47c8c4d0d83c27f7c39ac415a4d/click-8.2.1-py3-none-any.whl", hash = "sha256:61a3265b914e850b85317d0b3109c7f8cd35a670f963866005d6ef1d5175a12b", size = 102215, upload-time = "2025-05-20T23:19:47.796Z" },
+    { url = "https://files.pythonhosted.org/packages/db/d3/9dcc0f5797f070ec8edf30fbadfb200e71d9db6b84d211e3b2085a7589a0/click-8.3.0-py3-none-any.whl", hash = "sha256:9b9f285302c6e3064f4330c05f05b81945b2a39544279343e6e7c5f27a9baddc", size = 107295, upload-time = "2025-09-18T17:32:22.42Z" },
 ]
 
 [[package]]
@@ -485,7 +485,7 @@ wheels = [
 
 [[package]]
 name = "contraqctor"
-version = "0.4.7"
+version = "0.4.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -498,11 +498,12 @@ dependencies = [
     { name = "pyyaml" },
     { name = "requests" },
     { name = "rich" },
+    { name = "scipy" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/17/ba/aa09e2a6d816531abdfd1d345618f60f51ba68f43b9e1469d8fdfb90fddf/contraqctor-0.4.7.tar.gz", hash = "sha256:7867be507026cba8d88ad55f2287c56b73ca638352934f29070ca4d83ea4108c", size = 173192, upload-time = "2025-08-29T20:54:30.901Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ba/9e/457b8bf87aac1b71e311519ee07fb6d643237e5b3f265a688eded522069f/contraqctor-0.4.9.tar.gz", hash = "sha256:2ab5ba8973ed4f0dc275830601cfa3c760872073e58c11a4433615f090c99d9f", size = 179255, upload-time = "2025-09-19T16:48:06.619Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/88/3ca556f3c2f9c887f54898a32869543e51298ce324ea0cd0c44aa02b217d/contraqctor-0.4.7-py3-none-any.whl", hash = "sha256:bcb4282fc0e919e82865020b45c256c7cd02d8625698853ba3b5b7d4cadb9aa6", size = 49330, upload-time = "2025-08-29T20:54:29.582Z" },
+    { url = "https://files.pythonhosted.org/packages/25/37/7d24feaec06e6562fa4574018a6fa1d6cdd262bc2654d939d341a37576c2/contraqctor-0.4.9-py3-none-any.whl", hash = "sha256:56216c57f355d2866f1ea4a70d46320d66ad154fa13fa10a005b543ca1c47b9a", size = 55793, upload-time = "2025-09-19T16:48:05.307Z" },
 ]
 
 [[package]]
