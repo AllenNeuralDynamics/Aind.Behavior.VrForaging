@@ -18,7 +18,7 @@ from clabe.launcher import Launcher
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
-from ._utils import TrackedDevices, utcnow, _make_coordinate_system
+from ._utils import TrackedDevices, _make_origin_coordinate_system, utcnow
 
 logger = logging.getLogger(__name__)
 
@@ -116,7 +116,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             instrument_id=rig.rig_name,
             modalities=_modalities,
             modification_date=utcnow().date(),
-            coordinate_system=_make_coordinate_system(),
+            coordinate_system=_make_origin_coordinate_system(),
             components=_components,  # type: ignore [arg-type]
             connections=_connections,
             calibrations=_calibrations,
