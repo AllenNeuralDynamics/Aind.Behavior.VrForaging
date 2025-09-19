@@ -22,7 +22,8 @@ from clabe.launcher import (
 )
 from pydantic_settings import CliApp
 
-from .data_mappers import AindRigDataMapper, AindSessionDataMapper, write_ads_mappers
+from .data_mappers import AindRigDataMapper, AindSessionDataMapper
+from .data_mappers._utils import write_ads_mappers
 from .rig import AindVrForagingRig
 from .task_logic import AindVrForagingTaskLogic
 
@@ -76,8 +77,10 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     )
 
     # Mappers
-    session_mapper_promise = launcher.register_callable(AindSessionDataMapper.build_runner(bonsai_app))
-    rig_mapper_promise = launcher.register_callable(AindRigDataMapper.build_runner(picker))
+    session_mapper_promise = launcher.register_callable(
+        AindSessionDataMapper.build_runner(curriculum_suggestion=suggestion)
+    )
+    rig_mapper_promise = launcher.register_callable(AindRigDataMapper.build_runner())
     launcher.register_callable(write_ads_mappers(session_mapper_promise, rig_mapper_promise))
 
     # Watchdog

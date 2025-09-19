@@ -4,13 +4,11 @@ from datetime import datetime
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from aind_data_schema.core.rig import Rig
+from aind_data_schema.core import acquisition, instrument
+from aind_data_schema.utils import compatibility_check
 from git import Repo
 
-from aind_behavior_vr_foraging.data_mappers import (
-    AindRigDataMapper,
-    AindSessionDataMapper,
-)
+from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
 
 sys.path.append(".")
 from examples.examples import mock_rig, mock_session, mock_task_logic  # isort:skip # pylint: disable=wrong-import-position
@@ -46,27 +44,61 @@ class TestAindSessionDataMapper(unittest.TestCase):
         mapped = self.mapper.map()
         self.assertIsNotNone(mapped)
 
+    def test_round_trip(self):
+        mapped = self.mapper.map()
+        assert mapped is not None
+        acquisition.Acquisition.model_validate_json(mapped.model_dump_json())
+
 
 class TestAindRigDataMapper(unittest.TestCase):
     def setUp(self):
-        self.rig_schema_filename = "rig_schema.json"
-        self.db_root = MagicMock()
-        self.session_directory = MagicMock()
-        self.db_suffix = "test_suffix"
+        self.rig_model = mock_rig()
         self.mapper = AindRigDataMapper(
-            rig_schema_filename=self.rig_schema_filename,
-            db_root=self.db_root,
-            db_suffix=self.db_suffix,
+            rig_model=self.rig_model,
         )
 
-    @patch("pathlib.Path.exists", return_value=True)
-    @patch("aind_behavior_vr_foraging.data_mappers.model_from_json_file")
-    def test_mock_map(self, mock_model_from_json_file, mock_path_exists):
-        mock_model_from_json_file.return_value = MagicMock(spec=Rig)
+    @patch("aind_behavior_vr_foraging.data_mappers.AindRigDataMapper._map")
+    def test_mock_map(self, mock_map):
+        mock_map.return_value = MagicMock()
         result = self.mapper.map()
         self.assertIsNotNone(result)
-        self.assertTrue(self.mapper.mapped)
-        self.assertIsInstance(result, Rig)
+        self.assertTrue(self.mapper.is_mapped())
+
+    def test_map(self):
+        mapped = self.mapper.map()
+        self.assertIsNotNone(mapped)
+
+    def test_round_trip(self):
+        mapped = self.mapper.map()
+        assert mapped is not None
+        instrument.Instrument.model_validate_json(mapped.model_dump_json())
+
+
+class TestInstrumentAcquisitionCompatibility(unittest.TestCase):
+    def setUp(self):
+        self.rig_model = mock_rig()
+        self.session_model = mock_session()
+        self.task_logic_model = mock_task_logic()
+        self.rig_mapper = AindRigDataMapper(
+            rig_model=self.rig_model,
+        )
+        self.session_mapper = AindSessionDataMapper(
+            session_model=self.session_model,
+            rig_model=self.rig_model,
+            task_logic_model=self.task_logic_model,
+            repository=Repo(Path("./")),
+            script_path=Path("./src/main.bonsai"),
+            session_end_time=datetime.now(),
+        )
+
+    def test_compatibility(self):
+        session_mapped = self.session_mapper.map()
+        assert session_mapped is not None
+        rig_mapped = self.rig_mapper.map()
+        assert rig_mapped is not None
+        compatibility_check.InstrumentAcquisitionCompatibility(
+            instrument=rig_mapped, acquisition=session_mapped
+        ).run_compatibility_check()
 
 
 if __name__ == "__main__":
