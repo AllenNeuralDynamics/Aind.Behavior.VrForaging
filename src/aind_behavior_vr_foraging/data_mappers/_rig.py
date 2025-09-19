@@ -18,7 +18,7 @@ from clabe.launcher import Launcher
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
-from ._utils import TrackedDevices, utcnow
+from ._utils import TrackedDevices, utcnow, _make_coordinate_system
 
 logger = logging.getLogger(__name__)
 
@@ -116,7 +116,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             instrument_id=rig.rig_name,
             modalities=_modalities,
             modification_date=utcnow().date(),
-            coordinate_system=coordinates.CoordinateSystemLibrary.BREGMA_ARI,  # this is going to change possibly
+            coordinate_system=_make_coordinate_system(),
             components=_components,  # type: ignore [arg-type]
             connections=_connections,
             calibrations=_calibrations,
@@ -442,7 +442,6 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             ],
             "center": [
                 aind_schema_model_coordinates.AnatomicalRelative.ANTERIOR,
-                aind_schema_model_coordinates.AnatomicalRelative.MEDIAL,
             ],
             "right": [
                 aind_schema_model_coordinates.AnatomicalRelative.ANTERIOR,
@@ -466,8 +465,25 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
                 size_unit=units.SizeUnit.PX,
                 viewing_distance=Decimal(str(distance_from_vector(display.extrinsics.translation))),
                 viewing_distance_unit=units.SizeUnit.CM,
-                contrast=abs(int(rig.screen.contrast * 100)),
-                brightness=abs(int(rig.screen.brightness * 100)),
+                brightness=100,
+                coordinate_system=coordinates.CoordinateSystemLibrary.SIPE_MONITOR_RTF,
+                transform=[
+                    coordinates.Translation(
+                        translation=[
+                            display.extrinsics.translation.x * 10,  # to mm
+                            display.extrinsics.translation.y * 10,  # to mm
+                            display.extrinsics.translation.z * 10 * -1,  # to mm and flip z
+                        ]
+                    ),
+                    coordinates.Rotation(
+                        angles=[
+                            display.extrinsics.rotation.x,
+                            display.extrinsics.rotation.y,
+                            display.extrinsics.rotation.z,
+                        ],
+                        angles_unit=units.AngleUnit.RAD,
+                    ),
+                ],
             )
 
         return [_get_monitors(name) for name in ["left", "center", "right"]]
