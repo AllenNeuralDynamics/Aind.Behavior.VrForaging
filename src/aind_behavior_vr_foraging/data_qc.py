@@ -212,6 +212,7 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     _runner = qc.Runner()
     loading_errors = dataset.load_all(strict=False)
     exclude: list[contract.DataStream] = []
+    rig: AindVrForagingRig = dataset["Behavior"]["InputSchemas"]["Rig"].data
 
     # Exclude commands to Harp boards as these are tested separately
     for cmd in dataset["Behavior"]["HarpCommands"]:
@@ -238,10 +239,21 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     )
 
     # Add harp board specific tests
-    _runner.add_suite(qc.harp.HarpSniffDetectorTestSuite(dataset["Behavior"]["HarpSniffDetector"]), "HarpSniffDetector")
+    if rig.harp_sniff_detector is not None:
+        _runner.add_suite(
+            qc.harp.HarpSniffDetectorTestSuite(dataset["Behavior"]["HarpSniffDetector"]), "HarpSniffDetector"
+        )
+
+    if rig.harp_environment_sensor is not None:
+        _runner.add_suite(
+            qc.harp.HarpEnvironmentSensorTestSuite(dataset["Behavior"]["HarpEnvironmentSensor"]),
+            "HarpEnvironmentSensor",
+        )
+
+    _runner.add_suite(qc.harp.HarpTreadmillTestSuite(dataset["Behavior"]["HarpTreadmill"]), "HarpTreadmill")
+    _runner.add_suite(qc.harp.HarpLicketySplitTestSuite(dataset["Behavior"]["HarpLickometer"]), "HarpLickometer")
 
     # Add camera qc
-    rig: AindVrForagingRig = dataset["Behavior"]["InputSchemas"]["Rig"].data
     for camera in dataset["BehaviorVideos"]:
         _runner.add_suite(
             qc.camera.CameraTestSuite(camera, expected_fps=rig.triggered_camera_controller.frame_rate), camera.name
@@ -260,7 +272,7 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
         photodiode_events=t.cast(pd.DataFrame, dataset["Behavior"]["HarpBehavior"]["DigitalInputState"].data).query(
             "MessageType == 'EVENT'"
         )["DIPort0"],
-        expected_fps=dataset["Behavior"]["InputSchemas"]["Rig"].data["screen"]["target_render_frequency"],
+        expected_fps=rig.screen.target_render_frequency,
     )
 
     _runner.add_suite(_rendering, "Rendering")
