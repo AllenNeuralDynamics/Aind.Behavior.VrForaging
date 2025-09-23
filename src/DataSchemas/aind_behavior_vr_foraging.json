@@ -2553,6 +2553,8 @@
           "$ref": "#/$defs/NumericalUpdaterParameters",
           "default": {
             "initial_value": 0.0,
+            "on_success": 0.0,
+            "on_failure": 0.0,
             "increment": 0.0,
             "decrement": 0.0,
             "minimum": 0.0,
@@ -2584,14 +2586,28 @@
           "title": "Initial Value",
           "type": "number"
         },
+        "on_success": {
+          "default": 0.0,
+          "description": "Value used to update the parameter by on success",
+          "title": "On Success",
+          "type": "number"
+        },
+        "on_failure": {
+          "default": 0.0,
+          "description": "Value used to update the parameter by on failure",
+          "title": "On Failure",
+          "type": "number"
+        },
         "increment": {
           "default": 0.0,
+          "deprecated": true,
           "description": "Value to increment the parameter by",
           "title": "Increment",
           "type": "number"
         },
         "decrement": {
           "default": 0.0,
+          "deprecated": true,
           "description": "Value to decrement the parameter by",
           "title": "Decrement",
           "type": "number"

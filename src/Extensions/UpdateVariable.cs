@@ -12,11 +12,11 @@ namespace AindVrForagingDataSchema
     public class UpdateVariable
     {
 
-        private bool isIncrement = true;
-        public bool IsIncrement
+        private bool isSuccess = true;
+        public bool IsSuccess
         {
-            get { return isIncrement; }
-            set { isIncrement = value; }
+            get { return isSuccess; }
+            set { isSuccess = value; }
         }
 
 
@@ -43,7 +43,7 @@ namespace AindVrForagingDataSchema
                 return value;
             }
             var updateParams = updater.Parameters;
-            var updateValue = IsIncrement ? updateParams.Increment : updateParams.Decrement;
+            var updateValue = isSuccess ? updateParams.OnSuccess : updateParams.OnFailure;
             double updated_value;
             switch (updater.Operation)
             {

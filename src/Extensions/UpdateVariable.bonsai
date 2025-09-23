@@ -204,7 +204,7 @@
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
-                      <Property Name="IsIncrement" />
+                      <Property Name="IsSuccess" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -217,7 +217,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p1:UpdateVariable">
-                      <p1:IsIncrement>false</p1:IsIncrement>
+                      <p1:IsSuccess>false</p1:IsSuccess>
                       <p1:Updater />
                     </Combinator>
                   </Expression>
