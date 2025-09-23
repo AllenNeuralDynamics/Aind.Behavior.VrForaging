@@ -53,9 +53,6 @@ namespace AindVrForagingDataSchema
                 case NumericalUpdaterOperation.Set:
                     updated_value = updateParams.InitialValue;
                     break;
-                case NumericalUpdaterOperation.OffsetPercentage:
-                    updated_value = value + (value * updateValue);
-                    break;
                 case NumericalUpdaterOperation.Gain:
                     updated_value = value * updateValue;
                     break;

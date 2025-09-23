@@ -79,8 +79,6 @@ class NumericalUpdaterOperation(str, Enum):
     OFFSET = "Offset"
     GAIN = "Gain"
     SET = "Set"
-    OFFSETPERCENTAGE = "OffsetPercentage"
-
 
 class NumericalUpdaterParameters(BaseModel):
     """
