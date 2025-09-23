@@ -80,6 +80,7 @@ class NumericalUpdaterOperation(str, Enum):
     GAIN = "Gain"
     SET = "Set"
 
+
 class NumericalUpdaterParameters(BaseModel):
     """
     Parameters that control how numerical updates are applied to task values.
