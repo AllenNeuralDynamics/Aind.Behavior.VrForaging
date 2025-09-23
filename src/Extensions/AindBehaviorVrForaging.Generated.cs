@@ -7024,6 +7024,10 @@ namespace AindVrForagingDataSchema
     
         private double _initialValue;
     
+        private double _onSuccess;
+    
+        private double _onFailure;
+    
         private double _increment;
     
         private double _decrement;
@@ -7035,6 +7039,8 @@ namespace AindVrForagingDataSchema
         public NumericalUpdaterParameters()
         {
             _initialValue = 0D;
+            _onSuccess = 0D;
+            _onFailure = 0D;
             _increment = 0D;
             _decrement = 0D;
             _minimum = 0D;
@@ -7044,6 +7050,8 @@ namespace AindVrForagingDataSchema
         protected NumericalUpdaterParameters(NumericalUpdaterParameters other)
         {
             _initialValue = other._initialValue;
+            _onSuccess = other._onSuccess;
+            _onFailure = other._onFailure;
             _increment = other._increment;
             _decrement = other._decrement;
             _minimum = other._minimum;
@@ -7064,6 +7072,40 @@ namespace AindVrForagingDataSchema
             set
             {
                 _initialValue = value;
+            }
+        }
+    
+        /// <summary>
+        /// Value used to update the parameter by on success
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("on_success")]
+        [System.ComponentModel.DescriptionAttribute("Value used to update the parameter by on success")]
+        public double OnSuccess
+        {
+            get
+            {
+                return _onSuccess;
+            }
+            set
+            {
+                _onSuccess = value;
+            }
+        }
+    
+        /// <summary>
+        /// Value used to update the parameter by on failure
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("on_failure")]
+        [System.ComponentModel.DescriptionAttribute("Value used to update the parameter by on failure")]
+        public double OnFailure
+        {
+            get
+            {
+                return _onFailure;
+            }
+            set
+            {
+                _onFailure = value;
             }
         }
     
@@ -7148,6 +7190,8 @@ namespace AindVrForagingDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("InitialValue = " + _initialValue + ", ");
+            stringBuilder.Append("OnSuccess = " + _onSuccess + ", ");
+            stringBuilder.Append("OnFailure = " + _onFailure + ", ");
             stringBuilder.Append("Increment = " + _increment + ", ");
             stringBuilder.Append("Decrement = " + _decrement + ", ");
             stringBuilder.Append("Minimum = " + _minimum + ", ");
