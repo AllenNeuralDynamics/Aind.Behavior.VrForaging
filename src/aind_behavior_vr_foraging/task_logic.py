@@ -1,7 +1,6 @@
-from __future__ import annotations
-
+import logging
 from enum import Enum
-from typing import TYPE_CHECKING, Annotated, Dict, List, Literal, Optional, Self, Union
+from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
@@ -11,6 +10,8 @@ from typing_extensions import TypeAliasType
 from aind_behavior_vr_foraging import (
     __version__,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -90,10 +91,40 @@ class NumericalUpdaterParameters(BaseModel):
     """
 
     initial_value: float = Field(default=0.0, description="Initial value of the parameter")
-    increment: float = Field(default=0.0, description="Value to increment the parameter by")
-    decrement: float = Field(default=0.0, description="Value to decrement the parameter by")
+    on_success: float = Field(default=0.0, description="Value used to update the parameter by on success")
+    on_failure: float = Field(default=0.0, description="Value used to update the parameter by on failure")
+    increment: float = Field(
+        default=0.0,
+        description="Value to increment the parameter by",
+        deprecated="This field is deprecated, use on_success instead",
+    )
+    decrement: float = Field(
+        default=0.0,
+        description="Value to decrement the parameter by",
+        deprecated="This field is deprecated, use on_failure instead",
+    )
     minimum: float = Field(default=0.0, description="Minimum value of the parameter")
     maximum: float = Field(default=0.0, description="Minimum value of the parameter")
+
+    @model_validator(mode="before")
+    @classmethod
+    def _ensure_backwards_compatibility(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            __map = {
+                "increment": "on_success",
+                "decrement": "on_failure",
+            }
+            for old_key, new_key in __map.items():
+                if old_key in data and new_key not in data:
+                    data[new_key] = data.pop(old_key)
+                    logger.warning(f"'{old_key}' is deprecated. Please use '{new_key}' instead.")
+        return data
+
+    @model_validator(mode="after")
+    def _ensure_backwards_compatibility_after(self) -> Self:
+        self.increment = self.on_success
+        self.decrement = self.on_failure
+        return self
 
 
 class NumericalUpdater(BaseModel):
