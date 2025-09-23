@@ -2570,8 +2570,7 @@
         "None",
         "Offset",
         "Gain",
-        "Set",
-        "OffsetPercentage"
+        "Set"
       ],
       "title": "NumericalUpdaterOperation",
       "type": "string"

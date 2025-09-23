@@ -7004,9 +7004,6 @@ namespace AindVrForagingDataSchema
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Set")]
         Set = 3,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="OffsetPercentage")]
-        OffsetPercentage = 4,
     }
 
 
