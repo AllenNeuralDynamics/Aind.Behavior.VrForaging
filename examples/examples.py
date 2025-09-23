@@ -192,8 +192,8 @@ def mock_task_logic() -> AindVrForagingTaskLogic:
             parameters=NumericalUpdaterParametersHelper(0, 0.005, 0, 0, 0.5),
         ),
         vr_task_logic.UpdaterTarget.STOP_VELOCITY_THRESHOLD: vr_task_logic.NumericalUpdater(
-            operation=vr_task_logic.NumericalUpdaterOperation.OFFSETPERCENTAGE,
-            parameters=NumericalUpdaterParametersHelper(40, 0, -0.25, 10, 40),
+            operation=vr_task_logic.NumericalUpdaterOperation.GAIN,
+            parameters=NumericalUpdaterParametersHelper(40, 0, 0.75, 10, 40),
         ),
     }
 
