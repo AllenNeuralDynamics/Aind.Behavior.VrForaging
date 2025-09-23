@@ -943,7 +943,9 @@ class BlockStructure(BaseModel):
     """
 
     blocks: List[Block] = Field(description="Statistics of the environment", min_length=1)
-    sampling_mode: Literal["Random", "Sequential"] = Field(default="Sequential", description="Sampling mode of the blocks.")
+    sampling_mode: Literal["Random", "Sequential"] = Field(
+        default="Sequential", description="Sampling mode of the blocks."
+    )
 
 
 # ==================== MAIN TASK LOGIC CLASSES ====================
