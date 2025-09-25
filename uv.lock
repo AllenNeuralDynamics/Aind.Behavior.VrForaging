@@ -95,7 +95,7 @@ requires-dist = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"], marker = "extra == 'dev'" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'" },
-    { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = "==1.4" },
+    { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">2" },
     { name = "autodoc-pydantic", extras = ["erdantic"], marker = "extra == 'docs'" },
     { name = "codespell", marker = "extra == 'dev'" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.5.0" },
@@ -140,29 +140,30 @@ aind-services = [
 
 [[package]]
 name = "aind-data-schema"
-version = "1.4.0"
+version = "2.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-data-schema-models" },
     { name = "pydantic" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/34/d3/b8c49737c207966eef2a19f74f599b69f4b7fc3d8abfc33a164397252088/aind_data_schema-1.4.0.tar.gz", hash = "sha256:9768e00ee1f7ea4da72abc4b365ee807c2129dd30da96e759ae17ed93824b40e", size = 858325, upload-time = "2025-02-28T18:55:56.25Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/21/e5/eb47708e06847a3b5148a572d0f381c71d4ff1ce9f11f1910af3d98f9155/aind_data_schema-2.0.2.tar.gz", hash = "sha256:d662ef51d08167fd3ba21cf3d7873425106208e4cf4ffca930a9050ae4a3b798", size = 739724, upload-time = "2025-09-18T02:26:11.152Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/02/da/bce4b9d3122cb98e055d7a9d3159117eb810992605aa849bef4b9e8069fc/aind_data_schema-1.4.0-py3-none-any.whl", hash = "sha256:d82fbbd96f3588a9b03b0275bb89831a1b901c5b63e8790f07583d0fd4a4c732", size = 65020, upload-time = "2025-02-28T18:55:53.068Z" },
+    { url = "https://files.pythonhosted.org/packages/10/45/c6bc859c41347de1d6c062bad4061016bc032ebb2540c1a436aecb40986c/aind_data_schema-2.0.2-py3-none-any.whl", hash = "sha256:56741b578ee81f28a751b5e7ccff7a2816c8f6669994c17d2c3daa6abbd79293", size = 85002, upload-time = "2025-09-18T02:26:09.369Z" },
 ]
 
 [[package]]
 name = "aind-data-schema-models"
-version = "0.7.5"
+version = "4.2.11"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "importlib-resources" },
     { name = "pydantic" },
+    { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9a/41/142150bb66ce16856e75469945a3e1ec21ea4c6cdaac27bacf962854e3ac/aind_data_schema_models-0.7.5.tar.gz", hash = "sha256:9605f0999930b595b9d92316ada0b3a8fa8d28c537330cc5f6198cc8e59d3dee", size = 552889, upload-time = "2025-01-05T23:53:17.974Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e7/23/56d3c10b64642a13da409463650453eccd9aec309440854015b39758bc05/aind_data_schema_models-4.2.11.tar.gz", hash = "sha256:bb4ef3319c448170c96693d22386f11e0805787164236883dff51bce6f832316", size = 324182, upload-time = "2025-09-17T19:54:19.929Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f3/c1/e2177d7e0fa1102e4dcd4563d519c9ed56177d0b6df552dd9e50aacb1367/aind_data_schema_models-0.7.5-py3-none-any.whl", hash = "sha256:f6d934451c672e3c48691759cd5cfb615306c40f30625ef0323285dc69cfceff", size = 532063, upload-time = "2025-01-05T23:53:15.685Z" },
+    { url = "https://files.pythonhosted.org/packages/e8/df/4713b80de9dfe4c9f46c98cd4cc407280ccee353ed42d41c649299609ad4/aind_data_schema_models-4.2.11-py3-none-any.whl", hash = "sha256:b1c03db51992676b6df528eea86009d74be4cd252e4790f9aa692098571f29fd", size = 297807, upload-time = "2025-09-17T19:54:18.67Z" },
 ]
 
 [[package]]
@@ -1976,7 +1977,7 @@ wheels = [
 
 [[package]]
 name = "typer"
-version = "0.17.4"
+version = "0.18.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -1984,9 +1985,9 @@ dependencies = [
     { name = "shellingham" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/92/e8/2a73ccf9874ec4c7638f172efc8972ceab13a0e3480b389d6ed822f7a822/typer-0.17.4.tar.gz", hash = "sha256:b77dc07d849312fd2bb5e7f20a7af8985c7ec360c45b051ed5412f64d8dc1580", size = 103734, upload-time = "2025-09-05T18:14:40.746Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/73/f2/8214025e8fd1ada825d1b2183bd5895148b42b88ffe3ea3eed1224568ed0/typer-0.18.0.tar.gz", hash = "sha256:342049be1a608c972b0f77dd2b2573e74366b83465cfd5ebd3fede187e1f885e", size = 103878, upload-time = "2025-09-19T19:21:32.856Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/93/72/6b3e70d32e89a5cbb6a4513726c1ae8762165b027af569289e19ec08edd8/typer-0.17.4-py3-none-any.whl", hash = "sha256:015534a6edaa450e7007eba705d5c18c3349dcea50a6ad79a5ed530967575824", size = 46643, upload-time = "2025-09-05T18:14:39.166Z" },
+    { url = "https://files.pythonhosted.org/packages/55/cc/c476930fbb1649658cb2195144dac1a9899e474bb6433bf35bf37b6946cb/typer-0.18.0-py3-none-any.whl", hash = "sha256:e0f91cc4bc0761f739c74ffd92aab3c8df279c4cab271b0dba1f302afa0b5a84", size = 46753, upload-time = "2025-09-19T19:21:30.993Z" },
 ]
 
 [[package]]
