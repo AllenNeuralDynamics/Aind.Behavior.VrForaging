@@ -43,7 +43,7 @@ namespace AindVrForagingDataSchema
     
         public AindBehaviorSessionModel()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.0";
+            _aindBehaviorServicesPkgVersion = "0.12.1";
             _version = "0.3.1";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
@@ -952,7 +952,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.0";
+            _aindBehaviorServicesPkgVersion = "0.12.1";
             _version = "0.6.0-rc1";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -1519,7 +1519,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.0";
+            _aindBehaviorServicesPkgVersion = "0.12.1";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
