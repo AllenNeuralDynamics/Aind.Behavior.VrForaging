@@ -17,3 +17,8 @@ default_behavior_picker:
 curriculum:
   script: "curriculum run"
   project_directory: "./src/aind_behavior_vr_foraging/curricula/aind.Behavior.VrForaging.Curricula"
+
+dataverse:
+  tenant_id: "32669cd6-737f-4b39-8bdd-d6951120d3fc"
+  client_id: "df37356e-3316-484a-b732-319b6b4ad464"
+  org: "orgc1997c24"
