@@ -11,9 +11,6 @@ on:
   release:
     types: [ published ]
 
-env:
-  DEFAULT_BRANCH: main
-
 jobs:
 
 # ╔──────────────────────────╗
@@ -85,7 +82,7 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     if: >
-      github.ref == 'refs/heads/${{ env.DEFAULT_BRANCH }}' && 
+      github.ref == 'refs/heads/main' && 
       github.event_name == 'push' &&
       github.event.head_commit.author.email != 'github-actions[bot]@users.noreply.github.com'
     name: Create GitHub pre-release
@@ -93,7 +90,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{ env.DEFAULT_BRANCH }}
+          ref: main
 
       - uses: astral-sh/setup-uv@v6
         with:
@@ -114,7 +111,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Bump version and regenerate schemas [skip ci]" || echo "No changes to commit"
-          git push origin ${{ env.DEFAULT_BRANCH }}
+          git push origin main
 
       - name: Get version
         id: get_version
@@ -154,7 +151,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{ env.DEFAULT_BRANCH }}
+          ref: main
 
       - uses: astral-sh/setup-uv@v6
         with:
@@ -181,7 +178,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Set version and regenerate schemas" || echo "No changes to commit"
-          git push origin ${{ env.DEFAULT_BRANCH }}
+          git push origin main
 
 
 # ╔─────────────────────────╗
@@ -196,7 +193,7 @@ jobs:
     name: Build and deploy documentation to GitHub Pages
     runs-on: ubuntu-latest
     needs: github-rc-release
-    if: github.ref == 'refs/heads/${{ env.DEFAULT_BRANCH }}' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
