@@ -23,8 +23,8 @@ def pep440_to_semver(ver: str) -> str:
 
 
 try:
-    __semver__ = version(__name__)
+    __version__ = version(__name__)
 except PackageNotFoundError:
-    __semver__ = "0.0.0"
+    __version__ = "0.0.0"
 
-__semver__ = pep440_to_semver(__semver__)
+__semver__ = pep440_to_semver(__version__)

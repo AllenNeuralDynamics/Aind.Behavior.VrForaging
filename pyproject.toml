@@ -75,4 +75,3 @@ ignore-words-list = 'nd'
 [tool.uv]
 default-groups = ['dev']
 required-version = '>=0.8.4'
-prerelease = "allow"
