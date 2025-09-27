@@ -108,7 +108,7 @@ reward_function = vr_task_logic.PatchRewardFunction(
     rule=vr_task_logic.RewardFunctionRule.ON_REWARD,
 )
 
-reset_function = vr_task_logic.OnThisPatchEntryFunction(
+reset_function = vr_task_logic.OnThisPatchEntryRewardFunction(
     available=vr_task_logic.SetValueFunction(value=vr_task_logic.scalar_value(0.1))
 )
 

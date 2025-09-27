@@ -55,7 +55,7 @@ def compute_cmc_transition_probability(n_states, rep_rate, T=3.5, dt=0.1) -> np.
 
 operation_control = vr_task_logic.OperationControl(
     movable_spout_control=vr_task_logic.MovableSpoutControl(enabled=False),
-    audio_control=vr_task_logic.AudioControl(duration=0.2, frequency=5000),
+    audio_control=vr_task_logic.AudioControl(duration=0.2, frequency=9999),
     odor_control=vr_task_logic.OdorControl(),
     position_control=vr_task_logic.PositionControl(
         frequency_filter_cutoff=5,
