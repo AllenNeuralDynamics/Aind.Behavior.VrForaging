@@ -385,6 +385,7 @@ class RewardFunctionRule(str, Enum):
     ON_TIME = "OnTime"
     ON_DISTANCE = "OnDistance"
     ON_THIS_PATCH_ENTRY = "OnThisPatchEntry"
+    ON_PATCH_ENTRY = "OnPatchEntry"
     ON_CHOICE_ACCUMULATED = "OnChoiceAccumulated"
     ON_REWARD_ACCUMULATED = "OnRewardAccumulated"
     ON_TIME_ACCUMULATED = "OnTimeAccumulated"
@@ -449,24 +450,45 @@ class OutsideRewardFunction(_RewardFunction):
     )
 
 
-class OnThisPatchEntryFunction(_RewardFunction):
+class OnThisPatchEntryRewardFunction(_RewardFunction):
     """
     A RewardFunction that is applied when the animal enters the patch.
     """
 
-    function_type: Literal["OnThisPatchEntryFunction"] = "OnThisPatchEntryFunction"
+    function_type: Literal["OnThisPatchEntryRewardFunction"] = "OnThisPatchEntryRewardFunction"
     rule: Literal[RewardFunctionRule.ON_THIS_PATCH_ENTRY] = Field(
         default=RewardFunctionRule.ON_THIS_PATCH_ENTRY, description="Rule to trigger reward function"
     )
 
 
+class PersistentRewardFunction(_RewardFunction):
+    """
+    A RewardFunction that is always active.
+    """
+
+    function_type: Literal["PersistentRewardFunction"] = "PersistentRewardFunction"
+    rule: Literal[
+        RewardFunctionRule.ON_REWARD,
+        RewardFunctionRule.ON_CHOICE,
+        RewardFunctionRule.ON_TIME,
+        RewardFunctionRule.ON_DISTANCE,
+        RewardFunctionRule.ON_CHOICE_ACCUMULATED,
+        RewardFunctionRule.ON_REWARD_ACCUMULATED,
+        RewardFunctionRule.ON_TIME_ACCUMULATED,
+        RewardFunctionRule.ON_DISTANCE_ACCUMULATED,
+        RewardFunctionRule.ON_PATCH_ENTRY,
+    ]
+
+
 if TYPE_CHECKING:
-    RewardFunction = Union[PatchRewardFunction, OutsideRewardFunction, OnThisPatchEntryFunction]
+    RewardFunction = Union[
+        PatchRewardFunction, OutsideRewardFunction, OnThisPatchEntryRewardFunction, PersistentRewardFunction
+    ]
 else:
     RewardFunction = TypeAliasType(
         "RewardFunction",
         Annotated[
-            Union[PatchRewardFunction, OutsideRewardFunction, OnThisPatchEntryFunction],
+            Union[PatchRewardFunction, OutsideRewardFunction, OnThisPatchEntryRewardFunction, PersistentRewardFunction],
             Field(discriminator="function_type"),
         ],
     )
