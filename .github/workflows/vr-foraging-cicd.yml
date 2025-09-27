@@ -11,6 +11,9 @@ on:
   release:
     types: [ published ]
 
+env:
+  DEFAULT_BRANCH: main
+
 jobs:
 
 # ╔──────────────────────────╗
@@ -81,7 +84,10 @@ jobs:
   github-rc-release:
     needs: tests
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: >
+      github.ref == 'refs/heads/${{ env.DEFAULT_BRANCH }}' && 
+      github.event_name == 'push' &&
+      github.event.head_commit.author.email != 'github-actions[bot]@users.noreply.github.com'
     name: Create GitHub pre-release
     steps:
       - uses: actions/checkout@v5
@@ -107,7 +113,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Bump version and regenerate schemas" || echo "No changes to commit"
+          git commit -m "Bump version and regenerate schemas [skip ci]" || echo "No changes to commit"
           git push origin ${{ env.DEFAULT_BRANCH }}
 
       - name: Get version
@@ -190,7 +196,7 @@ jobs:
     name: Build and deploy documentation to GitHub Pages
     runs-on: ubuntu-latest
     needs: github-rc-release
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/${{ env.DEFAULT_BRANCH }}' && github.event_name == 'push'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
