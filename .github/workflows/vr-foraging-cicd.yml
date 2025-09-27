@@ -9,18 +9,17 @@ on:
       - dev*
       - release*
   release:
-    types: [ published ]
+    types: [published]
 
 jobs:
-
-# ╔──────────────────────────╗
-# │   _____         _        │
-# │  |_   _|__  ___| |_ ___  │
-# │    | |/ _ \/ __| __/ __| │
-# │    | |  __/\__ \ |_\__ \ │
-# │    |_|\___||___/\__|___/ │
-# │                          │
-# ╚──────────────────────────╝
+  # ╔──────────────────────────╗
+  # │   _____         _        │
+  # │  |_   _|__  ___| |_ ___  │
+  # │    | |/ _ \/ __| __/ __| │
+  # │    | |  __/\__ \ |_\__ \ │
+  # │    |_|\___||___/\__|___/ │
+  # │                          │
+  # ╚──────────────────────────╝
   tests:
     runs-on: windows-latest
     name: VrForaging unit tests
@@ -30,9 +29,6 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
-
-      - name: Set up Python
-        run: uv python install
 
       - name: Install python dependencies
         run: uv sync
@@ -69,15 +65,14 @@ jobs:
           git config --global core.safecrlf false
           git diff --exit-code || (echo "Untracked changes found" && exit 1)
 
-
-# ╔───────────────────────────────────────────────────────────╗
-# │    ____ ___ ____ ____    ____      _                      │
-# │   / ___|_ _/ ___|  _ \  |  _ \ ___| | ___  __ _ ___  ___  │
-# │  | |    | | |   | | | | | |_) / _ \ |/ _ \/ _` / __|/ _ \ │
-# │  | |___ | | |___| |_| | |  _ <  __/ |  __/ (_| \__ \  __/ │
-# │   \____|___\____|____/  |_| \_\___|_|\___|\__,_|___/\___| │
-# │                                                           │
-# ╚───────────────────────────────────────────────────────────╝
+  # ╔───────────────────────────────────────────────────────────╗
+  # │    ____ ___ ____ ____    ____      _                      │
+  # │   / ___|_ _/ ___|  _ \  |  _ \ ___| | ___  __ _ ___  ___  │
+  # │  | |    | | |   | | | | | |_) / _ \ |/ _ \/ _` / __|/ _ \ │
+  # │  | |___ | | |___| |_| | |  _ <  __/ |  __/ (_| \__ \  __/ │
+  # │   \____|___\____|____/  |_| \_\___|_|\___|\__,_|___/\___| │
+  # │                                                           │
+  # ╚───────────────────────────────────────────────────────────╝
   github-rc-release:
     needs: tests
     runs-on: ubuntu-latest
@@ -96,12 +91,9 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Set up Python
-        run: uv python install
-
       - name: Bump pre-release by default
         run: uv version --bump rc
-      
+
       - name: Regenerate schemas
         run: uv run vr-foraging regenerate
 
@@ -116,8 +108,8 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-            version=$(uv version --output-format json | jq -r '.version')
-            echo "version=$version" >> $GITHUB_OUTPUT
+          version=$(uv version --output-format json | jq -r '.version')
+          echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -131,22 +123,22 @@ jobs:
           body: |
             Automated pre-release v${{ steps.get_version.outputs.version }}
 
-# ╔─────────────────────────────────────────────────────────────────╗
-# │   ____        _     _ _        ____      _                      │
-# │  |  _ \ _   _| |__ | (_) ___  |  _ \ ___| | ___  __ _ ___  ___  │
-# │  | |_) | | | | '_ \| | |/ __| | |_) / _ \ |/ _ \/ _` / __|/ _ \ │
-# │  |  __/| |_| | |_) | | | (__  |  _ <  __/ |  __/ (_| \__ \  __/ │
-# │  |_|    \__,_|_.__/|_|_|\___| |_| \_\___|_|\___|\__,_|___/\___| │
-# │                                                                 │
-# ╚─────────────────────────────────────────────────────────────────╝
+  # ╔─────────────────────────────────────────────────────────────────╗
+  # │   ____        _     _ _        ____      _                      │
+  # │  |  _ \ _   _| |__ | (_) ___  |  _ \ ___| | ___  __ _ ___  ___  │
+  # │  | |_) | | | | '_ \| | |/ __| | |_) / _ \ |/ _ \/ _` / __|/ _ \ │
+  # │  |  __/| |_| | |_) | | | (__  |  _ <  __/ |  __/ (_| \__ \  __/ │
+  # │  |_|    \__,_|_.__/|_|_|\___| |_| \_\___|_|\___|\__,_|___/\___| │
+  # │                                                                 │
+  # ╚─────────────────────────────────────────────────────────────────╝
 
   github-public-release:
     runs-on: ubuntu-latest
     name: Create GitHub public release
     needs: tests
     if: github.event_name == 'release' &&
-        github.event.action == 'published' &&
-        !github.event.release.prerelease
+      github.event.action == 'published' &&
+      !github.event.release.prerelease
     steps:
       - uses: actions/checkout@v5
         with:
@@ -156,8 +148,6 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
-      - name: Set up Python
-        run: uv python install
 
       - name: Get release version from tag
         id: get_version
@@ -165,7 +155,7 @@ jobs:
 
       - name: Validate version tag format
         run: uv version ${{ steps.get_version.outputs.version }} --dry-run
-      
+
       - name: Update package version
         run: uv version ${{ steps.get_version.outputs.version }}
 
@@ -180,15 +170,14 @@ jobs:
           git commit -m "Set version and regenerate schemas" || echo "No changes to commit"
           git push origin main
 
-
-# ╔─────────────────────────╗
-# │   ____                  │
-# │  |  _ \  ___   ___ ___  │
-# │  | | | |/ _ \ / __/ __| │
-# │  | |_| | (_) | (__\__ \ │
-# │  |____/ \___/ \___|___/ │
-# │                         │
-# ╚─────────────────────────╝
+  # ╔─────────────────────────╗
+  # │   ____                  │
+  # │  |  _ \  ___   ___ ___  │
+  # │  | | | |/ _ \ / __/ __| │
+  # │  | |_| | (_) | (__\__ \ │
+  # │  |____/ \___/ \___|___/ │
+  # │                         │
+  # ╚─────────────────────────╝
   build-docs:
     name: Build and deploy documentation to GitHub Pages
     runs-on: ubuntu-latest
@@ -197,9 +186,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
-
-      - name: Set up Python
-        run: uv python install
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3
