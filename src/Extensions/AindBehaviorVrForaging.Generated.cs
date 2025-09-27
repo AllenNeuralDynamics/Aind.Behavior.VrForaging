@@ -8104,7 +8104,7 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DescriptionAttribute("A RewardFunction that is applied when the animal enters the patch.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class OnThisPatchEntryFunction : RewardFunction
+    public partial class OnThisPatchEntryRewardFunction : RewardFunction
     {
     
         private PatchUpdateFunction _amount;
@@ -8115,12 +8115,12 @@ namespace AindVrForagingDataSchema
     
         private string _rule;
     
-        public OnThisPatchEntryFunction()
+        public OnThisPatchEntryRewardFunction()
         {
             _rule = "OnThisPatchEntry";
         }
     
-        protected OnThisPatchEntryFunction(OnThisPatchEntryFunction other) : 
+        protected OnThisPatchEntryRewardFunction(OnThisPatchEntryRewardFunction other) : 
                 base(other)
         {
             _amount = other._amount;
@@ -8200,14 +8200,14 @@ namespace AindVrForagingDataSchema
             }
         }
     
-        public System.IObservable<OnThisPatchEntryFunction> Generate()
+        public System.IObservable<OnThisPatchEntryRewardFunction> Generate()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OnThisPatchEntryFunction(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OnThisPatchEntryRewardFunction(this)));
         }
     
-        public System.IObservable<OnThisPatchEntryFunction> Generate<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OnThisPatchEntryRewardFunction> Generate<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new OnThisPatchEntryFunction(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new OnThisPatchEntryRewardFunction(this));
         }
     
         protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -9771,6 +9771,130 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A RewardFunction that is always active.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A RewardFunction that is always active.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PersistentRewardFunction : RewardFunction
+    {
+    
+        private PatchUpdateFunction _amount;
+    
+        private PatchUpdateFunction _probability;
+    
+        private PatchUpdateFunction _available;
+    
+        private PersistentRewardFunctionRule _rule;
+    
+        public PersistentRewardFunction()
+        {
+        }
+    
+        protected PersistentRewardFunction(PersistentRewardFunction other) : 
+                base(other)
+        {
+            _amount = other._amount;
+            _probability = other._probability;
+            _available = other._available;
+            _rule = other._rule;
+        }
+    
+        /// <summary>
+        /// Defines the amount of reward replenished per rule unit.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("amount")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward replenished per rule unit.")]
+        public PatchUpdateFunction Amount
+        {
+            get
+            {
+                return _amount;
+            }
+            set
+            {
+                _amount = value;
+            }
+        }
+    
+        /// <summary>
+        /// Defines the probability of reward replenished per rule unit.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("probability")]
+        [System.ComponentModel.DescriptionAttribute("Defines the probability of reward replenished per rule unit.")]
+        public PatchUpdateFunction Probability
+        {
+            get
+            {
+                return _probability;
+            }
+            set
+            {
+                _probability = value;
+            }
+        }
+    
+        /// <summary>
+        /// Defines the amount of reward available replenished in the patch per rule unit.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("available")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available replenished in the patch per rule unit.")]
+        public PatchUpdateFunction Available
+        {
+            get
+            {
+                return _available;
+            }
+            set
+            {
+                _available = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rule", Required=Newtonsoft.Json.Required.Always)]
+        public PersistentRewardFunctionRule Rule
+        {
+            get
+            {
+                return _rule;
+            }
+            set
+            {
+                _rule = value;
+            }
+        }
+    
+        public System.IObservable<PersistentRewardFunction> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PersistentRewardFunction(this)));
+        }
+    
+        public System.IObservable<PersistentRewardFunction> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PersistentRewardFunction(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Amount = " + _amount + ", ");
+            stringBuilder.Append("Probability = " + _probability + ", ");
+            stringBuilder.Append("Available = " + _available + ", ");
+            stringBuilder.Append("Rule = " + _rule);
+            return true;
+        }
+    }
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
@@ -10316,8 +10440,9 @@ namespace AindVrForagingDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "function_type")]
     [JsonInheritanceAttribute("PatchRewardFunction", typeof(PatchRewardFunction))]
-    [JsonInheritanceAttribute("OnThisPatchEntryFunction", typeof(OnThisPatchEntryFunction))]
+    [JsonInheritanceAttribute("OnThisPatchEntryRewardFunction", typeof(OnThisPatchEntryRewardFunction))]
     [JsonInheritanceAttribute("OutsideRewardFunction", typeof(OutsideRewardFunction))]
+    [JsonInheritanceAttribute("PersistentRewardFunction", typeof(PersistentRewardFunction))]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class RewardFunction
@@ -15358,6 +15483,40 @@ namespace AindVrForagingDataSchema
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum PersistentRewardFunctionRule
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnReward")]
+        OnReward = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnChoice")]
+        OnChoice = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnTime")]
+        OnTime = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnDistance")]
+        OnDistance = 3,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnChoiceAccumulated")]
+        OnChoiceAccumulated = 4,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnRewardAccumulated")]
+        OnRewardAccumulated = 5,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnTimeAccumulated")]
+        OnTimeAccumulated = 6,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnDistanceAccumulated")]
+        OnDistanceAccumulated = 7,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnPatchEntry")]
+        OnPatchEntry = 8,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TruncationParameters2
@@ -15780,8 +15939,9 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OnThisPatchEntryFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OnThisPatchEntryRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OutsideRewardFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PersistentRewardFunction>))]
     public partial class MatchRewardFunction : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -16465,9 +16625,9 @@ namespace AindVrForagingDataSchema
             return Process<OlfactometerChannelConfig>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<OnThisPatchEntryFunction> source)
+        public System.IObservable<string> Process(System.IObservable<OnThisPatchEntryRewardFunction> source)
         {
-            return Process<OnThisPatchEntryFunction>(source);
+            return Process<OnThisPatchEntryRewardFunction>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<OperantLogic> source)
@@ -16543,6 +16703,11 @@ namespace AindVrForagingDataSchema
         public System.IObservable<string> Process(System.IObservable<PdfDistributionParameters> source)
         {
             return Process<PdfDistributionParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PersistentRewardFunction> source)
+        {
+            return Process<PersistentRewardFunction>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<PoissonDistribution> source)
@@ -16847,7 +17012,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerChannelConfig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OnThisPatchEntryFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OnThisPatchEntryRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperantLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OutsideRewardFunction>))]
@@ -16863,6 +17028,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchVirtualSitesGenerator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PdfDistributionParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PersistentRewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PoissonDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PositionControl>))]
