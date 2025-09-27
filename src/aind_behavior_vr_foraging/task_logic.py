@@ -953,7 +953,11 @@ class BlockEndConditionPatchCount(_BlockEndConditionBase):
 
 if TYPE_CHECKING:
     BlockEndCondition = Union[
-        BlockEndConditionDuration, BlockEndConditionDistance, BlockEndConditionChoice, BlockEndConditionReward
+        BlockEndConditionDuration,
+        BlockEndConditionDistance,
+        BlockEndConditionChoice,
+        BlockEndConditionReward,
+        BlockEndConditionPatchCount,
     ]
 else:
     BlockEndCondition = TypeAliasType(
