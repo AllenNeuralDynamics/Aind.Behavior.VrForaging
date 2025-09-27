@@ -13,13 +13,12 @@ from clabe.apps import (
 )
 from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
 from clabe.launcher import (
-    DefaultBehaviorPicker,
-    DefaultBehaviorPickerSettings,
     Launcher,
     LauncherCliArgs,
     Promise,
     run_if,
 )
+from clabe.pickers.dataverse import DataversePicker
 from pydantic_settings import CliApp
 
 from .data_mappers import AindRigDataMapper, AindSessionDataMapper
@@ -37,9 +36,7 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     bonsai_app = AindBehaviorServicesBonsaiApp(BonsaiAppSettings(workflow=Path(r"./src/main.bonsai")))
     trainer = CurriculumApp(settings=CurriculumSettings())
     watchdog_settings = WatchdogSettings()  # type: ignore[call-arg]
-    picker = DefaultBehaviorPicker[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic](
-        settings=DefaultBehaviorPickerSettings()  # type: ignore[call-arg]
-    )
+    picker = DataversePicker[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic]()
     launcher = Launcher(
         rig=AindVrForagingRig,
         session=AindBehaviorSessionModel,
@@ -72,8 +69,11 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     launcher.register_callable(
         run_if(lambda: suggestion.result is not None)(lambda launcher: _dump_suggestion(launcher, suggestion))
     )
+
     launcher.register_callable(
-        run_if(lambda: suggestion.result is not None)(lambda launcher: picker.dump_model(launcher, suggestion.result))
+        run_if(lambda: suggestion.result is not None)(
+            lambda launcher: picker.push_new_suggestion(launcher, suggestion.result.trainer_state)
+        )
     )
 
     # Mappers
