@@ -24,7 +24,7 @@ jobs:
         run: uv python install
 
       - name: Install python dependencies
-        run: uv sync --extra dev
+        run: uv sync
 
       - name: Run ruff format
         run: uv run ruff format
