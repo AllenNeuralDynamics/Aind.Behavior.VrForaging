@@ -18,7 +18,7 @@ from clabe.launcher import Launcher
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
-from ._utils import TrackedDevices, _make_origin_coordinate_system, utcnow
+from .utils import TrackedDevices, _make_origin_coordinate_system, utcnow
 
 logger = logging.getLogger(__name__)
 

@@ -23,7 +23,7 @@ from clabe.launcher import (
 from pydantic_settings import CliApp
 
 from .data_mappers import AindRigDataMapper, AindSessionDataMapper
-from .data_mappers._utils import write_ads_mappers
+from .data_mappers.utils import write_ads_mappers
 from .rig import AindVrForagingRig
 from .task_logic import AindVrForagingTaskLogic
 

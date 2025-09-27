@@ -14,8 +14,8 @@ from clabe.launcher import Launcher, Promise
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
 if TYPE_CHECKING:
-    from ._rig import AindRigDataMapper
-    from ._session import AindSessionDataMapper
+    from .rig import AindRigDataMapper
+    from .session import AindSessionDataMapper
 else:
     AindRigDataMapper = AindSessionDataMapper = Any
 
