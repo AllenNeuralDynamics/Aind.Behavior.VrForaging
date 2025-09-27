@@ -60,6 +60,10 @@ def make_patch(
         label=label,
         state_index=state_index,
         odor_specification=vr_task_logic.OdorSpecification(index=odor_index, concentration=1),
+        patch_terminators=[
+            vr_task_logic.PatchTerminatorOnChoice(count=vr_task_logic.scalar_value(1)),
+            vr_task_logic.PatchTerminatorOnRejection(count=vr_task_logic.scalar_value(1)),
+        ],
         reward_specification=vr_task_logic.RewardSpecification(
             amount=vr_task_logic.scalar_value(REWARD_AMOUNT),
             probability=vr_task_logic.scalar_value(p_reward),
