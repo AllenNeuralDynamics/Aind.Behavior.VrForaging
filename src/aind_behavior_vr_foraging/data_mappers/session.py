@@ -22,7 +22,7 @@ from clabe.launcher import Launcher, Promise
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
-from ._utils import TrackedDevices, _get_water_calibration, _make_origin_coordinate_system
+from .utils import TrackedDevices, _get_water_calibration, _make_origin_coordinate_system
 
 logger = logging.getLogger(__name__)
 

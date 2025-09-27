@@ -11,11 +11,10 @@ from git import Repo
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
-from ._rig import AindRigDataMapper
-from ._session import AindSessionDataMapper
+from .rig import AindRigDataMapper
+from .session import AindSessionDataMapper
 
 logger = logging.getLogger(__name__)
-
 
 class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
     data_path: os.PathLike = pydantic.Field(description="Path to the session data directory.")
@@ -52,7 +51,6 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
         logger.info("Writing rig.json to %s", self.data_path)
         rig_mapped.write_standard_file(Path(self.data_path))
         logger.info("Mapping completed!")
-
 
 if __name__ == "__main__":
     pydantic_settings.CliApp().run(DataMapperCli)

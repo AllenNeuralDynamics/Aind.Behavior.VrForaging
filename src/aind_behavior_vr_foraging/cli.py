@@ -8,7 +8,6 @@ from aind_behavior_vr_foraging.data_mappers import DataMapperCli
 from aind_behavior_vr_foraging.data_qc import DataQcCli
 from aind_behavior_vr_foraging.launcher import ClabeCli
 
-
 class VersionCli(RootModel):
     root: t.Any
 
