@@ -3,7 +3,7 @@ import typing as t
 from pydantic import Field, RootModel
 from pydantic_settings import BaseSettings, CliApp, CliSubCommand
 
-from aind_behavior_vr_foraging import __version__, regenerate
+from aind_behavior_vr_foraging import __semver__, regenerate
 from aind_behavior_vr_foraging.data_mappers import DataMapperCli
 from aind_behavior_vr_foraging.data_qc import DataQcCli
 from aind_behavior_vr_foraging.launcher import ClabeCli
@@ -13,7 +13,7 @@ class VersionCli(RootModel):
     root: t.Any
 
     def cli_cmd(self) -> None:
-        print(__version__)
+        print(__semver__)
 
 
 class DslRegenerateCli(RootModel):

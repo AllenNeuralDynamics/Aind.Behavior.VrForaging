@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.8.22"]
+build-backend = "uv_build"
 
 [project]
 name = "aind-behavior-vr-foraging"
@@ -12,7 +12,8 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Operating System :: Microsoft :: Windows",
 ]
-dynamic = ["version", "readme"]
+version = "0.6.0rc3"
+readme = {file = "README.md", content-type = "text/markdown"}
 
 dependencies = [
   "aind_behavior_services>=0.12, <0.13",
@@ -35,6 +36,8 @@ launcher = [
     "aind_behavior_vr_foraging[data]",
     ]
 
+[dependency-groups]
+
 dev = [
     "aind_behavior_vr_foraging[launcher]",
     "aind_behavior_vr_foraging[data]",
@@ -43,7 +46,7 @@ dev = [
 ]
 
 docs = [
-    'Sphinx<9',
+    'Sphinx',
     'furo',
     'sphinx-jinja',
     'autodoc_pydantic[erdantic]',
@@ -53,15 +56,7 @@ docs = [
 ]
 
 [project.scripts]
-regenerate = "aind_behavior_vr_foraging.regenerate:main"
 vr-foraging = "aind_behavior_vr_foraging.cli:main"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.dynamic]
-version = {attr = "aind_behavior_vr_foraging.__version__"}
-readme = {file = "README.md", content-type = "text/markdown"}
 
 [tool.ruff]
 line-length = 120
@@ -76,3 +71,7 @@ pydocstyle = { convention = 'google' }
 [tool.codespell]
 skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock,*Generated.cs'
 ignore-words-list = 'nd'
+
+[tool.uv]
+default-groups = ['dev']
+required-version = '>=0.8.4'

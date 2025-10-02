@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field, NonNegativeFloat, field_validator, model_
 from typing_extensions import TypeAliasType
 
 from aind_behavior_vr_foraging import (
-    __version__,
+    __semver__,
 )
 
 logger = logging.getLogger(__name__)
@@ -1032,6 +1032,6 @@ class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
     It includes all task parameters, environment specifications, and control settings.
     """
 
-    version: Literal[__version__] = __version__
+    version: Literal[__semver__] = __semver__
     name: Literal["AindVrForaging"] = Field(default="AindVrForaging", description="Name of the task logic", frozen=True)
     task_parameters: AindVrForagingTaskParameters = Field(description="Parameters of the task logic")
