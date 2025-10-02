@@ -6,7 +6,7 @@ from pathlib import Path
 import contraqctor
 import semver
 
-from aind_behavior_vr_foraging import __version__
+from aind_behavior_vr_foraging import __semver__
 
 
 def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contract.Dataset]:
@@ -22,7 +22,7 @@ def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contr
     return partial(_dataset, version=version)
 
 
-def dataset(path: os.PathLike, version: str = __version__) -> contraqctor.contract.Dataset:
+def dataset(path: os.PathLike, version: str = __semver__) -> contraqctor.contract.Dataset:
     """
     Loads the dataset for the Aind VR Foraging project from a specified version.
 
@@ -37,7 +37,7 @@ def dataset(path: os.PathLike, version: str = __version__) -> contraqctor.contra
     return dataset_constructor(Path(path))
 
 
-def render_dataset(version: str = __version__) -> str:
+def render_dataset(version: str = __semver__) -> str:
     """Renders the dataset as a tree-like structure for visualization."""
     from contraqctor.contract.utils import print_data_stream_tree
 
