@@ -2927,12 +2927,12 @@
       "title": "OlfactometerChannelType",
       "type": "string"
     },
-    "OnThisPatchEntryFunction": {
+    "OnThisPatchEntryRewardFunction": {
       "description": "A RewardFunction that is applied when the animal enters the patch.",
       "properties": {
         "function_type": {
-          "const": "OnThisPatchEntryFunction",
-          "default": "OnThisPatchEntryFunction",
+          "const": "OnThisPatchEntryRewardFunction",
+          "default": "OnThisPatchEntryRewardFunction",
           "title": "Function Type",
           "type": "string"
         },
@@ -2980,7 +2980,7 @@
           "type": "string"
         }
       },
-      "title": "OnThisPatchEntryFunction",
+      "title": "OnThisPatchEntryRewardFunction",
       "type": "object"
     },
     "OperantLogic": {
@@ -3694,6 +3694,73 @@
       "title": "PdfDistributionParameters",
       "type": "object"
     },
+    "PersistentRewardFunction": {
+      "description": "A RewardFunction that is always active.",
+      "properties": {
+        "function_type": {
+          "const": "PersistentRewardFunction",
+          "default": "PersistentRewardFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "amount": {
+          "default": null,
+          "description": "Defines the amount of reward replenished per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PatchUpdateFunction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "probability": {
+          "default": null,
+          "description": "Defines the probability of reward replenished per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PatchUpdateFunction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "available": {
+          "default": null,
+          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/PatchUpdateFunction"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rule": {
+          "enum": [
+            "OnReward",
+            "OnChoice",
+            "OnTime",
+            "OnDistance",
+            "OnChoiceAccumulated",
+            "OnRewardAccumulated",
+            "OnTimeAccumulated",
+            "OnDistanceAccumulated",
+            "OnPatchEntry"
+          ],
+          "title": "Rule",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule"
+      ],
+      "title": "PersistentRewardFunction",
+      "type": "object"
+    },
     "PoissonDistribution": {
       "properties": {
         "family": {
@@ -3856,9 +3923,10 @@
     "RewardFunction": {
       "discriminator": {
         "mapping": {
-          "OnThisPatchEntryFunction": "#/$defs/OnThisPatchEntryFunction",
+          "OnThisPatchEntryRewardFunction": "#/$defs/OnThisPatchEntryRewardFunction",
           "OutsideRewardFunction": "#/$defs/OutsideRewardFunction",
-          "PatchRewardFunction": "#/$defs/PatchRewardFunction"
+          "PatchRewardFunction": "#/$defs/PatchRewardFunction",
+          "PersistentRewardFunction": "#/$defs/PersistentRewardFunction"
         },
         "propertyName": "function_type"
       },
@@ -3870,7 +3938,10 @@
           "$ref": "#/$defs/OutsideRewardFunction"
         },
         {
-          "$ref": "#/$defs/OnThisPatchEntryFunction"
+          "$ref": "#/$defs/OnThisPatchEntryRewardFunction"
+        },
+        {
+          "$ref": "#/$defs/PersistentRewardFunction"
         }
       ]
     },
