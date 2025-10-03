@@ -330,6 +330,13 @@ def dataset(
                                     root_path / "behavior/SoftwareEvents/PatchTerminationEvent.json"
                                 ),
                             ),
+                            SoftwareEvents(
+                                name="SpoutParkingPositions",
+                                description="Encodes the spout parking positions to use while fully retracted or extended.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/SpoutParkingPositions.json"
+                                ),
+                            ),
                         ],
                     ),
                     DataStreamCollection(
