@@ -115,7 +115,7 @@ provides-extras = ["data", "launcher", "dev", "docs"]
 [[package]]
 name = "aind-clabe"
 version = "0.6.15rc1"
-source = { git = "https://github.com/AllenNeuralDynamics/clabe?rev=feat-dataverse-client#7a2d0f30b980688eea10f4191aba10f42fb2e127" }
+source = { git = "https://github.com/AllenNeuralDynamics/clabe?rev=feat-dataverse-client#bd205c73618226e7589bedbe449b5d7db7307ab9" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
