@@ -19,6 +19,7 @@ from clabe.launcher import (
     Promise,
     run_if,
 )
+from clabe.pickers import DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
@@ -39,14 +40,16 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     bonsai_app = AindBehaviorServicesBonsaiApp(BonsaiAppSettings(workflow=Path(r"./src/main.bonsai")))
     trainer = CurriculumApp(settings=CurriculumSettings())
     watchdog_settings = WatchdogSettings()  # type: ignore[call-arg]
-    picker = DataversePicker[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic]()
+    picker = DataversePicker[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic](
+        settings=DefaultBehaviorPickerSettings()
+    )
     launcher = Launcher(
         rig=AindVrForagingRig,
         session=AindBehaviorSessionModel,
         task_logic=AindVrForagingTaskLogic,
         settings=settings,
     )
-    manipulator_modifier = ByAnimalManipulatorModifier(picker, launcher)
+    manipulator_modifier = ByAnimalManipulatorModifier(picker)
 
     # Get user input
     launcher.register_callable(picker.initialize)
