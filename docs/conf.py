@@ -19,7 +19,7 @@ SOURCE_ROOT = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/t
 project = "AIND VR Foraging"
 copyright = "2025, Allen Institute for Neural Dynamics"
 author = "Bruno Cruz"
-release = aind_behavior_vr_foraging.__version__
+release = aind_behavior_vr_foraging.__semver__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
