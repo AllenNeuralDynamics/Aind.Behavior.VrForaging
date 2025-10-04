@@ -55,7 +55,7 @@ def compute_cmc_transition_probability(n_states, rep_rate, T=3.5, dt=0.1) -> np.
 
 operation_control = vr_task_logic.OperationControl(
     movable_spout_control=vr_task_logic.MovableSpoutControl(enabled=False),
-    audio_control=vr_task_logic.AudioControl(duration=0.2, frequency=5000),
+    audio_control=vr_task_logic.AudioControl(duration=0.2, frequency=9999),
     odor_control=vr_task_logic.OdorControl(),
     position_control=vr_task_logic.PositionControl(
         frequency_filter_cutoff=5,
@@ -215,7 +215,7 @@ task_logic = AindVrForagingTaskLogic(
 )
 
 
-def main(path_seed: str = "./local/mcm_{schema}.json"):
+def main(path_seed: str = "./local/MCM_{schema}.json"):
     example_task_logic = task_logic
     example_trainer_state = TrainerState(
         stage=Stage(name="example_stage", task=example_task_logic), curriculum=None, is_on_curriculum=False

@@ -11,14 +11,16 @@ from git import Repo
 from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
 
 sys.path.append(".")
-from examples.examples import mock_rig, mock_session, mock_task_logic  # isort:skip # pylint: disable=wrong-import-position
+from examples.rig import rig
+from examples.session import session
+from examples.task_patch_foraging import task_logic
 
 
 class TestAindSessionDataMapper(unittest.TestCase):
     def setUp(self):
-        self.session_model = mock_session()
-        self.rig_model = mock_rig()
-        self.task_logic_model = mock_task_logic()
+        self.session_model = session
+        self.rig_model = rig
+        self.task_logic_model = task_logic
         self.repository = Repo(Path("./"))
         self.script_path = Path("./src/main.bonsai")
         self.session_end_time = datetime.now()
@@ -52,7 +54,7 @@ class TestAindSessionDataMapper(unittest.TestCase):
 
 class TestAindRigDataMapper(unittest.TestCase):
     def setUp(self):
-        self.rig_model = mock_rig()
+        self.rig_model = rig
         self.mapper = AindRigDataMapper(
             rig_model=self.rig_model,
         )
@@ -76,9 +78,9 @@ class TestAindRigDataMapper(unittest.TestCase):
 
 class TestInstrumentAcquisitionCompatibility(unittest.TestCase):
     def setUp(self):
-        self.rig_model = mock_rig()
-        self.session_model = mock_session()
-        self.task_logic_model = mock_task_logic()
+        self.rig_model = rig
+        self.session_model = session
+        self.task_logic_model = task_logic
         self.rig_mapper = AindRigDataMapper(
             rig_model=self.rig_model,
         )

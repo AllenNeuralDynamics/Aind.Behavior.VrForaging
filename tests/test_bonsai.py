@@ -13,7 +13,7 @@ from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 sys.path.append(".")
-from examples import examples  # isort:skip # pylint: disable=wrong-import-position
+from examples import rig, session, task_patch_foraging  # isort:skip # pylint: disable=wrong-import-position
 from tests import JSON_ROOT  # isort:skip # pylint: disable=wrong-import-position
 
 TModel = TypeVar("TModel", bound=Union[AindVrForagingRig, AindVrForagingTaskLogic, AindBehaviorSessionModel])
@@ -21,7 +21,9 @@ TModel = TypeVar("TModel", bound=Union[AindVrForagingRig, AindVrForagingTaskLogi
 
 class BonsaiTests(unittest.TestCase):
     def test_deserialization(self):
-        examples.main("./local/{schema}.json")
+        rig.main("./local/{schema}.json")
+        session.main("./local/{schema}.json")
+        task_patch_foraging.main("./local/{schema}.json")
 
         models_to_test = [
             TestModel(bonsai_property="SessionPath", json_root=JSON_ROOT, model=AindBehaviorSessionModel),

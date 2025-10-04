@@ -10,7 +10,7 @@ from contraqctor import contract, qc
 from contraqctor.contract.harp import HarpDevice
 from matplotlib import pyplot as plt
 
-from aind_behavior_vr_foraging import __version__
+from aind_behavior_vr_foraging import __semver__
 from aind_behavior_vr_foraging.data_contract import dataset
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
@@ -284,7 +284,7 @@ class DataQcCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
     data_path: pydantic_settings.CliPositionalArg[os.PathLike] = pydantic.Field(
         description="Path to the session data directory."
     )
-    version: str = pydantic.Field(default=__version__, description="Version of the dataset.")
+    version: str = pydantic.Field(default=__semver__, description="Version of the dataset.")
 
     def cli_cmd(self):
         vr_dataset = dataset(Path(self.data_path), self.version)

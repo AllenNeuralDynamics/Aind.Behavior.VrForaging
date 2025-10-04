@@ -11,7 +11,7 @@ import aind_behavior_services.calibration.water_valve as wvc
 import aind_behavior_services.rig as rig
 from pydantic import BaseModel, Field
 
-from aind_behavior_vr_foraging import __version__
+from aind_behavior_vr_foraging import __semver__
 
 
 class AindManipulatorAdditionalSettings(BaseModel):
@@ -35,7 +35,7 @@ class RigCalibration(BaseModel):
 
 
 class AindVrForagingRig(rig.AindBehaviorRigModel):
-    version: Literal[__version__] = __version__
+    version: Literal[__semver__] = __semver__
     triggered_camera_controller: rig.cameras.CameraController[rig.cameras.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
     )
