@@ -205,7 +205,7 @@ namespace AindVrForagingDataSchema
 
         private void ValidateTruncationParameters(TruncationParameters truncationParameters)
         {
-            if (truncationParameters.Min >= truncationParameters.Max)
+            if (truncationParameters.Min > truncationParameters.Max)
             {
                 throw new ArgumentException("Invalid truncation parameters. Min must be lower than Max");
             }
