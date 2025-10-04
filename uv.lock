@@ -122,7 +122,7 @@ docs = [
 [[package]]
 name = "aind-clabe"
 version = "0.6.15rc2"
-source = { git = "https://github.com/AllenNeuralDynamics/clabe?rev=feat-dataverse-client#e3b017235c4b8fdaf0e8f2d6573bab7de7be42b9" }
+source = { git = "https://github.com/AllenNeuralDynamics/clabe?rev=feat-dataverse-client#6bdebeed2853de745b8e913b982a60dae4020e3d" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
