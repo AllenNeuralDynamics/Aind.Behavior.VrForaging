@@ -229,6 +229,15 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         #     logger.error("Olfactometer device not found in rig model.")
         #     raise ValueError("Olfactometer device not found in rig model.")
 
+        if self.curriculum is not None:
+            performance_metrics = acquisition.PerformanceMetrics(
+                output_parameters=acquisition.GenericModel.model_validate(self.curriculum.metrics.model_dump())
+            )
+            curriculum_status = str(self.curriculum.trainer_state.is_on_curriculum)
+        else:
+            curriculum_status = "false"
+            performance_metrics = None
+
         stimulus_epochs: list[acquisition.StimulusEpoch] = [
             acquisition.StimulusEpoch(
                 active_devices=active_devices,
@@ -238,6 +247,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 configurations=stimulus_epoch_configurations,
                 stimulus_name=self.session_model.experiment,
                 stimulus_modalities=stimulus_modalities,
+                performance_metrics=performance_metrics,
+                curriculum_status=curriculum_status,
             )
         ]
         return stimulus_epochs

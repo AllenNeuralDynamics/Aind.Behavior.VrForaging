@@ -11,6 +11,8 @@ from aind_behavior_vr_foraging import __semver__
 
 def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contract.Dataset]:
     parsed_version = semver.Version.parse(version)
+    # Ignore release candidate suffix for version comparison
+    parsed_version = semver.Version(parsed_version.major, parsed_version.minor, parsed_version.patch)
     if semver.Version.parse("0.4.0") <= parsed_version < semver.Version.parse("0.5.0"):
         from .v0_4_0 import dataset as _dataset
     elif semver.Version.parse("0.5.0") <= parsed_version < semver.Version.parse("0.6.0"):
