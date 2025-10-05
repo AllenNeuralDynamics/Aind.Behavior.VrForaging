@@ -64,7 +64,7 @@ def _get_water_calibration(rig_model: AindVrForagingRig) -> List[measurements.Vo
         c = water_calibration.output
         if c is None:
             c = water_calibration.input.calibrate_output()
-        assert c.interval_average is not None
+        c.interval_average = c.interval_average or {}
 
         return measurements.VolumeCalibration(
             device_name=device_name,
