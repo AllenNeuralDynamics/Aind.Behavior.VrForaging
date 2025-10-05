@@ -1,4 +1,4 @@
 * text=auto
 *.cmd text eol=crlf
 *.bat text eol=crlf
-*.bonsai textuv.lock merge=ours
+*.bonsai text
