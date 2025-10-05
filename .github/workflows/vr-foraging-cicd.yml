@@ -92,8 +92,13 @@ jobs:
           enable-cache: true
 
       - name: Bump pre-release by default
-        run: uv version --bump rc
-
+        shell: bash
+        run: |
+          if uv version --bump rc --dry-run; then
+            uv version --bump rc
+          else
+            uv version --bump rc --bump patch
+          fi
       - name: Regenerate schemas
         run: uv run vr-foraging regenerate
 
