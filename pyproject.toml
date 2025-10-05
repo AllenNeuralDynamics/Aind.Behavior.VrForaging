@@ -31,7 +31,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 data = ["contraqctor<0.5.0"]
 
 launcher = [
-    "aind-clabe[aind-services] @ git+https://github.com/AllenNeuralDynamics/clabe@feat-dataverse-client",
+    "aind-clabe[aind-services]",
     "aind-data-schema>=2",
     "aind_behavior_vr_foraging[data]",
     ]
