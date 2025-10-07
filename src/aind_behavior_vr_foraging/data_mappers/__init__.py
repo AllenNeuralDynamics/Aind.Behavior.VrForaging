@@ -1,11 +1,13 @@
 import logging
 import os
 from pathlib import Path
+from typing import Optional
 
 import pydantic
 import pydantic_settings
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file
+from clabe.apps import CurriculumSuggestion
 from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -26,6 +28,9 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
     repo_path: os.PathLike = pydantic.Field(
         default=Path("."), description="Path to the repository. By default it will use the current directory."
     )
+    curriculum_suggestion: Optional[os.PathLike] = pydantic.Field(
+        default=None, description="Path to curriculum suggestion file."
+    )
 
     def cli_cmd(self):
         logger.info("Mapping metadata directly from dataset.")
@@ -33,6 +38,12 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
         session = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
         rig = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
         task_logic = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
+
+        if self.curriculum_suggestion is not None:
+            curriculum_suggestion = model_from_json_file(Path(self.curriculum_suggestion), CurriculumSuggestion)
+        else:
+            curriculum_suggestion = None
+
         repo = Repo(self.repo_path)
         session_mapped = AindSessionDataMapper(
             session_model=session,
@@ -40,6 +51,7 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
             task_logic_model=task_logic,
             repository=repo,
             script_path=Path("./src/main.bonsai"),
+            curriculum_suggestion=curriculum_suggestion,
         ).map()
         rig_mapped = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(self.db_root)).map()
 
