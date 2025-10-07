@@ -70,7 +70,7 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     # Curriculum
     suggestion = launcher.register_callable(
         run_if(lambda: trainer_state_exists_predicate(picker.trainer_state))(
-            trainer.build_runner(input_trainer_state=lambda: picker.trainer_state)
+            trainer.build_runner(input_trainer_state=lambda: picker.trainer_state, allow_std_error=True)
         )
     )
     launcher.register_callable(
