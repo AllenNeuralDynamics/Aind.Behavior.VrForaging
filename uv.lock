@@ -120,7 +120,7 @@ docs = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.6.15"
+version = "0.6.16"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -130,9 +130,9 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b1/bc/e32dfec7f8b95e69f686b1e3e5c3effabc2cc00df76ad94f97b32785a11f/aind_clabe-0.6.15.tar.gz", hash = "sha256:0a56b32967ec304cd642c67fb626f51e2f0d64ccb9233878f3e8614fea8aebd4", size = 56952, upload-time = "2025-10-05T00:10:13.426Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/12/cc/ef4a2f287256fd1b3f6d77dd68210bd18d66824d3ac93cd0bd2844307f31/aind_clabe-0.6.16.tar.gz", hash = "sha256:9f94162eaa4d230c969f5a0e8eb16f3ba2919780f7fad5fd533aafd8feeadb55", size = 56934, upload-time = "2025-10-08T05:16:36.933Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c6/1b/5e48c051100715bc32fa9693038220930589bf9935315ab4555eb6760e80/aind_clabe-0.6.15-py3-none-any.whl", hash = "sha256:fd6c0f2fbc8e495e08cd06d51f8a092c7b61c52a39193a6e91ba7748d1b300ba", size = 75578, upload-time = "2025-10-05T00:10:12.279Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/c7/a41966880f8bf3b7f7baf0528e982e7df3bf28efd77f55aa15e34efce7e4/aind_clabe-0.6.16-py3-none-any.whl", hash = "sha256:51b067dc39ba5be8d3b6f5845099ce7fb50eeb7321192be6532940c6bb29e1ae", size = 75565, upload-time = "2025-10-08T05:16:36.083Z" },
 ]
 
 [package.optional-dependencies]
@@ -1233,9 +1233,9 @@ name = "msal"
 version = "1.34.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography" },
-    { name = "pyjwt", extra = ["crypto"] },
-    { name = "requests" },
+    { name = "cryptography", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
+    { name = "pyjwt", extra = ["crypto"], marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
+    { name = "requests", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cf/0e/c857c46d653e104019a84f22d4494f2119b4fe9f896c92b4b864b3b045cc/msal-1.34.0.tar.gz", hash = "sha256:76ba83b716ea5a6d75b0279c0ac353a0e05b820ca1f6682c0eb7f45190c43c2f", size = 153961, upload-time = "2025-09-22T23:05:48.989Z" }
 wheels = [
@@ -1716,7 +1716,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography" },
+    { name = "cryptography", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 
 [[package]]

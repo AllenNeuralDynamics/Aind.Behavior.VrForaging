@@ -91,6 +91,7 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     launcher.register_callable(write_ads_mappers(session_mapper_promise, rig_mapper_promise))
 
     # Watchdog
+    launcher.register_callable(lambda x: x.copy_logs())
     launcher.register_callable(
         WatchdogDataTransferService.build_runner(
             settings=watchdog_settings, aind_session_data_mapper=session_mapper_promise
