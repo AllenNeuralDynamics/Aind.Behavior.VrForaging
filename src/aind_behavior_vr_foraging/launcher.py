@@ -13,12 +13,7 @@ from clabe.apps import (
     CurriculumSuggestion,
 )
 from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
-from clabe.launcher import (
-    Launcher,
-    LauncherCliArgs,
-    Promise,
-    run_if,
-)
+from clabe.launcher import Launcher, LauncherCliArgs, MaybeResult, Promise, run_if
 from clabe.pickers import DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
@@ -73,19 +68,22 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
             trainer.build_runner(input_trainer_state=lambda: picker.trainer_state, allow_std_error=True)
         )
     )
+
     launcher.register_callable(
-        run_if(lambda: suggestion.result is not None)(lambda launcher: _dump_suggestion(launcher, suggestion))
+        run_if(lambda: suggestion.result.has_result() and (not suggestion.result.result))(
+            lambda launcher: _dump_suggestion(launcher, suggestion.result.result)
+        )
     )
 
     launcher.register_callable(
-        run_if(lambda: suggestion.result is not None)(
-            lambda launcher: picker.push_new_suggestion(launcher, suggestion.result.trainer_state)
+        run_if(lambda: suggestion.result.has_result() and (not suggestion.result.result))(
+            lambda launcher: picker.push_new_suggestion(launcher, suggestion.result.result.trainer_state)
         )
     )
 
     # Mappers
     session_mapper_promise = launcher.register_callable(
-        AindSessionDataMapper.build_runner(curriculum_suggestion=suggestion)
+        AindSessionDataMapper.build_runner(curriculum_suggestion=lambda: _resolve_trainer_suggestion(suggestion))
     )
     rig_mapper_promise = launcher.register_callable(AindRigDataMapper.build_runner())
     launcher.register_callable(write_ads_mappers(session_mapper_promise, rig_mapper_promise))
@@ -94,15 +92,25 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     launcher.register_callable(lambda x: x.copy_logs())
     launcher.register_callable(
         WatchdogDataTransferService.build_runner(
-            settings=watchdog_settings, aind_session_data_mapper=session_mapper_promise
+            settings=watchdog_settings, aind_session_data_mapper=session_mapper_promise.as_callable()
         )
     )
     return launcher
 
 
-def _dump_suggestion(launcher: Launcher[Any, Any, Any], suggestion: Promise[Any, CurriculumSuggestion]) -> None:
+def _dump_suggestion(launcher: Launcher[Any, Any, Any], suggestion: CurriculumSuggestion) -> None:
     with open(launcher.session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
-        f.write(suggestion.result.model_dump_json(indent=2))
+        f.write(suggestion.model_dump_json(indent=2))
+
+
+def _resolve_trainer_suggestion(
+    input_trainer_state: Promise[Any, MaybeResult[CurriculumSuggestion]],
+) -> CurriculumSuggestion | None:
+    if not input_trainer_state.has_result():
+        return None
+    if not input_trainer_state.result.has_result():
+        return None
+    return input_trainer_state.result.result
 
 
 class ByAnimalManipulatorModifier:
