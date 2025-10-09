@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Callable, Dict, List, Optional, Union
 
 import aind_behavior_services.rig as AbsRig
 import git
@@ -17,7 +17,7 @@ from aind_data_schema_models.modalities import Modality
 from clabe.apps import CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
-from clabe.launcher import Launcher, Promise
+from clabe.launcher import Launcher
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
@@ -63,7 +63,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     @classmethod
     def build_runner(
         cls,
-        curriculum_suggestion: Optional[Promise[[Any], CurriculumSuggestion]] = None,
+        curriculum_suggestion: Optional[Callable[[], CurriculumSuggestion | None]] = None,
     ) -> Callable[
         [Launcher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic]], "AindSessionDataMapper"
     ]:
@@ -75,7 +75,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 rig_model=launcher.get_rig(strict=True),
                 task_logic_model=launcher.get_task_logic(strict=True),
                 repository=launcher.repository,
-                curriculum_suggestion=curriculum_suggestion.result if curriculum_suggestion is not None else None,
+                curriculum_suggestion=curriculum_suggestion() if curriculum_suggestion is not None else None,
             )
             new.map()
             return new

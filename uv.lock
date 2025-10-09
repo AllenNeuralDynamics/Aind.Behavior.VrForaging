@@ -94,7 +94,7 @@ docs = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.7.0" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.5.0" },
     { name = "pydantic-settings" },
@@ -120,7 +120,7 @@ docs = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.6.16"
+version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -130,9 +130,9 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/12/cc/ef4a2f287256fd1b3f6d77dd68210bd18d66824d3ac93cd0bd2844307f31/aind_clabe-0.6.16.tar.gz", hash = "sha256:9f94162eaa4d230c969f5a0e8eb16f3ba2919780f7fad5fd533aafd8feeadb55", size = 56934, upload-time = "2025-10-08T05:16:36.933Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/67/9c/3c3bed11c9d11c23d6859f804e4bfe8530c382f46aea949ea5b320f4b8e7/aind_clabe-0.7.0.tar.gz", hash = "sha256:29390f13c6e1115ddfa9a7a26d11df7a77fde150f1ad26ea34244cceb1765e54", size = 57124, upload-time = "2025-10-09T23:11:33.423Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ef/c7/a41966880f8bf3b7f7baf0528e982e7df3bf28efd77f55aa15e34efce7e4/aind_clabe-0.6.16-py3-none-any.whl", hash = "sha256:51b067dc39ba5be8d3b6f5845099ce7fb50eeb7321192be6532940c6bb29e1ae", size = 75565, upload-time = "2025-10-08T05:16:36.083Z" },
+    { url = "https://files.pythonhosted.org/packages/05/44/112b2f0d489b161bf175211c02971d8eb114499fdd6985690806e94de2c9/aind_clabe-0.7.0-py3-none-any.whl", hash = "sha256:a0eab731a241d1bd340bf6552f5222f0f718980494a511ba9144c7cb196d38a8", size = 75695, upload-time = "2025-10-09T23:11:32.159Z" },
 ]
 
 [package.optional-dependencies]
