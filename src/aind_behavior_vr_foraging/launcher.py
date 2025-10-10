@@ -70,13 +70,13 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     )
 
     launcher.register_callable(
-        run_if(lambda: suggestion.result.has_result() and (not suggestion.result.result))(
+        run_if(lambda: suggestion.result.has_result())(
             lambda launcher: _dump_suggestion(launcher, suggestion.result.result)
         )
     )
 
     launcher.register_callable(
-        run_if(lambda: suggestion.result.has_result() and (not suggestion.result.result))(
+        run_if(lambda: suggestion.result.has_result())(
             lambda launcher: picker.push_new_suggestion(launcher, suggestion.result.result.trainer_state)
         )
     )
