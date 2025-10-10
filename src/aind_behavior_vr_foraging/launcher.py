@@ -99,6 +99,9 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
 
 
 def _dump_suggestion(launcher: Launcher[Any, Any, Any], suggestion: CurriculumSuggestion) -> None:
+    launcher.logger.info(
+        f"Dumping curriculum suggestion to: {launcher.session_directory / 'Behavior' / 'Logs' / 'suggestion.json'}"
+    )
     with open(launcher.session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
         f.write(suggestion.model_dump_json(indent=2))
 
