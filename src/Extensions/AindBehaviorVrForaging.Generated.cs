@@ -43,9 +43,10 @@ namespace AindVrForagingDataSchema
     
         public AindBehaviorSessionModel()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.1";
-            _version = "0.3.1";
+            _aindBehaviorServicesPkgVersion = "0.12.2";
+            _version = "0.12.2";
             _experimenter = new System.Collections.Generic.List<string>();
+            _experimentVersion = "";
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
         }
@@ -96,7 +97,7 @@ namespace AindVrForagingDataSchema
         /// <summary>
         /// Name of the experiment
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("experiment", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("experiment")]
         [System.ComponentModel.DescriptionAttribute("Name of the experiment")]
         public string Experiment
         {
@@ -164,10 +165,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Name of the session. This will be used to create a folder in the root path.
+        /// Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("session_name")]
-        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path.")]
+        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path. If no" +
+            "t provided, it will be generated using subject and date.")]
         public string SessionName
         {
             get
@@ -200,7 +202,7 @@ namespace AindVrForagingDataSchema
         /// <summary>
         /// Version of the experiment
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("experiment_version", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("experiment_version")]
         [System.ComponentModel.DescriptionAttribute("Version of the experiment")]
         public string ExperimentVersion
         {
@@ -952,7 +954,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.1";
+            _aindBehaviorServicesPkgVersion = "0.12.2";
             _version = "0.6.0-rc4";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -1519,7 +1521,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.1";
+            _aindBehaviorServicesPkgVersion = "0.12.2";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
@@ -2020,7 +2022,15 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A beta probability distribution.
+    ///
+    ///Continuous distribution bounded between 0 and 1. Commonly used
+    ///for modeling probabilities and proportions.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A beta probability distribution.\n\nContinuous distribution bounded between 0 and 1" +
+        ". Commonly used\nfor modeling probabilities and proportions.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BetaDistribution : Distribution
@@ -2123,7 +2133,13 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a beta distribution.
+    ///
+    ///Defined by alpha and beta shape parameters.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a beta distribution.\n\nDefined by alpha and beta shape parameters.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BetaDistributionParameters
@@ -2229,7 +2245,15 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A binomial probability distribution.
+    ///
+    ///Models the number of successes in a fixed number of independent
+    ///Bernoulli trials with constant success probability.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A binomial probability distribution.\n\nModels the number of successes in a fixed n" +
+        "umber of independent\nBernoulli trials with constant success probability.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BinomialDistribution : Distribution
@@ -2332,7 +2356,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a binomial distribution.
+    ///
+    ///Defined by number of trials (n) and success probability (p).
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a binomial distribution.\n\nDefined by number of trials (n) and succ" +
+        "ess probability (p).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BinomialDistributionParameters
@@ -4429,7 +4460,15 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// An exponential probability distribution.
+    ///
+    ///Models time between events in a Poisson process. Commonly used
+    ///for wait times and inter-event intervals.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("An exponential probability distribution.\n\nModels time between events in a Poisson" +
+        " process. Commonly used\nfor wait times and inter-event intervals.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ExponentialDistribution : Distribution
@@ -4532,7 +4571,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for an exponential distribution.
+    ///
+    ///Defined by the rate parameter (inverse of mean).
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for an exponential distribution.\n\nDefined by the rate parameter (inver" +
+        "se of mean).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ExponentialDistributionParameters
@@ -4616,7 +4662,15 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A gamma probability distribution.
+    ///
+    ///Generalizes the exponential distribution. Used for modeling
+    ///positive continuous variables with right-skewed distributions.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A gamma probability distribution.\n\nGeneralizes the exponential distribution. Used" +
+        " for modeling\npositive continuous variables with right-skewed distributions.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class GammaDistribution : Distribution
@@ -4719,7 +4773,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a gamma distribution.
+    ///
+    ///Defined by shape (k) and rate (θ⁻¹) parameters.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a gamma distribution.\n\nDefined by shape (k) and rate (θ⁻¹) paramet" +
+        "ers.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class GammaDistributionParameters
@@ -5970,7 +6031,16 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A log-normal probability distribution.
+    ///
+    ///Distribution where the logarithm of the variable is normally distributed.
+    ///Always produces positive values and is right-skewed.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A log-normal probability distribution.\n\nDistribution where the logarithm of the v" +
+        "ariable is normally distributed.\nAlways produces positive values and is right-sk" +
+        "ewed.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LogNormalDistribution : Distribution
@@ -6073,7 +6143,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a log-normal distribution.
+    ///
+    ///Defined by the mean and standard deviation of the underlying normal distribution.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a log-normal distribution.\n\nDefined by the mean and standard devia" +
+        "tion of the underlying normal distribution.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LogNormalDistributionParameters
@@ -6671,7 +6748,16 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A normal (Gaussian) probability distribution.
+    ///
+    ///Bell-shaped distribution symmetric around the mean, commonly used
+    ///for modeling naturally occurring random variables.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A normal (Gaussian) probability distribution.\n\nBell-shaped distribution symmetric" +
+        " around the mean, commonly used\nfor modeling naturally occurring random variable" +
+        "s.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class NormalDistribution : Distribution
@@ -6774,7 +6860,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a normal (Gaussian) distribution.
+    ///
+    ///Defined by mean (center) and standard deviation (spread).
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a normal (Gaussian) distribution.\n\nDefined by mean (center) and st" +
+        "andard deviation (spread).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class NormalDistributionParameters
@@ -9560,7 +9653,16 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A custom probability density function distribution.
+    ///
+    ///Allows defining arbitrary discrete distributions by specifying
+    ///probability values and their corresponding indices.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A custom probability density function distribution.\n\nAllows defining arbitrary di" +
+        "screte distributions by specifying\nprobability values and their corresponding in" +
+        "dices.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PdfDistribution : Distribution
@@ -9663,7 +9765,16 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a custom probability density function distribution.
+    ///
+    ///Defined by explicit probability values and their corresponding indices.
+    ///Probabilities are automatically normalized to sum to 1.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a custom probability density function distribution.\n\nDefined by ex" +
+        "plicit probability values and their corresponding indices.\nProbabilities are aut" +
+        "omatically normalized to sum to 1.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PdfDistributionParameters
@@ -9895,7 +10006,16 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A Poisson probability distribution.
+    ///
+    ///Models the number of events occurring in a fixed interval of time or space
+    ///when events occur independently at a constant rate.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A Poisson probability distribution.\n\nModels the number of events occurring in a f" +
+        "ixed interval of time or space\nwhen events occur independently at a constant rat" +
+        "e.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PoissonDistribution : Distribution
@@ -9998,7 +10118,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a Poisson distribution.
+    ///
+    ///Defined by the rate parameter (average number of events).
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a Poisson distribution.\n\nDefined by the rate parameter (average nu" +
+        "mber of events).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PoissonDistributionParameters
@@ -10751,7 +10878,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A scalar distribution that returns a constant value.
+    ///
+    ///Useful for fixed parameters that don't vary across trials or samples.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A scalar distribution that returns a constant value.\n\nUseful for fixed parameters" +
+        " that don\'t vary across trials or samples.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Scalar : Distribution
@@ -10846,7 +10980,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a scalar (constant) distribution.
+    ///
+    ///Represents a deterministic value that always returns the same number.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a scalar (constant) distribution.\n\nRepresents a deterministic valu" +
+        "e that always returns the same number.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ScalarDistributionParameter
@@ -10930,7 +11071,16 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for scaling and offsetting sampled distribution values.
+    ///Scaling is applied as (value * scale + offset).
+    ///
+    ///Applies linear transformation: result = (value * scale) + offset.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for scaling and offsetting sampled distribution values.\nScaling is app" +
+        "lied as (value * scale + offset).\n\nApplies linear transformation: result = (valu" +
+        "e * scale) + offset.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ScalingParameters
@@ -12959,13 +13109,20 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for truncating a distribution to a specified range. Truncation should
+    ///be applied after sampling and scaling.
+    ///
+    ///Used to constrain sampled values within minimum and maximum bounds.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for truncating a distribution to a specified range. Truncation should\n" +
+        "be applied after sampling and scaling.\n\nUsed to constrain sampled values within " +
+        "minimum and maximum bounds.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TruncationParameters
     {
-    
-        private bool _isTruncated;
     
         private double _min;
     
@@ -12973,33 +13130,14 @@ namespace AindVrForagingDataSchema
     
         public TruncationParameters()
         {
-            _isTruncated = false;
             _min = 0D;
             _max = 0D;
         }
     
         protected TruncationParameters(TruncationParameters other)
         {
-            _isTruncated = other._isTruncated;
             _min = other._min;
             _max = other._max;
-        }
-    
-        /// <summary>
-        /// Whether the distribution is truncated
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("is_truncated")]
-        [System.ComponentModel.DescriptionAttribute("Whether the distribution is truncated")]
-        public bool IsTruncated
-        {
-            get
-            {
-                return _isTruncated;
-            }
-            set
-            {
-                _isTruncated = value;
-            }
         }
     
         /// <summary>
@@ -13048,7 +13186,6 @@ namespace AindVrForagingDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("IsTruncated = " + _isTruncated + ", ");
             stringBuilder.Append("Min = " + _min + ", ");
             stringBuilder.Append("Max = " + _max);
             return true;
@@ -13069,7 +13206,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// A uniform probability distribution.
+    ///
+    ///All values between min and max have equal probability of being sampled.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A uniform probability distribution.\n\nAll values between min and max have equal pr" +
+        "obability of being sampled.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UniformDistribution : Distribution
@@ -13172,7 +13316,14 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a uniform distribution.
+    ///
+    ///Defined by minimum and maximum bounds of the distribution.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a uniform distribution.\n\nDefined by minimum and maximum bounds of " +
+        "the distribution.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UniformDistributionParameters

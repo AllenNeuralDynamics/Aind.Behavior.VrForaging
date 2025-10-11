@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Callable, Dict, List, Optional, Union
 
 import aind_behavior_services.rig as AbsRig
 import git
@@ -17,7 +17,7 @@ from aind_data_schema_models.modalities import Modality
 from clabe.apps import CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
-from clabe.launcher import Launcher, Promise
+from clabe.launcher import Launcher
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
@@ -63,7 +63,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     @classmethod
     def build_runner(
         cls,
-        curriculum_suggestion: Optional[Promise[[Any], CurriculumSuggestion]] = None,
+        curriculum_suggestion: Optional[Callable[[], CurriculumSuggestion | None]] = None,
     ) -> Callable[
         [Launcher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic]], "AindSessionDataMapper"
     ]:
@@ -75,7 +75,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 rig_model=launcher.get_rig(strict=True),
                 task_logic_model=launcher.get_task_logic(strict=True),
                 repository=launcher.repository,
-                curriculum_suggestion=curriculum_suggestion.result if curriculum_suggestion is not None else None,
+                curriculum_suggestion=curriculum_suggestion() if curriculum_suggestion is not None else None,
             )
             new.map()
             return new
@@ -229,6 +229,15 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         #     logger.error("Olfactometer device not found in rig model.")
         #     raise ValueError("Olfactometer device not found in rig model.")
 
+        if self.curriculum is not None:
+            performance_metrics = acquisition.PerformanceMetrics(
+                output_parameters=acquisition.GenericModel.model_validate(self.curriculum.metrics.model_dump())
+            )
+            curriculum_status = str(self.curriculum.trainer_state.is_on_curriculum)
+        else:
+            curriculum_status = "false"
+            performance_metrics = None
+
         stimulus_epochs: list[acquisition.StimulusEpoch] = [
             acquisition.StimulusEpoch(
                 active_devices=active_devices,
@@ -238,6 +247,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 configurations=stimulus_epoch_configurations,
                 stimulus_name=self.session_model.experiment,
                 stimulus_modalities=stimulus_modalities,
+                performance_metrics=performance_metrics,
+                curriculum_status=curriculum_status,
             )
         ]
         return stimulus_epochs
