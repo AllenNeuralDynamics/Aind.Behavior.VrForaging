@@ -92,13 +92,16 @@ jobs:
           enable-cache: true
 
       - name: Bump pre-release by default
-        shell: bash
+        # Note: Bumping the rc will fail if the version is not currently an rc
+        # To solve it, we bump the patch and rc atomically
+        shell: bash # interop with win/linux for if statement
         run: |
           if uv version --bump rc --dry-run; then
             uv version --bump rc
           else
             uv version --bump rc --bump patch
           fi
+
       - name: Regenerate schemas
         run: uv run vr-foraging regenerate
 
@@ -156,7 +159,9 @@ jobs:
 
       - name: Get release version from tag
         id: get_version
-        run: echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+        shell: bash
+        run: |
+          echo "version=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Validate version tag format
         run: uv version ${{ steps.get_version.outputs.version }} --dry-run
@@ -174,6 +179,12 @@ jobs:
           git add .
           git commit -m "Set version and regenerate schemas" || echo "No changes to commit"
           git push origin main
+
+      - name: Build
+        run: uv build
+
+      - name: Publish
+        run: uv publish --token ${{ secrets.AIND_PYPI_TOKEN }}
 
   # ╔─────────────────────────╗
   # │   ____                  │
