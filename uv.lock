@@ -57,7 +57,7 @@ wheels = [
 
 [[package]]
 name = "aind-behavior-vr-foraging"
-version = "0.6.0rc7"
+version = "0.6.0rc8"
 source = { editable = "." }
 dependencies = [
     { name = "aind-behavior-services" },
