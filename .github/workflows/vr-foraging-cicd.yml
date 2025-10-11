@@ -116,7 +116,7 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          version=$(uv version --output-format json | jq -r '.version')
+          version=$(uv version --short)
           echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
