@@ -115,6 +115,7 @@ jobs:
 
       - name: Get version
         id: get_version
+        shell: bash
         run: |
           version=$(uv version --short)
           echo "version=$version" >> $GITHUB_OUTPUT
