@@ -75,7 +75,7 @@ jobs:
   # ╚───────────────────────────────────────────────────────────╝
   github-rc-release:
     needs: tests
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: >
       github.ref == 'refs/heads/main' && 
       github.event_name == 'push' &&
@@ -141,7 +141,7 @@ jobs:
   # ╚─────────────────────────────────────────────────────────────────╝
 
   github-public-release:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Create GitHub public release
     needs: tests
     if: github.event_name == 'release' &&
@@ -196,7 +196,7 @@ jobs:
   # ╚─────────────────────────╝
   build-docs:
     name: Build and deploy documentation to GitHub Pages
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: github-rc-release
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
