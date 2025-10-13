@@ -28,7 +28,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 
 [project.optional-dependencies]
 
-data = ["contraqctor<0.5.0"]
+data = ["contraqctor @ git+https://github.com/AllenNeuralDynamics/contraqctor.git@v0.5.0rc1"]
 
 launcher = [
     "aind-clabe[aind-services]>=0.7",
