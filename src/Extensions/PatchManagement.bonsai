@@ -2792,52 +2792,12 @@
                                 <Name>RewardFunction</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>CurrentPosition</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Value.Z</Selector>
+                                <Name>ActivePatch</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Take">
-                                  <rx:Count>1</rx:Count>
+                                <Combinator xsi:type="DoubleProperty">
+                                  <Value>1</Value>
                                 </Combinator>
-                              </Expression>
-                              <Expression xsi:type="rx:AsyncSubject">
-                                <Name>InitialPosition</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>CurrentPosition</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Value.Z</Selector>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>RefreshEnvironmentRate</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Period" />
-                                </PropertyMappings>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="gl:Timer">
-                                  <gl:DueTime>PT0S</gl:DueTime>
-                                  <gl:Period>PT1S</gl:Period>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Sample" />
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>InitialPosition</Name>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:WithLatestFrom" />
-                              </Expression>
-                              <Expression xsi:type="Subtract" />
-                              <Expression xsi:type="scr:ExpressionTransform">
-                                <scr:Name>toDouble</scr:Name>
-                                <scr:Expression>double(it)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>RewardFunction</Name>
@@ -2845,26 +2805,21 @@
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:WithLatestFrom" />
                               </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
+                              </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
                               <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
-                              <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="4" To="6" Label="Source1" />
+                              <Edge From="5" To="6" Label="Source2" />
+                              <Edge From="6" To="7" Label="Source1" />
                               <Edge From="7" To="8" Label="Source1" />
-                              <Edge From="8" To="12" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="10" To="11" Label="Source1" />
-                              <Edge From="11" To="12" Label="Source2" />
-                              <Edge From="12" To="14" Label="Source1" />
-                              <Edge From="13" To="14" Label="Source2" />
-                              <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="15" To="16" Label="Source1" />
-                              <Edge From="16" To="18" Label="Source1" />
-                              <Edge From="17" To="18" Label="Source2" />
-                              <Edge From="18" To="19" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
