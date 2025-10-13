@@ -337,6 +337,13 @@ def dataset(
                                     root_path / "behavior/SoftwareEvents/SpoutParkingPositions.json"
                                 ),
                             ),
+                            SoftwareEvents(
+                                name="PatchStateAtReward",
+                                description="An event emitted whenever the reward is about to be given and the patch state is sampled.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/PatchStateAtReward.json"
+                                ),
+                            ),
                         ],
                     ),
                     DataStreamCollection(
