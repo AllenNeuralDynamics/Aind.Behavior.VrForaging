@@ -2,6 +2,18 @@ name: VrForaging test suite
 
 on:
   workflow_dispatch:
+    inputs:
+      bump_type:
+        description: "Version bump type"
+        required: false
+        default: "rc"
+        type: choice
+        options:
+          - rc
+          - patch
+          - minor
+          - major
+          - stable
   pull_request:
   push:
     branches:
@@ -77,7 +89,7 @@ jobs:
     needs: tests
     runs-on: windows-latest
     if: >
-      github.ref == 'refs/heads/main' && 
+      github.ref == 'refs/heads/main' &&
       github.event_name == 'push' &&
       github.event.head_commit.author.email != 'github-actions[bot]@users.noreply.github.com'
     name: Create GitHub pre-release
@@ -141,13 +153,14 @@ jobs:
   # │                                                                 │
   # ╚─────────────────────────────────────────────────────────────────╝
 
-  github-public-release:
+  prepare-public-release:
     runs-on: windows-latest
-    name: Create GitHub public release
+    name: Prepare files for public release
     needs: tests
-    if: github.event_name == 'release' &&
-      github.event.action == 'published' &&
-      !github.event.release.prerelease
+    if: github.event_name == 'workflow_dispatch'
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      is_prerelease: ${{ steps.check_prerelease.outputs.prerelease }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -158,13 +171,32 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Get release version from tag
+      - name: Get target version
         id: get_version
         shell: bash
         run: |
-          echo "version=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          # Use bump type from input (defaults to rc)
+          bump_type="${{ github.event.inputs.bump_type || 'rc' }}"
+          echo "Bumping version with type: $bump_type"
 
-      - name: Validate version tag format
+          # Handle version bumping based on type
+          if [[ "$bump_type" == "rc" ]]; then
+            # Handle rc bumping logic (same as in github-rc-release)
+            if uv version --bump rc --dry-run; then
+              uv version --bump rc
+            else
+              uv version --bump rc --bump patch
+            fi
+          else
+            # Handle patch, minor, major, stable
+            uv version --bump $bump_type
+          fi
+
+          release_version=$(uv run uv version --short)
+          echo "version=$release_version" >> $GITHUB_OUTPUT
+          echo "Release version will be: $release_version"
+
+      - name: Validate version format
         run: uv version ${{ steps.get_version.outputs.version }} --dry-run
 
       - name: Update package version
@@ -173,18 +205,84 @@ jobs:
       - name: Regenerate schemas
         run: uv run vr-foraging regenerate
 
-      - name: Commit version and schema changes
+      - name: Commit version, schema changes and create tag
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Set version and regenerate schemas" || echo "No changes to commit"
+          git commit -m "Release v${{ steps.get_version.outputs.version }} [skip ci]"
+          git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
           git push origin main
+          git push origin "v${{ steps.get_version.outputs.version }}"
+
+      - name: Determine if prerelease
+        id: check_prerelease
+        shell: bash
+        run: |
+          version="${{ steps.get_version.outputs.version }}"
+          if [[ "$version" == *"rc"* ]]; then
+            echo "prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "prerelease=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: Release v${{ steps.get_version.outputs.version }}
+          generate_release_notes: true
+          prerelease: ${{ steps.check_prerelease.outputs.prerelease }}
+          body: |
+            Release v${{ steps.get_version.outputs.version }}
+
+            This release was manually triggered.
+
+  publish-to-pypi:
+    runs-on: windows-latest
+    name: Publish to PyPI
+    needs: [tests, prepare-public-release]
+    if: |
+      (github.event_name == 'workflow_dispatch') ||
+      (github.event_name == 'release' &&
+       github.event.action == 'published' &&
+       !github.event.release.prerelease &&
+       startsWith(github.ref, 'refs/tags/v'))
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.ref_name }}
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Verify version consistency (for automatic releases)
+        if: github.event_name == 'release'
+        shell: bash
+        run: |
+          tag_version=$(echo "${{ github.ref_name }}" | sed 's/^v//')
+          package_version=$(uv run uv version --short)
+          if [[ "$tag_version" != "$package_version" ]]; then
+            echo "ERROR: Tag version ($tag_version) doesn't match package version ($package_version)"
+            exit 1
+          fi
+          echo "✅ Version consistency verified: $tag_version"
+
+      - name: Get current version (for manual releases)
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          package_version=$(uv run uv version --short)
+          echo "📦 Publishing version: $package_version"
 
       - name: Build
         run: uv build
 
-      - name: Publish
+      - name: Publish to PyPI
         run: uv publish --token ${{ secrets.AIND_PYPI_TOKEN }}
 
   # ╔─────────────────────────╗
