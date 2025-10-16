@@ -917,6 +917,16 @@
       "type": "object"
     },
     "BlockEndCondition": {
+      "discriminator": {
+        "mapping": {
+          "Choice": "#/$defs/BlockEndConditionChoice",
+          "Distance": "#/$defs/BlockEndConditionDistance",
+          "Duration": "#/$defs/BlockEndConditionDuration",
+          "PatchCount": "#/$defs/BlockEndConditionPatchCount",
+          "Reward": "#/$defs/BlockEndConditionReward"
+        },
+        "propertyName": "condition_type"
+      },
       "oneOf": [
         {
           "$ref": "#/$defs/BlockEndConditionDuration"
@@ -3366,6 +3376,16 @@
       "type": "object"
     },
     "PatchTerminator": {
+      "discriminator": {
+        "mapping": {
+          "OnChoice": "#/$defs/PatchTerminatorOnChoice",
+          "OnDistance": "#/$defs/PatchTerminatorOnDistance",
+          "OnRejection": "#/$defs/PatchTerminatorOnRejection",
+          "OnReward": "#/$defs/PatchTerminatorOnReward",
+          "OnTime": "#/$defs/PatchTerminatorOnTime"
+        },
+        "propertyName": "terminator_type"
+      },
       "oneOf": [
         {
           "$ref": "#/$defs/PatchTerminatorOnRejection"
@@ -3925,6 +3945,15 @@
       "type": "object"
     },
     "RewardFunction": {
+      "discriminator": {
+        "mapping": {
+          "OnThisPatchEntryRewardFunction": "#/$defs/OnThisPatchEntryRewardFunction",
+          "OutsideRewardFunction": "#/$defs/OutsideRewardFunction",
+          "PatchRewardFunction": "#/$defs/PatchRewardFunction",
+          "PersistentRewardFunction": "#/$defs/PersistentRewardFunction"
+        },
+        "propertyName": "function_type"
+      },
       "oneOf": [
         {
           "$ref": "#/$defs/PatchRewardFunction"
@@ -5078,6 +5107,13 @@
       "type": "string"
     },
     "VideoWriter": {
+      "discriminator": {
+        "mapping": {
+          "FFMPEG": "#/$defs/VideoWriterFfmpeg",
+          "OPENCV": "#/$defs/VideoWriterOpenCv"
+        },
+        "propertyName": "video_writer_type"
+      },
       "oneOf": [
         {
           "$ref": "#/$defs/VideoWriterFfmpeg"
