@@ -3,14 +3,14 @@
     "AindBehaviorSessionModel": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.2",
+          "default": "0.12.3",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.12.2",
-          "default": "0.12.2",
+          "const": "0.12.3",
+          "default": "0.12.3",
           "title": "Version",
           "type": "string"
         },
@@ -353,7 +353,7 @@
     "AindVrForagingRig": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.2",
+          "default": "0.12.3",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -611,7 +611,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.2",
+          "default": "0.12.3",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -917,16 +917,6 @@
       "type": "object"
     },
     "BlockEndCondition": {
-      "discriminator": {
-        "mapping": {
-          "Choice": "#/$defs/BlockEndConditionChoice",
-          "Distance": "#/$defs/BlockEndConditionDistance",
-          "Duration": "#/$defs/BlockEndConditionDuration",
-          "PatchCount": "#/$defs/BlockEndConditionPatchCount",
-          "Reward": "#/$defs/BlockEndConditionReward"
-        },
-        "propertyName": "condition_type"
-      },
       "oneOf": [
         {
           "$ref": "#/$defs/BlockEndConditionDuration"
@@ -3376,16 +3366,6 @@
       "type": "object"
     },
     "PatchTerminator": {
-      "discriminator": {
-        "mapping": {
-          "OnChoice": "#/$defs/PatchTerminatorOnChoice",
-          "OnDistance": "#/$defs/PatchTerminatorOnDistance",
-          "OnRejection": "#/$defs/PatchTerminatorOnRejection",
-          "OnReward": "#/$defs/PatchTerminatorOnReward",
-          "OnTime": "#/$defs/PatchTerminatorOnTime"
-        },
-        "propertyName": "terminator_type"
-      },
       "oneOf": [
         {
           "$ref": "#/$defs/PatchTerminatorOnRejection"
@@ -3945,15 +3925,6 @@
       "type": "object"
     },
     "RewardFunction": {
-      "discriminator": {
-        "mapping": {
-          "OnThisPatchEntryRewardFunction": "#/$defs/OnThisPatchEntryRewardFunction",
-          "OutsideRewardFunction": "#/$defs/OutsideRewardFunction",
-          "PatchRewardFunction": "#/$defs/PatchRewardFunction",
-          "PersistentRewardFunction": "#/$defs/PersistentRewardFunction"
-        },
-        "propertyName": "function_type"
-      },
       "oneOf": [
         {
           "$ref": "#/$defs/PatchRewardFunction"
@@ -4997,8 +4968,18 @@
       "type": "object"
     },
     "TruncationParameters": {
-      "description": "Parameters for truncating a distribution to a specified range. Truncation should\nbe applied after sampling and scaling.\n\nUsed to constrain sampled values within minimum and maximum bounds.",
+      "description": "Parameters for truncating a distribution to a specified range. Truncation should\nbe applied after sampling and scaling.\n\nThe truncation_mode determines how out-of-bounds values are handled:\n- \"exclude\": Resample until a value within [min, max] is obtained.\nIf after a certain number of attempts no valid value is found, it\nwill use the average of sampled values and pick the closest bound.\n- \"clamp\": Clamp values to the nearest bound within [min, max].\nUsed to constrain sampled values within minimum and maximum bounds.",
       "properties": {
+        "truncation_mode": {
+          "default": "exclude",
+          "description": "Mode of truncation to apply",
+          "enum": [
+            "exclude",
+            "clamp"
+          ],
+          "title": "Truncation Mode",
+          "type": "string"
+        },
         "min": {
           "default": 0,
           "description": "Minimum value of the sampled distribution",
@@ -5097,13 +5078,6 @@
       "type": "string"
     },
     "VideoWriter": {
-      "discriminator": {
-        "mapping": {
-          "FFMPEG": "#/$defs/VideoWriterFfmpeg",
-          "OPENCV": "#/$defs/VideoWriterOpenCv"
-        },
-        "propertyName": "video_writer_type"
-      },
       "oneOf": [
         {
           "$ref": "#/$defs/VideoWriterFfmpeg"
