@@ -354,9 +354,9 @@ namespace AindVrForagingDataSchema
 
     public interface IDistribution
     {
-        public double Sample();
+        double Sample();
 
-        public double[] Samples(double[] arr);
+        double[] Samples(double[] arr);
     }
 
     public class ContinuousDistributionWrapper : IDistribution
