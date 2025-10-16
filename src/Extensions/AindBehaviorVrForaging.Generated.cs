@@ -2488,12 +2488,12 @@ namespace AindVrForagingDataSchema
     
         private EnvironmentStatistics _environmentStatistics;
     
-        private System.Collections.Generic.List<object> _endConditions;
+        private System.Collections.Generic.List<BlockEndCondition> _endConditions;
     
         public Block()
         {
             _environmentStatistics = new EnvironmentStatistics();
-            _endConditions = new System.Collections.Generic.List<object>();
+            _endConditions = new System.Collections.Generic.List<BlockEndCondition>();
         }
     
         protected Block(Block other)
@@ -2526,7 +2526,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("end_conditions")]
         [System.ComponentModel.DescriptionAttribute("List of end conditions that must be true for the block to end.")]
-        public System.Collections.Generic.List<object> EndConditions
+        public System.Collections.Generic.List<BlockEndCondition> EndConditions
         {
             get
             {
@@ -2570,7 +2570,20 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Block end condition based on time duration.
+    ///
+    ///This condition ends a block after a specified amount of time has elapsed.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "condition_type")]
+    [JsonInheritanceAttribute("Duration", typeof(BlockEndConditionDuration))]
+    [JsonInheritanceAttribute("Distance", typeof(BlockEndConditionDistance))]
+    [JsonInheritanceAttribute("Choice", typeof(BlockEndConditionChoice))]
+    [JsonInheritanceAttribute("Reward", typeof(BlockEndConditionReward))]
+    [JsonInheritanceAttribute("PatchCount", typeof(BlockEndConditionPatchCount))]
+    [System.ComponentModel.DescriptionAttribute("Block end condition based on time duration.\n\nThis condition ends a block after a " +
+        "specified amount of time has elapsed.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockEndCondition
@@ -2626,35 +2639,19 @@ namespace AindVrForagingDataSchema
         "reward attempts).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class BlockEndConditionChoice
+    public partial class BlockEndConditionChoice : BlockEndCondition
     {
-    
-        private string _conditionType;
     
         private Distribution _value;
     
         public BlockEndConditionChoice()
         {
-            _conditionType = "Choice";
         }
     
-        protected BlockEndConditionChoice(BlockEndConditionChoice other)
+        protected BlockEndConditionChoice(BlockEndConditionChoice other) : 
+                base(other)
         {
-            _conditionType = other._conditionType;
             _value = other._value;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("condition_type")]
-        public string ConditionType
-        {
-            get
-            {
-                return _conditionType;
-            }
-            set
-            {
-                _conditionType = value;
-            }
         }
     
         /// <summary>
@@ -2685,24 +2682,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionChoice(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("ConditionType = " + _conditionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Value = " + _value);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -2717,35 +2704,19 @@ namespace AindVrForagingDataSchema
         "r the animal has traveled a specified distance.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class BlockEndConditionDistance
+    public partial class BlockEndConditionDistance : BlockEndCondition
     {
-    
-        private string _conditionType;
     
         private Distribution _value;
     
         public BlockEndConditionDistance()
         {
-            _conditionType = "Distance";
         }
     
-        protected BlockEndConditionDistance(BlockEndConditionDistance other)
+        protected BlockEndConditionDistance(BlockEndConditionDistance other) : 
+                base(other)
         {
-            _conditionType = other._conditionType;
             _value = other._value;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("condition_type")]
-        public string ConditionType
-        {
-            get
-            {
-                return _conditionType;
-            }
-            set
-            {
-                _conditionType = value;
-            }
         }
     
         /// <summary>
@@ -2776,24 +2747,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionDistance(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("ConditionType = " + _conditionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Value = " + _value);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -2808,35 +2769,19 @@ namespace AindVrForagingDataSchema
         "specified amount of time has elapsed.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class BlockEndConditionDuration
+    public partial class BlockEndConditionDuration : BlockEndCondition
     {
-    
-        private string _conditionType;
     
         private Distribution _value;
     
         public BlockEndConditionDuration()
         {
-            _conditionType = "Duration";
         }
     
-        protected BlockEndConditionDuration(BlockEndConditionDuration other)
+        protected BlockEndConditionDuration(BlockEndConditionDuration other) : 
+                base(other)
         {
-            _conditionType = other._conditionType;
             _value = other._value;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("condition_type")]
-        public string ConditionType
-        {
-            get
-            {
-                return _conditionType;
-            }
-            set
-            {
-                _conditionType = value;
-            }
         }
     
         /// <summary>
@@ -2867,24 +2812,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionDuration(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("ConditionType = " + _conditionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Value = " + _value);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -2900,35 +2835,19 @@ namespace AindVrForagingDataSchema
         "ock after the animal has visited a specified\nnumber of unique patches.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class BlockEndConditionPatchCount
+    public partial class BlockEndConditionPatchCount : BlockEndCondition
     {
-    
-        private string _conditionType;
     
         private Distribution _value;
     
         public BlockEndConditionPatchCount()
         {
-            _conditionType = "PatchCount";
         }
     
-        protected BlockEndConditionPatchCount(BlockEndConditionPatchCount other)
+        protected BlockEndConditionPatchCount(BlockEndConditionPatchCount other) : 
+                base(other)
         {
-            _conditionType = other._conditionType;
             _value = other._value;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("condition_type")]
-        public string ConditionType
-        {
-            get
-            {
-                return _conditionType;
-            }
-            set
-            {
-                _conditionType = value;
-            }
         }
     
         /// <summary>
@@ -2959,24 +2878,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionPatchCount(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("ConditionType = " + _conditionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Value = " + _value);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -2992,35 +2901,19 @@ namespace AindVrForagingDataSchema
         "lock after the animal has obtained a specified\nnumber of rewards.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class BlockEndConditionReward
+    public partial class BlockEndConditionReward : BlockEndCondition
     {
-    
-        private string _conditionType;
     
         private Distribution _value;
     
         public BlockEndConditionReward()
         {
-            _conditionType = "Reward";
         }
     
-        protected BlockEndConditionReward(BlockEndConditionReward other)
+        protected BlockEndConditionReward(BlockEndConditionReward other) : 
+                base(other)
         {
-            _conditionType = other._conditionType;
             _value = other._value;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("condition_type")]
-        public string ConditionType
-        {
-            get
-            {
-                return _conditionType;
-            }
-            set
-            {
-                _conditionType = value;
-            }
         }
     
         /// <summary>
@@ -3051,24 +2944,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new BlockEndConditionReward(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("ConditionType = " + _conditionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Value = " + _value);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -8314,10 +8197,8 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DescriptionAttribute("A RewardFunction that is applied when the animal enters the patch.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class OnThisPatchEntryRewardFunction
+    public partial class OnThisPatchEntryRewardFunction : RewardFunction
     {
-    
-        private string _functionType;
     
         private PatchUpdateFunction _amount;
     
@@ -8329,30 +8210,16 @@ namespace AindVrForagingDataSchema
     
         public OnThisPatchEntryRewardFunction()
         {
-            _functionType = "OnThisPatchEntryRewardFunction";
             _rule = "OnThisPatchEntry";
         }
     
-        protected OnThisPatchEntryRewardFunction(OnThisPatchEntryRewardFunction other)
+        protected OnThisPatchEntryRewardFunction(OnThisPatchEntryRewardFunction other) : 
+                base(other)
         {
-            _functionType = other._functionType;
             _amount = other._amount;
             _probability = other._probability;
             _available = other._available;
             _rule = other._rule;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("function_type")]
-        public string FunctionType
-        {
-            get
-            {
-                return _functionType;
-            }
-            set
-            {
-                _functionType = value;
-            }
         }
     
         /// <summary>
@@ -8436,27 +8303,17 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new OnThisPatchEntryRewardFunction(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("FunctionType = " + _functionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Amount = " + _amount + ", ");
             stringBuilder.Append("Probability = " + _probability + ", ");
             stringBuilder.Append("Available = " + _available + ", ");
             stringBuilder.Append("Rule = " + _rule);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -8758,10 +8615,8 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DescriptionAttribute("A RewardFunction that is applied when the animal is outside of the patch.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class OutsideRewardFunction
+    public partial class OutsideRewardFunction : RewardFunction
     {
-    
-        private string _functionType;
     
         private PatchUpdateFunction _amount;
     
@@ -8775,32 +8630,18 @@ namespace AindVrForagingDataSchema
     
         public OutsideRewardFunction()
         {
-            _functionType = "OutsideRewardFunction";
             _rule = AindVrForagingDataSchema.OutsideRewardFunctionRule.OnTime;
             _delay = 0D;
         }
     
-        protected OutsideRewardFunction(OutsideRewardFunction other)
+        protected OutsideRewardFunction(OutsideRewardFunction other) : 
+                base(other)
         {
-            _functionType = other._functionType;
             _amount = other._amount;
             _probability = other._probability;
             _available = other._available;
             _rule = other._rule;
             _delay = other._delay;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("function_type")]
-        public string FunctionType
-        {
-            get
-            {
-                return _functionType;
-            }
-            set
-            {
-                _functionType = value;
-            }
         }
     
         /// <summary>
@@ -8902,28 +8743,18 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new OutsideRewardFunction(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("FunctionType = " + _functionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Amount = " + _amount + ", ");
             stringBuilder.Append("Probability = " + _probability + ", ");
             stringBuilder.Append("Available = " + _available + ", ");
             stringBuilder.Append("Rule = " + _rule + ", ");
             stringBuilder.Append("Delay = " + _delay);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -8948,7 +8779,7 @@ namespace AindVrForagingDataSchema
     
         private PatchVirtualSitesGenerator _patchVirtualSitesGenerator;
     
-        private System.Collections.Generic.List<object> _patchTerminators;
+        private System.Collections.Generic.List<PatchTerminator> _patchTerminators;
     
         public Patch()
         {
@@ -8956,7 +8787,7 @@ namespace AindVrForagingDataSchema
             _stateIndex = 0;
             _rewardSpecification = new RewardSpecification();
             _patchVirtualSitesGenerator = new PatchVirtualSitesGenerator();
-            _patchTerminators = new System.Collections.Generic.List<object>();
+            _patchTerminators = new System.Collections.Generic.List<PatchTerminator>();
         }
     
         protected Patch(Patch other)
@@ -9063,7 +8894,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("patch_terminators")]
         [System.ComponentModel.DescriptionAttribute("The optional termination specification of the patch")]
-        public System.Collections.Generic.List<object> PatchTerminators
+        public System.Collections.Generic.List<PatchTerminator> PatchTerminators
         {
             get
             {
@@ -9120,10 +8951,8 @@ namespace AindVrForagingDataSchema
         "poses of this function post-patch and inter-patch are excluded.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class PatchRewardFunction
+    public partial class PatchRewardFunction : RewardFunction
     {
-    
-        private string _functionType;
     
         private PatchUpdateFunction _amount;
     
@@ -9135,30 +8964,16 @@ namespace AindVrForagingDataSchema
     
         public PatchRewardFunction()
         {
-            _functionType = "PatchRewardFunction";
             _rule = AindVrForagingDataSchema.PatchRewardFunctionRule.OnReward;
         }
     
-        protected PatchRewardFunction(PatchRewardFunction other)
+        protected PatchRewardFunction(PatchRewardFunction other) : 
+                base(other)
         {
-            _functionType = other._functionType;
             _amount = other._amount;
             _probability = other._probability;
             _available = other._available;
             _rule = other._rule;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("function_type")]
-        public string FunctionType
-        {
-            get
-            {
-                return _functionType;
-            }
-            set
-            {
-                _functionType = value;
-            }
         }
     
         /// <summary>
@@ -9243,32 +9058,33 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchRewardFunction(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("FunctionType = " + _functionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Amount = " + _amount + ", ");
             stringBuilder.Append("Probability = " + _probability + ", ");
             stringBuilder.Append("Available = " + _available + ", ");
             stringBuilder.Append("Rule = " + _rule);
             return true;
         }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
     }
 
 
+    /// <summary>
+    /// Terminates the patch after a reward site where the animal does not stop in "count" reward sites.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "terminator_type")]
+    [JsonInheritanceAttribute("OnRejection", typeof(PatchTerminatorOnRejection))]
+    [JsonInheritanceAttribute("OnChoice", typeof(PatchTerminatorOnChoice))]
+    [JsonInheritanceAttribute("OnReward", typeof(PatchTerminatorOnReward))]
+    [JsonInheritanceAttribute("OnTime", typeof(PatchTerminatorOnTime))]
+    [JsonInheritanceAttribute("OnDistance", typeof(PatchTerminatorOnDistance))]
+    [System.ComponentModel.DescriptionAttribute("Terminates the patch after a reward site where the animal does not stop in \"count" +
+        "\" reward sites.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PatchTerminator
@@ -9319,36 +9135,20 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DescriptionAttribute("Terminates the patch after \"count\" choices.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class PatchTerminatorOnChoice
+    public partial class PatchTerminatorOnChoice : PatchTerminator
     {
-    
-        private string _terminatorType;
     
         private Distribution _count;
     
         public PatchTerminatorOnChoice()
         {
-            _terminatorType = "OnChoice";
             _count = new Distribution();
         }
     
-        protected PatchTerminatorOnChoice(PatchTerminatorOnChoice other)
+        protected PatchTerminatorOnChoice(PatchTerminatorOnChoice other) : 
+                base(other)
         {
-            _terminatorType = other._terminatorType;
             _count = other._count;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("terminator_type")]
-        public string TerminatorType
-        {
-            get
-            {
-                return _terminatorType;
-            }
-            set
-            {
-                _terminatorType = value;
-            }
         }
     
         /// <summary>
@@ -9379,24 +9179,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnChoice(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("TerminatorType = " + _terminatorType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Count = " + _count);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -9408,35 +9198,19 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DescriptionAttribute("Terminates the patch after a \"count\" distance.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class PatchTerminatorOnDistance
+    public partial class PatchTerminatorOnDistance : PatchTerminator
     {
-    
-        private string _terminatorType;
     
         private Distribution _count;
     
         public PatchTerminatorOnDistance()
         {
-            _terminatorType = "OnDistance";
         }
     
-        protected PatchTerminatorOnDistance(PatchTerminatorOnDistance other)
+        protected PatchTerminatorOnDistance(PatchTerminatorOnDistance other) : 
+                base(other)
         {
-            _terminatorType = other._terminatorType;
             _count = other._count;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("terminator_type")]
-        public string TerminatorType
-        {
-            get
-            {
-                return _terminatorType;
-            }
-            set
-            {
-                _terminatorType = value;
-            }
         }
     
         /// <summary>
@@ -9467,24 +9241,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnDistance(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("TerminatorType = " + _terminatorType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Count = " + _count);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -9497,36 +9261,20 @@ namespace AindVrForagingDataSchema
         "\" reward sites.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class PatchTerminatorOnRejection
+    public partial class PatchTerminatorOnRejection : PatchTerminator
     {
-    
-        private string _terminatorType;
     
         private Distribution _count;
     
         public PatchTerminatorOnRejection()
         {
-            _terminatorType = "OnRejection";
             _count = new Distribution();
         }
     
-        protected PatchTerminatorOnRejection(PatchTerminatorOnRejection other)
+        protected PatchTerminatorOnRejection(PatchTerminatorOnRejection other) : 
+                base(other)
         {
-            _terminatorType = other._terminatorType;
             _count = other._count;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("terminator_type")]
-        public string TerminatorType
-        {
-            get
-            {
-                return _terminatorType;
-            }
-            set
-            {
-                _terminatorType = value;
-            }
         }
     
         /// <summary>
@@ -9557,24 +9305,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnRejection(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("TerminatorType = " + _terminatorType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Count = " + _count);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -9586,36 +9324,20 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DescriptionAttribute("Terminates the patch after \"count\" rewards.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class PatchTerminatorOnReward
+    public partial class PatchTerminatorOnReward : PatchTerminator
     {
-    
-        private string _terminatorType;
     
         private Distribution _count;
     
         public PatchTerminatorOnReward()
         {
-            _terminatorType = "OnReward";
             _count = new Distribution();
         }
     
-        protected PatchTerminatorOnReward(PatchTerminatorOnReward other)
+        protected PatchTerminatorOnReward(PatchTerminatorOnReward other) : 
+                base(other)
         {
-            _terminatorType = other._terminatorType;
             _count = other._count;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("terminator_type")]
-        public string TerminatorType
-        {
-            get
-            {
-                return _terminatorType;
-            }
-            set
-            {
-                _terminatorType = value;
-            }
         }
     
         /// <summary>
@@ -9646,24 +9368,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnReward(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("TerminatorType = " + _terminatorType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Count = " + _count);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -9675,35 +9387,19 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DescriptionAttribute("Terminates the patch after a \"count\" seconds.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class PatchTerminatorOnTime
+    public partial class PatchTerminatorOnTime : PatchTerminator
     {
-    
-        private string _terminatorType;
     
         private Distribution _count;
     
         public PatchTerminatorOnTime()
         {
-            _terminatorType = "OnTime";
         }
     
-        protected PatchTerminatorOnTime(PatchTerminatorOnTime other)
+        protected PatchTerminatorOnTime(PatchTerminatorOnTime other) : 
+                base(other)
         {
-            _terminatorType = other._terminatorType;
             _count = other._count;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("terminator_type")]
-        public string TerminatorType
-        {
-            get
-            {
-                return _terminatorType;
-            }
-            set
-            {
-                _terminatorType = value;
-            }
         }
     
         /// <summary>
@@ -9734,24 +9430,14 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnTime(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("TerminatorType = " + _terminatorType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Count = " + _count);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -10203,10 +9889,8 @@ namespace AindVrForagingDataSchema
     [System.ComponentModel.DescriptionAttribute("A RewardFunction that is always active.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class PersistentRewardFunction
+    public partial class PersistentRewardFunction : RewardFunction
     {
-    
-        private string _functionType;
     
         private PatchUpdateFunction _amount;
     
@@ -10218,29 +9902,15 @@ namespace AindVrForagingDataSchema
     
         public PersistentRewardFunction()
         {
-            _functionType = "PersistentRewardFunction";
         }
     
-        protected PersistentRewardFunction(PersistentRewardFunction other)
+        protected PersistentRewardFunction(PersistentRewardFunction other) : 
+                base(other)
         {
-            _functionType = other._functionType;
             _amount = other._amount;
             _probability = other._probability;
             _available = other._available;
             _rule = other._rule;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("function_type")]
-        public string FunctionType
-        {
-            get
-            {
-                return _functionType;
-            }
-            set
-            {
-                _functionType = value;
-            }
         }
     
         /// <summary>
@@ -10321,27 +9991,17 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new PersistentRewardFunction(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("FunctionType = " + _functionType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("Amount = " + _amount + ", ");
             stringBuilder.Append("Probability = " + _probability + ", ");
             stringBuilder.Append("Available = " + _available + ", ");
             stringBuilder.Append("Rule = " + _rule);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -10905,6 +10565,11 @@ namespace AindVrForagingDataSchema
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "function_type")]
+    [JsonInheritanceAttribute("PatchRewardFunction", typeof(PatchRewardFunction))]
+    [JsonInheritanceAttribute("OnThisPatchEntryRewardFunction", typeof(OnThisPatchEntryRewardFunction))]
+    [JsonInheritanceAttribute("OutsideRewardFunction", typeof(OutsideRewardFunction))]
+    [JsonInheritanceAttribute("PersistentRewardFunction", typeof(PersistentRewardFunction))]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class RewardFunction
@@ -10976,7 +10641,7 @@ namespace AindVrForagingDataSchema
     
         private Distribution _available;
     
-        private System.Collections.Generic.List<object> _rewardFunction;
+        private System.Collections.Generic.List<RewardFunction> _rewardFunction;
     
         public RewardSpecification()
         {
@@ -10984,7 +10649,7 @@ namespace AindVrForagingDataSchema
             _amount = new Distribution();
             _probability = new Distribution();
             _available = new Distribution();
-            _rewardFunction = new System.Collections.Generic.List<object>();
+            _rewardFunction = new System.Collections.Generic.List<RewardFunction>();
         }
     
         protected RewardSpecification(RewardSpecification other)
@@ -11093,7 +10758,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward_function")]
         [System.ComponentModel.DescriptionAttribute("Reward function of the patch")]
-        public System.Collections.Generic.List<object> RewardFunction
+        public System.Collections.Generic.List<RewardFunction> RewardFunction
         {
             get
             {
@@ -11967,7 +11632,7 @@ namespace AindVrForagingDataSchema
     
         private Rect _regionOfInterest;
     
-        private VideoWriter2 _videoWriter;
+        private VideoWriter _videoWriter;
     
         public SpinnakerCamera()
         {
@@ -12233,7 +11898,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("video_writer")]
         [System.ComponentModel.DescriptionAttribute("Video writer. If not provided, no video will be saved.")]
-        public VideoWriter2 VideoWriter
+        public VideoWriter VideoWriter
         {
             get
             {
@@ -13821,6 +13486,9 @@ namespace AindVrForagingDataSchema
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "video_writer_type")]
+    [JsonInheritanceAttribute("FFMPEG", typeof(VideoWriterFfmpeg))]
+    [JsonInheritanceAttribute("OPENCV", typeof(VideoWriterOpenCv))]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VideoWriter
@@ -13867,10 +13535,8 @@ namespace AindVrForagingDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class VideoWriterFfmpeg
+    public partial class VideoWriterFfmpeg : VideoWriter
     {
-    
-        private string _videoWriterType;
     
         private int _frameRate;
     
@@ -13882,33 +13548,19 @@ namespace AindVrForagingDataSchema
     
         public VideoWriterFfmpeg()
         {
-            _videoWriterType = "FFMPEG";
             _frameRate = 30;
             _containerExtension = "mp4";
             _outputArguments = "-vf \"scale=out_color_matrix=bt709:out_range=full,format=bgr24,scale=out_range=full\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M";
             _inputArguments = "-colorspace bt709 -color_primaries bt709 -color_range full -color_trc linear";
         }
     
-        protected VideoWriterFfmpeg(VideoWriterFfmpeg other)
+        protected VideoWriterFfmpeg(VideoWriterFfmpeg other) : 
+                base(other)
         {
-            _videoWriterType = other._videoWriterType;
             _frameRate = other._frameRate;
             _containerExtension = other._containerExtension;
             _outputArguments = other._outputArguments;
             _inputArguments = other._inputArguments;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("video_writer_type")]
-        public string VideoWriterType
-        {
-            get
-            {
-                return _videoWriterType;
-            }
-            set
-            {
-                _videoWriterType = value;
-            }
         }
     
         /// <summary>
@@ -13989,27 +13641,17 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new VideoWriterFfmpeg(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("VideoWriterType = " + _videoWriterType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("FrameRate = " + _frameRate + ", ");
             stringBuilder.Append("ContainerExtension = " + _containerExtension + ", ");
             stringBuilder.Append("OutputArguments = " + _outputArguments + ", ");
             stringBuilder.Append("InputArguments = " + _inputArguments);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -14017,10 +13659,8 @@ namespace AindVrForagingDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class VideoWriterOpenCv
+    public partial class VideoWriterOpenCv : VideoWriter
     {
-    
-        private string _videoWriterType;
     
         private int _frameRate;
     
@@ -14030,31 +13670,17 @@ namespace AindVrForagingDataSchema
     
         public VideoWriterOpenCv()
         {
-            _videoWriterType = "OPENCV";
             _frameRate = 30;
             _containerExtension = "avi";
             _fourCc = "FMP4";
         }
     
-        protected VideoWriterOpenCv(VideoWriterOpenCv other)
+        protected VideoWriterOpenCv(VideoWriterOpenCv other) : 
+                base(other)
         {
-            _videoWriterType = other._videoWriterType;
             _frameRate = other._frameRate;
             _containerExtension = other._containerExtension;
             _fourCc = other._fourCc;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("video_writer_type")]
-        public string VideoWriterType
-        {
-            get
-            {
-                return _videoWriterType;
-            }
-            set
-            {
-                _videoWriterType = value;
-            }
         }
     
         /// <summary>
@@ -14118,26 +13744,16 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Select(source, _ => new VideoWriterOpenCv(this));
         }
     
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("VideoWriterType = " + _videoWriterType + ", ");
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
             stringBuilder.Append("FrameRate = " + _frameRate + ", ");
             stringBuilder.Append("ContainerExtension = " + _containerExtension + ", ");
             stringBuilder.Append("FourCc = " + _fourCc);
             return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
         }
     }
 
@@ -15273,7 +14889,7 @@ namespace AindVrForagingDataSchema
     
         private int _index;
     
-        private VideoWriter3 _videoWriter;
+        private VideoWriter _videoWriter;
     
         public WebCamera()
         {
@@ -15384,7 +15000,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("video_writer")]
         [System.ComponentModel.DescriptionAttribute("Video writer. If not provided, no video will be saved.")]
-        public VideoWriter3 VideoWriter
+        public VideoWriter VideoWriter
         {
             get
             {
@@ -16187,50 +15803,6 @@ namespace AindVrForagingDataSchema
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class VideoWriter2
-    {
-    
-        public VideoWriter2()
-        {
-        }
-    
-        protected VideoWriter2(VideoWriter2 other)
-        {
-        }
-    
-        public System.IObservable<VideoWriter2> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VideoWriter2(this)));
-        }
-    
-        public System.IObservable<VideoWriter2> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new VideoWriter2(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum TruncationParametersTruncationMode
     {
@@ -16240,50 +15812,6 @@ namespace AindVrForagingDataSchema
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="clamp")]
         Clamp = 1,
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class VideoWriter3
-    {
-    
-        public VideoWriter3()
-        {
-        }
-    
-        protected VideoWriter3(VideoWriter3 other)
-        {
-        }
-    
-        public System.IObservable<VideoWriter3> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VideoWriter3(this)));
-        }
-    
-        public System.IObservable<VideoWriter3> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new VideoWriter3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
     }
 
 
@@ -16427,6 +15955,50 @@ namespace AindVrForagingDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDuration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionDistance>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionChoice>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionReward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlockEndConditionPatchCount>))]
+    public partial class MatchBlockEndCondition : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(BlockEndCondition);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchBlockEndCondition),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<BlockEndCondition> source)
+            where TResult : BlockEndCondition
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<BlockEndCondition>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BetaDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BinomialDistribution>))]
@@ -16476,6 +16048,50 @@ namespace AindVrForagingDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnRejection>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnChoice>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnReward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnTime>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnDistance>))]
+    public partial class MatchPatchTerminator : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(PatchTerminator);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchPatchTerminator),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<PatchTerminator> source)
+            where TResult : PatchTerminator
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<PatchTerminator>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ClampedRateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ClampedMultiplicativeRateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SetValueFunction>))]
@@ -16504,6 +16120,90 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Create<TResult>(observer =>
             {
                 var sourceObserver = System.Reactive.Observer.Create<PatchUpdateFunction>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OnThisPatchEntryRewardFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OutsideRewardFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PersistentRewardFunction>))]
+    public partial class MatchRewardFunction : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(RewardFunction);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchRewardFunction),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<RewardFunction> source)
+            where TResult : RewardFunction
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<RewardFunction>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
+    public partial class MatchVideoWriter : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(VideoWriter);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchVideoWriter),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<VideoWriter> source)
+            where TResult : VideoWriter
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<VideoWriter>(
                     value =>
                     {
                         var match = value as TResult;
@@ -17437,16 +17137,6 @@ namespace AindVrForagingDataSchema
         {
             return Process<ScalingParameters2>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<VideoWriter2> source)
-        {
-            return Process<VideoWriter2>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<VideoWriter3> source)
-        {
-            return Process<VideoWriter3>(source);
-        }
     }
 
 
@@ -17583,8 +17273,6 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Count>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters2>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter2>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter3>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
