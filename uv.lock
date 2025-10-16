@@ -96,7 +96,7 @@ requires-dist = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.7" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2" },
-    { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.5.0" },
+    { name = "contraqctor", marker = "extra == 'data'", git = "https://github.com/AllenNeuralDynamics/contraqctor.git?rev=v0.5.0rc1" },
     { name = "pydantic-settings" },
 ]
 provides-extras = ["data", "launcher"]
@@ -568,8 +568,8 @@ wheels = [
 
 [[package]]
 name = "contraqctor"
-version = "0.4.9"
-source = { registry = "https://pypi.org/simple" }
+version = "0.5.0rc1"
+source = { git = "https://github.com/AllenNeuralDynamics/contraqctor.git?rev=v0.5.0rc1#8997665fa1fcb1c7b8147ead79e747198f8b7445" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "harp-python" },
@@ -583,10 +583,6 @@ dependencies = [
     { name = "rich" },
     { name = "scipy" },
     { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ba/9e/457b8bf87aac1b71e311519ee07fb6d643237e5b3f265a688eded522069f/contraqctor-0.4.9.tar.gz", hash = "sha256:2ab5ba8973ed4f0dc275830601cfa3c760872073e58c11a4433615f090c99d9f", size = 179255, upload-time = "2025-09-19T16:48:06.619Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/25/37/7d24feaec06e6562fa4574018a6fa1d6cdd262bc2654d939d341a37576c2/contraqctor-0.4.9-py3-none-any.whl", hash = "sha256:56216c57f355d2866f1ea4a70d46320d66ad154fa13fa10a005b543ca1c47b9a", size = 55793, upload-time = "2025-09-19T16:48:05.307Z" },
 ]
 
 [[package]]

@@ -210,7 +210,7 @@ class Rendering(qc.Suite):
 
 def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     _runner = qc.Runner()
-    loading_errors = dataset.load_all(strict=False)
+    dataset.load_all(strict=False)
     exclude: list[contract.DataStream] = []
     rig: AindVrForagingRig = dataset["Behavior"]["InputSchemas"]["Rig"].data
 
@@ -221,7 +221,7 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
                 exclude.append(stream)
 
     # Add the outcome of the dataset loading step to the automatic qc
-    _runner.add_suite(qc.contract.ContractTestSuite(loading_errors, exclude=exclude), group="Data contract")
+    _runner.add_suite(qc.contract.ContractTestSuite(dataset.collect_errors(), exclude=exclude), group="Data contract")
 
     # Add Harp tests for ALL Harp devices in the dataset
     for stream in (_r := dataset["Behavior"]):
