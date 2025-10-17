@@ -211,7 +211,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Release v${{ steps.get_version.outputs.version }} [skip ci]"
-          git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
+          git tag -a "v${{ steps.get_version.outputs.version }}" -m "v${{ steps.get_version.outputs.version }}"
           git push origin main
           git push origin "v${{ steps.get_version.outputs.version }}"
 
