@@ -43,8 +43,8 @@ namespace AindVrForagingDataSchema
     
         public AindBehaviorSessionModel()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.2";
-            _version = "0.12.2";
+            _aindBehaviorServicesPkgVersion = "0.12.3";
+            _version = "0.12.3";
             _experimenter = new System.Collections.Generic.List<string>();
             _experimentVersion = "";
             _allowDirtyRepo = false;
@@ -954,7 +954,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.2";
+            _aindBehaviorServicesPkgVersion = "0.12.3";
             _version = "0.6.0-rc13";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -1521,7 +1521,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.2";
+            _aindBehaviorServicesPkgVersion = "0.12.3";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
@@ -13113,16 +13113,29 @@ namespace AindVrForagingDataSchema
     /// Parameters for truncating a distribution to a specified range. Truncation should
     ///be applied after sampling and scaling.
     ///
+    ///The truncation_mode determines how out-of-bounds values are handled:
+    ///- "exclude": Resample until a value within [min, max] is obtained.
+    ///If after a certain number of attempts no valid value is found, it
+    ///will use the average of sampled values and pick the closest bound.
+    ///- "clamp": Clamp values to the nearest bound within [min, max].
     ///Used to constrain sampled values within minimum and maximum bounds.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Parameters for truncating a distribution to a specified range. Truncation should\n" +
-        "be applied after sampling and scaling.\n\nUsed to constrain sampled values within " +
-        "minimum and maximum bounds.")]
+    [System.ComponentModel.DescriptionAttribute(@"Parameters for truncating a distribution to a specified range. Truncation should
+    be applied after sampling and scaling.
+
+    The truncation_mode determines how out-of-bounds values are handled:
+    - ""exclude"": Resample until a value within [min, max] is obtained.
+    If after a certain number of attempts no valid value is found, it
+    will use the average of sampled values and pick the closest bound.
+    - ""clamp"": Clamp values to the nearest bound within [min, max].
+    Used to constrain sampled values within minimum and maximum bounds.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TruncationParameters
     {
+    
+        private TruncationParametersTruncationMode _truncationMode;
     
         private double _min;
     
@@ -13130,14 +13143,34 @@ namespace AindVrForagingDataSchema
     
         public TruncationParameters()
         {
+            _truncationMode = AindVrForagingDataSchema.TruncationParametersTruncationMode.Exclude;
             _min = 0D;
             _max = 0D;
         }
     
         protected TruncationParameters(TruncationParameters other)
         {
+            _truncationMode = other._truncationMode;
             _min = other._min;
             _max = other._max;
+        }
+    
+        /// <summary>
+        /// Mode of truncation to apply
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncation_mode")]
+        [System.ComponentModel.DescriptionAttribute("Mode of truncation to apply")]
+        public TruncationParametersTruncationMode TruncationMode
+        {
+            get
+            {
+                return _truncationMode;
+            }
+            set
+            {
+                _truncationMode = value;
+            }
         }
     
         /// <summary>
@@ -13186,6 +13219,7 @@ namespace AindVrForagingDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
+            stringBuilder.Append("TruncationMode = " + _truncationMode + ", ");
             stringBuilder.Append("Min = " + _min + ", ");
             stringBuilder.Append("Max = " + _max);
             return true;
@@ -15765,6 +15799,19 @@ namespace AindVrForagingDataSchema
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="NoColorProcessing")]
         NoColorProcessing = 1,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum TruncationParametersTruncationMode
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="exclude")]
+        Exclude = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="clamp")]
+        Clamp = 1,
     }
 
 
