@@ -1,7 +1,6 @@
 import enum
 import logging
-from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable, List, Optional, Type, TypeVar, Union
+from typing import List, Optional, Type, TypeVar, Union
 
 import aind_behavior_services.calibration as AbsCalibration
 import pydantic
@@ -9,15 +8,8 @@ from aind_behavior_services.utils import get_fields_of_type, utcnow
 from aind_data_schema.components import coordinates, measurements
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
-from clabe.launcher import Launcher, Promise
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
-
-if TYPE_CHECKING:
-    from ._rig import AindRigDataMapper
-    from ._session import AindSessionDataMapper
-else:
-    AindRigDataMapper = AindSessionDataMapper = Any
 
 TTo = TypeVar("TTo", bound=pydantic.BaseModel)
 
@@ -36,22 +28,6 @@ def coerce_to_aind_data_schema(value: Union[pydantic.BaseModel, dict], target_ty
     target_fields = target_type.model_fields
     _normalized_input = {k: v for k, v in _normalized_input.items() if k in target_fields}
     return target_type(**_normalized_input)
-
-
-def write_ads_mappers(
-    session_mapper: Promise[[Launcher], AindSessionDataMapper], rig_mapper: Promise[[Launcher], AindRigDataMapper]
-) -> Callable[[Launcher], None]:
-    def _run(launcher: Launcher) -> None:
-        session_directory = launcher.session_directory
-        _session = session_mapper.result.mapped
-        _rig = rig_mapper.result.mapped
-        _session.instrument_id = _rig.instrument_id
-        logger.info("Writing session.json to %s", session_directory)
-        _session.write_standard_file(Path(session_directory))
-        logger.info("Writing rig.json to %s", session_directory)
-        _rig.write_standard_file(Path(session_directory))
-
-    return _run
 
 
 def _get_water_calibration(rig_model: AindVrForagingRig) -> List[measurements.VolumeCalibration]:
