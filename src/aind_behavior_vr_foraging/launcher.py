@@ -111,10 +111,9 @@ class ByAnimalManipulatorModifier:
     def __init__(self, picker: DataversePicker, launcher: Launcher) -> None:
         self._picker = picker
         self._launcher = launcher
-        self._session = self._launcher.session
 
     def inject(self, rig: AindVrForagingRig) -> AindVrForagingRig:
-        subject = self._session.subject
+        subject = self._launcher.session.subject
         target_folder = self._picker.subject_dir / subject
         target_file = target_folder / "manipulator_init.json"
         if not target_file.exists():
@@ -127,7 +126,7 @@ class ByAnimalManipulatorModifier:
         return rig
 
     def dump(self) -> None:
-        target_folder = self._picker.subject_dir / self._session.subject
+        target_folder = self._picker.subject_dir / self._launcher.session.subject
         target_file = target_folder / "manipulator_init.json"
         _dataset = data_contract.dataset(self._launcher.session_directory)
         try:
