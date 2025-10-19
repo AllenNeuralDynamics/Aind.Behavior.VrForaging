@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from typing import Any, cast
 
@@ -22,6 +23,8 @@ from . import data_contract
 from .data_mappers import AindRigDataMapper, AindSessionDataMapper
 from .rig import AindVrForagingRig
 from .task_logic import AindVrForagingTaskLogic
+
+logger = logging.getLogger(__name__)
 
 
 def experiment(launcher: Launcher) -> None:
@@ -115,12 +118,10 @@ class ByAnimalManipulatorModifier:
         target_folder = self._picker.subject_dir / subject
         target_file = target_folder / "manipulator_init.json"
         if not target_file.exists():
-            self._launcher.logger.warning(f"Manipulator initial position file not found: {target_file}. Using default.")
+            logger.warning(f"Manipulator initial position file not found: {target_file}. Using default.")
         else:
             cached = ManipulatorPosition.model_validate_json(target_file.read_text(encoding="utf-8"))
-            self._launcher.logger.info(
-                f"Loading manipulator initial position from: {target_file}. Deserialized: {cached}"
-            )
+            logger.info(f"Loading manipulator initial position from: {target_file}. Deserialized: {cached}")
             assert rig.manipulator.calibration is not None
             rig.manipulator.calibration.input.initial_position = cached
         return rig
@@ -136,10 +137,10 @@ class ByAnimalManipulatorModifier:
             data: dict[str, Any] = manipulator_parking_position.data.iloc[0]["data"]["ResetPosition"]
             position = ManipulatorPosition.model_validate(data)
         except Exception as e:
-            self._launcher.logger.error(f"Failed to load manipulator parking position: {e}")
+            logger.error(f"Failed to load manipulator parking position: {e}")
             return
         else:
-            self._launcher.logger.info(f"Saving manipulator initial position to: {target_file}. Serialized: {position}")
+            logger.info(f"Saving manipulator initial position to: {target_file}. Serialized: {position}")
             target_folder.mkdir(parents=True, exist_ok=True)
             target_file.write_text(position.model_dump_json(indent=2), encoding="utf-8")
 
