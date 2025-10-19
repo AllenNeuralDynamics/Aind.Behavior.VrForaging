@@ -121,7 +121,7 @@ docs = [
 [[package]]
 name = "aind-clabe"
 version = "0.7.3rc1"
-source = { git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=refactor-for-no-defer#160f84e6b8d04f01c31a762ebf77d1965ff475b2" }
+source = { git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=refactor-for-no-defer#cbee528cccc1eed01a3572ad9d913f4390fe217b" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
