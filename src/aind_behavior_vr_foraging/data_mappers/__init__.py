@@ -46,8 +46,8 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
 
         repo = Repo(self.repo_path)
         session_mapped = AindSessionDataMapper(
-            session_model=session,
-            rig_model=rig,
+            session=session,
+            rig=rig,
             task_logic_model=task_logic,
             repository=repo,
             script_path=Path("./src/main.bonsai"),

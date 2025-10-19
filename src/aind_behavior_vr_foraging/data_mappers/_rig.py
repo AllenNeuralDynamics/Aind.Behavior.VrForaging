@@ -4,7 +4,7 @@ import os
 import platform
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, Callable, Optional, cast
+from typing import Optional, cast
 
 import aind_behavior_services.rig as AbsRig
 from aind_behavior_services import calibration as AbsCalibration
@@ -14,7 +14,6 @@ from aind_data_schema.core import instrument
 from aind_data_schema_models import coordinates as aind_schema_model_coordinates
 from aind_data_schema_models import modalities, units
 from clabe.data_mapper import aind_data_schema as ads
-from clabe.launcher import Launcher
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
@@ -45,10 +44,10 @@ class _DeviceNode:
 class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     def __init__(
         self,
-        rig_model: AindVrForagingRig,
+        rig: AindVrForagingRig,
     ):
         super().__init__()
-        self.rig_model = rig_model
+        self.rig_model = rig
         self._mapped: Optional[instrument.Instrument] = None
 
     def rig_schema(self):
@@ -74,17 +73,6 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
 
     def is_mapped(self) -> bool:
         return self.mapped is not None
-
-    @classmethod
-    def build_runner(cls) -> Callable[[Launcher[AindVrForagingRig, Any, Any]], "AindRigDataMapper"]:
-        def _new(
-            launcher: Launcher[AindVrForagingRig, Any, Any],
-        ) -> "AindRigDataMapper":
-            new = cls(rig_model=launcher.get_rig(strict=True))
-            new.map()
-            return new
-
-        return _new
 
     ## From here on, private methods only!
     ## Lasciate ogne speranza, voi ch'entrate
