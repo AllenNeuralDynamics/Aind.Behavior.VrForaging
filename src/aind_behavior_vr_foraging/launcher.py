@@ -47,6 +47,7 @@ def experiment(launcher: Launcher) -> None:
 
     # Fetch the task settings
     trainer_state, task_logic = picker.pick_trainer_state(AindVrForagingTaskLogic)
+    input_trainer_state_path = launcher.save_temp_model(trainer_state)
 
     # Fetch rig settings
     rig = picker.pick_rig(AindVrForagingRig)
@@ -69,7 +70,6 @@ def experiment(launcher: Launcher) -> None:
         or (picker.trainer_state.is_on_curriculum is False)
         or (picker.trainer_state.stage is None)
     ):
-        input_trainer_state_path = launcher.save_temp_model(trainer_state)
         trainer = CurriculumApp(
             settings=CurriculumSettings(
                 input_trainer_state=input_trainer_state_path, data_directory=launcher.session_directory
