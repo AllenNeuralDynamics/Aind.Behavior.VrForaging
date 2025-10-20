@@ -44,4 +44,6 @@ def render_dataset(version: str = __semver__) -> str:
     from contraqctor.contract.utils import print_data_stream_tree_html
 
     dataset_constructor = _dataset_lookup_helper(version)
-    return print_data_stream_tree_html(dataset_constructor(Path("<RootPath>")), show_missing_indicator=False, show_type=True)
+    return print_data_stream_tree_html(
+        dataset_constructor(Path("<RootPath>")), show_missing_indicator=False, show_type=True
+    )
