@@ -90,5 +90,5 @@ export_model_diagram(aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogi
 
 # -- Dataset rendering
 
-with open(f"{_static_path}/dataset.txt", "w", encoding="utf-8") as f:
+with open(f"{_static_path}/dataset.html", "w", encoding="utf-8") as f:
     f.write(contract.render_dataset())
