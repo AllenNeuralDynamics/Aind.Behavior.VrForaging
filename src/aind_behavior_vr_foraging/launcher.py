@@ -1,7 +1,9 @@
+import asyncio
 import logging
 from pathlib import Path
 from typing import Any, cast
 
+import aind_physiology_fip.rig
 from aind_behavior_services.calibration.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import AindBehaviorSessionModel
 from clabe import resource_monitor
@@ -14,7 +16,7 @@ from clabe.apps import (
 )
 from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
 from clabe.launcher import Launcher, LauncherCliArgs
-from clabe.pickers import DefaultBehaviorPickerSettings
+from clabe.pickers import DefaultBehaviorPicker, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
@@ -27,7 +29,7 @@ from .task_logic import AindVrForagingTaskLogic
 logger = logging.getLogger(__name__)
 
 
-def experiment(launcher: Launcher) -> None:
+async def experiment(launcher: Launcher) -> None:
     monitor = resource_monitor.ResourceMonitor(
         constrains=[
             resource_monitor.available_storage_constraint_factory(launcher.settings.data_dir, 2e11),
@@ -39,6 +41,13 @@ def experiment(launcher: Launcher) -> None:
 
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
+
+    fip_picker = DefaultBehaviorPicker(
+        launcher=launcher,
+        settings=DefaultBehaviorPickerSettings(
+            config_library_dir=Path(r"\\allen\aind\scratch\AindBehavior.db\AindPhysiologyFip")
+        ),
+    )
     manipulator_modifier = ByAnimalManipulatorModifier(picker, launcher)
 
     # Pick and register session
@@ -52,13 +61,29 @@ def experiment(launcher: Launcher) -> None:
     # Fetch rig settings
     rig = picker.pick_rig(AindVrForagingRig)
 
+    fip_rig = fip_picker.pick_rig(aind_physiology_fip.rig.AindPhysioFipRig)
+
     # Post-fetching modifications
     manipulator_modifier.inject(rig)
 
     # Run the task via Bonsai
     bonsai_app = AindBehaviorServicesBonsaiApp(BonsaiAppSettings(workflow=Path(r"./src/main.bonsai")))
+
+    fip_app = AindBehaviorServicesBonsaiApp(
+        BonsaiAppSettings(
+            workflow=Path(r"./src/platforms/FIP_DAQ_Control/main.bonsai"),
+            executable=Path(r"./src/platforms/FIP_DAQ_Control/bonsai/bonsai.exe"),
+            is_editor_mode=True,
+            is_start_flag=True,
+        )
+    )
     bonsai_app.add_app_settings(launcher, rig=rig, session=session, task_logic=task_logic)
-    bonsai_app.run().get_result(allow_stderr=True)
+    fip_app.add_app_settings(launcher=launcher, session=session, rig=fip_rig)
+
+    await asyncio.gather(bonsai_app.run_async(), fip_app.run_async())
+
+    bonsai_app.get_result(allow_stderr=True)
+    fip_app.get_result(allow_stderr=True)
 
     # Update manipulator initial position for next session
     manipulator_modifier.dump()
