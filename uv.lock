@@ -97,7 +97,7 @@ docs = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.8.0,<0.9.0" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=async-run-app" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2" },
     { name = "aind-physiology-fip", marker = "extra == 'platform-fip'", directory = "src/Platforms/FIP_DAQ_Control" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.6.0" },
@@ -125,7 +125,7 @@ docs = [
 [[package]]
 name = "aind-clabe"
 version = "0.8.1"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=async-run-app#81890cc31821fba56cb80b779b93157b5e093252" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
@@ -133,10 +133,6 @@ dependencies = [
     { name = "pydantic-settings" },
     { name = "rich" },
     { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ed/08/235ed31a6e7601d851d721ee64f1129f2d1a8266ef632251c6c4ad78b553/aind_clabe-0.8.1.tar.gz", hash = "sha256:797f3341378b1164d236b867381c41e65d37c48c14241f5b43fd6e6193540581", size = 47625, upload-time = "2025-10-20T03:10:36.108Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/9d/53/b9d642932c6deb923dc3bbde307c896aad4b706ec64bd81044ac9c365fc1/aind_clabe-0.8.1-py3-none-any.whl", hash = "sha256:6eed68e6d6859c6f200bdafb91768e68d8920917d46caa77ed2b42a350b3fdc9", size = 64907, upload-time = "2025-10-20T03:10:35.129Z" },
 ]
 
 [package.optional-dependencies]
@@ -1290,9 +1286,9 @@ name = "msal"
 version = "1.34.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography" },
-    { name = "pyjwt", extra = ["crypto"] },
-    { name = "requests" },
+    { name = "cryptography", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
+    { name = "pyjwt", extra = ["crypto"], marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
+    { name = "requests", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cf/0e/c857c46d653e104019a84f22d4494f2119b4fe9f896c92b4b864b3b045cc/msal-1.34.0.tar.gz", hash = "sha256:76ba83b716ea5a6d75b0279c0ac353a0e05b820ca1f6682c0eb7f45190c43c2f", size = 153961, upload-time = "2025-09-22T23:05:48.989Z" }
 wheels = [
@@ -1776,7 +1772,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography" },
+    { name = "cryptography", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
 ]
 
 [[package]]
