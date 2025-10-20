@@ -57,7 +57,7 @@ wheels = [
 
 [[package]]
 name = "aind-behavior-vr-foraging"
-version = "0.6.0rc15"
+version = "0.6.0rc14"
 source = { editable = "." }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -94,7 +94,7 @@ docs = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.8.0,<0.9.0" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=v0.8.1rc1" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.6.0" },
     { name = "pydantic-settings" },
@@ -120,8 +120,8 @@ docs = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.8.0"
-source = { registry = "https://pypi.org/simple" }
+version = "0.8.1rc1"
+source = { git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=v0.8.1rc1#883638e781084de6445bc487d83594168e841dee" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
@@ -129,10 +129,6 @@ dependencies = [
     { name = "pydantic-settings" },
     { name = "rich" },
     { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/2c/a8/3f32138efe3a3b986d615b2745c845c835010c579de4d9cedd785836209f/aind_clabe-0.8.0.tar.gz", hash = "sha256:ba5ae6a53d12887781072a9422cf9313fc97ad296ebbc805229ae3c76e6b3b09", size = 47572, upload-time = "2025-10-19T21:50:06.393Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ad/30/c9e291decb3afd9b9b109a3205e83c7b2e2bee978e94c00d291c51268550/aind_clabe-0.8.0-py3-none-any.whl", hash = "sha256:a011cb5295a0f9b9079062794ac98a946310b93c3c7ef91c860bc3d57b1dc167", size = 64794, upload-time = "2025-10-19T21:50:05.042Z" },
 ]
 
 [package.optional-dependencies]
