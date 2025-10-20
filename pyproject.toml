@@ -12,7 +12,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Operating System :: Microsoft :: Windows",
 ]
-version = "0.6.0rc15"
+version = "0.6.0rc14"
 readme = {file = "README.md", content-type = "text/markdown"}
 
 dependencies = [
@@ -31,7 +31,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 data = ["contraqctor<0.6.0"]
 
 launcher = [
-    "aind-clabe[aind-services] >= 0.8.0 ,<0.9.0",
+    "aind-clabe[aind-services] @ git+https://github.com/AllenNeuralDynamics/clabe.git@v0.8.1rc1",
     "aind-data-schema>=2",
     "aind_behavior_vr_foraging[data]",
     ]
