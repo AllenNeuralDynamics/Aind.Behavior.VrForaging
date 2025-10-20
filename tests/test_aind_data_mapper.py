@@ -18,18 +18,18 @@ from examples.task_patch_foraging import task_logic
 
 class TestAindSessionDataMapper(unittest.TestCase):
     def setUp(self):
-        self.session_model = session
-        self.rig_model = rig
-        self.task_logic_model = task_logic
+        self.session = session
+        self.rig = rig
+        self.task_logic = task_logic
         self.repository = Repo(Path("./"))
         self.script_path = Path("./src/main.bonsai")
         self.session_end_time = datetime.now()
         self.session_directory = None
 
         self.mapper = AindSessionDataMapper(
-            session_model=self.session_model,
-            rig_model=self.rig_model,
-            task_logic_model=self.task_logic_model,
+            session=self.session,
+            rig=self.rig,
+            task_logic=self.task_logic,
             repository=self.repository,
             script_path=self.script_path,
             session_end_time=self.session_end_time,
@@ -54,9 +54,9 @@ class TestAindSessionDataMapper(unittest.TestCase):
 
 class TestAindRigDataMapper(unittest.TestCase):
     def setUp(self):
-        self.rig_model = rig
+        self.rig = rig
         self.mapper = AindRigDataMapper(
-            rig_model=self.rig_model,
+            rig=self.rig,
         )
 
     @patch("aind_behavior_vr_foraging.data_mappers.AindRigDataMapper._map")
@@ -78,16 +78,16 @@ class TestAindRigDataMapper(unittest.TestCase):
 
 class TestInstrumentAcquisitionCompatibility(unittest.TestCase):
     def setUp(self):
-        self.rig_model = rig
-        self.session_model = session
-        self.task_logic_model = task_logic
+        self.rig = rig
+        self.session = session
+        self.task_logic = task_logic
         self.rig_mapper = AindRigDataMapper(
-            rig_model=self.rig_model,
+            rig=self.rig,
         )
         self.session_mapper = AindSessionDataMapper(
-            session_model=self.session_model,
-            rig_model=self.rig_model,
-            task_logic_model=self.task_logic_model,
+            session=self.session,
+            rig=self.rig,
+            task_logic=self.task_logic,
             repository=Repo(Path("./")),
             script_path=Path("./src/main.bonsai"),
             session_end_time=datetime.now(),
