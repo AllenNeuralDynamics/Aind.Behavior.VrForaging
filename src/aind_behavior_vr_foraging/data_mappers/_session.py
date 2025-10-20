@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Union
+from typing import List, Optional, Union
 
 import aind_behavior_services.rig as AbsRig
 import git
@@ -17,7 +17,6 @@ from aind_data_schema_models.modalities import Modality
 from clabe.apps import CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
-from clabe.launcher import Launcher
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
@@ -30,24 +29,22 @@ logger = logging.getLogger(__name__)
 class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
         self,
-        session_model: AindBehaviorSessionModel,
-        rig_model: AindVrForagingRig,
-        task_logic_model: AindVrForagingTaskLogic,
+        session: AindBehaviorSessionModel,
+        rig: AindVrForagingRig,
+        task_logic: AindVrForagingTaskLogic,
         repository: Union[os.PathLike, git.Repo] = Path("."),
         script_path: os.PathLike = Path("./src/main.bonsai"),
         session_end_time: Optional[datetime.datetime] = None,
         curriculum_suggestion: Optional[CurriculumSuggestion] = None,
-        output_parameters: Optional[Dict] = None,
     ):
-        self.session_model = session_model
-        self.rig_model = rig_model
-        self.task_logic_model = task_logic_model
+        self.session_model = session
+        self.rig_model = rig
+        self.task_logic_model = task_logic
         self.repository = repository
         if isinstance(self.repository, os.PathLike | str):
             self.repository = git.Repo(Path(self.repository))
         self.script_path = script_path
         self._session_end_time = session_end_time
-        self.output_parameters = output_parameters
         self._mapped: Optional[acquisition.Acquisition] = None
         self.curriculum = curriculum_suggestion
 
@@ -59,28 +56,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     def session_schema(self):
         return self.mapped
-
-    @classmethod
-    def build_runner(
-        cls,
-        curriculum_suggestion: Optional[Callable[[], CurriculumSuggestion | None]] = None,
-    ) -> Callable[
-        [Launcher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic]], "AindSessionDataMapper"
-    ]:
-        def _new(
-            launcher: Launcher[AindVrForagingRig, AindBehaviorSessionModel, AindVrForagingTaskLogic],
-        ) -> "AindSessionDataMapper":
-            new = cls(
-                session_model=launcher.get_session(strict=True),
-                rig_model=launcher.get_rig(strict=True),
-                task_logic_model=launcher.get_task_logic(strict=True),
-                repository=launcher.repository,
-                curriculum_suggestion=curriculum_suggestion() if curriculum_suggestion is not None else None,
-            )
-            new.map()
-            return new
-
-        return _new
 
     @property
     def session_name(self) -> str:
@@ -97,7 +72,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def is_mapped(self) -> bool:
         return self.mapped is not None
 
-    def map(self) -> Optional[acquisition.Acquisition]:
+    def map(self) -> acquisition.Acquisition:
         logger.info("Mapping aind-data-schema Session.")
         try:
             self._mapped = self._map()
@@ -120,7 +95,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             acquisition_end_time=utcnow(),
             acquisition_start_time=self.session_model.date,
             experimenters=self.session_model.experimenter,
-            acquisition_type=self.session_model.experiment,
+            acquisition_type=self.session_model.experiment or self.task_logic_model.name,
             coordinate_system=_make_origin_coordinate_system(),
             data_streams=self._get_data_streams(),
             calibrations=self._get_calibrations(),
@@ -245,7 +220,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 stimulus_start_time=self.session_model.date,
                 stimulus_end_time=self.session_end_time,
                 configurations=stimulus_epoch_configurations,
-                stimulus_name=self.session_model.experiment,
+                stimulus_name=self.session_model.experiment or self.task_logic_model.name,
                 stimulus_modalities=stimulus_modalities,
                 performance_metrics=performance_metrics,
                 curriculum_status=curriculum_status,
