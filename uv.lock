@@ -94,7 +94,7 @@ docs = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.8.0,<0.9.0" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.8.2,<0.9.0" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.6.0" },
     { name = "pydantic-settings" },
@@ -120,7 +120,7 @@ docs = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.8.1"
+version = "0.8.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -130,9 +130,9 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ed/08/235ed31a6e7601d851d721ee64f1129f2d1a8266ef632251c6c4ad78b553/aind_clabe-0.8.1.tar.gz", hash = "sha256:797f3341378b1164d236b867381c41e65d37c48c14241f5b43fd6e6193540581", size = 47625, upload-time = "2025-10-20T03:10:36.108Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8e/37/dff7f633606ce87600a4114bd1dd506f2109d5d891f66030b5769426ac1c/aind_clabe-0.8.2.tar.gz", hash = "sha256:f384d51a541b900f5783a9523eba4f885cfa69850a2ac33881db07ca7a7f1d3a", size = 48635, upload-time = "2025-10-21T02:29:17.795Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9d/53/b9d642932c6deb923dc3bbde307c896aad4b706ec64bd81044ac9c365fc1/aind_clabe-0.8.1-py3-none-any.whl", hash = "sha256:6eed68e6d6859c6f200bdafb91768e68d8920917d46caa77ed2b42a350b3fdc9", size = 64907, upload-time = "2025-10-20T03:10:35.129Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/14/0ac35972d01f3a82bc1a720b42589929dd8beabc6066dc26ef16597e4e96/aind_clabe-0.8.2-py3-none-any.whl", hash = "sha256:d366a0495763d64d8bfb2fbc195951269b7e0fb3152bd967f944b48155384698", size = 66180, upload-time = "2025-10-21T02:29:16.829Z" },
 ]
 
 [package.optional-dependencies]
@@ -151,16 +151,16 @@ aind-services = [
 
 [[package]]
 name = "aind-data-schema"
-version = "2.0.3"
+version = "2.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-data-schema-models" },
     { name = "pydantic" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/46/cc/636358c2f3629c293f201c8f3eba6a86335b7979c648282b7f6fb59ba675/aind_data_schema-2.0.3.tar.gz", hash = "sha256:def6a43d8f9e6259177f2b58e2b830b38d7e7b8dc006827314f6ea8b1577d55b", size = 739960, upload-time = "2025-10-02T18:04:49.036Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9a/93/a283d16a6ffb59f9cd558edcb0fcea5b1099d81921c3ac167a43cc3c4f3d/aind_data_schema-2.1.0.tar.gz", hash = "sha256:899d1a209211c742ece04c9506500983f0a8ffc7e0911f0e82e4d9501f50134e", size = 750414, upload-time = "2025-10-20T18:30:42.133Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ac/61/dae645b22f3b38b1f28a597a2438b95c5e239f8deb1a4f2b9e1dc7187f5f/aind_data_schema-2.0.3-py3-none-any.whl", hash = "sha256:a216ad39e6d8db11d45e3686f5bfa65eec2f676db1031b279e52112de151f023", size = 85042, upload-time = "2025-10-02T18:04:47.412Z" },
+    { url = "https://files.pythonhosted.org/packages/86/1c/40593876feb8cb106ca45b9d25a708abf68db544358286abfd950074a109/aind_data_schema-2.1.0-py3-none-any.whl", hash = "sha256:0b59880cc3c22f703b2f8f99249d178cd177b2ab6fd2cb115e37251606404957", size = 86103, upload-time = "2025-10-20T18:30:40.413Z" },
 ]
 
 [[package]]
@@ -1253,9 +1253,9 @@ name = "msal"
 version = "1.34.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
-    { name = "pyjwt", extra = ["crypto"], marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
-    { name = "requests", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
+    { name = "cryptography" },
+    { name = "pyjwt", extra = ["crypto"] },
+    { name = "requests" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cf/0e/c857c46d653e104019a84f22d4494f2119b4fe9f896c92b4b864b3b045cc/msal-1.34.0.tar.gz", hash = "sha256:76ba83b716ea5a6d75b0279c0ac353a0e05b820ca1f6682c0eb7f45190c43c2f", size = 153961, upload-time = "2025-09-22T23:05:48.989Z" }
 wheels = [
@@ -1739,7 +1739,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')" },
+    { name = "cryptography" },
 ]
 
 [[package]]
@@ -2257,7 +2257,7 @@ wheels = [
 
 [[package]]
 name = "typer"
-version = "0.19.2"
+version = "0.20.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -2265,9 +2265,9 @@ dependencies = [
     { name = "shellingham" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/21/ca/950278884e2ca20547ff3eb109478c6baf6b8cf219318e6bc4f666fad8e8/typer-0.19.2.tar.gz", hash = "sha256:9ad824308ded0ad06cc716434705f691d4ee0bfd0fb081839d2e426860e7fdca", size = 104755, upload-time = "2025-09-23T09:47:48.256Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8f/28/7c85c8032b91dbe79725b6f17d2fffc595dff06a35c7a30a37bef73a1ab4/typer-0.20.0.tar.gz", hash = "sha256:1aaf6494031793e4876fb0bacfa6a912b551cf43c1e63c800df8b1a866720c37", size = 106492, upload-time = "2025-10-20T17:03:49.445Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/00/22/35617eee79080a5d071d0f14ad698d325ee6b3bf824fc0467c03b30e7fa8/typer-0.19.2-py3-none-any.whl", hash = "sha256:755e7e19670ffad8283db353267cb81ef252f595aa6834a0d1ca9312d9326cb9", size = 46748, upload-time = "2025-09-23T09:47:46.777Z" },
+    { url = "https://files.pythonhosted.org/packages/78/64/7713ffe4b5983314e9d436a90d5bd4f63b6054e2aca783a3cfc44cb95bbf/typer-0.20.0-py3-none-any.whl", hash = "sha256:5b463df6793ec1dca6213a3cf4c0f03bc6e322ac5e16e13ddd622a889489784a", size = 47028, upload-time = "2025-10-20T17:03:47.617Z" },
 ]
 
 [[package]]
