@@ -5,7 +5,6 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
-                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -151,47 +150,10 @@
         <Name>CurrentPosition</Name>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
-        <Name>EncoderSample</Name>
-      </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>Value</Selector>
-      </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>InstantVelocity</Selector>
-      </Expression>
-      <Expression xsi:type="SubscribeSubject">
-        <Name>TaskLogicParameters</Name>
-      </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>OperationControl</Selector>
-      </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>PositionControl.FrequencyFilterCutoff</Selector>
-      </Expression>
-      <Expression xsi:type="PropertyMapping">
-        <PropertyMappings>
-          <Property Name="Cutoff1" />
-        </PropertyMappings>
-      </Expression>
-      <Expression xsi:type="SubscribeSubject">
-        <Name>TreadmillSamplingRate</Name>
-      </Expression>
-      <Expression xsi:type="PropertyMapping">
-        <PropertyMappings>
-          <Property Name="SampleRate" />
-        </PropertyMappings>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="dsp:FrequencyFilter">
-          <dsp:SampleRate>250</dsp:SampleRate>
-          <dsp:Cutoff1>5</dsp:Cutoff1>
-          <dsp:Cutoff2>0</dsp:Cutoff2>
-          <dsp:KernelLength>60</dsp:KernelLength>
-          <dsp:FilterType>LowPass</dsp:FilterType>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="MulticastSubject">
         <Name>FilteredCurrentVelocity</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item1</Selector>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>StopVelocityThreshold</Name>
@@ -210,7 +172,7 @@
         <Combinator xsi:type="rx:DistinctUntilChanged" />
       </Expression>
       <Expression xsi:type="MemberSelector">
-        <Selector>Seconds</Selector>
+        <Selector>Item2</Selector>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:WithLatestFrom" />
@@ -294,31 +256,22 @@
       <Edge From="25" To="26" Label="Source1" />
       <Edge From="26" To="27" Label="Source1" />
       <Edge From="28" To="29" Label="Source1" />
-      <Edge From="28" To="43" Label="Source1" />
-      <Edge From="29" To="30" Label="Source1" />
-      <Edge From="30" To="37" Label="Source1" />
-      <Edge From="31" To="32" Label="Source1" />
+      <Edge From="28" To="34" Label="Source1" />
+      <Edge From="29" To="32" Label="Source1" />
+      <Edge From="30" To="31" Label="Source1" />
+      <Edge From="31" To="32" Label="Source2" />
       <Edge From="32" To="33" Label="Source1" />
-      <Edge From="33" To="34" Label="Source1" />
-      <Edge From="34" To="37" Label="Source2" />
+      <Edge From="33" To="35" Label="Source1" />
+      <Edge From="34" To="35" Label="Source2" />
       <Edge From="35" To="36" Label="Source1" />
-      <Edge From="36" To="37" Label="Source3" />
+      <Edge From="36" To="37" Label="Source1" />
       <Edge From="37" To="38" Label="Source1" />
-      <Edge From="38" To="41" Label="Source1" />
       <Edge From="39" To="40" Label="Source1" />
-      <Edge From="40" To="41" Label="Source2" />
+      <Edge From="40" To="43" Label="Source1" />
       <Edge From="41" To="42" Label="Source1" />
-      <Edge From="42" To="44" Label="Source1" />
-      <Edge From="43" To="44" Label="Source2" />
-      <Edge From="44" To="45" Label="Source1" />
-      <Edge From="45" To="46" Label="Source1" />
-      <Edge From="46" To="47" Label="Source1" />
-      <Edge From="48" To="49" Label="Source1" />
-      <Edge From="49" To="52" Label="Source1" />
-      <Edge From="50" To="51" Label="Source1" />
-      <Edge From="51" To="52" Label="Source2" />
-      <Edge From="52" To="54" Label="Source1" />
-      <Edge From="53" To="54" Label="Source2" />
+      <Edge From="42" To="43" Label="Source2" />
+      <Edge From="43" To="45" Label="Source1" />
+      <Edge From="44" To="45" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
