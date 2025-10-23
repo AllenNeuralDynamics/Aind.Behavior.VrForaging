@@ -431,7 +431,7 @@ Item2.Item2 as SecondsSinceChoice)</scr:Expression>
                           <Combinator xsi:type="rx:CombineLatest" />
                         </Expression>
                         <Expression xsi:type="zg:RollingGraphBuilder">
-                          <zg:ValueSelector>Item1,Item2</zg:ValueSelector>
+                          <zg:ValueSelector>Item1.Item1,Item2</zg:ValueSelector>
                           <zg:SymbolType>None</zg:SymbolType>
                           <zg:LineWidth>2</zg:LineWidth>
                           <zg:CurveSettings />
