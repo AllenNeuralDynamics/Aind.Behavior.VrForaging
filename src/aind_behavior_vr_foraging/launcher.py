@@ -92,9 +92,11 @@ def experiment(launcher: Launcher) -> None:
 
     # Watchdog
     launcher.copy_logs()
+    watchdog_settings = WatchdogSettings()
+    watchdog_settings.destination = Path(watchdog_settings.destination) / launcher.session.subject
     WatchdogDataTransferService(
         source=launcher.session_directory,
-        settings=WatchdogSettings(),
+        settings=watchdog_settings,
         aind_data_schema_session=ads_session,
         session_name=session.session_name,
     ).transfer()
