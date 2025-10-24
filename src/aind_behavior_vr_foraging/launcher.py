@@ -91,6 +91,12 @@ def experiment(launcher: Launcher) -> None:
     ads_rig.write_standard_file(launcher.session_directory)
 
     # Watchdog
+    is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
+    if not is_transfer:
+        logger.info("Data transfer skipped by user.")
+        launcher.copy_logs()
+        return
+
     launcher.copy_logs()
     watchdog_settings = WatchdogSettings()
     watchdog_settings.destination = Path(watchdog_settings.destination) / launcher.session.subject

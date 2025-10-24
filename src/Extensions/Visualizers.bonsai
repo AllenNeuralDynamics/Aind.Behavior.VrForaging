@@ -425,13 +425,25 @@ Item2.Item2 as SecondsSinceChoice)</scr:Expression>
                           <Combinator xsi:type="gl:SampleOnRenderFrame" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskLogicParameters</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>OperationControl</Selector>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>PositionControl.VelocityThreshold</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
                           <Name>StopVelocityThreshold</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:CombineLatest" />
                         </Expression>
                         <Expression xsi:type="zg:RollingGraphBuilder">
-                          <zg:ValueSelector>Item1,Item2</zg:ValueSelector>
+                          <zg:ValueSelector>Item1.Item1,Item2</zg:ValueSelector>
                           <zg:SymbolType>None</zg:SymbolType>
                           <zg:LineWidth>2</zg:LineWidth>
                           <zg:CurveSettings />
@@ -443,10 +455,14 @@ Item2.Item2 as SecondsSinceChoice)</scr:Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="1" To="7" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="4" To="6" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
