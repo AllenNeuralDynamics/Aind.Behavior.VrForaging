@@ -14,7 +14,7 @@ from aind_data_schema.components import configs
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
 from aind_data_schema_models.modalities import Modality
-from clabe.apps import CurriculumSuggestion
+from clabe.apps import BonsaiAppSettings, CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
 
@@ -32,8 +32,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         session: AindBehaviorSessionModel,
         rig: AindVrForagingRig,
         task_logic: AindVrForagingTaskLogic,
+        bonsai_app_settings: BonsaiAppSettings = BonsaiAppSettings(workflow=Path("./src/main.bonsai")),
         repository: Union[os.PathLike, git.Repo] = Path("."),
-        script_path: os.PathLike = Path("./src/main.bonsai"),
         session_end_time: Optional[datetime.datetime] = None,
         curriculum_suggestion: Optional[CurriculumSuggestion] = None,
     ):
@@ -43,7 +43,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.repository = repository
         if isinstance(self.repository, os.PathLike | str):
             self.repository = git.Repo(Path(self.repository))
-        self.script_path = script_path
+        self.bonsai_app = bonsai_app_settings
         self._session_end_time = session_end_time
         self._mapped: Optional[acquisition.Acquisition] = None
         self.curriculum = curriculum_suggestion
@@ -260,7 +260,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         return list(map(_map_camera, cameras.keys(), cameras.values()))
 
     def _get_bonsai_as_code(self) -> acquisition.Code:
-        bonsai_env = data_mapper_helpers.snapshot_bonsai_environment(Path("./bonsai/bonsai.config"))
+        bonsai_folder = Path(self.bonsai_app.executable).parent
+        bonsai_env = data_mapper_helpers.snapshot_bonsai_environment(bonsai_folder / "bonsai.config")
         bonsai_version = bonsai_env.get("Bonsai", "unknown")
         assert isinstance(self.repository, git.Repo)
 
@@ -270,7 +271,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             version=self.repository.head.commit.hexsha,
             language="Bonsai",
             language_version=bonsai_version,
-            run_script=Path("./src/main.bonsai"),
+            run_script=Path(self.bonsai_app.workflow),
         )
 
     def _get_python_as_code(self) -> acquisition.Code:
