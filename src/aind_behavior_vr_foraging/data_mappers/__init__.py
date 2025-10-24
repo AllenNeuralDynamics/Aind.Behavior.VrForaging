@@ -7,7 +7,7 @@ import pydantic
 import pydantic_settings
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file
-from clabe.apps import CurriculumSuggestion
+from clabe.apps import BonsaiAppSettings, CurriculumSuggestion
 from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -21,10 +21,6 @@ logger = logging.getLogger(__name__)
 
 class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
     data_path: os.PathLike = pydantic.Field(description="Path to the session data directory.")
-    db_root: os.PathLike = pydantic.Field(
-        default=Path(r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging"),
-        description="Root directory for the database for additional metadata.",
-    )
     repo_path: os.PathLike = pydantic.Field(
         default=Path("."), description="Path to the repository. By default it will use the current directory."
     )
@@ -45,15 +41,20 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
             curriculum_suggestion = None
 
         repo = Repo(self.repo_path)
+        settings = BonsaiAppSettings(
+            workflow=Path(repo.working_dir) / "src" / "main.bonsai",
+            executable=Path(repo.working_dir) / "bonsai/bonsai.exe",
+        )
+
         session_mapped = AindSessionDataMapper(
             session=session,
             rig=rig,
-            task_logic_model=task_logic,
+            task_logic=task_logic,
             repository=repo,
-            script_path=Path("./src/main.bonsai"),
+            bonsai_app_settings=settings,
             curriculum_suggestion=curriculum_suggestion,
         ).map()
-        rig_mapped = AindRigDataMapper(rig_schema_filename=f"{rig.rig_name}.json", db_root=Path(self.db_root)).map()
+        rig_mapped = AindRigDataMapper(rig=rig).map()
 
         assert session.session_name is not None
         assert session_mapped is not None
