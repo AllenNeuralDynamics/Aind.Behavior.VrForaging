@@ -7,7 +7,6 @@ from aind_behavior_services.session import AindBehaviorSessionModel
 from clabe import resource_monitor
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
-    BonsaiAppSettings,
     CurriculumApp,
     CurriculumSettings,
     CurriculumSuggestion,
@@ -27,7 +26,7 @@ from .task_logic import AindVrForagingTaskLogic
 logger = logging.getLogger(__name__)
 
 
-def experiment(launcher: Launcher) -> None:
+async def experiment(launcher: Launcher) -> None:
     monitor = resource_monitor.ResourceMonitor(
         constrains=[
             resource_monitor.available_storage_constraint_factory(launcher.settings.data_dir, 2e11),
@@ -56,9 +55,14 @@ def experiment(launcher: Launcher) -> None:
     manipulator_modifier.inject(rig)
 
     # Run the task via Bonsai
-    bonsai_app = AindBehaviorServicesBonsaiApp(BonsaiAppSettings(workflow=Path(r"./src/main.bonsai")))
-    bonsai_app.add_app_settings(launcher, rig=rig, session=session, task_logic=task_logic)
-    bonsai_app.run().get_result(allow_stderr=True)
+    bonsai_app = AindBehaviorServicesBonsaiApp(
+        workflow=Path(r"./src/main.bonsai"),
+        temp_directory=launcher.temp_dir,
+        rig=rig,
+        session=session,
+        task_logic=task_logic,
+    )
+    await bonsai_app.run_async()
 
     # Update manipulator initial position for next session
     manipulator_modifier.dump()
@@ -76,9 +80,10 @@ def experiment(launcher: Launcher) -> None:
             )
         )
         # Run the curriculum
-        suggestion = trainer.run().get_result(allow_stderr=True)
+        await trainer.run_async()
+        suggestion = trainer.process_suggestion()
         # Dump suggestion for debugging (for now, but we will prob remove this later)
-        _dump_suggestion(launcher, suggestion)
+        _dump_suggestion(suggestion, launcher.session_directory)
         # Push updated trainer state back to the database
         picker.push_new_suggestion(suggestion.trainer_state)
 
@@ -88,7 +93,7 @@ def experiment(launcher: Launcher) -> None:
         session=session,
         task_logic=task_logic,
         curriculum_suggestion=suggestion,
-        bonsai_app_settings=bonsai_app.settings,
+        bonsai_app=bonsai_app,
     ).map()
     ads_session.write_standard_file(launcher.session_directory)
     ads_rig = AindRigDataMapper(rig=rig).map()
@@ -107,18 +112,15 @@ def experiment(launcher: Launcher) -> None:
     WatchdogDataTransferService(
         source=launcher.session_directory,
         settings=watchdog_settings,
-        aind_data_schema_session=ads_session,
-        session_name=session.session_name,
+        session=session,
     ).transfer()
 
     return
 
 
-def _dump_suggestion(launcher: Launcher, suggestion: CurriculumSuggestion) -> None:
-    launcher.logger.info(
-        f"Dumping curriculum suggestion to: {launcher.session_directory / 'Behavior' / 'Logs' / 'suggestion.json'}"
-    )
-    with open(launcher.session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
+def _dump_suggestion(suggestion: CurriculumSuggestion, session_directory: Path) -> None:
+    logger.info(f"Dumping curriculum suggestion to: {session_directory / 'Behavior' / 'Logs' / 'suggestion.json'}")
+    with open(session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
         f.write(suggestion.model_dump_json(indent=2))
 
 

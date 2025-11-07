@@ -94,7 +94,7 @@ docs = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.8.2,<0.9.0" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">0.8,<0.10.0" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.6.0" },
     { name = "pydantic-settings" },
@@ -120,19 +120,20 @@ docs = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.8.2"
+version = "0.9.0rc5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
+    { name = "requests" },
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8e/37/dff7f633606ce87600a4114bd1dd506f2109d5d891f66030b5769426ac1c/aind_clabe-0.8.2.tar.gz", hash = "sha256:f384d51a541b900f5783a9523eba4f885cfa69850a2ac33881db07ca7a7f1d3a", size = 48635, upload-time = "2025-10-21T02:29:17.795Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c6/10/19c53e3d9468d7cd7477cb0667b2c8f19529eed7a0c765d6420dcea9a9c8/aind_clabe-0.9.0rc5.tar.gz", hash = "sha256:4aa25fd8e991ec3cefe1b3b4a03789bd9410f1d1c38cadfb48a7c688148da4a4", size = 62483, upload-time = "2025-11-05T22:53:27.74Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/14/0ac35972d01f3a82bc1a720b42589929dd8beabc6066dc26ef16597e4e96/aind_clabe-0.8.2-py3-none-any.whl", hash = "sha256:d366a0495763d64d8bfb2fbc195951269b7e0fb3152bd967f944b48155384698", size = 66180, upload-time = "2025-10-21T02:29:16.829Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/eb/b9e61427eea514f5bbe199908c7275a44762446358b468e4f257b3b4cad5/aind_clabe-0.9.0rc5-py3-none-any.whl", hash = "sha256:0b0c468eeac6189b88456bba7b4c94ec76a3589a698c9f1341aa5ccbfb79a0ac", size = 83225, upload-time = "2025-11-05T22:53:26.289Z" },
 ]
 
 [package.optional-dependencies]

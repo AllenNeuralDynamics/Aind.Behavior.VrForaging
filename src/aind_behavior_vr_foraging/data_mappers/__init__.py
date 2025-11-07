@@ -7,7 +7,7 @@ import pydantic
 import pydantic_settings
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import model_from_json_file
-from clabe.apps import BonsaiAppSettings, CurriculumSuggestion
+from clabe.apps import BonsaiApp, CurriculumSuggestion
 from git import Repo
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -41,7 +41,7 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
             curriculum_suggestion = None
 
         repo = Repo(self.repo_path)
-        settings = BonsaiAppSettings(
+        settings = BonsaiApp(
             workflow=Path(repo.working_dir) / "src" / "main.bonsai",
             executable=Path(repo.working_dir) / "bonsai/bonsai.exe",
         )
@@ -51,7 +51,7 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
             rig=rig,
             task_logic=task_logic,
             repository=repo,
-            bonsai_app_settings=settings,
+            bonsai_app=settings,
             curriculum_suggestion=curriculum_suggestion,
         ).map()
         rig_mapped = AindRigDataMapper(rig=rig).map()
