@@ -32,7 +32,7 @@ class TestAindSessionDataMapper(unittest.TestCase):
             rig=self.rig,
             task_logic=self.task_logic,
             repository=self.repository,
-            bonsai_app_settings=self.bonsai_app_settings,
+            bonsai_app=self.bonsai_app_settings,
             session_end_time=self.session_end_time,
         )
 
@@ -92,7 +92,7 @@ class TestInstrumentAcquisitionCompatibility(unittest.TestCase):
             rig=self.rig,
             task_logic=self.task_logic,
             repository=Repo(Path("./")),
-            bonsai_app_settings=self.bonsai_app_settings,
+            bonsai_app=self.bonsai_app_settings,
             session_end_time=datetime.now(),
         )
 
