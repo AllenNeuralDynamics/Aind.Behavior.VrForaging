@@ -106,7 +106,7 @@ class TrackedDevices(enum.StrEnum):
     TORQUE_SENSOR = "torque_sensor"
     ROTARY_ENCODER = "rotary_encoder"
     ENCLOSURE = "behavior_enclosure"
-    MOTORIZED_STAGE = "motorized_stage"
+    MOTORIZED_STAGE = "manipulator"
     LICK_SPOUT = "lick_spout"
     SCREEN = "screen"
     COMPUTER = "computer"
