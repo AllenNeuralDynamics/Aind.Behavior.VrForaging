@@ -8,7 +8,6 @@ from typing import Optional, cast
 
 import aind_behavior_services.rig as AbsRig
 from aind_behavior_services import calibration as AbsCalibration
-from aind_behavior_services.utils import utcnow
 from aind_data_schema.base import GenericModel
 from aind_data_schema.components import connections, coordinates, devices, measurements
 from aind_data_schema.core import instrument
