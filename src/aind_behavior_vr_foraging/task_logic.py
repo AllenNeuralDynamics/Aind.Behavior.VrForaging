@@ -228,8 +228,10 @@ class OperantLogic(BaseModel):
     """
 
     is_operant: bool = Field(default=True, description="Will the trial implement operant logic")
-    stop_duration: float = Field(
-        default=0, ge=0, description="Duration (s) the animal must stop for to lock its choice"
+    stop_duration: distributions.Distribution = Field(
+        default=scalar_value(0),
+        validate_default=True,
+        description="Duration (s) the animal must stop for to lock its choice",
     )
     time_to_collect_reward: float = Field(
         default=100000, ge=0, description="Time(s) the animal has to collect the reward"

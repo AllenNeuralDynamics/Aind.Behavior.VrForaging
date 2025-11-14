@@ -8336,7 +8336,7 @@ namespace AindVrForagingDataSchema
     
         private bool _isOperant;
     
-        private double _stopDuration;
+        private Distribution _stopDuration;
     
         private double _timeToCollectReward;
     
@@ -8345,7 +8345,7 @@ namespace AindVrForagingDataSchema
         public OperantLogic()
         {
             _isOperant = true;
-            _stopDuration = 0D;
+            _stopDuration = new Distribution();
             _timeToCollectReward = 100000D;
             _graceDistanceThreshold = 10D;
         }
@@ -8378,9 +8378,10 @@ namespace AindVrForagingDataSchema
         /// <summary>
         /// Duration (s) the animal must stop for to lock its choice
         /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("stop_duration")]
         [System.ComponentModel.DescriptionAttribute("Duration (s) the animal must stop for to lock its choice")]
-        public double StopDuration
+        public Distribution StopDuration
         {
             get
             {
@@ -15281,6 +15282,51 @@ namespace AindVrForagingDataSchema
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Delay
+    {
+    
+        public Delay()
+        {
+        }
+    
+        protected Delay(Delay other)
+        {
+        }
+    
+        public System.IObservable<Delay> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Delay(this)));
+        }
+    
+        public System.IObservable<Delay> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Delay(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Amount
     {
     
@@ -16220,6 +16266,45 @@ namespace AindVrForagingDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    public partial class MatchDelay : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Delay);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchDelay),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Delay> source)
+            where TResult : Delay
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Delay>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     public partial class MatchAmount : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -17093,6 +17178,11 @@ namespace AindVrForagingDataSchema
             return Process<AindBehaviorVrForagingTaskLogicVector3>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Delay> source)
+        {
+            return Process<Delay>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Amount> source)
         {
             return Process<Amount>(source);
@@ -17264,6 +17354,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorServicesRigVisualStimulationVector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorVrForagingTaskLogicVector3>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Delay>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Amount>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Probability>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Available>))]
