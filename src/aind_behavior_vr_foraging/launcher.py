@@ -13,9 +13,8 @@ from clabe.apps import (
 )
 from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
 from clabe.launcher import Launcher, LauncherCliArgs
-from clabe.pickers import DefaultBehaviorPickerSettings
+from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
-from clabe.pickers import ByAnimalModifier
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
