@@ -96,7 +96,7 @@ requires-dist = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">0.8,<0.10.0" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2" },
-    { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.6.0" },
+    { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.3,<0.6.0" },
     { name = "pydantic-settings" },
 ]
 provides-extras = ["data", "launcher"]
@@ -569,11 +569,12 @@ wheels = [
 
 [[package]]
 name = "contraqctor"
-version = "0.5.0"
+version = "0.5.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "harp-python" },
+    { name = "jinja2" },
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "opencv-python" },
@@ -585,9 +586,9 @@ dependencies = [
     { name = "scipy" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cd/0d/cfe3c022bc3cb9591340f3e73bf6e99bfacf65d08476bffca3e315afb153/contraqctor-0.5.0.tar.gz", hash = "sha256:f585b0543392572f92586bbad0c0c7f3646dc4aa65e5f137ea937d3f5f9310cc", size = 45208, upload-time = "2025-10-14T23:59:14.807Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/95/33/e0dfd99fc23ab1ac6162b496727edef844e9279e13a969b05a1b4b05d426/contraqctor-0.5.3.tar.gz", hash = "sha256:0d11e4cf50acf01288b5ed66053211105c3a716fe8a31d63bcc2bf423037ac20", size = 54226, upload-time = "2025-11-10T17:31:19.497Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f9/52/41dcff4dd54ef55e2334c023e029ca9de5a1500af7e3a62cac13b83a479c/contraqctor-0.5.0-py3-none-any.whl", hash = "sha256:f0d0692a14707f294e4c18021bb288b7eb0097875f7ae6471de13ce85ae90fd8", size = 57442, upload-time = "2025-10-14T23:59:13.653Z" },
+    { url = "https://files.pythonhosted.org/packages/b4/9a/94fa67d2aecf7703a68be18b97b8d1af09ec9c26c73b2c21d5e881e46353/contraqctor-0.5.3-py3-none-any.whl", hash = "sha256:9306521efd6165007409319be39d4a8d9e286028693237584dbfc9f87e974292", size = 67638, upload-time = "2025-11-10T17:31:18.482Z" },
 ]
 
 [[package]]
