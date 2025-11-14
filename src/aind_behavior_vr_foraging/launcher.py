@@ -118,7 +118,7 @@ async def experiment(launcher: Launcher) -> None:
 
             vr_dataset = data_contract.dataset(launcher.session_directory)
             runner = make_qc_runner(vr_dataset)
-            qc_path = launcher.session_directory / "Behavior" / "Logs" / "qc_report.json"
+            qc_path = launcher.session_directory / "Behavior" / "Logs" / "qc_report.html"
             reporter = HtmlReporter(output_path=qc_path)
             runner.run_all_with_progress(reporter=reporter)
             webbrowser.open(qc_path.as_uri(), new=2)
