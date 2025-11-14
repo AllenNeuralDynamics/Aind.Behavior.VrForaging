@@ -108,7 +108,8 @@ async def experiment(launcher: Launcher) -> None:
     ads_rig = AindRigDataMapper(rig=rig).map()
     ads_rig.write_standard_file(launcher.session_directory)
 
-    if picker.ui_helper.prompt_yes_no_question("Would you like to run data transfer?"):
+    # Run data qc
+    if picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
         try:
             import webbrowser
 
