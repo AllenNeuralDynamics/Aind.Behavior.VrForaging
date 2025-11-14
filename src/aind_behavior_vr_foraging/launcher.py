@@ -39,12 +39,6 @@ async def experiment(launcher: Launcher) -> None:
 
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
-    manipulator_modifier = ByAnimalManipulatorModifier(
-        subject_db_path=picker.subject_dir / picker.session.subject,
-        model_path="manipulator.calibration.input.initial_position",
-        model_name="manipulator_init.json",
-        launcher=launcher,
-    )
 
     # Pick and register session
     session = picker.pick_session(AindBehaviorSessionModel)
@@ -58,6 +52,12 @@ async def experiment(launcher: Launcher) -> None:
     rig = picker.pick_rig(AindVrForagingRig)
 
     # Post-fetching modifications
+    manipulator_modifier = ByAnimalManipulatorModifier(
+        subject_db_path=picker.subject_dir / picker.session.subject,
+        model_path="manipulator.calibration.input.initial_position",
+        model_name="manipulator_init.json",
+        launcher=launcher,
+    )
     manipulator_modifier.inject(rig)
 
     # Run the task via Bonsai

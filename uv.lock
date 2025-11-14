@@ -121,7 +121,7 @@ docs = [
 [[package]]
 name = "aind-clabe"
 version = "0.9.0rc7"
-source = { git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=fix-small-issues#310bd9ae21f9505bea8e05a13393dc06fcea682c" }
+source = { git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=fix-small-issues#51e48ee12943f1b68baf9e5b58fa76fb46f04a7d" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
