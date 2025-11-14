@@ -3013,11 +3013,17 @@
           "type": "boolean"
         },
         "stop_duration": {
-          "default": 0,
-          "description": "Duration (s) the animal must stop for to lock its choice",
-          "minimum": 0,
-          "title": "Stop Duration",
-          "type": "number"
+          "$ref": "#/$defs/Distribution",
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 0.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "Duration (s) the animal must stop for to lock its choice"
         },
         "time_to_collect_reward": {
           "default": 100000,
