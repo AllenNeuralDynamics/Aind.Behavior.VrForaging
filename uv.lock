@@ -94,7 +94,7 @@ docs = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = "==0.9.0rc7" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=fix-small-issues" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.3,<0.6.0" },
     { name = "pydantic-settings" },
@@ -121,7 +121,7 @@ docs = [
 [[package]]
 name = "aind-clabe"
 version = "0.9.0rc7"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/AllenNeuralDynamics/clabe.git?rev=fix-small-issues#310bd9ae21f9505bea8e05a13393dc06fcea682c" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
@@ -130,10 +130,6 @@ dependencies = [
     { name = "requests" },
     { name = "rich" },
     { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/45/ac/3ac72a8fd10d23c5d5afcdd4d5240400f1ae4460db352a43c2794bd295ca/aind_clabe-0.9.0rc7.tar.gz", hash = "sha256:a5b605c223c51e7ca0e823f9064113b535b37b35dc77838a227df96d63d440fa", size = 67079, upload-time = "2025-11-14T16:48:02.816Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a9/4b/f9f12e5b7808270a3108fbbaf402c881637e59bd9db727e5b9d0fe4a8828/aind_clabe-0.9.0rc7-py3-none-any.whl", hash = "sha256:e79ca303bc8426329a430fd22f993b9d851e935cf95787c0ac436d576b10c1a1", size = 89703, upload-time = "2025-11-14T16:48:01.544Z" },
 ]
 
 [package.optional-dependencies]
