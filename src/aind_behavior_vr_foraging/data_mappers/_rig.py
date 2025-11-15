@@ -375,6 +375,15 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             is_clock_generator=False,
         )
 
+        harp_stepper_motor = devices.HarpDevice(
+            name=validate_name(rig, "manipulator"),
+            harp_device_type=devices.HarpDeviceType.STEPPERDRIVER,
+            manufacturer=devices.Organization.OEPS,
+            is_clock_generator=False,
+        )
+
+        _components.append(harp_stepper_motor)
+
         if rig.harp_sniff_detector is not None:
             _components.append(
                 devices.HarpDevice(
@@ -492,7 +501,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             model="328-300-00",
             travel=Decimal("30"),
             travel_unit=units.SizeUnit.CM,
-            notes="This stage is driven by the HarpStepperDriver device.",
+            notes="This stage is driven by the manipulator device.",
         )
 
         return devices.LickSpoutAssembly(
