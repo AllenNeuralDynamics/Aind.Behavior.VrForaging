@@ -32,7 +32,7 @@ data = ["contraqctor>=0.5.3, <0.6.0"]
 
 launcher = [
     #"aind-clabe[aind-services] >0.8 ,<0.10.0",
-    "aind-clabe[aind-services] @git+https://github.com/AllenNeuralDynamics/clabe.git@fix-small-issues",
+    "aind-clabe[aind-services] @git+https://github.com/AllenNeuralDynamics/clabe.git@development",
     "aind-data-schema>=2",
     "aind_behavior_vr_foraging[data]",
     ]
