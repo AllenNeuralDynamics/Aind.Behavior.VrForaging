@@ -1,4 +1,5 @@
 import os
+import platform
 import sys
 import unittest
 import warnings
@@ -19,6 +20,7 @@ from tests import JSON_ROOT  # isort:skip # pylint: disable=wrong-import-positio
 TModel = TypeVar("TModel", bound=Union[AindVrForagingRig, AindVrForagingTaskLogic, AindBehaviorSessionModel])
 
 
+@unittest.skipUnless(platform.system() == "Windows", "Bonsai tests only run on Windows")
 class BonsaiTests(unittest.TestCase):
     def test_deserialization(self):
         rig.main("./local/{schema}.json")
