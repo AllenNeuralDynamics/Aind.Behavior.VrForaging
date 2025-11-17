@@ -1,0 +1,205 @@
+{
+  "aind_behavior_services_pkg_version": "0.12.3",
+  "version": "0.1.2-rc2",
+  "computer_name": "test_computer",
+  "rig_name": "test_rig",
+  "camera_green_iso": {
+    "device_type": "FipCamera",
+    "name": "FipCamera",
+    "additional_settings": null,
+    "calibration": null,
+    "serial_number": "000000",
+    "gain": 0.0,
+    "offset": {
+      "x": 0.0,
+      "y": 0.0
+    }
+  },
+  "camera_red": {
+    "device_type": "FipCamera",
+    "name": "FipCamera",
+    "additional_settings": null,
+    "calibration": null,
+    "serial_number": "000001",
+    "gain": 0.0,
+    "offset": {
+      "x": 0.0,
+      "y": 0.0
+    }
+  },
+  "light_source_uv": {
+    "device_type": "LightSource",
+    "name": "LightSource",
+    "additional_settings": null,
+    "calibration": null,
+    "power": 0.1,
+    "task": {
+      "delta_1": 15650,
+      "delta_2": 666,
+      "delta_3": 300,
+      "delta_4": 50,
+      "light_source_port": 8,
+      "camera_port": 1,
+      "events_enabled": true,
+      "mute_output": false,
+      "pwm_frequency": 10000.0
+    }
+  },
+  "light_source_blue": {
+    "device_type": "LightSource",
+    "name": "mock_device",
+    "additional_settings": null,
+    "calibration": {
+      "device_name": "mock_device",
+      "input": null,
+      "output": {
+        "power_lut": {
+          "0.0": 0.0,
+          "0.1": 10.0,
+          "0.2": 20.0
+        }
+      },
+      "date": null,
+      "description": null,
+      "notes": null
+    },
+    "power": 10.0,
+    "task": {
+      "delta_1": 15650,
+      "delta_2": 666,
+      "delta_3": 300,
+      "delta_4": 50,
+      "light_source_port": 4,
+      "camera_port": 1,
+      "events_enabled": true,
+      "mute_output": false,
+      "pwm_frequency": 10000.0
+    }
+  },
+  "light_source_lime": {
+    "device_type": "LightSource",
+    "name": "mock_device",
+    "additional_settings": null,
+    "calibration": {
+      "device_name": "mock_device",
+      "input": null,
+      "output": {
+        "power_lut": {
+          "0.0": 0.0,
+          "0.1": 10.0,
+          "0.2": 20.0
+        }
+      },
+      "date": null,
+      "description": null,
+      "notes": null
+    },
+    "power": 20.0,
+    "task": {
+      "delta_1": 15650,
+      "delta_2": 666,
+      "delta_3": 300,
+      "delta_4": 50,
+      "light_source_port": 16,
+      "camera_port": 2,
+      "events_enabled": true,
+      "mute_output": false,
+      "pwm_frequency": 10000.0
+    }
+  },
+  "roi_settings": {
+    "camera_green_iso_background": {
+      "center": {
+        "x": 10.0,
+        "y": 10.0
+      },
+      "radius": 10.0
+    },
+    "camera_red_background": {
+      "center": {
+        "x": 10.0,
+        "y": 10.0
+      },
+      "radius": 10.0
+    },
+    "camera_green_iso_roi": [
+      {
+        "center": {
+          "x": 50.0,
+          "y": 50.0
+        },
+        "radius": 20.0
+      },
+      {
+        "center": {
+          "x": 50.0,
+          "y": 150.0
+        },
+        "radius": 20.0
+      },
+      {
+        "center": {
+          "x": 150.0,
+          "y": 50.0
+        },
+        "radius": 20.0
+      },
+      {
+        "center": {
+          "x": 150.0,
+          "y": 150.0
+        },
+        "radius": 20.0
+      }
+    ],
+    "camera_red_roi": [
+      {
+        "center": {
+          "x": 50.0,
+          "y": 50.0
+        },
+        "radius": 20.0
+      },
+      {
+        "center": {
+          "x": 50.0,
+          "y": 150.0
+        },
+        "radius": 20.0
+      },
+      {
+        "center": {
+          "x": 150.0,
+          "y": 50.0
+        },
+        "radius": 20.0
+      },
+      {
+        "center": {
+          "x": 150.0,
+          "y": 150.0
+        },
+        "radius": 20.0
+      }
+    ]
+  },
+  "cuttlefish_fip": {
+    "device_type": "cuTTLefishFip",
+    "name": "cuTTLefishFip",
+    "additional_settings": null,
+    "calibration": null,
+    "who_am_i": 1407,
+    "serial_number": null,
+    "port_name": "COM1"
+  },
+  "networking": {
+    "zmq_publisher": {
+      "connection_string": "@tcp://localhost:5556",
+      "topic": "fip"
+    },
+    "zmq_subscriber": {
+      "connection_string": "@tcp://localhost:5557",
+      "topic": "fip"
+    }
+  }
+}

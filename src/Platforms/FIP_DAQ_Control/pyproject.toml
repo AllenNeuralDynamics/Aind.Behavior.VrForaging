@@ -1,0 +1,67 @@
+[build-system]
+requires = ["uv_build>=0.8.22"]
+build-backend = "uv_build"
+
+[project]
+name = "aind-physiology-fip"
+description = "A repository for Fiber Photometry data acquisition"
+authors = [
+    { name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org" },
+    { name = "Kenta Hagihara", email = "kenta.hagihara@alleninstitute.org" },
+]
+license = { text = "MIT" }
+requires-python = ">=3.11"
+version = "0.1.2rc2"
+readme = { file = "README.md", content-type = "text/markdown" }
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+]
+
+dependencies = ["aind_behavior_services<0.13"]
+
+[project.urls]
+Documentation = "https://allenneuraldynamics.github.io/Aind.Physiology.Fip/"
+Repository = "https://github.com/AllenNeuralDynamics/Aind.Physiology.Fip/"
+Issues = "https://github.com/AllenNeuralDynamics/Aind.Physiology.Fip/issues"
+Changelog = "https://github.com/AllenNeuralDynamics/Aind.Physiology.Fip/releases"
+
+[project.optional-dependencies]
+
+data = ["contraqctor < 0.6", "pydantic_settings", "opencv-python"]
+
+[dependency-groups]
+
+dev = ["ruff", "codespell", "aind-physiology-fip[data]"]
+
+docs = [
+    'Sphinx',
+    'furo',
+    'sphinx-jinja',
+    'autodoc_pydantic[erdantic]',
+    'sphinx-jsonschema',
+    'sphinx-copybutton',
+    "sphinx_mdinclude",
+]
+
+[project.scripts]
+fip = "aind_physiology_fip.cli:main"
+
+[tool.ruff]
+line-length = 120
+target-version = 'py311'
+
+[tool.ruff.lint]
+extend-select = ['Q', 'RUF100', 'C90', 'I']
+extend-ignore = []
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = 'google' }
+
+[tool.codespell]
+skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock'
+ignore-words-list = 'nd'
+
+[tool.uv]
+default-groups = ['dev']
+required-version = '>=0.8.4'
