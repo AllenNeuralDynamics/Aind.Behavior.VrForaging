@@ -1,0 +1,18 @@
+{
+  "aind_behavior_services_pkg_version": "0.12.3",
+  "version": "0.12.3",
+  "experiment": "AindPhysioFip",
+  "experimenter": [
+    "Foo",
+    "Bar"
+  ],
+  "date": "2025-10-20T00:46:40.173309Z",
+  "root_path": "c://",
+  "session_name": "test_2025-10-20T004640Z",
+  "subject": "test",
+  "experiment_version": "0.0.0",
+  "notes": "test session",
+  "commit_hash": null,
+  "allow_dirty_repo": true,
+  "skip_hardware_validation": false
+}

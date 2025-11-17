@@ -1,0 +1,804 @@
+{
+  "$defs": {
+    "AindBehaviorSessionModel": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.3",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.12.3",
+          "default": "0.12.3",
+          "title": "Version",
+          "type": "string"
+        },
+        "experiment": {
+          "default": null,
+          "description": "Name of the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Experiment"
+        },
+        "experimenter": {
+          "default": [],
+          "description": "Name of the experimenter",
+          "items": {
+            "type": "string"
+          },
+          "title": "Experimenter",
+          "type": "array"
+        },
+        "date": {
+          "description": "Date of the experiment",
+          "format": "date-time",
+          "title": "Date",
+          "type": "string"
+        },
+        "root_path": {
+          "description": "Root path where data will be logged",
+          "title": "Root Path",
+          "type": "string"
+        },
+        "session_name": {
+          "default": null,
+          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Name"
+        },
+        "subject": {
+          "description": "Name of the subject",
+          "title": "Subject",
+          "type": "string"
+        },
+        "experiment_version": {
+          "default": "",
+          "deprecated": true,
+          "description": "Version of the experiment",
+          "title": "Experiment Version",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "description": "Notes about the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "commit_hash": {
+          "default": null,
+          "description": "Commit hash of the repository",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit Hash"
+        },
+        "allow_dirty_repo": {
+          "default": false,
+          "description": "Allow running from a dirty repository",
+          "title": "Allow Dirty Repo",
+          "type": "boolean"
+        },
+        "skip_hardware_validation": {
+          "default": false,
+          "description": "Skip hardware validation",
+          "title": "Skip Hardware Validation",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "root_path",
+        "subject"
+      ],
+      "title": "AindBehaviorSessionModel",
+      "type": "object"
+    },
+    "AindPhysioFipRig": {
+      "description": "Complete rig configuration model for AIND FIP photometry system.",
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.3",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.1.2-rc2",
+          "default": "0.1.2-rc2",
+          "title": "Version",
+          "type": "string"
+        },
+        "computer_name": {
+          "description": "Computer name",
+          "title": "Computer Name",
+          "type": "string"
+        },
+        "rig_name": {
+          "description": "Rig name",
+          "title": "Rig Name",
+          "type": "string"
+        },
+        "camera_green_iso": {
+          "$ref": "#/$defs/FipCamera",
+          "description": "Camera for the green and iso channels",
+          "title": "G/Iso Camera"
+        },
+        "camera_red": {
+          "$ref": "#/$defs/FipCamera",
+          "description": "Red camera",
+          "title": "Red Camera"
+        },
+        "light_source_uv": {
+          "$ref": "#/$defs/LightSource",
+          "description": "UV (415nm) light source",
+          "title": "UV light source"
+        },
+        "light_source_blue": {
+          "$ref": "#/$defs/LightSource",
+          "description": "Blue (470nm) light source",
+          "title": "Blue light source"
+        },
+        "light_source_lime": {
+          "$ref": "#/$defs/LightSource",
+          "description": "Lime (560nm) light source",
+          "title": "Lime light source"
+        },
+        "roi_settings": {
+          "default": null,
+          "description": "Region of interest settings. Leave empty to attempt to load from local file or manually define it in the program.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/RoiSettings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Region of interest settings"
+        },
+        "cuttlefish_fip": {
+          "$ref": "#/$defs/HarpCuttlefishfip",
+          "description": "CuttlefishFip board for controlling the trigger of cameras and light-sources",
+          "title": "CuttlefishFip"
+        },
+        "networking": {
+          "$ref": "#/$defs/Networking",
+          "default": {
+            "zmq_publisher": {
+              "connection_string": "@tcp://localhost:5556",
+              "topic": "fip"
+            },
+            "zmq_subscriber": {
+              "connection_string": "@tcp://localhost:5557",
+              "topic": "fip"
+            }
+          },
+          "description": "Networking settings"
+        }
+      },
+      "required": [
+        "rig_name",
+        "camera_green_iso",
+        "camera_red",
+        "light_source_uv",
+        "light_source_blue",
+        "light_source_lime",
+        "cuttlefish_fip"
+      ],
+      "title": "AindPhysioFipRig",
+      "type": "object"
+    },
+    "BaseModel": {
+      "properties": {},
+      "title": "BaseModel",
+      "type": "object"
+    },
+    "Circle": {
+      "properties": {
+        "center": {
+          "$ref": "#/$defs/Point2f",
+          "default": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "description": "Center of the circle (px)"
+        },
+        "radius": {
+          "default": 1,
+          "description": "Radius of the circle (px)",
+          "minimum": 0,
+          "title": "Radius",
+          "type": "number"
+        }
+      },
+      "title": "Circle",
+      "type": "object"
+    },
+    "FipCamera": {
+      "description": "Camera device configuration for FIP photometry system.",
+      "properties": {
+        "device_type": {
+          "const": "FipCamera",
+          "default": "FipCamera",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "serial_number": {
+          "description": "Camera serial number",
+          "title": "Serial Number",
+          "type": "string"
+        },
+        "gain": {
+          "default": 0,
+          "description": "Gain",
+          "minimum": 0,
+          "title": "Gain",
+          "type": "number"
+        },
+        "offset": {
+          "$ref": "#/$defs/Point2f",
+          "default": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "description": "Offset (px)"
+        }
+      },
+      "required": [
+        "serial_number"
+      ],
+      "title": "FipCamera",
+      "type": "object"
+    },
+    "FipTask": {
+      "description": "Task configuration for FIP timing and triggering parameters.",
+      "properties": {
+        "delta_1": {
+          "default": 15650,
+          "description": "Delta 1 (us)",
+          "minimum": 0,
+          "title": "Delta 1",
+          "type": "integer"
+        },
+        "delta_2": {
+          "default": 666,
+          "description": "Delta 2 (us)",
+          "minimum": 0,
+          "title": "Delta 2",
+          "type": "integer"
+        },
+        "delta_3": {
+          "default": 300,
+          "description": "Delta 3 (us)",
+          "minimum": 0,
+          "title": "Delta 3",
+          "type": "integer"
+        },
+        "delta_4": {
+          "default": 50,
+          "description": "Delta 4 (us)",
+          "minimum": 0,
+          "title": "Delta 4",
+          "type": "integer"
+        },
+        "light_source_port": {
+          "$ref": "#/$defs/Ports",
+          "description": "Port that triggers the light source."
+        },
+        "camera_port": {
+          "$ref": "#/$defs/Ports",
+          "description": "Port that triggers the camera."
+        },
+        "events_enabled": {
+          "default": true,
+          "description": "Whether to enable events for the task. If False, the task will not trigger any events.",
+          "title": "Events Enabled",
+          "type": "boolean"
+        },
+        "mute_output": {
+          "default": false,
+          "description": "Whether to mute the output of the task. If True, the task will not trigger any outputs but timing will be preserved.",
+          "title": "Mute Output",
+          "type": "boolean"
+        },
+        "pwm_frequency": {
+          "default": 10000,
+          "description": "PWM frequency (Hz) of the light source output.",
+          "minimum": 10000,
+          "title": "Pwm Frequency",
+          "type": "number"
+        }
+      },
+      "required": [
+        "light_source_port",
+        "camera_port"
+      ],
+      "title": "FipTask",
+      "type": "object"
+    },
+    "HarpCuttlefishfip": {
+      "properties": {
+        "device_type": {
+          "const": "cuTTLefishFip",
+          "default": "cuTTLefishFip",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1407,
+          "default": 1407,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpCuttlefishfip",
+      "type": "object"
+    },
+    "LightSource": {
+      "description": "Light source device configuration with power control and timing tasks.",
+      "properties": {
+        "device_type": {
+          "const": "LightSource",
+          "default": "LightSource",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration for the LightSource. If left empty, 'power' will be used as duty-cycle (0-100).",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LightSourceCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calibration"
+        },
+        "power": {
+          "default": 0,
+          "description": "Power (mW)",
+          "minimum": 0,
+          "title": "Power",
+          "type": "number"
+        },
+        "task": {
+          "$ref": "#/$defs/FipTask",
+          "description": "Task for the light source",
+          "title": "Task"
+        }
+      },
+      "required": [
+        "task"
+      ],
+      "title": "LightSource",
+      "type": "object"
+    },
+    "LightSourceCalibration": {
+      "description": "Calibration model for converting light source duty cycle to power output.",
+      "properties": {
+        "device_name": {
+          "description": "Name of the device being calibrated",
+          "title": "Device name",
+          "type": "string"
+        },
+        "input": {
+          "default": null,
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Input data"
+        },
+        "output": {
+          "$ref": "#/$defs/LightSourceCalibrationOutput",
+          "title": "Lookup table to convert duty cycle to power (mW)"
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Brief description of what is being calibrated"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "device_name",
+        "output"
+      ],
+      "title": "LightSourceCalibration",
+      "type": "object"
+    },
+    "LightSourceCalibrationOutput": {
+      "description": "Output of the light source calibration process.",
+      "properties": {
+        "power_lut": {
+          "additionalProperties": {
+            "default": 0,
+            "description": "Power (mW)",
+            "minimum": 0,
+            "type": "number"
+          },
+          "description": "Look-up table for LightSource power vs. duty cycle",
+          "title": "Power Lut",
+          "type": "object"
+        }
+      },
+      "required": [
+        "power_lut"
+      ],
+      "title": "LightSourceCalibrationOutput",
+      "type": "object"
+    },
+    "Networking": {
+      "description": "Network configuration settings for ZeroMQ communication.",
+      "properties": {
+        "zmq_publisher": {
+          "$ref": "#/$defs/ZmqConnection",
+          "default": {
+            "connection_string": "@tcp://localhost:5556",
+            "topic": "fip"
+          }
+        },
+        "zmq_subscriber": {
+          "$ref": "#/$defs/ZmqConnection",
+          "default": {
+            "connection_string": "@tcp://localhost:5557",
+            "topic": "fip"
+          }
+        }
+      },
+      "title": "Networking",
+      "type": "object"
+    },
+    "Point2f": {
+      "properties": {
+        "x": {
+          "description": "X coordinate of the point (px)",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate of the point (px)",
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Point2f",
+      "type": "object"
+    },
+    "Ports": {
+      "description": "Available hardware ports in the FIP cuttlefish board.",
+      "enum": [
+        0,
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128
+      ],
+      "title": "Ports",
+      "type": "integer",
+      "x-enumNames": [
+        "None",
+        "Io0",
+        "Io1",
+        "Io2",
+        "Io3",
+        "Io4",
+        "Io5",
+        "Io6",
+        "Io7"
+      ]
+    },
+    "RoiSettings": {
+      "description": "Region of Interest (ROI) settings for camera channels in the FIP system.",
+      "properties": {
+        "camera_green_iso_background": {
+          "$ref": "#/$defs/Circle",
+          "default": {
+            "center": {
+              "x": 10.0,
+              "y": 10.0
+            },
+            "radius": 10.0
+          },
+          "description": "ROI to compute the background for the green/iso camera channel"
+        },
+        "camera_red_background": {
+          "$ref": "#/$defs/Circle",
+          "default": {
+            "center": {
+              "x": 10.0,
+              "y": 10.0
+            },
+            "radius": 10.0
+          },
+          "description": "ROI to compute the background for the red camera channel"
+        },
+        "camera_green_iso_roi": {
+          "default": [
+            {
+              "center": {
+                "x": 50.0,
+                "y": 50.0
+              },
+              "radius": 20.0
+            },
+            {
+              "center": {
+                "x": 50.0,
+                "y": 150.0
+              },
+              "radius": 20.0
+            },
+            {
+              "center": {
+                "x": 150.0,
+                "y": 50.0
+              },
+              "radius": 20.0
+            },
+            {
+              "center": {
+                "x": 150.0,
+                "y": 150.0
+              },
+              "radius": 20.0
+            }
+          ],
+          "description": "ROI for the green/iso camera channel",
+          "items": {
+            "$ref": "#/$defs/Circle"
+          },
+          "title": "Camera Green Iso Roi",
+          "type": "array"
+        },
+        "camera_red_roi": {
+          "default": [
+            {
+              "center": {
+                "x": 50.0,
+                "y": 50.0
+              },
+              "radius": 20.0
+            },
+            {
+              "center": {
+                "x": 50.0,
+                "y": 150.0
+              },
+              "radius": 20.0
+            },
+            {
+              "center": {
+                "x": 150.0,
+                "y": 50.0
+              },
+              "radius": 20.0
+            },
+            {
+              "center": {
+                "x": 150.0,
+                "y": 150.0
+              },
+              "radius": 20.0
+            }
+          ],
+          "description": "ROI for the red camera channel",
+          "items": {
+            "$ref": "#/$defs/Circle"
+          },
+          "title": "Camera Red Roi",
+          "type": "array"
+        }
+      },
+      "title": "RoiSettings",
+      "type": "object"
+    },
+    "ZmqConnection": {
+      "properties": {
+        "connection_string": {
+          "default": "@tcp://localhost:5556",
+          "description": "The connection string for the ZMQ socket.",
+          "title": "Connection String",
+          "type": "string"
+        },
+        "topic": {
+          "default": "",
+          "title": "Topic",
+          "type": "string"
+        }
+      },
+      "title": "ZmqConnection",
+      "type": "object"
+    }
+  }
+}
