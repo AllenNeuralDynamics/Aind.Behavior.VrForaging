@@ -14,7 +14,7 @@ from aind_data_schema.components import configs
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
 from aind_data_schema_models.modalities import Modality
-from clabe.apps import BonsaiAppSettings, CurriculumSuggestion
+from clabe.apps import BonsaiApp, CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
 
@@ -32,7 +32,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         session: AindBehaviorSessionModel,
         rig: AindVrForagingRig,
         task_logic: AindVrForagingTaskLogic,
-        bonsai_app_settings: BonsaiAppSettings = BonsaiAppSettings(workflow=Path("./src/main.bonsai")),
+        bonsai_app: Optional[BonsaiApp] = None,
         repository: Union[os.PathLike, git.Repo] = Path("."),
         session_end_time: Optional[datetime.datetime] = None,
         curriculum_suggestion: Optional[CurriculumSuggestion] = None,
@@ -43,7 +43,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.repository = repository
         if isinstance(self.repository, os.PathLike | str):
             self.repository = git.Repo(Path(self.repository))
-        self.bonsai_app = bonsai_app_settings
+        self.bonsai_app = bonsai_app if bonsai_app is not None else BonsaiApp(workflow=Path("./src/main.bonsai"))
         self._session_end_time = session_end_time
         self._mapped: Optional[acquisition.Acquisition] = None
         self.curriculum = curriculum_suggestion
