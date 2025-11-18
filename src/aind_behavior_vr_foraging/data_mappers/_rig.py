@@ -353,7 +353,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
 
         _components.append(cls._get_computer(rig))
 
-        _components.append(cls._get_enclosure())
+        # _components.append(cls._get_enclosure())  # Enclosure is removed since we do not have a good way to ensure consistency across rigs
 
         harp_behavior_node = cls._get_harp_behavior_node(rig)
         _components.append(harp_behavior_node.device)

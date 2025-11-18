@@ -7,14 +7,13 @@ from aind_behavior_services.session import AindBehaviorSessionModel
 from clabe import resource_monitor
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
-    BonsaiAppSettings,
     CurriculumApp,
     CurriculumSettings,
     CurriculumSuggestion,
 )
 from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
 from clabe.launcher import Launcher, LauncherCliArgs
-from clabe.pickers import DefaultBehaviorPickerSettings
+from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
@@ -27,7 +26,7 @@ from .task_logic import AindVrForagingTaskLogic
 logger = logging.getLogger(__name__)
 
 
-def experiment(launcher: Launcher) -> None:
+async def experiment(launcher: Launcher) -> None:
     monitor = resource_monitor.ResourceMonitor(
         constrains=[
             resource_monitor.available_storage_constraint_factory(launcher.settings.data_dir, 2e11),
@@ -39,7 +38,6 @@ def experiment(launcher: Launcher) -> None:
 
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
-    manipulator_modifier = ByAnimalManipulatorModifier(picker, launcher)
 
     # Pick and register session
     session = picker.pick_session(AindBehaviorSessionModel)
@@ -53,15 +51,29 @@ def experiment(launcher: Launcher) -> None:
     rig = picker.pick_rig(AindVrForagingRig)
 
     # Post-fetching modifications
+    manipulator_modifier = ByAnimalManipulatorModifier(
+        subject_db_path=picker.subject_dir / picker.session.subject,
+        model_path="manipulator.calibration.input.initial_position",
+        model_name="manipulator_init.json",
+        launcher=launcher,
+    )
     manipulator_modifier.inject(rig)
 
     # Run the task via Bonsai
-    bonsai_app = AindBehaviorServicesBonsaiApp(BonsaiAppSettings(workflow=Path(r"./src/main.bonsai")))
-    bonsai_app.add_app_settings(launcher, rig=rig, session=session, task_logic=task_logic)
-    bonsai_app.run().get_result(allow_stderr=True)
+    bonsai_app = AindBehaviorServicesBonsaiApp(
+        workflow=Path(r"./src/main.bonsai"),
+        temp_directory=launcher.temp_dir,
+        rig=rig,
+        session=session,
+        task_logic=task_logic,
+    )
+    await bonsai_app.run_async()
 
     # Update manipulator initial position for next session
-    manipulator_modifier.dump()
+    try:
+        manipulator_modifier.dump()
+    except Exception as e:
+        logger.error(f"Failed to update manipulator initial position: {e}")
 
     # Curriculum
     suggestion: CurriculumSuggestion | None = None
@@ -76,9 +88,10 @@ def experiment(launcher: Launcher) -> None:
             )
         )
         # Run the curriculum
-        suggestion = trainer.run().get_result(allow_stderr=True)
+        await trainer.run_async()
+        suggestion = trainer.process_suggestion()
         # Dump suggestion for debugging (for now, but we will prob remove this later)
-        _dump_suggestion(launcher, suggestion)
+        _dump_suggestion(suggestion, launcher.session_directory)
         # Push updated trainer state back to the database
         picker.push_new_suggestion(suggestion.trainer_state)
 
@@ -88,11 +101,29 @@ def experiment(launcher: Launcher) -> None:
         session=session,
         task_logic=task_logic,
         curriculum_suggestion=suggestion,
-        bonsai_app_settings=bonsai_app.settings,
+        bonsai_app=bonsai_app,
     ).map()
     ads_session.write_standard_file(launcher.session_directory)
     ads_rig = AindRigDataMapper(rig=rig).map()
     ads_rig.write_standard_file(launcher.session_directory)
+
+    # Run data qc
+    if picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
+        try:
+            import webbrowser
+
+            from contraqctor.qc.reporters import HtmlReporter
+
+            from .data_qc import make_qc_runner
+
+            vr_dataset = data_contract.dataset(launcher.session_directory)
+            runner = make_qc_runner(vr_dataset)
+            qc_path = launcher.session_directory / "Behavior" / "Logs" / "qc_report.html"
+            reporter = HtmlReporter(output_path=qc_path)
+            runner.run_all_with_progress(reporter=reporter)
+            webbrowser.open(qc_path.as_uri(), new=2)
+        except Exception as e:
+            logger.error(f"Failed to run data QC: {e}")
 
     # Watchdog
     is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
@@ -107,56 +138,35 @@ def experiment(launcher: Launcher) -> None:
     WatchdogDataTransferService(
         source=launcher.session_directory,
         settings=watchdog_settings,
-        aind_data_schema_session=ads_session,
-        session_name=session.session_name,
+        session=session,
     ).transfer()
 
     return
 
 
-def _dump_suggestion(launcher: Launcher, suggestion: CurriculumSuggestion) -> None:
-    launcher.logger.info(
-        f"Dumping curriculum suggestion to: {launcher.session_directory / 'Behavior' / 'Logs' / 'suggestion.json'}"
-    )
-    with open(launcher.session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
+def _dump_suggestion(suggestion: CurriculumSuggestion, session_directory: Path) -> None:
+    logger.info(f"Dumping curriculum suggestion to: {session_directory / 'Behavior' / 'Logs' / 'suggestion.json'}")
+    with open(session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
         f.write(suggestion.model_dump_json(indent=2))
 
 
-class ByAnimalManipulatorModifier:
-    def __init__(self, picker: DataversePicker, launcher: Launcher) -> None:
-        self._picker = picker
+class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
+    """Modifier to set and update manipulator initial position based on animal-specific data."""
+
+    def __init__(
+        self, subject_db_path: Path, model_path: str, model_name: str, *, launcher: Launcher, **kwargs
+    ) -> None:
+        super().__init__(subject_db_path, model_path, model_name, **kwargs)
         self._launcher = launcher
 
-    def inject(self, rig: AindVrForagingRig) -> AindVrForagingRig:
-        subject = self._launcher.session.subject
-        target_folder = self._picker.subject_dir / subject
-        target_file = target_folder / "manipulator_init.json"
-        if not target_file.exists():
-            logger.warning(f"Manipulator initial position file not found: {target_file}. Using default.")
-        else:
-            cached = ManipulatorPosition.model_validate_json(target_file.read_text(encoding="utf-8"))
-            logger.info(f"Loading manipulator initial position from: {target_file}. Deserialized: {cached}")
-            assert rig.manipulator.calibration is not None
-            rig.manipulator.calibration.input.initial_position = cached
-        return rig
-
-    def dump(self) -> None:
-        target_folder = self._picker.subject_dir / self._launcher.session.subject
-        target_file = target_folder / "manipulator_init.json"
+    def _process_before_dump(self) -> ManipulatorPosition:
         _dataset = data_contract.dataset(self._launcher.session_directory)
-        try:
-            manipulator_parking_position: SoftwareEvents = cast(
-                SoftwareEvents, _dataset["Behavior"]["SoftwareEvents"]["SpoutParkingPositions"].load()
-            )
-            data: dict[str, Any] = manipulator_parking_position.data.iloc[0]["data"]["ResetPosition"]
-            position = ManipulatorPosition.model_validate(data)
-        except Exception as e:
-            logger.error(f"Failed to load manipulator parking position: {e}")
-            return
-        else:
-            logger.info(f"Saving manipulator initial position to: {target_file}. Serialized: {position}")
-            target_folder.mkdir(parents=True, exist_ok=True)
-            target_file.write_text(position.model_dump_json(indent=2), encoding="utf-8")
+        manipulator_parking_position: SoftwareEvents = cast(
+            SoftwareEvents, _dataset["Behavior"]["SoftwareEvents"]["SpoutParkingPositions"].load()
+        )
+        data: dict[str, Any] = manipulator_parking_position.data.iloc[0]["data"]["ResetPosition"]
+        position = ManipulatorPosition.model_validate(data)
+        return position
 
 
 class ClabeCli(LauncherCliArgs):

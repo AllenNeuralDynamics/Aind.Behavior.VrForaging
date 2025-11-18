@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 from aind_data_schema.core import acquisition, instrument
 from aind_data_schema.utils import compatibility_check
-from clabe.apps import BonsaiAppSettings
+from clabe.apps import BonsaiApp
 from git import Repo
 
 from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
@@ -23,7 +23,7 @@ class TestAindSessionDataMapper(unittest.TestCase):
         self.rig = rig
         self.task_logic = task_logic
         self.repository = Repo(Path("./"))
-        self.bonsai_app_settings = BonsaiAppSettings(workflow=Path("./src/main.bonsai"))
+        self.bonsai_app = BonsaiApp(workflow=Path("./src/main.bonsai"))
         self.session_end_time = datetime.now()
         self.session_directory = None
 
@@ -32,7 +32,7 @@ class TestAindSessionDataMapper(unittest.TestCase):
             rig=self.rig,
             task_logic=self.task_logic,
             repository=self.repository,
-            bonsai_app_settings=self.bonsai_app_settings,
+            bonsai_app=self.bonsai_app,
             session_end_time=self.session_end_time,
         )
 
@@ -85,14 +85,14 @@ class TestInstrumentAcquisitionCompatibility(unittest.TestCase):
         self.rig_mapper = AindRigDataMapper(
             rig=self.rig,
         )
-        self.bonsai_app_settings = BonsaiAppSettings(workflow=Path("./src/main.bonsai"))
+        self.bonsai_app_settings = BonsaiApp(workflow=Path("./src/main.bonsai"))
 
         self.session_mapper = AindSessionDataMapper(
             session=self.session,
             rig=self.rig,
             task_logic=self.task_logic,
             repository=Repo(Path("./")),
-            bonsai_app_settings=self.bonsai_app_settings,
+            bonsai_app=self.bonsai_app_settings,
             session_end_time=datetime.now(),
         )
 

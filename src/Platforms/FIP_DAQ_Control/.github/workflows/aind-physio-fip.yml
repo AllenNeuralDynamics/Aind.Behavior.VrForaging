@@ -1,0 +1,327 @@
+name: FIP test suite
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: "Version bump type"
+        required: false
+        default: "rc"
+        type: choice
+        options:
+          - rc
+          - patch
+          - minor
+          - major
+          - stable
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev*
+      - release*
+  release:
+    types: [published]
+
+jobs:
+  # ╔──────────────────────────╗
+  # │   _____         _        │
+  # │  |_   _|__  ___| |_ ___  │
+  # │    | |/ _ \/ __| __/ __| │
+  # │    | |  __/\__ \ |_\__ \ │
+  # │    |_|\___||___/\__|___/ │
+  # │                          │
+  # ╚──────────────────────────╝
+  tests:
+    runs-on: windows-latest
+    name: FIP unit tests
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install python dependencies
+        run: uv sync
+
+      - name: Run ruff format
+        run: uv run ruff format
+
+      - name: Run ruff check
+        run: uv run ruff check
+
+      - name: Run codespell
+        run: uv run codespell
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      - name: Restore dotnet tools
+        run: dotnet tool restore
+
+      - name: Setup Bonsai environment
+        working-directory: ./bonsai
+        run: ./setup.ps1
+
+      - name: Run python unit tests
+        run: uv run python -m unittest
+
+      - name: Regenerate schemas
+        run: uv run fip regenerate
+
+      - name: Check for uncommitted changes
+        run: |
+          git config --global core.safecrlf false
+          git diff --exit-code || (echo "Untracked changes found" && exit 1)
+
+  # ╔───────────────────────────────────────────────────────────╗
+  # │    ____ ___ ____ ____    ____      _                      │
+  # │   / ___|_ _/ ___|  _ \  |  _ \ ___| | ___  __ _ ___  ___  │
+  # │  | |    | | |   | | | | | |_) / _ \ |/ _ \/ _` / __|/ _ \ │
+  # │  | |___ | | |___| |_| | |  _ <  __/ |  __/ (_| \__ \  __/ │
+  # │   \____|___\____|____/  |_| \_\___|_|\___|\__,_|___/\___| │
+  # │                                                           │
+  # ╚───────────────────────────────────────────────────────────╝
+  github-rc-release:
+    needs: tests
+    runs-on: windows-latest
+    if: >
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push' &&
+      github.event.head_commit.author.email != 'github-actions[bot]@users.noreply.github.com'
+    name: Create GitHub pre-release
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Bump pre-release by default
+        # Note: Bumping the rc will fail if the version is not currently an rc
+        # To solve it, we bump the patch and rc atomically
+        shell: bash # interop with win/linux for if statement
+        run: |
+          if uv version --bump rc --dry-run; then
+            uv version --bump rc
+          else
+            uv version --bump rc --bump patch
+          fi
+
+      - name: Regenerate schemas
+        run: uv run fip regenerate
+
+      - name: Regenerate examples
+        run: uv run ./examples/example.py --path-seed "./examples/{schema}.json"
+
+      - name: Commit version and schema changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Bump version and regenerate schemas [skip ci]" || echo "No changes to commit"
+          git push origin main
+
+      - name: Get version
+        id: get_version
+        shell: bash
+        run: |
+          version=$(uv version --short)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: v${{ steps.get_version.outputs.version }}
+          generate_release_notes: true
+          prerelease: true
+          body: |
+            Automated pre-release v${{ steps.get_version.outputs.version }}
+
+  # ╔─────────────────────────────────────────────────────────────────╗
+  # │   ____        _     _ _        ____      _                      │
+  # │  |  _ \ _   _| |__ | (_) ___  |  _ \ ___| | ___  __ _ ___  ___  │
+  # │  | |_) | | | | '_ \| | |/ __| | |_) / _ \ |/ _ \/ _` / __|/ _ \ │
+  # │  |  __/| |_| | |_) | | | (__  |  _ <  __/ |  __/ (_| \__ \  __/ │
+  # │  |_|    \__,_|_.__/|_|_|\___| |_| \_\___|_|\___|\__,_|___/\___| │
+  # │                                                                 │
+  # ╚─────────────────────────────────────────────────────────────────╝
+
+  prepare-public-release:
+    runs-on: windows-latest
+    name: Prepare files for public release
+    needs: tests
+    if: github.event_name == 'workflow_dispatch'
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      is_prerelease: ${{ steps.check_prerelease.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Get target version
+        id: get_version
+        shell: bash
+        run: |
+          # Use bump type from input (defaults to rc)
+          bump_type="${{ github.event.inputs.bump_type || 'rc' }}"
+          echo "Bumping version with type: $bump_type"
+
+          # Handle version bumping based on type
+          if [[ "$bump_type" == "rc" ]]; then
+            # Handle rc bumping logic (same as in github-rc-release)
+            if uv version --bump rc --dry-run; then
+              uv version --bump rc
+            else
+              uv version --bump rc --bump patch
+            fi
+          else
+            # Handle patch, minor, major, stable
+            uv version --bump $bump_type
+          fi
+
+          release_version=$(uv run uv version --short)
+          echo "version=$release_version" >> $GITHUB_OUTPUT
+          echo "Release version will be: $release_version"
+
+      - name: Validate version format
+        run: uv version ${{ steps.get_version.outputs.version }} --dry-run
+
+      - name: Update package version
+        run: uv version ${{ steps.get_version.outputs.version }}
+
+      - name: Regenerate schemas
+        run: uv run fip regenerate
+
+      - name: Regenerate examples
+        run: uv run ./examples/example.py --path-seed "./examples/{schema}.json"
+
+      - name: Commit version, schema changes and create tag
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "v${{ steps.get_version.outputs.version }} [skip ci]"
+          git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
+          git push origin main
+          git push origin "v${{ steps.get_version.outputs.version }}"
+
+      - name: Determine if prerelease
+        id: check_prerelease
+        shell: bash
+        run: |
+          version="${{ steps.get_version.outputs.version }}"
+          if [[ "$version" == *"rc"* ]]; then
+            echo "prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "prerelease=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: Release v${{ steps.get_version.outputs.version }}
+          generate_release_notes: true
+          prerelease: ${{ steps.check_prerelease.outputs.prerelease }}
+          body: |
+            Release v${{ steps.get_version.outputs.version }}
+
+            This release was manually triggered.
+
+  publish-to-pypi:
+    runs-on: windows-latest
+    name: Publish to PyPI
+    needs: [tests, prepare-public-release]
+    if: |
+      (github.event_name == 'workflow_dispatch') ||
+      (github.event_name == 'release' &&
+       github.event.action == 'published' &&
+       !github.event.release.prerelease &&
+       startsWith(github.ref, 'refs/tags/v'))
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.ref_name }}
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Verify version consistency (for automatic releases)
+        if: github.event_name == 'release'
+        shell: bash
+        run: |
+          tag_version=$(echo "${{ github.ref_name }}" | sed 's/^v//')
+          package_version=$(uv run uv version --short)
+          if [[ "$tag_version" != "$package_version" ]]; then
+            echo "ERROR: Tag version ($tag_version) doesn't match package version ($package_version)"
+            exit 1
+          fi
+          echo "✅ Version consistency verified: $tag_version"
+
+      - name: Get current version (for manual releases)
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          package_version=$(uv run uv version --short)
+          echo "📦 Publishing version: $package_version"
+
+      - name: Build
+        run: uv build
+
+      - name: Publish to PyPI
+        run: uv publish --token ${{ secrets.AIND_PYPI_TOKEN }}
+
+  # ╔─────────────────────────╗
+  # │   ____                  │
+  # │  |  _ \  ___   ___ ___  │
+  # │  | | | |/ _ \ / __/ __| │
+  # │  | |_| | (_) | (__\__ \ │
+  # │  |____/ \___/ \___|___/ │
+  # │                         │
+  # ╚─────────────────────────╝
+  build-docs:
+    name: Build and deploy documentation to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: publish-to-pypi
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v2
+
+      - name: Install docs group of dependencies
+        run: uv sync --group docs
+
+      - name: Build Sphinx documentation
+        run: uv run sphinx-build -b html docs/ _build/html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _build/html
+          force_orphan: true
