@@ -26,13 +26,10 @@ logger = logging.getLogger(__name__)
 class _DeviceNode:
     """Helper class to keep track of devices, their connections and spawned devices"""
 
+    device_name: str
     device: devices.Device
     connections_from: list[connections.Connection] = dataclasses.field(default_factory=list)
     spawned_devices: list[devices.Device] = dataclasses.field(default_factory=list)
-
-    @property
-    def device_name(self) -> str:
-        return self.device.name
 
     def get_spawned_device(self, name: str) -> devices.Device:
         for d in self.spawned_devices:
@@ -165,7 +162,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     @staticmethod
     def _get_harp_behavior_node(rig: AindVrForagingRig) -> _DeviceNode:
         _connections: list[connections.Connection] = []
-        source_device = rig.harp_behavior.name or "harp_behavior"
+        source_device = validate_name(rig, "harp_behavior")
 
         # Add triggered camera controller
         if rig.triggered_camera_controller:
@@ -239,6 +236,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         )
 
         return _DeviceNode(
+            device_name=source_device,
             device=_harp_device,
             connections_from=_connections,
             spawned_devices=[speaker, photodiode, water_valve],
@@ -246,7 +244,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
 
     @staticmethod
     def _get_harp_treadmill_node(rig: AindVrForagingRig) -> _DeviceNode:
-        source_device = rig.harp_treadmill.name or "harp_treadmill"
+        source_device = validate_name(rig, "harp_treadmill")
 
         _connections = [
             connections.Connection(
@@ -293,12 +291,16 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         )
 
         return _DeviceNode(
-            device=_harp_device, connections_from=_connections, spawned_devices=[magnetic_brake, encoder, torque_sensor]
+            device_name=source_device,
+            device=_harp_device,
+            connections_from=_connections,
+            spawned_devices=[magnetic_brake, encoder, torque_sensor],
         )
 
     @staticmethod
     def _get_harp_clock_generate_node(rig: AindVrForagingRig, components: list[devices.Device]) -> _DeviceNode:
-        source_device = rig.harp_clock_generator.name or "harp_clock_generator"
+        source_device = validate_name(rig, "harp_clock_generator")
+
         harp_devices = [d for d in components if isinstance(d, devices.HarpDevice)]
         _connections = [
             connections.Connection(
@@ -321,7 +323,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             ],
         )
 
-        return _DeviceNode(device=harp_device, connections_from=_connections)
+        return _DeviceNode(device_name=source_device, device=harp_device, connections_from=_connections)
 
     @staticmethod
     def _get_wheel(
@@ -367,16 +369,25 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
 
         # Get all other harp devices
         harp_lickometer = devices.HarpDevice(
-            name=rig.harp_lickometer.name or "harp_lickometer",
+            name=validate_name(rig, "harp_lickometer"),
             harp_device_type=devices.HarpDeviceType.LICKETYSPLIT,
             manufacturer=devices.Organization.AIND,
             is_clock_generator=False,
         )
 
+        harp_stepper_motor = devices.HarpDevice(
+            name=validate_name(rig, "manipulator"),
+            harp_device_type=devices.HarpDeviceType.STEPPERDRIVER,
+            manufacturer=devices.Organization.OEPS,
+            is_clock_generator=False,
+        )
+
+        _components.append(harp_stepper_motor)
+
         if rig.harp_sniff_detector is not None:
             _components.append(
                 devices.HarpDevice(
-                    name=rig.harp_sniff_detector.name or "harp_sniff_detector",
+                    name=validate_name(rig, "harp_sniff_detector"),
                     harp_device_type=devices.HarpDeviceType.SNIFFDETECTOR,
                     is_clock_generator=False,
                 )
@@ -385,7 +396,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         if rig.harp_environment_sensor is not None:
             _components.append(
                 devices.HarpDevice(
-                    name=rig.harp_environment_sensor.name or "harp_environment_sensor",
+                    name=validate_name(rig, "harp_environment_sensor"),
                     harp_device_type=devices.HarpDeviceType.ENVIRONMENTSENSOR,
                     is_clock_generator=False,
                 )
@@ -490,7 +501,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
             model="328-300-00",
             travel=Decimal("30"),
             travel_unit=units.SizeUnit.CM,
-            notes="This stage is driven by the HarpStepperDriver device.",
+            notes="This stage is driven by the manipulator device.",
         )
 
         return devices.LickSpoutAssembly(
@@ -695,3 +706,10 @@ def _get_olfactometer_channel(
         channel_type=ch_type_to_ch_type[ch.channel_type],
         flow_capacity=ch.flow_rate_capacity,
     )
+
+
+def validate_name(obj: object, name: str) -> str:
+    if hasattr(obj, name):
+        return name
+    else:
+        raise ValueError(f"Model {obj.__class__.__name__} does not contain a field {name}.")

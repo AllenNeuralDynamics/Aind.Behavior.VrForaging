@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import List, Optional, Union, cast, get_args
 
 import aind_behavior_services.rig as AbsRig
 import git
@@ -114,6 +114,16 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         calibrations += _get_water_calibration(self.rig_model)
         return calibrations
 
+    @staticmethod
+    def _include_device(device: AbsRig.Device) -> bool:
+        if isinstance(device, AbsRig.visual_stimulation.Screen):
+            return False
+        if isinstance(device, AbsRig.cameras.CameraController):
+            return False
+        if isinstance(device, get_args(AbsRig.cameras.CameraTypes)):
+            return cast(AbsRig.cameras.CameraTypes, device).video_writer is not None
+        return True
+
     def _get_data_streams(self) -> List[acquisition.DataStream]:
         assert self.session_end_time is not None, "Session end time is not set."
 
@@ -121,16 +131,19 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         if len(self._get_cameras_config()) > 0:
             modalities.append(getattr(Modality, "BEHAVIOR_VIDEOS"))
         modalities = list(set(modalities))
+
+        active_devices = [
+            _device[0]
+            for _device in get_fields_of_type(self.rig_model, AbsRig.Device, stop_recursion_on_type=False)
+            if _device[0] is not None and self._include_device(_device[1])
+        ]
+
         data_streams: list[acquisition.DataStream] = [
             acquisition.DataStream(
                 stream_start_time=self.session_model.date,
                 stream_end_time=self.session_end_time,
                 code=[self._get_bonsai_as_code(), self._get_python_as_code()],
-                active_devices=[
-                    _device[0]
-                    for _device in get_fields_of_type(self.rig_model, AbsRig.Device, stop_recursion_on_type=False)
-                    if _device[0] is not None
-                ],
+                active_devices=active_devices,
                 modalities=modalities,
                 configurations=self._get_cameras_config(),
                 notes=self.session_model.notes,
