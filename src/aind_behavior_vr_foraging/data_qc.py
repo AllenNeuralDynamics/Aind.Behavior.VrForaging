@@ -285,11 +285,19 @@ class DataQcCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
         description="Path to the session data directory."
     )
     version: str = pydantic.Field(default=__semver__, description="Version of the dataset.")
+    report_path: Path | None = pydantic.Field(
+        default=None, description="Path to save the Html QC report. If not provided, report is not saved."
+    )
 
     def cli_cmd(self):
         vr_dataset = dataset(Path(self.data_path), self.version)
         runner = make_qc_runner(vr_dataset)
-        runner.run_all_with_progress()
+        results = runner.run_all_with_progress()
+        if report_path := self.report_path:
+            from contraqctor.qc.reporters import HtmlReporter
+
+            reporter = HtmlReporter(output_path=report_path)
+            reporter.report_results(results, serialize_context_exportable_obj=True)
 
 
 if __name__ == "__main__":
