@@ -954,7 +954,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.3";
+            _aindBehaviorServicesPkgVersion = "0.12.5";
             _version = "0.6.2-rc3";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
