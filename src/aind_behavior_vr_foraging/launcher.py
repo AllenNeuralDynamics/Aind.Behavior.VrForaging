@@ -129,7 +129,6 @@ async def experiment(launcher: Launcher) -> None:
     is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
     if not is_transfer:
         logger.info("Data transfer skipped by user.")
-        launcher.copy_logs()
         return
 
     launcher.copy_logs()
