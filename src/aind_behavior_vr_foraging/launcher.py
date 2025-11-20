@@ -168,7 +168,7 @@ def calculate_consumed_water(session_path: os.PathLike) -> Optional[float]:
     """
     from aind_behavior_vr_foraging.data_contract import dataset
 
-    return dataset(session_path)["Behavior"]["SoftwareEvents"]["GiveReward"].load()["data"].sum()
+    return dataset(session_path)["Behavior"]["SoftwareEvents"]["GiveReward"].load()["data"].sum() * 1e-3
 
 
 class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
