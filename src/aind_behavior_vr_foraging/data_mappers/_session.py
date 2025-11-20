@@ -36,6 +36,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         repository: Union[os.PathLike, git.Repo] = Path("."),
         session_end_time: Optional[datetime.datetime] = None,
         curriculum_suggestion: Optional[CurriculumSuggestion] = None,
+        water_consumed_ml: Optional[float] = None,
     ):
         self.session_model = session
         self.rig_model = rig
@@ -47,6 +48,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self._session_end_time = session_end_time
         self._mapped: Optional[acquisition.Acquisition] = None
         self.curriculum = curriculum_suggestion
+        self._water_consumed_ml = water_consumed_ml
 
     @property
     def session_end_time(self) -> datetime.datetime:
@@ -107,7 +109,11 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.mapped.write_standard_file(Path(directory))
 
     def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
-        return acquisition.AcquisitionSubjectDetails(mouse_platform_name=TrackedDevices.WHEEL)
+        return acquisition.AcquisitionSubjectDetails(
+            mouse_platform_name=TrackedDevices.WHEEL,
+            reward_consumed_total=self._water_consumed_ml,
+            reward_consumed_unit=units.VolumeUnit.ML,
+        )
 
     def _get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
         calibrations = []
