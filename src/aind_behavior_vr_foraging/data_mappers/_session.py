@@ -33,7 +33,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self,
         data_path: os.PathLike,
         repo_path: os.PathLike,
-        curriculum_suggestion_path: Optional[os.PathLike] = None,
+        curriculum_suggestion: Optional[os.PathLike] | CurriculumSuggestion = None,
         session_end_time: Optional[AwareDatetime] = None,
     ):
         self._data_path = data_path
@@ -45,8 +45,11 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.rig_model = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
         self.task_logic_model = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
 
-        if curriculum_suggestion_path is not None:
-            curriculum_suggestion = model_from_json_file(Path(curriculum_suggestion_path), CurriculumSuggestion)
+        if curriculum_suggestion is not None:
+            if isinstance(curriculum_suggestion, CurriculumSuggestion):
+                pass
+            else:
+                curriculum_suggestion = model_from_json_file(Path(curriculum_suggestion), CurriculumSuggestion)
         else:
             try:
                 curriculum_suggestion = model_from_json_file(

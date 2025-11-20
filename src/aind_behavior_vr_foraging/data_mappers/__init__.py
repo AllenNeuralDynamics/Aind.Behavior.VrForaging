@@ -2,15 +2,6 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services.utils import model_from_json_file
-from clabe.apps import BonsaiApp, CurriculumSuggestion
-from git import Repo
-
-from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
-
 from ._rig import AindRigDataMapper
 from ._session import AindSessionDataMapper
 

@@ -18,7 +18,6 @@ from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
-import aind_behavior_vr_foraging.data_contract.utils
 from aind_behavior_vr_foraging import data_contract
 from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -96,25 +95,15 @@ async def experiment(launcher: Launcher) -> None:
         # Push updated trainer state back to the database
         picker.push_new_suggestion(suggestion.trainer_state)
 
-    try:
-        total_water_consumed = aind_behavior_vr_foraging.data_contract.utils.calculate_consumed_water(
-            launcher.session_directory
-        )
-    except Exception as e:
-        logger.warning(f"Could not calculate consumed water: {e}")
-        total_water_consumed = None
-
     # Mappers
+    assert launcher.repository.working_tree_dir is not None
     ads_session = AindSessionDataMapper(
-        rig=rig,
-        session=session,
-        task_logic=task_logic,
+        data_path=launcher.session_directory,
+        repo_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
         curriculum_suggestion=suggestion,
-        bonsai_app=bonsai_app,
-        water_consumed_ml=total_water_consumed,
     ).map()
     ads_session.write_standard_file(launcher.session_directory)
-    ads_rig = AindRigDataMapper(rig=rig).map()
+    ads_rig = AindRigDataMapper(data_path=launcher.session_directory).map()
     ads_rig.write_standard_file(launcher.session_directory)
 
     # Run data qc
