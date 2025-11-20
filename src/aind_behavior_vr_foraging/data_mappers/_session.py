@@ -210,9 +210,9 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         _stim_code = self._get_bonsai_as_code()
         _stim_code.parameters = acquisition.GenericModel.model_validate(
             {
-                "task_logic": self.task_logic_model.model_dump(),
-                "rig": self.rig_model.model_dump(),
-                "session": self.session_model.model_dump(),
+                "task_logic": "./Behavior/Logs/tasklogic_input.json",
+                "rig": "./Behavior/Logs/rig_input.json",
+                "session": "./Behavior/Logs/session_input.json",
             }
         )
 
