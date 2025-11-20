@@ -1,7 +1,6 @@
 import logging
-import os
 from pathlib import Path
-from typing import Any, Optional, cast
+from typing import Any, cast
 
 from aind_behavior_services.calibration.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import AindBehaviorSessionModel
@@ -19,10 +18,11 @@ from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
-from . import data_contract
-from .data_mappers import AindRigDataMapper, AindSessionDataMapper
-from .rig import AindVrForagingRig
-from .task_logic import AindVrForagingTaskLogic
+import aind_behavior_vr_foraging.data_contract.utils
+from aind_behavior_vr_foraging import data_contract
+from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +97,9 @@ async def experiment(launcher: Launcher) -> None:
         picker.push_new_suggestion(suggestion.trainer_state)
 
     try:
-        total_water_consumed = calculate_consumed_water(launcher.session_directory)
+        total_water_consumed = aind_behavior_vr_foraging.data_contract.utils.calculate_consumed_water(
+            launcher.session_directory
+        )
     except Exception as e:
         logger.warning(f"Could not calculate consumed water: {e}")
         total_water_consumed = None
@@ -155,29 +157,6 @@ def _dump_suggestion(suggestion: CurriculumSuggestion, session_directory: Path) 
     logger.info(f"Dumping curriculum suggestion to: {session_directory / 'Behavior' / 'Logs' / 'suggestion.json'}")
     with open(session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
         f.write(suggestion.model_dump_json(indent=2))
-
-
-def calculate_consumed_water(session_path: os.PathLike) -> Optional[float]:
-    """Calculate the total volume of water consumed during a session.
-
-    Args:
-        session_path (os.PathLike): Path to the session directory.
-
-    Returns:
-        Optional[float]: Total volume of water consumed in milliliters, or None if unavailable.
-    """
-    from aind_behavior_vr_foraging.data_contract import dataset
-
-    reward = dataset(session_path)["Behavior"]["SoftwareEvents"]["GiveReward"].load()
-    extra = dataset(session_path)["Behavior"]["SoftwareEvents"]["ForceGiveReward "].load()
-    total = 0
-    if reward.has_data is False and extra.has_data is False:
-        return None
-    if reward.has_data:
-        total += reward.data["data"].sum() * 1e-3
-    if extra.has_data:
-        total += extra.data["data"].sum() * 1e-3
-    return total
 
 
 class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
