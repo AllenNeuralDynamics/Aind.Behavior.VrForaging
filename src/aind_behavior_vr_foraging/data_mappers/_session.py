@@ -121,8 +121,8 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
         return aind_data_schema_session
 
-    def write_standard_file(self, directory: os.PathLike) -> None:
-        self.mapped.write_standard_file(Path(directory))
+    def write_standard_file(self) -> None:
+        self.mapped.write_standard_file(Path(self._data_path))
 
     def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
         return acquisition.AcquisitionSubjectDetails(

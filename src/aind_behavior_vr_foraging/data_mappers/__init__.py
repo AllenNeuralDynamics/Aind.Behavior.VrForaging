@@ -22,35 +22,14 @@ if TYPE_CHECKING:
 
 def cli_cmd(cli_settings: "DataMapperCli"):
     """Generate aind-data-schema metadata for the VR Foraging dataset located at the specified path."""
-    logger.info("Mapping metadata directly from dataset.")
-    abs_schemas_path = Path(cli_settings.data_path) / "Behavior" / "Logs"
-    session = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
-    rig = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
-    task_logic = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
-
-    if cli_settings.curriculum_suggestion is not None:
-        curriculum_suggestion = model_from_json_file(Path(cli_settings.curriculum_suggestion), CurriculumSuggestion)
-    else:
-        curriculum_suggestion = None
-
-    repo = Repo(cli_settings.repo_path)
-    settings = BonsaiApp(
-        workflow=Path(repo.working_dir) / "src" / "main.bonsai",
-        executable=Path(repo.working_dir) / "bonsai/bonsai.exe",
-    )
-
     session_mapped = AindSessionDataMapper(
-        session=session,
-        rig=rig,
-        task_logic=task_logic,
-        repository=repo,
-        bonsai_app=settings,
-        curriculum_suggestion=curriculum_suggestion,
-        water_consumed_ml=calculate_consumed_water(cli_settings.data_path),
+        data_path=Path(cli_settings.data_path),
+        repo_path=Path(cli_settings.repo_path),
+        session_end_time=cli_settings.session_end_time,
     ).map()
-    rig_mapped = AindRigDataMapper(rig=rig).map()
 
-    assert session.session_name is not None
+    rig_mapped = AindRigDataMapper(data_path=Path(cli_settings.data_path)).map()
+
     assert session_mapped is not None
 
     session_mapped.instrument_id = rig_mapped.instrument_id
