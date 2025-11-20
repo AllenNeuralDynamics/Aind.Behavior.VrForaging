@@ -2,7 +2,7 @@ import os
 import typing as t
 from pathlib import Path
 
-from pydantic import Field, RootModel
+from pydantic import AwareDatetime, Field, RootModel
 from pydantic_settings import BaseSettings, CliApp, CliPositionalArg, CliSubCommand
 
 from aind_behavior_vr_foraging import __semver__, regenerate
@@ -16,6 +16,10 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
     )
     curriculum_suggestion: t.Optional[os.PathLike] = Field(
         default=None, description="Path to curriculum suggestion file."
+    )
+    session_end_time: AwareDatetime | None = Field(
+        default=None,
+        description="End time of the session in ISO format. If not provided, will use the time the data mapping is run.",
     )
 
     def cli_cmd(self):
