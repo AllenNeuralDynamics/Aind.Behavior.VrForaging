@@ -1,13 +1,13 @@
+import json
 import sys
+import tempfile
 import unittest
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 from aind_data_schema.core import acquisition, instrument
 from aind_data_schema.utils import compatibility_check
-from clabe.apps import BonsaiApp
-from git import Repo
 
 from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
 
@@ -19,24 +19,37 @@ from examples.task_patch_foraging import task_logic
 
 class TestAindSessionDataMapper(unittest.TestCase):
     def setUp(self):
-        self.session = session
-        self.rig = rig
-        self.task_logic = task_logic
-        self.repository = Repo(Path("./"))
-        self.bonsai_app = BonsaiApp(workflow=Path("./src/main.bonsai"))
-        self.session_end_time = datetime.now()
-        self.session_directory = None
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.data_path = Path(self.temp_dir.name)
+
+        logs_dir = self.data_path / "Behavior" / "Logs"
+        logs_dir.mkdir(parents=True, exist_ok=True)
+
+        session_input_path = logs_dir / "session_input.json"
+        with open(session_input_path, "w", encoding="utf-8") as f:
+            json.dump(session.model_dump(mode="json"), f, indent=2)
+
+        rig_input_path = logs_dir / "rig_input.json"
+        with open(rig_input_path, "w", encoding="utf-8") as f:
+            json.dump(rig.model_dump(mode="json"), f, indent=2)
+
+        tasklogic_input_path = logs_dir / "tasklogic_input.json"
+        with open(tasklogic_input_path, "w", encoding="utf-8") as f:
+            json.dump(task_logic.model_dump(mode="json"), f, indent=2)
+
+        self.repo_path = Path("./")
+        self.session_end_time = datetime(2023, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
 
         self.mapper = AindSessionDataMapper(
-            session=self.session,
-            rig=self.rig,
-            task_logic=self.task_logic,
-            repository=self.repository,
-            bonsai_app=self.bonsai_app,
+            data_path=self.data_path,
+            repo_path=self.repo_path,
             session_end_time=self.session_end_time,
         )
 
-    @patch("aind_behavior_vr_foraging.data_mappers.AindSessionDataMapper._map")
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    @patch("aind_behavior_vr_foraging.data_mappers._session.AindSessionDataMapper._map")
     def test_mock_map(self, mock_map):
         mock_map.return_value = MagicMock()
         result = self.mapper.map()
@@ -60,7 +73,7 @@ class TestAindRigDataMapper(unittest.TestCase):
             rig=self.rig,
         )
 
-    @patch("aind_behavior_vr_foraging.data_mappers.AindRigDataMapper._map")
+    @patch("aind_behavior_vr_foraging.data_mappers._rig.AindRigDataMapper._map")
     def test_mock_map(self, mock_map):
         mock_map.return_value = MagicMock()
         result = self.mapper.map()
@@ -79,22 +92,36 @@ class TestAindRigDataMapper(unittest.TestCase):
 
 class TestInstrumentAcquisitionCompatibility(unittest.TestCase):
     def setUp(self):
-        self.rig = rig
-        self.session = session
-        self.task_logic = task_logic
-        self.rig_mapper = AindRigDataMapper(
-            rig=self.rig,
-        )
-        self.bonsai_app_settings = BonsaiApp(workflow=Path("./src/main.bonsai"))
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.data_path = Path(self.temp_dir.name)
+
+        logs_dir = self.data_path / "Behavior" / "Logs"
+        logs_dir.mkdir(parents=True, exist_ok=True)
+
+        session_input_path = logs_dir / "session_input.json"
+        with open(session_input_path, "w", encoding="utf-8") as f:
+            json.dump(session.model_dump(mode="json"), f, indent=2)
+
+        rig_input_path = logs_dir / "rig_input.json"
+        with open(rig_input_path, "w", encoding="utf-8") as f:
+            json.dump(rig.model_dump(mode="json"), f, indent=2)
+
+        tasklogic_input_path = logs_dir / "tasklogic_input.json"
+        with open(tasklogic_input_path, "w", encoding="utf-8") as f:
+            json.dump(task_logic.model_dump(mode="json"), f, indent=2)
+
+        self.repo_path = Path("./")
+
+        self.rig_mapper = AindRigDataMapper(rig=rig)
 
         self.session_mapper = AindSessionDataMapper(
-            session=self.session,
-            rig=self.rig,
-            task_logic=self.task_logic,
-            repository=Repo(Path("./")),
-            bonsai_app=self.bonsai_app_settings,
-            session_end_time=datetime.now(),
+            data_path=self.data_path,
+            repo_path=self.repo_path,
+            session_end_time=datetime(2023, 1, 1, 12, 0, 0, tzinfo=timezone.utc),
         )
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
 
     def test_compatibility(self):
         session_mapped = self.session_mapper.map()

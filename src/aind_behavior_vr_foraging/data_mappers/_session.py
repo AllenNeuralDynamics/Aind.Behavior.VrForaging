@@ -3,13 +3,13 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import List, Optional, Union, cast, get_args
+from typing import List, Optional, cast, get_args
 
 import aind_behavior_services.rig as AbsRig
 import git
 import pydantic
 from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services.utils import get_fields_of_type, utcnow
+from aind_behavior_services.utils import get_fields_of_type, model_from_json_file, utcnow
 from aind_data_schema.components import configs
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
@@ -17,7 +17,9 @@ from aind_data_schema_models.modalities import Modality
 from clabe.apps import BonsaiApp, CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
+from pydantic import AwareDatetime
 
+from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
@@ -29,26 +31,40 @@ logger = logging.getLogger(__name__)
 class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
         self,
-        session: AindBehaviorSessionModel,
-        rig: AindVrForagingRig,
-        task_logic: AindVrForagingTaskLogic,
-        bonsai_app: Optional[BonsaiApp] = None,
-        repository: Union[os.PathLike, git.Repo] = Path("."),
-        session_end_time: Optional[datetime.datetime] = None,
-        curriculum_suggestion: Optional[CurriculumSuggestion] = None,
-        water_consumed_ml: Optional[float] = None,
+        data_path: os.PathLike,
+        repo_path: os.PathLike,
+        curriculum_suggestion_path: Optional[os.PathLike] = None,
+        session_end_time: Optional[AwareDatetime] = None,
     ):
-        self.session_model = session
-        self.rig_model = rig
-        self.task_logic_model = task_logic
-        self.repository = repository
-        if isinstance(self.repository, os.PathLike | str):
-            self.repository = git.Repo(Path(self.repository))
-        self.bonsai_app = bonsai_app if bonsai_app is not None else BonsaiApp(workflow=Path("./src/main.bonsai"))
+        self._data_path = data_path
+        self._repo_path = repo_path
         self._session_end_time = session_end_time
-        self._mapped: Optional[acquisition.Acquisition] = None
+
+        abs_schemas_path = Path(self._data_path) / "Behavior" / "Logs"
+        self.session_model = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
+        self.rig_model = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
+        self.task_logic_model = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
+
+        if curriculum_suggestion_path is not None:
+            curriculum_suggestion = model_from_json_file(Path(curriculum_suggestion_path), CurriculumSuggestion)
+        else:
+            try:
+                curriculum_suggestion = model_from_json_file(
+                    Path(self._data_path) / "Behavior" / "Logs" / "curriculum_suggestion.json",
+                    CurriculumSuggestion,
+                )
+            except FileNotFoundError:
+                logger.warning("Curriculum suggestion file not found. Proceeding without it.")
+                curriculum_suggestion = None
         self.curriculum = curriculum_suggestion
-        self._water_consumed_ml = water_consumed_ml
+        self.repository = git.Repo(self._repo_path)
+        assert self.repository.working_tree_dir is not None
+        self.bonsai_app = BonsaiApp(
+            executable=Path(self.repository.working_tree_dir) / "bonsai" / "bonsai.exe",
+            workflow=Path(self.repository.working_tree_dir) / "src" / "main.bonsai",
+        )
+
+        self._mapped: Optional[acquisition.Acquisition] = None
 
     @property
     def session_end_time(self) -> datetime.datetime:
@@ -111,7 +127,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
         return acquisition.AcquisitionSubjectDetails(
             mouse_platform_name=TrackedDevices.WHEEL,
-            reward_consumed_total=self._water_consumed_ml,
+            reward_consumed_total=calculate_consumed_water(self._data_path),
             reward_consumed_unit=units.VolumeUnit.ML,
         )
 
