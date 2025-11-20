@@ -10,6 +10,7 @@ from git import Repo
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
+from ..launcher import calculate_consumed_water
 from ._rig import AindRigDataMapper
 from ._session import AindSessionDataMapper
 
@@ -45,6 +46,7 @@ def cli_cmd(cli_settings: "DataMapperCli"):
         repository=repo,
         bonsai_app=settings,
         curriculum_suggestion=curriculum_suggestion,
+        water_consumed_ml=calculate_consumed_water(cli_settings.data_path),
     ).map()
     rig_mapped = AindRigDataMapper(rig=rig).map()
 
