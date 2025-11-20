@@ -14,7 +14,7 @@ def calculate_consumed_water(session_path: os.PathLike) -> Optional[float]:
     from aind_behavior_vr_foraging.data_contract import dataset
 
     reward = dataset(session_path)["Behavior"]["SoftwareEvents"]["GiveReward"].load()
-    extra = dataset(session_path)["Behavior"]["SoftwareEvents"]["ForceGiveReward "].load()
+    extra = dataset(session_path)["Behavior"]["SoftwareEvents"]["ForceGiveReward"].load()
     total = 0
     if reward.has_data is False and extra.has_data is False:
         return None
