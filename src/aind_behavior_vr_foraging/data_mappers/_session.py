@@ -117,7 +117,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             acquisition_start_time=self.session_model.date,
             experimenters=self.session_model.experimenter,
             acquisition_type=self.session_model.experiment or self.task_logic_model.name,
-            coordinate_system=_make_origin_coordinate_system(),
+            coordinate_system=None,
             data_streams=self._get_data_streams(),
             calibrations=self._get_calibrations(),
             stimulus_epochs=self._get_stimulus_epochs(),
