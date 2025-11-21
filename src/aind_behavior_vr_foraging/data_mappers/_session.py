@@ -23,7 +23,7 @@ from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_wat
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
-from ._utils import TrackedDevices, _get_water_calibration, _make_origin_coordinate_system
+from ._utils import TrackedDevices, _get_water_calibration
 
 logger = logging.getLogger(__name__)
 
