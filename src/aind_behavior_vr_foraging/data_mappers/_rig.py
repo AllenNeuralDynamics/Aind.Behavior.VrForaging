@@ -39,7 +39,7 @@ class _DeviceNode:
         raise ValueError(f"Device {name} not found in spawned devices of {self.device_name}")
 
 
-class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
+class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
     def __init__(
         self,
         data_path: os.PathLike,
@@ -56,7 +56,7 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
         raise NotImplementedError("Method not implemented.")
 
     def write_standard_file(self) -> None:
-        self.mapped.write_standard_file(self._data_path)
+        self.mapped.write_standard_file(self._data_path, filename_suffix="vrforaging")
 
     def map(self) -> instrument.Instrument:
         logger.info("Mapping aind-data-schema Rig.")
