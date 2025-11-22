@@ -24,17 +24,17 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
 
     def cli_cmd(self):
         """Generate aind-data-schema metadata for the VR Foraging dataset located at the specified path."""
-        from ._rig import AindRigDataMapper
-        from ._session import AindSessionDataMapper
+        from ._rig import AindInstrumentDataMapper
+        from ._session import AindAcquisitionDataMapper
 
-        session_mapper = AindSessionDataMapper(
+        session_mapper = AindAcquisitionDataMapper(
             data_path=Path(self.data_path),
             repo_path=Path(self.repo_path),
             session_end_time=self.session_end_time,
         )
         session_mapper.map()
 
-        rig_mapper = AindRigDataMapper(data_path=Path(self.data_path))
+        rig_mapper = AindInstrumentDataMapper(data_path=Path(self.data_path))
         rig_mapper.map()
 
         assert session_mapper.mapped is not None
