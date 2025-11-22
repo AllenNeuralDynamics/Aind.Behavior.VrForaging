@@ -1,44 +1,12 @@
-import os
 import typing as t
-from pathlib import Path
 
-from pydantic import AwareDatetime, Field, RootModel
-from pydantic_settings import BaseSettings, CliApp, CliPositionalArg, CliSubCommand
+from pydantic import Field, RootModel
+from pydantic_settings import BaseSettings, CliApp, CliSubCommand
 
 from aind_behavior_vr_foraging import __semver__, regenerate
+from aind_behavior_vr_foraging.data_mappers import DataMapperCli
+from aind_behavior_vr_foraging.data_qc import DataQcCli
 from aind_behavior_vr_foraging.launcher import ClabeCli
-
-
-class DataMapperCli(BaseSettings, cli_kebab_case=True):
-    data_path: os.PathLike = Field(description="Path to the session data directory.")
-    repo_path: os.PathLike = Field(
-        default=Path("."), description="Path to the repository. By default it will use the current directory."
-    )
-    curriculum_suggestion: t.Optional[os.PathLike] = Field(
-        default=None, description="Path to curriculum suggestion file."
-    )
-    session_end_time: AwareDatetime | None = Field(
-        default=None,
-        description="End time of the session in ISO format. If not provided, will use the time the data mapping is run.",
-    )
-
-    def cli_cmd(self):
-        from aind_behavior_vr_foraging.data_mappers import cli_cmd
-
-        return cli_cmd(self)
-
-
-class DataQcCli(BaseSettings, cli_kebab_case=True):
-    data_path: CliPositionalArg[os.PathLike] = Field(description="Path to the session data directory.")
-    version: str = Field(default=__semver__, description="Version of the dataset.")
-    report_path: Path | None = Field(
-        default=None, description="Path to save the Html QC report. If not provided, report is not saved."
-    )
-
-    def cli_cmd(self):
-        from aind_behavior_vr_foraging.data_qc import cli_cmd
-
-        return cli_cmd(self)
 
 
 class VersionCli(RootModel):
