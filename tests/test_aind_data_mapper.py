@@ -91,7 +91,7 @@ class TestAindDataMappers(unittest.TestCase):
         assert rig_mapped is not None
         compatibility_check.InstrumentAcquisitionCompatibility(
             instrument=rig_mapped, acquisition=session_mapped
-        ).run_compatibility_check()
+        ).run_compatibility_check(raise_for_missing_devices=True)
 
     def test_mapper_cli(self):
         DataMapperCli(
@@ -99,8 +99,8 @@ class TestAindDataMappers(unittest.TestCase):
             repo_path=self.repo_path,
             session_end_time=self.session_end_time,
         ).cli_cmd()
-        instrument_path = self.data_path / "instrument.json"
-        acquisition_path = self.data_path / "acquisition.json"
+        instrument_path = self.data_path / "instrument_vrforaging.json"
+        acquisition_path = self.data_path / "acquisition_vrforaging.json"
 
         self.assertTrue(instrument_path.exists())
         self.assertTrue(acquisition_path.exists())
