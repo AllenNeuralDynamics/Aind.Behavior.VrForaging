@@ -77,6 +77,7 @@ launcher = [
 [package.dev-dependencies]
 dev = [
     { name = "aind-behavior-vr-foraging", extra = ["data", "launcher"] },
+    { name = "aind-data-schema" },
     { name = "codespell" },
     { name = "ruff" },
 ]
@@ -105,6 +106,7 @@ provides-extras = ["data", "launcher"]
 dev = [
     { name = "aind-behavior-vr-foraging", extras = ["data"] },
     { name = "aind-behavior-vr-foraging", extras = ["launcher"] },
+    { name = "aind-data-schema", git = "https://github.com/AllenNeuralDynamics/aind-data-schema?rev=dev" },
     { name = "codespell" },
     { name = "ruff" },
 ]
@@ -154,15 +156,11 @@ aind-services = [
 [[package]]
 name = "aind-data-schema"
 version = "2.1.0"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/AllenNeuralDynamics/aind-data-schema?rev=dev#003150c17dda01e30ad1c087f68d4fa56abd342f" }
 dependencies = [
     { name = "aind-data-schema-models" },
     { name = "pydantic" },
     { name = "semver" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9a/93/a283d16a6ffb59f9cd558edcb0fcea5b1099d81921c3ac167a43cc3c4f3d/aind_data_schema-2.1.0.tar.gz", hash = "sha256:899d1a209211c742ece04c9506500983f0a8ffc7e0911f0e82e4d9501f50134e", size = 750414, upload-time = "2025-10-20T18:30:42.133Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/86/1c/40593876feb8cb106ca45b9d25a708abf68db544358286abfd950074a109/aind_data_schema-2.1.0-py3-none-any.whl", hash = "sha256:0b59880cc3c22f703b2f8f99249d178cd177b2ab6fd2cb115e37251606404957", size = 86103, upload-time = "2025-10-20T18:30:40.413Z" },
 ]
 
 [[package]]
