@@ -39,7 +39,7 @@ class _DeviceNode:
         raise ValueError(f"Device {name} not found in spawned devices of {self.device_name}")
 
 
-class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
+class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
     def __init__(
         self,
         data_path: os.PathLike,

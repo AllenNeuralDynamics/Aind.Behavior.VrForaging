@@ -28,7 +28,7 @@ from ._utils import TrackedDevices, _get_water_calibration
 logger = logging.getLogger(__name__)
 
 
-class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
+class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
         self,
         data_path: os.PathLike,
