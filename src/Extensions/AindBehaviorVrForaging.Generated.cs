@@ -13795,7 +13795,7 @@ namespace AindVrForagingDataSchema
     
         private OdorSpecification _odorSpecification;
     
-        private RewardSpecification _rewardSpecification;
+        private VirtualSiteRewardSpecification _rewardSpecification;
     
         private RenderSpecification _renderSpecification;
     
@@ -13915,7 +13915,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("reward_specification")]
         [System.ComponentModel.DescriptionAttribute("The optional reward specification of the virtual site")]
-        public RewardSpecification RewardSpecification
+        public VirtualSiteRewardSpecification RewardSpecification
         {
             get
             {
@@ -14173,6 +14173,108 @@ namespace AindVrForagingDataSchema
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="InterSite")]
         InterSite = 4,
+    }
+
+
+    /// <summary>
+    /// THIS CLASS IS NOT MEANT TO BE DIRECTLY INSTANTIATED.
+    ///Specifies reward parameters and behavior for a virtual site.
+    ///
+    ///Note: This class is primarily used internally for runtime site generation
+    ///and is not meant to be directly instantiated in task configuration DSL.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute(@"THIS CLASS IS NOT MEANT TO BE DIRECTLY INSTANTIATED.
+    Specifies reward parameters and behavior for a virtual site.
+
+    Note: This class is primarily used internally for runtime site generation
+    and is not meant to be directly instantiated in task configuration DSL.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class VirtualSiteRewardSpecification
+    {
+    
+        private OperantLogic _operantLogic;
+    
+        private Distribution _delay;
+    
+        public VirtualSiteRewardSpecification()
+        {
+            _operantLogic = new OperantLogic();
+            _delay = new Distribution();
+        }
+    
+        protected VirtualSiteRewardSpecification(VirtualSiteRewardSpecification other)
+        {
+            _operantLogic = other._operantLogic;
+            _delay = other._delay;
+        }
+    
+        /// <summary>
+        /// The optional operant logic of the reward
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("operant_logic", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The optional operant logic of the reward")]
+        public OperantLogic OperantLogic
+        {
+            get
+            {
+                return _operantLogic;
+            }
+            set
+            {
+                _operantLogic = value;
+            }
+        }
+    
+        /// <summary>
+        /// The optional distribution where the delay to reward will be drawn from
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("delay")]
+        [System.ComponentModel.DescriptionAttribute("The optional distribution where the delay to reward will be drawn from")]
+        public Distribution Delay
+        {
+            get
+            {
+                return _delay;
+            }
+            set
+            {
+                _delay = value;
+            }
+        }
+    
+        public System.IObservable<VirtualSiteRewardSpecification> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VirtualSiteRewardSpecification(this)));
+        }
+    
+        public System.IObservable<VirtualSiteRewardSpecification> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new VirtualSiteRewardSpecification(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("OperantLogic = " + _operantLogic + ", ");
+            stringBuilder.Append("Delay = " + _delay);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
     }
 
 
@@ -17138,6 +17240,11 @@ namespace AindVrForagingDataSchema
             return Process<VirtualSiteGenerator>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<VirtualSiteRewardSpecification> source)
+        {
+            return Process<VirtualSiteRewardSpecification>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<VisualCorridor> source)
         {
             return Process<VisualCorridor>(source);
@@ -17346,6 +17453,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteGenerator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VirtualSiteRewardSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VisualCorridor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibration>))]
