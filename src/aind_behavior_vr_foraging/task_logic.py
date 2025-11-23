@@ -622,6 +622,23 @@ class PatchVirtualSitesGenerator(BaseModel):
     )
 
 
+class VirtualSiteRewardSpecification(BaseModel):
+    """
+    THIS CLASS IS NOT MEANT TO BE DIRECTLY INSTANTIATED.
+    Specifies reward parameters and behavior for a virtual site.
+
+    Note: This class is primarily used internally for runtime site generation
+    and is not meant to be directly instantiated in task configuration DSL.
+    """
+
+    operant_logic: OperantLogic = Field(description="The optional operant logic of the reward")
+    delay: distributions.Distribution = Field(
+        default=scalar_value(0),
+        description="The optional distribution where the delay to reward will be drawn from",
+        validate_default=True,
+    )
+
+
 class VirtualSite(BaseModel):
     """
     THIS CLASS IS NOT MEANT TO BE DIRECTLY INSTANTIATED.
@@ -642,7 +659,7 @@ class VirtualSite(BaseModel):
     odor_specification: Optional[OdorSpecification] = Field(
         default=None, description="The optional odor specification of the virtual site"
     )
-    reward_specification: Optional[RewardSpecification] = Field(
+    reward_specification: Optional[VirtualSiteRewardSpecification] = Field(
         default=None, description="The optional reward specification of the virtual site"
     )
     render_specification: RenderSpecification = Field(
