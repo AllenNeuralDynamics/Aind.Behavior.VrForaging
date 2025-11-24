@@ -84,7 +84,7 @@ async def experiment(launcher: Launcher) -> None:
     ):
         trainer = CurriculumApp(
             settings=CurriculumSettings(
-                input_trainer_state=input_trainer_state_path, data_directory=launcher.session_directory
+                input_trainer_state=input_trainer_state_path.resolve(), data_directory=launcher.session_directory
             )
         )
         # Run the curriculum
