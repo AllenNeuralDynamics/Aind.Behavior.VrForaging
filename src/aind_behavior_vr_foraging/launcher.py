@@ -18,10 +18,10 @@ from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
-from . import data_contract
-from .data_mappers import AindRigDataMapper, AindSessionDataMapper
-from .rig import AindVrForagingRig
-from .task_logic import AindVrForagingTaskLogic
+from aind_behavior_vr_foraging import data_contract
+from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +84,7 @@ async def experiment(launcher: Launcher) -> None:
     ):
         trainer = CurriculumApp(
             settings=CurriculumSettings(
-                input_trainer_state=input_trainer_state_path, data_directory=launcher.session_directory
+                input_trainer_state=input_trainer_state_path.resolve(), data_directory=launcher.session_directory
             )
         )
         # Run the curriculum
@@ -96,15 +96,14 @@ async def experiment(launcher: Launcher) -> None:
         picker.push_new_suggestion(suggestion.trainer_state)
 
     # Mappers
+    assert launcher.repository.working_tree_dir is not None
     ads_session = AindSessionDataMapper(
-        rig=rig,
-        session=session,
-        task_logic=task_logic,
+        data_path=launcher.session_directory,
+        repo_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
         curriculum_suggestion=suggestion,
-        bonsai_app=bonsai_app,
     ).map()
     ads_session.write_standard_file(launcher.session_directory)
-    ads_rig = AindRigDataMapper(rig=rig).map()
+    ads_rig = AindRigDataMapper(data_path=launcher.session_directory).map()
     ads_rig.write_standard_file(launcher.session_directory)
 
     # Run data qc
@@ -114,7 +113,7 @@ async def experiment(launcher: Launcher) -> None:
 
             from contraqctor.qc.reporters import HtmlReporter
 
-            from .data_qc import make_qc_runner
+            from .data_qc.data_qc import make_qc_runner
 
             vr_dataset = data_contract.dataset(launcher.session_directory)
             runner = make_qc_runner(vr_dataset)
@@ -129,7 +128,6 @@ async def experiment(launcher: Launcher) -> None:
     is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
     if not is_transfer:
         logger.info("Data transfer skipped by user.")
-        launcher.copy_logs()
         return
 
     launcher.copy_logs()

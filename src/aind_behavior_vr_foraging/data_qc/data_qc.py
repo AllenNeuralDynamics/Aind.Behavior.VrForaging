@@ -1,17 +1,11 @@
-import os
 import typing as t
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import pydantic
-import pydantic_settings
 from contraqctor import contract, qc
 from contraqctor.contract.harp import HarpDevice
 from matplotlib import pyplot as plt
 
-from aind_behavior_vr_foraging import __semver__
-from aind_behavior_vr_foraging.data_contract import dataset
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
 
@@ -278,27 +272,3 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     _runner.add_suite(_rendering, "Rendering")
 
     return _runner
-
-
-class DataQcCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
-    data_path: pydantic_settings.CliPositionalArg[os.PathLike] = pydantic.Field(
-        description="Path to the session data directory."
-    )
-    version: str = pydantic.Field(default=__semver__, description="Version of the dataset.")
-    report_path: Path | None = pydantic.Field(
-        default=None, description="Path to save the Html QC report. If not provided, report is not saved."
-    )
-
-    def cli_cmd(self):
-        vr_dataset = dataset(Path(self.data_path), self.version)
-        runner = make_qc_runner(vr_dataset)
-        results = runner.run_all_with_progress()
-        if report_path := self.report_path:
-            from contraqctor.qc.reporters import HtmlReporter
-
-            reporter = HtmlReporter(output_path=report_path)
-            reporter.report_results(results, serialize_context_exportable_obj=True)
-
-
-if __name__ == "__main__":
-    cli = pydantic_settings.CliApp().run(DataQcCli)
