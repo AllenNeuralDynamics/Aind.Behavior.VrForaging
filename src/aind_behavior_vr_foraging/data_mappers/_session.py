@@ -3,13 +3,13 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import List, Optional, Union, cast, get_args
+from typing import List, Optional, cast, get_args
 
 import aind_behavior_services.rig as AbsRig
 import git
 import pydantic
 from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services.utils import get_fields_of_type, utcnow
+from aind_behavior_services.utils import get_fields_of_type, model_from_json_file, utcnow
 from aind_data_schema.components import configs
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
@@ -17,11 +17,13 @@ from aind_data_schema_models.modalities import Modality
 from clabe.apps import BonsaiApp, CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
+from pydantic import AwareDatetime
 
+from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
-from ._utils import TrackedDevices, _get_water_calibration, _make_origin_coordinate_system
+from ._utils import TrackedDevices, _get_water_calibration
 
 logger = logging.getLogger(__name__)
 
@@ -29,24 +31,43 @@ logger = logging.getLogger(__name__)
 class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
         self,
-        session: AindBehaviorSessionModel,
-        rig: AindVrForagingRig,
-        task_logic: AindVrForagingTaskLogic,
-        bonsai_app: Optional[BonsaiApp] = None,
-        repository: Union[os.PathLike, git.Repo] = Path("."),
-        session_end_time: Optional[datetime.datetime] = None,
-        curriculum_suggestion: Optional[CurriculumSuggestion] = None,
+        data_path: os.PathLike,
+        repo_path: os.PathLike,
+        curriculum_suggestion: Optional[os.PathLike] | CurriculumSuggestion = None,
+        session_end_time: Optional[AwareDatetime] = None,
     ):
-        self.session_model = session
-        self.rig_model = rig
-        self.task_logic_model = task_logic
-        self.repository = repository
-        if isinstance(self.repository, os.PathLike | str):
-            self.repository = git.Repo(Path(self.repository))
-        self.bonsai_app = bonsai_app if bonsai_app is not None else BonsaiApp(workflow=Path("./src/main.bonsai"))
+        self._data_path = data_path
+        self._repo_path = repo_path
         self._session_end_time = session_end_time
-        self._mapped: Optional[acquisition.Acquisition] = None
+
+        abs_schemas_path = Path(self._data_path) / "Behavior" / "Logs"
+        self.session_model = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
+        self.rig_model = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
+        self.task_logic_model = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
+
+        if curriculum_suggestion is not None:
+            if isinstance(curriculum_suggestion, CurriculumSuggestion):
+                pass
+            else:
+                curriculum_suggestion = model_from_json_file(Path(curriculum_suggestion), CurriculumSuggestion)
+        else:
+            try:
+                curriculum_suggestion = model_from_json_file(
+                    Path(self._data_path) / "Behavior" / "Logs" / "curriculum_suggestion.json",
+                    CurriculumSuggestion,
+                )
+            except FileNotFoundError:
+                logger.warning("Curriculum suggestion file not found. Proceeding without it.")
+                curriculum_suggestion = None
         self.curriculum = curriculum_suggestion
+        self.repository = git.Repo(self._repo_path)
+        assert self.repository.working_tree_dir is not None
+        self.bonsai_app = BonsaiApp(
+            executable=Path(self.repository.working_tree_dir) / "bonsai" / "bonsai.exe",
+            workflow=Path(self.repository.working_tree_dir) / "src" / "main.bonsai",
+        )
+
+        self._mapped: Optional[acquisition.Acquisition] = None
 
     @property
     def session_end_time(self) -> datetime.datetime:
@@ -96,18 +117,22 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             acquisition_start_time=self.session_model.date,
             experimenters=self.session_model.experimenter,
             acquisition_type=self.session_model.experiment or self.task_logic_model.name,
-            coordinate_system=_make_origin_coordinate_system(),
+            coordinate_system=None,
             data_streams=self._get_data_streams(),
             calibrations=self._get_calibrations(),
             stimulus_epochs=self._get_stimulus_epochs(),
         )
         return aind_data_schema_session
 
-    def write_standard_file(self, directory: os.PathLike) -> None:
-        self.mapped.write_standard_file(Path(directory))
+    def write_standard_file(self) -> None:
+        self.mapped.write_standard_file(Path(self._data_path))
 
     def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
-        return acquisition.AcquisitionSubjectDetails(mouse_platform_name=TrackedDevices.WHEEL)
+        return acquisition.AcquisitionSubjectDetails(
+            mouse_platform_name=TrackedDevices.WHEEL,
+            reward_consumed_total=calculate_consumed_water(self._data_path),
+            reward_consumed_unit=units.VolumeUnit.ML,
+        )
 
     def _get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
         calibrations = []
@@ -185,9 +210,9 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         _stim_code = self._get_bonsai_as_code()
         _stim_code.parameters = acquisition.GenericModel.model_validate(
             {
-                "task_logic": self.task_logic_model.model_dump(),
-                "rig": self.rig_model.model_dump(),
-                "session": self.session_model.model_dump(),
+                "task_logic": "./Behavior/Logs/tasklogic_input.json",
+                "rig": "./Behavior/Logs/rig_input.json",
+                "session": "./Behavior/Logs/session_input.json",
             }
         )
 

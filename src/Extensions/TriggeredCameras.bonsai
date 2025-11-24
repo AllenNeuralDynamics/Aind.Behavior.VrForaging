@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.5"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
@@ -142,7 +142,7 @@
               <VideoExtension>mp4</VideoExtension>
               <OutputArguments>-vf "scale=out_color_matrix=bt709:out_range=full" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -maxrate 700M -bufsize 350M</OutputArguments>
               <InputArguments>-colorspace rgb -color_primaries bt709 -color_trc linear</InputArguments>
-              <Verbosity>Verbose</Verbosity>
+              <Verbosity>Warning</Verbosity>
               <FrameRate>0</FrameRate>
             </Expression>
           </Nodes>

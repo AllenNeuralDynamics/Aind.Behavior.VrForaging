@@ -5242,7 +5242,7 @@
           "description": "The optional reward specification of the virtual site",
           "oneOf": [
             {
-              "$ref": "#/$defs/RewardSpecification"
+              "$ref": "#/$defs/VirtualSiteRewardSpecification"
             },
             {
               "type": "null"
@@ -5327,6 +5327,33 @@
       ],
       "title": "VirtualSiteLabels",
       "type": "string"
+    },
+    "VirtualSiteRewardSpecification": {
+      "description": "THIS CLASS IS NOT MEANT TO BE DIRECTLY INSTANTIATED.\nSpecifies reward parameters and behavior for a virtual site.\n\nNote: This class is primarily used internally for runtime site generation\nand is not meant to be directly instantiated in task configuration DSL.",
+      "properties": {
+        "operant_logic": {
+          "$ref": "#/$defs/OperantLogic",
+          "description": "The optional operant logic of the reward"
+        },
+        "delay": {
+          "$ref": "#/$defs/Distribution",
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 0.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "The optional distribution where the delay to reward will be drawn from"
+        }
+      },
+      "required": [
+        "operant_logic"
+      ],
+      "title": "VirtualSiteRewardSpecification",
+      "type": "object"
     },
     "VisualCorridor": {
       "description": "Defines a visual corridor segment in the VR environment.\n\nVisual corridors are the basic building blocks of the VR environment,\ndefining spatial regions with specific textures, dimensions, and positions.",

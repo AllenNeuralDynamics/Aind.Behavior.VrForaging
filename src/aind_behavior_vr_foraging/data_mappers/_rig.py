@@ -8,6 +8,7 @@ from typing import Optional, cast
 
 import aind_behavior_services.rig as AbsRig
 from aind_behavior_services import calibration as AbsCalibration
+from aind_behavior_services.utils import model_from_json_file
 from aind_data_schema.base import GenericModel
 from aind_data_schema.components import connections, coordinates, devices, measurements
 from aind_data_schema.core import instrument
@@ -41,10 +42,10 @@ class _DeviceNode:
 class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     def __init__(
         self,
-        rig: AindVrForagingRig,
+        data_path: os.PathLike,
     ):
         super().__init__()
-        self.rig_model = rig
+        self._data_path = Path(data_path)
         self._mapped: Optional[instrument.Instrument] = None
 
     def rig_schema(self):
@@ -54,12 +55,12 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     def session_name(self):
         raise NotImplementedError("Method not implemented.")
 
-    def write_standard_file(self, directory: os.PathLike) -> None:
-        self.mapped.write_standard_file(Path(directory))
+    def write_standard_file(self) -> None:
+        self.mapped.write_standard_file(self._data_path)
 
     def map(self) -> instrument.Instrument:
         logger.info("Mapping aind-data-schema Rig.")
-        self._mapped = self._map(self.rig_model)
+        self._mapped = self._map(self._data_path)
         return self.mapped
 
     @property
@@ -71,11 +72,12 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
     def is_mapped(self) -> bool:
         return self.mapped is not None
 
-    ## From here on, private methods only!
-    ## Lasciate ogne speranza, voi ch'entrate
+    # From here on, private methods only!
+    # Lasciate ogne speranza, voi ch'entrate
 
     @classmethod
-    def _map(cls, rig: AindVrForagingRig) -> instrument.Instrument:
+    def _map(cls, root_path: os.PathLike) -> instrument.Instrument:
+        rig = model_from_json_file(Path(root_path) / "Behavior" / "Logs" / "rig_input.json", AindVrForagingRig)
         _modalities = [modalities.Modality.BEHAVIOR, modalities.Modality.BEHAVIOR_VIDEOS]
         _components, _connections = cls._get_all_components_and_connections(rig)
         _calibrations: list[measurements.Calibration] = cls._get_calibrations(rig)
