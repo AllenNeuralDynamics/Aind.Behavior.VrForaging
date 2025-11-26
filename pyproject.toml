@@ -42,7 +42,8 @@ dev = [
     "aind_behavior_vr_foraging[launcher]",
     "aind_behavior_vr_foraging[data]",
     "ruff",
-    "codespell"
+    "codespell",
+    "aind-data-schema @git+https://github.com/AllenNeuralDynamics/aind-data-schema@dev"
 ]
 
 docs = [

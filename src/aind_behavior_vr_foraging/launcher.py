@@ -4,6 +4,7 @@ from typing import Any, cast
 
 from aind_behavior_services.calibration.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.utils import utcnow
 from clabe import resource_monitor
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
@@ -19,7 +20,7 @@ from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
 from aind_behavior_vr_foraging import data_contract
-from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
+from aind_behavior_vr_foraging.data_mappers import DataMapperCli
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
@@ -77,6 +78,7 @@ async def experiment(launcher: Launcher) -> None:
 
     # Curriculum
     suggestion: CurriculumSuggestion | None = None
+    suggestion_path: Path | None = None
     if not (
         (picker.trainer_state is None)
         or (picker.trainer_state.is_on_curriculum is False)
@@ -91,20 +93,19 @@ async def experiment(launcher: Launcher) -> None:
         await trainer.run_async()
         suggestion = trainer.process_suggestion()
         # Dump suggestion for debugging (for now, but we will prob remove this later)
-        _dump_suggestion(suggestion, launcher.session_directory)
+        suggestion_path = _dump_suggestion(suggestion, launcher.session_directory)
         # Push updated trainer state back to the database
         picker.push_new_suggestion(suggestion.trainer_state)
 
     # Mappers
     assert launcher.repository.working_tree_dir is not None
-    ads_session = AindSessionDataMapper(
+
+    DataMapperCli(
         data_path=launcher.session_directory,
         repo_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
-        curriculum_suggestion=suggestion,
-    ).map()
-    ads_session.write_standard_file(launcher.session_directory)
-    ads_rig = AindRigDataMapper(data_path=launcher.session_directory).map()
-    ads_rig.write_standard_file(launcher.session_directory)
+        curriculum_suggestion=suggestion_path,
+        session_end_time=utcnow(),
+    ).cli_cmd()
 
     # Run data qc
     if picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
@@ -142,10 +143,12 @@ async def experiment(launcher: Launcher) -> None:
     return
 
 
-def _dump_suggestion(suggestion: CurriculumSuggestion, session_directory: Path) -> None:
+def _dump_suggestion(suggestion: CurriculumSuggestion, session_directory: Path) -> Path:
     logger.info(f"Dumping curriculum suggestion to: {session_directory / 'Behavior' / 'Logs' / 'suggestion.json'}")
-    with open(session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
+    suggestion_path = session_directory / "Behavior" / "Logs" / "suggestion.json"
+    with open(suggestion_path, "w", encoding="utf-8") as f:
         f.write(suggestion.model_dump_json(indent=2))
+    return suggestion_path
 
 
 class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
