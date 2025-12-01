@@ -9,7 +9,8 @@ from unittest.mock import MagicMock, patch
 from aind_data_schema.core import acquisition, instrument
 from aind_data_schema.utils import compatibility_check
 
-from aind_behavior_vr_foraging.data_mappers import AindRigDataMapper, AindSessionDataMapper
+from aind_behavior_vr_foraging.data_mappers._rig import AindInstrumentDataMapper
+from aind_behavior_vr_foraging.data_mappers._session import AindAcquisitionDataMapper
 
 sys.path.append(".")
 from aind_behavior_vr_foraging.cli import DataMapperCli
@@ -41,18 +42,18 @@ class TestAindDataMappers(unittest.TestCase):
         self.repo_path = Path("./")
         self.session_end_time = datetime(2023, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
 
-        self.session_mapper = AindSessionDataMapper(
+        self.session_mapper = AindAcquisitionDataMapper(
             data_path=self.data_path,
             repo_path=self.repo_path,
             session_end_time=self.session_end_time,
         )
 
-        self.rig_mapper = AindRigDataMapper(data_path=self.data_path)
+        self.rig_mapper = AindInstrumentDataMapper(data_path=self.data_path)
 
     def tearDown(self):
         self.temp_dir.cleanup()
 
-    @patch("aind_behavior_vr_foraging.data_mappers._session.AindSessionDataMapper._map")
+    @patch("aind_behavior_vr_foraging.data_mappers._session.AindAcquisitionDataMapper._map")
     def test_session_mock_map(self, mock_map):
         mock_map.return_value = MagicMock()
         result = self.session_mapper.map()
@@ -68,7 +69,7 @@ class TestAindDataMappers(unittest.TestCase):
         assert mapped is not None
         acquisition.Acquisition.model_validate_json(mapped.model_dump_json())
 
-    @patch("aind_behavior_vr_foraging.data_mappers._rig.AindRigDataMapper._map")
+    @patch("aind_behavior_vr_foraging.data_mappers._rig.AindInstrumentDataMapper._map")
     def test_rig_mock_map(self, mock_map):
         mock_map.return_value = MagicMock()
         result = self.rig_mapper.map()
@@ -91,7 +92,7 @@ class TestAindDataMappers(unittest.TestCase):
         assert rig_mapped is not None
         compatibility_check.InstrumentAcquisitionCompatibility(
             instrument=rig_mapped, acquisition=session_mapped
-        ).run_compatibility_check()
+        ).run_compatibility_check(raise_for_missing_devices=True)
 
     def test_mapper_cli(self):
         DataMapperCli(
@@ -99,8 +100,8 @@ class TestAindDataMappers(unittest.TestCase):
             repo_path=self.repo_path,
             session_end_time=self.session_end_time,
         ).cli_cmd()
-        instrument_path = self.data_path / "instrument.json"
-        acquisition_path = self.data_path / "acquisition.json"
+        instrument_path = self.data_path / "instrument_vrforaging.json"
+        acquisition_path = self.data_path / "acquisition_vrforaging.json"
 
         self.assertTrue(instrument_path.exists())
         self.assertTrue(acquisition_path.exists())

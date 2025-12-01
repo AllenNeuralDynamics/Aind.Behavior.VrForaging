@@ -28,7 +28,7 @@ from ._utils import TrackedDevices, _get_water_calibration
 logger = logging.getLogger(__name__)
 
 
-class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
+class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
         self,
         data_path: os.PathLike,
@@ -123,9 +123,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
             stimulus_epochs=self._get_stimulus_epochs(),
         )
         return aind_data_schema_session
-
-    def write_standard_file(self) -> None:
-        self.mapped.write_standard_file(Path(self._data_path))
 
     def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
         return acquisition.AcquisitionSubjectDetails(
