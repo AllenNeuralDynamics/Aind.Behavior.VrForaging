@@ -1,31 +1,50 @@
 import logging
+import os
+import typing as t
 from pathlib import Path
-from typing import TYPE_CHECKING
 
-from ._rig import AindRigDataMapper
-from ._session import AindSessionDataMapper
+from pydantic import AwareDatetime, Field
+from pydantic_settings import BaseSettings
 
 logger = logging.getLogger(__name__)
 
-if TYPE_CHECKING:
-    from aind_behavior_vr_foraging.cli import DataMapperCli
 
+class DataMapperCli(BaseSettings, cli_kebab_case=True):
+    data_path: os.PathLike = Field(description="Path to the session data directory.")
+    repo_path: os.PathLike = Field(
+        default=Path("."), description="Path to the repository. By default it will use the current directory."
+    )
+    curriculum_suggestion: t.Optional[os.PathLike] = Field(
+        default=None, description="Path to curriculum suggestion file."
+    )
+    session_end_time: AwareDatetime | None = Field(
+        default=None,
+        description="End time of the session in ISO format. If not provided, will use the time the data mapping is run.",
+    )
+    suffix: t.Optional[str] = Field(default="vrforaging", description="Suffix to append to the output filenames.")
 
-def cli_cmd(cli_settings: "DataMapperCli"):
-    """Generate aind-data-schema metadata for the VR Foraging dataset located at the specified path."""
-    session_mapped = AindSessionDataMapper(
-        data_path=Path(cli_settings.data_path),
-        repo_path=Path(cli_settings.repo_path),
-        session_end_time=cli_settings.session_end_time,
-    ).map()
+    def cli_cmd(self):
+        """Generate aind-data-schema metadata for the VR Foraging dataset located at the specified path."""
+        from ._rig import AindInstrumentDataMapper
+        from ._session import AindAcquisitionDataMapper
 
-    rig_mapped = AindRigDataMapper(data_path=Path(cli_settings.data_path)).map()
+        session_mapper = AindAcquisitionDataMapper(
+            data_path=Path(self.data_path),
+            repo_path=Path(self.repo_path),
+            session_end_time=self.session_end_time,
+        )
+        session_mapper.map()
 
-    assert session_mapped is not None
+        rig_mapper = AindInstrumentDataMapper(data_path=Path(self.data_path))
+        rig_mapper.map()
 
-    session_mapped.instrument_id = rig_mapped.instrument_id
-    logger.info("Writing session.json to %s", cli_settings.data_path)
-    session_mapped.write_standard_file(Path(cli_settings.data_path))
-    logger.info("Writing rig.json to %s", cli_settings.data_path)
-    rig_mapped.write_standard_file(Path(cli_settings.data_path))
-    logger.info("Mapping completed!")
+        assert session_mapper.mapped is not None
+        assert rig_mapper.mapped is not None
+
+        session_mapper.mapped.instrument_id = rig_mapper.mapped.instrument_id
+        session_mapper.mapped.write_standard_file(output_directory=Path(self.data_path), filename_suffix=self.suffix)
+        rig_mapper.mapped.write_standard_file(output_directory=Path(self.data_path), filename_suffix=self.suffix)
+        logger.info(
+            "Mapping completed! Saved acquisition.json and instrument.json to %s",
+            self.data_path,
+        )
