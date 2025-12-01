@@ -124,9 +124,6 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
         return aind_data_schema_session
 
-    def write_standard_file(self) -> None:
-        self.mapped.write_standard_file(Path(self._data_path), filename_suffix="vrforaging")
-
     def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
         return acquisition.AcquisitionSubjectDetails(
             mouse_platform_name=TrackedDevices.WHEEL,

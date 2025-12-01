@@ -21,6 +21,7 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
         default=None,
         description="End time of the session in ISO format. If not provided, will use the time the data mapping is run.",
     )
+    suffix: t.Optional[str] = Field(default="vrforaging", description="Suffix to append to the output filenames.")
 
     def cli_cmd(self):
         """Generate aind-data-schema metadata for the VR Foraging dataset located at the specified path."""
@@ -41,8 +42,8 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
         assert rig_mapper.mapped is not None
 
         session_mapper.mapped.instrument_id = rig_mapper.mapped.instrument_id
-        session_mapper.write_standard_file()
-        rig_mapper.write_standard_file()
+        session_mapper.mapped.write_standard_file(output_directory=Path(self.data_path), filename_suffix=self.suffix)
+        rig_mapper.mapped.write_standard_file(output_directory=Path(self.data_path), filename_suffix=self.suffix)
         logger.info(
             "Mapping completed! Saved acquisition.json and instrument.json to %s",
             self.data_path,
