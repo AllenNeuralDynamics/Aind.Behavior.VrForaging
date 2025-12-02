@@ -9,7 +9,6 @@ watchdog:
   delete_modalities_source_after_success: true
   job_type: "vr_foraging"
   transfer_endpoint: "http://aind-data-transfer-service-dev/api/v2/submit_jobs"
-  s3_bucket: "default"
 
 default_behavior_picker:
   config_library_dir: '\\allen\aind\scratch\AindBehavior.db\AindVrForaging'
