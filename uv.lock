@@ -94,7 +94,7 @@ docs = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.9" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.9.1rc1" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2.2" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.3,<0.6.0" },
     { name = "pydantic-settings" },
@@ -120,7 +120,7 @@ docs = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.9.0"
+version = "0.9.1rc1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -132,15 +132,16 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/75/c1/77cbabec001fa93b558eee34530a0c88eb7f959e10cdfcaacea93496b0e4/aind_clabe-0.9.0.tar.gz", hash = "sha256:732c68e664a84ca933085c44fccb6db782411dacc31d433e2d86c43030b08179", size = 68200, upload-time = "2025-11-18T02:12:32.817Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/de/29/b09373fc0ff73967053e1b0a1f65ff69bdb6dc8f2afaf6ce9e3b148106c6/aind_clabe-0.9.1rc1.tar.gz", hash = "sha256:526aa13d2ddf44e2e2c26700ad29af40ad3541c8d1d94af42d7721cf19a1f2fb", size = 66536, upload-time = "2025-12-01T18:39:00.039Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/25/cc/975079dd0910d40ada6e4d1f40093ef2d5a18ff8f25df243138ad84076c3/aind_clabe-0.9.0-py3-none-any.whl", hash = "sha256:e09e6f23c421fcd2f68e86639fe1adff84a5cdf46fa9fe6ee36e4840a6c0e036", size = 91335, upload-time = "2025-11-18T02:12:31.731Z" },
+    { url = "https://files.pythonhosted.org/packages/be/5f/315f105ac8d19a7a032482f28a3862e430321a1f81109dbca715ce250527/aind_clabe-0.9.1rc1-py3-none-any.whl", hash = "sha256:8c63ddc92c2fc7247d456a2f9899b16ed01cf74f841cc0a873358923a86d6720", size = 88917, upload-time = "2025-12-01T18:38:59.161Z" },
 ]
 
 [package.optional-dependencies]
 aind-services = [
     { name = "aind-data-schema" },
     { name = "aind-data-transfer-service" },
+    { name = "aind-watchdog-service" },
     { name = "cryptography" },
     { name = "ldap3", marker = "sys_platform == 'win32'" },
     { name = "ms-active-directory" },
@@ -192,6 +193,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/e3/59/280af29afa129f6a58c43e9bb0f1dfc2654f24759b278940e0a5508b56af/aind_data_transfer_service-1.22.0.tar.gz", hash = "sha256:e7ec917fd3df1ee52979a4b78a74f24ae3fd3a5f4294dbf00c1d08a62bceab68", size = 38564, upload-time = "2025-11-24T23:39:06.299Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/43/f9/6256bb5b80bc7e51120a038a34a22b8368b6f76f0a340e55408d21c497fb/aind_data_transfer_service-1.22.0-py3-none-any.whl", hash = "sha256:436276434634aecbc4afa0fe25ba4b384151394824e57263d0b9f4f73f8d6a0b", size = 23972, upload-time = "2025-11-24T23:39:05.249Z" },
+]
+
+[[package]]
+name = "aind-watchdog-service"
+version = "0.1.6.dev8"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aind-data-transfer-service" },
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ce/7a/133583e96793c98b46ed06e7e591b7364bdb96a557b5a647dee4294961c3/aind_watchdog_service-0.1.6.dev8.tar.gz", hash = "sha256:5636372fba8504ab3679678319183a39361c655593d3f6d5c919ca41ace7f8ab", size = 392177, upload-time = "2025-11-25T17:20:21.887Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b8/cd/3607a1b5bfa8af2cc33f5b44a56c16337a09571d6ee29fbb61fef75d3cd7/aind_watchdog_service-0.1.6.dev8-py3-none-any.whl", hash = "sha256:8f15baf43a2ced64384075d7d3eb88a2a8f96460db020dbd38353a1ee4a2fb4c", size = 48580, upload-time = "2025-11-25T17:20:20.575Z" },
 ]
 
 [[package]]
