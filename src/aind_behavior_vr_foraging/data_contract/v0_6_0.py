@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.session import Session
 from contraqctor.contract import Dataset, DataStreamCollection
 from contraqctor.contract.camera import Camera
 from contraqctor.contract.csv import Csv
@@ -423,7 +423,7 @@ def dataset(
                             PydanticModel(
                                 name="Session",
                                 reader_params=PydanticModel.make_params(
-                                    model=AindBehaviorSessionModel,
+                                    model=Session,
                                     path=root_path / "behavior/Logs/session_output.json",
                                 ),
                             ),

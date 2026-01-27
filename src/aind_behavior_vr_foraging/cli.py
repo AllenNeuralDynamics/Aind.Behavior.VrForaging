@@ -6,7 +6,6 @@ from pydantic_settings import BaseSettings, CliApp, CliSubCommand
 from aind_behavior_vr_foraging import __semver__, regenerate
 from aind_behavior_vr_foraging.data_mappers import DataMapperCli
 from aind_behavior_vr_foraging.data_qc import DataQcCli
-from aind_behavior_vr_foraging.launcher import ClabeCli
 
 
 class VersionCli(RootModel):
@@ -31,9 +30,6 @@ class VrForagingCli(BaseSettings, cli_prog_name="vr-foraging", cli_kebab_case=Tr
     )
     regenerate: CliSubCommand[DslRegenerateCli] = Field(
         description="Regenerate the vr-foraging dsl dependencies.",
-    )
-    clabe: CliSubCommand[ClabeCli] = Field(
-        description="Run the Clabe CLI.",
     )
 
     def cli_cmd(self):
