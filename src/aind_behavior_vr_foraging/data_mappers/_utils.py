@@ -1,8 +1,8 @@
 import enum
 import logging
-from typing import List, Optional, Type, TypeVar, Union
+from typing import List, Type, TypeVar, Union
 
-import aind_behavior_services.calibration as AbsCalibration
+import aind_behavior_services.rig.water_valve as water_valve
 import pydantic
 from aind_behavior_services.utils import get_fields_of_type, utcnow
 from aind_data_schema.components import coordinates, measurements
@@ -32,31 +32,26 @@ def coerce_to_aind_data_schema(value: Union[pydantic.BaseModel, dict], target_ty
 
 def _get_water_calibration(rig_model: AindVrForagingRig) -> List[measurements.VolumeCalibration]:
     def _mapper(
-        device_name: Optional[str], water_calibration: AbsCalibration.water_valve.WaterValveCalibration
+        device_name: str, water_calibration: water_valve.WaterValveCalibration
     ) -> measurements.VolumeCalibration:
-        device_name = device_name or water_calibration.device_name
         if device_name is None:
             raise ValueError("Device name is not set.")
-        c = water_calibration.output
-        if c is None:
-            c = water_calibration.input.calibrate_output()
-        c.interval_average = c.interval_average or {}
 
+        interval_average = water_calibration.interval_average if water_calibration.interval_average else {}
         return measurements.VolumeCalibration(
             device_name=device_name,
             calibration_date=water_calibration.date if water_calibration.date else utcnow(),
-            notes=water_calibration.notes,
-            input=list(c.interval_average.keys()),
-            output=list(c.interval_average.values()),
+            input=list(interval_average.keys()),
+            output=list(interval_average.values()),
             input_unit=units.TimeUnit.S,
             output_unit=units.VolumeUnit.ML,
             fit=measurements.CalibrationFit(
                 fit_type=measurements.FitType.LINEAR,
-                fit_parameters=acquisition.GenericModel.model_validate(c.model_dump()),
+                fit_parameters=acquisition.GenericModel.model_validate(water_calibration.model_dump()),
             ),
         )
 
-    water_calibration = get_fields_of_type(rig_model, AbsCalibration.water_valve.WaterValveCalibration)
+    water_calibration = get_fields_of_type(rig_model, water_valve.WaterValveCalibration)
     return (
         list(map(lambda tup: _mapper(TrackedDevices.WATER_VALVE_SOLENOID, tup[1]), water_calibration))
         if len(water_calibration) > 0
@@ -68,11 +63,11 @@ def _get_treadmill_brake_calibration(rig_model: AindVrForagingRig) -> List[measu
     treadmill = rig_model.harp_treadmill
     if treadmill.calibration is None:
         raise ValueError("Treadmill calibration is not set.")
-    calibration = treadmill.calibration.output.brake_lookup_calibration
+    calibration = treadmill.calibration.brake_lookup_calibration
     calibration_ads = measurements.Calibration(
         device_name=TrackedDevices.MAGNETIC_BRAKE,
         calibration_date=treadmill.calibration.date if treadmill.calibration.date else utcnow(),
-        description=type(treadmill.calibration.output).model_fields["brake_lookup_calibration"].description
+        description=type(treadmill.calibration).model_fields["brake_lookup_calibration"].description
         or "brake calibration",
         input=[pair[0] for pair in calibration],
         input_unit=units.MassUnit.G,  # torque in gram-force cm

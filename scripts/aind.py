@@ -2,9 +2,10 @@ import logging
 from pathlib import Path
 from typing import Any, cast
 
-from aind_behavior_services.calibration.aind_manipulator import ManipulatorPosition
-from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
+from aind_behavior_services.session import Session
 from aind_behavior_services.utils import utcnow
+from aind_behavior_vr_foraging.task import AindVrForagingTaskLogic
 from clabe import resource_monitor
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
@@ -13,7 +14,7 @@ from clabe.apps import (
     CurriculumSuggestion,
 )
 from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
-from clabe.launcher import Launcher, LauncherCliArgs
+from clabe.launcher import Launcher, LauncherCliArgs, experiment
 from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
@@ -22,39 +23,38 @@ from pydantic_settings import CliApp
 from aind_behavior_vr_foraging import data_contract
 from aind_behavior_vr_foraging.data_mappers import DataMapperCli
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 logger = logging.getLogger(__name__)
 
 
-async def experiment(launcher: Launcher) -> None:
-    monitor = resource_monitor.ResourceMonitor(
-        constrains=[
-            resource_monitor.available_storage_constraint_factory(launcher.settings.data_dir, 2e11),
-        ]
-    )
-
-    # Validate resources
-    monitor.run()
-
+@experiment()
+async def aind_experiment_protocol(launcher: Launcher) -> None:
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
 
     # Pick and register session
-    session = picker.pick_session(AindBehaviorSessionModel)
-    launcher.register_session(session)
+    session = picker.pick_session(Session)
 
     # Fetch the task settings
     trainer_state, task_logic = picker.pick_trainer_state(AindVrForagingTaskLogic)
-    input_trainer_state_path = launcher.save_temp_model(trainer_state)
 
     # Fetch rig settings
     rig = picker.pick_rig(AindVrForagingRig)
 
+    launcher.register_session(session, rig.data_directory)
+
+    resource_monitor.ResourceMonitor(
+        constrains=[
+            resource_monitor.available_storage_constraint_factory(rig.data_directory, 2e11),
+        ]
+    ).run()
+
+    input_trainer_state_path = launcher.save_temp_model(trainer_state)
+
     # Post-fetching modifications
     manipulator_modifier = ByAnimalManipulatorModifier(
-        subject_db_path=picker.subject_dir / picker.session.subject,
-        model_path="manipulator.calibration.input.initial_position",
+        subject_db_path=picker.subject_dir / session.subject,
+        model_path="manipulator.calibration.initial_position",
         model_name="manipulator_init.json",
         launcher=launcher,
     )
@@ -114,7 +114,7 @@ async def experiment(launcher: Launcher) -> None:
 
             from contraqctor.qc.reporters import HtmlReporter
 
-            from .data_qc.data_qc import make_qc_runner
+            from ..src.aind_behavior_vr_foraging.data_qc.data_qc import make_qc_runner
 
             vr_dataset = data_contract.dataset(launcher.session_directory)
             runner = make_qc_runner(vr_dataset)
@@ -173,7 +173,7 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
 class ClabeCli(LauncherCliArgs):
     def cli_cmd(self):
         launcher = Launcher(settings=self)
-        launcher.run_experiment(experiment)
+        launcher.run_experiment(aind_experiment_protocol)
         return None
 
 

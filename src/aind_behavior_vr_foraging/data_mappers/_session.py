@@ -8,7 +8,8 @@ from typing import List, Optional, cast, get_args
 import aind_behavior_services.rig as AbsRig
 import git
 import pydantic
-from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.rig import cameras, visual_stimulation
+from aind_behavior_services.session import Session
 from aind_behavior_services.utils import get_fields_of_type, model_from_json_file, utcnow
 from aind_data_schema.components import configs
 from aind_data_schema.core import acquisition
@@ -41,9 +42,9 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self._session_end_time = session_end_time
 
         abs_schemas_path = Path(self._data_path) / "Behavior" / "Logs"
-        self.session_model = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
+        self.session_model = model_from_json_file(abs_schemas_path / "session_input.json", Session)
         self.rig_model = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
-        self.task_logic_model = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
+        self.task_model = model_from_json_file(abs_schemas_path / "task_input.json", AindVrForagingTaskLogic)
 
         if curriculum_suggestion is not None:
             if isinstance(curriculum_suggestion, CurriculumSuggestion):
@@ -116,7 +117,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             acquisition_end_time=utcnow(),
             acquisition_start_time=self.session_model.date,
             experimenters=self.session_model.experimenter,
-            acquisition_type=self.session_model.experiment or self.task_logic_model.name,
+            acquisition_type=self.session_model.experiment or self.task_model.name,
             coordinate_system=None,
             data_streams=self._get_data_streams(),
             calibrations=self._get_calibrations(),
@@ -138,12 +139,12 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     @staticmethod
     def _include_device(device: AbsRig.Device) -> bool:
-        if isinstance(device, AbsRig.visual_stimulation.Screen):
+        if isinstance(device, visual_stimulation.ScreenAssembly):
             return False
-        if isinstance(device, AbsRig.cameras.CameraController):
+        if isinstance(device, cameras.CameraController):
             return False
-        if isinstance(device, get_args(AbsRig.cameras.CameraTypes)):
-            return cast(AbsRig.cameras.CameraTypes, device).video_writer is not None
+        if isinstance(device, get_args(cameras.CameraTypes)):
+            return cast(cameras.CameraTypes, device).video_writer is not None
         return True
 
     def _get_data_streams(self) -> List[acquisition.DataStream]:
@@ -255,7 +256,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 stimulus_start_time=self.session_model.date,
                 stimulus_end_time=self.session_end_time,
                 configurations=stimulus_epoch_configurations,
-                stimulus_name=self.session_model.experiment or self.task_logic_model.name,
+                stimulus_name=self.session_model.experiment or self.task_model.name,
                 stimulus_modalities=stimulus_modalities,
                 performance_metrics=performance_metrics,
                 curriculum_status=curriculum_status,
@@ -264,7 +265,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         return stimulus_epochs
 
     def _get_cameras_config(self) -> List[acquisition.DetectorConfig]:
-        def _map_camera(name: str, camera: AbsRig.cameras.CameraTypes) -> acquisition.DetectorConfig:
+        def _map_camera(name: str, camera: cameras.CameraTypes) -> acquisition.DetectorConfig:
             assert camera.video_writer is not None, "Camera does not have a video writer configured."
             return acquisition.DetectorConfig(
                 device_name=name,
@@ -274,25 +275,25 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 compression=_map_compression(camera.video_writer),
             )
 
-        def _map_compression(compression: AbsRig.cameras.VideoWriter) -> acquisition.Code:
+        def _map_compression(compression: cameras.VideoWriter) -> acquisition.Code:
             if compression is None:
                 raise ValueError("Camera does not have a video writer configured.")
-            if isinstance(compression, AbsRig.cameras.VideoWriterFfmpeg):
+            if isinstance(compression, cameras.VideoWriterFfmpeg):
                 return acquisition.Code(
                     url="https://ffmpeg.org/",
                     name="FFMPEG",
                     parameters=acquisition.GenericModel.model_validate(compression.model_dump()),
                 )
-            elif isinstance(compression, AbsRig.cameras.VideoWriterOpenCv):
+            elif isinstance(compression, cameras.VideoWriterOpenCv):
                 bonsai = self._get_bonsai_as_code()
                 bonsai.parameters = acquisition.GenericModel.model_validate(compression.model_dump())
                 return bonsai
             else:
                 raise ValueError("Camera does not have a valid video writer configured.")
 
-        cameras = data_mapper_helpers.get_cameras(self.rig_model, exclude_without_video_writer=True)
+        _cameras = data_mapper_helpers.get_cameras(self.rig_model, exclude_without_video_writer=True)
 
-        return list(map(_map_camera, cameras.keys(), cameras.values()))
+        return list(map(_map_camera, _cameras.keys(), _cameras.values()))
 
     def _get_bonsai_as_code(self) -> acquisition.Code:
         bonsai_folder = Path(self.bonsai_app.executable).parent
