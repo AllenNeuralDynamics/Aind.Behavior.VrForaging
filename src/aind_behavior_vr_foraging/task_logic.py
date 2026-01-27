@@ -1,9 +1,9 @@
 import logging
 from enum import Enum
-from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, Union
+from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, Union, cast
 
-import aind_behavior_services.task_logic.distributions as distributions
-from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
+import aind_behavior_services.task.distributions as distributions
+from aind_behavior_services.task import Task, TaskParameters
 from pydantic import BaseModel, Field, NonNegativeFloat, field_validator, model_validator
 from typing_extensions import TypeAliasType
 
@@ -331,7 +331,12 @@ class CtcmFunction(_PatchUpdateFunction):
 
     function_type: Literal["CtcmFunction"] = "CtcmFunction"
     transition_matrix: List[List[NonNegativeFloat]] = Field(description="Transition matrix between states")
-    rho: float = Field(description="The underlying value goverining the stochastic process")
+    rho: float = Field(description="The underlying value governing the stochastic process")
+    dt: Literal[0.1] = Field(default=0.1, description="Sampling time step (s)")
+    rate: Optional[float] = Field(
+        default=None,
+        description="Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only",
+    )
     minimum: float = Field(default=1, description="Maximum value after update")
     maximum: float = Field(default=0, description="Minimum value after update")
 
@@ -348,6 +353,49 @@ class CtcmFunction(_PatchUpdateFunction):
             for col in row:
                 col /= row_sum
         return value
+
+    @classmethod
+    def from_replenishment_rate(
+        cls, n_states: int, replenishment_rate: float, rho: float, dt: Optional[float] = 0.1
+    ) -> "CtcmFunction":
+        """
+        Computes the replenishment transition probability matrix for each patch
+        Parameters
+        -----------
+        n_states: int
+            number reward states per patch.
+        replenishment_rate: float
+            replenishment rate.
+        rho: float
+            The underlying value governing the stochastic process
+        dt: float
+            experiment time step
+
+
+        Returns
+        -------
+        CtcmFunction
+            Instance of CtcmFunction with computed transition matrix.
+        """
+        import numpy as np
+        from scipy.linalg import expm
+
+        if dt is None:
+            dt = cls.model_fields["dt"].default
+        q = np.zeros((n_states, n_states))
+        np.fill_diagonal(q, -replenishment_rate)
+        np.fill_diagonal(q[:, 1:], replenishment_rate)
+        q[-1, -1] = 0
+
+        p_t = expm(q * dt)
+        assert p_t.ndim == 2
+        transition_matrix = cast(list[list[float]], p_t.tolist())
+        return cls(
+            transition_matrix=transition_matrix,
+            rho=rho,
+            dt=dt,
+            rate=replenishment_rate,
+        )
 
 
 if TYPE_CHECKING:
@@ -1042,7 +1090,7 @@ class AindVrForagingTaskParameters(TaskParameters):
     operation_control: OperationControl = Field(description="Control of the operation")
 
 
-class AindVrForagingTaskLogic(AindBehaviorTaskLogicModel):
+class AindVrForagingTaskLogic(Task):
     """
     Main task logic model for the AIND VR Foraging task.
 

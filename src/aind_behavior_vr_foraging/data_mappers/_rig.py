@@ -6,8 +6,8 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Optional, cast
 
-import aind_behavior_services.rig as AbsRig
-from aind_behavior_services import calibration as AbsCalibration
+from aind_behavior_services.common import Vector3
+from aind_behavior_services.rig import cameras, olfactometer, visual_stimulation
 from aind_behavior_services.utils import model_from_json_file
 from aind_data_schema.base import GenericModel
 from aind_data_schema.components import connections, coordinates, devices, measurements
@@ -328,18 +328,18 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
     def _get_wheel(
         rig: AindVrForagingRig, encoder: devices.Device, magnetic_brake: devices.Device, torque_sensor: devices.Device
     ) -> devices.Wheel:
-        if rig.harp_treadmill.calibration is None or rig.harp_treadmill.calibration.output is None:
+        if rig.harp_treadmill.calibration is None:
             raise ValueError("Treadmill calibration is not set.")
         return devices.Wheel(
             name=TrackedDevices.WHEEL,
             manufacturer=devices.Organization.AIND,
-            radius=Decimal(str(rig.harp_treadmill.calibration.output.wheel_diameter)) / 2,
+            radius=Decimal(str(rig.harp_treadmill.calibration.wheel_diameter)) / 2,
             width=Decimal("3.5"),
             size_unit=units.SizeUnit.CM,
             encoder=encoder,
             magnetic_brake=magnetic_brake,
             torque_sensor=torque_sensor,
-            pulse_per_revolution=rig.harp_treadmill.calibration.output.pulses_per_revolution,
+            pulse_per_revolution=rig.harp_treadmill.calibration.pulses_per_revolution,
             notes="https://tinyurl.com/AI-RunningWheel",
         )
 
@@ -447,11 +447,11 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
             ],
         }
 
-        def distance_from_vector(vector: AbsRig.visual_stimulation.Vector3):
+        def distance_from_vector(vector: Vector3):
             return (vector.x**2 + vector.y**2 + vector.z**2) ** 0.5
 
         def _get_monitors(display_name: str):
-            display = cast(AbsRig.visual_stimulation.DisplayCalibration, getattr(rig.screen.calibration, display_name))
+            display = cast(visual_stimulation.DisplayCalibration, getattr(rig.screen.calibration, display_name))
             return devices.Monitor(
                 name=f"{str(TrackedDevices.SCREEN)}_{display_name}",
                 manufacturer=devices.Organization.LG,
@@ -524,7 +524,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
     @staticmethod
     def _get_olfactometer(rig: AindVrForagingRig) -> devices.Olfactometer:
         olf_calibration = rig.harp_olfactometer.calibration
-        if olf_calibration is None or (calibration := olf_calibration.input) is None:
+        if olf_calibration is None:
             raise ValueError("Olfactometer calibration is not set.")
 
         return devices.Olfactometer(
@@ -532,7 +532,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
             harp_device_type=devices.HarpDeviceType.OLFACTOMETER,
             manufacturer=devices.Organization.CHAMPALIMAUD,
             is_clock_generator=False,
-            channels=list(map(_get_olfactometer_channel, calibration.channel_config.values())),
+            channels=list(map(_get_olfactometer_channel, olf_calibration.channel_config.values())),
         )
 
     @staticmethod
@@ -654,7 +654,7 @@ _camera_assembly_lookup = {
 }
 
 
-def _get_camera(name: str, camera: AbsRig.cameras.SpinnakerCamera, fps: float) -> devices.Camera:
+def _get_camera(name: str, camera: cameras.SpinnakerCamera, fps: float) -> devices.Camera:
     return devices.Camera(
         name=name,
         manufacturer=devices.Organization.FLIR,
@@ -694,11 +694,11 @@ def _get_camera_assembly(camera: devices.Camera) -> devices.CameraAssembly:
 
 
 def _get_olfactometer_channel(
-    ch: AbsCalibration.olfactometer.OlfactometerChannelConfig,
+    ch: olfactometer.OlfactometerChannelConfig,
 ) -> devices.OlfactometerChannel:
     ch_type_to_ch_type = {
-        AbsCalibration.olfactometer.OlfactometerChannelType.CARRIER: devices.OlfactometerChannelType.CARRIER,
-        AbsCalibration.olfactometer.OlfactometerChannelType.ODOR: devices.OlfactometerChannelType.ODOR,
+        olfactometer.OlfactometerChannelType.CARRIER: devices.OlfactometerChannelType.CARRIER,
+        olfactometer.OlfactometerChannelType.ODOR: devices.OlfactometerChannelType.ODOR,
     }
     return devices.OlfactometerChannel(
         channel_index=ch.channel_index,
