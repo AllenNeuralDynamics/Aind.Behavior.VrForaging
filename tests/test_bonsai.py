@@ -8,10 +8,10 @@ from typing import Generic, List, Optional, Type, TypeVar, Union
 
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import run_bonsai_process
+from aind_behavior_vr_foraging.task import AindVrForagingTaskLogic
 from pydantic import ValidationError
 
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 sys.path.append(".")
 from examples import rig, session, task_patch_foraging  # isort:skip # pylint: disable=wrong-import-position

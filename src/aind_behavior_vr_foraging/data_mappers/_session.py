@@ -44,7 +44,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         abs_schemas_path = Path(self._data_path) / "Behavior" / "Logs"
         self.session_model = model_from_json_file(abs_schemas_path / "session_input.json", Session)
         self.rig_model = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
-        self.task_model = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
+        self.task_model = model_from_json_file(abs_schemas_path / "task_input.json", AindVrForagingTaskLogic)
 
         if curriculum_suggestion is not None:
             if isinstance(curriculum_suggestion, CurriculumSuggestion):
