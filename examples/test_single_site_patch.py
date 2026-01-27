@@ -4,8 +4,8 @@ from typing import Optional
 import aind_behavior_services.task.distributions as distributions
 from aind_behavior_curriculum import Stage, TrainerState
 
-import aind_behavior_vr_foraging.task_logic as vr_task_logic
-from aind_behavior_vr_foraging.task_logic import (
+import aind_behavior_vr_foraging.task as vr_task_logic
+from aind_behavior_vr_foraging.task import (
     AindVrForagingTaskLogic,
     AindVrForagingTaskParameters,
 )

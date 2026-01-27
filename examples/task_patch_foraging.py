@@ -3,7 +3,7 @@ import os
 import aind_behavior_services.task.distributions as distributions
 from aind_behavior_curriculum import Stage, TrainerState
 
-import aind_behavior_vr_foraging.task_logic as vr_task_logic
+import aind_behavior_vr_foraging.task as vr_task_logic
 
 
 def NumericalUpdaterParametersHelper(initial_value, increment, decrement, minimum, maximum):
