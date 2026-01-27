@@ -1,7 +1,7 @@
 import os
 from typing import cast
 
-import aind_behavior_services.task_logic.distributions as distributions
+import aind_behavior_services.task.distributions as distributions
 import numpy as np
 from aind_behavior_curriculum import Stage, TrainerState
 from scipy.linalg import expm

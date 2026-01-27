@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from aind_behavior_services.session import AindBehaviorSessionModel
 from contraqctor.contract import Dataset, DataStreamCollection
 from contraqctor.contract.camera import Camera
 from contraqctor.contract.csv import Csv
@@ -8,12 +7,9 @@ from contraqctor.contract.harp import (
     DeviceYmlByFile,
     HarpDevice,
 )
-from contraqctor.contract.json import PydanticModel, SoftwareEvents
+from contraqctor.contract.json import Json, SoftwareEvents
 from contraqctor.contract.mux import MapFromPaths
 from contraqctor.contract.text import Text
-
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 
 def dataset(
@@ -378,24 +374,21 @@ def dataset(
                         name="InputSchemas",
                         description="Configuration files for the behavior rig, task_logic and session.",
                         data_streams=[
-                            PydanticModel(
+                            Json(
                                 name="Rig",
-                                reader_params=PydanticModel.make_params(
-                                    model=AindVrForagingRig,
+                                reader_params=Json.make_params(
                                     path=root_path / "behavior/Logs/rig_input.json",
                                 ),
                             ),
-                            PydanticModel(
+                            Json(
                                 name="TaskLogic",
-                                reader_params=PydanticModel.make_params(
-                                    model=AindVrForagingTaskLogic,
+                                reader_params=Json.make_params(
                                     path=root_path / "behavior/Logs/tasklogic_input.json",
                                 ),
                             ),
-                            PydanticModel(
+                            Json(
                                 name="Session",
-                                reader_params=PydanticModel.make_params(
-                                    model=AindBehaviorSessionModel,
+                                reader_params=Json.make_params(
                                     path=root_path / "behavior/Logs/session_input.json",
                                 ),
                             ),

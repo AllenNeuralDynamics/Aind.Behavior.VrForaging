@@ -1,13 +1,9 @@
 import os
 
-import aind_behavior_services.task_logic.distributions as distributions
+import aind_behavior_services.task.distributions as distributions
 from aind_behavior_curriculum import Stage, TrainerState
 
-import aind_behavior_vr_foraging.task_logic as vr_task_logic
-from aind_behavior_vr_foraging.task_logic import (
-    AindVrForagingTaskLogic,
-    AindVrForagingTaskParameters,
-)
+import aind_behavior_vr_foraging.task as vr_task_logic
 
 
 def NumericalUpdaterParametersHelper(initial_value, increment, decrement, minimum, maximum):
@@ -157,8 +153,8 @@ environment_statistics = vr_task_logic.EnvironmentStatistics(
     first_state_occupancy=[1, 0], transition_matrix=[[1, 0], [0, 1]], patches=[patch1, patch2]
 )
 
-task_logic = AindVrForagingTaskLogic(
-    task_parameters=AindVrForagingTaskParameters(
+task_logic = vr_task_logic.AindVrForagingTaskLogic(
+    task_parameters=vr_task_logic.AindVrForagingTaskParameters(
         rng_seed=42,
         updaters=updaters,
         environment=vr_task_logic.BlockStructure(
