@@ -229,6 +229,97 @@ def ensure_rig_and_computer_name(rig: AindVrForagingRig) -> None:
         rig.computer_name = computer_name
 
 
+@experiment()
+async def recover_session(launcher: Launcher) -> None:
+    # Start experiment setup
+    picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
+    session_path = Path(picker.ui_helper.input("Enter the path to the session you want to recover:"))
+    if not session_path.exists():
+        logger.error("Session path does not exist: %s", session_path)
+        return
+    session_model = Session.model_validate_json(
+        (session_path / "behavior/Logs/session_input.json").read_text(encoding="utf-8")
+    )
+    rig_model = AindVrForagingRig.model_validate_json(
+        (session_path / "behavior/Logs/rig_input.json").read_text(encoding="utf-8")
+    )
+    trainer_state_files = list((session_path / "behavior/Logs/.launcher").glob("TrainerState_*.json"))
+    if trainer_state_files:
+        input_trainer_state_path = trainer_state_files[0]
+    else:
+        raise FileNotFoundError("Trainer state file not found.")
+
+    ensure_rig_and_computer_name(rig_model)
+
+    launcher.register_session(session_model, rig_model.data_directory)
+
+    # Curriculum
+    suggestion: CurriculumSuggestion | None = None
+    suggestion_path: Path | None = None
+    if not (
+        (picker.trainer_state is None)
+        or (picker.trainer_state.is_on_curriculum is False)
+        or (picker.trainer_state.stage is None)
+    ):
+        trainer = CurriculumApp(
+            settings=CurriculumSettings(
+                input_trainer_state=input_trainer_state_path.resolve(), data_directory=launcher.session_directory
+            )
+        )
+        # Run the curriculum
+        await trainer.run_async()
+        suggestion = trainer.process_suggestion()
+        # Dump suggestion for debugging (for now, but we will prob remove this later)
+        suggestion_path = _dump_suggestion(suggestion, launcher.session_directory)
+        # Push updated trainer state back to the database
+        picker.push_new_suggestion(suggestion.trainer_state)
+
+    # Mappers
+    assert launcher.repository.working_tree_dir is not None
+
+    DataMapperCli(
+        data_path=launcher.session_directory,
+        repo_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
+        curriculum_suggestion=suggestion_path,
+        session_end_time=utcnow(),
+    ).cli_cmd()
+
+    # Run data qc
+    if picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
+        try:
+            import webbrowser
+
+            from contraqctor.qc.reporters import HtmlReporter
+
+            from ..src.aind_behavior_vr_foraging.data_qc.data_qc import make_qc_runner
+
+            vr_dataset = data_contract.dataset(launcher.session_directory)
+            runner = make_qc_runner(vr_dataset)
+            qc_path = launcher.session_directory / "Behavior" / "Logs" / "qc_report.html"
+            reporter = HtmlReporter(output_path=qc_path)
+            runner.run_all_with_progress(reporter=reporter)
+            webbrowser.open(qc_path.as_uri(), new=2)
+        except Exception as e:
+            logger.error(f"Failed to run data QC: {e}")
+
+    # Watchdog
+    is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
+    if not is_transfer:
+        logger.info("Data transfer skipped by user.")
+        return
+
+    launcher.copy_logs()
+    watchdog_settings = WatchdogSettings()
+    watchdog_settings.destination = Path(watchdog_settings.destination) / launcher.session.subject
+    WatchdogDataTransferService(
+        source=launcher.session_directory,
+        settings=watchdog_settings,
+        session=session_model,
+    ).transfer()
+
+    return
+
+
 class ClabeCli(LauncherCliArgs):
     def cli_cmd(self):
         launcher = Launcher(settings=self)
