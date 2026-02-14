@@ -53,7 +53,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         else:
             try:
                 curriculum_suggestion = model_from_json_file(
-                    Path(self._data_path) / "Behavior" / "Logs" / "curriculum_suggestion.json",
+                    Path(self._data_path) / "Behavior" / "Logs" / "suggestion.json",
                     CurriculumSuggestion,
                 )
             except FileNotFoundError:
