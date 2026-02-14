@@ -12,11 +12,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Operating System :: Microsoft :: Windows",
 ]
-version = "0.6.5"
+version = "0.7.0rc0"
 readme = {file = "README.md", content-type = "text/markdown"}
 
 dependencies = [
-  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@refactor-class-names",
+  "aind_behavior_services>=0.13",
   "pydantic-settings"
 ]
 
@@ -31,7 +31,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 data = ["contraqctor>=0.5.3, <0.6.0"]
 
 launcher = [
-    "aind-clabe[aind-services]@git+https://github.com/AllenNeuralDynamics/clabe@refactor-against-aind-behavior-services-breaking",
+    "aind-clabe[aind-services]>=0.9",
     "aind-data-schema>=2.4",
     "aind_behavior_vr_foraging[data]",
     ]
