@@ -1,4 +1,5 @@
 import logging
+import os
 from pathlib import Path
 from typing import Any, cast
 
@@ -40,6 +41,7 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
 
     # Fetch rig settings
     rig = picker.pick_rig(AindVrForagingRig)
+    ensure_rig_and_computer_name(rig)
 
     launcher.register_session(session, rig.data_directory)
 
@@ -197,6 +199,34 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
         data: dict[str, Any] = manipulator_parking_position.data.iloc[0]["data"]["ResetPosition"]
         position = ManipulatorPosition.model_validate(data)
         return position
+
+
+def ensure_rig_and_computer_name(rig: AindVrForagingRig) -> None:
+    """Ensures rig and computer name are set from environment variables if available, otherwise defaults to rig configuration values."""
+    rig_name = os.environ.get("aibs_comp_id", None)
+    computer_name = os.environ.get("hostname", None)
+
+    if rig_name is None:
+        logger.warning(
+            "'aibs_comp_id' environment variable not set. Defaulting to rig name from configuration. %s", rig.rig_name
+        )
+        rig_name = rig.rig_name
+    if computer_name is None:
+        computer_name = rig.computer_name
+        logger.warning(
+            "'hostname' environment variable not set. Defaulting to computer name from configuration. %s",
+            rig.computer_name,
+        )
+
+    if rig_name != rig.rig_name or computer_name != rig.computer_name:
+        logger.warning(
+            "Rig name or computer name from environment variables do not match the rig configuration. "
+            "Forcing rig name: %s and computer name: %s from environment variables.",
+            rig_name,
+            computer_name,
+        )
+        rig.rig_name = rig_name
+        rig.computer_name = computer_name
 
 
 class ClabeCli(LauncherCliArgs):
