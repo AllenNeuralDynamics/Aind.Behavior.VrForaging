@@ -6,7 +6,7 @@ from aind_behavior_services.schema import BonsaiSgenSerializers, convert_pydanti
 from aind_behavior_services.session import Session
 
 import aind_behavior_vr_foraging.rig
-import aind_behavior_vr_foraging.task
+import aind_behavior_vr_foraging.task_logic
 
 SCHEMA_ROOT = Path("./src/DataSchemas/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")
@@ -15,11 +15,11 @@ NAMESPACE_PREFIX = "AindVrForagingDataSchema"
 
 def main():
     models = [
-        aind_behavior_vr_foraging.task.AindVrForagingTaskLogic,
+        aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic,
         aind_behavior_vr_foraging.rig.AindVrForagingRig,
         Session,
-        aind_behavior_vr_foraging.task.VirtualSite,
-        aind_behavior_vr_foraging.task.VisualCorridor,
+        aind_behavior_vr_foraging.task_logic.VirtualSite,
+        aind_behavior_vr_foraging.task_logic.VisualCorridor,
     ]
     model = pydantic.RootModel[Union[tuple(models)]]
 
