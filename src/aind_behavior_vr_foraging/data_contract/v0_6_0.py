@@ -344,6 +344,13 @@ def dataset(
                                     root_path / "behavior/SoftwareEvents/PatchStateAtReward.json"
                                 ),
                             ),
+                            SoftwareEvents(
+                                name="Annotations",
+                                description="An event emitted whenever an annotation is made during the session.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/Annotations/Annotations.json"
+                                ),
+                            ),
                         ],
                     ),
                     DataStreamCollection(
