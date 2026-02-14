@@ -1053,7 +1053,7 @@ class Block(BaseModel):
 
     environment_statistics: EnvironmentStatistics = Field(description="Statistics of the environment")
     end_conditions: List[BlockEndCondition] = Field(
-        [], description="List of end conditions that must be true for the block to end."
+        default=[], description="List of end conditions that must be true for the block to end."
     )
 
 
