@@ -143,12 +143,41 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
     return
 
 
+@experiment()
+async def calibration_protocol(launcher: Launcher) -> None:
+    # Start experiment setup
+    picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
+
+    # Pick and register session
+    session = Session(subject="CALIBRATION", experiment="CALIBRATION", date=utcnow())
+
+    # Fetch rig settings
+    rig = picker.pick_rig(AindVrForagingRig)
+
+    launcher.register_session(session, rig.data_directory)
+
+    resource_monitor.ResourceMonitor(
+        constrains=[
+            resource_monitor.available_storage_constraint_factory(rig.data_directory, 2e11),
+        ]
+    ).run()
+
+    # Run the task via Bonsai
+    bonsai_app = AindBehaviorServicesBonsaiApp(
+        workflow=Path(r"./src/main.bonsai"),
+        temp_directory=launcher.temp_dir,
+        rig=rig,
+    )
+    await bonsai_app.run_async()
+    logger.info("Calibration protocol completed successfully.")
+
+
 def _dump_suggestion(suggestion: CurriculumSuggestion, session_directory: Path) -> Path:
-    logger.info(f"Dumping curriculum suggestion to: {session_directory / 'Behavior' / 'Logs' / 'suggestion.json'}")
-    suggestion_path = session_directory / "Behavior" / "Logs" / "suggestion.json"
-    with open(suggestion_path, "w", encoding="utf-8") as f:
+    path = session_directory / "Behavior" / "Logs" / "suggestion.json"
+    logger.info("Dumping curriculum suggestion to: %s", path)
+    with open(path, "w", encoding="utf-8") as f:
         f.write(suggestion.model_dump_json(indent=2))
-    return suggestion_path
+    return path
 
 
 class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
