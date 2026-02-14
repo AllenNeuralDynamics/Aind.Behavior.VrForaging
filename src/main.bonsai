@@ -53,7 +53,7 @@
               <Name>RawSessionSchema</Name>
             </Expression>
             <Expression xsi:type="p1:DeserializeFromJson">
-              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindBehaviorSessionModel" />
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:Session" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -489,9 +489,6 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Calibration</Selector>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Input</Selector>
-                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p1:SerializeToJson">
                       <p1:Formatting>None</p1:Formatting>
@@ -617,33 +614,32 @@ Item3 as Right)</scr:Expression>
                   <Edge From="27" To="28" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
                   <Edge From="29" To="30" Label="Source1" />
-                  <Edge From="30" To="31" Label="Source1" />
-                  <Edge From="31" To="36" Label="Source1" />
+                  <Edge From="30" To="35" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source1" />
                   <Edge From="32" To="33" Label="Source1" />
                   <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source1" />
-                  <Edge From="35" To="36" Label="Source2" />
+                  <Edge From="34" To="35" Label="Source2" />
+                  <Edge From="36" To="37" Label="Source1" />
                   <Edge From="37" To="38" Label="Source1" />
                   <Edge From="38" To="39" Label="Source1" />
-                  <Edge From="39" To="40" Label="Source1" />
-                  <Edge From="40" To="44" Label="Source1" />
+                  <Edge From="39" To="43" Label="Source1" />
+                  <Edge From="40" To="41" Label="Source1" />
                   <Edge From="41" To="42" Label="Source1" />
-                  <Edge From="42" To="43" Label="Source1" />
-                  <Edge From="43" To="44" Label="Source2" />
+                  <Edge From="42" To="43" Label="Source2" />
+                  <Edge From="44" To="45" Label="Source1" />
                   <Edge From="45" To="46" Label="Source1" />
                   <Edge From="46" To="47" Label="Source1" />
-                  <Edge From="47" To="48" Label="Source1" />
-                  <Edge From="48" To="52" Label="Source1" />
+                  <Edge From="47" To="51" Label="Source1" />
+                  <Edge From="48" To="49" Label="Source1" />
                   <Edge From="49" To="50" Label="Source1" />
-                  <Edge From="50" To="51" Label="Source1" />
-                  <Edge From="51" To="52" Label="Source2" />
+                  <Edge From="50" To="51" Label="Source2" />
+                  <Edge From="52" To="53" Label="Source1" />
                   <Edge From="53" To="54" Label="Source1" />
                   <Edge From="54" To="55" Label="Source1" />
-                  <Edge From="55" To="56" Label="Source1" />
-                  <Edge From="56" To="60" Label="Source1" />
+                  <Edge From="55" To="59" Label="Source1" />
+                  <Edge From="56" To="57" Label="Source1" />
                   <Edge From="57" To="58" Label="Source1" />
-                  <Edge From="58" To="59" Label="Source1" />
-                  <Edge From="59" To="60" Label="Source2" />
+                  <Edge From="58" To="59" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1288,8 +1284,18 @@ Item3 as Right)</scr:Expression>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="RootFolder" Selector="RootPath" />
                 <Property Name="SessionName" Selector="SessionName" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RigSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>DataDirectory</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="RootFolder" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPathFromSession.bonsai">
@@ -1327,7 +1333,10 @@ Item3 as Right)</scr:Expression>
             <Edge From="30" To="31" Label="Source1" />
             <Edge From="31" To="32" Label="Source1" />
             <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="34" To="38" Label="Source1" />
+            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="38" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3048,9 +3057,6 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Calibration.WaterValve</Selector>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Output</Selector>
-                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
@@ -3134,21 +3140,20 @@ Item3 as Right)</scr:Expression>
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="17" Label="Source1" />
+                  <Edge From="13" To="16" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="20" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source2" />
+                  <Edge From="15" To="16" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="19" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source2" />
+                  <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -3241,7 +3246,7 @@ Item3 as Right)</scr:Expression>
                           <Selector>Manipulator</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>AdditionalSettings.SpoutAxis</Selector>
+                          <Selector>SpoutAxis</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -4108,9 +4113,6 @@ Item3 as Right)</scr:Expression>
                           <Selector>HarpTreadmill.Calibration</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Output</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
                           <Selector>WheelDiameter</Selector>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
@@ -4141,17 +4143,16 @@ Item3 as Right)</scr:Expression>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source1" />
+                        <Edge From="1" To="7" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="2" To="5" Label="Source1" />
-                        <Edge From="2" To="8" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="6" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source2" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="9" Label="Source1" />
-                        <Edge From="8" To="9" Label="Source2" />
+                        <Edge From="3" To="5" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source2" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="8" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -4241,9 +4242,6 @@ Item1 as Displacement,
                           <Selector>HarpTreadmill.Calibration</Selector>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Output</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
                           <Selector>BrakeLookupCalibration</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -4275,13 +4273,12 @@ Item1 as Displacement,
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="3" To="5" Label="Source1" />
                         <Edge From="4" To="6" Label="Source1" />
-                        <Edge From="5" To="7" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -6161,9 +6158,6 @@ it.Item3 as SiteHasChoice)</scr:Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Calibration</Selector>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Input</Selector>
-                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p1:SerializeToJson">
                       <p1:Formatting>None</p1:Formatting>
@@ -6304,7 +6298,6 @@ it.Item3 as SiteHasChoice)</scr:Expression>
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
