@@ -3,6 +3,8 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+from typing import Type
+
 import erdantic as erd
 from pydantic import BaseModel
 
@@ -81,7 +83,7 @@ def linkcode_resolve(domain, info):
 _static_path = "_static"
 
 
-def export_model_diagram(model: BaseModel, root: str = _static_path) -> None:
+def export_model_diagram(model: Type[BaseModel], root: str = _static_path) -> None:
     diagram = erd.create(model)
     diagram.draw(f"{root}/{model.__name__}.svg")
 

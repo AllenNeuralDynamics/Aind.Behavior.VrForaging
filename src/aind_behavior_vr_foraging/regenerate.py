@@ -2,8 +2,8 @@ from pathlib import Path
 from typing import Union
 
 import pydantic
-from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services.utils import BonsaiSgenSerializers, convert_pydantic_to_bonsai
+from aind_behavior_services.schema import BonsaiSgenSerializers, convert_pydantic_to_bonsai
+from aind_behavior_services.session import Session
 
 import aind_behavior_vr_foraging.rig
 import aind_behavior_vr_foraging.task_logic
@@ -17,7 +17,7 @@ def main():
     models = [
         aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic,
         aind_behavior_vr_foraging.rig.AindVrForagingRig,
-        AindBehaviorSessionModel,
+        Session,
         aind_behavior_vr_foraging.task_logic.VirtualSite,
         aind_behavior_vr_foraging.task_logic.VisualCorridor,
     ]
