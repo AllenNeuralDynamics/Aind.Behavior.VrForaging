@@ -1,193 +1,14 @@
 {
   "$defs": {
-    "AindBehaviorSessionModel": {
-      "properties": {
-        "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
-          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
-          "title": "aind_behavior_services package version",
-          "type": "string"
-        },
-        "version": {
-          "const": "0.12.5",
-          "default": "0.12.5",
-          "title": "Version",
-          "type": "string"
-        },
-        "experiment": {
-          "default": null,
-          "description": "Name of the experiment",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Experiment"
-        },
-        "experimenter": {
-          "default": [],
-          "description": "Name of the experimenter",
-          "items": {
-            "type": "string"
-          },
-          "title": "Experimenter",
-          "type": "array"
-        },
-        "date": {
-          "description": "Date of the experiment",
-          "format": "date-time",
-          "title": "Date",
-          "type": "string"
-        },
-        "root_path": {
-          "description": "Root path where data will be logged",
-          "title": "Root Path",
-          "type": "string"
-        },
-        "session_name": {
-          "default": null,
-          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Session Name"
-        },
-        "subject": {
-          "description": "Name of the subject",
-          "title": "Subject",
-          "type": "string"
-        },
-        "experiment_version": {
-          "default": "",
-          "deprecated": true,
-          "description": "Version of the experiment",
-          "title": "Experiment Version",
-          "type": "string"
-        },
-        "notes": {
-          "default": null,
-          "description": "Notes about the experiment",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        },
-        "commit_hash": {
-          "default": null,
-          "description": "Commit hash of the repository",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Commit Hash"
-        },
-        "allow_dirty_repo": {
-          "default": false,
-          "description": "Allow running from a dirty repository",
-          "title": "Allow Dirty Repo",
-          "type": "boolean"
-        },
-        "skip_hardware_validation": {
-          "default": false,
-          "description": "Skip hardware validation",
-          "title": "Skip Hardware Validation",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "root_path",
-        "subject"
-      ],
-      "title": "AindBehaviorSessionModel",
-      "type": "object"
-    },
-    "AindManipulatorAdditionalSettings": {
-      "description": "Additional settings for the manipulator device",
-      "properties": {
-        "spout_axis": {
-          "$ref": "#/$defs/Axis",
-          "default": 2,
-          "description": "Spout axis"
-        }
-      },
-      "title": "AindManipulatorAdditionalSettings",
-      "type": "object"
-    },
     "AindManipulatorCalibration": {
-      "description": "Aind manipulator calibration class",
+      "description": "AindManipulator calibration class",
       "properties": {
-        "device_name": {
-          "default": "AindManipulator",
-          "description": "Must match a device name in rig/instrument",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/AindManipulatorCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/AindManipulatorCalibrationOutput",
-          "title": "Output of the calibration."
-        },
-        "date": {
-          "default": null,
-          "oneOf": [
-            {
-              "format": "date-time",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Date"
-        },
         "description": {
-          "const": "Calibration of the load cells system",
-          "default": "Calibration of the load cells system",
+          "const": "AindManipulator calibration and settings",
+          "default": "AindManipulator calibration and settings",
           "title": "Description",
           "type": "string"
         },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "AindManipulatorCalibration",
-      "type": "object"
-    },
-    "AindManipulatorCalibrationInput": {
-      "properties": {
         "full_step_to_mm": {
           "$ref": "#/$defs/ManipulatorPosition",
           "default": {
@@ -270,16 +91,11 @@
           }
         }
       },
-      "title": "AindManipulatorCalibrationInput",
-      "type": "object"
-    },
-    "AindManipulatorCalibrationOutput": {
-      "properties": {},
-      "title": "AindManipulatorCalibrationOutput",
+      "title": "AindManipulatorCalibration",
       "type": "object"
     },
     "AindManipulatorDevice": {
-      "description": "Overrides the default settings for the manipulator device by spec'ing additional_settings field",
+      "description": "Appends a task specific configuration to the base manipulator model.",
       "properties": {
         "device_type": {
           "const": "StepperDriver",
@@ -287,37 +103,72 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "$ref": "#/$defs/AindManipulatorAdditionalSettings",
-          "default": {
-            "spout_axis": 2
-          },
-          "description": "Additional settings"
-        },
         "calibration": {
-          "default": null,
-          "oneOf": [
-            {
-              "$ref": "#/$defs/AindManipulatorCalibration"
+          "$ref": "#/$defs/AindManipulatorCalibration",
+          "default": {
+            "description": "AindManipulator calibration and settings",
+            "full_step_to_mm": {
+              "x": 0.01,
+              "y1": 0.01,
+              "y2": 0.01,
+              "z": 0.01
             },
-            {
-              "type": "null"
+            "axis_configuration": [
+              {
+                "axis": 2,
+                "max_limit": 25.0,
+                "maximum_step_interval": 2000,
+                "microstep_resolution": 0,
+                "min_limit": -0.01,
+                "motor_operation_mode": 0,
+                "step_acceleration_interval": 100,
+                "step_interval": 100
+              },
+              {
+                "axis": 3,
+                "max_limit": 25.0,
+                "maximum_step_interval": 2000,
+                "microstep_resolution": 0,
+                "min_limit": -0.01,
+                "motor_operation_mode": 0,
+                "step_acceleration_interval": 100,
+                "step_interval": 100
+              },
+              {
+                "axis": 1,
+                "max_limit": 25.0,
+                "maximum_step_interval": 2000,
+                "microstep_resolution": 0,
+                "min_limit": -0.01,
+                "motor_operation_mode": 0,
+                "step_acceleration_interval": 100,
+                "step_interval": 100
+              },
+              {
+                "axis": 4,
+                "max_limit": 25.0,
+                "maximum_step_interval": 2000,
+                "microstep_resolution": 0,
+                "min_limit": -0.01,
+                "motor_operation_mode": 0,
+                "step_acceleration_interval": 100,
+                "step_interval": 100
+              }
+            ],
+            "homing_order": [
+              2,
+              3,
+              1,
+              4
+            ],
+            "initial_position": {
+              "x": 0.0,
+              "y1": 0.0,
+              "y2": 0.0,
+              "z": 0.0
             }
-          ],
-          "title": "Calibration of the manipulator"
+          },
+          "description": "Calibration for the device."
         },
         "who_am_i": {
           "const": 1130,
@@ -342,6 +193,11 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
+        },
+        "spout_axis": {
+          "$ref": "#/$defs/Axis",
+          "default": 2,
+          "description": "Spout axis"
         }
       },
       "required": [
@@ -353,14 +209,14 @@
     "AindVrForagingRig": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
+          "default": "0.13.0",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.6.4",
-          "default": "0.6.4",
+          "const": "0.7.0-rc0",
+          "default": "0.7.0-rc0",
           "title": "Version",
           "type": "string"
         },
@@ -372,6 +228,12 @@
         "rig_name": {
           "description": "Rig name",
           "title": "Rig Name",
+          "type": "string"
+        },
+        "data_directory": {
+          "description": "Directory where data will be saved to",
+          "format": "path",
+          "title": "Data Directory",
           "type": "string"
         },
         "triggered_camera_controller": {
@@ -451,11 +313,9 @@
           "description": "Manipulator"
         },
         "screen": {
-          "$ref": "#/$defs/Screen",
+          "$ref": "#/$defs/ScreenAssembly",
           "default": {
-            "device_type": "Screen",
-            "device_name": "Screen",
-            "additional_settings": null,
+            "device_type": "ScreenAssembly",
             "calibration": {
               "center": {
                 "extrinsics": {
@@ -533,7 +393,9 @@
         }
       },
       "required": [
+        "computer_name",
         "rig_name",
+        "data_directory",
         "triggered_camera_controller",
         "harp_behavior",
         "harp_olfactometer",
@@ -568,8 +430,8 @@
           "description": "Parameters of the task logic"
         },
         "version": {
-          "const": "0.6.4",
-          "default": "0.6.4",
+          "const": "0.7.0-rc0",
+          "default": "0.7.0-rc0",
           "title": "Version",
           "type": "string"
         },
@@ -611,7 +473,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
+          "default": "0.13.0",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -1082,34 +944,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1156,34 +993,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1364,9 +1176,29 @@
           "type": "array"
         },
         "rho": {
-          "description": "The underlying value goverining the stochastic process",
+          "description": "The underlying value governing the stochastic process",
           "title": "Rho",
           "type": "number"
+        },
+        "dt": {
+          "const": 0.1,
+          "default": 0.1,
+          "description": "Sampling time step (s)",
+          "title": "Dt",
+          "type": "number"
+        },
+        "rate": {
+          "default": null,
+          "description": "Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rate"
         },
         "minimum": {
           "default": 1,
@@ -1389,6 +1221,7 @@
       "type": "object"
     },
     "DisplayCalibration": {
+      "description": "Represents the calibration parameters of a display.",
       "properties": {
         "intrinsics": {
           "$ref": "#/$defs/DisplayIntrinsics",
@@ -1421,9 +1254,10 @@
       "type": "object"
     },
     "DisplayExtrinsics": {
+      "description": "Represents the extrinsic parameters of a display.",
       "properties": {
         "rotation": {
-          "$ref": "#/$defs/aind_behavior_services__rig__visual_stimulation__Vector3",
+          "$ref": "#/$defs/aind_behavior_services__common__Vector3",
           "default": {
             "x": 0.0,
             "y": 0.0,
@@ -1432,7 +1266,7 @@
           "description": "Rotation vector (radians)"
         },
         "translation": {
-          "$ref": "#/$defs/aind_behavior_services__rig__visual_stimulation__Vector3",
+          "$ref": "#/$defs/aind_behavior_services__common__Vector3",
           "default": {
             "x": 0.0,
             "y": 1.309016,
@@ -1445,6 +1279,7 @@
       "type": "object"
     },
     "DisplayIntrinsics": {
+      "description": "Represents the intrinsic parameters of a display.",
       "properties": {
         "frame_width": {
           "default": 1920,
@@ -1476,84 +1311,6 @@
         }
       },
       "title": "DisplayIntrinsics",
-      "type": "object"
-    },
-    "DisplaysCalibration": {
-      "properties": {
-        "left": {
-          "$ref": "#/$defs/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": -16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            }
-          },
-          "description": "Left display calibration"
-        },
-        "center": {
-          "$ref": "#/$defs/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 0.0,
-                "y": 1.309016,
-                "z": -13.27
-              }
-            }
-          },
-          "description": "Center display calibration"
-        },
-        "right": {
-          "$ref": "#/$defs/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": -1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            }
-          },
-          "description": "Right display calibration"
-        }
-      },
-      "title": "DisplaysCalibration",
       "type": "object"
     },
     "Distribution": {
@@ -1803,34 +1560,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1879,34 +1611,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1955,34 +1662,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -2031,34 +1713,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -2107,34 +1764,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -2183,34 +1815,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -2367,6 +1974,7 @@
       "type": "object"
     },
     "ManipulatorPosition": {
+      "description": "Represents a position in the manipulator coordinate system",
       "properties": {
         "x": {
           "title": "X coordinate",
@@ -2436,6 +2044,7 @@
       "type": "object"
     },
     "MicrostepResolution": {
+      "description": "Microstep resolution available",
       "enum": [
         0,
         1,
@@ -2452,6 +2061,7 @@
       ]
     },
     "MotorOperationMode": {
+      "description": "Motor operation mode",
       "enum": [
         0,
         1
@@ -2710,6 +2320,7 @@
       "type": "object"
     },
     "Olfactometer": {
+      "description": "A calibrated olfactometer device",
       "properties": {
         "device_type": {
           "const": "Olfactometer",
@@ -2717,41 +2328,12 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
-          "default": null,
-          "oneOf": [
-            {
-              "$ref": "#/$defs/OlfactometerCalibration"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "$ref": "#/$defs/OlfactometerCalibration",
+          "default": {
+            "date": "2026-02-14T19:48:12.752548Z",
+            "channel_config": {}
+          },
           "title": "Calibration of the olfactometer"
         },
         "who_am_i": {
@@ -2786,63 +2368,14 @@
       "type": "object"
     },
     "OlfactometerCalibration": {
-      "description": "Olfactometer calibration class",
+      "description": "Olfactometer device configuration model",
       "properties": {
-        "device_name": {
-          "default": "Olfactometer",
-          "description": "Name of the device being calibrated",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/OlfactometerCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/OlfactometerCalibrationOutput",
-          "title": "Output of the calibration"
-        },
         "date": {
-          "default": null,
-          "oneOf": [
-            {
-              "format": "date-time",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Date"
-        },
-        "description": {
-          "const": "Calibration of the harp olfactometer device",
-          "default": "Calibration of the harp olfactometer device",
-          "title": "Description",
+          "description": "Date of the calibration",
+          "format": "date-time",
+          "title": "Date",
           "type": "string"
         },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "OlfactometerCalibration",
-      "type": "object"
-    },
-    "OlfactometerCalibrationInput": {
-      "properties": {
         "channel_config": {
           "additionalProperties": {
             "$ref": "#/$defs/OlfactometerChannelConfig"
@@ -2856,12 +2389,7 @@
           "type": "object"
         }
       },
-      "title": "OlfactometerCalibrationInput",
-      "type": "object"
-    },
-    "OlfactometerCalibrationOutput": {
-      "properties": {},
-      "title": "OlfactometerCalibrationOutput",
+      "title": "OlfactometerCalibration",
       "type": "object"
     },
     "OlfactometerChannel": {
@@ -2882,15 +2410,16 @@
       ]
     },
     "OlfactometerChannelConfig": {
+      "description": "Configuration for a single olfactometer channel",
       "properties": {
         "channel_index": {
-          "title": "Channel index",
+          "title": "Odor channel index",
           "type": "integer"
         },
         "channel_type": {
           "$ref": "#/$defs/OlfactometerChannelType",
           "default": "Odor",
-          "title": "Channel type"
+          "title": "Olfactometer channel type"
         },
         "flow_rate_capacity": {
           "default": 100,
@@ -2939,7 +2468,7 @@
       "type": "object"
     },
     "OlfactometerChannelType": {
-      "description": "Channel type",
+      "description": "Olfactometer channel type",
       "enum": [
         "Odor",
         "Carrier"
@@ -3895,6 +3424,7 @@
       "type": "object"
     },
     "Rect": {
+      "description": "Represents a rectangle defined by its top-left corner, width, and height.",
       "properties": {
         "x": {
           "default": 0,
@@ -4056,7 +3586,7 @@
       "type": "object"
     },
     "RigCalibration": {
-      "description": "Container class for calibration models. In a future release these will be moved to the respective devices",
+      "description": "Container class for calibration models.",
       "properties": {
         "water_valve": {
           "$ref": "#/$defs/WaterValveCalibration",
@@ -4140,42 +3670,17 @@
       "title": "ScalingParameters",
       "type": "object"
     },
-    "Screen": {
+    "ScreenAssembly": {
+      "description": "Represents a screen assembly (left, center and right screens) and respective configuration.",
       "properties": {
         "device_type": {
-          "const": "Screen",
-          "default": "Screen",
-          "description": "Device type",
+          "const": "ScreenAssembly",
+          "default": "ScreenAssembly",
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
-          "$ref": "#/$defs/DisplaysCalibration",
+          "$ref": "#/$defs/ScreenAssemblyCalibration",
           "default": {
             "left": {
               "extrinsics": {
@@ -4238,7 +3743,7 @@
               }
             }
           },
-          "description": "Screen calibration"
+          "description": "Screen assembly calibration"
         },
         "display_index": {
           "default": 1,
@@ -4281,7 +3786,191 @@
           "type": "number"
         }
       },
-      "title": "Screen",
+      "title": "ScreenAssembly",
+      "type": "object"
+    },
+    "ScreenAssemblyCalibration": {
+      "description": "Represents the calibration parameters for a screen assembly with three displays.",
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Left display calibration"
+        },
+        "center": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            }
+          },
+          "description": "Center display calibration"
+        },
+        "right": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Right display calibration"
+        }
+      },
+      "title": "ScreenAssemblyCalibration",
+      "type": "object"
+    },
+    "Session": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.13.0",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.13.0",
+          "default": "0.13.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "experiment": {
+          "default": null,
+          "description": "Name of the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Experiment"
+        },
+        "experimenter": {
+          "default": [],
+          "description": "Name of the experimenter",
+          "items": {
+            "type": "string"
+          },
+          "title": "Experimenter",
+          "type": "array"
+        },
+        "date": {
+          "description": "Date of the experiment",
+          "format": "date-time",
+          "title": "Date",
+          "type": "string"
+        },
+        "session_name": {
+          "default": null,
+          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Name"
+        },
+        "subject": {
+          "description": "Name of the subject",
+          "title": "Subject",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "description": "Notes about the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "commit_hash": {
+          "default": null,
+          "description": "Commit hash of the repository",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit Hash"
+        },
+        "allow_dirty_repo": {
+          "default": false,
+          "description": "Allow running from a dirty repository",
+          "title": "Allow Dirty Repo",
+          "type": "boolean"
+        },
+        "skip_hardware_validation": {
+          "default": false,
+          "description": "Skip hardware validation",
+          "title": "Skip Hardware Validation",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "subject"
+      ],
+      "title": "Session",
       "type": "object"
     },
     "SetValueFunction": {
@@ -4324,42 +4013,17 @@
       "type": "object"
     },
     "SpinnakerCamera": {
+      "description": "Spinnaker camera device configuration.",
       "properties": {
         "device_type": {
           "const": "SpinnakerCamera",
           "default": "SpinnakerCamera",
-          "description": "Device type",
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -4473,6 +4137,7 @@
       "type": "object"
     },
     "SpinnakerCameraAdcBitDepth": {
+      "description": "ADC bit depth options for Spinnaker cameras.",
       "enum": [
         0,
         1,
@@ -4487,6 +4152,7 @@
       ]
     },
     "SpinnakerCameraPixelFormat": {
+      "description": "Pixel format options for Spinnaker cameras.",
       "enum": [
         0,
         1,
@@ -4804,6 +4470,7 @@
       "type": "object"
     },
     "Treadmill": {
+      "description": "A calibrated treadmill device",
       "properties": {
         "device_type": {
           "const": "Treadmill",
@@ -4811,41 +4478,24 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
-          "default": null,
-          "oneOf": [
-            {
-              "$ref": "#/$defs/TreadmillCalibration"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "$ref": "#/$defs/TreadmillCalibration",
+          "default": {
+            "date": "2026-02-14T19:48:12.755298Z",
+            "wheel_diameter": 15.0,
+            "pulses_per_revolution": 28800,
+            "invert_direction": false,
+            "brake_lookup_calibration": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                65535.0
+              ]
+            ]
+          },
           "title": "Calibration of the treadmill"
         },
         "who_am_i": {
@@ -4882,66 +4532,12 @@
     "TreadmillCalibration": {
       "description": "Treadmill calibration class",
       "properties": {
-        "device_name": {
-          "default": "Treadmill",
-          "description": "Must match a device name in rig/instrument",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/TreadmillCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/TreadmillCalibrationOutput",
-          "title": "Output of the calibration."
-        },
         "date": {
-          "default": null,
-          "oneOf": [
-            {
-              "format": "date-time",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Date"
-        },
-        "description": {
-          "const": "Calibration of the treadmill system",
-          "default": "Calibration of the treadmill system",
-          "title": "Description",
+          "description": "Date of the calibration",
+          "format": "date-time",
+          "title": "Date",
           "type": "string"
         },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "TreadmillCalibration",
-      "type": "object"
-    },
-    "TreadmillCalibrationInput": {
-      "properties": {},
-      "title": "TreadmillCalibrationInput",
-      "type": "object"
-    },
-    "TreadmillCalibrationOutput": {
-      "properties": {
         "wheel_diameter": {
           "default": 15,
           "description": "Wheel diameter",
@@ -4963,6 +4559,16 @@
           "type": "boolean"
         },
         "brake_lookup_calibration": {
+          "default": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              65535
+            ]
+          ],
           "description": "Brake lookup calibration. Each pair of values define (input [torque], output [brake set-point U16])",
           "items": {
             "items": {
@@ -4977,10 +4583,7 @@
           "type": "array"
         }
       },
-      "required": [
-        "brake_lookup_calibration"
-      ],
-      "title": "TreadmillCalibrationOutput",
+      "title": "TreadmillCalibration",
       "type": "object"
     },
     "TreadmillSpecification": {
@@ -5130,6 +4733,7 @@
       ]
     },
     "VideoWriterFfmpeg": {
+      "description": "FFMPEG video writer configuration.",
       "properties": {
         "video_writer_type": {
           "const": "FFMPEG",
@@ -5167,6 +4771,7 @@
       "type": "object"
     },
     "VideoWriterOpenCv": {
+      "description": "OpenCV video writer configuration.",
       "properties": {
         "video_writer_type": {
           "const": "OPENCV",
@@ -5428,63 +5033,14 @@
       "type": "object"
     },
     "WaterValveCalibration": {
-      "description": "Water valve calibration class",
+      "description": "Represents a water valve calibration.",
       "properties": {
-        "device_name": {
-          "default": "WaterValve",
-          "description": "Name of the device being calibrated",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/WaterValveCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/WaterValveCalibrationOutput",
-          "title": "Output of the calibration."
-        },
         "date": {
-          "default": null,
-          "oneOf": [
-            {
-              "format": "date-time",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Date"
-        },
-        "description": {
-          "const": "Calibration of the water valve delivery system",
-          "default": "Calibration of the water valve delivery system",
-          "title": "Description",
+          "description": "Date of the calibration",
+          "format": "date-time",
+          "title": "Date",
           "type": "string"
         },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "WaterValveCalibration",
-      "type": "object"
-    },
-    "WaterValveCalibrationInput": {
-      "properties": {
         "measurements": {
           "default": [],
           "description": "List of measurements",
@@ -5493,14 +5049,7 @@
           },
           "title": "Measurements",
           "type": "array"
-        }
-      },
-      "title": "WaterValveCalibrationInput",
-      "type": "object"
-    },
-    "WaterValveCalibrationOutput": {
-      "description": "Output for water valve calibration class",
-      "properties": {
+        },
         "interval_average": {
           "default": null,
           "description": "Dictionary keyed by measured valve interval and corresponding average single event volume.",
@@ -5566,46 +5115,21 @@
         "slope",
         "offset"
       ],
-      "title": "WaterValveCalibrationOutput",
+      "title": "WaterValveCalibration",
       "type": "object"
     },
     "WebCamera": {
+      "description": "Web camera device configuration.",
       "properties": {
         "device_type": {
           "const": "WebCamera",
           "default": "WebCamera",
-          "description": "Device type",
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -5638,23 +5162,24 @@
       "title": "WebCamera",
       "type": "object"
     },
-    "aind_behavior_services__rig__visual_stimulation__Vector3": {
+    "aind_behavior_services__common__Vector3": {
+      "description": "Represents a 3D vector with float coordinates.",
       "properties": {
         "x": {
           "default": 0,
-          "description": "X coordinate of the point",
+          "description": "X coordinate of the vector",
           "title": "X",
           "type": "number"
         },
         "y": {
           "default": 0,
-          "description": "Y coordinate of the point",
+          "description": "Y coordinate of the vector",
           "title": "Y",
           "type": "number"
         },
         "z": {
           "default": 0,
-          "description": "Z coordinate of the point",
+          "description": "Z coordinate of the vector",
           "title": "Z",
           "type": "number"
         }

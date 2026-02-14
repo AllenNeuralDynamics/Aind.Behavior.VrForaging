@@ -5,7 +5,6 @@ from typing import Any, cast
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import utcnow
-from aind_behavior_vr_foraging.task import AindVrForagingTaskLogic
 from clabe import resource_monitor
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
@@ -23,6 +22,7 @@ from pydantic_settings import CliApp
 from aind_behavior_vr_foraging import data_contract
 from aind_behavior_vr_foraging.data_mappers import DataMapperCli
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 logger = logging.getLogger(__name__)
 
