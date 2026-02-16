@@ -308,7 +308,6 @@ async def recover_session(launcher: Launcher) -> None:
         logger.info("Data transfer skipped by user.")
         return
 
-    launcher.copy_logs()
     watchdog_settings = WatchdogSettings()
     watchdog_settings.destination = Path(watchdog_settings.destination) / launcher.session.subject
     WatchdogDataTransferService(
