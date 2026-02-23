@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Stream Tree</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .tree {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: pre;
+        }
+        .tree-node {
+            position: relative;
+            display: inline;
+        }
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: normal;
+            width: 300px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .no-description {
+            font-style: italic;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="tree">
+<span class="tooltip">📂 VrForagingDataset [Dataset]<span class="tooltiptext">Type: Dataset<br>Description: A VrForaging dataset</span></span>
+├── <span class="tooltip">📂 Behavior [DataStreamCollection]<span class="tooltiptext">Type: DataStreamCollection<br>Description: Data from the Behavior modality</span></span>
+    ├── <span class="tooltip">📂 HarpBehavior [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 HarpManipulator [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 HarpTreadmill [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 HarpOlfactometer [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 HarpSniffDetector [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 HarpLickometer [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 HarpClockGenerator [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 HarpEnvironmentSensor [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 HarpCommands [DataStreamCollection]<span class="tooltiptext">Type: DataStreamCollection<br>Description: Commands sent to Harp devices</span></span>
+    │   ├── <span class="tooltip">📂 HarpBehavior [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    │   ├── <span class="tooltip">📂 HarpManipulator [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    │   ├── <span class="tooltip">📂 HarpTreadmill [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    │   ├── <span class="tooltip">📂 HarpOlfactometer [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    │   ├── <span class="tooltip">📂 HarpSniffDetector [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    │   ├── <span class="tooltip">📂 HarpLickometer [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    │   ├── <span class="tooltip">📂 HarpClockGenerator [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    │   └── <span class="tooltip">📂 HarpEnvironmentSensor [HarpDevice]<span class="tooltiptext">Type: HarpDevice<br>Description: <em>No description available</em></span></span>
+    ├── <span class="tooltip">📂 SoftwareEvents [DataStreamCollection]<span class="tooltiptext">Type: DataStreamCollection<br>Description: Software events generated by the workflow. The timestamps of these events are low precision and should not be used to align to physiology data.</span></span>
+    │   ├── <span class="tooltip">📄 ActivePatch [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: An event emitted when a patch threshold is crossed.</span></span>
+    │   ├── <span class="tooltip">📄 ActiveSite [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: An event emitted when a site becomes active.</span></span>
+    │   ├── <span class="tooltip">📄 ArmOdor [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: An event sent each time an Odor mixture messaged is sent to arm at the olfactometer.</span></span>
+    │   ├── <span class="tooltip">📄 Block [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: An event signaling block transitions.</span></span>
+    │   ├── <span class="tooltip">📄 ChoiceFeedback [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: A unit event that is emitted when the subject receives feedback about their choice.</span></span>
+    │   ├── <span class="tooltip">📄 ForceGiveReward [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: An event that is emitted when the experimenter manually delivers a reward to the subject, overriding the task logic.</span></span>
+    │   ├── <span class="tooltip">📄 GiveReward [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: The amount of reward given to a subject. The value can be null if no reward was given (P=0) or 0.0 if the reward was delivered but calculated to be 0.</span></span>
+    │   ├── <span class="tooltip">📄 PatchRewardAmount [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: Amount of reward available to be collected in the upcoming site.</span></span>
+    │   ├── <span class="tooltip">📄 PatchRewardAvailable [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: Amount of reward left in the patch.</span></span>
+    │   ├── <span class="tooltip">📄 PatchRewardProbability [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: Probability of reward being available to be collected in the upcoming site.</span></span>
+    │   ├── <span class="tooltip">📄 RngSeed [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: The value of the random number generator seed.</span></span>
+    │   ├── <span class="tooltip">📄 StopVelocityThreshold [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: The velocity threshold used to determine if the subject is stopped or not. In cm/s.</span></span>
+    │   ├── <span class="tooltip">📄 VisualCorridorSpecs [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: Specification of the visual corridor instantiated to be rendered.</span></span>
+    │   ├── <span class="tooltip">📄 WaitRewardOutcome [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: The outcome of the period between choice and reward delivery.</span></span>
+    │   ├── <span class="tooltip">📄 WaitLickOutcome [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: The outcome of the period between reward availability and lick detection.</span></span>
+    │   ├── <span class="tooltip">📄 UpdaterStopDurationOffset [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: Metadata for the updater of the StopDurationOffset parameter.</span></span>
+    │   ├── <span class="tooltip">📄 UpdaterStopVelocityThreshold [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: Metadata for the updater of the StopVelocityThreshold parameter.</span></span>
+    │   ├── <span class="tooltip">📄 UpdaterRewardDelayOffset [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: Metadata for the updater of the RewardDelayOffset parameter.</span></span>
+    │   ├── <span class="tooltip">📄 HabituationRewardAvailable [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: In the habituation task mode, this event will be emitted whenever a reward is available to be collected.</span></span>
+    │   ├── <span class="tooltip">📄 PatchState [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: An event emitted whenever the state of a patch changes.</span></span>
+    │   ├── <span class="tooltip">📄 PatchTermination [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: An event emitted whenever a patch is terminated by the task logic.</span></span>
+    │   ├── <span class="tooltip">📄 SpoutParkingPositions [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: Encodes the spout parking positions to use while fully retracted or extended.</span></span>
+    │   └── <span class="tooltip">📄 PatchStateAtReward [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: An event emitted whenever the reward is about to be given and the patch state is sampled.</span></span>
+    ├── <span class="tooltip">📂 OperationControl [DataStreamCollection]<span class="tooltiptext">Type: DataStreamCollection<br>Description: Streams associated with online operation of the task.</span></span>
+    │   ├── <span class="tooltip">📄 CurrentPosition [Csv]<span class="tooltiptext">Type: Csv<br>Description: The position of the animal in VR coordinates (cm). The timestamp is derived from the encoder reading that gave rise to the position change.</span></span>
+    │   ├── <span class="tooltip">📄 IsStopped [Csv]<span class="tooltiptext">Type: Csv<br>Description: The result of the ongoing stop detection algorithm. The timestamp is derived from the encoder reading that gave rise to the position change.</span></span>
+    │   ├── <span class="tooltip">📄 Torque [Csv]<span class="tooltiptext">Type: Csv<br>Description: The torque instructed to be applied to the treadmill. Timestamps are software-derived, use the Harp device events for hardware timestamps.</span></span>
+    │   └── <span class="tooltip">📄 RendererSynchState [Csv]<span class="tooltiptext">Type: Csv<br>Description: Contains information that allows the post-hoc alignment of visual stimuli to the behavior data. Seconds are software derived.</span></span>
+    ├── <span class="tooltip">📂 Logs [DataStreamCollection]<span class="tooltiptext">Type: DataStreamCollection<br>Description: <em>No description available</em></span></span>
+    │   ├── <span class="tooltip">📄 Launcher [Text]<span class="tooltiptext">Type: Text<br>Description: Contains the console log of the launcher process.</span></span>
+    │   └── <span class="tooltip">📄 EndSession [SoftwareEvents]<span class="tooltiptext">Type: SoftwareEvents<br>Description: A file that determines the end of the session. If the file is empty, the session is still running or it was not closed properly.</span></span>
+    └── <span class="tooltip">📂 InputSchemas [DataStreamCollection]<span class="tooltiptext">Type: DataStreamCollection<br>Description: Configuration files for the behavior rig, task_logic and session.</span></span>
+    │   ├── <span class="tooltip">📄 Rig [PydanticModel]<span class="tooltiptext">Type: PydanticModel<br>Description: <em>No description available</em></span></span>
+    │   ├── <span class="tooltip">📄 TaskLogic [PydanticModel]<span class="tooltiptext">Type: PydanticModel<br>Description: <em>No description available</em></span></span>
+    │   └── <span class="tooltip">📄 Session [PydanticModel]<span class="tooltiptext">Type: PydanticModel<br>Description: <em>No description available</em></span></span>
+└── <span class="tooltip">📂 BehaviorVideos [MapFromPaths]<span class="tooltiptext">Type: MapFromPaths<br>Description: Data from BehaviorVideos modality</span></span>
+    </div>
+</body>
+</html>
