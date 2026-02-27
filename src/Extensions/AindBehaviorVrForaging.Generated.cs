@@ -367,7 +367,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.0";
+            _aindBehaviorServicesPkgVersion = "0.13.2";
             _version = "0.7.0-rc0";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -953,7 +953,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.0";
+            _aindBehaviorServicesPkgVersion = "0.13.2";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
@@ -6743,7 +6743,7 @@ namespace AindVrForagingDataSchema
     public partial class OlfactometerCalibration
     {
     
-        private System.DateTimeOffset _date;
+        private System.DateTimeOffset? _date;
     
         private System.Collections.Generic.Dictionary<string, OlfactometerChannelConfig> _channelConfig;
     
@@ -6764,7 +6764,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("date")]
         [System.ComponentModel.DescriptionAttribute("Date of the calibration")]
-        public System.DateTimeOffset Date
+        public System.DateTimeOffset? Date
         {
             get
             {
@@ -10370,8 +10370,8 @@ namespace AindVrForagingDataSchema
     
         public Session()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.0";
-            _version = "0.13.0";
+            _aindBehaviorServicesPkgVersion = "0.13.2";
+            _version = "0.13.2";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
@@ -11811,7 +11811,7 @@ namespace AindVrForagingDataSchema
     public partial class TreadmillCalibration
     {
     
-        private System.DateTimeOffset _date;
+        private System.DateTimeOffset? _date;
     
         private double _wheelDiameter;
     
@@ -11844,7 +11844,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("date")]
         [System.ComponentModel.DescriptionAttribute("Date of the calibration")]
-        public System.DateTimeOffset Date
+        public System.DateTimeOffset? Date
         {
             get
             {
@@ -12486,8 +12486,8 @@ namespace AindVrForagingDataSchema
         public VideoWriterFfmpeg()
         {
             _frameRate = 30;
-            _containerExtension = "mp4";
-            _outputArguments = "-vf \"scale=out_color_matrix=bt709:out_range=full,format=bgr24,scale=out_range=full\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M";
+            _containerExtension = "mkv";
+            _outputArguments = "-vf \"scale=out_range=full,setparams=range=full:colorspace=bt709:color_primaries=bt709:color_trc=linear\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p3 -rc vbr -cq 18 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M -f matroska -write_crc32 0";
             _inputArguments = "-colorspace bt709 -color_primaries bt709 -color_range full -color_trc linear";
         }
     
@@ -13541,7 +13541,7 @@ namespace AindVrForagingDataSchema
     public partial class WaterValveCalibration
     {
     
-        private System.DateTimeOffset _date;
+        private System.DateTimeOffset? _date;
     
         private System.Collections.Generic.List<Measurement> _measurements;
     
@@ -13577,7 +13577,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("date")]
         [System.ComponentModel.DescriptionAttribute("Date of the calibration")]
-        public System.DateTimeOffset Date
+        public System.DateTimeOffset? Date
         {
             get
             {

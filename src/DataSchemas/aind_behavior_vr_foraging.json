@@ -209,7 +209,7 @@
     "AindVrForagingRig": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.0",
+          "default": "0.13.2",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -473,7 +473,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.0",
+          "default": "0.13.2",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -2331,7 +2331,7 @@
         "calibration": {
           "$ref": "#/$defs/OlfactometerCalibration",
           "default": {
-            "date": "2026-02-14T19:48:12.752548Z",
+            "date": null,
             "channel_config": {}
           },
           "title": "Calibration of the olfactometer"
@@ -2371,10 +2371,18 @@
       "description": "Olfactometer device configuration model",
       "properties": {
         "date": {
+          "default": null,
           "description": "Date of the calibration",
-          "format": "date-time",
-          "title": "Date",
-          "type": "string"
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
         },
         "channel_config": {
           "additionalProperties": {
@@ -3871,14 +3879,14 @@
     "Session": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.0",
+          "default": "0.13.2",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.13.0",
-          "default": "0.13.0",
+          "const": "0.13.2",
+          "default": "0.13.2",
           "title": "Version",
           "type": "string"
         },
@@ -4481,7 +4489,7 @@
         "calibration": {
           "$ref": "#/$defs/TreadmillCalibration",
           "default": {
-            "date": "2026-02-14T19:48:12.755298Z",
+            "date": null,
             "wheel_diameter": 15.0,
             "pulses_per_revolution": 28800,
             "invert_direction": false,
@@ -4533,10 +4541,18 @@
       "description": "Treadmill calibration class",
       "properties": {
         "date": {
+          "default": null,
           "description": "Date of the calibration",
-          "format": "date-time",
-          "title": "Date",
-          "type": "string"
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
         },
         "wheel_diameter": {
           "default": 15,
@@ -4749,13 +4765,13 @@
           "type": "integer"
         },
         "container_extension": {
-          "default": "mp4",
+          "default": "mkv",
           "description": "Container extension",
           "title": "Container Extension",
           "type": "string"
         },
         "output_arguments": {
-          "default": "-vf \"scale=out_color_matrix=bt709:out_range=full,format=bgr24,scale=out_range=full\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M",
+          "default": "-vf \"scale=out_range=full,setparams=range=full:colorspace=bt709:color_primaries=bt709:color_trc=linear\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p3 -rc vbr -cq 18 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M -f matroska -write_crc32 0",
           "description": "Output arguments",
           "title": "Output Arguments",
           "type": "string"
@@ -5036,10 +5052,18 @@
       "description": "Represents a water valve calibration.",
       "properties": {
         "date": {
+          "default": null,
           "description": "Date of the calibration",
-          "format": "date-time",
-          "title": "Date",
-          "type": "string"
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
         },
         "measurements": {
           "default": [],
