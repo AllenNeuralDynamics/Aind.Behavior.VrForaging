@@ -2261,13 +2261,6 @@
     "OdorControl": {
       "description": "Controls the odor delivery system parameters.\n\nThis class manages the olfactory stimulus delivery system, including flow rates,\nvalve timing, and carrier gas configuration. It ensures proper odor concentration\nand delivery timing for the behavioral task.",
       "properties": {
-        "valve_max_open_time": {
-          "default": 10,
-          "description": "Maximum time (s) the valve can be open continuously",
-          "minimum": 0,
-          "title": "Valve Max Open Time",
-          "type": "number"
-        },
         "target_total_flow": {
           "default": 1000,
           "description": "Target total flow (ml/s) of the odor mixture",
@@ -2595,7 +2588,6 @@
         "odor_control": {
           "$ref": "#/$defs/OdorControl",
           "default": {
-            "valve_max_open_time": 10.0,
             "target_total_flow": 1000.0,
             "use_channel_3_as_carrier": true,
             "target_odor_flow": 100.0
