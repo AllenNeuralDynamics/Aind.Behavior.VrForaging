@@ -34,9 +34,7 @@ operation_control = vr_task_logic.OperationControl(
         retracting_distance=2000,
     ),
     audio_control=vr_task_logic.AudioControl(frequency=1000, duration=0.2),
-    odor_control=vr_task_logic.OdorControl(
-        valve_max_open_time=100000, target_odor_flow=100, target_total_flow=1000, use_channel_3_as_carrier=True
-    ),
+    odor_control=vr_task_logic.OdorControl(target_odor_flow=100, target_total_flow=1000, use_channel_3_as_carrier=True),
     position_control=vr_task_logic.PositionControl(
         gain=vr_task_logic.Vector3(x=1, y=1, z=1),
         initial_position=vr_task_logic.Vector3(x=0, y=2.56, z=0),

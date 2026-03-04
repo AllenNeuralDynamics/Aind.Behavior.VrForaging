@@ -6366,8 +6366,6 @@ namespace AindVrForagingDataSchema
     public partial class OdorControl
     {
     
-        private double _valveMaxOpenTime;
-    
         private double _targetTotalFlow;
     
         private bool _useChannel3AsCarrier;
@@ -6376,7 +6374,6 @@ namespace AindVrForagingDataSchema
     
         public OdorControl()
         {
-            _valveMaxOpenTime = 10D;
             _targetTotalFlow = 1000D;
             _useChannel3AsCarrier = true;
             _targetOdorFlow = 100D;
@@ -6384,27 +6381,9 @@ namespace AindVrForagingDataSchema
     
         protected OdorControl(OdorControl other)
         {
-            _valveMaxOpenTime = other._valveMaxOpenTime;
             _targetTotalFlow = other._targetTotalFlow;
             _useChannel3AsCarrier = other._useChannel3AsCarrier;
             _targetOdorFlow = other._targetOdorFlow;
-        }
-    
-        /// <summary>
-        /// Maximum time (s) the valve can be open continuously
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("valve_max_open_time")]
-        [System.ComponentModel.DescriptionAttribute("Maximum time (s) the valve can be open continuously")]
-        public double ValveMaxOpenTime
-        {
-            get
-            {
-                return _valveMaxOpenTime;
-            }
-            set
-            {
-                _valveMaxOpenTime = value;
-            }
         }
     
         /// <summary>
@@ -6470,7 +6449,6 @@ namespace AindVrForagingDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("ValveMaxOpenTime = " + _valveMaxOpenTime + ", ");
             stringBuilder.Append("TargetTotalFlow = " + _targetTotalFlow + ", ");
             stringBuilder.Append("UseChannel3AsCarrier = " + _useChannel3AsCarrier + ", ");
             stringBuilder.Append("TargetOdorFlow = " + _targetOdorFlow);

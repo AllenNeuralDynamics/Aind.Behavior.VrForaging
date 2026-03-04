@@ -879,9 +879,6 @@ class OdorControl(BaseModel):
     and delivery timing for the behavioral task.
     """
 
-    valve_max_open_time: float = Field(
-        default=10, ge=0, description="Maximum time (s) the valve can be open continuously"
-    )
     target_total_flow: float = Field(
         default=1000, ge=100, le=1000, description="Target total flow (ml/s) of the odor mixture"
     )
