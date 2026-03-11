@@ -111,8 +111,8 @@ class Rendering(qc.Suite):
         ts_photodiode = ts_photodiode[1:]
         ts_gpu = ts_gpu[1:]
         # Zero both arrays to make it easier to manipulate
-        ts_gpu -= ts_gpu[0]
-        ts_photodiode -= ts_photodiode[0]
+        ts_gpu = ts_gpu - ts_gpu[0]
+        ts_photodiode = ts_photodiode - ts_photodiode[0]
 
         aligned_gpu_photodiode = np.empty((len(ts_gpu), 2))
         aligned_gpu_photodiode[:] = np.nan
