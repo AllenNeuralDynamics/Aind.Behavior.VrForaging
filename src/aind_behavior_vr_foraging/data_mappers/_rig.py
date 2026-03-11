@@ -628,8 +628,8 @@ _camera_assembly_lookup = {
         ],
         lens=devices.Lens(
             name="face_camera_lens",
-            manufacturer=devices.Organization.TAMRON,
-            model="M112FM16",
+            manufacturer=devices.Organization.FUJINON,
+            model="CF50ZA-1S",
         ),
     ),
     "SideCamera": _PartialCameraAssembly(
@@ -637,7 +637,9 @@ _camera_assembly_lookup = {
         target=devices.CameraTarget.BODY,
         relative_position=[aind_schema_model_coordinates.AnatomicalRelative.LATERAL],
         lens=devices.Lens(
-            name="side_camera_lens", manufacturer=devices.Organization.OTHER, model="LM5JCM", notes="manufacturer=Kowa"
+            name="side_camera_lens",
+            manufacturer=devices.Organization.KOWA,
+            model="LM5JCM",
         ),
     ),
     "FrontCamera": _PartialCameraAssembly(
@@ -648,7 +650,9 @@ _camera_assembly_lookup = {
             aind_schema_model_coordinates.AnatomicalRelative.SUPERIOR,
         ],
         lens=devices.Lens(
-            name="front_camera_lens", manufacturer=devices.Organization.OTHER, model="LM5JCM", notes="manufacturer=Kowa"
+            name="front_camera_lens",
+            manufacturer=devices.Organization.KOWA,
+            model="LM25HC",
         ),
     ),
 }
