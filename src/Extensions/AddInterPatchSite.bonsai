@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.2"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
+                 xmlns:p2="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.Distributions;assembly=AllenNeuralDynamics.AindBehaviorServices.Distributions"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns="https://bonsai-rx.org/2018/workflow">
@@ -46,7 +47,7 @@
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Value" DisplayName="LengthDistribution" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p1:Distribution">
+            <Expression xsi:type="PropertySource" TypeArguments="p1:VirtualSiteGenerator,p2:Distribution">
               <MemberName>LengthDistribution</MemberName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -58,7 +59,7 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:SampleDistribution" />
+              <Combinator xsi:type="p2:SampleDistribution" />
             </Expression>
             <Expression xsi:type="InputMapping">
               <PropertyMappings />
@@ -84,7 +85,9 @@
               <Property Name="Contrast" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:RenderSpecification" />
+              <Combinator xsi:type="p1:RenderSpecification">
+                <p1:Contrast xsi:nil="true" />
+              </Combinator>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -97,6 +100,7 @@
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSite.bonsai">
               <Id>0</Id>
+              <Label>Unspecified</Label>
               <Length>120</Length>
               <StartPosition>0</StartPosition>
             </Expression>

@@ -16,7 +16,7 @@ version = "0.7.0rc0"
 readme = {file = "README.md", content-type = "text/markdown"}
 
 dependencies = [
-  "aind_behavior_services>=0.13.2",
+  "aind_behavior_services>=0.13.5",
   "pydantic-settings"
 ]
 
@@ -41,8 +41,8 @@ launcher = [
 dev = [
     "aind_behavior_vr_foraging[launcher]",
     "aind_behavior_vr_foraging[data]",
-    "aind-data-schema@git+https://github.com/AllenNeuralDynamics/aind-data-schema@dev",
-    "aind-data-schema-models@git+https://github.com/AllenNeuralDynamics/aind-data-schema-models@main",
+    "aind-data-schema",
+    "aind-data-schema-models",
     "ruff",
     "codespell",
 ]
