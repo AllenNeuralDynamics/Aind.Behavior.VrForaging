@@ -92,7 +92,8 @@
         }
       },
       "title": "AindManipulatorCalibration",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.AindManipulatorCalibration"
     },
     "AindManipulatorDevice": {
       "description": "Appends a task specific configuration to the base manipulator model.",
@@ -209,7 +210,7 @@
     "AindVrForagingRig": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.2",
+          "default": "0.13.5",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -473,7 +474,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.2",
+          "default": "0.13.5",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -544,7 +545,8 @@
         "Y1",
         "Y2",
         "Z"
-      ]
+      ],
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.Axis"
     },
     "AxisConfiguration": {
       "description": "Axis configuration",
@@ -601,7 +603,8 @@
         "axis"
       ],
       "title": "AxisConfiguration",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.AxisConfiguration"
     },
     "BaseModel": {
       "properties": {},
@@ -652,7 +655,8 @@
         }
       },
       "title": "BetaDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BetaDistribution"
     },
     "BetaDistributionParameters": {
       "description": "Parameters for a beta distribution.\n\nDefined by alpha and beta shape parameters.",
@@ -679,7 +683,8 @@
         }
       },
       "title": "BetaDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BetaDistributionParameters"
     },
     "BinomialDistribution": {
       "description": "A binomial probability distribution.\n\nModels the number of successes in a fixed number of independent\nBernoulli trials with constant success probability.",
@@ -725,7 +730,8 @@
         }
       },
       "title": "BinomialDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BinomialDistribution"
     },
     "BinomialDistributionParameters": {
       "description": "Parameters for a binomial distribution.\n\nDefined by number of trials (n) and success probability (p).",
@@ -753,7 +759,8 @@
         }
       },
       "title": "BinomialDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BinomialDistributionParameters"
     },
     "Block": {
       "description": "Configuration for a single experimental block.\n\nA block represents a period of the experiment with specific environment\nstatistics and ending conditions. Each block defines the environmental\nparameters and termination criteria for that experimental phase.",
@@ -1362,7 +1369,8 @@
           "$ref": "#/$defs/PdfDistribution"
         }
       ],
-      "title": "Distribution"
+      "title": "Distribution",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution"
     },
     "EnvironmentStatistics": {
       "description": "Defines the statistical properties of the foraging environment.\n\nThis class specifies the patches available in the environment, their transition\nprobabilities, and initial state occupancy. It forms the core specification\nfor the foraging environment structure.",
@@ -1457,7 +1465,8 @@
         }
       },
       "title": "ExponentialDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ExponentialDistribution"
     },
     "ExponentialDistributionParameters": {
       "description": "Parameters for an exponential distribution.\n\nDefined by the rate parameter (inverse of mean).",
@@ -1477,7 +1486,8 @@
         }
       },
       "title": "ExponentialDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ExponentialDistributionParameters"
     },
     "GammaDistribution": {
       "description": "A gamma probability distribution.\n\nGeneralizes the exponential distribution. Used for modeling\npositive continuous variables with right-skewed distributions.",
@@ -1523,7 +1533,8 @@
         }
       },
       "title": "GammaDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.GammaDistribution"
     },
     "GammaDistributionParameters": {
       "description": "Parameters for a gamma distribution.\n\nDefined by shape (k) and rate (\u03b8\u207b\u00b9) parameters.",
@@ -1550,7 +1561,8 @@
         }
       },
       "title": "GammaDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.GammaDistributionParameters"
     },
     "HarpAnalogInput": {
       "properties": {
@@ -1911,7 +1923,8 @@
         }
       },
       "title": "LogNormalDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.LogNormalDistribution"
     },
     "LogNormalDistributionParameters": {
       "description": "Parameters for a log-normal distribution.\n\nDefined by the mean and standard deviation of the underlying normal distribution.",
@@ -1936,7 +1949,8 @@
         }
       },
       "title": "LogNormalDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.LogNormalDistributionParameters"
     },
     "LookupTableFunction": {
       "description": "A patch update function that uses lookup table interpolation.\n\nUpdate in the form of x = lut_values[lerp(lut_keys, lut_values, tick_value)].\nThis function maps input values to output values using a lookup table with\nlinear interpolation between defined points. Useful for complex, non-linear\nreward schedules or parameter updates.",
@@ -2000,7 +2014,8 @@
         "z"
       ],
       "title": "ManipulatorPosition",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.ManipulatorPosition"
     },
     "Measurement": {
       "description": "Input for water valve calibration class",
@@ -2058,7 +2073,8 @@
         "Microstep16",
         "Microstep32",
         "Microstep64"
-      ]
+      ],
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.MicrostepResolution"
     },
     "MotorOperationMode": {
       "description": "Motor operation mode",
@@ -2071,7 +2087,8 @@
       "x-enumNames": [
         "Quiet",
         "Dynamic"
-      ]
+      ],
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.MotorOperationMode"
     },
     "MovableSpoutControl": {
       "description": "Controls the movable water spout behavior for reward delivery.\n\nThis class configures how the movable spout operates, including when it's\nenabled, timing for reward collection, and retraction distance for operant\nconditioning protocols.",
@@ -2144,7 +2161,8 @@
         }
       },
       "title": "NormalDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.NormalDistribution"
     },
     "NormalDistributionParameters": {
       "description": "Parameters for a normal (Gaussian) distribution.\n\nDefined by mean (center) and standard deviation (spread).",
@@ -2169,7 +2187,8 @@
         }
       },
       "title": "NormalDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.NormalDistributionParameters"
     },
     "NumericalUpdater": {
       "description": "A numerical updater that modifies task parameters during execution.\n\nThis class combines an operation type with parameters to define how values\nshould be updated dynamically during the task, enabling adaptive behavior\nbased on animal performance or other criteria.",
@@ -3213,7 +3232,8 @@
         }
       },
       "title": "PdfDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.PdfDistribution"
     },
     "PdfDistributionParameters": {
       "description": "Parameters for a custom probability density function distribution.\n\nDefined by explicit probability values and their corresponding indices.\nProbabilities are automatically normalized to sum to 1.",
@@ -3249,7 +3269,8 @@
         }
       },
       "title": "PdfDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.PdfDistributionParameters"
     },
     "PersistentRewardFunction": {
       "description": "A RewardFunction that is always active.",
@@ -3361,7 +3382,8 @@
         }
       },
       "title": "PoissonDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.PoissonDistribution"
     },
     "PoissonDistributionParameters": {
       "description": "Parameters for a Poisson distribution.\n\nDefined by the rate parameter (average number of events).",
@@ -3381,7 +3403,8 @@
         }
       },
       "title": "PoissonDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.PoissonDistributionParameters"
     },
     "PositionControl": {
       "description": "Controls the position tracking and movement detection parameters.\n\nThis class manages the position control system including coordinate transformations,\ninitial positioning, signal filtering, and movement detection thresholds for the\nvirtual reality foraging task.",
@@ -3617,20 +3640,33 @@
           "description": "Parameters of the distribution"
         },
         "truncation_parameters": {
-          "const": null,
           "default": null,
-          "title": "Truncation Parameters",
-          "type": "null"
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "scaling_parameters": {
-          "const": null,
           "default": null,
-          "title": "Scaling Parameters",
-          "type": "null"
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "Scalar",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.Scalar"
     },
     "ScalarDistributionParameter": {
       "description": "Parameters for a scalar (constant) distribution.\n\nRepresents a deterministic value that always returns the same number.",
@@ -3649,7 +3685,8 @@
         }
       },
       "title": "ScalarDistributionParameter",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ScalarDistributionParameter"
     },
     "ScalingParameters": {
       "description": "Parameters for scaling and offsetting sampled distribution values.\nScaling is applied as (value * scale + offset).\n\nApplies linear transformation: result = (value * scale) + offset.",
@@ -3668,7 +3705,8 @@
         }
       },
       "title": "ScalingParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ScalingParameters"
     },
     "ScreenAssembly": {
       "description": "Represents a screen assembly (left, center and right screens) and respective configuration.",
@@ -3871,14 +3909,14 @@
     "Session": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.2",
+          "default": "0.13.5",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.13.2",
-          "default": "0.13.2",
+          "const": "0.13.5",
+          "default": "0.13.5",
           "title": "Version",
           "type": "string"
         },
@@ -4640,7 +4678,8 @@
         }
       },
       "title": "TruncationParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.TruncationParameters"
     },
     "UniformDistribution": {
       "description": "A uniform probability distribution.\n\nAll values between min and max have equal probability of being sampled.",
@@ -4686,7 +4725,8 @@
         }
       },
       "title": "UniformDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.UniformDistribution"
     },
     "UniformDistributionParameters": {
       "description": "Parameters for a uniform distribution.\n\nDefined by minimum and maximum bounds of the distribution.",
@@ -4711,7 +4751,8 @@
         }
       },
       "title": "UniformDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.UniformDistributionParameters"
     },
     "UpdaterTarget": {
       "description": "Enumeration of parameters that can be targeted by numerical updaters.\n\nThese targets define which task parameters can be dynamically modified\nduring task execution to adapt to animal performance or experimental needs.",

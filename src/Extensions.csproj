@@ -20,6 +20,8 @@
     <PackageReference Include="OpenTK.GLControl" Version="3.1.0" />
     <PackageReference Include="Bonsai.Dsp.Design" Version="2.9.0" />
     <PackageReference Include="Hexa.NET.ImGui.Backends" Version="1.0.17.4" />
-    <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices" Version="0.12.0" />
+    <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices" Version="0.13.4" />
+    <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices.Distributions" Version="0.2.0" />
+
   </ItemGroup>
 </Project>
