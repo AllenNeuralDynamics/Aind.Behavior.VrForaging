@@ -55,14 +55,22 @@
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TriggeredCamerasStream</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core.Design:SpinnakerCameraControllerVisualizer.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\SpinnakerCameraControllerVisualizer.bonsai">
+                    <Minimum>1</Minimum>
+                    <Maximum>254</Maximum>
+                    <OverlayAlpha>1</OverlayAlpha>
+                  </Expression>
                   <Expression xsi:type="VisualizerMapping">
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TriggeredCamerasStream</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core.Design:SpinnakerCameraControllerVisualizer.bonsai" />
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\SpinnakerCameraControllerVisualizer.bonsai">
+                    <Minimum>1</Minimum>
+                    <Maximum>254</Maximum>
+                    <OverlayAlpha>1</OverlayAlpha>
+                  </Expression>
                   <Expression xsi:type="VisualizerMapping">
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
