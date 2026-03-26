@@ -224,31 +224,38 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
 
         # Olfactory Stimulation
-        # TODO needs aind-data-schema to be updated
-        # stimulus_modalities.append(acquisition.StimulusModality.OLFACTORY)
-        # olfactory_stimulus_channel_config: List[aind_data_schema.components.stimulus.OlfactometerChannelConfig] = []
-        # olf_calibration = rig_model.harp_olfactometer.calibration
-        # if olf_calibration is None:
-        #     raise ValueError("Olfactometer calibration is not set in the rig model.")
-        # for _, channel in olf_calibration.input.channel_config.items():
-        #     if channel.channel_type == OlfactometerChannelType.ODOR:
-        #         olfactory_stimulus_channel_config.append(
-        #             coerce_to_aind_data_schema(channel, aind_data_schema.components.stimulus.OlfactometerChannelConfig)
-        #         )
-        # stimulation_parameters.append(
-        #     aind_data_schema.core.session.OlfactoryStimulation(
-        #         stimulus_name="Olfactory", channels=olfactory_stimulus_channel_config
-        #     )
-        # )
+        import aind_data_schema.components.configs
+        from aind_behavior_services.rig.olfactometer import OlfactometerChannelType
 
-        # _olfactory_device = get_fields_of_type(rig_model, AbsRig.harp.HarpOlfactometer)
-        # if len(_olfactory_device) > 0:
-        #     if _olfactory_device[0][0]:
-        #         stimulation_devices.append(_olfactory_device[0][0])
-        # else:
-        #     logger.error("Olfactometer device not found in rig model.")
-        #     raise ValueError("Olfactometer device not found in rig model.")
+        stimulus_modalities.append(acquisition.StimulusModality.OLFACTORY)
+        olfactory_stimulus_channel_info: List[aind_data_schema.components.configs.OlfactometerChannelInfo] = []
+        olf_calibration = self.rig_model.harp_olfactometer.calibration
+        if olf_calibration is None:
+            raise ValueError("Olfactometer calibration is not set in the rig model.")
+        for _, channel in olf_calibration.channel_config.items():
+            if channel.channel_type == OlfactometerChannelType.ODOR:
+                # These fields are required, so...
+                if not (channel.odorant is None and channel.odorant_dilution is None):
+                    olfactory_stimulus_channel_info.append(
+                        aind_data_schema.components.configs.OlfactometerChannelInfo(
+                            channel_index=channel.channel_index,
+                            odorant=channel.odorant,
+                            dilution=channel.odorant_dilution,
+                        )
+                    )
+                else:
+                    logger.warning(
+                        "Olfactometer channel %d is configured as ODOR but odorant or dilution is not set. Skipping this channel.",
+                        channel.channel_index,
+                    )
 
+        stimulus_epoch_configurations.append(
+            aind_data_schema.components.configs.OlfactometerConfig(
+                device_name=TrackedDevices.OLFACTOMETER, channel_configs=olfactory_stimulus_channel_info
+            )
+        )
+
+        # Animal performance, curriculum, and metrics
         performance_metrics: Optional[acquisition.PerformanceMetrics] = None
         curriculum_status: str = "false"
 

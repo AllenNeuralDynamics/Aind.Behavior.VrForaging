@@ -106,3 +106,4 @@ class TrackedDevices(enum.StrEnum):
     SCREEN = "screen"
     COMPUTER = "computer"
     WATER_VALVE_SOLENOID = "water_valve_solenoid"
+    OLFACTOMETER = "harp_olfactometer"
