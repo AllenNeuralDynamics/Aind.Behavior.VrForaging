@@ -528,7 +528,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
             raise ValueError("Olfactometer calibration is not set.")
 
         return devices.Olfactometer(
-            name="harp_olfactometer",
+            name=TrackedDevices.OLFACTOMETER,
             harp_device_type=devices.HarpDeviceType.OLFACTOMETER,
             manufacturer=devices.Organization.CHAMPALIMAUD,
             is_clock_generator=False,
