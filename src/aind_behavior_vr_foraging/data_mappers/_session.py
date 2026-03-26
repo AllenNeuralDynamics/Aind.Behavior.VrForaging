@@ -8,6 +8,7 @@ from typing import List, Optional, cast, get_args
 import aind_behavior_services.rig as AbsRig
 import git
 import pydantic
+from aind_behavior_curriculum import TrainerState
 from aind_behavior_services.rig import cameras, visual_stimulation
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import get_fields_of_type, model_from_json_file, utcnow
@@ -46,6 +47,14 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.rig_model = model_from_json_file(abs_schemas_path / "rig_input.json", AindVrForagingRig)
         self.task_model = model_from_json_file(abs_schemas_path / "tasklogic_input.json", AindVrForagingTaskLogic)
 
+        self.trainer_state: TrainerState | None = None
+        trainer_state_path = Path(self._data_path) / "Behavior" / "trainer_state.json"
+        if trainer_state_path.exists():
+            self.trainer_state = model_from_json_file(
+                trainer_state_path,
+                TrainerState,
+            )
+
         if curriculum_suggestion is not None:
             if isinstance(curriculum_suggestion, CurriculumSuggestion):
                 pass
@@ -60,7 +69,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             except FileNotFoundError:
                 logger.warning("Curriculum suggestion file not found. Proceeding without it.")
                 curriculum_suggestion = None
-        self.curriculum = curriculum_suggestion
+        self.curriculum_suggestion = curriculum_suggestion
         self.repository = git.Repo(self._repo_path)
         assert self.repository.working_tree_dir is not None
         self.bonsai_app = BonsaiApp(
@@ -240,14 +249,19 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         #     logger.error("Olfactometer device not found in rig model.")
         #     raise ValueError("Olfactometer device not found in rig model.")
 
-        if self.curriculum is not None:
+        performance_metrics: Optional[acquisition.PerformanceMetrics] = None
+        curriculum_status: str = "false"
+
+        if self.curriculum_suggestion is not None:
+            logger.debug("Curriculum suggestion found. Setting performance metrics based on curriculum suggestion.")
             performance_metrics = acquisition.PerformanceMetrics(
-                output_parameters=acquisition.GenericModel.model_validate(self.curriculum.metrics.model_dump())
+                output_parameters=acquisition.GenericModel.model_validate(
+                    self.curriculum_suggestion.metrics.model_dump()
+                )
             )
-            curriculum_status = str(self.curriculum.trainer_state.is_on_curriculum)
-        else:
-            curriculum_status = "false"
-            performance_metrics = None
+        if self.trainer_state is not None:
+            logger.debug("Trainer state found. Setting curriculum status based on trainer state.")
+            curriculum_status = str(self.trainer_state.is_on_curriculum)
 
         stimulus_epochs: list[acquisition.StimulusEpoch] = [
             acquisition.StimulusEpoch(

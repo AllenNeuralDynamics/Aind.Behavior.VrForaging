@@ -51,7 +51,8 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         ]
     ).run()
 
-    input_trainer_state_path = launcher.save_temp_model(trainer_state)
+    input_trainer_state_path = launcher.session_directory / "behavior" / "trainer_state.json"
+    input_trainer_state_path.write_text(trainer_state.model_dump_json(indent=2), encoding="utf-8")
 
     # Post-fetching modifications
     manipulator_modifier = ByAnimalManipulatorModifier(
@@ -243,7 +244,7 @@ async def recover_session(launcher: Launcher) -> None:
     rig_model = AindVrForagingRig.model_validate_json(
         (session_path / "behavior/Logs/rig_input.json").read_text(encoding="utf-8")
     )
-    trainer_state_files = list((session_path / "behavior/Logs/.launcher").glob("TrainerState_*.json"))
+    trainer_state_files = list((session_path / "behavior").glob("trainer_state*.json"))
     if trainer_state_files:
         input_trainer_state_path = trainer_state_files[0]
     else:
