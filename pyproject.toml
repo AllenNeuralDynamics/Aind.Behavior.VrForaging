@@ -32,7 +32,7 @@ data = ["contraqctor>=0.5.3, <0.6.0"]
 
 launcher = [
     "aind-clabe[aind-services]>=0.10",
-    "aind-data-schema>=2.4",
+    "aind-data-schema>=2.6",
     "aind_behavior_vr_foraging[data]",
     ]
 
