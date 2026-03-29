@@ -208,6 +208,7 @@
       "type": "object"
     },
     "AindVrForagingRig": {
+      "description": "Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task.",
       "properties": {
         "aind_behavior_services_pkg_version": {
           "default": "0.13.5",
@@ -260,6 +261,14 @@
         "harp_olfactometer": {
           "$ref": "#/$defs/Olfactometer",
           "description": "Harp olfactometer"
+        },
+        "harp_olfactometer_extension": {
+          "description": "A collection of subordinate olfactometers that can be added to increase the number of independently delivered odors. The order of the list determines the order by which odors are numbered",
+          "items": {
+            "$ref": "#/$defs/Olfactometer"
+          },
+          "title": "Harp Olfactometer Extension",
+          "type": "array"
         },
         "harp_lickometer": {
           "$ref": "#/$defs/HarpLicketySplit",

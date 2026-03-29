@@ -180,7 +180,12 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents the schema, and concrete instantiation, of a rig configuration to run " +
+        "the VrForaging behavior task.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindVrForagingRig
@@ -203,6 +208,8 @@ namespace AindVrForagingDataSchema
         private HarpBehavior _harpBehavior;
     
         private Olfactometer _harpOlfactometer;
+    
+        private System.Collections.Generic.List<Olfactometer> _harpOlfactometerExtension;
     
         private HarpLicketySplit _harpLickometer;
     
@@ -229,6 +236,7 @@ namespace AindVrForagingDataSchema
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
             _harpOlfactometer = new Olfactometer();
+            _harpOlfactometerExtension = new System.Collections.Generic.List<Olfactometer>();
             _harpLickometer = new HarpLicketySplit();
             _harpClockGenerator = new HarpWhiteRabbit();
             _harpTreadmill = new Treadmill();
@@ -248,6 +256,7 @@ namespace AindVrForagingDataSchema
             _monitoringCameraController = other._monitoringCameraController;
             _harpBehavior = other._harpBehavior;
             _harpOlfactometer = other._harpOlfactometer;
+            _harpOlfactometerExtension = other._harpOlfactometerExtension;
             _harpLickometer = other._harpLickometer;
             _harpClockGenerator = other._harpClockGenerator;
             _harpAnalogInput = other._harpAnalogInput;
@@ -405,6 +414,26 @@ namespace AindVrForagingDataSchema
             set
             {
                 _harpOlfactometer = value;
+            }
+        }
+    
+        /// <summary>
+        /// A collection of subordinate olfactometers that can be added to increase the number of independently delivered odors. The order of the list determines the order by which odors are numbered
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_olfactometer_extension")]
+        [System.ComponentModel.DescriptionAttribute("A collection of subordinate olfactometers that can be added to increase the numbe" +
+            "r of independently delivered odors. The order of the list determines the order b" +
+            "y which odors are numbered")]
+        public System.Collections.Generic.List<Olfactometer> HarpOlfactometerExtension
+        {
+            get
+            {
+                return _harpOlfactometerExtension;
+            }
+            set
+            {
+                _harpOlfactometerExtension = value;
             }
         }
     
@@ -591,6 +620,7 @@ namespace AindVrForagingDataSchema
             stringBuilder.Append("MonitoringCameraController = " + _monitoringCameraController + ", ");
             stringBuilder.Append("HarpBehavior = " + _harpBehavior + ", ");
             stringBuilder.Append("HarpOlfactometer = " + _harpOlfactometer + ", ");
+            stringBuilder.Append("HarpOlfactometerExtension = " + _harpOlfactometerExtension + ", ");
             stringBuilder.Append("HarpLickometer = " + _harpLickometer + ", ");
             stringBuilder.Append("HarpClockGenerator = " + _harpClockGenerator + ", ");
             stringBuilder.Append("HarpAnalogInput = " + _harpAnalogInput + ", ");
