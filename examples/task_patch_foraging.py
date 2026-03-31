@@ -114,7 +114,7 @@ replenish_function = vr_task_logic.OutsideRewardFunction(
 patch1 = vr_task_logic.Patch(
     label="reset",
     state_index=0,
-    odor_specification=vr_task_logic.OdorSpecification(index=1, concentration=1),
+    odor_specification=[0.0, 1.0, 0.0],
     reward_specification=vr_task_logic.RewardSpecification(
         amount=vr_task_logic.scalar_value(1),
         probability=vr_task_logic.scalar_value(1),
@@ -134,7 +134,7 @@ patch1 = vr_task_logic.Patch(
 patch2 = vr_task_logic.Patch(
     label="slow-replenish",
     state_index=1,
-    odor_specification=vr_task_logic.OdorSpecification(index=0, concentration=1),
+    odor_specification=[0.1, 0.0, 0.0],
     reward_specification=vr_task_logic.RewardSpecification(
         reward_function=[reward_function, replenish_function],
         operant_logic=OperantLogicHelper(),
