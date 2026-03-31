@@ -2286,35 +2286,6 @@
       "title": "NumericalUpdaterParameters",
       "type": "object"
     },
-    "OdorControl": {
-      "description": "Controls the odor delivery system parameters.\n\nThis class manages the olfactory stimulus delivery system, including flow rates,\nvalve timing, and carrier gas configuration. It ensures proper odor concentration\nand delivery timing for the behavioral task.",
-      "properties": {
-        "target_total_flow": {
-          "default": 1000,
-          "description": "Target total flow (ml/s) of the odor mixture",
-          "maximum": 1000,
-          "minimum": 100,
-          "title": "Target Total Flow",
-          "type": "number"
-        },
-        "use_channel_3_as_carrier": {
-          "default": true,
-          "description": "Whether to use channel 3 as carrier",
-          "title": "Use Channel 3 As Carrier",
-          "type": "boolean"
-        },
-        "target_odor_flow": {
-          "default": 100,
-          "description": "Target odor flow (ml/s) in the odor mixture",
-          "maximum": 100,
-          "minimum": 0,
-          "title": "Target Odor Flow",
-          "type": "number"
-        }
-      },
-      "title": "OdorControl",
-      "type": "object"
-    },
     "OdorSpecification": {
       "description": "Specifies odor delivery parameters for olfactory cues in the VR environment.\n\nOdors can be delivered at specific locations to provide additional sensory\ninformation for navigation and foraging decisions.",
       "properties": {
@@ -2612,15 +2583,6 @@
             "retracting_distance": 0.0
           },
           "description": "Control of the movable spout"
-        },
-        "odor_control": {
-          "$ref": "#/$defs/OdorControl",
-          "default": {
-            "target_total_flow": 1000.0,
-            "use_channel_3_as_carrier": true,
-            "target_odor_flow": 100.0
-          },
-          "description": "Control of the odor"
         },
         "position_control": {
           "$ref": "#/$defs/PositionControl",
@@ -3434,7 +3396,7 @@
             "y": 2.56,
             "z": 0.0
           },
-          "description": "Gain of the position control."
+          "description": "Initial position of the subject in the VR world."
         },
         "frequency_filter_cutoff": {
           "default": 0.5,
