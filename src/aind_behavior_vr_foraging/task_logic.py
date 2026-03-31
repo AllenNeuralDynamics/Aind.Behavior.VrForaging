@@ -410,10 +410,6 @@ class _RewardFunction(BaseModel):
         default=None, description="Defines the amount of reward available replenished in the patch per rule unit."
     )
 
-
-OdorConcentration = Annotated[float, Field(ge=0, le=1, description="Concentration of the odor")]
-
-
 class PatchRewardFunction(_RewardFunction):
     """
     A RewardFunction that is applied when the animal is inside the patch.
@@ -656,7 +652,7 @@ class VirtualSite(BaseModel):
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length: float = Field(default=20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
-    odor_specification: Optional[List[OdorConcentration]] = Field(
+    odor_specification: Optional[List[NonNegativeFloat]] = Field(
         default=None, description="The optional odor specification of the virtual site"
     )
     reward_specification: Optional[VirtualSiteRewardSpecification] = Field(
@@ -754,7 +750,7 @@ class Patch(BaseModel):
 
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
-    odor_specification: List[OdorConcentration] = Field(
+    odor_specification: List[NonNegativeFloat] = Field(
         description="A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel"
     )
     reward_specification: RewardSpecification = Field(
