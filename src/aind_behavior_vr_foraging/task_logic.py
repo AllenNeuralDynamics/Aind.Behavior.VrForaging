@@ -410,6 +410,7 @@ class _RewardFunction(BaseModel):
         default=None, description="Defines the amount of reward available replenished in the patch per rule unit."
     )
 
+
 class PatchRewardFunction(_RewardFunction):
     """
     A RewardFunction that is applied when the animal is inside the patch.
