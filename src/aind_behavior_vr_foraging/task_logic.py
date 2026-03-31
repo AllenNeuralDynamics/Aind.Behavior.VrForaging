@@ -1,12 +1,12 @@
 import logging
 from enum import Enum
-from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, Union, cast
+from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, TypeAlias, Union, cast
 
 import aind_behavior_services.task.distributions as distributions
 from aind_behavior_services.common import Size, Vector3
 from aind_behavior_services.task import Task, TaskParameters
-from pydantic import BaseModel, Field, NonNegativeFloat, field_validator, model_validator
-from typing_extensions import TypeAliasType
+from pydantic import BaseModel, BeforeValidator, Field, NonNegativeFloat, field_validator, model_validator
+from typing_extensions import TypeAliasType, deprecated
 
 from aind_behavior_vr_foraging import (
     __semver__,
@@ -636,6 +636,38 @@ class VirtualSiteRewardSpecification(BaseModel):
     )
 
 
+def _odor_mixture_from_odor_specification(value: Any):
+    if isinstance(value, list):
+        return value
+    else:
+        try:
+            odor_spec = OdorSpecification.model_validate(value)
+            return [odor_spec.concentration if i == odor_spec.index else 0 for i in range(3)]
+        except ValueError:
+            pass
+    return value
+
+
+OdorMixture: TypeAlias = Annotated[
+    List[NonNegativeFloat],
+    Field(description="The optional odor specification of the virtual site"),
+    BeforeValidator(_odor_mixture_from_odor_specification),
+]
+
+
+@deprecated("OdorSpecification is deprecated, use OdorMixture instead")
+class OdorSpecification(BaseModel):
+    """
+    Specifies odor delivery parameters for olfactory cues in the VR environment.
+
+    Odors can be delivered at specific locations to provide additional sensory
+    information for navigation and foraging decisions.
+    """
+
+    index: int = Field(ge=0, le=3, description="Index of the odor to be used")
+    concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
+
+
 class VirtualSite(BaseModel):
     """
     THIS CLASS IS NOT MEANT TO BE DIRECTLY INSTANTIATED.
@@ -653,7 +685,7 @@ class VirtualSite(BaseModel):
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length: float = Field(default=20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
-    odor_specification: Optional[List[NonNegativeFloat]] = Field(
+    odor_specification: Optional[OdorMixture] = Field(
         default=None, description="The optional odor specification of the virtual site"
     )
     reward_specification: Optional[VirtualSiteRewardSpecification] = Field(
@@ -751,7 +783,7 @@ class Patch(BaseModel):
 
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
-    odor_specification: List[NonNegativeFloat] = Field(
+    odor_specification: OdorMixture = Field(
         description="A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel"
     )
     reward_specification: RewardSpecification = Field(
