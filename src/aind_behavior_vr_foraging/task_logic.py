@@ -165,18 +165,6 @@ class VisualCorridor(BaseModel):
     textures: WallTextures = Field(description="The textures of the corridor")
 
 
-class OdorSpecification(BaseModel):
-    """
-    Specifies odor delivery parameters for olfactory cues in the VR environment.
-
-    Odors can be delivered at specific locations to provide additional sensory
-    information for navigation and foraging decisions.
-    """
-
-    index: int = Field(ge=0, le=3, description="Index of the odor to be used")
-    concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
-
-
 # ==================== PATCH REWARD LOGIC ====================
 
 
@@ -423,6 +411,9 @@ class _RewardFunction(BaseModel):
     )
 
 
+OdorConcentration = Annotated[float, Field(ge=0, le=1, description="Concentration of the odor")]
+
+
 class PatchRewardFunction(_RewardFunction):
     """
     A RewardFunction that is applied when the animal is inside the patch.
@@ -665,7 +656,7 @@ class VirtualSite(BaseModel):
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length: float = Field(default=20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
-    odor_specification: Optional[OdorSpecification] = Field(
+    odor_specification: Optional[List[OdorConcentration]] = Field(
         default=None, description="The optional odor specification of the virtual site"
     )
     reward_specification: Optional[VirtualSiteRewardSpecification] = Field(
@@ -763,8 +754,8 @@ class Patch(BaseModel):
 
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
-    odor_specification: Optional[OdorSpecification] = Field(
-        default=None, description="The optional odor specification of the patch"
+    odor_specification: List[OdorConcentration] = Field(
+        description="A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel"
     )
     reward_specification: RewardSpecification = Field(
         default=RewardSpecification(),
@@ -867,6 +858,23 @@ class AudioControl(BaseModel):
     frequency: float = Field(default=1000, ge=100, le=9999, description="Frequency (Hz) of the audio cue")
 
 
+class OdorControl(BaseModel):
+    """
+    Controls the odor delivery system parameters.
+
+    This class manages the olfactory stimulus delivery system, including flow rates,
+    valve timing, and carrier gas configuration. It ensures proper odor concentration
+    and delivery timing for the behavioral task.
+    """
+
+    target_total_flow: Literal[1000] = Field(
+        default=1000, ge=100, le=1000, description="Target total flow (ml/s) of the odor mixture"
+    )
+    target_odor_flow: Literal[100] = Field(
+        default=100, ge=0, le=100, description="Target odor flow (ml/s) in the odor mixture"
+    )
+
+
 class OperationControl(BaseModel):
     """
     Master control class for all operational hardware systems.
@@ -878,6 +886,11 @@ class OperationControl(BaseModel):
 
     movable_spout_control: MovableSpoutControl = Field(
         default=MovableSpoutControl(), description="Control of the movable spout"
+    )
+    odor_control: OdorControl = Field(
+        default=OdorControl(target_odor_flow=100, target_total_flow=1000),
+        description="Control of the odor",
+        validate_default=True,
     )
     position_control: PositionControl = Field(
         default=PositionControl(), description="Control of the position", validate_default=True
