@@ -26,6 +26,8 @@ class RigCalibration(BaseModel):
 
 
 class AindVrForagingRig(rig.Rig):
+    """Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task."""
+
     version: Literal[__semver__] = __semver__
     triggered_camera_controller: cameras.CameraController[cameras.SpinnakerCamera] = Field(
         description="Required camera controller to triggered cameras."
@@ -35,6 +37,10 @@ class AindVrForagingRig(rig.Rig):
     )
     harp_behavior: harp.HarpBehavior = Field(description="Harp behavior")
     harp_olfactometer: oc.Olfactometer = Field(description="Harp olfactometer")
+    harp_olfactometer_extension: list[oc.Olfactometer] = Field(
+        default_factory=list,
+        description="A collection of subordinate olfactometers that can be added to increase the number of independently delivered odors. The order of the list determines the order by which odors are numbered",
+    )
     harp_lickometer: harp.HarpLicketySplit = Field(description="Harp lickometer")
     harp_clock_generator: harp.HarpWhiteRabbit = Field(description="Harp clock generator")
     harp_analog_input: Optional[harp.HarpAnalogInput] = Field(default=None, description="Harp analog input")
