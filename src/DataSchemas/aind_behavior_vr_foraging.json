@@ -2709,8 +2709,6 @@
         "odor_specification": {
           "description": "A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel",
           "items": {
-            "description": "Concentration of the odor",
-            "maximum": 1,
             "minimum": 0,
             "type": "number"
           },
@@ -4890,9 +4888,8 @@
           "description": "The optional odor specification of the virtual site",
           "oneOf": [
             {
+              "description": "The optional odor specification of the virtual site",
               "items": {
-                "description": "Concentration of the odor",
-                "maximum": 1,
                 "minimum": 0,
                 "type": "number"
               },

@@ -32,13 +32,25 @@ public class CreateHubOdorMixture : Transform<IList<double>, IList<OdorMixMessag
         set { totalFlow = value; }
     }
 
+    private int olfactometerChannelCount = 3;
+    public int OlfactometerChannelCount
+    {
+        get { return olfactometerChannelCount; }
+        set { olfactometerChannelCount = value; }
+    }
+
     private const int _MINIMUM_CARRIER_FLOW = 100;
 
     private IList<OdorMixMessages> ConstructMessage(IList<double> channelConcentrations)
     {
-        int nChannels = channelConcentrations.Count();
+        int nChannels = OlfactometerChannelCount;
+        if (channelConcentrations.Count > nChannels)
+        {
+            throw new ArgumentException("The number of channel concentrations provided " + channelConcentrations.Count + " does not match the expected number based on the olfactometer count " + nChannels + ".");
+        }
         // We make sure all odors sum to 1 and then calculate the "real" flow for each channel based on the target odor flow
-        var adjustedFlow = channelConcentrations.Select(c => c / channelConcentrations.Sum()).Select(c => (int)(TotalOdorFlow * c));
+        var adjustedFlow = channelConcentrations.Select(c => c / channelConcentrations.Sum()).Select(c => (int)(TotalOdorFlow * c))
+            .Concat(Enumerable.Repeat(0, nChannels - channelConcentrations.Count)); // We pad with zeros if there are fewer concentrations than channels
         var carrierFlow = totalFlow - totalOdorFlow;
         if (carrierFlow < _MINIMUM_CARRIER_FLOW)
         {
