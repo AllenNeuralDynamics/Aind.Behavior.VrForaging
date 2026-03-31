@@ -180,7 +180,12 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents the schema, and concrete instantiation, of a rig configuration to run " +
+        "the VrForaging behavior task.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindVrForagingRig
@@ -204,6 +209,8 @@ namespace AindVrForagingDataSchema
     
         private Olfactometer _harpOlfactometer;
     
+        private System.Collections.Generic.List<Olfactometer> _harpOlfactometerExtension;
+    
         private HarpLicketySplit _harpLickometer;
     
         private HarpWhiteRabbit _harpClockGenerator;
@@ -224,11 +231,12 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
             _version = "0.7.0-rc0";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
             _harpOlfactometer = new Olfactometer();
+            _harpOlfactometerExtension = new System.Collections.Generic.List<Olfactometer>();
             _harpLickometer = new HarpLicketySplit();
             _harpClockGenerator = new HarpWhiteRabbit();
             _harpTreadmill = new Treadmill();
@@ -248,6 +256,7 @@ namespace AindVrForagingDataSchema
             _monitoringCameraController = other._monitoringCameraController;
             _harpBehavior = other._harpBehavior;
             _harpOlfactometer = other._harpOlfactometer;
+            _harpOlfactometerExtension = other._harpOlfactometerExtension;
             _harpLickometer = other._harpLickometer;
             _harpClockGenerator = other._harpClockGenerator;
             _harpAnalogInput = other._harpAnalogInput;
@@ -405,6 +414,26 @@ namespace AindVrForagingDataSchema
             set
             {
                 _harpOlfactometer = value;
+            }
+        }
+    
+        /// <summary>
+        /// A collection of subordinate olfactometers that can be added to increase the number of independently delivered odors. The order of the list determines the order by which odors are numbered
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_olfactometer_extension")]
+        [System.ComponentModel.DescriptionAttribute("A collection of subordinate olfactometers that can be added to increase the numbe" +
+            "r of independently delivered odors. The order of the list determines the order b" +
+            "y which odors are numbered")]
+        public System.Collections.Generic.List<Olfactometer> HarpOlfactometerExtension
+        {
+            get
+            {
+                return _harpOlfactometerExtension;
+            }
+            set
+            {
+                _harpOlfactometerExtension = value;
             }
         }
     
@@ -591,6 +620,7 @@ namespace AindVrForagingDataSchema
             stringBuilder.Append("MonitoringCameraController = " + _monitoringCameraController + ", ");
             stringBuilder.Append("HarpBehavior = " + _harpBehavior + ", ");
             stringBuilder.Append("HarpOlfactometer = " + _harpOlfactometer + ", ");
+            stringBuilder.Append("HarpOlfactometerExtension = " + _harpOlfactometerExtension + ", ");
             stringBuilder.Append("HarpLickometer = " + _harpLickometer + ", ");
             stringBuilder.Append("HarpClockGenerator = " + _harpClockGenerator + ", ");
             stringBuilder.Append("HarpAnalogInput = " + _harpAnalogInput + ", ");
@@ -810,7 +840,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
@@ -2529,14 +2559,14 @@ namespace AindVrForagingDataSchema
     public partial class DisplayExtrinsics
     {
     
-        private AindBehaviorServicesCommonVector3 _rotation;
+        private Vector3 _rotation;
     
-        private AindBehaviorServicesCommonVector3 _translation;
+        private Vector3 _translation;
     
         public DisplayExtrinsics()
         {
-            _rotation = new AindBehaviorServicesCommonVector3();
-            _translation = new AindBehaviorServicesCommonVector3();
+            _rotation = new Vector3();
+            _translation = new Vector3();
         }
     
         protected DisplayExtrinsics(DisplayExtrinsics other)
@@ -2551,7 +2581,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rotation")]
         [System.ComponentModel.DescriptionAttribute("Rotation vector (radians)")]
-        public AindBehaviorServicesCommonVector3 Rotation
+        public Vector3 Rotation
         {
             get
             {
@@ -2569,7 +2599,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("translation")]
         [System.ComponentModel.DescriptionAttribute("Translation (in cm)")]
-        public AindBehaviorServicesCommonVector3 Translation
+        public Vector3 Translation
         {
             get
             {
@@ -4461,23 +4491,19 @@ namespace AindVrForagingDataSchema
     public partial class OdorControl
     {
     
-        private double _targetTotalFlow;
+        private int _targetTotalFlow;
     
-        private bool _useChannel3AsCarrier;
-    
-        private double _targetOdorFlow;
+        private int _targetOdorFlow;
     
         public OdorControl()
         {
-            _targetTotalFlow = 1000D;
-            _useChannel3AsCarrier = true;
-            _targetOdorFlow = 100D;
+            _targetTotalFlow = 1000;
+            _targetOdorFlow = 100;
         }
     
         protected OdorControl(OdorControl other)
         {
             _targetTotalFlow = other._targetTotalFlow;
-            _useChannel3AsCarrier = other._useChannel3AsCarrier;
             _targetOdorFlow = other._targetOdorFlow;
         }
     
@@ -4486,7 +4512,7 @@ namespace AindVrForagingDataSchema
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("target_total_flow")]
         [System.ComponentModel.DescriptionAttribute("Target total flow (ml/s) of the odor mixture")]
-        public double TargetTotalFlow
+        public int TargetTotalFlow
         {
             get
             {
@@ -4499,28 +4525,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Whether to use channel 3 as carrier
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("use_channel_3_as_carrier")]
-        [System.ComponentModel.DescriptionAttribute("Whether to use channel 3 as carrier")]
-        public bool UseChannel3AsCarrier
-        {
-            get
-            {
-                return _useChannel3AsCarrier;
-            }
-            set
-            {
-                _useChannel3AsCarrier = value;
-            }
-        }
-    
-        /// <summary>
         /// Target odor flow (ml/s) in the odor mixture
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("target_odor_flow")]
         [System.ComponentModel.DescriptionAttribute("Target odor flow (ml/s) in the odor mixture")]
-        public double TargetOdorFlow
+        public int TargetOdorFlow
         {
             get
             {
@@ -4545,104 +4554,7 @@ namespace AindVrForagingDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("TargetTotalFlow = " + _targetTotalFlow + ", ");
-            stringBuilder.Append("UseChannel3AsCarrier = " + _useChannel3AsCarrier + ", ");
             stringBuilder.Append("TargetOdorFlow = " + _targetOdorFlow);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
-    /// Specifies odor delivery parameters for olfactory cues in the VR environment.
-    ///
-    ///Odors can be delivered at specific locations to provide additional sensory
-    ///information for navigation and foraging decisions.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Specifies odor delivery parameters for olfactory cues in the VR environment.\n\nOdo" +
-        "rs can be delivered at specific locations to provide additional sensory\ninformat" +
-        "ion for navigation and foraging decisions.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class OdorSpecification
-    {
-    
-        private int _index;
-    
-        private double _concentration;
-    
-        public OdorSpecification()
-        {
-            _concentration = 1D;
-        }
-    
-        protected OdorSpecification(OdorSpecification other)
-        {
-            _index = other._index;
-            _concentration = other._concentration;
-        }
-    
-        /// <summary>
-        /// Index of the odor to be used
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("index", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Index of the odor to be used")]
-        public int Index
-        {
-            get
-            {
-                return _index;
-            }
-            set
-            {
-                _index = value;
-            }
-        }
-    
-        /// <summary>
-        /// Concentration of the odor
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("concentration")]
-        [System.ComponentModel.DescriptionAttribute("Concentration of the odor")]
-        public double Concentration
-        {
-            get
-            {
-                return _concentration;
-            }
-            set
-            {
-                _concentration = value;
-            }
-        }
-    
-        public System.IObservable<OdorSpecification> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OdorSpecification(this)));
-        }
-    
-        public System.IObservable<OdorSpecification> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new OdorSpecification(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Index = " + _index + ", ");
-            stringBuilder.Append("Concentration = " + _concentration);
             return true;
         }
     
@@ -5672,7 +5584,7 @@ namespace AindVrForagingDataSchema
     
         private int _stateIndex;
     
-        private OdorSpecification _odorSpecification;
+        private System.Collections.Generic.List<double> _odorSpecification;
     
         private RewardSpecification _rewardSpecification;
     
@@ -5684,6 +5596,7 @@ namespace AindVrForagingDataSchema
         {
             _label = "";
             _stateIndex = 0;
+            _odorSpecification = new System.Collections.Generic.List<double>();
             _rewardSpecification = new RewardSpecification();
             _patchVirtualSitesGenerator = new PatchVirtualSitesGenerator();
             _patchTerminators = new System.Collections.Generic.List<PatchTerminator>();
@@ -5734,12 +5647,13 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// The optional odor specification of the patch
+        /// A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor_specification")]
-        [System.ComponentModel.DescriptionAttribute("The optional odor specification of the patch")]
-        public OdorSpecification OdorSpecification
+        [Newtonsoft.Json.JsonPropertyAttribute("odor_specification", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("A list of odor concentrations for the patch, where the index of the list correspo" +
+            "nds to the odor channel")]
+        public System.Collections.Generic.List<double> OdorSpecification
         {
             get
             {
@@ -6692,9 +6606,9 @@ namespace AindVrForagingDataSchema
     public partial class PositionControl
     {
     
-        private AindBehaviorVrForagingTaskLogicVector3 _gain;
+        private Vector3 _gain;
     
-        private AindBehaviorVrForagingTaskLogicVector3 _initialPosition;
+        private Vector3 _initialPosition;
     
         private double _frequencyFilterCutoff;
     
@@ -6702,8 +6616,8 @@ namespace AindVrForagingDataSchema
     
         public PositionControl()
         {
-            _gain = new AindBehaviorVrForagingTaskLogicVector3();
-            _initialPosition = new AindBehaviorVrForagingTaskLogicVector3();
+            _gain = new Vector3();
+            _initialPosition = new Vector3();
             _frequencyFilterCutoff = 0.5D;
             _velocityThreshold = 1D;
         }
@@ -6722,7 +6636,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("gain")]
         [System.ComponentModel.DescriptionAttribute("Gain of the position control.")]
-        public AindBehaviorVrForagingTaskLogicVector3 Gain
+        public Vector3 Gain
         {
             get
             {
@@ -6735,12 +6649,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Gain of the position control.
+        /// Initial position of the subject in the VR world.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("initial_position")]
-        [System.ComponentModel.DescriptionAttribute("Gain of the position control.")]
-        public AindBehaviorVrForagingTaskLogicVector3 InitialPosition
+        [System.ComponentModel.DescriptionAttribute("Initial position of the subject in the VR world.")]
+        public Vector3 InitialPosition
         {
             get
             {
@@ -7714,8 +7628,8 @@ namespace AindVrForagingDataSchema
     
         public Session()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
-            _version = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
+            _version = "0.13.6";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
@@ -8049,13 +7963,9 @@ namespace AindVrForagingDataSchema
 
     /// <summary>
     /// Represents 2D dimensions with width and height.
-    ///
-    ///Used for defining texture sizes, corridor dimensions, and other 2D measurements
-    ///in the VR foraging environment.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Represents 2D dimensions with width and height.\n\nUsed for defining texture sizes," +
-        " corridor dimensions, and other 2D measurements\nin the VR foraging environment.")]
+    [System.ComponentModel.DescriptionAttribute("Represents 2D dimensions with width and height.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Size
@@ -9417,6 +9327,120 @@ namespace AindVrForagingDataSchema
 
 
     /// <summary>
+    /// Represents a 3D vector with float coordinates.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents a 3D vector with float coordinates.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Vector3
+    {
+    
+        private double _x;
+    
+        private double _y;
+    
+        private double _z;
+    
+        public Vector3()
+        {
+            _x = 0D;
+            _y = 0D;
+            _z = 0D;
+        }
+    
+        protected Vector3(Vector3 other)
+        {
+            _x = other._x;
+            _y = other._y;
+            _z = other._z;
+        }
+    
+        /// <summary>
+        /// X coordinate of the vector
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
+        [System.ComponentModel.DescriptionAttribute("X coordinate of the vector")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        /// <summary>
+        /// Y coordinate of the vector
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
+        [System.ComponentModel.DescriptionAttribute("Y coordinate of the vector")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        /// <summary>
+        /// Z coordinate of the vector
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("z")]
+        [System.ComponentModel.DescriptionAttribute("Z coordinate of the vector")]
+        public double Z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                _z = value;
+            }
+        }
+    
+        public System.IObservable<Vector3> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Vector3(this)));
+        }
+    
+        public System.IObservable<Vector3> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Vector3(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("X = " + _x + ", ");
+            stringBuilder.Append("Y = " + _y + ", ");
+            stringBuilder.Append("Z = " + _z);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
     /// FFMPEG video writer configuration.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
@@ -9735,7 +9759,7 @@ namespace AindVrForagingDataSchema
     
         private double _startPosition;
     
-        private OdorSpecification _odorSpecification;
+        private System.Collections.Generic.List<double> _odorSpecification;
     
         private VirtualSiteRewardSpecification _rewardSpecification;
     
@@ -9838,7 +9862,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("odor_specification")]
         [System.ComponentModel.DescriptionAttribute("The optional odor specification of the virtual site")]
-        public OdorSpecification OdorSpecification
+        public System.Collections.Generic.List<double> OdorSpecification
         {
             get
             {
@@ -10864,239 +10888,6 @@ namespace AindVrForagingDataSchema
     }
 
 
-    /// <summary>
-    /// Represents a 3D vector with float coordinates.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Represents a 3D vector with float coordinates.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindBehaviorServicesCommonVector3
-    {
-    
-        private double _x;
-    
-        private double _y;
-    
-        private double _z;
-    
-        public AindBehaviorServicesCommonVector3()
-        {
-            _x = 0D;
-            _y = 0D;
-            _z = 0D;
-        }
-    
-        protected AindBehaviorServicesCommonVector3(AindBehaviorServicesCommonVector3 other)
-        {
-            _x = other._x;
-            _y = other._y;
-            _z = other._z;
-        }
-    
-        /// <summary>
-        /// X coordinate of the vector
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("x")]
-        [System.ComponentModel.DescriptionAttribute("X coordinate of the vector")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
-    
-        /// <summary>
-        /// Y coordinate of the vector
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("y")]
-        [System.ComponentModel.DescriptionAttribute("Y coordinate of the vector")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        /// <summary>
-        /// Z coordinate of the vector
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("z")]
-        [System.ComponentModel.DescriptionAttribute("Z coordinate of the vector")]
-        public double Z
-        {
-            get
-            {
-                return _z;
-            }
-            set
-            {
-                _z = value;
-            }
-        }
-    
-        public System.IObservable<AindBehaviorServicesCommonVector3> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorServicesCommonVector3(this)));
-        }
-    
-        public System.IObservable<AindBehaviorServicesCommonVector3> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorServicesCommonVector3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("X = " + _x + ", ");
-            stringBuilder.Append("Y = " + _y + ", ");
-            stringBuilder.Append("Z = " + _z);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
-    /// Represents a 3D point or vector with x, y, and z coordinates.
-    ///
-    ///Used for 3D positioning and movement in the virtual reality environment,
-    ///including camera positions, object locations, and 3D transformations.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Represents a 3D point or vector with x, y, and z coordinates.\n\nUsed for 3D positi" +
-        "oning and movement in the virtual reality environment,\nincluding camera position" +
-        "s, object locations, and 3D transformations.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindBehaviorVrForagingTaskLogicVector3
-    {
-    
-        private double _x;
-    
-        private double _y;
-    
-        private double _z;
-    
-        public AindBehaviorVrForagingTaskLogicVector3()
-        {
-            _x = 0D;
-            _y = 0D;
-            _z = 0D;
-        }
-    
-        protected AindBehaviorVrForagingTaskLogicVector3(AindBehaviorVrForagingTaskLogicVector3 other)
-        {
-            _x = other._x;
-            _y = other._y;
-            _z = other._z;
-        }
-    
-        /// <summary>
-        /// X coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("x")]
-        [System.ComponentModel.DescriptionAttribute("X coordinate of the point")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
-    
-        /// <summary>
-        /// Y coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("y")]
-        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        /// <summary>
-        /// Z coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("z")]
-        [System.ComponentModel.DescriptionAttribute("Z coordinate of the point")]
-        public double Z
-        {
-            get
-            {
-                return _z;
-            }
-            set
-            {
-                _z = value;
-            }
-        }
-    
-        public System.IObservable<AindBehaviorVrForagingTaskLogicVector3> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorVrForagingTaskLogicVector3(this)));
-        }
-    
-        public System.IObservable<AindBehaviorVrForagingTaskLogicVector3> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorVrForagingTaskLogicVector3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("X = " + _x + ", ");
-            stringBuilder.Append("Y = " + _y + ", ");
-            stringBuilder.Append("Z = " + _z);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum BlockStructureSamplingMode
@@ -11770,11 +11561,6 @@ namespace AindVrForagingDataSchema
             return Process<OdorControl>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<OdorSpecification> source)
-        {
-            return Process<OdorSpecification>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<Olfactometer> source)
         {
             return Process<Olfactometer>(source);
@@ -11945,6 +11731,11 @@ namespace AindVrForagingDataSchema
             return Process<TreadmillSpecification>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Vector3> source)
+        {
+            return Process<Vector3>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<VideoWriter> source)
         {
             return Process<VideoWriter>(source);
@@ -11994,16 +11785,6 @@ namespace AindVrForagingDataSchema
         {
             return Process<WebCamera>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<AindBehaviorServicesCommonVector3> source)
-        {
-            return Process<AindBehaviorServicesCommonVector3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindBehaviorVrForagingTaskLogicVector3> source)
-        {
-            return Process<AindBehaviorVrForagingTaskLogicVector3>(source);
-        }
     }
 
 
@@ -12050,7 +11831,6 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Olfactometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerChannelConfig>))]
@@ -12085,6 +11865,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSpecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
@@ -12095,8 +11876,6 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorServicesCommonVector3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorVrForagingTaskLogicVector3>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     

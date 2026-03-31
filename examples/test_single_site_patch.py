@@ -31,6 +31,10 @@ P_BAIT_BLOCK = [
 ]
 
 
+def odor_concentration_from_index(odor_index: int) -> list[float]:
+    return [1.0 if i == odor_index else 0.0 for i in range(3)]
+
+
 def make_patch(
     label: str,
     state_index: int,
@@ -59,7 +63,7 @@ def make_patch(
     return vr_task_logic.Patch(
         label=label,
         state_index=state_index,
-        odor_specification=vr_task_logic.OdorSpecification(index=odor_index, concentration=1),
+        odor_specification=odor_concentration_from_index(odor_index),
         patch_terminators=[
             vr_task_logic.PatchTerminatorOnChoice(count=vr_task_logic.scalar_value(1)),
             vr_task_logic.PatchTerminatorOnRejection(count=vr_task_logic.scalar_value(1)),

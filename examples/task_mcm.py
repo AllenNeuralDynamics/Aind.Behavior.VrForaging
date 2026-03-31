@@ -85,6 +85,10 @@ inter_patch_time = np.array([3, 2, 1]) * 3.5  # delay before replenishment start
 rhos = [0.9, 0.9, 0.9]
 
 
+def odor_concentration_from_index(odor_index: int) -> list[float]:
+    return [1.0 if i == odor_index else 0.0 for i in range(3)]
+
+
 def make_patch(
     label: str,
     state_index: int,
@@ -118,7 +122,7 @@ def make_patch(
     return vr_task_logic.Patch(
         label=label,
         state_index=state_index,
-        odor_specification=vr_task_logic.OdorSpecification(index=odor_index, concentration=1),
+        odor_specification=odor_concentration_from_index(odor_index),
         reward_specification=vr_task_logic.RewardSpecification(
             amount=vr_task_logic.scalar_value(reward_amount),
             probability=vr_task_logic.scalar_value(p_max),

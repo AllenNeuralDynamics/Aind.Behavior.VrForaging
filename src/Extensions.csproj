@@ -13,7 +13,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Bonsai.Harp" Version="3.5.2" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
-    <PackageReference Include="Harp.Olfactometer" Version="0.1.0-build231127" />
+    <PackageReference Include="Harp.Olfactometer" Version="0.3.0" />
     <PackageReference Include="AllenNeuralDynamics.AindManipulator" Version="0.1.6" />
     <PackageReference Include="Hexa.NET.ImGui" Version="2.2.9" />
     <PackageReference Include="Hexa.NET.ImPlot" Version="2.2.9" />

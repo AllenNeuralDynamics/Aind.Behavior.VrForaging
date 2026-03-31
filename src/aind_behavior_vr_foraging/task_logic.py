@@ -1,11 +1,12 @@
 import logging
 from enum import Enum
-from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, Union, cast
+from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, TypeAlias, Union, cast
 
 import aind_behavior_services.task.distributions as distributions
+from aind_behavior_services.common import Size, Vector3
 from aind_behavior_services.task import Task, TaskParameters
-from pydantic import BaseModel, Field, NonNegativeFloat, field_validator, model_validator
-from typing_extensions import TypeAliasType
+from pydantic import BaseModel, BeforeValidator, Field, NonNegativeFloat, field_validator, model_validator
+from typing_extensions import TypeAliasType, deprecated
 
 from aind_behavior_vr_foraging import (
     __semver__,
@@ -25,46 +26,6 @@ def scalar_value(value: float) -> distributions.Scalar:
         distributions.Scalar: The scalar distribution type.
     """
     return distributions.Scalar(distribution_parameters=distributions.ScalarDistributionParameter(value=value))
-
-
-# ==================== BASIC DATA STRUCTURES ====================
-
-
-class Size(BaseModel):
-    """
-    Represents 2D dimensions with width and height.
-
-    Used for defining texture sizes, corridor dimensions, and other 2D measurements
-    in the VR foraging environment.
-    """
-
-    width: float = Field(default=0, description="Width of the texture")
-    height: float = Field(default=0, description="Height of the texture")
-
-
-class Vector2(BaseModel):
-    """
-    Represents a 2D point or vector with x and y coordinates.
-
-    Used for positioning elements in 2D space within the VR environment,
-    such as texture coordinates or 2D movement vectors.
-    """
-
-    x: float = Field(default=0, description="X coordinate of the point")
-    y: float = Field(default=0, description="Y coordinate of the point")
-
-
-class Vector3(BaseModel):
-    """
-    Represents a 3D point or vector with x, y, and z coordinates.
-
-    Used for 3D positioning and movement in the virtual reality environment,
-    including camera positions, object locations, and 3D transformations.
-    """
-
-    x: float = Field(default=0, description="X coordinate of the point")
-    y: float = Field(default=0, description="Y coordinate of the point")
-    z: float = Field(default=0, description="Z coordinate of the point")
 
 
 # ==================== NUMERICAL UPDATERS ====================
@@ -202,18 +163,6 @@ class VisualCorridor(BaseModel):
     start_position: float = Field(default=0, ge=0, description="Start position of the corridor (cm)")
     length: float = Field(default=120, ge=0, description="Length of the corridor site (cm)")
     textures: WallTextures = Field(description="The textures of the corridor")
-
-
-class OdorSpecification(BaseModel):
-    """
-    Specifies odor delivery parameters for olfactory cues in the VR environment.
-
-    Odors can be delivered at specific locations to provide additional sensory
-    information for navigation and foraging decisions.
-    """
-
-    index: int = Field(ge=0, le=3, description="Index of the odor to be used")
-    concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
 
 
 # ==================== PATCH REWARD LOGIC ====================
@@ -687,6 +636,38 @@ class VirtualSiteRewardSpecification(BaseModel):
     )
 
 
+def _odor_mixture_from_odor_specification(value: Any):
+    if isinstance(value, list):
+        return value
+    else:
+        try:
+            odor_spec = OdorSpecification.model_validate(value)
+            return [odor_spec.concentration if i == odor_spec.index else 0 for i in range(3)]
+        except ValueError:
+            pass
+    return value
+
+
+OdorMixture: TypeAlias = Annotated[
+    List[NonNegativeFloat],
+    Field(description="The optional odor specification of the virtual site"),
+    BeforeValidator(_odor_mixture_from_odor_specification),
+]
+
+
+@deprecated("OdorSpecification is deprecated, use OdorMixture instead")
+class OdorSpecification(BaseModel):
+    """
+    Specifies odor delivery parameters for olfactory cues in the VR environment.
+
+    Odors can be delivered at specific locations to provide additional sensory
+    information for navigation and foraging decisions.
+    """
+
+    index: int = Field(ge=0, le=3, description="Index of the odor to be used")
+    concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
+
+
 class VirtualSite(BaseModel):
     """
     THIS CLASS IS NOT MEANT TO BE DIRECTLY INSTANTIATED.
@@ -704,7 +685,7 @@ class VirtualSite(BaseModel):
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length: float = Field(default=20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
-    odor_specification: Optional[OdorSpecification] = Field(
+    odor_specification: Optional[OdorMixture] = Field(
         default=None, description="The optional odor specification of the virtual site"
     )
     reward_specification: Optional[VirtualSiteRewardSpecification] = Field(
@@ -802,8 +783,8 @@ class Patch(BaseModel):
 
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
-    odor_specification: Optional[OdorSpecification] = Field(
-        default=None, description="The optional odor specification of the patch"
+    odor_specification: OdorMixture = Field(
+        description="A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel"
     )
     reward_specification: RewardSpecification = Field(
         default=RewardSpecification(),
@@ -870,24 +851,6 @@ class MovableSpoutControl(BaseModel):
     )
 
 
-class OdorControl(BaseModel):
-    """
-    Controls the odor delivery system parameters.
-
-    This class manages the olfactory stimulus delivery system, including flow rates,
-    valve timing, and carrier gas configuration. It ensures proper odor concentration
-    and delivery timing for the behavioral task.
-    """
-
-    target_total_flow: float = Field(
-        default=1000, ge=100, le=1000, description="Target total flow (ml/s) of the odor mixture"
-    )
-    use_channel_3_as_carrier: bool = Field(default=True, description="Whether to use channel 3 as carrier")
-    target_odor_flow: float = Field(
-        default=100, ge=0, le=100, description="Target odor flow (ml/s) in the odor mixture"
-    )
-
-
 class PositionControl(BaseModel):
     """
     Controls the position tracking and movement detection parameters.
@@ -898,7 +861,9 @@ class PositionControl(BaseModel):
     """
 
     gain: Vector3 = Field(default=Vector3(x=1, y=1, z=1), description="Gain of the position control.")
-    initial_position: Vector3 = Field(default=Vector3(x=0, y=2.56, z=0), description="Gain of the position control.")
+    initial_position: Vector3 = Field(
+        default=Vector3(x=0, y=2.56, z=0), description="Initial position of the subject in the VR world."
+    )
     frequency_filter_cutoff: float = Field(
         default=0.5,
         ge=0,
@@ -922,6 +887,23 @@ class AudioControl(BaseModel):
     frequency: float = Field(default=1000, ge=100, le=9999, description="Frequency (Hz) of the audio cue")
 
 
+class OdorControl(BaseModel):
+    """
+    Controls the odor delivery system parameters.
+
+    This class manages the olfactory stimulus delivery system, including flow rates,
+    valve timing, and carrier gas configuration. It ensures proper odor concentration
+    and delivery timing for the behavioral task.
+    """
+
+    target_total_flow: Literal[1000] = Field(
+        default=1000, ge=100, le=1000, description="Target total flow (ml/s) of the odor mixture"
+    )
+    target_odor_flow: Literal[100] = Field(
+        default=100, ge=0, le=100, description="Target odor flow (ml/s) in the odor mixture"
+    )
+
+
 class OperationControl(BaseModel):
     """
     Master control class for all operational hardware systems.
@@ -934,7 +916,11 @@ class OperationControl(BaseModel):
     movable_spout_control: MovableSpoutControl = Field(
         default=MovableSpoutControl(), description="Control of the movable spout"
     )
-    odor_control: OdorControl = Field(default=OdorControl(), description="Control of the odor", validate_default=True)
+    odor_control: OdorControl = Field(
+        default=OdorControl(target_odor_flow=100, target_total_flow=1000),
+        description="Control of the odor",
+        validate_default=True,
+    )
     position_control: PositionControl = Field(
         default=PositionControl(), description="Control of the position", validate_default=True
     )

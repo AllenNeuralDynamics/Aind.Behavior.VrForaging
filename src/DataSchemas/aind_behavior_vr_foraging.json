@@ -208,9 +208,10 @@
       "type": "object"
     },
     "AindVrForagingRig": {
+      "description": "Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task.",
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.5",
+          "default": "0.13.6",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -260,6 +261,14 @@
         "harp_olfactometer": {
           "$ref": "#/$defs/Olfactometer",
           "description": "Harp olfactometer"
+        },
+        "harp_olfactometer_extension": {
+          "description": "A collection of subordinate olfactometers that can be added to increase the number of independently delivered odors. The order of the list determines the order by which odors are numbered",
+          "items": {
+            "$ref": "#/$defs/Olfactometer"
+          },
+          "title": "Harp Olfactometer Extension",
+          "type": "array"
         },
         "harp_lickometer": {
           "$ref": "#/$defs/HarpLicketySplit",
@@ -474,7 +483,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.5",
+          "default": "0.13.6",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -1264,7 +1273,7 @@
       "description": "Represents the extrinsic parameters of a display.",
       "properties": {
         "rotation": {
-          "$ref": "#/$defs/aind_behavior_services__common__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 0.0,
@@ -1273,7 +1282,7 @@
           "description": "Rotation vector (radians)"
         },
         "translation": {
-          "$ref": "#/$defs/aind_behavior_services__common__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 1.309016,
@@ -2281,54 +2290,25 @@
       "description": "Controls the odor delivery system parameters.\n\nThis class manages the olfactory stimulus delivery system, including flow rates,\nvalve timing, and carrier gas configuration. It ensures proper odor concentration\nand delivery timing for the behavioral task.",
       "properties": {
         "target_total_flow": {
+          "const": 1000,
           "default": 1000,
           "description": "Target total flow (ml/s) of the odor mixture",
-          "maximum": 1000,
-          "minimum": 100,
+          "ge": 100,
+          "le": 1000,
           "title": "Target Total Flow",
-          "type": "number"
-        },
-        "use_channel_3_as_carrier": {
-          "default": true,
-          "description": "Whether to use channel 3 as carrier",
-          "title": "Use Channel 3 As Carrier",
-          "type": "boolean"
+          "type": "integer"
         },
         "target_odor_flow": {
+          "const": 100,
           "default": 100,
           "description": "Target odor flow (ml/s) in the odor mixture",
-          "maximum": 100,
-          "minimum": 0,
+          "ge": 0,
+          "le": 100,
           "title": "Target Odor Flow",
-          "type": "number"
+          "type": "integer"
         }
       },
       "title": "OdorControl",
-      "type": "object"
-    },
-    "OdorSpecification": {
-      "description": "Specifies odor delivery parameters for olfactory cues in the VR environment.\n\nOdors can be delivered at specific locations to provide additional sensory\ninformation for navigation and foraging decisions.",
-      "properties": {
-        "index": {
-          "description": "Index of the odor to be used",
-          "maximum": 3,
-          "minimum": 0,
-          "title": "Index",
-          "type": "integer"
-        },
-        "concentration": {
-          "default": 1,
-          "description": "Concentration of the odor",
-          "maximum": 1,
-          "minimum": 0,
-          "title": "Concentration",
-          "type": "number"
-        }
-      },
-      "required": [
-        "index"
-      ],
-      "title": "OdorSpecification",
       "type": "object"
     },
     "Olfactometer": {
@@ -2607,9 +2587,8 @@
         "odor_control": {
           "$ref": "#/$defs/OdorControl",
           "default": {
-            "target_total_flow": 1000.0,
-            "use_channel_3_as_carrier": true,
-            "target_odor_flow": 100.0
+            "target_total_flow": 1000,
+            "target_odor_flow": 100
           },
           "description": "Control of the odor"
         },
@@ -2728,16 +2707,13 @@
           "type": "integer"
         },
         "odor_specification": {
-          "default": null,
-          "description": "The optional odor specification of the patch",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/OdorSpecification"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "description": "A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel",
+          "items": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "title": "Odor Specification",
+          "type": "array"
         },
         "reward_specification": {
           "$ref": "#/$defs/RewardSpecification",
@@ -2861,6 +2837,9 @@
           "type": "array"
         }
       },
+      "required": [
+        "odor_specification"
+      ],
       "title": "Patch",
       "type": "object"
     },
@@ -3410,7 +3389,7 @@
       "description": "Controls the position tracking and movement detection parameters.\n\nThis class manages the position control system including coordinate transformations,\ninitial positioning, signal filtering, and movement detection thresholds for the\nvirtual reality foraging task.",
       "properties": {
         "gain": {
-          "$ref": "#/$defs/aind_behavior_vr_foraging__task_logic__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 1.0,
             "y": 1.0,
@@ -3419,13 +3398,13 @@
           "description": "Gain of the position control."
         },
         "initial_position": {
-          "$ref": "#/$defs/aind_behavior_vr_foraging__task_logic__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 2.56,
             "z": 0.0
           },
-          "description": "Gain of the position control."
+          "description": "Initial position of the subject in the VR world."
         },
         "frequency_filter_cutoff": {
           "default": 0.5,
@@ -3909,14 +3888,14 @@
     "Session": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.5",
+          "default": "0.13.6",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.13.5",
-          "default": "0.13.5",
+          "const": "0.13.6",
+          "default": "0.13.6",
           "title": "Version",
           "type": "string"
         },
@@ -4032,7 +4011,7 @@
       "type": "object"
     },
     "Size": {
-      "description": "Represents 2D dimensions with width and height.\n\nUsed for defining texture sizes, corridor dimensions, and other 2D measurements\nin the VR foraging environment.",
+      "description": "Represents 2D dimensions with width and height.",
       "properties": {
         "width": {
           "default": 0,
@@ -4764,6 +4743,31 @@
       "title": "UpdaterTarget",
       "type": "string"
     },
+    "Vector3": {
+      "description": "Represents a 3D vector with float coordinates.",
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the vector",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the vector",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the vector",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
+      "type": "object"
+    },
     "VideoWriter": {
       "discriminator": {
         "mapping": {
@@ -4884,12 +4888,18 @@
           "description": "The optional odor specification of the virtual site",
           "oneOf": [
             {
-              "$ref": "#/$defs/OdorSpecification"
+              "description": "The optional odor specification of the virtual site",
+              "items": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "type": "array"
             },
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "Odor Specification"
         },
         "reward_specification": {
           "default": null,
@@ -5217,56 +5227,6 @@
         }
       },
       "title": "WebCamera",
-      "type": "object"
-    },
-    "aind_behavior_services__common__Vector3": {
-      "description": "Represents a 3D vector with float coordinates.",
-      "properties": {
-        "x": {
-          "default": 0,
-          "description": "X coordinate of the vector",
-          "title": "X",
-          "type": "number"
-        },
-        "y": {
-          "default": 0,
-          "description": "Y coordinate of the vector",
-          "title": "Y",
-          "type": "number"
-        },
-        "z": {
-          "default": 0,
-          "description": "Z coordinate of the vector",
-          "title": "Z",
-          "type": "number"
-        }
-      },
-      "title": "Vector3",
-      "type": "object"
-    },
-    "aind_behavior_vr_foraging__task_logic__Vector3": {
-      "description": "Represents a 3D point or vector with x, y, and z coordinates.\n\nUsed for 3D positioning and movement in the virtual reality environment,\nincluding camera positions, object locations, and 3D transformations.",
-      "properties": {
-        "x": {
-          "default": 0,
-          "description": "X coordinate of the point",
-          "title": "X",
-          "type": "number"
-        },
-        "y": {
-          "default": 0,
-          "description": "Y coordinate of the point",
-          "title": "Y",
-          "type": "number"
-        },
-        "z": {
-          "default": 0,
-          "description": "Z coordinate of the point",
-          "title": "Z",
-          "type": "number"
-        }
-      },
-      "title": "Vector3",
       "type": "object"
     }
   }
