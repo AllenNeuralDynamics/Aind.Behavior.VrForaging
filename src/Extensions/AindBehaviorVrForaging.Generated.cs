@@ -231,7 +231,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
             _version = "0.7.0-rc0";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -840,7 +840,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
@@ -2559,14 +2559,14 @@ namespace AindVrForagingDataSchema
     public partial class DisplayExtrinsics
     {
     
-        private AindBehaviorServicesCommonVector3 _rotation;
+        private Vector3 _rotation;
     
-        private AindBehaviorServicesCommonVector3 _translation;
+        private Vector3 _translation;
     
         public DisplayExtrinsics()
         {
-            _rotation = new AindBehaviorServicesCommonVector3();
-            _translation = new AindBehaviorServicesCommonVector3();
+            _rotation = new Vector3();
+            _translation = new Vector3();
         }
     
         protected DisplayExtrinsics(DisplayExtrinsics other)
@@ -2581,7 +2581,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rotation")]
         [System.ComponentModel.DescriptionAttribute("Rotation vector (radians)")]
-        public AindBehaviorServicesCommonVector3 Rotation
+        public Vector3 Rotation
         {
             get
             {
@@ -2599,7 +2599,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("translation")]
         [System.ComponentModel.DescriptionAttribute("Translation (in cm)")]
-        public AindBehaviorServicesCommonVector3 Translation
+        public Vector3 Translation
         {
             get
             {
@@ -6578,9 +6578,9 @@ namespace AindVrForagingDataSchema
     public partial class PositionControl
     {
     
-        private AindBehaviorVrForagingTaskLogicVector3 _gain;
+        private Vector3 _gain;
     
-        private AindBehaviorVrForagingTaskLogicVector3 _initialPosition;
+        private Vector3 _initialPosition;
     
         private double _frequencyFilterCutoff;
     
@@ -6588,8 +6588,8 @@ namespace AindVrForagingDataSchema
     
         public PositionControl()
         {
-            _gain = new AindBehaviorVrForagingTaskLogicVector3();
-            _initialPosition = new AindBehaviorVrForagingTaskLogicVector3();
+            _gain = new Vector3();
+            _initialPosition = new Vector3();
             _frequencyFilterCutoff = 0.5D;
             _velocityThreshold = 1D;
         }
@@ -6608,7 +6608,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("gain")]
         [System.ComponentModel.DescriptionAttribute("Gain of the position control.")]
-        public AindBehaviorVrForagingTaskLogicVector3 Gain
+        public Vector3 Gain
         {
             get
             {
@@ -6626,7 +6626,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("initial_position")]
         [System.ComponentModel.DescriptionAttribute("Initial position of the subject in the VR world.")]
-        public AindBehaviorVrForagingTaskLogicVector3 InitialPosition
+        public Vector3 InitialPosition
         {
             get
             {
@@ -7600,8 +7600,8 @@ namespace AindVrForagingDataSchema
     
         public Session()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
-            _version = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
+            _version = "0.13.6";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
@@ -7935,13 +7935,9 @@ namespace AindVrForagingDataSchema
 
     /// <summary>
     /// Represents 2D dimensions with width and height.
-    ///
-    ///Used for defining texture sizes, corridor dimensions, and other 2D measurements
-    ///in the VR foraging environment.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Represents 2D dimensions with width and height.\n\nUsed for defining texture sizes," +
-        " corridor dimensions, and other 2D measurements\nin the VR foraging environment.")]
+    [System.ComponentModel.DescriptionAttribute("Represents 2D dimensions with width and height.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Size
@@ -9299,6 +9295,120 @@ namespace AindVrForagingDataSchema
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="RewardDelayOffset")]
         RewardDelayOffset = 2,
+    }
+
+
+    /// <summary>
+    /// Represents a 3D vector with float coordinates.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents a 3D vector with float coordinates.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Vector3
+    {
+    
+        private double _x;
+    
+        private double _y;
+    
+        private double _z;
+    
+        public Vector3()
+        {
+            _x = 0D;
+            _y = 0D;
+            _z = 0D;
+        }
+    
+        protected Vector3(Vector3 other)
+        {
+            _x = other._x;
+            _y = other._y;
+            _z = other._z;
+        }
+    
+        /// <summary>
+        /// X coordinate of the vector
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
+        [System.ComponentModel.DescriptionAttribute("X coordinate of the vector")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        /// <summary>
+        /// Y coordinate of the vector
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
+        [System.ComponentModel.DescriptionAttribute("Y coordinate of the vector")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        /// <summary>
+        /// Z coordinate of the vector
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("z")]
+        [System.ComponentModel.DescriptionAttribute("Z coordinate of the vector")]
+        public double Z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                _z = value;
+            }
+        }
+    
+        public System.IObservable<Vector3> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Vector3(this)));
+        }
+    
+        public System.IObservable<Vector3> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Vector3(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("X = " + _x + ", ");
+            stringBuilder.Append("Y = " + _y + ", ");
+            stringBuilder.Append("Z = " + _z);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
     }
 
 
@@ -10750,239 +10860,6 @@ namespace AindVrForagingDataSchema
     }
 
 
-    /// <summary>
-    /// Represents a 3D vector with float coordinates.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Represents a 3D vector with float coordinates.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindBehaviorServicesCommonVector3
-    {
-    
-        private double _x;
-    
-        private double _y;
-    
-        private double _z;
-    
-        public AindBehaviorServicesCommonVector3()
-        {
-            _x = 0D;
-            _y = 0D;
-            _z = 0D;
-        }
-    
-        protected AindBehaviorServicesCommonVector3(AindBehaviorServicesCommonVector3 other)
-        {
-            _x = other._x;
-            _y = other._y;
-            _z = other._z;
-        }
-    
-        /// <summary>
-        /// X coordinate of the vector
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("x")]
-        [System.ComponentModel.DescriptionAttribute("X coordinate of the vector")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
-    
-        /// <summary>
-        /// Y coordinate of the vector
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("y")]
-        [System.ComponentModel.DescriptionAttribute("Y coordinate of the vector")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        /// <summary>
-        /// Z coordinate of the vector
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("z")]
-        [System.ComponentModel.DescriptionAttribute("Z coordinate of the vector")]
-        public double Z
-        {
-            get
-            {
-                return _z;
-            }
-            set
-            {
-                _z = value;
-            }
-        }
-    
-        public System.IObservable<AindBehaviorServicesCommonVector3> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorServicesCommonVector3(this)));
-        }
-    
-        public System.IObservable<AindBehaviorServicesCommonVector3> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorServicesCommonVector3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("X = " + _x + ", ");
-            stringBuilder.Append("Y = " + _y + ", ");
-            stringBuilder.Append("Z = " + _z);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
-    /// Represents a 3D point or vector with x, y, and z coordinates.
-    ///
-    ///Used for 3D positioning and movement in the virtual reality environment,
-    ///including camera positions, object locations, and 3D transformations.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Represents a 3D point or vector with x, y, and z coordinates.\n\nUsed for 3D positi" +
-        "oning and movement in the virtual reality environment,\nincluding camera position" +
-        "s, object locations, and 3D transformations.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindBehaviorVrForagingTaskLogicVector3
-    {
-    
-        private double _x;
-    
-        private double _y;
-    
-        private double _z;
-    
-        public AindBehaviorVrForagingTaskLogicVector3()
-        {
-            _x = 0D;
-            _y = 0D;
-            _z = 0D;
-        }
-    
-        protected AindBehaviorVrForagingTaskLogicVector3(AindBehaviorVrForagingTaskLogicVector3 other)
-        {
-            _x = other._x;
-            _y = other._y;
-            _z = other._z;
-        }
-    
-        /// <summary>
-        /// X coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("x")]
-        [System.ComponentModel.DescriptionAttribute("X coordinate of the point")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
-    
-        /// <summary>
-        /// Y coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("y")]
-        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        /// <summary>
-        /// Z coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("z")]
-        [System.ComponentModel.DescriptionAttribute("Z coordinate of the point")]
-        public double Z
-        {
-            get
-            {
-                return _z;
-            }
-            set
-            {
-                _z = value;
-            }
-        }
-    
-        public System.IObservable<AindBehaviorVrForagingTaskLogicVector3> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorVrForagingTaskLogicVector3(this)));
-        }
-    
-        public System.IObservable<AindBehaviorVrForagingTaskLogicVector3> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorVrForagingTaskLogicVector3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("X = " + _x + ", ");
-            stringBuilder.Append("Y = " + _y + ", ");
-            stringBuilder.Append("Z = " + _z);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum BlockStructureSamplingMode
@@ -11826,6 +11703,11 @@ namespace AindVrForagingDataSchema
             return Process<TreadmillSpecification>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Vector3> source)
+        {
+            return Process<Vector3>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<VideoWriter> source)
         {
             return Process<VideoWriter>(source);
@@ -11874,16 +11756,6 @@ namespace AindVrForagingDataSchema
         public System.IObservable<string> Process(System.IObservable<WebCamera> source)
         {
             return Process<WebCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindBehaviorServicesCommonVector3> source)
-        {
-            return Process<AindBehaviorServicesCommonVector3>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindBehaviorVrForagingTaskLogicVector3> source)
-        {
-            return Process<AindBehaviorVrForagingTaskLogicVector3>(source);
         }
     }
 
@@ -11965,6 +11837,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Treadmill>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TreadmillSpecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
@@ -11975,8 +11848,6 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WallTextures>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorServicesCommonVector3>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorVrForagingTaskLogicVector3>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     

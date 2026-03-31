@@ -3,6 +3,7 @@ from enum import Enum
 from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, Union, cast
 
 import aind_behavior_services.task.distributions as distributions
+from aind_behavior_services.common import Size, Vector3
 from aind_behavior_services.task import Task, TaskParameters
 from pydantic import BaseModel, Field, NonNegativeFloat, field_validator, model_validator
 from typing_extensions import TypeAliasType
@@ -25,46 +26,6 @@ def scalar_value(value: float) -> distributions.Scalar:
         distributions.Scalar: The scalar distribution type.
     """
     return distributions.Scalar(distribution_parameters=distributions.ScalarDistributionParameter(value=value))
-
-
-# ==================== BASIC DATA STRUCTURES ====================
-
-
-class Size(BaseModel):
-    """
-    Represents 2D dimensions with width and height.
-
-    Used for defining texture sizes, corridor dimensions, and other 2D measurements
-    in the VR foraging environment.
-    """
-
-    width: float = Field(default=0, description="Width of the texture")
-    height: float = Field(default=0, description="Height of the texture")
-
-
-class Vector2(BaseModel):
-    """
-    Represents a 2D point or vector with x and y coordinates.
-
-    Used for positioning elements in 2D space within the VR environment,
-    such as texture coordinates or 2D movement vectors.
-    """
-
-    x: float = Field(default=0, description="X coordinate of the point")
-    y: float = Field(default=0, description="Y coordinate of the point")
-
-
-class Vector3(BaseModel):
-    """
-    Represents a 3D point or vector with x, y, and z coordinates.
-
-    Used for 3D positioning and movement in the virtual reality environment,
-    including camera positions, object locations, and 3D transformations.
-    """
-
-    x: float = Field(default=0, description="X coordinate of the point")
-    y: float = Field(default=0, description="Y coordinate of the point")
-    z: float = Field(default=0, description="Z coordinate of the point")
 
 
 # ==================== NUMERICAL UPDATERS ====================
@@ -880,7 +841,9 @@ class PositionControl(BaseModel):
     """
 
     gain: Vector3 = Field(default=Vector3(x=1, y=1, z=1), description="Gain of the position control.")
-    initial_position: Vector3 = Field(default=Vector3(x=0, y=2.56, z=0), description="Initial position of the subject in the VR world.")
+    initial_position: Vector3 = Field(
+        default=Vector3(x=0, y=2.56, z=0), description="Initial position of the subject in the VR world."
+    )
     frequency_filter_cutoff: float = Field(
         default=0.5,
         ge=0,

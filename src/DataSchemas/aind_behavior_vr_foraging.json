@@ -211,7 +211,7 @@
       "description": "Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task.",
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.5",
+          "default": "0.13.6",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -483,7 +483,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.5",
+          "default": "0.13.6",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -1273,7 +1273,7 @@
       "description": "Represents the extrinsic parameters of a display.",
       "properties": {
         "rotation": {
-          "$ref": "#/$defs/aind_behavior_services__common__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 0.0,
@@ -1282,7 +1282,7 @@
           "description": "Rotation vector (radians)"
         },
         "translation": {
-          "$ref": "#/$defs/aind_behavior_services__common__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 1.309016,
@@ -3381,7 +3381,7 @@
       "description": "Controls the position tracking and movement detection parameters.\n\nThis class manages the position control system including coordinate transformations,\ninitial positioning, signal filtering, and movement detection thresholds for the\nvirtual reality foraging task.",
       "properties": {
         "gain": {
-          "$ref": "#/$defs/aind_behavior_vr_foraging__task_logic__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 1.0,
             "y": 1.0,
@@ -3390,7 +3390,7 @@
           "description": "Gain of the position control."
         },
         "initial_position": {
-          "$ref": "#/$defs/aind_behavior_vr_foraging__task_logic__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 2.56,
@@ -3880,14 +3880,14 @@
     "Session": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.5",
+          "default": "0.13.6",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.13.5",
-          "default": "0.13.5",
+          "const": "0.13.6",
+          "default": "0.13.6",
           "title": "Version",
           "type": "string"
         },
@@ -4003,7 +4003,7 @@
       "type": "object"
     },
     "Size": {
-      "description": "Represents 2D dimensions with width and height.\n\nUsed for defining texture sizes, corridor dimensions, and other 2D measurements\nin the VR foraging environment.",
+      "description": "Represents 2D dimensions with width and height.",
       "properties": {
         "width": {
           "default": 0,
@@ -4735,6 +4735,31 @@
       "title": "UpdaterTarget",
       "type": "string"
     },
+    "Vector3": {
+      "description": "Represents a 3D vector with float coordinates.",
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the vector",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the vector",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the vector",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
+      "type": "object"
+    },
     "VideoWriter": {
       "discriminator": {
         "mapping": {
@@ -5188,56 +5213,6 @@
         }
       },
       "title": "WebCamera",
-      "type": "object"
-    },
-    "aind_behavior_services__common__Vector3": {
-      "description": "Represents a 3D vector with float coordinates.",
-      "properties": {
-        "x": {
-          "default": 0,
-          "description": "X coordinate of the vector",
-          "title": "X",
-          "type": "number"
-        },
-        "y": {
-          "default": 0,
-          "description": "Y coordinate of the vector",
-          "title": "Y",
-          "type": "number"
-        },
-        "z": {
-          "default": 0,
-          "description": "Z coordinate of the vector",
-          "title": "Z",
-          "type": "number"
-        }
-      },
-      "title": "Vector3",
-      "type": "object"
-    },
-    "aind_behavior_vr_foraging__task_logic__Vector3": {
-      "description": "Represents a 3D point or vector with x, y, and z coordinates.\n\nUsed for 3D positioning and movement in the virtual reality environment,\nincluding camera positions, object locations, and 3D transformations.",
-      "properties": {
-        "x": {
-          "default": 0,
-          "description": "X coordinate of the point",
-          "title": "X",
-          "type": "number"
-        },
-        "y": {
-          "default": 0,
-          "description": "Y coordinate of the point",
-          "title": "Y",
-          "type": "number"
-        },
-        "z": {
-          "default": 0,
-          "description": "Z coordinate of the point",
-          "title": "Z",
-          "type": "number"
-        }
-      },
-      "title": "Vector3",
       "type": "object"
     }
   }
