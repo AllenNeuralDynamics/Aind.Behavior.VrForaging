@@ -4475,127 +4475,6 @@ namespace AindVrForagingDataSchema
 
 
     /// <summary>
-    /// Controls the odor delivery system parameters.
-    ///
-    ///This class manages the olfactory stimulus delivery system, including flow rates,
-    ///valve timing, and carrier gas configuration. It ensures proper odor concentration
-    ///and delivery timing for the behavioral task.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Controls the odor delivery system parameters.\n\nThis class manages the olfactory s" +
-        "timulus delivery system, including flow rates,\nvalve timing, and carrier gas con" +
-        "figuration. It ensures proper odor concentration\nand delivery timing for the beh" +
-        "avioral task.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class OdorControl
-    {
-    
-        private double _targetTotalFlow;
-    
-        private bool _useChannel3AsCarrier;
-    
-        private double _targetOdorFlow;
-    
-        public OdorControl()
-        {
-            _targetTotalFlow = 1000D;
-            _useChannel3AsCarrier = true;
-            _targetOdorFlow = 100D;
-        }
-    
-        protected OdorControl(OdorControl other)
-        {
-            _targetTotalFlow = other._targetTotalFlow;
-            _useChannel3AsCarrier = other._useChannel3AsCarrier;
-            _targetOdorFlow = other._targetOdorFlow;
-        }
-    
-        /// <summary>
-        /// Target total flow (ml/s) of the odor mixture
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("target_total_flow")]
-        [System.ComponentModel.DescriptionAttribute("Target total flow (ml/s) of the odor mixture")]
-        public double TargetTotalFlow
-        {
-            get
-            {
-                return _targetTotalFlow;
-            }
-            set
-            {
-                _targetTotalFlow = value;
-            }
-        }
-    
-        /// <summary>
-        /// Whether to use channel 3 as carrier
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("use_channel_3_as_carrier")]
-        [System.ComponentModel.DescriptionAttribute("Whether to use channel 3 as carrier")]
-        public bool UseChannel3AsCarrier
-        {
-            get
-            {
-                return _useChannel3AsCarrier;
-            }
-            set
-            {
-                _useChannel3AsCarrier = value;
-            }
-        }
-    
-        /// <summary>
-        /// Target odor flow (ml/s) in the odor mixture
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("target_odor_flow")]
-        [System.ComponentModel.DescriptionAttribute("Target odor flow (ml/s) in the odor mixture")]
-        public double TargetOdorFlow
-        {
-            get
-            {
-                return _targetOdorFlow;
-            }
-            set
-            {
-                _targetOdorFlow = value;
-            }
-        }
-    
-        public System.IObservable<OdorControl> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OdorControl(this)));
-        }
-    
-        public System.IObservable<OdorControl> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new OdorControl(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("TargetTotalFlow = " + _targetTotalFlow + ", ");
-            stringBuilder.Append("UseChannel3AsCarrier = " + _useChannel3AsCarrier + ", ");
-            stringBuilder.Append("TargetOdorFlow = " + _targetOdorFlow);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
     /// Specifies odor delivery parameters for olfactory cues in the VR environment.
     ///
     ///Odors can be delivered at specific locations to provide additional sensory
@@ -5410,8 +5289,6 @@ namespace AindVrForagingDataSchema
     
         private MovableSpoutControl _movableSpoutControl;
     
-        private OdorControl _odorControl;
-    
         private PositionControl _positionControl;
     
         private AudioControl _audioControl;
@@ -5419,7 +5296,6 @@ namespace AindVrForagingDataSchema
         public OperationControl()
         {
             _movableSpoutControl = new MovableSpoutControl();
-            _odorControl = new OdorControl();
             _positionControl = new PositionControl();
             _audioControl = new AudioControl();
         }
@@ -5427,7 +5303,6 @@ namespace AindVrForagingDataSchema
         protected OperationControl(OperationControl other)
         {
             _movableSpoutControl = other._movableSpoutControl;
-            _odorControl = other._odorControl;
             _positionControl = other._positionControl;
             _audioControl = other._audioControl;
         }
@@ -5447,24 +5322,6 @@ namespace AindVrForagingDataSchema
             set
             {
                 _movableSpoutControl = value;
-            }
-        }
-    
-        /// <summary>
-        /// Control of the odor
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor_control")]
-        [System.ComponentModel.DescriptionAttribute("Control of the odor")]
-        public OdorControl OdorControl
-        {
-            get
-            {
-                return _odorControl;
-            }
-            set
-            {
-                _odorControl = value;
             }
         }
     
@@ -5517,7 +5374,6 @@ namespace AindVrForagingDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("MovableSpoutControl = " + _movableSpoutControl + ", ");
-            stringBuilder.Append("OdorControl = " + _odorControl + ", ");
             stringBuilder.Append("PositionControl = " + _positionControl + ", ");
             stringBuilder.Append("AudioControl = " + _audioControl);
             return true;
@@ -6765,11 +6621,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Gain of the position control.
+        /// Initial position of the subject in the VR world.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("initial_position")]
-        [System.ComponentModel.DescriptionAttribute("Gain of the position control.")]
+        [System.ComponentModel.DescriptionAttribute("Initial position of the subject in the VR world.")]
         public AindBehaviorVrForagingTaskLogicVector3 InitialPosition
         {
             get
@@ -11795,11 +11651,6 @@ namespace AindVrForagingDataSchema
             return Process<NumericalUpdaterParameters>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<OdorControl> source)
-        {
-            return Process<OdorControl>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<OdorSpecification> source)
         {
             return Process<OdorSpecification>(source);
@@ -12079,7 +11930,6 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Olfactometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibration>))]

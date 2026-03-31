@@ -870,24 +870,6 @@ class MovableSpoutControl(BaseModel):
     )
 
 
-class OdorControl(BaseModel):
-    """
-    Controls the odor delivery system parameters.
-
-    This class manages the olfactory stimulus delivery system, including flow rates,
-    valve timing, and carrier gas configuration. It ensures proper odor concentration
-    and delivery timing for the behavioral task.
-    """
-
-    target_total_flow: float = Field(
-        default=1000, ge=100, le=1000, description="Target total flow (ml/s) of the odor mixture"
-    )
-    use_channel_3_as_carrier: bool = Field(default=True, description="Whether to use channel 3 as carrier")
-    target_odor_flow: float = Field(
-        default=100, ge=0, le=100, description="Target odor flow (ml/s) in the odor mixture"
-    )
-
-
 class PositionControl(BaseModel):
     """
     Controls the position tracking and movement detection parameters.
@@ -898,7 +880,7 @@ class PositionControl(BaseModel):
     """
 
     gain: Vector3 = Field(default=Vector3(x=1, y=1, z=1), description="Gain of the position control.")
-    initial_position: Vector3 = Field(default=Vector3(x=0, y=2.56, z=0), description="Gain of the position control.")
+    initial_position: Vector3 = Field(default=Vector3(x=0, y=2.56, z=0), description="Initial position of the subject in the VR world.")
     frequency_filter_cutoff: float = Field(
         default=0.5,
         ge=0,
@@ -934,7 +916,6 @@ class OperationControl(BaseModel):
     movable_spout_control: MovableSpoutControl = Field(
         default=MovableSpoutControl(), description="Control of the movable spout"
     )
-    odor_control: OdorControl = Field(default=OdorControl(), description="Control of the odor", validate_default=True)
     position_control: PositionControl = Field(
         default=PositionControl(), description="Control of the position", validate_default=True
     )
