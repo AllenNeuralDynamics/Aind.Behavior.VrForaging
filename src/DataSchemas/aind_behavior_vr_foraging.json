@@ -2286,29 +2286,29 @@
       "title": "NumericalUpdaterParameters",
       "type": "object"
     },
-    "OdorSpecification": {
-      "description": "Specifies odor delivery parameters for olfactory cues in the VR environment.\n\nOdors can be delivered at specific locations to provide additional sensory\ninformation for navigation and foraging decisions.",
+    "OdorControl": {
+      "description": "Controls the odor delivery system parameters.\n\nThis class manages the olfactory stimulus delivery system, including flow rates,\nvalve timing, and carrier gas configuration. It ensures proper odor concentration\nand delivery timing for the behavioral task.",
       "properties": {
-        "index": {
-          "description": "Index of the odor to be used",
-          "maximum": 3,
-          "minimum": 0,
-          "title": "Index",
+        "target_total_flow": {
+          "const": 1000,
+          "default": 1000,
+          "description": "Target total flow (ml/s) of the odor mixture",
+          "ge": 100,
+          "le": 1000,
+          "title": "Target Total Flow",
           "type": "integer"
         },
-        "concentration": {
-          "default": 1,
-          "description": "Concentration of the odor",
-          "maximum": 1,
-          "minimum": 0,
-          "title": "Concentration",
-          "type": "number"
+        "target_odor_flow": {
+          "const": 100,
+          "default": 100,
+          "description": "Target odor flow (ml/s) in the odor mixture",
+          "ge": 0,
+          "le": 100,
+          "title": "Target Odor Flow",
+          "type": "integer"
         }
       },
-      "required": [
-        "index"
-      ],
-      "title": "OdorSpecification",
+      "title": "OdorControl",
       "type": "object"
     },
     "Olfactometer": {
@@ -2584,6 +2584,14 @@
           },
           "description": "Control of the movable spout"
         },
+        "odor_control": {
+          "$ref": "#/$defs/OdorControl",
+          "default": {
+            "target_total_flow": 1000,
+            "target_odor_flow": 100
+          },
+          "description": "Control of the odor"
+        },
         "position_control": {
           "$ref": "#/$defs/PositionControl",
           "default": {
@@ -2699,16 +2707,15 @@
           "type": "integer"
         },
         "odor_specification": {
-          "default": null,
-          "description": "The optional odor specification of the patch",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/OdorSpecification"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "description": "A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel",
+          "items": {
+            "description": "Concentration of the odor",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "title": "Odor Specification",
+          "type": "array"
         },
         "reward_specification": {
           "$ref": "#/$defs/RewardSpecification",
@@ -2832,6 +2839,9 @@
           "type": "array"
         }
       },
+      "required": [
+        "odor_specification"
+      ],
       "title": "Patch",
       "type": "object"
     },
@@ -4880,12 +4890,19 @@
           "description": "The optional odor specification of the virtual site",
           "oneOf": [
             {
-              "$ref": "#/$defs/OdorSpecification"
+              "items": {
+                "description": "Concentration of the odor",
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "type": "array"
             },
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "Odor Specification"
         },
         "reward_specification": {
           "default": null,

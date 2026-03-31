@@ -4475,83 +4475,86 @@ namespace AindVrForagingDataSchema
 
 
     /// <summary>
-    /// Specifies odor delivery parameters for olfactory cues in the VR environment.
+    /// Controls the odor delivery system parameters.
     ///
-    ///Odors can be delivered at specific locations to provide additional sensory
-    ///information for navigation and foraging decisions.
+    ///This class manages the olfactory stimulus delivery system, including flow rates,
+    ///valve timing, and carrier gas configuration. It ensures proper odor concentration
+    ///and delivery timing for the behavioral task.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Specifies odor delivery parameters for olfactory cues in the VR environment.\n\nOdo" +
-        "rs can be delivered at specific locations to provide additional sensory\ninformat" +
-        "ion for navigation and foraging decisions.")]
+    [System.ComponentModel.DescriptionAttribute("Controls the odor delivery system parameters.\n\nThis class manages the olfactory s" +
+        "timulus delivery system, including flow rates,\nvalve timing, and carrier gas con" +
+        "figuration. It ensures proper odor concentration\nand delivery timing for the beh" +
+        "avioral task.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class OdorSpecification
+    public partial class OdorControl
     {
     
-        private int _index;
+        private int _targetTotalFlow;
     
-        private double _concentration;
+        private int _targetOdorFlow;
     
-        public OdorSpecification()
+        public OdorControl()
         {
-            _concentration = 1D;
+            _targetTotalFlow = 1000;
+            _targetOdorFlow = 100;
         }
     
-        protected OdorSpecification(OdorSpecification other)
+        protected OdorControl(OdorControl other)
         {
-            _index = other._index;
-            _concentration = other._concentration;
-        }
-    
-        /// <summary>
-        /// Index of the odor to be used
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("index", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Index of the odor to be used")]
-        public int Index
-        {
-            get
-            {
-                return _index;
-            }
-            set
-            {
-                _index = value;
-            }
+            _targetTotalFlow = other._targetTotalFlow;
+            _targetOdorFlow = other._targetOdorFlow;
         }
     
         /// <summary>
-        /// Concentration of the odor
+        /// Target total flow (ml/s) of the odor mixture
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("concentration")]
-        [System.ComponentModel.DescriptionAttribute("Concentration of the odor")]
-        public double Concentration
+        [Newtonsoft.Json.JsonPropertyAttribute("target_total_flow")]
+        [System.ComponentModel.DescriptionAttribute("Target total flow (ml/s) of the odor mixture")]
+        public int TargetTotalFlow
         {
             get
             {
-                return _concentration;
+                return _targetTotalFlow;
             }
             set
             {
-                _concentration = value;
+                _targetTotalFlow = value;
             }
         }
     
-        public System.IObservable<OdorSpecification> Generate()
+        /// <summary>
+        /// Target odor flow (ml/s) in the odor mixture
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("target_odor_flow")]
+        [System.ComponentModel.DescriptionAttribute("Target odor flow (ml/s) in the odor mixture")]
+        public int TargetOdorFlow
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OdorSpecification(this)));
+            get
+            {
+                return _targetOdorFlow;
+            }
+            set
+            {
+                _targetOdorFlow = value;
+            }
         }
     
-        public System.IObservable<OdorSpecification> Generate<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<OdorControl> Generate()
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new OdorSpecification(this));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OdorControl(this)));
+        }
+    
+        public System.IObservable<OdorControl> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OdorControl(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("Index = " + _index + ", ");
-            stringBuilder.Append("Concentration = " + _concentration);
+            stringBuilder.Append("TargetTotalFlow = " + _targetTotalFlow + ", ");
+            stringBuilder.Append("TargetOdorFlow = " + _targetOdorFlow);
             return true;
         }
     
@@ -5289,6 +5292,8 @@ namespace AindVrForagingDataSchema
     
         private MovableSpoutControl _movableSpoutControl;
     
+        private OdorControl _odorControl;
+    
         private PositionControl _positionControl;
     
         private AudioControl _audioControl;
@@ -5296,6 +5301,7 @@ namespace AindVrForagingDataSchema
         public OperationControl()
         {
             _movableSpoutControl = new MovableSpoutControl();
+            _odorControl = new OdorControl();
             _positionControl = new PositionControl();
             _audioControl = new AudioControl();
         }
@@ -5303,6 +5309,7 @@ namespace AindVrForagingDataSchema
         protected OperationControl(OperationControl other)
         {
             _movableSpoutControl = other._movableSpoutControl;
+            _odorControl = other._odorControl;
             _positionControl = other._positionControl;
             _audioControl = other._audioControl;
         }
@@ -5322,6 +5329,24 @@ namespace AindVrForagingDataSchema
             set
             {
                 _movableSpoutControl = value;
+            }
+        }
+    
+        /// <summary>
+        /// Control of the odor
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("odor_control")]
+        [System.ComponentModel.DescriptionAttribute("Control of the odor")]
+        public OdorControl OdorControl
+        {
+            get
+            {
+                return _odorControl;
+            }
+            set
+            {
+                _odorControl = value;
             }
         }
     
@@ -5374,6 +5399,7 @@ namespace AindVrForagingDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("MovableSpoutControl = " + _movableSpoutControl + ", ");
+            stringBuilder.Append("OdorControl = " + _odorControl + ", ");
             stringBuilder.Append("PositionControl = " + _positionControl + ", ");
             stringBuilder.Append("AudioControl = " + _audioControl);
             return true;
@@ -5558,7 +5584,7 @@ namespace AindVrForagingDataSchema
     
         private int _stateIndex;
     
-        private OdorSpecification _odorSpecification;
+        private System.Collections.Generic.List<double> _odorSpecification;
     
         private RewardSpecification _rewardSpecification;
     
@@ -5570,6 +5596,7 @@ namespace AindVrForagingDataSchema
         {
             _label = "";
             _stateIndex = 0;
+            _odorSpecification = new System.Collections.Generic.List<double>();
             _rewardSpecification = new RewardSpecification();
             _patchVirtualSitesGenerator = new PatchVirtualSitesGenerator();
             _patchTerminators = new System.Collections.Generic.List<PatchTerminator>();
@@ -5620,12 +5647,13 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// The optional odor specification of the patch
+        /// A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor_specification")]
-        [System.ComponentModel.DescriptionAttribute("The optional odor specification of the patch")]
-        public OdorSpecification OdorSpecification
+        [Newtonsoft.Json.JsonPropertyAttribute("odor_specification", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("A list of odor concentrations for the patch, where the index of the list correspo" +
+            "nds to the odor channel")]
+        public System.Collections.Generic.List<double> OdorSpecification
         {
             get
             {
@@ -9731,7 +9759,7 @@ namespace AindVrForagingDataSchema
     
         private double _startPosition;
     
-        private OdorSpecification _odorSpecification;
+        private System.Collections.Generic.List<double> _odorSpecification;
     
         private VirtualSiteRewardSpecification _rewardSpecification;
     
@@ -9834,7 +9862,7 @@ namespace AindVrForagingDataSchema
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("odor_specification")]
         [System.ComponentModel.DescriptionAttribute("The optional odor specification of the virtual site")]
-        public OdorSpecification OdorSpecification
+        public System.Collections.Generic.List<double> OdorSpecification
         {
             get
             {
@@ -11528,9 +11556,9 @@ namespace AindVrForagingDataSchema
             return Process<NumericalUpdaterParameters>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<OdorSpecification> source)
+        public System.IObservable<string> Process(System.IObservable<OdorControl> source)
         {
-            return Process<OdorSpecification>(source);
+            return Process<OdorControl>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Olfactometer> source)
@@ -11802,7 +11830,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorSpecification>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Olfactometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OlfactometerChannelConfig>))]
