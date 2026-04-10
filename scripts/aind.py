@@ -52,6 +52,7 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
     ).run()
 
     input_trainer_state_path = launcher.session_directory / "behavior" / "trainer_state.json"
+    input_trainer_state_path.parent.mkdir(parents=True, exist_ok=True)
     input_trainer_state_path.write_text(trainer_state.model_dump_json(indent=2), encoding="utf-8")
 
     # Post-fetching modifications
@@ -69,7 +70,7 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         temp_directory=launcher.temp_dir,
         rig=rig,
         session=session,
-        task_logic=task_logic,
+        task=task_logic,
     )
     await bonsai_app.run_async()
 
