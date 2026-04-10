@@ -22,7 +22,7 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="ExternalizedMapping">
-        <Property Name="TaskLogicPath" />
+        <Property Name="TaskLogicPath" DisplayName="TaskPath" />
         <Property Name="RigPath" />
         <Property Name="SessionPath" />
       </Expression>
