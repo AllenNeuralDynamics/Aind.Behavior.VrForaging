@@ -114,7 +114,7 @@ class Rendering(qc.Suite):
         ts_gpu = ts_gpu - ts_gpu[0]
         ts_photodiode = ts_photodiode - ts_photodiode[0]
 
-        aligned_gpu_photodiode = np.empty((len(ts_gpu), 2))
+        aligned_gpu_photodiode = np.empty((len(ts_gpu), 2))  # Array to store aligned GPU and photodiode timestamps
         aligned_gpu_photodiode[:] = np.nan
 
         for i in range(ts_gpu.shape[0]):
@@ -133,12 +133,17 @@ class Rendering(qc.Suite):
                 # After resetting the drift, find the closest photodiode event to the render frame one
                 diffs = np.abs((ts_photodiode - last_correction[1]) - (ts_gpu[i] - last_correction[0]))
 
-                candidate_idx = np.argmin(diffs)
-                candidate_min = diffs[candidate_idx]
-                candidate_time = ts_photodiode[candidate_idx]
-                prev = aligned_gpu_photodiode[i - 1, 1]
+                # Restrict search to events strictly after the last confirmed match to avoid
+                # argmin tie-breaking picking an already-used event (lower index wins ties),
+                # which would fail the monotonicity check and produce spurious NaNs.
+                future_mask = ts_photodiode > last_correction[1]
+                restricted_diffs = np.where(future_mask, diffs, np.inf)
 
-                if (candidate_time > (prev if ~np.isnan(prev) else 0)) and np.abs(candidate_min) < max_latency:
+                candidate_idx = np.argmin(restricted_diffs)
+                candidate_min = restricted_diffs[candidate_idx]
+                candidate_time = ts_photodiode[candidate_idx]
+
+                if np.isfinite(candidate_min) and np.abs(candidate_min) < max_latency:
                     # If it is after the last candidate time and within the expected latency, keep it
                     aligned_gpu_photodiode[i, 1] = candidate_time
                     # Otherwise, we consider that the photodiode event is not aligned with the GPU frame and keep it as a NaN
@@ -152,14 +157,15 @@ class Rendering(qc.Suite):
         axes[0, 0].set_xlabel("Toggle index")
         axes[0, 0].set_ylabel("Timing Difference (s)")
 
-        axes[1, 0].plot(np.diff(aligned_gpu_photodiode[:, 0]) - np.diff(aligned_gpu_photodiode[:, 1]))
-        axes[1, 0].set_title(f"dGPU vs dPhotodiode Timing Differences. Max threshold = {max_latency}s")
-        axes[1, 0].set_xlabel("Toggle index")
-        axes[1, 0].set_ylabel("Timing Difference (ds)")
-
         # Perform linear regression between GPU and photodiode timestamps
         valid_mask = ~np.isnan(aligned_gpu_photodiode).any(axis=1)
         valid_data = aligned_gpu_photodiode[valid_mask]
+        diff_diff = np.diff(valid_data[:, 0]) - np.diff(valid_data[:, 1])
+
+        axes[1, 0].plot(diff_diff)
+        axes[1, 0].set_title(f"dGPU vs dPhotodiode Timing Differences. Max threshold = {max_latency}s")
+        axes[1, 0].set_xlabel("Toggle index")
+        axes[1, 0].set_ylabel("Timing Difference (ds)")
 
         coeffs = np.polyfit(valid_data[:, 0], valid_data[:, 1], 1)
         slope, intercept = coeffs[0], coeffs[1]
@@ -187,16 +193,12 @@ class Rendering(qc.Suite):
         metrics["slope"] = slope
         metrics["mean_toggle_diff"] = np.nanmean(aligned_gpu_photodiode[:, 0] - aligned_gpu_photodiode[:, 1])
         metrics["std_toggle_diff"] = np.nanstd(aligned_gpu_photodiode[:, 0] - aligned_gpu_photodiode[:, 1])
-        metrics["mean_toggle_diff_diff"] = np.nanmean(
-            np.diff(aligned_gpu_photodiode[:, 0]) - np.diff(aligned_gpu_photodiode[:, 1])
-        )
-        metrics["std_toggle_diff_diff"] = np.nanstd(
-            np.diff(aligned_gpu_photodiode[:, 0]) - np.diff(aligned_gpu_photodiode[:, 1])
-        )
+        metrics["mean_toggle_diff_diff"] = np.mean(diff_diff)
+        metrics["std_toggle_diff_diff"] = np.std(diff_diff)
 
-        axes[1, 1].hist(aligned_gpu_photodiode[:, 0] - aligned_gpu_photodiode[:, 1], bins=30, label="Timing Difference")
+        axes[1, 1].hist(valid_data[:, 0] - valid_data[:, 1], bins=30, label="Timing Difference")
         axes[1, 1].hist(
-            np.diff(aligned_gpu_photodiode[:, 0]) - np.diff(aligned_gpu_photodiode[:, 1]),
+            diff_diff,
             bins=30,
             label="Difference of Timing Difference",
         )
