@@ -80,6 +80,24 @@ olfactometer_calibration = OlfactometerCalibration(
     },
 )
 
+# In case you want to add an extension olfactometer:
+extension_olfactometer_calibration = OlfactometerCalibration(
+    channel_config={
+        ch: OlfactometerChannelConfig(
+            channel_index=ch,
+            channel_type=OlfactometerChannelType.ODOR,
+            flow_rate_capacity=100,
+            flow_rate=100,
+        )
+        for ch in [
+            OlfactometerChannel.Channel0,
+            OlfactometerChannel.Channel1,
+            OlfactometerChannel.Channel2,
+            OlfactometerChannel.Channel3,
+        ]
+    },
+)
+
 water_valve_calibration = calibrate_water_valves(
     measurements=[
         Measurement(valve_open_interval=0.2, valve_open_time=0.01, water_weight=[0.6, 0.6], repeat_count=200),
@@ -119,6 +137,7 @@ rig = AindVrForagingRig(
             wheel_diameter=15, pulses_per_revolution=28800, brake_lookup_calibration=[[0, 0], [1, 65535]]
         ),
     ),
+    harp_olfactometer_extension=[Olfactometer(port_name="COM10", calibration=extension_olfactometer_calibration)],
     manipulator=AindManipulatorDevice(port_name="COM9", calibration=manipulator_calibration),
     screen=visual_stimulation.ScreenAssembly(display_index=1),
     calibration=RigCalibration(water_valve=water_valve_calibration),
