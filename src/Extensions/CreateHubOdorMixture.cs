@@ -11,14 +11,14 @@ using Harp.Olfactometer;
 [Description("Returns a list of pairs of Harp messages necessary to configure all olfactometers in a hub to deliver a given odor mixture.")]
 public class CreateHubOdorMixture : Transform<IList<double>, IList<OdorMixMessages>>
 {
-    private int totalOdorFlow = 100;
+    private int perOdorFlow = 100;
     [Range(0, 900)]
     [Editor(DesignTypes.SliderEditor, DesignTypes.UITypeEditor)]
     [Description("The total desired flow of the odor mixture. This value will be used to automatically calculate the carrier(s) flow based on the total flow.")]
-    public int TotalOdorFlow
+    public int PerOdorFlow
     {
-        get { return totalOdorFlow; }
-        set { totalOdorFlow = value; }
+        get { return perOdorFlow; }
+        set { perOdorFlow = value; }
     }
 
 
@@ -49,9 +49,9 @@ public class CreateHubOdorMixture : Transform<IList<double>, IList<OdorMixMessag
             throw new ArgumentException("The number of channel concentrations provided " + channelConcentrations.Count + " does not match the expected number based on the olfactometer count " + nChannels + ".");
         }
         // We make sure all odors sum to 1 and then calculate the "real" flow for each channel based on the target odor flow
-        var adjustedFlow = channelConcentrations.Select(c => c / channelConcentrations.Sum()).Select(c => (int)(TotalOdorFlow * c))
+        var adjustedFlow = channelConcentrations.Select(c => (int)(PerOdorFlow * c))
             .Concat(Enumerable.Repeat(0, nChannels - channelConcentrations.Count)); // We pad with zeros if there are fewer concentrations than channels
-        var carrierFlow = totalFlow - totalOdorFlow;
+        var carrierFlow = totalFlow - adjustedFlow.Sum();
         if (carrierFlow < _MINIMUM_CARRIER_FLOW)
         {
             throw new InvalidOperationException("The total odor flow exceeds the total flow minus the minimum carrier flow. Reduce the total target odor flow or the concentrations.");

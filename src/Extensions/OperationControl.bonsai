@@ -369,7 +369,7 @@
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
-                      <Property Name="TotalFlow" />
+                      <Property Name="PerOdorFlow" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -385,7 +385,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p1:CreateHubOdorMixture">
-                      <p1:TotalOdorFlow>100</p1:TotalOdorFlow>
+                      <p1:PerOdorFlow>100</p1:PerOdorFlow>
                       <p1:TotalFlow>1000</p1:TotalFlow>
                       <p1:OlfactometerChannelCount>3</p1:OlfactometerChannelCount>
                     </Combinator>
@@ -450,7 +450,7 @@
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
-                      <Property Name="TotalFlow" />
+                      <Property Name="PerOdorFlow" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -474,7 +474,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p1:CreateHubOdorMixture">
-                      <p1:TotalOdorFlow>100</p1:TotalOdorFlow>
+                      <p1:PerOdorFlow>100</p1:PerOdorFlow>
                       <p1:TotalFlow>1000</p1:TotalFlow>
                       <p1:OlfactometerChannelCount>3</p1:OlfactometerChannelCount>
                     </Combinator>
