@@ -1,10 +1,10 @@
-using Bonsai;
-using System;
-using System.ComponentModel;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using AindVrForagingDataSchema;
+using Bonsai;
 
 [Combinator]
 [Description("Creates a PatchManager keyed by patch index from a dictionary of PatchStatistics.")]

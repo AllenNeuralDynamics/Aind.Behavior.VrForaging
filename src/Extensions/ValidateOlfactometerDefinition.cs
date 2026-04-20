@@ -1,9 +1,9 @@
-﻿using Bonsai;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using AindVrForagingDataSchema;
+using Bonsai;
 
 [Combinator]
 [Description("Validates that the olfactometer definition in the task logic is compatible with the number of olfactometers defined in the rig. Throws an exception if the definition is invalid.")]

@@ -1,13 +1,13 @@
-﻿using Bonsai.Design;
-using Bonsai.Expressions;
-using Hexa.NET.ImGui;
-using Hexa.NET.ImPlot;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 using AllenNeuralDynamics.Core.Design;
+using Bonsai.Design;
+using Bonsai.Expressions;
+using Hexa.NET.ImGui;
+using Hexa.NET.ImPlot;
 
 namespace AllenNeuralDynamics.VrForaging
 {

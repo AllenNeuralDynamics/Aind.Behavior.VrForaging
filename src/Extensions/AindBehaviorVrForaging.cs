@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using MathNet.Numerics.Interpolation;
-using Bonsai;
-using System.Reactive.Linq;
-using MathNet.Numerics.Distributions;
 using System.ComponentModel;
+using System.Linq;
+using System.Reactive.Linq;
+using Bonsai;
+using MathNet.Numerics.Distributions;
+using MathNet.Numerics.Interpolation;
 
 namespace AindVrForagingDataSchema
 {

@@ -1,7 +1,7 @@
-﻿using Bonsai;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
+using Bonsai;
 
 [Combinator]
 [Description("Returns a sequence containing a null Distribution.")]

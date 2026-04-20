@@ -1,11 +1,11 @@
-﻿using Bonsai;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using Harp.Olfactometer;
+using Bonsai;
 using Bonsai.Harp;
-using System.Collections.Generic;
+using Harp.Olfactometer;
 
 
 [Description("Returns a list of pairs of Harp messages necessary to configure all olfactometers in a hub to deliver a given odor mixture.")]
@@ -71,8 +71,8 @@ public class CreateHubOdorMixture : Transform<IList<double>, IList<OdorMixMessag
                 flows[1],
                 flows[2],
                 flows[3],
-                carrierFlow));
-
+                olfactometerIndex == 0 ? carrierFlow : 0 // We explicitly turn off the air supply to the extension olfactometers since it should never be used
+            ));
             OdorValves valves = OdorValves.None;
             for (int i = 0; i < flows.Count; i++)
             {
