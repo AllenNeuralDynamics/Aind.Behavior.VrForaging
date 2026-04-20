@@ -86,7 +86,7 @@ rhos = [0.9, 0.9, 0.9]
 
 
 def odor_concentration_from_index(odor_index: int) -> list[float]:
-    return [1.0 if i == odor_index else 0.0 for i in range(3)]
+    return [1.0 if i == odor_index else 0.0 for i in range(5)]
 
 
 def make_patch(
@@ -198,11 +198,35 @@ patch3 = make_patch(
     rho=rhos[2],
     inter_patch_time=inter_patch_time[2],
 )
+patch4 = make_patch(
+    label="D",
+    state_index=3,
+    odor_index=3,
+    p_max=p_maxs[0],
+    p_min=p_min[0],
+    dep_rate=dep_rates[0],
+    rep_rate=rep_rates[0],
+    n_states=num_ps_states[0],
+    rho=rhos[0],
+    inter_patch_time=inter_patch_time[0],
+)
+patch5 = make_patch(
+    label="E",
+    state_index=4,
+    odor_index=4,
+    p_max=p_maxs[1],
+    p_min=p_min[1],
+    dep_rate=dep_rates[1],
+    rep_rate=rep_rates[1],
+    n_states=num_ps_states[1],
+    rho=rhos[1],
+    inter_patch_time=inter_patch_time[1],
+)
 
 environment_statistics = vr_task_logic.EnvironmentStatistics(
-    first_state_occupancy=[0.33, 0.33, 0.33],
-    transition_matrix=[[0, 1, 0], [0, 0, 1], [1, 0, 0]],
-    patches=[patch1, patch2, patch3],
+    first_state_occupancy=[0.2, 0.2, 0.2, 0.2, 0.2],
+    transition_matrix=[[0, 1, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0], [0, 0, 0, 0, 1], [1, 0, 0, 0, 0]],
+    patches=[patch1, patch2, patch3, patch4, patch5],
 )
 
 

@@ -1888,7 +1888,7 @@ it.Item3 as SiteHasChoice)</scr:Expression>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
-                <Property Name="TotalFlow" />
+                <Property Name="PerOdorFlow" />
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -1904,7 +1904,7 @@ it.Item3 as SiteHasChoice)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p6:CreateHubOdorMixture">
-                <p6:TotalOdorFlow>100</p6:TotalOdorFlow>
+                <p6:PerOdorFlow>100</p6:PerOdorFlow>
                 <p6:TotalFlow>1000</p6:TotalFlow>
                 <p6:OlfactometerChannelCount>3</p6:OlfactometerChannelCount>
               </Combinator>
