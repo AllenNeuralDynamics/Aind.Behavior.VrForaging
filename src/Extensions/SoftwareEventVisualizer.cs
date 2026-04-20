@@ -1,14 +1,14 @@
-﻿using Bonsai.Design;
-using Bonsai.Expressions;
-using Hexa.NET.ImGui;
-using Hexa.NET.ImPlot;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
-using AllenNeuralDynamics.Core.Design;
 using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
+using AllenNeuralDynamics.Core.Design;
+using Bonsai.Design;
+using Bonsai.Expressions;
+using Hexa.NET.ImGui;
+using Hexa.NET.ImPlot;
 
 namespace AllenNeuralDynamics.VrForaging
 {
@@ -76,7 +76,7 @@ namespace AllenNeuralDynamics.VrForaging
                 ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 0.5f);
                 ImPlot.SetupAxes("Seconds", "", axesFlags | ImPlotAxisFlags.NoLabel, axesFlags | ImPlotAxisFlags.NoDecorations);
                 ImPlot.SetupAxesLimits(latestTimestamp - windowSize, latestTimestamp, 0, 1, ImPlotCond.Always);
-                ImPlot.SetupAxisTicks(ImAxis.X1, latestTimestamp - windowSize, latestTimestamp, 2, new string[] {"-" + windowSize.ToString(), "0"});
+                ImPlot.SetupAxisTicks(ImAxis.X1, latestTimestamp - windowSize, latestTimestamp, 2, new string[] { "-" + windowSize.ToString(), "0" });
 
                 ethogramPlotter.Plot();
                 foreach (var plotter in eventPlotters)

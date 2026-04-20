@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
 using System.Numerics;
-using System;
 using AindVrForagingDataSchema;
+using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
 using Hexa.NET.ImPlot;
 
 namespace AllenNeuralDynamics.VrForaging
@@ -107,7 +107,7 @@ namespace AllenNeuralDynamics.VrForaging
             {
                 var yys = Enumerable.Repeat(yPoint, xxs.Length).ToArray();
                 ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 1f);
-                ImPlot.SetNextMarkerStyle(marker.HasValue? marker.Value : ImPlotMarker.Circle, size, color, 1.0f, color);
+                ImPlot.SetNextMarkerStyle(marker.HasValue ? marker.Value : ImPlotMarker.Circle, size, color, 1.0f, color);
                 fixed (double* x = xxs)
                 fixed (double* y = yys)
                 {
