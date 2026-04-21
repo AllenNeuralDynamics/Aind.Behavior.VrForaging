@@ -211,14 +211,14 @@
       "description": "Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task.",
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.6",
+          "default": "0.13.7",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.7.0-rc0",
-          "default": "0.7.0-rc0",
+          "const": "1.0.0-rc0",
+          "default": "1.0.0-rc0",
           "title": "Version",
           "type": "string"
         },
@@ -440,8 +440,8 @@
           "description": "Parameters of the task logic"
         },
         "version": {
-          "const": "0.7.0-rc0",
-          "default": "0.7.0-rc0",
+          "const": "1.0.0-rc0",
+          "default": "1.0.0-rc0",
           "title": "Version",
           "type": "string"
         },
@@ -483,7 +483,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.6",
+          "default": "0.13.7",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -3888,14 +3888,14 @@
     "Session": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.6",
+          "default": "0.13.7",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.13.6",
-          "default": "0.13.6",
+          "const": "0.13.7",
+          "default": "0.13.7",
           "title": "Version",
           "type": "string"
         },
