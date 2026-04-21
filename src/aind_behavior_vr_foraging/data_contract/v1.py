@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from aind_behavior_services.session import Session
 from contraqctor.contract import Dataset, DataStreamCollection
 from contraqctor.contract.camera import Camera
 from contraqctor.contract.csv import Csv
@@ -7,16 +8,19 @@ from contraqctor.contract.harp import (
     DeviceYmlByFile,
     HarpDevice,
 )
-from contraqctor.contract.json import Json, SoftwareEvents
+from contraqctor.contract.json import PydanticModel, SoftwareEvents
 from contraqctor.contract.mux import MapFromPaths
 from contraqctor.contract.text import Text
+
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 
 def dataset(
     root_path: Path,
     name: str = "VrForagingDataset",
     description: str = "A VrForaging dataset",
-    version: str = "0.6.0",
+    version: str = "1.0.0",
 ) -> Dataset:
     """
     Creates a Dataset object for the VR Foraging experiment.
@@ -113,6 +117,19 @@ def dataset(
                             device_yml_hint=DeviceYmlByFile(),
                         ),
                     ),
+                    MapFromPaths(
+                        name="HarpOlfactometerExtension",
+                        description="Data from any additional Harp Olfactometer devices that were added as extensions to the main olfactometer. The number of these devices can vary between sessions, but they will always be named sequentially as OlfactometerExtension1, OlfactometerExtension2, etc.",
+                        reader_params=MapFromPaths.make_params(
+                            paths=[root_path / "behavior"],
+                            include_glob_pattern=["OlfactometerExtension*.harp"],
+                            inner_data_stream=HarpDevice,
+                            inner_param_factory=lambda device_name: HarpDevice.make_params(
+                                path=root_path / "behavior" / device_name,
+                                device_yml_hint=DeviceYmlByFile(),
+                            ),
+                        ),
+                    ),
                     DataStreamCollection(
                         name="HarpCommands",
                         description="Commands sent to Harp devices",
@@ -171,6 +188,19 @@ def dataset(
                                 reader_params=HarpDevice.make_params(
                                     path=root_path / "behavior/HarpCommands/EnvironmentSensor.harp",
                                     device_yml_hint=DeviceYmlByFile(),
+                                ),
+                            ),
+                            MapFromPaths(
+                                name="HarpOlfactometerExtension",
+                                description="Data from any additional Harp Olfactometer devices that were added as extensions to the main olfactometer. The number of these devices can vary between sessions, but they will always be named sequentially as OlfactometerExtension1, OlfactometerExtension2, etc.",
+                                reader_params=MapFromPaths.make_params(
+                                    paths=[root_path / "behavior/HarpCommands"],
+                                    include_glob_pattern=["OlfactometerExtension*.harp"],
+                                    inner_data_stream=HarpDevice,
+                                    inner_param_factory=lambda device_name: HarpDevice.make_params(
+                                        path=root_path / "behavior/HarpCommands" / device_name,
+                                        device_yml_hint=DeviceYmlByFile(),
+                                    ),
                                 ),
                             ),
                         ],
@@ -409,22 +439,25 @@ def dataset(
                         name="InputSchemas",
                         description="Configuration files for the behavior rig, task_logic and session.",
                         data_streams=[
-                            Json(
+                            PydanticModel(
                                 name="Rig",
-                                reader_params=Json.make_params(
-                                    path=root_path / "behavior/Logs/rig_input.json",
+                                reader_params=PydanticModel.make_params(
+                                    model=AindVrForagingRig,
+                                    path=root_path / "behavior/Logs/rig_output.json",
                                 ),
                             ),
-                            Json(
+                            PydanticModel(
                                 name="TaskLogic",
-                                reader_params=Json.make_params(
-                                    path=root_path / "behavior/Logs/tasklogic_input.json",
+                                reader_params=PydanticModel.make_params(
+                                    model=AindVrForagingTaskLogic,
+                                    path=root_path / "behavior/Logs/tasklogic_output.json",
                                 ),
                             ),
-                            Json(
+                            PydanticModel(
                                 name="Session",
-                                reader_params=Json.make_params(
-                                    path=root_path / "behavior/Logs/session_input.json",
+                                reader_params=PydanticModel.make_params(
+                                    model=Session,
+                                    path=root_path / "behavior/Logs/session_output.json",
                                 ),
                             ),
                         ],
