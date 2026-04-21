@@ -231,8 +231,8 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.6";
-            _version = "0.7.0-rc0";
+            _aindBehaviorServicesPkgVersion = "0.13.7";
+            _version = "1.0.0-rc0";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
             _harpOlfactometer = new Olfactometer();
@@ -681,7 +681,7 @@ namespace AindVrForagingDataSchema
             _name = "AindVrForaging";
             _description = "";
             _taskParameters = new AindVrForagingTaskParameters();
-            _version = "0.7.0-rc0";
+            _version = "1.0.0-rc0";
         }
     
         protected AindVrForagingTaskLogic(AindVrForagingTaskLogic other)
@@ -840,7 +840,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.6";
+            _aindBehaviorServicesPkgVersion = "0.13.7";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
@@ -7628,8 +7628,8 @@ namespace AindVrForagingDataSchema
     
         public Session()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.6";
-            _version = "0.13.6";
+            _aindBehaviorServicesPkgVersion = "0.13.7";
+            _version = "0.13.7";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
