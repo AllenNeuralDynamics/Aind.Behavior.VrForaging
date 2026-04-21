@@ -430,7 +430,7 @@ def dataset(
                                 name="EndSession",
                                 description="A file that determines the end of the session. If the file is empty, the session is still running or it was not closed properly.",
                                 reader_params=SoftwareEvents.make_params(
-                                    path=root_path / "behavior/Logs/EndSession.json",
+                                    root_path / "behavior/SoftwareEvents/EndSession.json"
                                 ),
                             ),
                         ],
