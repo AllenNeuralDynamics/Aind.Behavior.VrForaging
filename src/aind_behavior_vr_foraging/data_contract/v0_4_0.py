@@ -363,7 +363,7 @@ def dataset(
                 name="BehaviorVideos",
                 description="Data from BehaviorVideos modality",
                 reader_params=MapFromPaths.make_params(
-                    paths=root_path / "behavior-videos",
+                    paths=[root_path / "behavior-videos"],
                     include_glob_pattern=["*"],
                     inner_data_stream=Camera,
                     inner_param_factory=lambda camera_name: Camera.make_params(
