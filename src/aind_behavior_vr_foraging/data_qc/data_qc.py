@@ -252,10 +252,19 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
             _runner.add_suite(qc.harp.HarpDeviceTestSuite(stream, commands), stream.name)
 
     # Add Harp Hub tests
+    all_harp_devices = [harp_device for harp_device in dataset["Behavior"] if isinstance(harp_device, HarpDevice)]
+    # Extend from the HarpOlfactometerExtension in case there are additional devices
+    all_harp_devices.extend(
+        [
+            harp_device
+            for harp_device in dataset["Behavior"]["HarpOlfactometerExtension"]
+            if isinstance(harp_device, HarpDevice)
+        ]
+    )
     _runner.add_suite(
         qc.harp.HarpHubTestSuite(
             dataset["Behavior"]["HarpClockGenerator"],
-            [harp_device for harp_device in dataset["Behavior"] if isinstance(harp_device, HarpDevice)],
+            all_harp_devices,
         ),
         "HarpHub",
     )
