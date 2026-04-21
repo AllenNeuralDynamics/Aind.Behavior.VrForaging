@@ -1,3 +1,4 @@
+import logging
 import os
 import typing as t
 from functools import partial
@@ -8,6 +9,8 @@ import semver
 
 from aind_behavior_vr_foraging import __semver__
 
+logger = logging.getLogger(__name__)
+
 
 def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contract.Dataset]:
     parsed_version = semver.Version.parse(version)
@@ -17,8 +20,15 @@ def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contr
         from .v0_4_0 import dataset as _dataset
     elif semver.Version.parse("0.5.0") <= parsed_version < semver.Version.parse("0.6.0"):
         from .v0_5_0 import dataset as _dataset
-    elif parsed_version >= semver.Version.parse("0.6.0"):
+    elif semver.Version.parse("0.6.0") <= parsed_version < semver.Version.parse("0.7.0"):
         from .v0_6_0 import dataset as _dataset
+    elif parsed_version.major == 1:
+        if parsed_version.prerelease is not None:
+            logger.warning(
+                "Version %s is a pre-release version. This will be considered a best-effort attempt to load the dataset.",
+                version,
+            )
+        from .v1 import dataset as _dataset
     else:
         raise ValueError(f"Unsupported version: {version}")
     return partial(_dataset, version=version)
