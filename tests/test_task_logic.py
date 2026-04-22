@@ -1,13 +1,14 @@
 """Tests for task_logic validation helpers."""
 
 import unittest
+import warnings
 
 from pydantic import ValidationError
 
 from aind_behavior_vr_foraging.task_logic import (
-    OdorSpecification,
     VirtualSite,
     _odor_mixture_from_odor_specification,
+    _OdorSpecification,
 )
 
 
@@ -57,12 +58,18 @@ class TestOdorMixtureFromOdorSpecification(unittest.TestCase):
     # --- Old format: OdorSpecification model instance ---
 
     def test_odor_spec_instance_index_0(self):
-        spec = OdorSpecification(index=0, concentration=0.6)
+        with warnings.catch_warnings():
+            # TODO remove this once _OdorSpecification is fully deprecated and removed
+            warnings.simplefilter("ignore", DeprecationWarning)
+            spec = _OdorSpecification(index=0, concentration=0.6)
         result = _odor_mixture_from_odor_specification(spec)
         self.assertEqual(result, [0.6, 0, 0])
 
     def test_odor_spec_instance_index_2(self):
-        spec = OdorSpecification(index=2, concentration=1.0)
+        with warnings.catch_warnings():
+            # TODO remove this once _OdorSpecification is fully deprecated and removed
+            warnings.simplefilter("ignore", DeprecationWarning)
+            spec = _OdorSpecification(index=2, concentration=1.0)
         result = _odor_mixture_from_odor_specification(spec)
         self.assertEqual(result, [0, 0, 1.0])
 
@@ -93,7 +100,7 @@ class TestOdorMixtureBackwardsCompatibilityViaModel(unittest.TestCase):
         self.assertEqual(site.odor_specification, [0.5, 0, 0])
 
     def test_virtual_site_accepts_old_format_odor_spec_instance(self):
-        spec = OdorSpecification(index=1, concentration=0.8)
+        spec = _OdorSpecification(index=1, concentration=0.8)
         site = VirtualSite(odor_specification=spec)
         self.assertEqual(site.odor_specification, [0, 0.8, 0])
 
