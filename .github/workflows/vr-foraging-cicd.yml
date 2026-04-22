@@ -313,12 +313,12 @@ jobs:
       - name: Install docs group of dependencies
         run: uv sync --group docs
 
-      - name: Build Sphinx documentation
-        run: uv run sphinx-build -b html docs/ _build/html
+      - name: Build MkDocs documentation
+        run: uv run mkdocs build --strict
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/html
+          publish_dir: site
           force_orphan: true

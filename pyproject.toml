@@ -48,13 +48,13 @@ dev = [
 ]
 
 docs = [
-    'Sphinx',
-    'furo',
-    'sphinx-jinja',
-    'autodoc_pydantic[erdantic]',
-    'myst_parser',
-    'sphinx-jsonschema',
-    "aind_behavior_vr_foraging[data]",  # Necessary for the data contract rendering
+    'mkdocs',
+    'mkdocs-material',
+    'mkdocstrings[python]',
+    'griffe-pydantic',
+    "aind_behavior_vr_foraging[data]",
+    "mkdocs-autorefs>=1.4.4",
+    "griffe-typingdoc>=0.3.1",
 ]
 
 [project.scripts]

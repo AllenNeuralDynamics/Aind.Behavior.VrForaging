@@ -72,6 +72,9 @@ cover/
 # Sphinx documentation
 docs/_build/
 
+# MkDocs documentation
+site/
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
