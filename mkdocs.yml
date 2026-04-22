@@ -5,8 +5,6 @@ copyright: 2025, Allen Institute for Neural Dynamics
 repo_url: https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging
 repo_name: GitHub
 docs_dir: docs
-exclude_docs: |
-  plans/
 
 validation:
   links:
