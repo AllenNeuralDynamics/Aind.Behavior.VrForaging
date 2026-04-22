@@ -1,4 +1,5 @@
 """MkDocs build hooks for generating dynamic assets."""
+
 import logging
 import shutil
 from pathlib import Path
@@ -30,6 +31,7 @@ def _copy_readme() -> None:
 def _generate_erdantic_diagrams() -> None:
     try:
         import erdantic as erd
+
         import aind_behavior_vr_foraging.task_logic
 
         model = aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic
