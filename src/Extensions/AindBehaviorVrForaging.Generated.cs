@@ -5895,6 +5895,7 @@ namespace AindVrForagingDataSchema
     [JsonInheritanceAttribute("OnReward", typeof(PatchTerminatorOnReward))]
     [JsonInheritanceAttribute("OnTime", typeof(PatchTerminatorOnTime))]
     [JsonInheritanceAttribute("OnDistance", typeof(PatchTerminatorOnDistance))]
+    [JsonInheritanceAttribute("OnRewardSite", typeof(PatchTerminatorOnRewardSite))]
     [System.ComponentModel.DescriptionAttribute("Terminates the patch after a reward site where the animal does not stop in \"count" +
         "\" reward sites.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
@@ -6178,6 +6179,68 @@ namespace AindVrForagingDataSchema
         public System.IObservable<PatchTerminatorOnReward> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnReward(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Count = " + _count);
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// Terminates the patch after visiting a specific site count.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Terminates the patch after visiting a specific site count.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchTerminatorOnRewardSite : PatchTerminator
+    {
+    
+        private AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution _count;
+    
+        public PatchTerminatorOnRewardSite()
+        {
+        }
+    
+        protected PatchTerminatorOnRewardSite(PatchTerminatorOnRewardSite other) : 
+                base(other)
+        {
+            _count = other._count;
+        }
+    
+        /// <summary>
+        /// Number of sites the animal visits before terminating the patch.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("count", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Number of sites the animal visits before terminating the patch.")]
+        public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Count
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                _count = value;
+            }
+        }
+    
+        public System.IObservable<PatchTerminatorOnRewardSite> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchTerminatorOnRewardSite(this)));
+        }
+    
+        public System.IObservable<PatchTerminatorOnRewardSite> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchTerminatorOnRewardSite(this));
         }
     
         protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -11199,6 +11262,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnReward>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnTime>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnDistance>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnRewardSite>))]
     public partial class MatchPatchTerminator : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -11631,6 +11695,11 @@ namespace AindVrForagingDataSchema
             return Process<PatchTerminatorOnReward>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<PatchTerminatorOnRewardSite> source)
+        {
+            return Process<PatchTerminatorOnRewardSite>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PatchTerminatorOnTime> source)
         {
             return Process<PatchTerminatorOnTime>(source);
@@ -11845,6 +11914,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnDistance>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnRejection>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnReward>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnRewardSite>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchTerminatorOnTime>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchUpdateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchVirtualSitesGenerator>))]

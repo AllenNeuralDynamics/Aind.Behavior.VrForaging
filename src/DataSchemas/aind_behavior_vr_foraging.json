@@ -2915,6 +2915,7 @@
           "OnDistance": "#/$defs/PatchTerminatorOnDistance",
           "OnRejection": "#/$defs/PatchTerminatorOnRejection",
           "OnReward": "#/$defs/PatchTerminatorOnReward",
+          "OnRewardSite": "#/$defs/PatchTerminatorOnRewardSite",
           "OnTime": "#/$defs/PatchTerminatorOnTime"
         },
         "propertyName": "terminator_type"
@@ -2934,6 +2935,9 @@
         },
         {
           "$ref": "#/$defs/PatchTerminatorOnDistance"
+        },
+        {
+          "$ref": "#/$defs/PatchTerminatorOnRewardSite"
         }
       ]
     },
@@ -3033,6 +3037,26 @@
         }
       },
       "title": "PatchTerminatorOnReward",
+      "type": "object"
+    },
+    "PatchTerminatorOnRewardSite": {
+      "description": "Terminates the patch after visiting a specific site count.",
+      "properties": {
+        "terminator_type": {
+          "const": "OnRewardSite",
+          "default": "OnRewardSite",
+          "title": "Terminator Type",
+          "type": "string"
+        },
+        "count": {
+          "$ref": "#/$defs/Distribution",
+          "description": "Number of sites the animal visits before terminating the patch."
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "title": "PatchTerminatorOnRewardSite",
       "type": "object"
     },
     "PatchTerminatorOnTime": {
