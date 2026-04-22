@@ -112,4 +112,3 @@ nav:
     - Task Logic: api/task_logic.md
   - JSON Schemas: json-schemas.md
   - Data Contract: dataset.md
-  - GitHub: https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging
