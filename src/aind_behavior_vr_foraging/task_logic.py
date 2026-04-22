@@ -641,7 +641,7 @@ def _odor_mixture_from_odor_specification(value: Any):
         return value
     else:
         try:
-            odor_spec = OdorSpecification.model_validate(value)
+            odor_spec = _OdorSpecification.model_validate(value)
             return [odor_spec.concentration if i == odor_spec.index else 0 for i in range(3)]
         except ValueError:
             pass
@@ -655,8 +655,8 @@ OdorMixture: TypeAlias = Annotated[
 ]
 
 
-@deprecated("OdorSpecification is deprecated, use OdorMixture instead")
-class OdorSpecification(BaseModel):
+@deprecated("_OdorSpecification has been deprecated and will be removed in a future release. Use OdorMixture instead")
+class _OdorSpecification(BaseModel):
     """
     Specifies odor delivery parameters for olfactory cues in the VR environment.
 
@@ -751,6 +751,13 @@ class PatchTerminatorOnDistance(_PatchTerminator):
         description="Number of distance units to wait before terminating the patch"
     )
 
+class PatchTerminatorOnRewardSite(_PatchTerminator):
+    """Terminates the patch after visiting a specific site count."""
+
+    terminator_type: Literal["OnRewardSite"] = "OnRewardSite"
+    count: distributions.Distribution = Field(
+        description="Number of sites the animal visits before terminating the patch."
+    )
 
 if TYPE_CHECKING:
     PatchTerminator = Union[
@@ -759,6 +766,7 @@ if TYPE_CHECKING:
         PatchTerminatorOnReward,
         PatchTerminatorOnTime,
         PatchTerminatorOnDistance,
+        PatchTerminatorOnRewardSite,
     ]
 else:
     PatchTerminator = TypeAliasType(
@@ -770,6 +778,7 @@ else:
                 PatchTerminatorOnReward,
                 PatchTerminatorOnTime,
                 PatchTerminatorOnDistance,
+                PatchTerminatorOnRewardSite,
             ],
             Field(discriminator="terminator_type"),
         ],
