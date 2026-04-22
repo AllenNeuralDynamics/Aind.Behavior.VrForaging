@@ -23,10 +23,14 @@ theme:
     repo: fontawesome/brands/github
   palette:
     - scheme: default
+      primary: white
+      accent: teal
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
+      primary: black
+      accent: teal
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
