@@ -751,6 +751,7 @@ class PatchTerminatorOnDistance(_PatchTerminator):
         description="Number of distance units to wait before terminating the patch"
     )
 
+
 class PatchTerminatorOnRewardSite(_PatchTerminator):
     """Terminates the patch after visiting a specific site count."""
 
@@ -758,6 +759,7 @@ class PatchTerminatorOnRewardSite(_PatchTerminator):
     count: distributions.Distribution = Field(
         description="Number of sites the animal visits before terminating the patch."
     )
+
 
 if TYPE_CHECKING:
     PatchTerminator = Union[
