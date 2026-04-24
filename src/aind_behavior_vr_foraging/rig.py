@@ -59,8 +59,22 @@ class AindVrForagingRig(rig.Rig):
     def _validate_olfactometer_configuration(self) -> Self:
         olfactometers = [self.harp_olfactometer] + self.harp_olfactometer_extension
         for olfactometer in olfactometers:
-            if len(olfactometer.calibration.channel_config) < 3:
+            if len(olfactometer.calibration.channel_config) < 4:
                 raise ValueError(
-                    f"Olfactometer {olfactometer} has fewer than 3 channels configured. All channels must be configured in VrForaging task."
+                    f"Olfactometer {olfactometer} has fewer than 4 channels configured. All channels must be configured in VrForaging task."
                 )
+        for olfactometer in self.harp_olfactometer_extension:
+            for channel in olfactometer.calibration.channel_config.values():
+                if channel.channel_type != oc.OlfactometerChannelType.ODOR:
+                    raise ValueError(
+                        f"All channels in olfactometer extensions must be of type 'Odor'. Found channel with type {channel.channel_type} in olfactometer {olfactometer}"
+                    )
+        if (
+            self.harp_olfactometer.calibration.channel_config[oc.OlfactometerChannel.Channel3].channel_type
+            != oc.OlfactometerChannelType.CARRIER
+        ):
+            raise ValueError(
+                f"Channel 3 of the main olfactometer must be configured as 'Carrier'. Found type {self.harp_olfactometer.calibration.channel_config[oc.OlfactometerChannel.Channel3].channel_type}"
+            )
+
         return self
