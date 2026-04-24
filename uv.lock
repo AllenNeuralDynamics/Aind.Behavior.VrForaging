@@ -84,7 +84,7 @@ docs = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.13.6" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.10" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.10.4" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2.6" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.3,<0.6.0" },
     { name = "pydantic-settings" },
@@ -112,7 +112,7 @@ docs = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.10.3"
+version = "0.10.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -124,9 +124,9 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8a/df/da32eb191583294b70f29a5c7c9b4c629eb4d779a1d43cd36e05bb52570b/aind_clabe-0.10.3.tar.gz", hash = "sha256:4490fe98c95d7243ce8a054e8f11153d2f3603c0d2697d1fd6fa4d51f59ca28a", size = 69955, upload-time = "2026-04-21T16:29:28.919Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/bd/59/ecf3ceffc459ee9bc48b2971b08c3a549fac1460e4a8731858b038254625/aind_clabe-0.10.4.tar.gz", hash = "sha256:e299213a9c579b7f4c351881f8a87f41c2ebc07a307f3d2448099e9b0f11a3ba", size = 70572, upload-time = "2026-04-23T03:06:03.835Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b2/cf/145b815a55d1ca426cbc6903862878a9fe172135812e3bde053d9bb030b3/aind_clabe-0.10.3-py3-none-any.whl", hash = "sha256:f76fff01fc1822d1067127e4f8637b40737fcc62ee651ccd33f9ec1990f0a5d8", size = 93124, upload-time = "2026-04-21T16:29:27.565Z" },
+    { url = "https://files.pythonhosted.org/packages/08/23/097156c8ed6c9efb72d7e39e2f4681d0d6713ca843431156f7d149074858/aind_clabe-0.10.4-py3-none-any.whl", hash = "sha256:71d6fc30dc755a6d28200174d222d76c34562928c8f8fcfa48128148b3a962a0", size = 94044, upload-time = "2026-04-23T03:06:04.887Z" },
 ]
 
 [package.optional-dependencies]
