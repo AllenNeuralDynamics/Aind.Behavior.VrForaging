@@ -1,5 +1,4 @@
 import logging
-import os
 from pathlib import Path
 from typing import Any, cast
 
@@ -27,11 +26,71 @@ from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 logger = logging.getLogger(__name__)
 
+_DEFAULT_PICKER_SETTINGS = DefaultBehaviorPickerSettings(
+    config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindVrForaging"
+)
+
+
+async def _run_curriculum_if_applicable(
+    picker: DataversePicker, input_trainer_state_path: Path, launcher: Launcher
+) -> tuple[CurriculumSuggestion | None, Path | None]:
+    if (
+        (picker.trainer_state is None)
+        or (picker.trainer_state.is_on_curriculum is False)
+        or (picker.trainer_state.stage is None)
+    ):
+        return None, None
+    trainer = CurriculumApp(
+        settings=CurriculumSettings(
+            input_trainer_state=input_trainer_state_path.resolve(),
+            data_directory=launcher.session_directory,
+            project_directory=Path("./plugins/curricula"),
+        )
+    )
+    await trainer.run_async()
+    suggestion = trainer.process_suggestion()
+    suggestion_path = _dump_suggestion(suggestion, launcher.session_directory)
+    picker.push_new_suggestion(suggestion.trainer_state)
+    return suggestion, suggestion_path
+
+
+def _run_data_qc(picker: DataversePicker, launcher: Launcher) -> None:
+    if not picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
+        return
+    try:
+        import webbrowser
+
+        from contraqctor.qc.reporters import HtmlReporter
+
+        from aind_behavior_vr_foraging.data_qc.data_qc import make_qc_runner
+
+        vr_dataset = data_contract.dataset(launcher.session_directory)
+        runner = make_qc_runner(vr_dataset)
+        qc_path = launcher.session_directory / "Behavior" / "Logs" / "qc_report.html"
+        reporter = HtmlReporter(output_path=qc_path)
+        runner.run_all_with_progress(reporter=reporter)
+        webbrowser.open(qc_path.as_uri(), new=2)
+    except Exception as e:
+        logger.error("Failed to run data QC: %s", e)
+
+
+def _run_data_transfer(picker: DataversePicker, launcher: Launcher, session: Session) -> None:
+    if not picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?"):
+        logger.info("Data transfer skipped by user.")
+        return
+    watchdog_settings = WatchdogSettings()
+    watchdog_settings.destination = Path(watchdog_settings.destination) / launcher.session.subject
+    WatchdogDataTransferService(
+        source=launcher.session_directory,
+        settings=watchdog_settings,
+        session=session,
+    ).transfer()
+
 
 @experiment()
 async def aind_experiment_protocol(launcher: Launcher) -> None:
     # Start experiment setup
-    picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
+    picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
 
     # Pick and register session
     session = picker.pick_session(Session)
@@ -41,7 +100,6 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
 
     # Fetch rig settings
     rig = picker.pick_rig(AindVrForagingRig)
-    ensure_rig_and_computer_name(rig)
 
     launcher.register_session(session, rig.data_directory)
 
@@ -78,28 +136,10 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
     try:
         manipulator_modifier.dump()
     except Exception as e:
-        logger.error(f"Failed to update manipulator initial position: {e}")
+        logger.error("Failed to update manipulator initial position: %s", e)
 
     # Curriculum
-    suggestion: CurriculumSuggestion | None = None
-    suggestion_path: Path | None = None
-    if not (
-        (picker.trainer_state is None)
-        or (picker.trainer_state.is_on_curriculum is False)
-        or (picker.trainer_state.stage is None)
-    ):
-        trainer = CurriculumApp(
-            settings=CurriculumSettings(
-                input_trainer_state=input_trainer_state_path.resolve(), data_directory=launcher.session_directory
-            )
-        )
-        # Run the curriculum
-        await trainer.run_async()
-        suggestion = trainer.process_suggestion()
-        # Dump suggestion for debugging (for now, but we will prob remove this later)
-        suggestion_path = _dump_suggestion(suggestion, launcher.session_directory)
-        # Push updated trainer state back to the database
-        picker.push_new_suggestion(suggestion.trainer_state)
+    suggestion, suggestion_path = await _run_curriculum_if_applicable(picker, input_trainer_state_path, launcher)
 
     # Mappers
     assert launcher.repository.working_tree_dir is not None
@@ -112,45 +152,17 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
     ).cli_cmd()
 
     # Run data qc
-    if picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
-        try:
-            import webbrowser
-
-            from contraqctor.qc.reporters import HtmlReporter
-
-            from ..src.aind_behavior_vr_foraging.data_qc.data_qc import make_qc_runner
-
-            vr_dataset = data_contract.dataset(launcher.session_directory)
-            runner = make_qc_runner(vr_dataset)
-            qc_path = launcher.session_directory / "Behavior" / "Logs" / "qc_report.html"
-            reporter = HtmlReporter(output_path=qc_path)
-            runner.run_all_with_progress(reporter=reporter)
-            webbrowser.open(qc_path.as_uri(), new=2)
-        except Exception as e:
-            logger.error(f"Failed to run data QC: {e}")
+    _run_data_qc(picker, launcher)
 
     # Watchdog
-    is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
-    if not is_transfer:
-        logger.info("Data transfer skipped by user.")
-        return
-
     launcher.copy_logs()
-    watchdog_settings = WatchdogSettings()
-    watchdog_settings.destination = Path(watchdog_settings.destination) / launcher.session.subject
-    WatchdogDataTransferService(
-        source=launcher.session_directory,
-        settings=watchdog_settings,
-        session=session,
-    ).transfer()
-
-    return
+    _run_data_transfer(picker, launcher, session)
 
 
 @experiment()
 async def calibration_protocol(launcher: Launcher) -> None:
     # Start experiment setup
-    picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
+    picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
 
     # Pick and register session
     session = Session(subject="CALIBRATION", experiment="CALIBRATION", date=utcnow())
@@ -159,12 +171,6 @@ async def calibration_protocol(launcher: Launcher) -> None:
     rig = picker.pick_rig(AindVrForagingRig)
 
     launcher.register_session(session, rig.data_directory)
-
-    resource_monitor.ResourceMonitor(
-        constrains=[
-            resource_monitor.available_storage_constraint_factory(rig.data_directory, 2e11),
-        ]
-    ).run()
 
     # Run the task via Bonsai
     bonsai_app = AindBehaviorServicesBonsaiApp(
@@ -203,38 +209,10 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
         return position
 
 
-def ensure_rig_and_computer_name(rig: AindVrForagingRig) -> None:
-    """Ensures rig and computer name are set from environment variables if available, otherwise defaults to rig configuration values."""
-    rig_name = os.environ.get("aibs_comp_id", None)
-    computer_name = os.environ.get("hostname", None)
-
-    if rig_name is None:
-        logger.warning(
-            "'aibs_comp_id' environment variable not set. Defaulting to rig name from configuration. %s", rig.rig_name
-        )
-        rig_name = rig.rig_name
-    if computer_name is None:
-        computer_name = rig.computer_name
-        logger.warning(
-            "'hostname' environment variable not set. Defaulting to computer name from configuration. %s",
-            rig.computer_name,
-        )
-
-    if rig_name != rig.rig_name or computer_name != rig.computer_name:
-        logger.warning(
-            "Rig name or computer name from environment variables do not match the rig configuration. "
-            "Forcing rig name: %s and computer name: %s from environment variables.",
-            rig_name,
-            computer_name,
-        )
-        rig.rig_name = rig_name
-        rig.computer_name = computer_name
-
-
 @experiment()
 async def recover_session(launcher: Launcher) -> None:
     # Start experiment setup
-    picker = DataversePicker(launcher=launcher, settings=DefaultBehaviorPickerSettings())
+    picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
     session_path = Path(picker.ui_helper.input("Enter the path to the session you want to recover:"))
     if not session_path.exists():
         logger.error("Session path does not exist: %s", session_path)
@@ -251,30 +229,10 @@ async def recover_session(launcher: Launcher) -> None:
     else:
         raise FileNotFoundError("Trainer state file not found.")
 
-    ensure_rig_and_computer_name(rig_model)
-
     launcher.register_session(session_model, rig_model.data_directory)
 
     # Curriculum
-    suggestion: CurriculumSuggestion | None = None
-    suggestion_path: Path | None = None
-    if not (
-        (picker.trainer_state is None)
-        or (picker.trainer_state.is_on_curriculum is False)
-        or (picker.trainer_state.stage is None)
-    ):
-        trainer = CurriculumApp(
-            settings=CurriculumSettings(
-                input_trainer_state=input_trainer_state_path.resolve(), data_directory=launcher.session_directory
-            )
-        )
-        # Run the curriculum
-        await trainer.run_async()
-        suggestion = trainer.process_suggestion()
-        # Dump suggestion for debugging (for now, but we will prob remove this later)
-        suggestion_path = _dump_suggestion(suggestion, launcher.session_directory)
-        # Push updated trainer state back to the database
-        picker.push_new_suggestion(suggestion.trainer_state)
+    suggestion, suggestion_path = await _run_curriculum_if_applicable(picker, input_trainer_state_path, launcher)
 
     # Mappers
     assert launcher.repository.working_tree_dir is not None
@@ -287,38 +245,10 @@ async def recover_session(launcher: Launcher) -> None:
     ).cli_cmd()
 
     # Run data qc
-    if picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
-        try:
-            import webbrowser
-
-            from contraqctor.qc.reporters import HtmlReporter
-
-            from ..src.aind_behavior_vr_foraging.data_qc.data_qc import make_qc_runner
-
-            vr_dataset = data_contract.dataset(launcher.session_directory)
-            runner = make_qc_runner(vr_dataset)
-            qc_path = launcher.session_directory / "Behavior" / "Logs" / "qc_report.html"
-            reporter = HtmlReporter(output_path=qc_path)
-            runner.run_all_with_progress(reporter=reporter)
-            webbrowser.open(qc_path.as_uri(), new=2)
-        except Exception as e:
-            logger.error(f"Failed to run data QC: {e}")
+    _run_data_qc(picker, launcher)
 
     # Watchdog
-    is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
-    if not is_transfer:
-        logger.info("Data transfer skipped by user.")
-        return
-
-    watchdog_settings = WatchdogSettings()
-    watchdog_settings.destination = Path(watchdog_settings.destination) / launcher.session.subject
-    WatchdogDataTransferService(
-        source=launcher.session_directory,
-        settings=watchdog_settings,
-        session=session_model,
-    ).transfer()
-
-    return
+    _run_data_transfer(picker, launcher, session_model)
 
 
 class ClabeCli(LauncherCliArgs):
