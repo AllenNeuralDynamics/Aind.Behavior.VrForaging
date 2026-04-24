@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import Literal, Optional, Self
 
 import aind_behavior_services.rig as rig
 import aind_behavior_services.rig.cameras as cameras
@@ -8,7 +8,7 @@ import aind_behavior_services.rig.treadmill as treadmill
 import aind_behavior_services.rig.visual_stimulation as visual_stimulation
 import aind_behavior_services.rig.water_valve as wvc
 from aind_behavior_services.rig import aind_manipulator as man
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from aind_behavior_vr_foraging import __semver__
 
@@ -54,3 +54,13 @@ class AindVrForagingRig(rig.Rig):
         default=visual_stimulation.ScreenAssembly(), description="Screen settings", validate_default=True
     )
     calibration: RigCalibration = Field(description="Calibration models")
+
+    @model_validator(mode="after")
+    def _validate_olfactometer_configuration(self) -> Self:
+        olfactometers = [self.harp_olfactometer] + self.harp_olfactometer_extension
+        for olfactometer in olfactometers:
+            if len(olfactometer.calibration.channel_config) < 3:
+                raise ValueError(
+                    f"Olfactometer {olfactometer} has fewer than 3 channels configured. All channels must be configured in VrForaging task."
+                )
+        return self
