@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AindVrForagingDataSchema;
@@ -13,7 +14,7 @@ public class ValidateOlfactometerDefinition
 {
     const int minimumCarrierFlow = 100;
 
-    public IObservable<bool> Process(IObservable<Tuple<AindVrForagingTaskLogic, AindVrForagingRig>> source)
+    public IObservable<Unit> Process(IObservable<Tuple<AindVrForagingTaskLogic, AindVrForagingRig>> source)
     {
         return source.Select(value =>
         {
@@ -44,7 +45,7 @@ public class ValidateOlfactometerDefinition
             {
                 throw new InvalidOperationException("The olfactometer definition in the task logic requires at least " + (maxIdx + 1) + " channels, but the rig only supports " + nChannels + " channels.");
             }
-            return maxIdx < nChannels;
+            return new Unit();
         });
     }
 }
