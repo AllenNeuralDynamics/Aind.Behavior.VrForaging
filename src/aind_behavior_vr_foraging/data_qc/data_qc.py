@@ -211,14 +211,19 @@ class Rendering(qc.Suite):
         context.update(metrics)
         fig.show()
 
-        if metrics["std_toggle_diff_diff"] > 0.01:
-            return self.fail_test(
-                metrics, "Standard deviation of toggle difference exceeds threshold.", context=context
-            )
-        else:
-            return self.pass_test(
-                metrics, "Standard deviation of toggle difference is within acceptable bounds.", context=context
-            )
+        match metrics["std_toggle_diff_diff"]:
+            case v if v < 0.01:
+                return self.pass_test(
+                    metrics, "Standard deviation of toggle difference is within acceptable bounds.", context=context
+                )
+            case v if v < 0.02:
+                return self.warn_test(
+                    metrics, "Standard deviation of toggle difference is elevated and of concern.", context=context
+                )
+            case _:
+                return self.fail_test(
+                    metrics, "Standard deviation of toggle difference exceeds threshold.", context=context
+                )
 
 
 def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
