@@ -36,7 +36,7 @@ from the root of the repository.
 
 The VR Foraging tasks is instantiated by a set of three settings files that strictly follow a DSL schema. These files are:
 
-- `task_logic.json`
+- `task.json`
 - `rig.json`
 - `session.json`
 
@@ -45,7 +45,7 @@ Examples on how to generate these files can be found in the `./Examples` directo
 The workflow can thus be executed using the [Bonsai CLI](https://bonsai-rx.org/docs/articles/cli.html):
 
 ```powershell
-"./bonsai/bonsai.exe" "./src/main.bonsai" -p SessionPath=<path-to-session.json> -p RigPath=<path-to-rig.json> -p TaskLogicPath=<path-to-task_logic.json>
+"./bonsai/bonsai.exe" "./src/main.bonsai" -p SessionPath=<path-to-session.json> -p RigPath=<path-to-rig.json> -p TaskPath=<path-to-task.json>
 ```
 
 However, for a better experiment management user experience, it is recommended to use the provided experiment launcher below.

@@ -938,7 +938,8 @@ class OperationControl(BaseModel):
     audio_control: AudioControl = Field(
         default=AudioControl(), description="Control of the audio", validate_default=True
     )
-
+    wait_to_start_duration: float = Field(default=0, ge=0, description="Duration to wait before starting the task")
+    wait_to_finish_duration: float = Field(default=0, ge=0, description="Duration to wait after finishing the task")
 
 # ==================== BLOCK END CONDITIONS ====================
 

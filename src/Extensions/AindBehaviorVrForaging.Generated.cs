@@ -5298,12 +5298,18 @@ namespace AindVrForagingDataSchema
     
         private AudioControl _audioControl;
     
+        private double _waitToStartDuration;
+    
+        private double _waitToFinishDuration;
+    
         public OperationControl()
         {
             _movableSpoutControl = new MovableSpoutControl();
             _odorControl = new OdorControl();
             _positionControl = new PositionControl();
             _audioControl = new AudioControl();
+            _waitToStartDuration = 0D;
+            _waitToFinishDuration = 0D;
         }
     
         protected OperationControl(OperationControl other)
@@ -5312,6 +5318,8 @@ namespace AindVrForagingDataSchema
             _odorControl = other._odorControl;
             _positionControl = other._positionControl;
             _audioControl = other._audioControl;
+            _waitToStartDuration = other._waitToStartDuration;
+            _waitToFinishDuration = other._waitToFinishDuration;
         }
     
         /// <summary>
@@ -5386,6 +5394,40 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        /// <summary>
+        /// Duration to wait before starting the task
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("wait_to_start_duration")]
+        [System.ComponentModel.DescriptionAttribute("Duration to wait before starting the task")]
+        public double WaitToStartDuration
+        {
+            get
+            {
+                return _waitToStartDuration;
+            }
+            set
+            {
+                _waitToStartDuration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Duration to wait after finishing the task
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("wait_to_finish_duration")]
+        [System.ComponentModel.DescriptionAttribute("Duration to wait after finishing the task")]
+        public double WaitToFinishDuration
+        {
+            get
+            {
+                return _waitToFinishDuration;
+            }
+            set
+            {
+                _waitToFinishDuration = value;
+            }
+        }
+    
         public System.IObservable<OperationControl> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OperationControl(this)));
@@ -5401,7 +5443,9 @@ namespace AindVrForagingDataSchema
             stringBuilder.Append("MovableSpoutControl = " + _movableSpoutControl + ", ");
             stringBuilder.Append("OdorControl = " + _odorControl + ", ");
             stringBuilder.Append("PositionControl = " + _positionControl + ", ");
-            stringBuilder.Append("AudioControl = " + _audioControl);
+            stringBuilder.Append("AudioControl = " + _audioControl + ", ");
+            stringBuilder.Append("WaitToStartDuration = " + _waitToStartDuration + ", ");
+            stringBuilder.Append("WaitToFinishDuration = " + _waitToFinishDuration);
             return true;
         }
     
