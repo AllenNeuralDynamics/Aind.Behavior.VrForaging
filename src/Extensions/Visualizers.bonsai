@@ -1053,7 +1053,7 @@ Item2.Item2 as SecondsSinceChoice)</scr:Expression>
                     <gui:Name>Stop</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Text>End Experiment</gui:Text>
+                    <gui:Text>Stop Experiment</gui:Text>
                   </Expression>
                   <Expression xsi:type="rx:Sink">
                     <Workflow>
