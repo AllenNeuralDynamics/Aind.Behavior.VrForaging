@@ -340,6 +340,8 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             url=self.repository.remote().url,
             name="Aind.Behavior.VrForaging",
             version=self.repository.head.commit.hexsha,
+            # version=__semver__,  # TODO slot this in when this is solved https://github.com/AllenNeuralDynamics/aind-data-schema/issues/1789
+            # sha=self.repository.head.commit.hexsha,
             language="Bonsai",
             language_version=bonsai_version,
             run_script=Path(self.bonsai_app.workflow),
