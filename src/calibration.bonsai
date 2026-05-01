@@ -1070,7 +1070,7 @@
               <Combinator xsi:type="rx:Merge" />
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
-              <Name>ExperimentState</Name>
+              <Name>ExperimentCommand</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>StartExperiment</Name>

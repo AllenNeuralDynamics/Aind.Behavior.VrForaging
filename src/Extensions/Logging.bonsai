@@ -16,8 +16,9 @@
                  xmlns:p9="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p10="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
+                 xmlns:p11="clr-namespace:;assembly=Extensions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
-                 xmlns:p11="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
+                 xmlns:p12="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -1025,7 +1026,17 @@ it.Value.SyncQuadValue.Value as SyncQuadValue)</scr:Expression>
                                 <Name>SoftwareEvent</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>EndExperiment</Name>
+                                <Name>ExperimentCommand</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p11:FilterExperimentCommand">
+                                  <p11:ExperimentCommand>EndCommand</p11:ExperimentCommand>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Take">
+                                  <rx:Count>1</rx:Count>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="StringProperty">
@@ -1059,8 +1070,10 @@ it.Value.SyncQuadValue.Value as SyncQuadValue)</scr:Expression>
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
                               <Edge From="6" To="7" Label="Source1" />
+                              <Edge From="7" To="8" Label="Source1" />
                               <Edge From="8" To="9" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
+                              <Edge From="10" To="11" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1397,8 +1410,8 @@ Value as IsStopped)</scr:Expression>
                                 <Name>SubjectSchema</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p11:SerializeToJson">
-                                  <p11:Formatting>None</p11:Formatting>
+                                <Combinator xsi:type="p12:SerializeToJson">
+                                  <p12:Formatting>None</p12:Formatting>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
@@ -1427,8 +1440,8 @@ Value as IsStopped)</scr:Expression>
                                 <Name>TaskLogicSchema</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p11:SerializeToJson">
-                                  <p11:Formatting>None</p11:Formatting>
+                                <Combinator xsi:type="p12:SerializeToJson">
+                                  <p12:Formatting>None</p12:Formatting>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
@@ -1457,8 +1470,8 @@ Value as IsStopped)</scr:Expression>
                                 <Name>RigSchema</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p11:SerializeToJson">
-                                  <p11:Formatting>None</p11:Formatting>
+                                <Combinator xsi:type="p12:SerializeToJson">
+                                  <p12:Formatting>None</p12:Formatting>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
