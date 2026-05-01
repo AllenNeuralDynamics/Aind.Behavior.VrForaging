@@ -126,7 +126,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             acquisition_end_time=utcnow(),
             acquisition_start_time=self.session_model.date,
             experimenters=self.session_model.experimenter,
-            acquisition_type=self.session_model.experiment or self.task_model.name,
+            acquisition_type=self.task_model.name,
             coordinate_system=None,
             data_streams=self._get_data_streams(),
             calibrations=self._get_calibrations(),
@@ -170,11 +170,20 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             if _device[0] is not None and self._include_device(_device[1])
         ]
 
+        code = [self._get_bonsai_as_code(), self._get_python_as_code()]
+        if (
+            self.curriculum_suggestion is not None
+            and self.curriculum_suggestion.trainer_state is not None
+            and self.curriculum_suggestion.trainer_state.curriculum is not None
+            and self.curriculum_suggestion.trainer_state.is_on_curriculum is True
+        ):
+            code.append(self._get_curriculum_as_code())
+
         data_streams: list[acquisition.DataStream] = [
             acquisition.DataStream(
                 stream_start_time=self.session_model.date,
                 stream_end_time=self.session_end_time,
-                code=[self._get_bonsai_as_code(), self._get_python_as_code()],
+                code=code,
                 active_devices=active_devices,
                 modalities=modalities,
                 configurations=self._get_cameras_config(),
@@ -257,7 +266,8 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
         # Animal performance, curriculum, and metrics
         performance_metrics: Optional[acquisition.PerformanceMetrics] = None
-        curriculum_status: str = "false"
+        curriculum_status: Optional[str] = None
+        training_protocol_name: Optional[str] = None
 
         if self.curriculum_suggestion is not None:
             logger.debug("Curriculum suggestion found. Setting performance metrics based on curriculum suggestion.")
@@ -268,7 +278,10 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             )
         if self.trainer_state is not None:
             logger.debug("Trainer state found. Setting curriculum status based on trainer state.")
-            curriculum_status = str(self.trainer_state.is_on_curriculum)
+            if self.trainer_state.stage is not None:
+                curriculum_status = str(self.trainer_state.stage.name)
+            if self.trainer_state.curriculum is not None:
+                training_protocol_name = str(self.trainer_state.curriculum.name)
 
         stimulus_epochs: list[acquisition.StimulusEpoch] = [
             acquisition.StimulusEpoch(
@@ -277,15 +290,16 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 stimulus_start_time=self.session_model.date,
                 stimulus_end_time=self.session_end_time,
                 configurations=stimulus_epoch_configurations,
-                stimulus_name=self.session_model.experiment or self.task_model.name,
+                stimulus_name=self.task_model.name,
                 stimulus_modalities=stimulus_modalities,
                 performance_metrics=performance_metrics,
                 curriculum_status=curriculum_status,
+                training_protocol_name=training_protocol_name,
             )
         ]
         return stimulus_epochs
 
-    def _get_cameras_config(self) -> List[acquisition.DetectorConfig]:
+    def _get_cameras_config(self) -> list[acquisition.DetectorConfig]:
         def _map_camera(name: str, camera: cameras.CameraTypes) -> acquisition.DetectorConfig:
             assert camera.video_writer is not None, "Camera does not have a video writer configured."
             return acquisition.DetectorConfig(
@@ -344,4 +358,33 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             version=self.repository.head.commit.hexsha,
             language="Python",
             language_version=semver,
+        )
+
+    def _get_curriculum_as_code(self) -> acquisition.Code:
+        target = Path("plugins/curricula")
+        submodule: Optional[git.Submodule] = None
+        for sub in self.repository.submodules:
+            if Path(sub.path) == target:
+                submodule = sub
+                break
+
+        if submodule is None:
+            raise ValueError(
+                f"Could not find a git submodule at '{target}' inside repository '{self.repository.working_tree_dir}'."
+            )
+
+        if self.curriculum_suggestion is None:
+            raise ValueError("Curriculum suggestion is not set.")
+        if (
+            self.curriculum_suggestion.trainer_state is None
+            or self.curriculum_suggestion.trainer_state.curriculum is None
+        ):
+            raise ValueError("Trainer state or curriculum is not set in the curriculum suggestion.")
+        return acquisition.Code(
+            url=submodule.url,
+            # sha=submodule.hexsha, #  TODO see https://github.com/AllenNeuralDynamics/aind-data-schema/issues/1789
+            name=self.curriculum_suggestion.trainer_state.curriculum.pkg_location,
+            version=self.curriculum_suggestion.trainer_state.curriculum.version,
+            language="aind-behavior-curriculum",
+            language_version=self.curriculum_suggestion.dsl_version,
         )

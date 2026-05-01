@@ -25,8 +25,8 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
 
     def cli_cmd(self):
         """Generate aind-data-schema metadata for the VR Foraging dataset located at the specified path."""
-        from ._instrument import AindInstrumentDataMapper
         from ._acquisition import AindAcquisitionDataMapper
+        from ._instrument import AindInstrumentDataMapper
 
         session_mapper = AindAcquisitionDataMapper(
             data_path=Path(self.data_path),
