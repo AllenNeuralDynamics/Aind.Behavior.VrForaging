@@ -9,8 +9,8 @@ from unittest.mock import MagicMock, patch
 from aind_data_schema.core import acquisition, instrument
 from aind_data_schema.utils import compatibility_check
 
-from aind_behavior_vr_foraging.data_mappers._rig import AindInstrumentDataMapper
-from aind_behavior_vr_foraging.data_mappers._session import AindAcquisitionDataMapper
+from aind_behavior_vr_foraging.data_mappers._instrument import AindInstrumentDataMapper
+from aind_behavior_vr_foraging.data_mappers._acquisition import AindAcquisitionDataMapper
 
 sys.path.append(".")
 from aind_behavior_vr_foraging.cli import DataMapperCli
