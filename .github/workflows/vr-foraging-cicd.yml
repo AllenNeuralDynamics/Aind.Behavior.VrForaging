@@ -56,8 +56,10 @@ jobs:
       - name: Run python unit tests
         run: uv run pytest
 
-      - name: Regenerate schemas
+      - name: Regenerate vr-foraging schemas
         run: uv run vr-foraging regenerate
+      - name: Regenerate vr-foraging-curricula curricula schemas
+        run: uv run src/packages/aind_behavior_vr_foraging_curricula/src/aind_behavior_vr_foraging_curricula/_schema.py
 
       - name: Check for uncommitted changes
         run: |
@@ -112,8 +114,10 @@ jobs:
             uv version ${{ steps.get_version.outputs.version }} --package $pkg
           done
 
-      - name: Regenerate schemas
+      - name: Regenerate vr-foraging schemas
         run: uv run vr-foraging regenerate
+      - name: Regenerate vr-foraging-curricula curricula schemas
+        run: uv run src/packages/aind_behavior_vr_foraging_curricula/src/aind_behavior_vr_foraging_curricula/_schema.py
 
       - name: Commit version and schema changes
         shell: bash
