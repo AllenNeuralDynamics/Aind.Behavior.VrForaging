@@ -61,6 +61,9 @@ jobs:
       - name: Regenerate vr-foraging-curricula curricula schemas
         run: uv run src/packages/aind_behavior_vr_foraging_curricula/src/aind_behavior_vr_foraging_curricula/_schema.py
 
+      - name: Build all packages
+        run: uv build --all-packages
+
       - name: Check for uncommitted changes
         run: |
           git config --global core.safecrlf false
@@ -119,6 +122,16 @@ jobs:
       - name: Regenerate vr-foraging-curricula curricula schemas
         run: uv run src/packages/aind_behavior_vr_foraging_curricula/src/aind_behavior_vr_foraging_curricula/_schema.py
 
+      - name: Build all packages
+        run: uv build --all-packages
+
+      - name: Upload wheels as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
       - name: Commit version and schema changes
         shell: bash
         run: |
@@ -146,20 +159,23 @@ jobs:
     name: Publish to PyPI
     needs: prepare-release
     steps:
-      - uses: actions/checkout@v6
+      - name: Download wheels artifact
+        uses: actions/download-artifact@v4
         with:
-          fetch-depth: 0
-          ref: main
+          name: dist
+          path: dist/
 
       - uses: astral-sh/setup-uv@v8.1.0
         with:
           enable-cache: true
 
-      - name: Build all packages
-        run: uv build --all-packages
-
       - name: Publish to PyPI
         run: uv publish --token ${{ secrets.AIND_PYPI_TOKEN }}
+
+      - name: Upload wheels to GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
 
   # ╔─────────────────────────╗
   # │   ____                  │
