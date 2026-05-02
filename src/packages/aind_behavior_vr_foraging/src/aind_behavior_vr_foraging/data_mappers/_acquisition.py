@@ -363,18 +363,6 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
 
     def _get_curriculum_as_code(self) -> acquisition.Code:
-        target = Path("src/aind_behavior_vr_foraging_curricula")
-        submodule: Optional[git.Submodule] = None
-        for sub in self.repository.submodules:
-            if Path(sub.path) == target:
-                submodule = sub
-                break
-
-        if submodule is None:
-            raise ValueError(
-                f"Could not find a git submodule at '{target}' inside repository '{self.repository.working_tree_dir}'."
-            )
-
         if self.curriculum_suggestion is None:
             raise ValueError("Curriculum suggestion is not set.")
         if (
@@ -383,8 +371,8 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         ):
             raise ValueError("Trainer state or curriculum is not set in the curriculum suggestion.")
         return acquisition.Code(
-            url=submodule.url,
-            # sha=submodule.hexsha, #  TODO see https://github.com/AllenNeuralDynamics/aind-data-schema/issues/1789
+            url=self.repository.remote().url,
+            # sha=self.repository.head.commit.hexsha, #  TODO see https://github.com/AllenNeuralDynamics/aind-data-schema/issues/1789
             name=self.curriculum_suggestion.trainer_state.curriculum.pkg_location,
             version=self.curriculum_suggestion.trainer_state.curriculum.version,
             language="aind-behavior-curriculum",

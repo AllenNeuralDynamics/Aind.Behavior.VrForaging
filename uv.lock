@@ -18,6 +18,9 @@ members = [
 
 [manifest.dependency-groups]
 dev = [
+    { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "aind-behavior-vr-foraging", extras = ["mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "aind-clabe", specifier = ">=0.10.5" },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
