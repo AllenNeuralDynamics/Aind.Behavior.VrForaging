@@ -51,6 +51,7 @@ extra_css:
 
 hooks:
   - docs/hooks.py
+  - docs/curricula_build.py
 
 plugins:
   - search
@@ -59,7 +60,8 @@ plugins:
       default_handler: python
       handlers:
         python:
-          paths: [src]
+          paths:
+            - src
           import:
             - https://docs.python.org/3/objects.inv
             - https://docs.pydantic.dev/latest/objects.inv
@@ -112,5 +114,6 @@ nav:
     - Session: api/session.md
     - Rig: api/rig.md
     - Task Logic: api/task_logic.md
+    - Curricula: api/curricula.md
   - JSON Schemas: json-schemas.md
   - Data Contract: dataset.md

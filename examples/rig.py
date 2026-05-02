@@ -100,8 +100,18 @@ extension_olfactometer_calibration = OlfactometerCalibration(
 
 water_valve_calibration = calibrate_water_valves(
     measurements=[
-        Measurement(valve_open_interval=0.2, valve_open_time=0.01, water_weight=[0.6, 0.6], repeat_count=200),
-        Measurement(valve_open_interval=0.2, valve_open_time=0.02, water_weight=[1.2, 1.2], repeat_count=200),
+        Measurement(
+            valve_open_interval=0.2,
+            valve_open_time=0.01,
+            water_weight=[0.6, 0.6],
+            repeat_count=200,
+        ),
+        Measurement(
+            valve_open_interval=0.2,
+            valve_open_time=0.02,
+            water_weight=[1.2, 1.2],
+            repeat_count=200,
+        ),
     ]
 )
 
@@ -115,10 +125,18 @@ rig = AindVrForagingRig(
         frame_rate=120,
         cameras={
             "FaceCamera": cameras.SpinnakerCamera(
-                serial_number="SerialNumber", binning=1, exposure=5000, gain=0, video_writer=video_writer
+                serial_number="SerialNumber",
+                binning=1,
+                exposure=5000,
+                gain=0,
+                video_writer=video_writer,
             ),
             "SideCamera": cameras.SpinnakerCamera(
-                serial_number="SerialNumber", binning=1, exposure=5000, gain=0, video_writer=video_writer
+                serial_number="SerialNumber",
+                binning=1,
+                exposure=5000,
+                gain=0,
+                video_writer=video_writer,
             ),
         },
     ),
@@ -126,7 +144,9 @@ rig = AindVrForagingRig(
         cameras={"WebCam0": cameras.WebCamera(index=0)}
     ),
     harp_behavior=HarpBehavior(port_name="COM3"),
-    harp_olfactometer=Olfactometer(port_name="COM4", calibration=olfactometer_calibration),
+    harp_olfactometer=Olfactometer(
+        port_name="COM4", calibration=olfactometer_calibration
+    ),
     harp_lickometer=HarpLicketySplit(port_name="COM5"),
     harp_clock_generator=HarpWhiteRabbit(port_name="COM6"),
     harp_analog_input=None,
@@ -134,11 +154,17 @@ rig = AindVrForagingRig(
     harp_treadmill=Treadmill(
         port_name="COM8",
         calibration=TreadmillCalibration(
-            wheel_diameter=15, pulses_per_revolution=28800, brake_lookup_calibration=[[0, 0], [1, 65535]]
+            wheel_diameter=15,
+            pulses_per_revolution=28800,
+            brake_lookup_calibration=[[0, 0], [1, 65535]],
         ),
     ),
-    harp_olfactometer_extension=[Olfactometer(port_name="COM10", calibration=extension_olfactometer_calibration)],
-    manipulator=AindManipulatorDevice(port_name="COM9", calibration=manipulator_calibration),
+    harp_olfactometer_extension=[
+        Olfactometer(port_name="COM10", calibration=extension_olfactometer_calibration)
+    ],
+    manipulator=AindManipulatorDevice(
+        port_name="COM9", calibration=manipulator_calibration
+    ),
     screen=visual_stimulation.ScreenAssembly(display_index=1),
     calibration=RigCalibration(water_valve=water_valve_calibration),
 )
@@ -149,7 +175,9 @@ def main(path_seed: str = "./local/{schema}.json"):
     models = [rig]
 
     for model in models:
-        with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
+        with open(
+            path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8"
+        ) as f:
             f.write(model.model_dump_json(indent=2))
 
 

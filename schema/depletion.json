@@ -1,0 +1,2274 @@
+{
+    "pkg_location": "aind_behavior_vr_foraging_curricula.depletion",
+    "name": "Depletion",
+    "version": "1.0.0-rc0",
+    "graph": {
+        "nodes": {
+            "0": {
+                "name": "one_odor_no_depletion",
+                "task": {
+                    "name": "AindVrForaging",
+                    "description": "",
+                    "task_parameters": {
+                        "rng_seed": null,
+                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "updaters": {
+                            "StopDurationOffset": {
+                                "operation": "Offset",
+                                "parameters": {
+                                    "initial_value": 0.0,
+                                    "on_success": 0.003,
+                                    "on_failure": 0.0,
+                                    "increment": 0.003,
+                                    "decrement": 0.0,
+                                    "minimum": 0.0,
+                                    "maximum": 0.5
+                                }
+                            },
+                            "RewardDelayOffset": {
+                                "operation": "Offset",
+                                "parameters": {
+                                    "initial_value": 0.0,
+                                    "on_success": 0.0005,
+                                    "on_failure": 0.0,
+                                    "increment": 0.0005,
+                                    "decrement": 0.0,
+                                    "minimum": 0.0,
+                                    "maximum": 0.5
+                                }
+                            },
+                            "StopVelocityThreshold": {
+                                "operation": "Gain",
+                                "parameters": {
+                                    "initial_value": 60.0,
+                                    "on_success": 0.96,
+                                    "on_failure": 0.0,
+                                    "increment": 0.96,
+                                    "decrement": 0.0,
+                                    "minimum": 10.0,
+                                    "maximum": 60.0
+                                }
+                            }
+                        },
+                        "environment": {
+                            "blocks": [
+                                {
+                                    "environment_statistics": {
+                                        "patches": [
+                                            {
+                                                "label": "PatchZA",
+                                                "state_index": 0,
+                                                "odor_specification": [
+                                                    1.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "reward_specification": {
+                                                    "operant_logic": {
+                                                        "is_operant": false,
+                                                        "stop_duration": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 0.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "time_to_collect_reward": 100000.0,
+                                                        "grace_distance_threshold": 10.0
+                                                    },
+                                                    "delay": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 0.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "amount": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 5.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "probability": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 1.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "available": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 9999.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "reward_function": [
+                                                        {
+                                                            "function_type": "PatchRewardFunction",
+                                                            "amount": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 5.0
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "probability": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 1.0
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 9999.0
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "rule": "OnChoice"
+                                                        }
+                                                    ]
+                                                },
+                                                "patch_virtual_sites_generator": {
+                                                    "inter_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "InterSite",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.05
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 10.0,
+                                                                "max": 30.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "inter_patch": {
+                                                        "render_specification": {
+                                                            "contrast": 1.0
+                                                        },
+                                                        "label": "InterPatch",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.01
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 25.0,
+                                                                "max": 75.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "post_patch": null,
+                                                    "reward_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "RewardSite",
+                                                        "length_distribution": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 20.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "patch_terminators": [
+                                                    {
+                                                        "terminator_type": "OnRejection",
+                                                        "count": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 1.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "transition_matrix": [
+                                            [
+                                                1.0
+                                            ]
+                                        ],
+                                        "first_state_occupancy": null
+                                    },
+                                    "end_conditions": []
+                                }
+                            ],
+                            "sampling_mode": "Sequential"
+                        },
+                        "operation_control": {
+                            "movable_spout_control": {
+                                "enabled": false,
+                                "time_to_collect_after_reward": 1.0,
+                                "retracting_distance": 0.0
+                            },
+                            "odor_control": {
+                                "target_total_flow": 1000,
+                                "target_odor_flow": 100
+                            },
+                            "position_control": {
+                                "gain": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                },
+                                "initial_position": {
+                                    "x": 0.0,
+                                    "y": 2.56,
+                                    "z": 0.0
+                                },
+                                "frequency_filter_cutoff": 5.0,
+                                "velocity_threshold": 60.0
+                            },
+                            "audio_control": {
+                                "duration": 0.2,
+                                "frequency": 9999.0
+                            },
+                            "wait_to_start_duration": 0.0,
+                            "wait_to_finish_duration": 0.0
+                        }
+                    },
+                    "version": "1.0.0-rc0",
+                    "stage_name": "one_odor_no_depletion"
+                },
+                "graph": {
+                    "nodes": {
+                        "0": "aind_behavior_vr_foraging_curricula.depletion.policies.p_learn_to_run",
+                        "1": "aind_behavior_vr_foraging_curricula.depletion.policies.p_learn_to_stop",
+                        "2": "aind_behavior_vr_foraging_curricula.depletion.policies.p_stochastic_reward"
+                    },
+                    "graph": {
+                        "0": [],
+                        "1": [],
+                        "2": []
+                    }
+                },
+                "start_policies": [
+                    "aind_behavior_vr_foraging_curricula.depletion.policies.p_learn_to_run",
+                    "aind_behavior_vr_foraging_curricula.depletion.policies.p_learn_to_stop",
+                    "aind_behavior_vr_foraging_curricula.depletion.policies.p_stochastic_reward"
+                ],
+                "metrics_provider": "aind_behavior_vr_foraging_curricula.depletion.metrics.metrics_from_dataset"
+            },
+            "1": {
+                "name": "one_odor_w_depletion_day_0",
+                "task": {
+                    "name": "AindVrForaging",
+                    "description": "",
+                    "task_parameters": {
+                        "rng_seed": null,
+                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "updaters": {
+                            "StopDurationOffset": {
+                                "operation": "Offset",
+                                "parameters": {
+                                    "initial_value": 0.4,
+                                    "on_success": 0.005,
+                                    "on_failure": 0.0,
+                                    "increment": 0.005,
+                                    "decrement": 0.0,
+                                    "minimum": 0.0,
+                                    "maximum": 0.5
+                                }
+                            },
+                            "RewardDelayOffset": {
+                                "operation": "Offset",
+                                "parameters": {
+                                    "initial_value": 0.25,
+                                    "on_success": 0.003,
+                                    "on_failure": 0.0,
+                                    "increment": 0.003,
+                                    "decrement": 0.0,
+                                    "minimum": 0.0,
+                                    "maximum": 0.5
+                                }
+                            },
+                            "StopVelocityThreshold": {
+                                "operation": "Gain",
+                                "parameters": {
+                                    "initial_value": 25.0,
+                                    "on_success": 0.96,
+                                    "on_failure": 0.0,
+                                    "increment": 0.96,
+                                    "decrement": 0.0,
+                                    "minimum": 8.0,
+                                    "maximum": 60.0
+                                }
+                            }
+                        },
+                        "environment": {
+                            "blocks": [
+                                {
+                                    "environment_statistics": {
+                                        "patches": [
+                                            {
+                                                "label": "PatchZB",
+                                                "state_index": 0,
+                                                "odor_specification": [
+                                                    1.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "reward_specification": {
+                                                    "operant_logic": {
+                                                        "is_operant": false,
+                                                        "stop_duration": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 0.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "time_to_collect_reward": 100000.0,
+                                                        "grace_distance_threshold": 10.0
+                                                    },
+                                                    "delay": {
+                                                        "family": "Normal",
+                                                        "distribution_parameters": {
+                                                            "family": "Normal",
+                                                            "mean": 0.0,
+                                                            "std": 0.15
+                                                        },
+                                                        "truncation_parameters": {
+                                                            "truncation_mode": "exclude",
+                                                            "min": 0.0,
+                                                            "max": 0.75
+                                                        },
+                                                        "scaling_parameters": {
+                                                            "scale": 1.0,
+                                                            "offset": 0.0
+                                                        }
+                                                    },
+                                                    "amount": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 5.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "probability": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 0.9
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "available": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 50.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "reward_function": [
+                                                        {
+                                                            "function_type": "OnThisPatchEntryRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.9
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 50.0
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "rule": "OnThisPatchEntry"
+                                                        },
+                                                        {
+                                                            "function_type": "PatchRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 0.9,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.9752
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": {
+                                                                "function_type": "ClampedRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 50.0,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": -5.0
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "rule": "OnReward"
+                                                        }
+                                                    ]
+                                                },
+                                                "patch_virtual_sites_generator": {
+                                                    "inter_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "InterSite",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.05
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 20.0,
+                                                                "max": 100.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "inter_patch": {
+                                                        "render_specification": {
+                                                            "contrast": 1.0
+                                                        },
+                                                        "label": "InterPatch",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.01
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 200.0,
+                                                                "max": 600.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "post_patch": null,
+                                                    "reward_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "RewardSite",
+                                                        "length_distribution": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 50.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "patch_terminators": [
+                                                    {
+                                                        "terminator_type": "OnRejection",
+                                                        "count": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 1.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "transition_matrix": [
+                                            [
+                                                1.0
+                                            ]
+                                        ],
+                                        "first_state_occupancy": null
+                                    },
+                                    "end_conditions": []
+                                }
+                            ],
+                            "sampling_mode": "Sequential"
+                        },
+                        "operation_control": {
+                            "movable_spout_control": {
+                                "enabled": false,
+                                "time_to_collect_after_reward": 1.0,
+                                "retracting_distance": 0.0
+                            },
+                            "odor_control": {
+                                "target_total_flow": 1000,
+                                "target_odor_flow": 100
+                            },
+                            "position_control": {
+                                "gain": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                },
+                                "initial_position": {
+                                    "x": 0.0,
+                                    "y": 2.56,
+                                    "z": 0.0
+                                },
+                                "frequency_filter_cutoff": 5.0,
+                                "velocity_threshold": 8.0
+                            },
+                            "audio_control": {
+                                "duration": 0.2,
+                                "frequency": 9999.0
+                            },
+                            "wait_to_start_duration": 0.0,
+                            "wait_to_finish_duration": 0.0
+                        }
+                    },
+                    "version": "1.0.0-rc0",
+                    "stage_name": "one_odor_w_depletion_day_0"
+                },
+                "graph": {
+                    "nodes": {},
+                    "graph": {}
+                },
+                "start_policies": [],
+                "metrics_provider": "aind_behavior_vr_foraging_curricula.depletion.metrics.metrics_from_dataset"
+            },
+            "2": {
+                "name": "one_odor_w_depletion_day_1",
+                "task": {
+                    "name": "AindVrForaging",
+                    "description": "",
+                    "task_parameters": {
+                        "rng_seed": null,
+                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "updaters": {
+                            "StopDurationOffset": {
+                                "operation": "Offset",
+                                "parameters": {
+                                    "initial_value": 0.4,
+                                    "on_success": 0.005,
+                                    "on_failure": 0.0,
+                                    "increment": 0.005,
+                                    "decrement": 0.0,
+                                    "minimum": 0.0,
+                                    "maximum": 0.5
+                                }
+                            },
+                            "RewardDelayOffset": {
+                                "operation": "Offset",
+                                "parameters": {
+                                    "initial_value": 0.25,
+                                    "on_success": 0.003,
+                                    "on_failure": 0.0,
+                                    "increment": 0.003,
+                                    "decrement": 0.0,
+                                    "minimum": 0.0,
+                                    "maximum": 0.5
+                                }
+                            },
+                            "StopVelocityThreshold": {
+                                "operation": "Gain",
+                                "parameters": {
+                                    "initial_value": 25.0,
+                                    "on_success": 0.96,
+                                    "on_failure": 0.0,
+                                    "increment": 0.96,
+                                    "decrement": 0.0,
+                                    "minimum": 8.0,
+                                    "maximum": 60.0
+                                }
+                            }
+                        },
+                        "environment": {
+                            "blocks": [
+                                {
+                                    "environment_statistics": {
+                                        "patches": [
+                                            {
+                                                "label": "PatchZB",
+                                                "state_index": 0,
+                                                "odor_specification": [
+                                                    1.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "reward_specification": {
+                                                    "operant_logic": {
+                                                        "is_operant": false,
+                                                        "stop_duration": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 0.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "time_to_collect_reward": 100000.0,
+                                                        "grace_distance_threshold": 10.0
+                                                    },
+                                                    "delay": {
+                                                        "family": "Normal",
+                                                        "distribution_parameters": {
+                                                            "family": "Normal",
+                                                            "mean": 0.0,
+                                                            "std": 0.15
+                                                        },
+                                                        "truncation_parameters": {
+                                                            "truncation_mode": "exclude",
+                                                            "min": 0.0,
+                                                            "max": 0.75
+                                                        },
+                                                        "scaling_parameters": {
+                                                            "scale": 1.0,
+                                                            "offset": 0.0
+                                                        }
+                                                    },
+                                                    "amount": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 5.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "probability": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 0.9
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "available": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 50.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "reward_function": [
+                                                        {
+                                                            "function_type": "OnThisPatchEntryRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.9
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 50.0
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "rule": "OnThisPatchEntry"
+                                                        },
+                                                        {
+                                                            "function_type": "PatchRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 0.9,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.9752
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": {
+                                                                "function_type": "ClampedRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 50.0,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": -5.0
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "rule": "OnReward"
+                                                        }
+                                                    ]
+                                                },
+                                                "patch_virtual_sites_generator": {
+                                                    "inter_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "InterSite",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.05
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 20.0,
+                                                                "max": 100.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "inter_patch": {
+                                                        "render_specification": {
+                                                            "contrast": 1.0
+                                                        },
+                                                        "label": "InterPatch",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.01
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 200.0,
+                                                                "max": 600.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "post_patch": null,
+                                                    "reward_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "RewardSite",
+                                                        "length_distribution": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 50.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "patch_terminators": [
+                                                    {
+                                                        "terminator_type": "OnRejection",
+                                                        "count": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 1.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "transition_matrix": [
+                                            [
+                                                1.0
+                                            ]
+                                        ],
+                                        "first_state_occupancy": null
+                                    },
+                                    "end_conditions": []
+                                }
+                            ],
+                            "sampling_mode": "Sequential"
+                        },
+                        "operation_control": {
+                            "movable_spout_control": {
+                                "enabled": false,
+                                "time_to_collect_after_reward": 1.0,
+                                "retracting_distance": 0.0
+                            },
+                            "odor_control": {
+                                "target_total_flow": 1000,
+                                "target_odor_flow": 100
+                            },
+                            "position_control": {
+                                "gain": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                },
+                                "initial_position": {
+                                    "x": 0.0,
+                                    "y": 2.56,
+                                    "z": 0.0
+                                },
+                                "frequency_filter_cutoff": 5.0,
+                                "velocity_threshold": 8.0
+                            },
+                            "audio_control": {
+                                "duration": 0.2,
+                                "frequency": 9999.0
+                            },
+                            "wait_to_start_duration": 0.0,
+                            "wait_to_finish_duration": 0.0
+                        }
+                    },
+                    "version": "1.0.0-rc0",
+                    "stage_name": "one_odor_w_depletion_day_1"
+                },
+                "graph": {
+                    "nodes": {},
+                    "graph": {}
+                },
+                "start_policies": [],
+                "metrics_provider": "aind_behavior_vr_foraging_curricula.depletion.metrics.metrics_from_dataset"
+            },
+            "3": {
+                "name": "all_odors_rewarded",
+                "task": {
+                    "name": "AindVrForaging",
+                    "description": "",
+                    "task_parameters": {
+                        "rng_seed": null,
+                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "updaters": {},
+                        "environment": {
+                            "blocks": [
+                                {
+                                    "environment_statistics": {
+                                        "patches": [
+                                            {
+                                                "label": "odor_90",
+                                                "state_index": 1,
+                                                "odor_specification": [
+                                                    0.0,
+                                                    1.0,
+                                                    0.0
+                                                ],
+                                                "reward_specification": {
+                                                    "operant_logic": {
+                                                        "is_operant": false,
+                                                        "stop_duration": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 0.5
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "time_to_collect_reward": 100000.0,
+                                                        "grace_distance_threshold": 10.0
+                                                    },
+                                                    "delay": {
+                                                        "family": "Normal",
+                                                        "distribution_parameters": {
+                                                            "family": "Normal",
+                                                            "mean": 0.5,
+                                                            "std": 0.15
+                                                        },
+                                                        "truncation_parameters": {
+                                                            "truncation_mode": "exclude",
+                                                            "min": 0.0,
+                                                            "max": 1.0
+                                                        },
+                                                        "scaling_parameters": {
+                                                            "scale": 1.0,
+                                                            "offset": 0.0
+                                                        }
+                                                    },
+                                                    "amount": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 5.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "probability": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 0.9
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "available": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 9999.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "reward_function": [
+                                                        {
+                                                            "function_type": "OnThisPatchEntryRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.9
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnThisPatchEntry"
+                                                        },
+                                                        {
+                                                            "function_type": "PatchRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 0.9,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.8795015081718721
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnReward"
+                                                        }
+                                                    ]
+                                                },
+                                                "patch_virtual_sites_generator": {
+                                                    "inter_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "InterSite",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.05
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 20.0,
+                                                                "max": 100.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "inter_patch": {
+                                                        "render_specification": {
+                                                            "contrast": 1.0
+                                                        },
+                                                        "label": "InterPatch",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.01
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 200.0,
+                                                                "max": 600.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "post_patch": null,
+                                                    "reward_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "RewardSite",
+                                                        "length_distribution": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 50.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "patch_terminators": [
+                                                    {
+                                                        "terminator_type": "OnRejection",
+                                                        "count": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 1.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "label": "odor_60",
+                                                "state_index": 0,
+                                                "odor_specification": [
+                                                    0.0,
+                                                    0.0,
+                                                    1.0
+                                                ],
+                                                "reward_specification": {
+                                                    "operant_logic": {
+                                                        "is_operant": false,
+                                                        "stop_duration": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 0.5
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "time_to_collect_reward": 100000.0,
+                                                        "grace_distance_threshold": 10.0
+                                                    },
+                                                    "delay": {
+                                                        "family": "Normal",
+                                                        "distribution_parameters": {
+                                                            "family": "Normal",
+                                                            "mean": 0.5,
+                                                            "std": 0.15
+                                                        },
+                                                        "truncation_parameters": {
+                                                            "truncation_mode": "exclude",
+                                                            "min": 0.0,
+                                                            "max": 1.0
+                                                        },
+                                                        "scaling_parameters": {
+                                                            "scale": 1.0,
+                                                            "offset": 0.0
+                                                        }
+                                                    },
+                                                    "amount": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 5.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "probability": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 0.6
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "available": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 9999.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "reward_function": [
+                                                        {
+                                                            "function_type": "OnThisPatchEntryRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.6
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnThisPatchEntry"
+                                                        },
+                                                        {
+                                                            "function_type": "PatchRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 0.6,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.8795015081718721
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnReward"
+                                                        }
+                                                    ]
+                                                },
+                                                "patch_virtual_sites_generator": {
+                                                    "inter_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "InterSite",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.05
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 20.0,
+                                                                "max": 100.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "inter_patch": {
+                                                        "render_specification": {
+                                                            "contrast": 1.0
+                                                        },
+                                                        "label": "InterPatch",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.01
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 200.0,
+                                                                "max": 600.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "post_patch": null,
+                                                    "reward_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "RewardSite",
+                                                        "length_distribution": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 50.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "patch_terminators": [
+                                                    {
+                                                        "terminator_type": "OnRejection",
+                                                        "count": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 1.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "transition_matrix": [
+                                            [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            [
+                                                0.5,
+                                                0.5
+                                            ]
+                                        ],
+                                        "first_state_occupancy": [
+                                            0.5,
+                                            0.5
+                                        ]
+                                    },
+                                    "end_conditions": []
+                                }
+                            ],
+                            "sampling_mode": "Sequential"
+                        },
+                        "operation_control": {
+                            "movable_spout_control": {
+                                "enabled": false,
+                                "time_to_collect_after_reward": 1.0,
+                                "retracting_distance": 0.0
+                            },
+                            "odor_control": {
+                                "target_total_flow": 1000,
+                                "target_odor_flow": 100
+                            },
+                            "position_control": {
+                                "gain": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                },
+                                "initial_position": {
+                                    "x": 0.0,
+                                    "y": 2.56,
+                                    "z": 0.0
+                                },
+                                "frequency_filter_cutoff": 5.0,
+                                "velocity_threshold": 8.0
+                            },
+                            "audio_control": {
+                                "duration": 0.2,
+                                "frequency": 9999.0
+                            },
+                            "wait_to_start_duration": 0.0,
+                            "wait_to_finish_duration": 0.0
+                        }
+                    },
+                    "version": "1.0.0-rc0",
+                    "stage_name": "all_odors_rewarded"
+                },
+                "graph": {
+                    "nodes": {},
+                    "graph": {}
+                },
+                "start_policies": [],
+                "metrics_provider": "aind_behavior_vr_foraging_curricula.depletion.metrics.metrics_from_dataset"
+            },
+            "4": {
+                "name": "graduation",
+                "task": {
+                    "name": "AindVrForaging",
+                    "description": "",
+                    "task_parameters": {
+                        "rng_seed": null,
+                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "updaters": {},
+                        "environment": {
+                            "blocks": [
+                                {
+                                    "environment_statistics": {
+                                        "patches": [
+                                            {
+                                                "label": "odor_0",
+                                                "state_index": 2,
+                                                "odor_specification": [
+                                                    1.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "reward_specification": {
+                                                    "operant_logic": {
+                                                        "is_operant": false,
+                                                        "stop_duration": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 0.5
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "time_to_collect_reward": 100000.0,
+                                                        "grace_distance_threshold": 10.0
+                                                    },
+                                                    "delay": {
+                                                        "family": "Normal",
+                                                        "distribution_parameters": {
+                                                            "family": "Normal",
+                                                            "mean": 0.5,
+                                                            "std": 0.15
+                                                        },
+                                                        "truncation_parameters": {
+                                                            "truncation_mode": "exclude",
+                                                            "min": 0.0,
+                                                            "max": 1.0
+                                                        },
+                                                        "scaling_parameters": {
+                                                            "scale": 1.0,
+                                                            "offset": 0.0
+                                                        }
+                                                    },
+                                                    "amount": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 5.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "probability": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 0.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "available": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 9999.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "reward_function": [
+                                                        {
+                                                            "function_type": "OnThisPatchEntryRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.0
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnThisPatchEntry"
+                                                        },
+                                                        {
+                                                            "function_type": "PatchRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 0.0,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.8795015081718721
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnReward"
+                                                        }
+                                                    ]
+                                                },
+                                                "patch_virtual_sites_generator": {
+                                                    "inter_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "InterSite",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.05
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 20.0,
+                                                                "max": 100.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "inter_patch": {
+                                                        "render_specification": {
+                                                            "contrast": 1.0
+                                                        },
+                                                        "label": "InterPatch",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.01
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 200.0,
+                                                                "max": 600.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "post_patch": null,
+                                                    "reward_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "RewardSite",
+                                                        "length_distribution": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 50.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "patch_terminators": [
+                                                    {
+                                                        "terminator_type": "OnRejection",
+                                                        "count": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 1.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "label": "odor_90",
+                                                "state_index": 1,
+                                                "odor_specification": [
+                                                    0.0,
+                                                    1.0,
+                                                    0.0
+                                                ],
+                                                "reward_specification": {
+                                                    "operant_logic": {
+                                                        "is_operant": false,
+                                                        "stop_duration": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 0.5
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "time_to_collect_reward": 100000.0,
+                                                        "grace_distance_threshold": 10.0
+                                                    },
+                                                    "delay": {
+                                                        "family": "Normal",
+                                                        "distribution_parameters": {
+                                                            "family": "Normal",
+                                                            "mean": 0.5,
+                                                            "std": 0.15
+                                                        },
+                                                        "truncation_parameters": {
+                                                            "truncation_mode": "exclude",
+                                                            "min": 0.0,
+                                                            "max": 1.0
+                                                        },
+                                                        "scaling_parameters": {
+                                                            "scale": 1.0,
+                                                            "offset": 0.0
+                                                        }
+                                                    },
+                                                    "amount": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 5.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "probability": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 0.9
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "available": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 9999.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "reward_function": [
+                                                        {
+                                                            "function_type": "OnThisPatchEntryRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.9
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnThisPatchEntry"
+                                                        },
+                                                        {
+                                                            "function_type": "PatchRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 0.9,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.8795015081718721
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnReward"
+                                                        }
+                                                    ]
+                                                },
+                                                "patch_virtual_sites_generator": {
+                                                    "inter_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "InterSite",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.05
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 20.0,
+                                                                "max": 100.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "inter_patch": {
+                                                        "render_specification": {
+                                                            "contrast": 1.0
+                                                        },
+                                                        "label": "InterPatch",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.01
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 200.0,
+                                                                "max": 600.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "post_patch": null,
+                                                    "reward_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "RewardSite",
+                                                        "length_distribution": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 50.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "patch_terminators": [
+                                                    {
+                                                        "terminator_type": "OnRejection",
+                                                        "count": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 1.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "label": "odor_60",
+                                                "state_index": 0,
+                                                "odor_specification": [
+                                                    0.0,
+                                                    0.0,
+                                                    1.0
+                                                ],
+                                                "reward_specification": {
+                                                    "operant_logic": {
+                                                        "is_operant": false,
+                                                        "stop_duration": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 0.5
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "time_to_collect_reward": 100000.0,
+                                                        "grace_distance_threshold": 10.0
+                                                    },
+                                                    "delay": {
+                                                        "family": "Normal",
+                                                        "distribution_parameters": {
+                                                            "family": "Normal",
+                                                            "mean": 0.5,
+                                                            "std": 0.15
+                                                        },
+                                                        "truncation_parameters": {
+                                                            "truncation_mode": "exclude",
+                                                            "min": 0.0,
+                                                            "max": 1.0
+                                                        },
+                                                        "scaling_parameters": {
+                                                            "scale": 1.0,
+                                                            "offset": 0.0
+                                                        }
+                                                    },
+                                                    "amount": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 5.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "probability": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 0.6
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "available": {
+                                                        "family": "Scalar",
+                                                        "distribution_parameters": {
+                                                            "family": "Scalar",
+                                                            "value": 9999.0
+                                                        },
+                                                        "truncation_parameters": null,
+                                                        "scaling_parameters": null
+                                                    },
+                                                    "reward_function": [
+                                                        {
+                                                            "function_type": "OnThisPatchEntryRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "SetValueFunction",
+                                                                "value": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.6
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnThisPatchEntry"
+                                                        },
+                                                        {
+                                                            "function_type": "PatchRewardFunction",
+                                                            "amount": null,
+                                                            "probability": {
+                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "minimum": 0.0,
+                                                                "maximum": 0.6,
+                                                                "rate": {
+                                                                    "family": "Scalar",
+                                                                    "distribution_parameters": {
+                                                                        "family": "Scalar",
+                                                                        "value": 0.8795015081718721
+                                                                    },
+                                                                    "truncation_parameters": null,
+                                                                    "scaling_parameters": null
+                                                                }
+                                                            },
+                                                            "available": null,
+                                                            "rule": "OnReward"
+                                                        }
+                                                    ]
+                                                },
+                                                "patch_virtual_sites_generator": {
+                                                    "inter_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "InterSite",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.05
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 20.0,
+                                                                "max": 100.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "inter_patch": {
+                                                        "render_specification": {
+                                                            "contrast": 1.0
+                                                        },
+                                                        "label": "InterPatch",
+                                                        "length_distribution": {
+                                                            "family": "Exponential",
+                                                            "distribution_parameters": {
+                                                                "family": "Exponential",
+                                                                "rate": 0.01
+                                                            },
+                                                            "truncation_parameters": {
+                                                                "truncation_mode": "exclude",
+                                                                "min": 200.0,
+                                                                "max": 600.0
+                                                            },
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "post_patch": null,
+                                                    "reward_site": {
+                                                        "render_specification": {
+                                                            "contrast": 0.5
+                                                        },
+                                                        "label": "RewardSite",
+                                                        "length_distribution": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 50.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        },
+                                                        "treadmill_specification": {
+                                                            "friction": {
+                                                                "family": "Scalar",
+                                                                "distribution_parameters": {
+                                                                    "family": "Scalar",
+                                                                    "value": 0.0
+                                                                },
+                                                                "truncation_parameters": null,
+                                                                "scaling_parameters": null
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "patch_terminators": [
+                                                    {
+                                                        "terminator_type": "OnRejection",
+                                                        "count": {
+                                                            "family": "Scalar",
+                                                            "distribution_parameters": {
+                                                                "family": "Scalar",
+                                                                "value": 1.0
+                                                            },
+                                                            "truncation_parameters": null,
+                                                            "scaling_parameters": null
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "transition_matrix": [
+                                            [
+                                                0.45,
+                                                0.45,
+                                                0.1
+                                            ],
+                                            [
+                                                0.45,
+                                                0.45,
+                                                0.1
+                                            ],
+                                            [
+                                                0.45,
+                                                0.45,
+                                                0.1
+                                            ]
+                                        ],
+                                        "first_state_occupancy": [
+                                            0.45,
+                                            0.45,
+                                            0.1
+                                        ]
+                                    },
+                                    "end_conditions": []
+                                }
+                            ],
+                            "sampling_mode": "Sequential"
+                        },
+                        "operation_control": {
+                            "movable_spout_control": {
+                                "enabled": false,
+                                "time_to_collect_after_reward": 1.0,
+                                "retracting_distance": 0.0
+                            },
+                            "odor_control": {
+                                "target_total_flow": 1000,
+                                "target_odor_flow": 100
+                            },
+                            "position_control": {
+                                "gain": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                },
+                                "initial_position": {
+                                    "x": 0.0,
+                                    "y": 2.56,
+                                    "z": 0.0
+                                },
+                                "frequency_filter_cutoff": 5.0,
+                                "velocity_threshold": 8.0
+                            },
+                            "audio_control": {
+                                "duration": 0.2,
+                                "frequency": 9999.0
+                            },
+                            "wait_to_start_duration": 0.0,
+                            "wait_to_finish_duration": 0.0
+                        }
+                    },
+                    "version": "1.0.0-rc0",
+                    "stage_name": "graduation"
+                },
+                "graph": {
+                    "nodes": {},
+                    "graph": {}
+                },
+                "start_policies": [],
+                "metrics_provider": "aind_behavior_vr_foraging_curricula.depletion.metrics.metrics_from_dataset"
+            }
+        },
+        "graph": {
+            "0": [
+                [
+                    "aind_behavior_vr_foraging_curricula.depletion.curriculum.st_s_stage_one_odor_no_depletion_s_stage_one_odor_w_depletion_day_0",
+                    1
+                ]
+            ],
+            "1": [
+                [
+                    "aind_behavior_vr_foraging_curricula.depletion.curriculum.st_s_stage_one_odor_w_depletion_day_0_s_stage_one_odor_w_depletion_day_1",
+                    2
+                ],
+                [
+                    "aind_behavior_vr_foraging_curricula.depletion.curriculum.st_s_stage_one_odor_w_depletion_day_0_s_stage_all_odors_rewarded",
+                    3
+                ]
+            ],
+            "2": [
+                [
+                    "aind_behavior_vr_foraging_curricula.depletion.curriculum.st_s_stage_one_odor_w_depletion_day_1_s_stage_one_odor_w_depletion_day_0",
+                    1
+                ],
+                [
+                    "aind_behavior_vr_foraging_curricula.depletion.curriculum.st_s_stage_one_odor_w_depletion_day_1_s_stage_all_odors_rewarded",
+                    3
+                ]
+            ],
+            "3": [
+                [
+                    "aind_behavior_vr_foraging_curricula.depletion.curriculum.st_s_stage_all_odors_rewarded_s_stage_graduation",
+                    4
+                ]
+            ],
+            "4": []
+        }
+    }
+}

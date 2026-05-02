@@ -40,7 +40,9 @@ def _generate_erdantic_diagrams() -> None:
         diagram.draw(str(out))
         log.info(f"Generated erdantic diagram → {out}")
     except Exception as e:
-        log.info(f"Skipping erdantic diagram generation (install erdantic+graphviz to enable): {e}")
+        log.info(
+            f"Skipping erdantic diagram generation (install erdantic+graphviz to enable): {e}"
+        )
 
 
 def _generate_dataset_html() -> None:
@@ -55,7 +57,9 @@ def _generate_dataset_html() -> None:
         style_match = re.search(r"<style>(.*?)</style>", html, re.DOTALL)
         raw_css = style_match.group(1) if style_match else ""
         # Scope every rule: prepend .dataset-tree to each selector block
-        scoped_css = re.sub(r"(?m)^(\s*)(\w[\w\s,:.#-]*)\s*\{", r"\1.dataset-tree \2 {", raw_css)
+        scoped_css = re.sub(
+            r"(?m)^(\s*)(\w[\w\s,:.#-]*)\s*\{", r"\1.dataset-tree \2 {", raw_css
+        )
         # Remove the generic `body` scope rule (it would match .dataset-tree body)
         scoped_css = scoped_css.replace(".dataset-tree body {", ".dataset-tree {")
 

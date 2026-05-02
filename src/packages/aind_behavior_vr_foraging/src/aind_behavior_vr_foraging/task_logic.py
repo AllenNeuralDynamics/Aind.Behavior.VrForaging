@@ -5,7 +5,15 @@ from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional,
 import aind_behavior_services.task.distributions as distributions
 from aind_behavior_services.common import Size, Vector3
 from aind_behavior_services.task import Task, TaskParameters
-from pydantic import BaseModel, BeforeValidator, Field, NonNegativeFloat, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    BeforeValidator,
+    Field,
+    NonNegativeFloat,
+    field_serializer,
+    field_validator,
+    model_validator,
+)
 from typing_extensions import TypeAliasType, deprecated
 
 from aind_behavior_vr_foraging import (
@@ -302,6 +310,11 @@ class CtcmFunction(_PatchUpdateFunction):
             for col in row:
                 col /= row_sum
         return value
+
+    @field_serializer("transition_matrix")
+    def serialize_transition_matrix(self, value: List[List[NonNegativeFloat]]) -> List[List[NonNegativeFloat]]:
+        """Round to 15 significant digits for deterministic serialization across platforms."""
+        return [[round(v, 15) for v in row] for row in value]
 
     @classmethod
     def from_replenishment_rate(
@@ -940,6 +953,7 @@ class OperationControl(BaseModel):
     )
     wait_to_start_duration: float = Field(default=0, ge=0, description="Duration to wait before starting the task")
     wait_to_finish_duration: float = Field(default=0, ge=0, description="Duration to wait after finishing the task")
+
 
 # ==================== BLOCK END CONDITIONS ====================
 
