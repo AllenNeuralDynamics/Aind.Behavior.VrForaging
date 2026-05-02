@@ -24,7 +24,7 @@ def _copy_schemas() -> None:
     schema_dst = REPO_ROOT / "docs" / "schema"
     if schema_src.exists():
         shutil.copytree(schema_src, schema_dst, dirs_exist_ok=True)
-        log.info(f"Copied schema/ → docs/schema/")
+        log.info("Copied schema/ → docs/schema/")
     else:
         log.warning("schema/ directory not found, skipping schema copy")
 
