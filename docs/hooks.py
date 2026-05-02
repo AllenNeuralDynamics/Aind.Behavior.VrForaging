@@ -14,8 +14,19 @@ def on_pre_build(**kwargs) -> None:
     """Generate assets before MkDocs build."""
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     _copy_readme()
+    _copy_schemas()
     _generate_erdantic_diagrams()
     _generate_dataset_html()
+
+
+def _copy_schemas() -> None:
+    schema_src = REPO_ROOT / "schema"
+    schema_dst = REPO_ROOT / "docs" / "schema"
+    if schema_src.exists():
+        shutil.copytree(schema_src, schema_dst, dirs_exist_ok=True)
+        log.info("Copied schema/ → docs/schema/")
+    else:
+        log.warning("schema/ directory not found, skipping schema copy")
 
 
 def _copy_readme() -> None:
