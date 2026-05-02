@@ -17,6 +17,12 @@ members = [
 ]
 
 [manifest.dependency-groups]
+dev = [
+    { name = "codespell" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "ruff" },
+]
 docs = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
     { name = "griffe-pydantic" },

@@ -5,9 +5,6 @@ testpaths = [
     "src/packages/aind_behavior_vr_foraging_curricula/tests",
 ]
 
-[tool.uv]
-required-version = '>=0.8.4'
-
 [tool.uv.workspace]
 members = [
     "src/packages/aind_behavior_vr_foraging",
@@ -29,3 +26,18 @@ docs = [
     'pymdown-extensions',
     'aind-behavior-vr-foraging[data]',
 ]
+
+dev = [
+    "ruff",
+    "codespell",
+    "pytest",
+    "pytest-cov",
+]
+
+[tool.codespell]
+skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock,*Generated.cs'
+ignore-words-list = 'nd'
+
+[tool.uv]
+required-version = '>=0.8.4'
+default-groups = ["dev"]
