@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.2"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p2="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
-                 xmlns:p3="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -27,7 +25,7 @@
               <Name>RawSessionSchema</Name>
             </Expression>
             <Expression xsi:type="p1:DeserializeFromJson">
-              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindBehaviorSessionModel" />
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:Session" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -40,8 +38,8 @@
             <Expression xsi:type="SubscribeSubject">
               <Name>RawRigSchema</Name>
             </Expression>
-            <Expression xsi:type="p2:DeserializeFromJson">
-              <p2:Type xsi:type="TypeMapping" TypeArguments="p2:AindVrForagingRig" />
+            <Expression xsi:type="p1:DeserializeFromJson">
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindVrForagingRig" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -54,8 +52,8 @@
             <Expression xsi:type="SubscribeSubject">
               <Name>RawTaskLogicSchema</Name>
             </Expression>
-            <Expression xsi:type="p3:DeserializeFromJson">
-              <p3:Type xsi:type="TypeMapping" TypeArguments="p3:AindVrForagingTaskLogic" />
+            <Expression xsi:type="p1:DeserializeFromJson">
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindVrForagingTaskLogic" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -91,19 +89,25 @@
         <Name>SubjectSchema</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:SerializeToJson" />
+        <Combinator xsi:type="p1:SerializeToJson">
+          <p1:Formatting>None</p1:Formatting>
+        </Combinator>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>TaskLogicSchema</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p3:SerializeToJson" />
+        <Combinator xsi:type="p1:SerializeToJson">
+          <p1:Formatting>None</p1:Formatting>
+        </Combinator>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>RigSchema</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p2:SerializeToJson" />
+        <Combinator xsi:type="p1:SerializeToJson">
+          <p1:Formatting>None</p1:Formatting>
+        </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Merge" />

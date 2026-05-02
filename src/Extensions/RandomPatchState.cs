@@ -1,9 +1,9 @@
-using Bonsai;
-using Bonsai.Reactive;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
+using Bonsai;
+using Bonsai.Reactive;
 
 [Combinator]
 [Description("")]
@@ -16,7 +16,7 @@ public class RandomPatchState
         return Observable.Defer(() =>
         {
             return Observable.Timer(new TimeSpan(0), new TimeSpan(0, 0, 0, 0, 50)).Select(_ => new PatchState(
-                patchId: rand.Next(0,3),
+                patchId: rand.Next(0, 3),
                 amount: rand.Next(0, 100),
                 probability: rand.NextDouble(),
                 available: 10

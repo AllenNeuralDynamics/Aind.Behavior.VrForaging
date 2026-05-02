@@ -1,7 +1,7 @@
 import os
 from typing import cast
 
-import aind_behavior_services.task_logic.distributions as distributions
+import aind_behavior_services.task.distributions as distributions
 import numpy as np
 from aind_behavior_curriculum import Stage, TrainerState
 from scipy.linalg import expm
@@ -15,8 +15,12 @@ from aind_behavior_vr_foraging.task_logic import (
 
 def ExponentialDistributionHelper(rate=1.0, minimum=0.0, maximum=1000.0):
     return distributions.ExponentialDistribution(
-        distribution_parameters=distributions.ExponentialDistributionParameters(rate=rate),
-        truncation_parameters=distributions.TruncationParameters(min=minimum, max=maximum, is_truncated=True),
+        distribution_parameters=distributions.ExponentialDistributionParameters(
+            rate=rate
+        ),
+        truncation_parameters=distributions.TruncationParameters(
+            min=minimum, max=maximum, is_truncated=True
+        ),
         scaling_parameters=distributions.ScalingParameters(scale=1.0, offset=0.0),
     )
 
@@ -71,7 +75,11 @@ maximum_intersite_length = 100
 rewardsite_length = 50
 cm_second_average_speed = 40  # cm/s
 reward_amount = 5  # microliters
-rep_rates = [0.2, 0.2, 0.2]  # replenishment rate of each patch (5min, 4min, 2min to full replenishment)
+rep_rates = [
+    0.2,
+    0.2,
+    0.2,
+]  # replenishment rate of each patch (5min, 4min, 2min to full replenishment)
 # rep_rates = [0.2, 0.1, 0.1] #  alternatively  (5min, 8min, 5min to full replenishment)
 num_ps_states = [16, 12, 7]  # number of discrete reward states within each patch
 p_maxs = [
@@ -81,8 +89,14 @@ p_maxs = [
 ]  # maximum reward probability of each patch, in order for patch A, B and C (they come in order A, B, C, A, ...)
 p_min = [0.2, 0.2, 0.2]  # minimum reward probability only used for stopping depletion
 dep_rates = [0.9, 0.81, 0.73]  # depletion rate of each patch
-inter_patch_time = np.array([3, 2, 1]) * 3.5  # delay before replenishment starts for each patch
+inter_patch_time = (
+    np.array([3, 2, 1]) * 3.5
+)  # delay before replenishment starts for each patch
 rhos = [0.9, 0.9, 0.9]
+
+
+def odor_concentration_from_index(odor_index: int) -> list[float]:
+    return [1.0 if i == odor_index else 0.0 for i in range(5)]
 
 
 def make_patch(
@@ -106,7 +120,10 @@ def make_patch(
 
     replenishment = vr_task_logic.OutsideRewardFunction(
         probability=vr_task_logic.CtcmFunction(
-            transition_matrix=cast(list[list[float]], compute_cmc_transition_probability(n_states, rep_rate).tolist()),
+            transition_matrix=cast(
+                list[list[float]],
+                compute_cmc_transition_probability(n_states, rep_rate).tolist(),
+            ),
             maximum=p_max,
             minimum=p_min,
             rho=rho,
@@ -118,7 +135,7 @@ def make_patch(
     return vr_task_logic.Patch(
         label=label,
         state_index=state_index,
-        odor_specification=vr_task_logic.OdorSpecification(index=odor_index, concentration=1),
+        odor_specification=odor_concentration_from_index(odor_index),
         reward_specification=vr_task_logic.RewardSpecification(
             amount=vr_task_logic.scalar_value(reward_amount),
             probability=vr_task_logic.scalar_value(p_max),
@@ -136,14 +153,18 @@ def make_patch(
             inter_patch=vr_task_logic.VirtualSiteGenerator(
                 render_specification=vr_task_logic.RenderSpecification(contrast=1),
                 label=vr_task_logic.VirtualSiteLabels.INTERPATCH,
-                length_distribution=vr_task_logic.scalar_value(inter_patch_time * cm_second_average_speed),
+                length_distribution=vr_task_logic.scalar_value(
+                    inter_patch_time * cm_second_average_speed
+                ),
                 treadmill_specification=None,
             ),
             inter_site=vr_task_logic.VirtualSiteGenerator(
                 render_specification=vr_task_logic.RenderSpecification(contrast=0.5),
                 label=vr_task_logic.VirtualSiteLabels.INTERSITE,
                 length_distribution=ExponentialDistributionHelper(
-                    rate=0.05, minimum=minimum_intersite_length, maximum=maximum_intersite_length
+                    rate=0.05,
+                    minimum=minimum_intersite_length,
+                    maximum=maximum_intersite_length,
                 ),
                 # length_distribution=vr_task_logic.scalar_value(1/0.05 * 2) # Consider using deterministic intersite distance
                 treadmill_specification=None,
@@ -194,11 +215,41 @@ patch3 = make_patch(
     rho=rhos[2],
     inter_patch_time=inter_patch_time[2],
 )
+patch4 = make_patch(
+    label="D",
+    state_index=3,
+    odor_index=3,
+    p_max=p_maxs[0],
+    p_min=p_min[0],
+    dep_rate=dep_rates[0],
+    rep_rate=rep_rates[0],
+    n_states=num_ps_states[0],
+    rho=rhos[0],
+    inter_patch_time=inter_patch_time[0],
+)
+patch5 = make_patch(
+    label="E",
+    state_index=4,
+    odor_index=4,
+    p_max=p_maxs[1],
+    p_min=p_min[1],
+    dep_rate=dep_rates[1],
+    rep_rate=rep_rates[1],
+    n_states=num_ps_states[1],
+    rho=rhos[1],
+    inter_patch_time=inter_patch_time[1],
+)
 
 environment_statistics = vr_task_logic.EnvironmentStatistics(
-    first_state_occupancy=[0.33, 0.33, 0.33],
-    transition_matrix=[[0, 1, 0], [0, 0, 1], [1, 0, 0]],
-    patches=[patch1, patch2, patch3],
+    first_state_occupancy=[0.2, 0.2, 0.2, 0.2, 0.2],
+    transition_matrix=[
+        [0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0],
+    ],
+    patches=[patch1, patch2, patch3, patch4, patch5],
 )
 
 
@@ -206,7 +257,11 @@ task_logic = AindVrForagingTaskLogic(
     task_parameters=AindVrForagingTaskParameters(
         rng_seed=None,
         environment=vr_task_logic.BlockStructure(
-            blocks=[vr_task_logic.Block(environment_statistics=environment_statistics, end_conditions=[])],
+            blocks=[
+                vr_task_logic.Block(
+                    environment_statistics=environment_statistics, end_conditions=[]
+                )
+            ],
             sampling_mode="Random",
         ),
         operation_control=operation_control,
@@ -218,13 +273,17 @@ task_logic = AindVrForagingTaskLogic(
 def main(path_seed: str = "./local/MCM_{schema}.json"):
     example_task_logic = task_logic
     example_trainer_state = TrainerState(
-        stage=Stage(name="example_stage", task=example_task_logic), curriculum=None, is_on_curriculum=False
+        stage=Stage(name="example_stage", task=example_task_logic),
+        curriculum=None,
+        is_on_curriculum=False,
     )
     os.makedirs(os.path.dirname(path_seed), exist_ok=True)
     models = [example_task_logic, example_trainer_state]
 
     for model in models:
-        with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
+        with open(
+            path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8"
+        ) as f:
             f.write(model.model_dump_json(indent=2))
 
 

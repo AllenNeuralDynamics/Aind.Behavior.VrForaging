@@ -1,9 +1,9 @@
-using Bonsai;
-using System;
-using System.ComponentModel;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
+using Bonsai;
 using OpenCV.Net;
 
 [Combinator]

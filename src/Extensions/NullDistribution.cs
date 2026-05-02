@@ -1,15 +1,15 @@
-using Bonsai;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
+using Bonsai;
 
 [Combinator]
 [Description("Returns a sequence containing a null Distribution.")]
 [WorkflowElementCategory(ElementCategory.Source)]
 public class NullDistribution
 {
-    public IObservable<AindVrForagingDataSchema.Distribution> Process()
+    public IObservable<AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution> Process()
     {
-        return Observable.Return<AindVrForagingDataSchema.Distribution>(null);
+        return Observable.Return<AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution>(null);
     }
 }

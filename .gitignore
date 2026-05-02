@@ -1,11 +1,19 @@
+# Generated docs files (regenerated on every mkdocs build)
+docs/index.md
+docs/assets/dataset_fragment.html
+docs/assets/dataset.html
+docs/assets/AindVrForagingTaskLogic.svg
+docs/curricula_diagrams/
+
 # Bonsai scripting files
 .vs
 .vscode
 bin
 obj
-Packages
+bonsai/Packages
 Bonsai.exe.WebView2
 Bonsai/Settings/
+
 *.bin
 *.avi
 *.dll
@@ -71,6 +79,9 @@ cover/
 
 # Sphinx documentation
 docs/_build/
+
+# MkDocs documentation
+site/
 
 # Jupyter Notebook
 .ipynb_checkpoints

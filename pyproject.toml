@@ -1,78 +1,46 @@
-[build-system]
-requires = ["uv_build>=0.8.22"]
-build-backend = "uv_build"
-
-[project]
-name = "aind-behavior-vr-foraging"
-description = "A library that defines AIND data schema for the Aind Behavior VR Foraging experiment."
-authors = [ {name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"}]
-license = "MIT"
-requires-python = ">=3.11"
-classifiers = [
-    "Programming Language :: Python :: 3.11",
-    "Operating System :: Microsoft :: Windows",
-]
-version = "0.6.8"
-readme = {file = "README.md", content-type = "text/markdown"}
-
-dependencies = [
-  "aind_behavior_services>=0.12, <0.13",
-  "pydantic-settings"
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = [
+    "src/packages/aind_behavior_vr_foraging/tests",
+    "src/packages/aind_behavior_vr_foraging_curricula/tests",
 ]
 
-[project.urls]
-Documentation = "https://allenneuraldynamics.github.io/Aind.Behavior.VrForaging/"
-Repository = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/"
-Issues = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/issues"
-Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/releases"
+[tool.uv.workspace]
+members = [
+    "src/packages/aind_behavior_vr_foraging",
+    "src/packages/aind_behavior_vr_foraging_curricula",
+]
 
-[project.optional-dependencies]
-
-data = ["contraqctor>=0.5.3, <0.6.0"]
-
-launcher = [
-    "aind-clabe[aind-services]>=0.9.1",
-    "aind-data-schema>=2.2",
-    "aind_behavior_vr_foraging[data]",
-    "aind-watchdog-service==0.1.6.dev8"
-    ]
+[tool.uv.sources]
+aind-behavior-vr-foraging = { workspace = true }
+aind-behavior-vr-foraging-curricula = { workspace = true }
 
 [dependency-groups]
+docs = [
+    'mkdocs',
+    'mkdocs-material',
+    'mkdocstrings[python]',
+    'griffe-pydantic',
+    'mkdocs-autorefs>=1.4.4',
+    'griffe-typingdoc>=0.3.1',
+    'pymdown-extensions',
+    'aind-behavior-vr-foraging[data]',
+]
 
 dev = [
-    "aind_behavior_vr_foraging[launcher]",
-    "aind_behavior_vr_foraging[data]",
     "ruff",
     "codespell",
+    "pytest",
+    "pytest-cov",
+    'aind-behavior-vr-foraging[data]',
+    'aind-behavior-vr-foraging[mappers]',
+    "aind-clabe >= 0.10.5",
 ]
-
-docs = [
-    'Sphinx',
-    'furo',
-    'sphinx-jinja',
-    'autodoc_pydantic[erdantic]',
-    'myst_parser',
-    'sphinx-jsonschema',
-    "aind_behavior_vr_foraging[data]",  # Necessary for the data contract rendering
-]
-
-[project.scripts]
-vr-foraging = "aind_behavior_vr_foraging.cli:main"
-
-[tool.ruff]
-line-length = 120
-target-version = 'py311'
-
-[tool.ruff.lint]
-extend-select = ['Q', 'RUF100', 'C90', 'I']
-extend-ignore = []
-mccabe = { max-complexity = 14 }
-pydocstyle = { convention = 'google' }
 
 [tool.codespell]
 skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock,*Generated.cs'
 ignore-words-list = 'nd'
 
 [tool.uv]
-default-groups = ['dev']
 required-version = '>=0.8.4'
+default-groups = ["dev"]

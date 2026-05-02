@@ -2,9 +2,6 @@ $scriptPath = $MyInvocation.MyCommand.Path
 $scriptDirectory = Split-Path -Parent $scriptPath
 Set-Location (Split-Path -Parent $scriptDirectory)
 
-Write-Output "Initializing and updating submodules..."
-&git submodule update --init --recursive
-
 Write-Output "Creating a Python  environment..."
 
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
@@ -17,7 +14,7 @@ if (Test-Path -Path ./.venv) {
 &uv venv
 .\.venv\Scripts\Activate.ps1
 Write-Output "Synchronizing environment..."
-&uv sync --extra launcher
+&uv sync
 Write-Output "Creating a Bonsai environment and installing packages..."
 if (Test-Path -Path "bonsai") {
     Set-Location "bonsai"

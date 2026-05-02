@@ -1,9 +1,9 @@
-using Bonsai;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using AindVrForagingDataSchema;
+using Bonsai;
 
 [Combinator]
 [Description("Determines if replenishment should be active based on the provided site data.")]
@@ -18,7 +18,7 @@ public class IsInsidePatchFunction
             var thisPatch = value.Item2;
             var activeSite = value.Item3;
 
-            if (thisPatch.RewardSpecification == null){return false;}
+            if (thisPatch.RewardSpecification == null) { return false; }
 
             return
                 (activePatch.StateIndex == thisPatch.StateIndex) &&

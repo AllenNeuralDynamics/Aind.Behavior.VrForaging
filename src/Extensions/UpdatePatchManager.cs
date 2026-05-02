@@ -1,9 +1,9 @@
-using Bonsai;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using AindVrForagingDataSchema;
+using Bonsai;
 
 [Description("Updates the state of a patch in the PatchManager based on tick value and rates, and returns the updated PatchState.")]
 public class UpdatePatchManager : Transform<Tuple<PatchManager, double, int, PatchUpdateFunction, PatchUpdateFunction, PatchUpdateFunction>, PatchState>

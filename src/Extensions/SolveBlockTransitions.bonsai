@@ -4,8 +4,9 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns:p2="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.Distributions;assembly=AllenNeuralDynamics.AindBehaviorServices.Distributions"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
-                 xmlns:p2="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
+                 xmlns:p3="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -248,7 +249,7 @@
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:SampleDistribution" />
+                          <Combinator xsi:type="p2:SampleDistribution" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:CombineLatest" />
@@ -361,7 +362,7 @@
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:SampleDistribution" />
+                          <Combinator xsi:type="p2:SampleDistribution" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:CombineLatest" />
@@ -446,7 +447,7 @@
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:SampleDistribution" />
+                          <Combinator xsi:type="p2:SampleDistribution" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:CombineLatest" />
@@ -524,7 +525,7 @@
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:SampleDistribution" />
+                          <Combinator xsi:type="p2:SampleDistribution" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:CombineLatest" />
@@ -602,7 +603,7 @@
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:SampleDistribution" />
+                          <Combinator xsi:type="p2:SampleDistribution" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:CombineLatest" />
@@ -731,7 +732,7 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="WorkflowOutput" />
-      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:Unit">
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p3:Unit">
         <rx:Name>EvaluateBlockEndConditions</rx:Name>
       </Expression>
     </Nodes>

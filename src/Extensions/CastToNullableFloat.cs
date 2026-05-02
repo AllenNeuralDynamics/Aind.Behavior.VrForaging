@@ -1,8 +1,8 @@
-using Bonsai;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
+using Bonsai;
 
 [Combinator]
 [Description("Attempts to cast an object to a float?.")]

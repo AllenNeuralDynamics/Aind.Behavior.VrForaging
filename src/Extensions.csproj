@@ -13,13 +13,15 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Bonsai.Harp" Version="3.5.2" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
-    <PackageReference Include="Harp.Olfactometer" Version="0.1.0-build231127" />
+    <PackageReference Include="Harp.Olfactometer" Version="0.3.0" />
     <PackageReference Include="AllenNeuralDynamics.AindManipulator" Version="0.1.6" />
     <PackageReference Include="Hexa.NET.ImGui" Version="2.2.9" />
     <PackageReference Include="Hexa.NET.ImPlot" Version="2.2.9" />
     <PackageReference Include="OpenTK.GLControl" Version="3.1.0" />
     <PackageReference Include="Bonsai.Dsp.Design" Version="2.9.0" />
     <PackageReference Include="Hexa.NET.ImGui.Backends" Version="1.0.17.4" />
-    <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices" Version="0.12.0" />
+    <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices" Version="0.13.4" />
+    <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices.Distributions" Version="0.2.0" />
+
   </ItemGroup>
 </Project>

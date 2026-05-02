@@ -1,193 +1,14 @@
 {
   "$defs": {
-    "AindBehaviorSessionModel": {
-      "properties": {
-        "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
-          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
-          "title": "aind_behavior_services package version",
-          "type": "string"
-        },
-        "version": {
-          "const": "0.12.5",
-          "default": "0.12.5",
-          "title": "Version",
-          "type": "string"
-        },
-        "experiment": {
-          "default": null,
-          "description": "Name of the experiment",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Experiment"
-        },
-        "experimenter": {
-          "default": [],
-          "description": "Name of the experimenter",
-          "items": {
-            "type": "string"
-          },
-          "title": "Experimenter",
-          "type": "array"
-        },
-        "date": {
-          "description": "Date of the experiment",
-          "format": "date-time",
-          "title": "Date",
-          "type": "string"
-        },
-        "root_path": {
-          "description": "Root path where data will be logged",
-          "title": "Root Path",
-          "type": "string"
-        },
-        "session_name": {
-          "default": null,
-          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Session Name"
-        },
-        "subject": {
-          "description": "Name of the subject",
-          "title": "Subject",
-          "type": "string"
-        },
-        "experiment_version": {
-          "default": "",
-          "deprecated": true,
-          "description": "Version of the experiment",
-          "title": "Experiment Version",
-          "type": "string"
-        },
-        "notes": {
-          "default": null,
-          "description": "Notes about the experiment",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        },
-        "commit_hash": {
-          "default": null,
-          "description": "Commit hash of the repository",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Commit Hash"
-        },
-        "allow_dirty_repo": {
-          "default": false,
-          "description": "Allow running from a dirty repository",
-          "title": "Allow Dirty Repo",
-          "type": "boolean"
-        },
-        "skip_hardware_validation": {
-          "default": false,
-          "description": "Skip hardware validation",
-          "title": "Skip Hardware Validation",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "root_path",
-        "subject"
-      ],
-      "title": "AindBehaviorSessionModel",
-      "type": "object"
-    },
-    "AindManipulatorAdditionalSettings": {
-      "description": "Additional settings for the manipulator device",
-      "properties": {
-        "spout_axis": {
-          "$ref": "#/$defs/Axis",
-          "default": 2,
-          "description": "Spout axis"
-        }
-      },
-      "title": "AindManipulatorAdditionalSettings",
-      "type": "object"
-    },
     "AindManipulatorCalibration": {
-      "description": "Aind manipulator calibration class",
+      "description": "AindManipulator calibration class",
       "properties": {
-        "device_name": {
-          "default": "AindManipulator",
-          "description": "Must match a device name in rig/instrument",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/AindManipulatorCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/AindManipulatorCalibrationOutput",
-          "title": "Output of the calibration."
-        },
-        "date": {
-          "default": null,
-          "oneOf": [
-            {
-              "format": "date-time",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Date"
-        },
         "description": {
-          "const": "Calibration of the load cells system",
-          "default": "Calibration of the load cells system",
+          "const": "AindManipulator calibration and settings",
+          "default": "AindManipulator calibration and settings",
           "title": "Description",
           "type": "string"
         },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "AindManipulatorCalibration",
-      "type": "object"
-    },
-    "AindManipulatorCalibrationInput": {
-      "properties": {
         "full_step_to_mm": {
           "$ref": "#/$defs/ManipulatorPosition",
           "default": {
@@ -270,16 +91,12 @@
           }
         }
       },
-      "title": "AindManipulatorCalibrationInput",
-      "type": "object"
-    },
-    "AindManipulatorCalibrationOutput": {
-      "properties": {},
-      "title": "AindManipulatorCalibrationOutput",
-      "type": "object"
+      "title": "AindManipulatorCalibration",
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.AindManipulatorCalibration"
     },
     "AindManipulatorDevice": {
-      "description": "Overrides the default settings for the manipulator device by spec'ing additional_settings field",
+      "description": "Appends a task specific configuration to the base manipulator model.",
       "properties": {
         "device_type": {
           "const": "StepperDriver",
@@ -287,37 +104,72 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "$ref": "#/$defs/AindManipulatorAdditionalSettings",
-          "default": {
-            "spout_axis": 2
-          },
-          "description": "Additional settings"
-        },
         "calibration": {
-          "default": null,
-          "oneOf": [
-            {
-              "$ref": "#/$defs/AindManipulatorCalibration"
+          "$ref": "#/$defs/AindManipulatorCalibration",
+          "default": {
+            "description": "AindManipulator calibration and settings",
+            "full_step_to_mm": {
+              "x": 0.01,
+              "y1": 0.01,
+              "y2": 0.01,
+              "z": 0.01
             },
-            {
-              "type": "null"
+            "axis_configuration": [
+              {
+                "axis": 2,
+                "max_limit": 25.0,
+                "maximum_step_interval": 2000,
+                "microstep_resolution": 0,
+                "min_limit": -0.01,
+                "motor_operation_mode": 0,
+                "step_acceleration_interval": 100,
+                "step_interval": 100
+              },
+              {
+                "axis": 3,
+                "max_limit": 25.0,
+                "maximum_step_interval": 2000,
+                "microstep_resolution": 0,
+                "min_limit": -0.01,
+                "motor_operation_mode": 0,
+                "step_acceleration_interval": 100,
+                "step_interval": 100
+              },
+              {
+                "axis": 1,
+                "max_limit": 25.0,
+                "maximum_step_interval": 2000,
+                "microstep_resolution": 0,
+                "min_limit": -0.01,
+                "motor_operation_mode": 0,
+                "step_acceleration_interval": 100,
+                "step_interval": 100
+              },
+              {
+                "axis": 4,
+                "max_limit": 25.0,
+                "maximum_step_interval": 2000,
+                "microstep_resolution": 0,
+                "min_limit": -0.01,
+                "motor_operation_mode": 0,
+                "step_acceleration_interval": 100,
+                "step_interval": 100
+              }
+            ],
+            "homing_order": [
+              2,
+              3,
+              1,
+              4
+            ],
+            "initial_position": {
+              "x": 0.0,
+              "y1": 0.0,
+              "y2": 0.0,
+              "z": 0.0
             }
-          ],
-          "title": "Calibration of the manipulator"
+          },
+          "description": "Calibration for the device."
         },
         "who_am_i": {
           "const": 1130,
@@ -342,6 +194,11 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
+        },
+        "spout_axis": {
+          "$ref": "#/$defs/Axis",
+          "default": 2,
+          "description": "Spout axis"
         }
       },
       "required": [
@@ -351,16 +208,17 @@
       "type": "object"
     },
     "AindVrForagingRig": {
+      "description": "Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task.",
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
+          "default": "0.13.7",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.6.8",
-          "default": "0.6.8",
+          "const": "1.0.0-rc0",
+          "default": "1.0.0-rc0",
           "title": "Version",
           "type": "string"
         },
@@ -372,6 +230,12 @@
         "rig_name": {
           "description": "Rig name",
           "title": "Rig Name",
+          "type": "string"
+        },
+        "data_directory": {
+          "description": "Directory where data will be saved to",
+          "format": "path",
+          "title": "Data Directory",
           "type": "string"
         },
         "triggered_camera_controller": {
@@ -397,6 +261,14 @@
         "harp_olfactometer": {
           "$ref": "#/$defs/Olfactometer",
           "description": "Harp olfactometer"
+        },
+        "harp_olfactometer_extension": {
+          "description": "A collection of subordinate olfactometers that can be added to increase the number of independently delivered odors. The order of the list determines the order by which odors are numbered",
+          "items": {
+            "$ref": "#/$defs/Olfactometer"
+          },
+          "title": "Harp Olfactometer Extension",
+          "type": "array"
         },
         "harp_lickometer": {
           "$ref": "#/$defs/HarpLicketySplit",
@@ -451,11 +323,9 @@
           "description": "Manipulator"
         },
         "screen": {
-          "$ref": "#/$defs/Screen",
+          "$ref": "#/$defs/ScreenAssembly",
           "default": {
-            "device_type": "Screen",
-            "device_name": "Screen",
-            "additional_settings": null,
+            "device_type": "ScreenAssembly",
             "calibration": {
               "center": {
                 "extrinsics": {
@@ -533,7 +403,9 @@
         }
       },
       "required": [
+        "computer_name",
         "rig_name",
+        "data_directory",
         "triggered_camera_controller",
         "harp_behavior",
         "harp_olfactometer",
@@ -568,8 +440,8 @@
           "description": "Parameters of the task logic"
         },
         "version": {
-          "const": "0.6.8",
-          "default": "0.6.8",
+          "const": "1.0.0-rc0",
+          "default": "1.0.0-rc0",
           "title": "Version",
           "type": "string"
         },
@@ -611,7 +483,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
+          "default": "0.13.7",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -682,7 +554,8 @@
         "Y1",
         "Y2",
         "Z"
-      ]
+      ],
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.Axis"
     },
     "AxisConfiguration": {
       "description": "Axis configuration",
@@ -739,7 +612,8 @@
         "axis"
       ],
       "title": "AxisConfiguration",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.AxisConfiguration"
     },
     "BaseModel": {
       "properties": {},
@@ -790,7 +664,8 @@
         }
       },
       "title": "BetaDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BetaDistribution"
     },
     "BetaDistributionParameters": {
       "description": "Parameters for a beta distribution.\n\nDefined by alpha and beta shape parameters.",
@@ -817,7 +692,8 @@
         }
       },
       "title": "BetaDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BetaDistributionParameters"
     },
     "BinomialDistribution": {
       "description": "A binomial probability distribution.\n\nModels the number of successes in a fixed number of independent\nBernoulli trials with constant success probability.",
@@ -863,7 +739,8 @@
         }
       },
       "title": "BinomialDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BinomialDistribution"
     },
     "BinomialDistributionParameters": {
       "description": "Parameters for a binomial distribution.\n\nDefined by number of trials (n) and success probability (p).",
@@ -891,7 +768,8 @@
         }
       },
       "title": "BinomialDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BinomialDistributionParameters"
     },
     "Block": {
       "description": "Configuration for a single experimental block.\n\nA block represents a period of the experiment with specific environment\nstatistics and ending conditions. Each block defines the environmental\nparameters and termination criteria for that experimental phase.",
@@ -1082,34 +960,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1156,34 +1009,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1364,9 +1192,29 @@
           "type": "array"
         },
         "rho": {
-          "description": "The underlying value goverining the stochastic process",
+          "description": "The underlying value governing the stochastic process",
           "title": "Rho",
           "type": "number"
+        },
+        "dt": {
+          "const": 0.1,
+          "default": 0.1,
+          "description": "Sampling time step (s)",
+          "title": "Dt",
+          "type": "number"
+        },
+        "rate": {
+          "default": null,
+          "description": "Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rate"
         },
         "minimum": {
           "default": 1,
@@ -1389,6 +1237,7 @@
       "type": "object"
     },
     "DisplayCalibration": {
+      "description": "Represents the calibration parameters of a display.",
       "properties": {
         "intrinsics": {
           "$ref": "#/$defs/DisplayIntrinsics",
@@ -1421,9 +1270,10 @@
       "type": "object"
     },
     "DisplayExtrinsics": {
+      "description": "Represents the extrinsic parameters of a display.",
       "properties": {
         "rotation": {
-          "$ref": "#/$defs/aind_behavior_services__rig__visual_stimulation__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 0.0,
@@ -1432,7 +1282,7 @@
           "description": "Rotation vector (radians)"
         },
         "translation": {
-          "$ref": "#/$defs/aind_behavior_services__rig__visual_stimulation__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 1.309016,
@@ -1445,6 +1295,7 @@
       "type": "object"
     },
     "DisplayIntrinsics": {
+      "description": "Represents the intrinsic parameters of a display.",
       "properties": {
         "frame_width": {
           "default": 1920,
@@ -1476,84 +1327,6 @@
         }
       },
       "title": "DisplayIntrinsics",
-      "type": "object"
-    },
-    "DisplaysCalibration": {
-      "properties": {
-        "left": {
-          "$ref": "#/$defs/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": -16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            }
-          },
-          "description": "Left display calibration"
-        },
-        "center": {
-          "$ref": "#/$defs/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 0.0,
-                "y": 1.309016,
-                "z": -13.27
-              }
-            }
-          },
-          "description": "Center display calibration"
-        },
-        "right": {
-          "$ref": "#/$defs/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": -1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            }
-          },
-          "description": "Right display calibration"
-        }
-      },
-      "title": "DisplaysCalibration",
       "type": "object"
     },
     "Distribution": {
@@ -1605,7 +1378,8 @@
           "$ref": "#/$defs/PdfDistribution"
         }
       ],
-      "title": "Distribution"
+      "title": "Distribution",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution"
     },
     "EnvironmentStatistics": {
       "description": "Defines the statistical properties of the foraging environment.\n\nThis class specifies the patches available in the environment, their transition\nprobabilities, and initial state occupancy. It forms the core specification\nfor the foraging environment structure.",
@@ -1700,7 +1474,8 @@
         }
       },
       "title": "ExponentialDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ExponentialDistribution"
     },
     "ExponentialDistributionParameters": {
       "description": "Parameters for an exponential distribution.\n\nDefined by the rate parameter (inverse of mean).",
@@ -1720,7 +1495,8 @@
         }
       },
       "title": "ExponentialDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ExponentialDistributionParameters"
     },
     "GammaDistribution": {
       "description": "A gamma probability distribution.\n\nGeneralizes the exponential distribution. Used for modeling\npositive continuous variables with right-skewed distributions.",
@@ -1766,7 +1542,8 @@
         }
       },
       "title": "GammaDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.GammaDistribution"
     },
     "GammaDistributionParameters": {
       "description": "Parameters for a gamma distribution.\n\nDefined by shape (k) and rate (\u03b8\u207b\u00b9) parameters.",
@@ -1793,7 +1570,8 @@
         }
       },
       "title": "GammaDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.GammaDistributionParameters"
     },
     "HarpAnalogInput": {
       "properties": {
@@ -1803,34 +1581,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1879,34 +1632,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1955,34 +1683,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -2031,34 +1734,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -2107,34 +1785,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -2183,34 +1836,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -2304,7 +1932,8 @@
         }
       },
       "title": "LogNormalDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.LogNormalDistribution"
     },
     "LogNormalDistributionParameters": {
       "description": "Parameters for a log-normal distribution.\n\nDefined by the mean and standard deviation of the underlying normal distribution.",
@@ -2329,7 +1958,8 @@
         }
       },
       "title": "LogNormalDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.LogNormalDistributionParameters"
     },
     "LookupTableFunction": {
       "description": "A patch update function that uses lookup table interpolation.\n\nUpdate in the form of x = lut_values[lerp(lut_keys, lut_values, tick_value)].\nThis function maps input values to output values using a lookup table with\nlinear interpolation between defined points. Useful for complex, non-linear\nreward schedules or parameter updates.",
@@ -2367,6 +1997,7 @@
       "type": "object"
     },
     "ManipulatorPosition": {
+      "description": "Represents a position in the manipulator coordinate system",
       "properties": {
         "x": {
           "title": "X coordinate",
@@ -2392,7 +2023,8 @@
         "z"
       ],
       "title": "ManipulatorPosition",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.ManipulatorPosition"
     },
     "Measurement": {
       "description": "Input for water valve calibration class",
@@ -2436,6 +2068,7 @@
       "type": "object"
     },
     "MicrostepResolution": {
+      "description": "Microstep resolution available",
       "enum": [
         0,
         1,
@@ -2449,9 +2082,11 @@
         "Microstep16",
         "Microstep32",
         "Microstep64"
-      ]
+      ],
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.MicrostepResolution"
     },
     "MotorOperationMode": {
+      "description": "Motor operation mode",
       "enum": [
         0,
         1
@@ -2461,7 +2096,8 @@
       "x-enumNames": [
         "Quiet",
         "Dynamic"
-      ]
+      ],
+      "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.MotorOperationMode"
     },
     "MovableSpoutControl": {
       "description": "Controls the movable water spout behavior for reward delivery.\n\nThis class configures how the movable spout operates, including when it's\nenabled, timing for reward collection, and retraction distance for operant\nconditioning protocols.",
@@ -2534,7 +2170,8 @@
         }
       },
       "title": "NormalDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.NormalDistribution"
     },
     "NormalDistributionParameters": {
       "description": "Parameters for a normal (Gaussian) distribution.\n\nDefined by mean (center) and standard deviation (spread).",
@@ -2559,7 +2196,8 @@
         }
       },
       "title": "NormalDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.NormalDistributionParameters"
     },
     "NumericalUpdater": {
       "description": "A numerical updater that modifies task parameters during execution.\n\nThis class combines an operation type with parameters to define how values\nshould be updated dynamically during the task, enabling adaptive behavior\nbased on animal performance or other criteria.",
@@ -2651,65 +2289,30 @@
     "OdorControl": {
       "description": "Controls the odor delivery system parameters.\n\nThis class manages the olfactory stimulus delivery system, including flow rates,\nvalve timing, and carrier gas configuration. It ensures proper odor concentration\nand delivery timing for the behavioral task.",
       "properties": {
-        "valve_max_open_time": {
-          "default": 10,
-          "description": "Maximum time (s) the valve can be open continuously",
-          "minimum": 0,
-          "title": "Valve Max Open Time",
-          "type": "number"
-        },
         "target_total_flow": {
+          "const": 1000,
           "default": 1000,
           "description": "Target total flow (ml/s) of the odor mixture",
-          "maximum": 1000,
-          "minimum": 100,
+          "ge": 100,
+          "le": 1000,
           "title": "Target Total Flow",
-          "type": "number"
-        },
-        "use_channel_3_as_carrier": {
-          "default": true,
-          "description": "Whether to use channel 3 as carrier",
-          "title": "Use Channel 3 As Carrier",
-          "type": "boolean"
+          "type": "integer"
         },
         "target_odor_flow": {
+          "const": 100,
           "default": 100,
           "description": "Target odor flow (ml/s) in the odor mixture",
-          "maximum": 100,
-          "minimum": 0,
+          "ge": 0,
+          "le": 100,
           "title": "Target Odor Flow",
-          "type": "number"
+          "type": "integer"
         }
       },
       "title": "OdorControl",
       "type": "object"
     },
-    "OdorSpecification": {
-      "description": "Specifies odor delivery parameters for olfactory cues in the VR environment.\n\nOdors can be delivered at specific locations to provide additional sensory\ninformation for navigation and foraging decisions.",
-      "properties": {
-        "index": {
-          "description": "Index of the odor to be used",
-          "maximum": 3,
-          "minimum": 0,
-          "title": "Index",
-          "type": "integer"
-        },
-        "concentration": {
-          "default": 1,
-          "description": "Concentration of the odor",
-          "maximum": 1,
-          "minimum": 0,
-          "title": "Concentration",
-          "type": "number"
-        }
-      },
-      "required": [
-        "index"
-      ],
-      "title": "OdorSpecification",
-      "type": "object"
-    },
     "Olfactometer": {
+      "description": "A calibrated olfactometer device",
       "properties": {
         "device_type": {
           "const": "Olfactometer",
@@ -2717,41 +2320,12 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
-          "default": null,
-          "oneOf": [
-            {
-              "$ref": "#/$defs/OlfactometerCalibration"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "$ref": "#/$defs/OlfactometerCalibration",
+          "default": {
+            "date": null,
+            "channel_config": {}
+          },
           "title": "Calibration of the olfactometer"
         },
         "who_am_i": {
@@ -2786,24 +2360,11 @@
       "type": "object"
     },
     "OlfactometerCalibration": {
-      "description": "Olfactometer calibration class",
+      "description": "Olfactometer device configuration model",
       "properties": {
-        "device_name": {
-          "default": "Olfactometer",
-          "description": "Name of the device being calibrated",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/OlfactometerCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/OlfactometerCalibrationOutput",
-          "title": "Output of the calibration"
-        },
         "date": {
           "default": null,
+          "description": "Date of the calibration",
           "oneOf": [
             {
               "format": "date-time",
@@ -2815,34 +2376,6 @@
           ],
           "title": "Date"
         },
-        "description": {
-          "const": "Calibration of the harp olfactometer device",
-          "default": "Calibration of the harp olfactometer device",
-          "title": "Description",
-          "type": "string"
-        },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "OlfactometerCalibration",
-      "type": "object"
-    },
-    "OlfactometerCalibrationInput": {
-      "properties": {
         "channel_config": {
           "additionalProperties": {
             "$ref": "#/$defs/OlfactometerChannelConfig"
@@ -2856,12 +2389,7 @@
           "type": "object"
         }
       },
-      "title": "OlfactometerCalibrationInput",
-      "type": "object"
-    },
-    "OlfactometerCalibrationOutput": {
-      "properties": {},
-      "title": "OlfactometerCalibrationOutput",
+      "title": "OlfactometerCalibration",
       "type": "object"
     },
     "OlfactometerChannel": {
@@ -2882,15 +2410,16 @@
       ]
     },
     "OlfactometerChannelConfig": {
+      "description": "Configuration for a single olfactometer channel",
       "properties": {
         "channel_index": {
-          "title": "Channel index",
+          "title": "Odor channel index",
           "type": "integer"
         },
         "channel_type": {
           "$ref": "#/$defs/OlfactometerChannelType",
           "default": "Odor",
-          "title": "Channel type"
+          "title": "Olfactometer channel type"
         },
         "flow_rate_capacity": {
           "default": 100,
@@ -2939,7 +2468,7 @@
       "type": "object"
     },
     "OlfactometerChannelType": {
-      "description": "Channel type",
+      "description": "Olfactometer channel type",
       "enum": [
         "Odor",
         "Carrier"
@@ -3058,10 +2587,8 @@
         "odor_control": {
           "$ref": "#/$defs/OdorControl",
           "default": {
-            "valve_max_open_time": 10.0,
-            "target_total_flow": 1000.0,
-            "use_channel_3_as_carrier": true,
-            "target_odor_flow": 100.0
+            "target_total_flow": 1000,
+            "target_odor_flow": 100
           },
           "description": "Control of the odor"
         },
@@ -3090,6 +2617,20 @@
             "frequency": 1000.0
           },
           "description": "Control of the audio"
+        },
+        "wait_to_start_duration": {
+          "default": 0,
+          "description": "Duration to wait before starting the task",
+          "minimum": 0,
+          "title": "Wait To Start Duration",
+          "type": "number"
+        },
+        "wait_to_finish_duration": {
+          "default": 0,
+          "description": "Duration to wait after finishing the task",
+          "minimum": 0,
+          "title": "Wait To Finish Duration",
+          "type": "number"
         }
       },
       "title": "OperationControl",
@@ -3180,16 +2721,13 @@
           "type": "integer"
         },
         "odor_specification": {
-          "default": null,
-          "description": "The optional odor specification of the patch",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/OdorSpecification"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "description": "A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel",
+          "items": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "title": "Odor Specification",
+          "type": "array"
         },
         "reward_specification": {
           "$ref": "#/$defs/RewardSpecification",
@@ -3313,6 +2851,9 @@
           "type": "array"
         }
       },
+      "required": [
+        "odor_specification"
+      ],
       "title": "Patch",
       "type": "object"
     },
@@ -3388,6 +2929,7 @@
           "OnDistance": "#/$defs/PatchTerminatorOnDistance",
           "OnRejection": "#/$defs/PatchTerminatorOnRejection",
           "OnReward": "#/$defs/PatchTerminatorOnReward",
+          "OnRewardSite": "#/$defs/PatchTerminatorOnRewardSite",
           "OnTime": "#/$defs/PatchTerminatorOnTime"
         },
         "propertyName": "terminator_type"
@@ -3407,6 +2949,9 @@
         },
         {
           "$ref": "#/$defs/PatchTerminatorOnDistance"
+        },
+        {
+          "$ref": "#/$defs/PatchTerminatorOnRewardSite"
         }
       ]
     },
@@ -3506,6 +3051,26 @@
         }
       },
       "title": "PatchTerminatorOnReward",
+      "type": "object"
+    },
+    "PatchTerminatorOnRewardSite": {
+      "description": "Terminates the patch after visiting a specific site count.",
+      "properties": {
+        "terminator_type": {
+          "const": "OnRewardSite",
+          "default": "OnRewardSite",
+          "title": "Terminator Type",
+          "type": "string"
+        },
+        "count": {
+          "$ref": "#/$defs/Distribution",
+          "description": "Number of sites the animal visits before terminating the patch."
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "title": "PatchTerminatorOnRewardSite",
       "type": "object"
     },
     "PatchTerminatorOnTime": {
@@ -3684,7 +3249,8 @@
         }
       },
       "title": "PdfDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.PdfDistribution"
     },
     "PdfDistributionParameters": {
       "description": "Parameters for a custom probability density function distribution.\n\nDefined by explicit probability values and their corresponding indices.\nProbabilities are automatically normalized to sum to 1.",
@@ -3720,7 +3286,8 @@
         }
       },
       "title": "PdfDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.PdfDistributionParameters"
     },
     "PersistentRewardFunction": {
       "description": "A RewardFunction that is always active.",
@@ -3832,7 +3399,8 @@
         }
       },
       "title": "PoissonDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.PoissonDistribution"
     },
     "PoissonDistributionParameters": {
       "description": "Parameters for a Poisson distribution.\n\nDefined by the rate parameter (average number of events).",
@@ -3852,13 +3420,14 @@
         }
       },
       "title": "PoissonDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.PoissonDistributionParameters"
     },
     "PositionControl": {
       "description": "Controls the position tracking and movement detection parameters.\n\nThis class manages the position control system including coordinate transformations,\ninitial positioning, signal filtering, and movement detection thresholds for the\nvirtual reality foraging task.",
       "properties": {
         "gain": {
-          "$ref": "#/$defs/aind_behavior_vr_foraging__task_logic__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 1.0,
             "y": 1.0,
@@ -3867,13 +3436,13 @@
           "description": "Gain of the position control."
         },
         "initial_position": {
-          "$ref": "#/$defs/aind_behavior_vr_foraging__task_logic__Vector3",
+          "$ref": "#/$defs/Vector3",
           "default": {
             "x": 0.0,
             "y": 2.56,
             "z": 0.0
           },
-          "description": "Gain of the position control."
+          "description": "Initial position of the subject in the VR world."
         },
         "frequency_filter_cutoff": {
           "default": 0.5,
@@ -3895,6 +3464,7 @@
       "type": "object"
     },
     "Rect": {
+      "description": "Represents a rectangle defined by its top-left corner, width, and height.",
       "properties": {
         "x": {
           "default": 0,
@@ -4056,7 +3626,7 @@
       "type": "object"
     },
     "RigCalibration": {
-      "description": "Container class for calibration models. In a future release these will be moved to the respective devices",
+      "description": "Container class for calibration models.",
       "properties": {
         "water_valve": {
           "$ref": "#/$defs/WaterValveCalibration",
@@ -4087,20 +3657,33 @@
           "description": "Parameters of the distribution"
         },
         "truncation_parameters": {
-          "const": null,
           "default": null,
-          "title": "Truncation Parameters",
-          "type": "null"
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "scaling_parameters": {
-          "const": null,
           "default": null,
-          "title": "Scaling Parameters",
-          "type": "null"
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "title": "Scalar",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.Scalar"
     },
     "ScalarDistributionParameter": {
       "description": "Parameters for a scalar (constant) distribution.\n\nRepresents a deterministic value that always returns the same number.",
@@ -4119,7 +3702,8 @@
         }
       },
       "title": "ScalarDistributionParameter",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ScalarDistributionParameter"
     },
     "ScalingParameters": {
       "description": "Parameters for scaling and offsetting sampled distribution values.\nScaling is applied as (value * scale + offset).\n\nApplies linear transformation: result = (value * scale) + offset.",
@@ -4138,44 +3722,20 @@
         }
       },
       "title": "ScalingParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ScalingParameters"
     },
-    "Screen": {
+    "ScreenAssembly": {
+      "description": "Represents a screen assembly (left, center and right screens) and respective configuration.",
       "properties": {
         "device_type": {
-          "const": "Screen",
-          "default": "Screen",
-          "description": "Device type",
+          "const": "ScreenAssembly",
+          "default": "ScreenAssembly",
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
-          "$ref": "#/$defs/DisplaysCalibration",
+          "$ref": "#/$defs/ScreenAssemblyCalibration",
           "default": {
             "left": {
               "extrinsics": {
@@ -4238,7 +3798,7 @@
               }
             }
           },
-          "description": "Screen calibration"
+          "description": "Screen assembly calibration"
         },
         "display_index": {
           "default": 1,
@@ -4281,7 +3841,191 @@
           "type": "number"
         }
       },
-      "title": "Screen",
+      "title": "ScreenAssembly",
+      "type": "object"
+    },
+    "ScreenAssemblyCalibration": {
+      "description": "Represents the calibration parameters for a screen assembly with three displays.",
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Left display calibration"
+        },
+        "center": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            }
+          },
+          "description": "Center display calibration"
+        },
+        "right": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Right display calibration"
+        }
+      },
+      "title": "ScreenAssemblyCalibration",
+      "type": "object"
+    },
+    "Session": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.13.7",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.13.7",
+          "default": "0.13.7",
+          "title": "Version",
+          "type": "string"
+        },
+        "experiment": {
+          "default": null,
+          "description": "Name of the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Experiment"
+        },
+        "experimenter": {
+          "default": [],
+          "description": "Name of the experimenter",
+          "items": {
+            "type": "string"
+          },
+          "title": "Experimenter",
+          "type": "array"
+        },
+        "date": {
+          "description": "Date of the experiment",
+          "format": "date-time",
+          "title": "Date",
+          "type": "string"
+        },
+        "session_name": {
+          "default": null,
+          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Name"
+        },
+        "subject": {
+          "description": "Name of the subject",
+          "title": "Subject",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "description": "Notes about the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "commit_hash": {
+          "default": null,
+          "description": "Commit hash of the repository",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit Hash"
+        },
+        "allow_dirty_repo": {
+          "default": false,
+          "description": "Allow running from a dirty repository",
+          "title": "Allow Dirty Repo",
+          "type": "boolean"
+        },
+        "skip_hardware_validation": {
+          "default": false,
+          "description": "Skip hardware validation",
+          "title": "Skip Hardware Validation",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "subject"
+      ],
+      "title": "Session",
       "type": "object"
     },
     "SetValueFunction": {
@@ -4305,7 +4049,7 @@
       "type": "object"
     },
     "Size": {
-      "description": "Represents 2D dimensions with width and height.\n\nUsed for defining texture sizes, corridor dimensions, and other 2D measurements\nin the VR foraging environment.",
+      "description": "Represents 2D dimensions with width and height.",
       "properties": {
         "width": {
           "default": 0,
@@ -4324,42 +4068,17 @@
       "type": "object"
     },
     "SpinnakerCamera": {
+      "description": "Spinnaker camera device configuration.",
       "properties": {
         "device_type": {
           "const": "SpinnakerCamera",
           "default": "SpinnakerCamera",
-          "description": "Device type",
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -4473,6 +4192,7 @@
       "type": "object"
     },
     "SpinnakerCameraAdcBitDepth": {
+      "description": "ADC bit depth options for Spinnaker cameras.",
       "enum": [
         0,
         1,
@@ -4487,6 +4207,7 @@
       ]
     },
     "SpinnakerCameraPixelFormat": {
+      "description": "Pixel format options for Spinnaker cameras.",
       "enum": [
         0,
         1,
@@ -4804,6 +4525,7 @@
       "type": "object"
     },
     "Treadmill": {
+      "description": "A calibrated treadmill device",
       "properties": {
         "device_type": {
           "const": "Treadmill",
@@ -4811,41 +4533,24 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
-          "default": null,
-          "oneOf": [
-            {
-              "$ref": "#/$defs/TreadmillCalibration"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "$ref": "#/$defs/TreadmillCalibration",
+          "default": {
+            "date": null,
+            "wheel_diameter": 15.0,
+            "pulses_per_revolution": 28800,
+            "invert_direction": false,
+            "brake_lookup_calibration": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                65535.0
+              ]
+            ]
+          },
           "title": "Calibration of the treadmill"
         },
         "who_am_i": {
@@ -4882,22 +4587,9 @@
     "TreadmillCalibration": {
       "description": "Treadmill calibration class",
       "properties": {
-        "device_name": {
-          "default": "Treadmill",
-          "description": "Must match a device name in rig/instrument",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/TreadmillCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/TreadmillCalibrationOutput",
-          "title": "Output of the calibration."
-        },
         "date": {
           "default": null,
+          "description": "Date of the calibration",
           "oneOf": [
             {
               "format": "date-time",
@@ -4909,39 +4601,6 @@
           ],
           "title": "Date"
         },
-        "description": {
-          "const": "Calibration of the treadmill system",
-          "default": "Calibration of the treadmill system",
-          "title": "Description",
-          "type": "string"
-        },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "TreadmillCalibration",
-      "type": "object"
-    },
-    "TreadmillCalibrationInput": {
-      "properties": {},
-      "title": "TreadmillCalibrationInput",
-      "type": "object"
-    },
-    "TreadmillCalibrationOutput": {
-      "properties": {
         "wheel_diameter": {
           "default": 15,
           "description": "Wheel diameter",
@@ -4963,6 +4622,16 @@
           "type": "boolean"
         },
         "brake_lookup_calibration": {
+          "default": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              65535
+            ]
+          ],
           "description": "Brake lookup calibration. Each pair of values define (input [torque], output [brake set-point U16])",
           "items": {
             "items": {
@@ -4977,10 +4646,7 @@
           "type": "array"
         }
       },
-      "required": [
-        "brake_lookup_calibration"
-      ],
-      "title": "TreadmillCalibrationOutput",
+      "title": "TreadmillCalibration",
       "type": "object"
     },
     "TreadmillSpecification": {
@@ -5029,7 +4695,8 @@
         }
       },
       "title": "TruncationParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.TruncationParameters"
     },
     "UniformDistribution": {
       "description": "A uniform probability distribution.\n\nAll values between min and max have equal probability of being sampled.",
@@ -5075,7 +4742,8 @@
         }
       },
       "title": "UniformDistribution",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.UniformDistribution"
     },
     "UniformDistributionParameters": {
       "description": "Parameters for a uniform distribution.\n\nDefined by minimum and maximum bounds of the distribution.",
@@ -5100,7 +4768,8 @@
         }
       },
       "title": "UniformDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.UniformDistributionParameters"
     },
     "UpdaterTarget": {
       "description": "Enumeration of parameters that can be targeted by numerical updaters.\n\nThese targets define which task parameters can be dynamically modified\nduring task execution to adapt to animal performance or experimental needs.",
@@ -5111,6 +4780,31 @@
       ],
       "title": "UpdaterTarget",
       "type": "string"
+    },
+    "Vector3": {
+      "description": "Represents a 3D vector with float coordinates.",
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the vector",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the vector",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the vector",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
+      "type": "object"
     },
     "VideoWriter": {
       "discriminator": {
@@ -5130,6 +4824,7 @@
       ]
     },
     "VideoWriterFfmpeg": {
+      "description": "FFMPEG video writer configuration.",
       "properties": {
         "video_writer_type": {
           "const": "FFMPEG",
@@ -5145,13 +4840,13 @@
           "type": "integer"
         },
         "container_extension": {
-          "default": "mp4",
+          "default": "mkv",
           "description": "Container extension",
           "title": "Container Extension",
           "type": "string"
         },
         "output_arguments": {
-          "default": "-vf \"scale=out_color_matrix=bt709:out_range=full,format=bgr24,scale=out_range=full\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M",
+          "default": "-vf \"scale=out_range=full,setparams=range=full:colorspace=bt709:color_primaries=bt709:color_trc=linear\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p3 -rc vbr -cq 18 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M -f matroska -write_crc32 0",
           "description": "Output arguments",
           "title": "Output Arguments",
           "type": "string"
@@ -5167,6 +4862,7 @@
       "type": "object"
     },
     "VideoWriterOpenCv": {
+      "description": "OpenCV video writer configuration.",
       "properties": {
         "video_writer_type": {
           "const": "OPENCV",
@@ -5230,12 +4926,18 @@
           "description": "The optional odor specification of the virtual site",
           "oneOf": [
             {
-              "$ref": "#/$defs/OdorSpecification"
+              "description": "The optional odor specification of the virtual site",
+              "items": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "type": "array"
             },
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "Odor Specification"
         },
         "reward_specification": {
           "default": null,
@@ -5428,24 +5130,11 @@
       "type": "object"
     },
     "WaterValveCalibration": {
-      "description": "Water valve calibration class",
+      "description": "Represents a water valve calibration.",
       "properties": {
-        "device_name": {
-          "default": "WaterValve",
-          "description": "Name of the device being calibrated",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/WaterValveCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/WaterValveCalibrationOutput",
-          "title": "Output of the calibration."
-        },
         "date": {
           "default": null,
+          "description": "Date of the calibration",
           "oneOf": [
             {
               "format": "date-time",
@@ -5457,34 +5146,6 @@
           ],
           "title": "Date"
         },
-        "description": {
-          "const": "Calibration of the water valve delivery system",
-          "default": "Calibration of the water valve delivery system",
-          "title": "Description",
-          "type": "string"
-        },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "WaterValveCalibration",
-      "type": "object"
-    },
-    "WaterValveCalibrationInput": {
-      "properties": {
         "measurements": {
           "default": [],
           "description": "List of measurements",
@@ -5493,14 +5154,7 @@
           },
           "title": "Measurements",
           "type": "array"
-        }
-      },
-      "title": "WaterValveCalibrationInput",
-      "type": "object"
-    },
-    "WaterValveCalibrationOutput": {
-      "description": "Output for water valve calibration class",
-      "properties": {
+        },
         "interval_average": {
           "default": null,
           "description": "Dictionary keyed by measured valve interval and corresponding average single event volume.",
@@ -5566,46 +5220,21 @@
         "slope",
         "offset"
       ],
-      "title": "WaterValveCalibrationOutput",
+      "title": "WaterValveCalibration",
       "type": "object"
     },
     "WebCamera": {
+      "description": "Web camera device configuration.",
       "properties": {
         "device_type": {
           "const": "WebCamera",
           "default": "WebCamera",
-          "description": "Device type",
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -5636,55 +5265,6 @@
         }
       },
       "title": "WebCamera",
-      "type": "object"
-    },
-    "aind_behavior_services__rig__visual_stimulation__Vector3": {
-      "properties": {
-        "x": {
-          "default": 0,
-          "description": "X coordinate of the point",
-          "title": "X",
-          "type": "number"
-        },
-        "y": {
-          "default": 0,
-          "description": "Y coordinate of the point",
-          "title": "Y",
-          "type": "number"
-        },
-        "z": {
-          "default": 0,
-          "description": "Z coordinate of the point",
-          "title": "Z",
-          "type": "number"
-        }
-      },
-      "title": "Vector3",
-      "type": "object"
-    },
-    "aind_behavior_vr_foraging__task_logic__Vector3": {
-      "description": "Represents a 3D point or vector with x, y, and z coordinates.\n\nUsed for 3D positioning and movement in the virtual reality environment,\nincluding camera positions, object locations, and 3D transformations.",
-      "properties": {
-        "x": {
-          "default": 0,
-          "description": "X coordinate of the point",
-          "title": "X",
-          "type": "number"
-        },
-        "y": {
-          "default": 0,
-          "description": "Y coordinate of the point",
-          "title": "Y",
-          "type": "number"
-        },
-        "z": {
-          "default": 0,
-          "description": "Z coordinate of the point",
-          "title": "Z",
-          "type": "number"
-        }
-      },
-      "title": "Vector3",
       "type": "object"
     }
   }

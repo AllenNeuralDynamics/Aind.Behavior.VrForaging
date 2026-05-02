@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.9.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
+                 xmlns:p1="clr-namespace:Harp.Olfactometer;assembly=Harp.Olfactometer"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="WorkflowInput">
+        <Name>Source1</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:ElementIndex" />
+      </Expression>
+      <Expression xsi:type="rx:CreateObservable">
+        <Name>InstantiateOlfactometer</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>thisOlfactometer</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>OlfactometerHubCommandsGroupedBy</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>thisOlfactometer</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Index</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionCondition">
+              <scr:Name>isThisOlfactometer?</scr:Name>
+              <scr:Expression>it.Item1.Key == it.Item2</scr:Expression>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item1</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item2</Selector>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>thisHarpOlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>thisHarpOlfactometerEvents</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>thisOlfactometer</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Index</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item2,Item1</Selector>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>OlfactometerHubEvents</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="harp:HarpMessage">
+              <rx:Name>thisHarpOlfactometerCommands</rx:Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>thisOlfactometer</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value.PortName</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="PortName" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:Device">
+                <harp:OperationMode>Active</harp:OperationMode>
+                <harp:OperationLed>On</harp:OperationLed>
+                <harp:DumpRegisters>true</harp:DumpRegisters>
+                <harp:VisualIndicators>On</harp:VisualIndicators>
+                <harp:Heartbeat>Enabled</harp:Heartbeat>
+                <harp:IgnoreErrors>false</harp:IgnoreErrors>
+                <harp:PortName>COM6</harp:PortName>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:PublishSubject">
+              <Name>thisHarpOlfactometerEvents</Name>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Name" DisplayName="TriggerHarpReadDumpSubjectName" />
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TriggerHarpReadDump</Name>
+            </Expression>
+            <Expression xsi:type="harp:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="harp:CreateOperationControlPayload">
+                <harp:OperationMode>Active</harp:OperationMode>
+                <harp:DumpRegisters>true</harp:DumpRegisters>
+                <harp:MuteReplies>false</harp:MuteReplies>
+                <harp:VisualIndicators>On</harp:VisualIndicators>
+                <harp:OperationLed>On</harp:OperationLed>
+                <harp:Heartbeat>Enabled</harp:Heartbeat>
+              </harp:Payload>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>thisHarpOlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>thisOlfactometer</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Index</Selector>
+            </Expression>
+            <Expression xsi:type="PropertySource" TypeArguments="p1:CreateChannel3RangePayload,p1:Channel3RangeConfig">
+              <MemberName>Channel3Range</MemberName>
+              <Value>FlowRate1000</Value>
+            </Expression>
+            <Expression xsi:type="PropertySource" TypeArguments="p1:CreateChannel3RangePayload,p1:Channel3RangeConfig">
+              <MemberName>Channel3Range</MemberName>
+              <Value>FlowRate100</Value>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>it.Item1 == 0 ? it.Item2 : it.Item3</scr:Expression>
+            </Expression>
+            <Expression xsi:type="p1:Format">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Register xsi:type="p1:Channel3Range" />
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>thisHarpOlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Delay">
+                <rx:DueTime>PT0.05S</rx:DueTime>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="p1:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="p1:CreateEnableEventsPayload">
+                <p1:EnableEvents>Flowmeter DI0Trigger ChannelActualFlow</p1:EnableEvents>
+              </harp:Payload>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>thisHarpOlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Delay">
+                <rx:DueTime>PT0.05S</rx:DueTime>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="p1:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="p1:CreateEnableFlowPayload">
+                <p1:EnableFlow>Enabled</p1:EnableFlow>
+              </harp:Payload>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>thisHarpOlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Delay">
+                <rx:DueTime>PT0.05S</rx:DueTime>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="p1:CreateMessage">
+              <harp:MessageType>Write</harp:MessageType>
+              <harp:Payload xsi:type="p1:CreateEnableValvePulsePayload">
+                <p1:EnableValvePulse>None</p1:EnableValvePulse>
+              </harp:Payload>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>thisHarpOlfactometerCommands</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>thisHarpOlfactometerEvents</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:SubscribeWhen" />
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="3" To="6" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source2" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="13" To="16" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source2" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="19" To="23" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="23" Label="Source2" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="30" To="33" Label="Source1" />
+            <Edge From="31" To="33" Label="Source2" />
+            <Edge From="32" To="33" Label="Source3" />
+            <Edge From="33" To="34" Label="Source1" />
+            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="42" To="43" Label="Source1" />
+            <Edge From="43" To="44" Label="Source1" />
+            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="45" To="47" Label="Source1" />
+            <Edge From="46" To="47" Label="Source2" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Merge" />
+      </Expression>
+      <Expression xsi:type="Annotation">
+        <Name>MultiplexIO</Name>
+        <Text><![CDATA[]]></Text>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Int32,harp:HarpMessage)">
+        <rx:Name>OlfactometerHubCommands</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:GroupBy">
+        <rx:KeySelector>Item1</rx:KeySelector>
+      </Expression>
+      <Expression xsi:type="rx:ReplaySubject">
+        <Name>OlfactometerHubCommandsGroupedBy</Name>
+        <rx:BufferSize xsi:nil="true" />
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Int32,harp:HarpMessage)">
+        <rx:Name>OlfactometerHubEvents</rx:Name>
+      </Expression>
+      <Expression xsi:type="rx:GroupBy">
+        <rx:KeySelector>Item1</rx:KeySelector>
+      </Expression>
+      <Expression xsi:type="rx:ReplaySubject">
+        <Name>OlfactometerHubEventsGroupedBy</Name>
+        <rx:BufferSize xsi:nil="true" />
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="4" To="10" Label="Source2" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>

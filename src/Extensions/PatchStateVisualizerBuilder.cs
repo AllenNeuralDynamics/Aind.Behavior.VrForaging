@@ -1,11 +1,11 @@
-
-using Bonsai.Expressions;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Bonsai;
+using Bonsai.Expressions;
 
 namespace AllenNeuralDynamics.VrForaging
 {

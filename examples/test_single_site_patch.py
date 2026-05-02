@@ -1,7 +1,7 @@
 import os
 from typing import Optional
 
-import aind_behavior_services.task_logic.distributions as distributions
+import aind_behavior_services.task.distributions as distributions
 from aind_behavior_curriculum import Stage, TrainerState
 
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
@@ -31,6 +31,10 @@ P_BAIT_BLOCK = [
 ]
 
 
+def odor_concentration_from_index(odor_index: int) -> list[float]:
+    return [1.0 if i == odor_index else 0.0 for i in range(3)]
+
+
 def make_patch(
     label: str,
     state_index: int,
@@ -42,9 +46,13 @@ def make_patch(
         rule=vr_task_logic.RewardFunctionRule.ON_PATCH_ENTRY,
         probability=vr_task_logic.SetValueFunction(
             value=distributions.BinomialDistribution(
-                distribution_parameters=distributions.BinomialDistributionParameters(n=1, p=p_replenish),
+                distribution_parameters=distributions.BinomialDistributionParameters(
+                    n=1, p=p_replenish
+                ),
                 scaling_parameters=distributions.ScalingParameters(offset=p_reward),
-                truncation_parameters=distributions.TruncationParameters(min=p_reward, max=1),
+                truncation_parameters=distributions.TruncationParameters(
+                    min=p_reward, max=1
+                ),
             ),
         ),
     )
@@ -59,10 +67,12 @@ def make_patch(
     return vr_task_logic.Patch(
         label=label,
         state_index=state_index,
-        odor_specification=vr_task_logic.OdorSpecification(index=odor_index, concentration=1),
+        odor_specification=odor_concentration_from_index(odor_index),
         patch_terminators=[
             vr_task_logic.PatchTerminatorOnChoice(count=vr_task_logic.scalar_value(1)),
-            vr_task_logic.PatchTerminatorOnRejection(count=vr_task_logic.scalar_value(1)),
+            vr_task_logic.PatchTerminatorOnRejection(
+                count=vr_task_logic.scalar_value(1)
+            ),
         ],
         reward_specification=vr_task_logic.RewardSpecification(
             amount=vr_task_logic.scalar_value(REWARD_AMOUNT),
@@ -85,7 +95,9 @@ def make_patch(
                     distribution_parameters=distributions.ExponentialDistributionParameters(
                         rate=1 / MEAN_INTERPATCH_LENGTH
                     ),
-                    scaling_parameters=distributions.ScalingParameters(offset=MINIMUM_INTERPATCH_LENGTH),
+                    scaling_parameters=distributions.ScalingParameters(
+                        offset=MINIMUM_INTERPATCH_LENGTH
+                    ),
                     truncation_parameters=distributions.TruncationParameters(
                         min=MINIMUM_INTERPATCH_LENGTH,
                         max=MAXIMUM_INTERPATCH_LENGTH,
@@ -111,16 +123,36 @@ def make_block(
     p_replenish: tuple[float, Optional[float], Optional[float]],
     n_min_trials: int = 100,
 ) -> vr_task_logic.Block:
-    patches = [make_patch(label="OdorA", state_index=0, odor_index=0, p_reward=p_rew[0], p_replenish=p_replenish[0])]
+    patches = [
+        make_patch(
+            label="OdorA",
+            state_index=0,
+            odor_index=0,
+            p_reward=p_rew[0],
+            p_replenish=p_replenish[0],
+        )
+    ]
     if p_rew[1] is not None:
         assert p_replenish[1] is not None
         patches.append(
-            make_patch(label="OdorB", state_index=1, odor_index=1, p_reward=p_rew[1], p_replenish=p_replenish[1])
+            make_patch(
+                label="OdorB",
+                state_index=1,
+                odor_index=1,
+                p_reward=p_rew[1],
+                p_replenish=p_replenish[1],
+            )
         )
     if p_rew[2] is not None:
         assert p_replenish[2] is not None
         patches.append(
-            make_patch(label="OdorC", state_index=2, odor_index=2, p_reward=p_rew[2], p_replenish=p_replenish[2])
+            make_patch(
+                label="OdorC",
+                state_index=2,
+                odor_index=2,
+                p_reward=p_rew[2],
+                p_replenish=p_replenish[2],
+            )
         )
 
     per_p = 1.0 / len(patches)
@@ -133,9 +165,15 @@ def make_block(
         end_conditions=[
             vr_task_logic.BlockEndConditionPatchCount(
                 value=distributions.ExponentialDistribution(
-                    distribution_parameters=distributions.ExponentialDistributionParameters(rate=1 / 25),
-                    scaling_parameters=distributions.ScalingParameters(offset=n_min_trials),
-                    truncation_parameters=distributions.TruncationParameters(min=n_min_trials, max=n_min_trials + 50),
+                    distribution_parameters=distributions.ExponentialDistributionParameters(
+                        rate=1 / 25
+                    ),
+                    scaling_parameters=distributions.ScalingParameters(
+                        offset=n_min_trials
+                    ),
+                    truncation_parameters=distributions.TruncationParameters(
+                        min=n_min_trials, max=n_min_trials + 50
+                    ),
                 )
             )
         ],
@@ -158,7 +196,11 @@ task_logic = AindVrForagingTaskLogic(
         rng_seed=None,
         environment=vr_task_logic.BlockStructure(
             blocks=[
-                make_block(p_rew=P_REWARD_BLOCK[i], p_replenish=P_BAIT_BLOCK[i], n_min_trials=100)
+                make_block(
+                    p_rew=P_REWARD_BLOCK[i],
+                    p_replenish=P_BAIT_BLOCK[i],
+                    n_min_trials=100,
+                )
                 for i in range(len(P_REWARD_BLOCK))
             ],
             sampling_mode="Sequential",
@@ -172,13 +214,17 @@ task_logic = AindVrForagingTaskLogic(
 def main(path_seed: str = "./local/SingleSitePatch_{schema}.json"):
     example_task_logic = task_logic
     example_trainer_state = TrainerState(
-        stage=Stage(name="example_stage", task=example_task_logic), curriculum=None, is_on_curriculum=False
+        stage=Stage(name="example_stage", task=example_task_logic),
+        curriculum=None,
+        is_on_curriculum=False,
     )
     os.makedirs(os.path.dirname(path_seed), exist_ok=True)
     models = [example_task_logic, example_trainer_state]
 
     for model in models:
-        with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
+        with open(
+            path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8"
+        ) as f:
             f.write(model.model_dump_json(indent=2))
 
 
