@@ -165,7 +165,7 @@ def make_graduated_patch(
     return task_logic.Patch(
         label=label,
         state_index=state_index,
-        odor_specification=task_logic._OdorSpecification(index=odor_index, concentration=1),
+        odor_specification=[1 if i == odor_index else 0 for i in range(3)],
         reward_specification=agent,
         patch_virtual_sites_generator=make_patch_virtual_sites_generator(),
     )

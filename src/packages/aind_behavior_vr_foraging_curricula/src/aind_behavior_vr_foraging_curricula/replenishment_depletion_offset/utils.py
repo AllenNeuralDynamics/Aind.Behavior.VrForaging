@@ -80,7 +80,7 @@ def make_patch(
     return vr_task_logic.Patch(
         label=label,
         state_index=state_index,
-        odor_specification=vr_task_logic._OdorSpecification(index=odor_index, concentration=1),
+        odor_specification=[1 if i == odor_index else 0 for i in range(3)],
         reward_specification=vr_task_logic.RewardSpecification(
             amount=vr_task_logic.scalar_value(reward_amount),
             probability=vr_task_logic.scalar_value(p_reward_max),

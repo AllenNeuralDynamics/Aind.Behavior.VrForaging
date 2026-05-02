@@ -51,7 +51,7 @@ def make_s_stage_one_odor_no_depletion() -> Stage:
                                     task_logic.Patch(
                                         label="PatchZA",
                                         state_index=0,
-                                        odor_specification=task_logic._OdorSpecification(index=0, concentration=1),
+                                        odor_specification=[1, 0, 0],
                                         reward_specification=task_logic.RewardSpecification(
                                             operant_logic=helpers.make_operant_logic(
                                                 stop_duration=0.0, is_operant=False
@@ -132,7 +132,7 @@ def _make_s_stage_one_odor_w_depletion_parameters() -> AindVrForagingTaskParamet
                             task_logic.Patch(
                                 label="PatchZB",
                                 state_index=0,
-                                odor_specification=task_logic._OdorSpecification(index=0, concentration=1),
+                                odor_specification=[1, 0, 0],
                                 reward_specification=helpers.exponential_probability_reward_count(
                                     available_water=50, amount_drop=5, maximum_p=0.9, c=0.9752, stop_duration=0.0
                                 ),

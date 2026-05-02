@@ -44,7 +44,7 @@ def make_patch(
     return vr_task_logic.Patch(
         label=label,
         state_index=state_index,
-        odor_specification=vr_task_logic._OdorSpecification(index=odor_index, concentration=1),
+        odor_specification=[1 if i == odor_index else 0 for i in range(3)],
         patch_terminators=[
             vr_task_logic.PatchTerminatorOnChoice(count=vr_task_logic.scalar_value(1)),
             vr_task_logic.PatchTerminatorOnRejection(count=vr_task_logic.scalar_value(1)),
