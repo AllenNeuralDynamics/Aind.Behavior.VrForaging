@@ -1,7 +1,7 @@
 site_name: AIND VR Foraging
 site_description: AIND VR Foraging behavior experiment documentation
 site_author: Bruno Cruz
-copyright: 2025, Allen Institute for Neural Dynamics
+copyright: 2026, Allen Institute for Neural Dynamics
 repo_url: https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging
 repo_name: GitHub
 docs_dir: docs
