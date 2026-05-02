@@ -2,6 +2,9 @@
 requires = ["uv_build>=0.8.22"]
 build-backend = "uv_build"
 
+[tool.uv_build]
+source-dir = "../../src"
+
 [project]
 name = "aind-behavior-vr-foraging-curricula"
 description = "A library of curricula for the VrForaging task."
@@ -74,7 +77,7 @@ skip = ".git,*.pdf,*.svg,uv.lock"
 ignore-words-list = "nd"
 
 [tool.pytest.ini_options]
-addopts = "--strict-markers --tb=short --cov=src --cov-report=term-missing --cov-fail-under=70"
+addopts = "--strict-markers --tb=short"
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]

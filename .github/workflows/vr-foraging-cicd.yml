@@ -70,7 +70,7 @@ jobs:
         run: uv run python -m unittest
 
       - name: Run curricula unit tests
-        run: uv run pytest packages/aind-behavior-vr-foraging-curricula/tests --tb=short --cov=packages/aind-behavior-vr-foraging-curricula/src --cov-report=term-missing --cov-fail-under=70 --override-ini="addopts="
+        run: uv run pytest packages/aind-behavior-vr-foraging-curricula/tests --tb=short --cov=src/aind_behavior_vr_foraging_curricula --cov-report=term-missing --cov-fail-under=70 --override-ini="addopts="
 
       - name: Regenerate schemas
         run: uv run vr-foraging regenerate

@@ -45,6 +45,8 @@ dev = [
     "aind-data-schema-models",
     "ruff",
     "codespell",
+    "pytest",
+    "pytest-cov",
 ]
 
 docs = [
@@ -75,6 +77,11 @@ pydocstyle = { convention = 'google' }
 [tool.codespell]
 skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock,*Generated.cs'
 ignore-words-list = 'nd'
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = ["tests", "packages/aind-behavior-vr-foraging-curricula/tests"]
+pythonpath = ["."]
 
 [tool.uv]
 default-groups = ['dev']

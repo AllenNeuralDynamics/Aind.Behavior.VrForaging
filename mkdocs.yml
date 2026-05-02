@@ -62,7 +62,6 @@ plugins:
         python:
           paths:
             - src
-            - packages/aind-behavior-vr-foraging-curricula/src
           import:
             - https://docs.python.org/3/objects.inv
             - https://docs.pydantic.dev/latest/objects.inv

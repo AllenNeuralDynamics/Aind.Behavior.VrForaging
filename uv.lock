@@ -71,6 +71,8 @@ dev = [
     { name = "aind-data-schema" },
     { name = "aind-data-schema-models" },
     { name = "codespell" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
     { name = "ruff" },
 ]
 docs = [
@@ -103,6 +105,8 @@ dev = [
     { name = "aind-data-schema" },
     { name = "aind-data-schema-models" },
     { name = "codespell" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
     { name = "ruff" },
 ]
 docs = [

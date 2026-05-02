@@ -10,9 +10,8 @@ else:
 
 
 REPO_ROOT = Path(__file__).parent.parent
-CURRICULA_PKG_ROOT = REPO_ROOT / "packages" / "aind-behavior-vr-foraging-curricula"
 PACKAGE_NAME = "aind_behavior_vr_foraging_curricula"
-SRC_DIR = CURRICULA_PKG_ROOT / "src" / PACKAGE_NAME
+SRC_DIR = REPO_ROOT / "src" / PACKAGE_NAME
 DOCS_DIR = REPO_ROOT / "docs"
 CURRICULA_LABEL = "Curricula"
 
