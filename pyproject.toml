@@ -55,6 +55,8 @@ docs = [
     "aind_behavior_vr_foraging[data]",
     "mkdocs-autorefs>=1.4.4",
     "griffe-typingdoc>=0.3.1",
+    "aind-behavior-vr-foraging-curricula",
+    "aind-behavior-curriculum",
 ]
 
 [project.scripts]
@@ -77,3 +79,9 @@ ignore-words-list = 'nd'
 [tool.uv]
 default-groups = ['dev']
 required-version = '>=0.8.4'
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+aind-behavior-vr-foraging-curricula = { workspace = true }

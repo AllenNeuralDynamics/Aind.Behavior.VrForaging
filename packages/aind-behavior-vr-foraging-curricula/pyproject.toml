@@ -1,0 +1,81 @@
+[build-system]
+requires = ["uv_build>=0.8.22"]
+build-backend = "uv_build"
+
+[project]
+name = "aind-behavior-vr-foraging-curricula"
+description = "A library of curricula for the VrForaging task."
+authors = [
+    {name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"},
+    {name = "Tiffany Ona", email = "tiffany.ona@alleninstitute.org"},
+]
+license = "MIT"
+version = "0.1.3"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: Microsoft :: Windows",
+]
+readme = {file = "README.md", content-type = "text/markdown"}
+
+dependencies = [
+    "aind-behavior-vr-foraging[data] >= 0.6.3",
+    "aind-behavior-curriculum >= 0.0.37",
+    "pydantic-settings",
+]
+
+[project.urls]
+Documentation = "https://allenneuraldynamics.github.io/Aind.Behavior.VrForaging/"
+Repository = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/"
+Issues = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/issues"
+Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/releases"
+
+[project.scripts]
+curriculum = "aind_behavior_vr_foraging_curricula.cli:main"
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.uv.sources]
+aind-behavior-vr-foraging = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "codespell",
+    "aind-behavior-vr-foraging-curricula",
+]
+
+docs = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "pymdown-extensions",
+    "ruff",
+    "aind-behavior-curriculum",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+extend-select = ["Q", "RUF100", "C90", "I"]
+extend-ignore = []
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = "google" }
+
+[tool.codespell]
+skip = ".git,*.pdf,*.svg,uv.lock"
+ignore-words-list = "nd"
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --tb=short --cov=src --cov-report=term-missing --cov-fail-under=70"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

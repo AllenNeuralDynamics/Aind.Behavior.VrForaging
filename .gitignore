@@ -3,9 +3,10 @@
 .vscode
 bin
 obj
-Packages
+bonsai/Packages
 Bonsai.exe.WebView2
 Bonsai/Settings/
+
 *.bin
 *.avi
 *.dll

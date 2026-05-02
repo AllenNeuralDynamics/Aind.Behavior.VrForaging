@@ -43,7 +43,7 @@ jobs:
           enable-cache: true
 
       - name: Install python dependencies
-        run: uv sync
+        run: uv sync --all-packages
 
       - name: Run ruff format
         run: uv run ruff format
@@ -68,6 +68,9 @@ jobs:
 
       - name: Run python unit tests
         run: uv run python -m unittest
+
+      - name: Run curricula unit tests
+        run: uv run pytest packages/aind-behavior-vr-foraging-curricula/tests --tb=short --cov=packages/aind-behavior-vr-foraging-curricula/src --cov-report=term-missing --cov-fail-under=70 --override-ini="addopts="
 
       - name: Regenerate schemas
         run: uv run vr-foraging regenerate
@@ -284,6 +287,13 @@ jobs:
 
       - name: Publish to PyPI
         run: uv publish --token ${{ secrets.AIND_PYPI_TOKEN }}
+
+      - name: Build curricula
+        run: uv build --package aind-behavior-vr-foraging-curricula
+
+      - name: Publish curricula to PyPI
+        continue-on-error: true
+        run: uv publish dist/aind_behavior_vr_foraging_curricula-* --token ${{ secrets.AIND_PYPI_TOKEN }}
 
   # ╔─────────────────────────╗
   # │   ____                  │
