@@ -312,7 +312,7 @@ class CtcmFunction(_PatchUpdateFunction):
         return value
 
     @field_serializer("transition_matrix")
-    def serialize_transition_matrix(self, value: List[List[float]]) -> List[List[float]]:
+    def serialize_transition_matrix(self, value: List[List[NonNegativeFloat]]) -> List[List[NonNegativeFloat]]:
         """Round to 15 significant digits for deterministic serialization across platforms."""
         return [[round(v, 15) for v in row] for row in value]
 
