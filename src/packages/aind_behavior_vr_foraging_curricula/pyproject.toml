@@ -24,7 +24,7 @@ classifiers = [
 readme = {file = "README.md", content-type = "text/markdown"}
 
 dependencies = [
-    "aind-behavior-vr-foraging[data] >= 0.6.3",
+    "aind-behavior-vr-foraging[data]",
     "aind-behavior-curriculum >= 0.0.37",
     "pydantic-settings",
 ]
@@ -50,16 +50,6 @@ dev = [
     "pytest",
     "pytest-cov",
     "codespell",
-    "aind-behavior-vr-foraging-curricula",
-]
-
-docs = [
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings[python]",
-    "pymdown-extensions",
-    "ruff",
-    "aind-behavior-curriculum",
 ]
 
 [tool.ruff]

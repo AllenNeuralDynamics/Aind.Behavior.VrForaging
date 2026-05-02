@@ -1,7 +1,7 @@
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib"
 testpaths = [
-    "tests",
+    "src/packages/aind_behavior_vr_foraging/tests",
     "src/packages/aind_behavior_vr_foraging_curricula/tests",
 ]
 
@@ -17,3 +17,15 @@ members = [
 [tool.uv.sources]
 aind-behavior-vr-foraging = { workspace = true }
 aind-behavior-vr-foraging-curricula = { workspace = true }
+
+[dependency-groups]
+docs = [
+    'mkdocs',
+    'mkdocs-material',
+    'mkdocstrings[python]',
+    'griffe-pydantic',
+    'mkdocs-autorefs>=1.4.4',
+    'griffe-typingdoc>=0.3.1',
+    'pymdown-extensions',
+    'aind-behavior-vr-foraging[data]',
+]
