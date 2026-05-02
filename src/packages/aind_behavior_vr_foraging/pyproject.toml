@@ -1,0 +1,89 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aind_behavior_vr_foraging"]
+
+[project]
+name = "aind-behavior-vr-foraging"
+description = "A library that defines AIND data schema for the Aind Behavior VR Foraging experiment."
+authors = [ {name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"}]
+license = "MIT"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: Microsoft :: Windows",
+]
+version = "1.0.0rc0"
+readme = {file = "README.md", content-type = "text/markdown"}
+
+dependencies = [
+  "aind_behavior_services>=0.13.6",
+  "pydantic-settings"
+]
+
+[project.urls]
+Documentation = "https://allenneuraldynamics.github.io/Aind.Behavior.VrForaging/"
+Repository = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/"
+Issues = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/issues"
+Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/releases"
+
+[project.optional-dependencies]
+
+data = ["contraqctor>=0.5.3, <0.6.0"]
+
+launcher = [
+    "aind-clabe[aind-services]>=0.10.4",
+    "aind-data-schema>=2.6",
+    "aind-behavior-vr-foraging[data]",
+    ]
+
+[project.scripts]
+vr-foraging = "aind_behavior_vr_foraging.cli:main"
+
+[tool.uv]
+default-groups = ["dev"]
+
+[dependency-groups]
+
+dev = [
+    "aind-behavior-vr-foraging[launcher]",
+    "aind-behavior-vr-foraging[data]",
+    "aind-data-schema",
+    "aind-data-schema-models",
+    "ruff",
+    "codespell",
+    "pytest",
+    "pytest-cov",
+]
+
+docs = [
+    'mkdocs',
+    'mkdocs-material',
+    'mkdocstrings[python]',
+    'griffe-pydantic',
+    "aind_behavior_vr_foraging[data]",
+    "mkdocs-autorefs>=1.4.4",
+    "griffe-typingdoc>=0.3.1",
+    "aind-behavior-vr-foraging-curricula",
+    "aind-behavior-curriculum",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = 'py311'
+
+[tool.ruff.lint]
+extend-select = ['Q', 'RUF100', 'C90', 'I']
+extend-ignore = []
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = 'google' }
+
+[tool.codespell]
+skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock,*Generated.cs'
+ignore-words-list = 'nd'
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = ["tests"]

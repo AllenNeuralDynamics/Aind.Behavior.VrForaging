@@ -232,7 +232,7 @@ class TestCurriculumIntegrationInDataMapper(unittest.TestCase):
         import git
 
         repo = git.Repo("./")
-        submodule = next(sub for sub in repo.submodules if sub.path == "plugins/curricula")
+        submodule = next(sub for sub in repo.submodules if sub.path == "src/aind_behavior_vr_foraging_curricula")
 
         mapped = self._make_mapper(self.curriculum_suggestion).map()
         stream = mapped.data_streams[0]

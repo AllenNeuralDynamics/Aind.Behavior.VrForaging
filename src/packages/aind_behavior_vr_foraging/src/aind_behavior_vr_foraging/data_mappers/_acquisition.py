@@ -363,7 +363,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
 
     def _get_curriculum_as_code(self) -> acquisition.Code:
-        target = Path("plugins/curricula")
+        target = Path("src/aind_behavior_vr_foraging_curricula")
         submodule: Optional[git.Submodule] = None
         for sub in self.repository.submodules:
             if Path(sub.path) == target:

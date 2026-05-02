@@ -44,7 +44,7 @@ async def _run_curriculum_if_applicable(
         settings=CurriculumSettings(
             input_trainer_state=input_trainer_state_path.resolve(),
             data_directory=launcher.session_directory,
-            project_directory=Path("./plugins/curricula"),
+            project_directory=Path("./src/aind_behavior_vr_foraging_curricula"),
         )
     )
     await trainer.run_async()
