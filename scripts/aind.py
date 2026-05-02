@@ -12,7 +12,10 @@ from clabe.apps import (
     CurriculumSettings,
     CurriculumSuggestion,
 )
-from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
+from clabe.data_transfer.aind_watchdog import (
+    WatchdogDataTransferService,
+    WatchdogSettings,
+)
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
 from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
@@ -55,7 +58,9 @@ async def _run_curriculum_if_applicable(
 
 
 def _run_data_qc(picker: DataversePicker, launcher: Launcher) -> None:
-    if not picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
+    if not picker.ui_helper.prompt_yes_no_question(
+        "Would you like to generate a qc report?"
+    ):
         return
     try:
         import webbrowser
@@ -74,12 +79,16 @@ def _run_data_qc(picker: DataversePicker, launcher: Launcher) -> None:
         logger.error("Failed to run data QC: %s", e)
 
 
-def _run_data_transfer(picker: DataversePicker, launcher: Launcher, session: Session) -> None:
+def _run_data_transfer(
+    picker: DataversePicker, launcher: Launcher, session: Session
+) -> None:
     if not picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?"):
         logger.info("Data transfer skipped by user.")
         return
     watchdog_settings = WatchdogSettings()
-    watchdog_settings.destination = Path(watchdog_settings.destination) / launcher.session.subject
+    watchdog_settings.destination = (
+        Path(watchdog_settings.destination) / launcher.session.subject
+    )
     WatchdogDataTransferService(
         source=launcher.session_directory,
         settings=watchdog_settings,
@@ -105,13 +114,19 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
 
     resource_monitor.ResourceMonitor(
         constrains=[
-            resource_monitor.available_storage_constraint_factory(rig.data_directory, 2e11),
+            resource_monitor.available_storage_constraint_factory(
+                rig.data_directory, 2e11
+            ),
         ]
     ).run()
 
-    input_trainer_state_path = launcher.session_directory / "behavior" / "trainer_state.json"
+    input_trainer_state_path = (
+        launcher.session_directory / "behavior" / "trainer_state.json"
+    )
     input_trainer_state_path.parent.mkdir(parents=True, exist_ok=True)
-    input_trainer_state_path.write_text(trainer_state.model_dump_json(indent=2), encoding="utf-8")
+    input_trainer_state_path.write_text(
+        trainer_state.model_dump_json(indent=2), encoding="utf-8"
+    )
 
     # Post-fetching modifications
     manipulator_modifier = ByAnimalManipulatorModifier(
@@ -139,7 +154,9 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         logger.error("Failed to update manipulator initial position: %s", e)
 
     # Curriculum
-    suggestion, suggestion_path = await _run_curriculum_if_applicable(picker, input_trainer_state_path, launcher)
+    suggestion, suggestion_path = await _run_curriculum_if_applicable(
+        picker, input_trainer_state_path, launcher
+    )
 
     # Mappers
     assert launcher.repository.working_tree_dir is not None
@@ -194,7 +211,13 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
     """Modifier to set and update manipulator initial position based on animal-specific data."""
 
     def __init__(
-        self, subject_db_path: Path, model_path: str, model_name: str, *, launcher: Launcher, **kwargs
+        self,
+        subject_db_path: Path,
+        model_path: str,
+        model_name: str,
+        *,
+        launcher: Launcher,
+        **kwargs,
     ) -> None:
         super().__init__(subject_db_path, model_path, model_name, **kwargs)
         self._launcher = launcher
@@ -202,9 +225,12 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
     def _process_before_dump(self) -> ManipulatorPosition:
         _dataset = data_contract.dataset(self._launcher.session_directory)
         manipulator_parking_position: SoftwareEvents = cast(
-            SoftwareEvents, _dataset["Behavior"]["SoftwareEvents"]["SpoutParkingPositions"].load()
+            SoftwareEvents,
+            _dataset["Behavior"]["SoftwareEvents"]["SpoutParkingPositions"].load(),
         )
-        data: dict[str, Any] = manipulator_parking_position.data.iloc[0]["data"]["ResetPosition"]
+        data: dict[str, Any] = manipulator_parking_position.data.iloc[0]["data"][
+            "ResetPosition"
+        ]
         position = ManipulatorPosition.model_validate(data)
         return position
 
@@ -213,7 +239,9 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
 async def recover_session(launcher: Launcher) -> None:
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
-    session_path = Path(picker.ui_helper.input("Enter the path to the session you want to recover:"))
+    session_path = Path(
+        picker.ui_helper.input("Enter the path to the session you want to recover:")
+    )
     if not session_path.exists():
         logger.error("Session path does not exist: %s", session_path)
         return
@@ -232,7 +260,9 @@ async def recover_session(launcher: Launcher) -> None:
     launcher.register_session(session_model, rig_model.data_directory)
 
     # Curriculum
-    suggestion, suggestion_path = await _run_curriculum_if_applicable(picker, input_trainer_state_path, launcher)
+    suggestion, suggestion_path = await _run_curriculum_if_applicable(
+        picker, input_trainer_state_path, launcher
+    )
 
     # Mappers
     assert launcher.repository.working_tree_dir is not None

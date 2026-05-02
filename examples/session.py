@@ -19,7 +19,9 @@ def main(path_seed: str = "./local/{schema}.json"):
     models = [session]
 
     for model in models:
-        with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
+        with open(
+            path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8"
+        ) as f:
             f.write(model.model_dump_json(indent=2))
 
 

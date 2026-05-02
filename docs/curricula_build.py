@@ -23,7 +23,9 @@ def on_pre_build(config: Dict[str, Any]) -> None:
     log.info("Regenerating Curricula diagrams...")
     curricula_structure = render_curricula()
     nav: List[Dict[str, Any]] = config.get("nav") or []
-    nav = [item for item in nav if not (isinstance(item, dict) and CURRICULA_LABEL in item)]
+    nav = [
+        item for item in nav if not (isinstance(item, dict) and CURRICULA_LABEL in item)
+    ]
     nav.append({CURRICULA_LABEL: curricula_structure[CURRICULA_LABEL]})
     config["nav"] = nav
     log.info("Curricula regenerated successfully.")
@@ -35,11 +37,14 @@ def render_curricula() -> Dict[str, List[Dict[str, str]]]:
     diagrams_dir = DOCS_DIR / "curricula_diagrams"
     diagrams_dir.mkdir(exist_ok=True)
 
-    for module_dir in sorted(p for p in SRC_DIR.iterdir() if p.is_dir() and not p.name.startswith("_")):
+    for module_dir in sorted(
+        p for p in SRC_DIR.iterdir() if p.is_dir() and not p.name.startswith("_")
+    ):
         module = importlib.import_module(f"{PACKAGE_NAME}.{module_dir.stem}")
         curriculum: Curriculum = getattr(module, "CURRICULUM")
 
         from aind_behavior_curriculum.curriculum_utils import export_diagram
+
         export_diagram(curriculum, diagrams_dir / f"{module_dir.stem}.svg")
 
         md_path = diagrams_dir / f"{module_dir.stem}.md"

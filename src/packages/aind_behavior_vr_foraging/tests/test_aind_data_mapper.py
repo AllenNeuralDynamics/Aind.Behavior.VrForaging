@@ -16,10 +16,11 @@ from aind_behavior_vr_foraging.data_mappers._acquisition import AindAcquisitionD
 from aind_behavior_vr_foraging.data_mappers._instrument import AindInstrumentDataMapper
 
 sys.path.append(".")
-from aind_behavior_vr_foraging.cli import DataMapperCli
 from examples.rig import rig
 from examples.session import session
 from examples.task_patch_foraging import task_logic
+
+from aind_behavior_vr_foraging.cli import DataMapperCli
 
 
 class TestAindDataMappers(unittest.TestCase):
