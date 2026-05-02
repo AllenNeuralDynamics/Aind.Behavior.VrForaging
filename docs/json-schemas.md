@@ -2,7 +2,7 @@
 
 The JSON schemas below define the input format for this task. They are generated from the Pydantic models in `src/aind_behavior_vr_foraging` and used to generate `src/Extensions/AindBehaviorVrForaging.cs` via Bonsai.Sgen.
 
-[Download full schema](https://raw.githubusercontent.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/main/schema/aind_behavior_vr_foraging.json){ .md-button }
+[Download full schema](schema/aind_behavior_vr_foraging.json){ .md-button }
 
 The schema contains definitions for:
 
