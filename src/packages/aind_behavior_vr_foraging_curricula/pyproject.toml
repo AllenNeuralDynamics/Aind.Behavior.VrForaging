@@ -13,7 +13,7 @@ authors = [
     {name = "Tiffany Ona", email = "tiffany.ona@alleninstitute.org"},
 ]
 license = "MIT"
-version = "0.1.3"
+version = "1.0.0rc0"
 requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3.11",

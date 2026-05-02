@@ -119,7 +119,7 @@ dev = [
 
 [[package]]
 name = "aind-behavior-vr-foraging-curricula"
-version = "0.1.3"
+version = "1.0.0rc0"
 source = { editable = "src/packages/aind_behavior_vr_foraging_curricula" }
 dependencies = [
     { name = "aind-behavior-curriculum" },
