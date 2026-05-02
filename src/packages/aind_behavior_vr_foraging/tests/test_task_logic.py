@@ -100,7 +100,10 @@ class TestOdorMixtureBackwardsCompatibilityViaModel(unittest.TestCase):
         self.assertEqual(site.odor_specification, [0.5, 0, 0])
 
     def test_virtual_site_accepts_old_format_odor_spec_instance(self):
-        spec = _OdorSpecification(index=1, concentration=0.8)
+        with warnings.catch_warnings():
+            # TODO remove this once _OdorSpecification is fully deprecated and removed
+            warnings.simplefilter("ignore", DeprecationWarning)
+            spec = _OdorSpecification(index=1, concentration=0.8)
         site = VirtualSite(odor_specification=spec)
         self.assertEqual(site.odor_specification, [0, 0.8, 0])
 

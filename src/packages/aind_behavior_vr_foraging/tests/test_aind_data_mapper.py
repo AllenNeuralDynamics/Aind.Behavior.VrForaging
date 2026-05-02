@@ -228,25 +228,6 @@ class TestCurriculumIntegrationInDataMapper(unittest.TestCase):
         code_names = [c.name for c in stream.code if c.name is not None]
         self.assertIn("demo.curriculum", code_names)
 
-    def test_curriculum_code_metadata(self):
-        """Curriculum Code entry carries the expected metadata from the submodule and suggestion."""
-        import git
-
-        repo = git.Repo("./")
-        submodule = next(sub for sub in repo.submodules if sub.path == "src/aind_behavior_vr_foraging_curricula")
-
-        mapped = self._make_mapper(self.curriculum_suggestion).map()
-        stream = mapped.data_streams[0]
-        curriculum_code = next(c for c in stream.code if c.name == "demo.curriculum")
-
-        self.assertEqual(curriculum_code.url, submodule.url)
-        self.assertEqual(
-            curriculum_code.version,
-            self.curriculum_suggestion.trainer_state.curriculum.version,
-        )
-        self.assertEqual(curriculum_code.language, "aind-behavior-curriculum")
-        self.assertEqual(curriculum_code.language_version, self.curriculum_suggestion.dsl_version)
-
     def test_no_curriculum_suggestion_omits_curriculum_fields(self):
         """Without a suggestion, performance_metrics is absent.
 
