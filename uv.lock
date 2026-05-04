@@ -213,7 +213,7 @@ wheels = [
 
 [[package]]
 name = "aind-data-transfer-service"
-version = "2.0.7"
+version = "2.0.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-data-schema-models" },
@@ -223,9 +223,9 @@ dependencies = [
     { name = "python-json-logger" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/eb/b8/2e8798e06b316455b2dca0bcc1e85fda554dc0f0da8671a9dc09340ad000/aind_data_transfer_service-2.0.7.tar.gz", hash = "sha256:af044ecbf07016111bb80147bf59b97e36f9d0590b42f96f3d4c8a5d85d4fd33", size = 37300, upload-time = "2026-05-01T22:43:27.537Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/df/3d/29da56f8c944142d7fe5c7a164177687edee1c474add38060a2b0f2550b1/aind_data_transfer_service-2.0.8.tar.gz", hash = "sha256:fc4627766fe4635a5af6b46d31ab81d335185435db23e44eaa262ccc2b857577", size = 37322, upload-time = "2026-05-04T17:38:07.143Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9d/20/3b6b74eb42bb956b264a7131ecca44e53d65a712c0a3da540bc3da8f1369/aind_data_transfer_service-2.0.7-py3-none-any.whl", hash = "sha256:b9f03f9b3e620c82ee477e11edb920284c71f990d5230ab14a668ba1480745ae", size = 23244, upload-time = "2026-05-01T22:43:26.359Z" },
+    { url = "https://files.pythonhosted.org/packages/a5/8c/09a539d82bd54a05699c8ddbbd9c14f674edd4d34aac37da22d547042e48/aind_data_transfer_service-2.0.8-py3-none-any.whl", hash = "sha256:31644d156a523093f593499f4a9d8d7c91e449f63a3ff86419996b6beebfcdfc", size = 23243, upload-time = "2026-05-04T17:38:06.19Z" },
 ]
 
 [[package]]
@@ -606,7 +606,7 @@ wheels = [
 
 [[package]]
 name = "contraqctor"
-version = "0.5.3"
+version = "0.5.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -623,9 +623,9 @@ dependencies = [
     { name = "scipy" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/95/33/e0dfd99fc23ab1ac6162b496727edef844e9279e13a969b05a1b4b05d426/contraqctor-0.5.3.tar.gz", hash = "sha256:0d11e4cf50acf01288b5ed66053211105c3a716fe8a31d63bcc2bf423037ac20", size = 54226, upload-time = "2025-11-10T17:31:19.497Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/61/a9/6b662f3908a080b7c0cd593cd515a82e7c96e54f7facc261cdfc522e5233/contraqctor-0.5.4.tar.gz", hash = "sha256:f660d328aff037b4d624c079fd68bc9475f9970a2ca2ec72acd5189749086637", size = 54697, upload-time = "2026-05-03T02:30:00.693Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b4/9a/94fa67d2aecf7703a68be18b97b8d1af09ec9c26c73b2c21d5e881e46353/contraqctor-0.5.3-py3-none-any.whl", hash = "sha256:9306521efd6165007409319be39d4a8d9e286028693237584dbfc9f87e974292", size = 67638, upload-time = "2025-11-10T17:31:18.482Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/d5/f14da8b7e40abe13109ae92155a57d1902cc956969c8494f30c1e52f315c/contraqctor-0.5.4-py3-none-any.whl", hash = "sha256:0c198b4a0af0d4c74a4aa1ec97b920a83fcd48179c77e3b662933c7821dafaac", size = 68057, upload-time = "2026-05-03T02:29:59.314Z" },
 ]
 
 [[package]]
@@ -737,7 +737,7 @@ name = "cryptography"
 version = "47.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform == 'win32'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ef/b2/7ffa7fe8207a8c42147ffe70c3e360b228160c1d85dc3faff16aaa3244c0/cryptography-47.0.0.tar.gz", hash = "sha256:9f8e55fe4e63613a5e1cc5819030f27b97742d720203a087802ce4ce9ceb52bb", size = 830863, upload-time = "2026-04-24T19:54:57.056Z" }
 wheels = [
@@ -1461,9 +1461,9 @@ name = "msal"
 version = "1.36.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography", marker = "sys_platform == 'win32'" },
-    { name = "pyjwt", extra = ["crypto"], marker = "sys_platform == 'win32'" },
-    { name = "requests", marker = "sys_platform == 'win32'" },
+    { name = "cryptography" },
+    { name = "pyjwt", extra = ["crypto"] },
+    { name = "requests" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/de/cb/b02b0f748ac668922364ccb3c3bff5b71628a05f5adfec2ba2a5c3031483/msal-1.36.0.tar.gz", hash = "sha256:3f6a4af2b036b476a4215111c4297b4e6e236ed186cd804faefba23e4990978b", size = 174217, upload-time = "2026-04-09T10:20:33.525Z" }
 wheels = [
@@ -1951,7 +1951,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography", marker = "sys_platform == 'win32'" },
+    { name = "cryptography" },
 ]
 
 [[package]]
