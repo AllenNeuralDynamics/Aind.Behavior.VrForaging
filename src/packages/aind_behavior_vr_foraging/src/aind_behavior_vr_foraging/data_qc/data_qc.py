@@ -30,19 +30,18 @@ class VrForagingQcSuite(qc.Suite):
 
     def test_has_annotations(self):
         """Check that the session has annotations and surfaces them in the context if they exist."""
-        annotations = self.dataset["Behavior"]["Logs"]["Annotations"]
-        if not annotations.has_data:
+        annotations: pd.DataFrame | None
+        try:
+            annotations = self.dataset["Behavior"]["Logs"]["Annotations"].read()
+        except (FileNotFoundError, FileExistsError):
+            annotations = None
+
+        if annotations is None or annotations.empty:
             return self.pass_test(
-                None, "No annotations found. This may be expected if no manual annotations were made."
+                None, "No Annotations stream found. This may be expected if no manual annotations were made."
             )
 
-        annotations_made = t.cast(pd.DataFrame, annotations.data)
-        if annotations_made.empty:
-            return self.pass_test(
-                None, "No annotations found. This may be expected if no manual annotations were made."
-            )
-
-        data = annotations_made["data"].to_dict()  #  this will be a series of strings
+        data = annotations["data"].to_dict()  #  this will be a series of strings
         return self.warn_test(None, "Annotations found", context=data)
 
 
