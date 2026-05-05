@@ -39,8 +39,8 @@
           <harp:OperationMode>Active</harp:OperationMode>
           <harp:DumpRegisters>true</harp:DumpRegisters>
           <harp:MuteReplies>false</harp:MuteReplies>
-          <harp:VisualIndicators>Off</harp:VisualIndicators>
-          <harp:OperationLed>Off</harp:OperationLed>
+          <harp:VisualIndicators>On</harp:VisualIndicators>
+          <harp:OperationLed>On</harp:OperationLed>
           <harp:Heartbeat>Enabled</harp:Heartbeat>
         </harp:Payload>
       </Expression>
