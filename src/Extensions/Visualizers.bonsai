@@ -7,12 +7,12 @@
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:p2="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
-                 xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
-                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p3="clr-namespace:AllenNeuralDynamics.VrForaging;assembly=Extensions"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
+                 xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
+                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:ui="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -343,8 +343,9 @@ it.Item4 as TimeSinceStart)
 </scr:Expression>
                         </Expression>
                         <Expression xsi:type="p1:TableVisualizerBuilder">
-                          <p1:FontSize>16</p1:FontSize>
+                          <p1:FontSize>24</p1:FontSize>
                         </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
@@ -355,67 +356,16 @@ it.Item4 as TimeSinceStart)
                         <Edge From="5" To="6" Label="Source4" />
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-                  </Expression>
-                  <Expression xsi:type="rx:Defer">
-                    <Name>Velocity</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>FilteredCurrentVelocity</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="gl:SampleOnRenderFrame" />
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogicParameters</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>OperationControl</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>PositionControl.VelocityThreshold</Selector>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>StopVelocityThreshold</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:CombineLatest" />
-                        </Expression>
-                        <Expression xsi:type="zg:RollingGraphBuilder">
-                          <zg:ValueSelector>Item1.Item1,Item2</zg:ValueSelector>
-                          <zg:SymbolType>None</zg:SymbolType>
-                          <zg:LineWidth>2</zg:LineWidth>
-                          <zg:CurveSettings />
-                          <zg:Capacity>2000</zg:Capacity>
-                          <zg:Min xsi:nil="true" />
-                          <zg:Max xsi:nil="true" />
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="7" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="6" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source2" />
-                        <Edge From="6" To="7" Label="Source2" />
-                        <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>GlobalPatchState</Name>
                   </Expression>
+                  <Expression xsi:type="p3:PatchStateVisualizerBuilder" />
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
@@ -425,9 +375,7 @@ it.Item4 as TimeSinceStart)
                     <gui:RowStyles />
                     <gui:CellSpans />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="rx:Defer">
                     <Name>Ethogram</Name>
                     <Workflow>
@@ -600,16 +548,67 @@ it.Item4 as TimeSinceStart)
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p3:SoftwareEventVisualizer" />
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="rx:Defer">
+                    <Name>Velocity</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>FilteredCurrentVelocity</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:SampleOnRenderFrame" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskLogicParameters</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>OperationControl</Selector>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>PositionControl.VelocityThreshold</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>StopVelocityThreshold</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:CombineLatest" />
+                        </Expression>
+                        <Expression xsi:type="zg:RollingGraphBuilder">
+                          <zg:ValueSelector>Item1.Item1,Item2</zg:ValueSelector>
+                          <zg:SymbolType>None</zg:SymbolType>
+                          <zg:LineWidth>2</zg:LineWidth>
+                          <zg:CurveSettings />
+                          <zg:Capacity>2000</zg:Capacity>
+                          <zg:Min xsi:nil="true" />
+                          <zg:Max xsi:nil="true" />
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="7" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="6" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>GlobalPatchState</Name>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:GroupBoxBuilder">
+                    <gui:Name>Velocity</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:Text>Velocity</gui:Text>
                   </Expression>
-                  <Expression xsi:type="p3:PatchStateVisualizerBuilder" />
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p3:PatchStateVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="rx:Defer">
                     <Name>Thermistor</Name>
                     <Workflow>
@@ -627,17 +626,164 @@ it.Item4 as TimeSinceStart)
                           <zg:Min xsi:nil="true" />
                           <zg:Max xsi:nil="true" />
                         </Expression>
+                        <Expression xsi:type="VisualizerMapping" />
+                        <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                          <gui:Name>Thermistor</gui:Name>
+                          <gui:Enabled>true</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:ColumnCount>1</gui:ColumnCount>
+                          <gui:RowCount>1</gui:RowCount>
+                          <gui:ColumnStyles />
+                          <gui:RowStyles />
+                          <gui:CellSpans />
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="rx:Defer">
+                    <Name>Photodiode</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>SynchQuadColor</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>HarpTimestampSource</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:CreateTimestamped" />
+                        </Expression>
+                        <Expression xsi:type="zg:RollingGraphBuilder">
+                          <zg:IndexSelector>Seconds</zg:IndexSelector>
+                          <zg:ValueSelector>Value</zg:ValueSelector>
+                          <zg:SymbolType>None</zg:SymbolType>
+                          <zg:LineWidth>3</zg:LineWidth>
+                          <zg:CurveSettings>
+                            <zg:CurveConfiguration>
+                              <zg:Label>Quad</zg:Label>
+                              <zg:Color>Red</zg:Color>
+                            </zg:CurveConfiguration>
+                          </zg:CurveSettings>
+                          <zg:Capacity xsi:nil="true" />
+                          <zg:Min xsi:nil="true" />
+                          <zg:Max xsi:nil="true" />
+                        </Expression>
+                        <Expression xsi:type="VisualizerMapping" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>HarpBehaviorEvents</Name>
+                        </Expression>
+                        <Expression xsi:type="beh:Parse">
+                          <harp:Register xsi:type="beh:TimestampedDigitalInputState" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Value</Selector>
+                        </Expression>
+                        <Expression xsi:type="HasFlag">
+                          <Operand xsi:type="WorkflowProperty" TypeArguments="beh:DigitalInputs">
+                            <Value>DIPort0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:DistinctUntilChanged" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Seconds</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:CreateTimestamped" />
+                        </Expression>
+                        <Expression xsi:type="zg:RollingGraphBuilder">
+                          <zg:IndexSelector>Seconds</zg:IndexSelector>
+                          <zg:ValueSelector>Value</zg:ValueSelector>
+                          <zg:SymbolType>None</zg:SymbolType>
+                          <zg:LineWidth>3</zg:LineWidth>
+                          <zg:CurveSettings>
+                            <zg:CurveConfiguration>
+                              <zg:Label>Photodiode</zg:Label>
+                              <zg:Color>Blue</zg:Color>
+                            </zg:CurveConfiguration>
+                          </zg:CurveSettings>
+                          <zg:Capacity xsi:nil="true" />
+                          <zg:Min xsi:nil="true" />
+                          <zg:Max xsi:nil="true" />
+                        </Expression>
+                        <Expression xsi:type="VisualizerMapping" />
+                        <Expression xsi:type="zg:RollingGraphPanelBuilder">
+                          <zg:Name>Photodiode</zg:Name>
+                          <zg:ReverseX>false</zg:ReverseX>
+                          <zg:ReverseY>false</zg:ReverseY>
+                          <zg:Span>20</zg:Span>
+                          <zg:Capacity xsi:nil="true" />
+                          <zg:BaseAxis>X</zg:BaseAxis>
+                          <zg:BarType>Cluster</zg:BarType>
+                          <zg:Min>-0.1</zg:Min>
+                          <zg:Max>1.1</zg:Max>
+                        </Expression>
+                        <Expression xsi:type="VisualizerMapping" />
+                        <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                          <gui:Name>Photodiode</gui:Name>
+                          <gui:Enabled>true</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:ColumnCount>1</gui:ColumnCount>
+                          <gui:RowCount>1</gui:RowCount>
+                          <gui:ColumnStyles />
+                          <gui:RowStyles />
+                          <gui:CellSpans />
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="16" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="7" To="11" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="12" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source2" />
+                        <Edge From="12" To="13" Label="Source1" />
+                        <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source1" />
+                        <Edge From="15" To="16" Label="Source2" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TabControlBuilder">
+                    <gui:Name>Sensors</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:GroupBoxBuilder">
+                    <gui:Name>Sensor</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:Text>Sensors</gui:Text>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
@@ -647,9 +793,7 @@ it.Item4 as TimeSinceStart)
                     <gui:RowStyles />
                     <gui:CellSpans />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Name>DataVisualization</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
@@ -664,21 +808,29 @@ it.Item4 as TimeSinceStart)
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source1" />
+                  <Edge From="1" To="5" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="15" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="15" Label="Source2" />
-                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="23" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="23" Label="Source2" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="13" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="12" To="21" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source3" />
+                  <Edge From="14" To="17" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source2" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source2" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source3" />
+                  <Edge From="23" To="24" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -858,9 +1010,9 @@ it.Item4 as TimeSinceStart)
                   </Expression>
                   <Expression xsi:type="gui:ButtonBuilder">
                     <gui:Name>Start</gui:Name>
-                    <gui:Enabled>false</gui:Enabled>
+                    <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Text>Starting 00:15:32.1</gui:Text>
+                    <gui:Text>Start</gui:Text>
                   </Expression>
                   <Expression xsi:type="rx:Sink">
                     <Workflow>
@@ -915,7 +1067,7 @@ it.Item4 as TimeSinceStart)
                   </Expression>
                   <Expression xsi:type="gui:ButtonBuilder">
                     <gui:Name>Stop</gui:Name>
-                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Enabled>false</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
                     <gui:Text>Stop Experiment</gui:Text>
                   </Expression>
@@ -1017,7 +1169,7 @@ it.Item4 as TimeSinceStart)
                     <gui:Name>ExperimentCommand</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Text>StartTask</gui:Text>
+                    <gui:Text>NotStarted</gui:Text>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:ButtonVisualizer" />
@@ -1038,7 +1190,7 @@ it.Item4 as TimeSinceStart)
                     <gui:Name>LauncherControl</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 26pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 16.125pt</gui:Font>
                     <gui:ColumnCount>1</gui:ColumnCount>
                     <gui:RowCount>2</gui:RowCount>
                     <gui:ColumnStyles />
@@ -1518,7 +1670,7 @@ it.Item4 as TimeSinceStart)
                     <gui:Name>HwShortcuts</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 20pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 8.25pt</gui:Font>
                     <gui:ColumnCount>5</gui:ColumnCount>
                     <gui:RowCount>5</gui:RowCount>
                     <gui:ColumnStyles />
@@ -1543,129 +1695,6 @@ it.Item4 as TimeSinceStart)
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
             </Expression>
-            <Expression xsi:type="rx:Defer">
-              <Name>Photodiode</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>SynchQuadColor</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>HarpTimestampSource</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="harp:CreateTimestamped" />
-                  </Expression>
-                  <Expression xsi:type="zg:RollingGraphBuilder">
-                    <zg:IndexSelector>Seconds</zg:IndexSelector>
-                    <zg:ValueSelector>Value</zg:ValueSelector>
-                    <zg:SymbolType>None</zg:SymbolType>
-                    <zg:LineWidth>3</zg:LineWidth>
-                    <zg:CurveSettings>
-                      <zg:CurveConfiguration>
-                        <zg:Label>Quad</zg:Label>
-                        <zg:Color>Red</zg:Color>
-                      </zg:CurveConfiguration>
-                    </zg:CurveSettings>
-                    <zg:Capacity xsi:nil="true" />
-                    <zg:Min xsi:nil="true" />
-                    <zg:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>HarpBehaviorEvents</Name>
-                  </Expression>
-                  <Expression xsi:type="beh:Parse">
-                    <harp:Register xsi:type="beh:TimestampedDigitalInputState" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
-                  </Expression>
-                  <Expression xsi:type="HasFlag">
-                    <Operand xsi:type="WorkflowProperty" TypeArguments="beh:DigitalInputs">
-                      <Value>DIPort0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:DistinctUntilChanged" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Seconds</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="harp:CreateTimestamped" />
-                  </Expression>
-                  <Expression xsi:type="zg:RollingGraphBuilder">
-                    <zg:IndexSelector>Seconds</zg:IndexSelector>
-                    <zg:ValueSelector>Value</zg:ValueSelector>
-                    <zg:SymbolType>None</zg:SymbolType>
-                    <zg:LineWidth>3</zg:LineWidth>
-                    <zg:CurveSettings>
-                      <zg:CurveConfiguration>
-                        <zg:Label>Photodiode</zg:Label>
-                        <zg:Color>Blue</zg:Color>
-                      </zg:CurveConfiguration>
-                    </zg:CurveSettings>
-                    <zg:Capacity xsi:nil="true" />
-                    <zg:Min xsi:nil="true" />
-                    <zg:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="zg:RollingGraphPanelBuilder">
-                    <zg:Name>Photodiode</zg:Name>
-                    <zg:ReverseX>false</zg:ReverseX>
-                    <zg:ReverseY>false</zg:ReverseY>
-                    <zg:Span>20</zg:Span>
-                    <zg:Capacity xsi:nil="true" />
-                    <zg:BaseAxis>X</zg:BaseAxis>
-                    <zg:BarType>Cluster</zg:BarType>
-                    <zg:Min>-0.1</zg:Min>
-                    <zg:Max>1.1</zg:Max>
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                    <gui:Name>Photodiode</gui:Name>
-                    <gui:Enabled>true</gui:Enabled>
-                    <gui:Visible>true</gui:Visible>
-                    <gui:ColumnCount>1</gui:ColumnCount>
-                    <gui:RowCount>1</gui:RowCount>
-                    <gui:ColumnStyles />
-                    <gui:RowStyles />
-                    <gui:CellSpans />
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="2" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source2" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="16" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="7" To="11" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="12" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source2" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source2" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:TabControlBuilder">
               <gui:Name>VrForaging</gui:Name>
               <gui:Enabled>true</gui:Enabled>
@@ -1712,24 +1741,22 @@ it.Item4 as TimeSinceStart)
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="25" Label="Source1" />
+            <Edge From="9" To="23" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="23" Label="Source1" />
+            <Edge From="12" To="21" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="23" Label="Source2" />
+            <Edge From="14" To="21" Label="Source2" />
             <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="23" Label="Source3" />
+            <Edge From="16" To="21" Label="Source3" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="23" Label="Source4" />
+            <Edge From="18" To="21" Label="Source4" />
             <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="23" Label="Source5" />
+            <Edge From="20" To="21" Label="Source5" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source6" />
+            <Edge From="22" To="23" Label="Source2" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source2" />
-            <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>

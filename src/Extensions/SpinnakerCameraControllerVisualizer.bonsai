@@ -39,7 +39,7 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p2:AccumulateToImmutableList" />
             </Expression>
-            <Expression xsi:type="gui:ListBoxDataSourceBuilder">
+            <Expression xsi:type="gui:ComboBoxDataSourceBuilder">
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:DisplayMember />
@@ -47,9 +47,7 @@
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>SelectedControllerCamera</Name>
             </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:ListBoxDataSourceVisualizer" />
-            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="SubscribeSubject">
               <Name>SelectedControllerCamera</Name>
             </Expression>
