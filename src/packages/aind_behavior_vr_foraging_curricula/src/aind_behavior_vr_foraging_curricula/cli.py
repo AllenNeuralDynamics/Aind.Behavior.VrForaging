@@ -1,5 +1,7 @@
 import importlib
+import logging
 import os
+import sys
 import typing as t
 from pathlib import Path
 
@@ -7,8 +9,10 @@ import aind_behavior_curriculum
 from pydantic import BaseModel, Field, RootModel, SerializeAsAny
 from pydantic_settings import BaseSettings, CliApp, CliImplicitFlag, CliSubCommand
 
-from . import __version__, curricula_logger
+from . import __version__
 from .utils import model_from_json_file
+
+logger = logging.getLogger(__name__)
 
 TModel = t.TypeVar("TModel", bound=BaseModel)
 TTrainerState = t.TypeVar("TTrainerState", bound=aind_behavior_curriculum.TrainerState)
@@ -61,13 +65,13 @@ class CurriculumCliArgs(BaseSettings):
                     aind_behavior_curriculum.TrainerState[aind_behavior_curriculum.Curriculum[t.Any]],
                 )
                 if (curriculum := annonymous_trainer_state.curriculum) is None:
-                    curricula_logger.error("Trainer state does not have a curriculum.")
+                    logger.error("Trainer state does not have a curriculum.")
                     raise ValueError("Trainer state does not have a curriculum.")
                 curriculum_name = curriculum.pkg_location
 
             curriculum_name = curriculum_name.replace(str(__package__) + ".", "")
             if curriculum_name not in _KNOWN_CURRICULA:
-                curricula_logger.error(f"Unknown curriculum: {curriculum_name}. Available: {list(_KNOWN_CURRICULA)}")
+                logger.error("Unknown curriculum: %s. Available: %s", curriculum_name, list(_KNOWN_CURRICULA))
                 raise ValueError(f"Unknown curriculum: {curriculum_name}. Available: {list(_KNOWN_CURRICULA)}")
 
             else:
@@ -85,7 +89,7 @@ class CurriculumCliArgs(BaseSettings):
                     file.write(suggestion.model_dump_json(indent=2))
 
         except Exception as e:
-            curricula_logger.error(f"Error occurred while running curriculum: {e}")
+            logger.error("Error occurred while running curriculum: %s", e)
             raise e
 
 
@@ -102,7 +106,7 @@ class CurriculumInitCliArgs(BaseSettings):
 
     def cli_cmd(self) -> None:
         if self.curriculum not in _KNOWN_CURRICULA:
-            curricula_logger.error(f"Unknown curriculum: {self.curriculum}. Available: {list(_KNOWN_CURRICULA)}")
+            logger.error("Unknown curriculum: %s. Available: %s", self.curriculum, list(_KNOWN_CURRICULA))
             raise ValueError(f"Unknown curriculum: {self.curriculum}. Available: {list(_KNOWN_CURRICULA)}")
 
         module = importlib.import_module(f"{__package__}.{self.curriculum}")
@@ -114,8 +118,8 @@ class CurriculumInitCliArgs(BaseSettings):
                 stages = trainer.curriculum.see_stages()
                 stage = [s for s in stages if s.name == self.stage][0]
             except IndexError:
-                curricula_logger.error(f"Unknown stage: {self.stage}")
-                curricula_logger.error(self._print_available_stages(trainer.curriculum))
+                logger.error("Unknown stage: %s", self.stage)
+                self._print_available_stages(trainer.curriculum)
                 raise ValueError(f"Unknown stage: {self.stage}. Available: {[s.name for s in stages]}")
             else:
                 init_state = trainer.create_trainer_state(
@@ -157,7 +161,39 @@ class CurriculumSuggestion(BaseModel, t.Generic[TTrainerState, TMetrics]):
 _KNOWN_CURRICULA = [p.stem for p in Path(__file__).parent.iterdir() if p.is_dir() and not p.name.startswith("_")]
 
 
+def _setup_logging() -> None:
+    """Configure logging for CLI usage.
+
+    This is called only when the package is used as a CLI tool,
+    not when imported as a library.
+    """
+    log_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+    # Configure package logger - log all debug and above
+    package_logger = logging.getLogger("aind_behavior_vr_foraging_curricula")
+    package_logger.setLevel(logging.DEBUG)
+    stderr_handler = logging.StreamHandler(sys.stderr)
+    stderr_handler.setLevel(logging.DEBUG)
+    stderr_handler.setFormatter(log_formatter)
+    package_logger.addHandler(stderr_handler)
+    package_logger.propagate = False
+
+    # Configure root logger to send logs from other packages to stderr
+    # Log warnings and above
+    root_logger = logging.getLogger()
+    for handler in root_logger.handlers[:]:
+        root_logger.removeHandler(handler)
+
+    root_stderr_handler = logging.StreamHandler(sys.stderr)
+    root_stderr_handler.setLevel(logging.WARNING)
+    root_stderr_handler.setFormatter(log_formatter)
+
+    root_logger.addHandler(root_stderr_handler)
+    root_logger.setLevel(logging.WARNING)
+
+
 def main():
+    _setup_logging()
     CliApp.run(CurriculumAppCliArgs, cli_exit_on_error=True)
 
 

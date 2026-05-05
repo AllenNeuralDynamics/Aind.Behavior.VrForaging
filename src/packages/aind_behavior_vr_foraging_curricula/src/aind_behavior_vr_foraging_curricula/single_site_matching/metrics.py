@@ -1,4 +1,3 @@
-import logging
 import os
 from typing import cast
 
@@ -8,8 +7,6 @@ from aind_behavior_vr_foraging.data_contract import dataset as vr_foraging_datas
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 from contraqctor.contract.json import SoftwareEvents
 from pydantic import Field, NonNegativeFloat, NonNegativeInt
-
-logger = logging.getLogger(__name__)
 
 
 class SingleSiteMatchingMetrics(Metrics):
