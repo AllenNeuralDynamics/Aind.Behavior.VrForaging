@@ -374,7 +374,14 @@ def dataset(
                                 name="Annotations",
                                 description="An event emitted whenever an annotation is made during the session.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/Annotations/Annotations.json"
+                                    root_path / "behavior/SoftwareEvents/Annotations.json"
+                                ),
+                            ),
+                            SoftwareEvents(
+                                name="EndSession",
+                                description="A file that determines the end of the session. If the file is empty, the session is still running or it was not closed properly.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/EndSession.json"
                                 ),
                             ),
                         ],
@@ -424,13 +431,6 @@ def dataset(
                                 description="Contains the console log of the launcher process.",
                                 reader_params=Text.make_params(
                                     path=root_path / "behavior/Logs/.launcher/launcher.log",
-                                ),
-                            ),
-                            SoftwareEvents(
-                                name="EndSession",
-                                description="A file that determines the end of the session. If the file is empty, the session is still running or it was not closed properly.",
-                                reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/SoftwareEvents/EndSession.json"
                                 ),
                             ),
                         ],

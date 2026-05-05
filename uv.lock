@@ -103,7 +103,7 @@ requires-dist = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'mappers'", editable = "src/packages/aind_behavior_vr_foraging" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", specifier = ">=0.10.4" },
     { name = "aind-data-schema", marker = "extra == 'mappers'", specifier = ">=2.6" },
-    { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.3,<0.6.0" },
+    { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.5,<0.6.0" },
     { name = "pydantic-settings" },
 ]
 provides-extras = ["data", "mappers"]
@@ -606,7 +606,7 @@ wheels = [
 
 [[package]]
 name = "contraqctor"
-version = "0.5.5"
+version = "0.5.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -623,9 +623,9 @@ dependencies = [
     { name = "scipy" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/97/8d/94b62ff48b32534f8422f1c61bbaf4f1af7b771a9f956b41d92f2e04c7c9/contraqctor-0.5.5.tar.gz", hash = "sha256:447886e6fee264860d237d50822b1e8c83b386d5ac29ef37c3203bbc8ccebe54", size = 54687, upload-time = "2026-05-05T19:37:12.224Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/92/ff/7a9539290e9272e91a83c396f9b944db2de93c85679b86bc8dc4d7b7ebf2/contraqctor-0.5.6.tar.gz", hash = "sha256:d7f9b9331f4ea7ba9b13d42a0a1f8101079dbbc41d832a8d94c051bbdff2b832", size = 54585, upload-time = "2026-05-05T22:00:38.406Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/51/18/b6fd47764c7ba4312760ddce72e48253590a888ce3653477a027e37fa90d/contraqctor-0.5.5-py3-none-any.whl", hash = "sha256:f8a71575e53c1dc6ee5c1c8b4180eddebfadeafd89d524142d61747d3fd8dbf3", size = 68052, upload-time = "2026-05-05T19:37:10.727Z" },
+    { url = "https://files.pythonhosted.org/packages/7d/de/7bf9adf0eacd7b77bbb645bc66e45db49ecdaee234fe5a7013a851ee44f0/contraqctor-0.5.6-py3-none-any.whl", hash = "sha256:103c27208a53c7d0d24a6ae035f3dc1aac720eb67a8ff09226f669886b023661", size = 67952, upload-time = "2026-05-05T22:00:39.502Z" },
 ]
 
 [[package]]

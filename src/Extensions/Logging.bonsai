@@ -13,8 +13,8 @@
                  xmlns:p6="clr-namespace:AllenNeuralDynamics.WhiteRabbit;assembly=AllenNeuralDynamics.WhiteRabbit"
                  xmlns:p7="clr-namespace:Harp.AnalogInput;assembly=Harp.AnalogInput"
                  xmlns:p8="clr-namespace:AllenNeuralDynamics.EnvironmentSensor;assembly=AllenNeuralDynamics.EnvironmentSensor"
-                 xmlns:p9="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
+                 xmlns:p9="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
                  xmlns:p10="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
                  xmlns:p11="clr-namespace:;assembly=Extensions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
@@ -419,6 +419,12 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpBehaviorCommands</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:FilterMessageType">
+                            <harp:FilterType>Include</harp:FilterType>
+                            <harp:MessageType>Write</harp:MessageType>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
                         </Expression>
@@ -454,6 +460,12 @@
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>StepperDriverCommands</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:FilterMessageType">
+                            <harp:FilterType>Include</harp:FilterType>
+                            <harp:MessageType>Write</harp:MessageType>
+                          </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
@@ -593,6 +605,12 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpLickometerCommands</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:FilterMessageType">
+                            <harp:FilterType>Include</harp:FilterType>
+                            <harp:MessageType>Write</harp:MessageType>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
                         </Expression>
@@ -628,6 +646,12 @@
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTreadmillCommands</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:FilterMessageType">
+                            <harp:FilterType>Include</harp:FilterType>
+                            <harp:MessageType>Write</harp:MessageType>
+                          </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
@@ -665,6 +689,12 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpWhiteRabbitCommands</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:FilterMessageType">
+                            <harp:FilterType>Include</harp:FilterType>
+                            <harp:MessageType>Write</harp:MessageType>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
                         </Expression>
@@ -700,6 +730,12 @@
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpSniffDetectorCommands</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:FilterMessageType">
+                            <harp:FilterType>Include</harp:FilterType>
+                            <harp:MessageType>Write</harp:MessageType>
+                          </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
@@ -747,6 +783,12 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpAnalogInputCommands</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:FilterMessageType">
+                            <harp:FilterType>Include</harp:FilterType>
+                            <harp:MessageType>Write</harp:MessageType>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
                         </Expression>
@@ -793,6 +835,12 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpEnvironmentSensorCommands</Name>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:FilterMessageType">
+                            <harp:FilterType>Include</harp:FilterType>
+                            <harp:MessageType>Write</harp:MessageType>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpTimestampSource</Name>
                         </Expression>
@@ -838,84 +886,92 @@
                         </Expression>
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="2" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source2" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="8" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="8" Label="Source2" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source3" />
-                        <Edge From="9" To="11" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source2" />
-                        <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="17" Label="Source1" />
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="9" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="9" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source3" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="13" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source2" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="17" Label="Source2" />
+                        <Edge From="14" To="19" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source3" />
-                        <Edge From="18" To="19" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source1" />
-                        <Edge From="21" To="23" Label="Source1" />
-                        <Edge From="22" To="23" Label="Source2" />
+                        <Edge From="16" To="19" Label="Source2" />
+                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source3" />
+                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
                         <Edge From="23" To="24" Label="Source1" />
-                        <Edge From="24" To="29" Label="Source1" />
-                        <Edge From="25" To="26" Label="Source1" />
-                        <Edge From="26" To="29" Label="Source2" />
-                        <Edge From="27" To="28" Label="Source1" />
-                        <Edge From="28" To="29" Label="Source3" />
-                        <Edge From="30" To="32" Label="Source1" />
-                        <Edge From="31" To="32" Label="Source2" />
-                        <Edge From="32" To="33" Label="Source1" />
-                        <Edge From="33" To="38" Label="Source1" />
-                        <Edge From="34" To="35" Label="Source1" />
-                        <Edge From="35" To="38" Label="Source2" />
+                        <Edge From="24" To="26" Label="Source1" />
+                        <Edge From="25" To="26" Label="Source2" />
+                        <Edge From="26" To="27" Label="Source1" />
+                        <Edge From="27" To="32" Label="Source1" />
+                        <Edge From="28" To="29" Label="Source1" />
+                        <Edge From="29" To="32" Label="Source2" />
+                        <Edge From="30" To="31" Label="Source1" />
+                        <Edge From="31" To="32" Label="Source3" />
+                        <Edge From="33" To="34" Label="Source1" />
+                        <Edge From="34" To="36" Label="Source1" />
+                        <Edge From="35" To="36" Label="Source2" />
                         <Edge From="36" To="37" Label="Source1" />
-                        <Edge From="37" To="38" Label="Source3" />
-                        <Edge From="39" To="41" Label="Source1" />
-                        <Edge From="40" To="41" Label="Source2" />
-                        <Edge From="41" To="42" Label="Source1" />
-                        <Edge From="42" To="47" Label="Source1" />
+                        <Edge From="37" To="42" Label="Source1" />
+                        <Edge From="38" To="39" Label="Source1" />
+                        <Edge From="39" To="42" Label="Source2" />
+                        <Edge From="40" To="41" Label="Source1" />
+                        <Edge From="41" To="42" Label="Source3" />
                         <Edge From="43" To="44" Label="Source1" />
-                        <Edge From="44" To="47" Label="Source2" />
-                        <Edge From="45" To="46" Label="Source1" />
-                        <Edge From="46" To="47" Label="Source3" />
-                        <Edge From="48" To="50" Label="Source1" />
-                        <Edge From="49" To="50" Label="Source2" />
+                        <Edge From="44" To="46" Label="Source1" />
+                        <Edge From="45" To="46" Label="Source2" />
+                        <Edge From="46" To="47" Label="Source1" />
+                        <Edge From="47" To="52" Label="Source1" />
+                        <Edge From="48" To="49" Label="Source1" />
+                        <Edge From="49" To="52" Label="Source2" />
                         <Edge From="50" To="51" Label="Source1" />
-                        <Edge From="51" To="56" Label="Source1" />
-                        <Edge From="52" To="53" Label="Source1" />
-                        <Edge From="53" To="56" Label="Source2" />
-                        <Edge From="54" To="55" Label="Source1" />
-                        <Edge From="55" To="56" Label="Source3" />
-                        <Edge From="56" To="60" Label="Source1" />
-                        <Edge From="57" To="58" Label="Source1" />
+                        <Edge From="51" To="52" Label="Source3" />
+                        <Edge From="53" To="54" Label="Source1" />
+                        <Edge From="54" To="56" Label="Source1" />
+                        <Edge From="55" To="56" Label="Source2" />
+                        <Edge From="56" To="57" Label="Source1" />
+                        <Edge From="57" To="62" Label="Source1" />
                         <Edge From="58" To="59" Label="Source1" />
-                        <Edge From="59" To="60" Label="Source2" />
-                        <Edge From="61" To="63" Label="Source1" />
-                        <Edge From="62" To="63" Label="Source2" />
+                        <Edge From="59" To="62" Label="Source2" />
+                        <Edge From="60" To="61" Label="Source1" />
+                        <Edge From="61" To="62" Label="Source3" />
+                        <Edge From="62" To="66" Label="Source1" />
                         <Edge From="63" To="64" Label="Source1" />
-                        <Edge From="64" To="69" Label="Source1" />
-                        <Edge From="65" To="66" Label="Source1" />
-                        <Edge From="66" To="69" Label="Source2" />
+                        <Edge From="64" To="65" Label="Source1" />
+                        <Edge From="65" To="66" Label="Source2" />
                         <Edge From="67" To="68" Label="Source1" />
-                        <Edge From="68" To="69" Label="Source3" />
-                        <Edge From="69" To="73" Label="Source1" />
+                        <Edge From="68" To="70" Label="Source1" />
+                        <Edge From="69" To="70" Label="Source2" />
                         <Edge From="70" To="71" Label="Source1" />
-                        <Edge From="71" To="72" Label="Source1" />
-                        <Edge From="72" To="73" Label="Source2" />
-                        <Edge From="74" To="76" Label="Source1" />
-                        <Edge From="75" To="76" Label="Source2" />
-                        <Edge From="76" To="77" Label="Source1" />
-                        <Edge From="77" To="82" Label="Source1" />
+                        <Edge From="71" To="76" Label="Source1" />
+                        <Edge From="72" To="73" Label="Source1" />
+                        <Edge From="73" To="76" Label="Source2" />
+                        <Edge From="74" To="75" Label="Source1" />
+                        <Edge From="75" To="76" Label="Source3" />
+                        <Edge From="76" To="80" Label="Source1" />
+                        <Edge From="77" To="78" Label="Source1" />
                         <Edge From="78" To="79" Label="Source1" />
-                        <Edge From="79" To="82" Label="Source2" />
-                        <Edge From="80" To="81" Label="Source1" />
-                        <Edge From="81" To="82" Label="Source3" />
-                        <Edge From="82" To="86" Label="Source1" />
-                        <Edge From="83" To="84" Label="Source1" />
+                        <Edge From="79" To="80" Label="Source2" />
+                        <Edge From="81" To="82" Label="Source1" />
+                        <Edge From="82" To="84" Label="Source1" />
+                        <Edge From="83" To="84" Label="Source2" />
                         <Edge From="84" To="85" Label="Source1" />
-                        <Edge From="85" To="86" Label="Source2" />
+                        <Edge From="85" To="90" Label="Source1" />
+                        <Edge From="86" To="87" Label="Source1" />
+                        <Edge From="87" To="90" Label="Source2" />
+                        <Edge From="88" To="89" Label="Source1" />
+                        <Edge From="89" To="90" Label="Source3" />
+                        <Edge From="90" To="94" Label="Source1" />
+                        <Edge From="91" To="92" Label="Source1" />
+                        <Edge From="92" To="93" Label="Source1" />
+                        <Edge From="93" To="94" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>

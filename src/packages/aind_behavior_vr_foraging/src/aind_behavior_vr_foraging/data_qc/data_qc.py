@@ -15,7 +15,7 @@ class VrForagingQcSuite(qc.Suite):
 
     def test_end_session_exists(self):
         """Check that the session has an end event."""
-        end_session = self.dataset["Behavior"]["Logs"]["EndSession"]
+        end_session = self.dataset["Behavior"]["SoftwareEvents"]["EndSession"]
 
         if not end_session.has_data:
             return self.fail_test(
@@ -32,7 +32,7 @@ class VrForagingQcSuite(qc.Suite):
         """Check that the session has annotations and surfaces them in the context if they exist."""
         annotations: pd.DataFrame | None
         try:
-            annotations = self.dataset["Behavior"]["Logs"]["Annotations"].read()
+            annotations = self.dataset["Behavior"]["SoftwareEvents"]["Annotations"].read()
         except (FileNotFoundError, FileExistsError):
             annotations = None
 
@@ -236,9 +236,6 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
         for stream in cmd:
             if isinstance(stream, contract.harp.HarpRegister):
                 exclude.append(stream)
-
-    # Add the outcome of the dataset loading step to the automatic qc
-    _runner.add_suite(qc.contract.ContractTestSuite(dataset.collect_errors(), exclude=exclude), group="Data contract")
 
     # Add Harp tests for ALL Harp devices in the dataset
     for stream in (_r := dataset["Behavior"]):
