@@ -464,6 +464,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
                 viewing_distance=Decimal(str(distance_from_vector(display.extrinsics.translation))),
                 viewing_distance_unit=units.SizeUnit.CM,
                 brightness=100,
+                brightness_unit=units.UnitlessUnit.PERCENT,
                 coordinate_system=coordinates.CoordinateSystemLibrary.SIPE_MONITOR_RTF,
                 transform=[
                     coordinates.Translation(

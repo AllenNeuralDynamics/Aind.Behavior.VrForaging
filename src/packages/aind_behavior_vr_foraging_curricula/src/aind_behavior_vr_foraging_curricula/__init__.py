@@ -1,6 +1,4 @@
-import logging
 import re
-import sys
 from importlib.metadata import PackageNotFoundError, version
 
 
@@ -30,31 +28,3 @@ except PackageNotFoundError:
     __version__ = "0.0.0"
 
 __semver__ = pep440_to_semver(__version__)
-
-
-log_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-
-# Configure package logger
-# Here, we will log all debug and above
-curricula_logger = logging.getLogger(__name__)
-curricula_logger.setLevel(logging.DEBUG)
-
-stderr_handler = logging.StreamHandler(sys.stderr)
-stderr_handler.setLevel(logging.DEBUG)
-stderr_handler.setFormatter(log_formatter)
-
-curricula_logger.addHandler(stderr_handler)
-curricula_logger.propagate = False
-
-# Configure the root logger to send logs from other packages to stderr
-# Here, we will log all warnings and above
-root_logger = logging.getLogger()
-for handler in root_logger.handlers[:]:
-    root_logger.removeHandler(handler)
-
-root_stderr_handler = logging.StreamHandler(sys.stderr)
-root_stderr_handler.setLevel(logging.WARNING)
-root_stderr_handler.setFormatter(log_formatter)
-
-root_logger.addHandler(root_stderr_handler)
-root_logger.setLevel(logging.WARNING)
