@@ -31,18 +31,6 @@ public class PlotStyle
         set { lineWidth = value; }
     }
 
-    [Description("Minimum value for the Y-axis. Leave null for auto-scaling.")]
-    public double? MinY { get; set; }
-
-    [Description("Maximum value for the Y-axis. Leave null for auto-scaling.")]
-    public double? MaxY { get; set; }
-
-    [Description("Minimum value for the X-axis. Leave null for auto-scaling.")]
-    public double? MinX { get; set; }
-
-    [Description("Maximum value for the X-axis. Leave null for auto-scaling.")]
-    public double? MaxX { get; set; }
-
     public IObservable<T> Process<T>(IObservable<T> source)
     {
         return Observable.Create<T>(observer =>
@@ -61,22 +49,6 @@ public class PlotStyle
     {
         ImGui.PushFont(ImGui.GetFont(), FontSize);
         ImPlot.PushStyleVar(ImPlotStyleVar.LineWeight, LineWidth);
-
-        if (MinX.HasValue || MaxX.HasValue)
-        {
-            var xMin = MinX.HasValue ? MinX.Value : double.NegativeInfinity;
-            var xMax = MaxX.HasValue ? MaxX.Value : double.PositiveInfinity;
-            ImPlot.SetNextAxisLimits(ImAxis.X1, xMin, xMax,
-                (MinX.HasValue && MaxX.HasValue) ? ImPlotCond.Always : ImPlotCond.Once);
-        }
-
-        if (MinY.HasValue || MaxY.HasValue)
-        {
-            var yMin = MinY.HasValue ? MinY.Value : double.NegativeInfinity;
-            var yMax = MaxY.HasValue ? MaxY.Value : double.PositiveInfinity;
-            ImPlot.SetNextAxisLimits(ImAxis.Y1, yMin, yMax,
-                (MinY.HasValue && MaxY.HasValue) ? ImPlotCond.Always : ImPlotCond.Once);
-        }
     }
 
     private void PopStyle()

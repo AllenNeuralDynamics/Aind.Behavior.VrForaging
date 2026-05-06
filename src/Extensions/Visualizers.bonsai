@@ -631,10 +631,6 @@ it.Item5 as TimeSinceLastChoice)
                           <Combinator xsi:type="p1:PlotStyle">
                             <p1:FontSize>24</p1:FontSize>
                             <p1:LineWidth>3</p1:LineWidth>
-                            <p1:MinY>0</p1:MinY>
-                            <p1:MaxY xsi:nil="true" />
-                            <p1:MinX xsi:nil="true" />
-                            <p1:MaxX xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="implot:PlotBuilder">
@@ -649,6 +645,14 @@ it.Item5 as TimeSinceLastChoice)
                           <implot:FlagsY>AutoFit</implot:FlagsY>
                           <implot:LabelX>Time</implot:LabelX>
                           <implot:LabelY>Velocity</implot:LabelY>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:SetAxisLimits">
+                            <p1:MinX xsi:nil="true" />
+                            <p1:MaxX xsi:nil="true" />
+                            <p1:MinY>0</p1:MinY>
+                            <p1:MaxY xsi:nil="true" />
+                          </Combinator>
                         </Expression>
                         <Expression xsi:type="rx:PublishSubject">
                           <Name>Plot</Name>
@@ -697,16 +701,17 @@ it.Item5 as TimeSinceLastChoice)
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="7" To="13" Label="Source1" />
-                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="8" To="14" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="12" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source2" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="13" Label="Source1" />
                         <Edge From="12" To="13" Label="Source2" />
-                        <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="13" To="14" Label="Source2" />
                         <Edge From="14" To="15" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
                         <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -736,10 +741,6 @@ it.Item5 as TimeSinceLastChoice)
                           <Combinator xsi:type="p1:PlotStyle">
                             <p1:FontSize>20</p1:FontSize>
                             <p1:LineWidth>2</p1:LineWidth>
-                            <p1:MinY xsi:nil="true" />
-                            <p1:MaxY xsi:nil="true" />
-                            <p1:MinX xsi:nil="true" />
-                            <p1:MaxX xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="implot:PlotBuilder">
@@ -765,7 +766,7 @@ it.Item5 as TimeSinceLastChoice)
                           <scr:Expression>new(it.Seconds as Timestamp, it.Value as Thermistor)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="imviz:RollingBufferBuilder">
-                          <imviz:Capacity>1000</imviz:Capacity>
+                          <imviz:Capacity>2000</imviz:Capacity>
                           <imviz:IndexSelector>Timestamp</imviz:IndexSelector>
                           <imviz:ValueSelector>Thermistor</imviz:ValueSelector>
                         </Expression>
@@ -809,10 +810,6 @@ it.Item5 as TimeSinceLastChoice)
                           <Combinator xsi:type="p1:PlotStyle">
                             <p1:FontSize>20</p1:FontSize>
                             <p1:LineWidth>2</p1:LineWidth>
-                            <p1:MinY>-0.1</p1:MinY>
-                            <p1:MaxY>1.1</p1:MaxY>
-                            <p1:MinX xsi:nil="true" />
-                            <p1:MaxX xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="implot:PlotBuilder">
