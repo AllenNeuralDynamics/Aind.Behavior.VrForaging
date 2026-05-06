@@ -14,7 +14,7 @@ namespace AllenNeuralDynamics.VrForaging
 {
     [Combinator]
     [WorkflowElementCategory(ElementCategory.Combinator)]
-    [Description("Renders a rolling ethogram of software events inside an ImPlot window on each frame. Source1 = Frame subject; Source2 = SoftwareEvent stream.")]
+    [Description("Renders a rolling ethogram of software events inside an ImPlot window on each frame. Source1 = Tuple<Unit, double> (tick + current timestamp); Source2 = SoftwareEvent stream.")]
     public class SoftwareEventDisplay
     {
         private bool visible = true;
@@ -26,7 +26,7 @@ namespace AllenNeuralDynamics.VrForaging
         private float fontSize = 20f;
         public float FontSize { get { return fontSize; } set { fontSize = value; } }
 
-        public IObservable<Unit> Process<TTickSource>(IObservable<TTickSource> frames, IObservable<SoftwareEvent> data)
+        public IObservable<Unit> Process(IObservable<Tuple<Unit, double>> frames, IObservable<SoftwareEvent> data)
         {
             return Observable.Create<Unit>(observer =>
             {
@@ -62,9 +62,14 @@ namespace AllenNeuralDynamics.VrForaging
                     },
                     observer.OnError);
 
-                var frameSub = frames.SubscribeSafe(Observer.Create<TTickSource>(
-                    _ =>
+                var frameSub = frames.SubscribeSafe(Observer.Create<Tuple<Unit, double>>(
+                    tick =>
                     {
+                        lock (bufferLock)
+                        {
+                            if (tick.Item2 > latestTimestamp) latestTimestamp = tick.Item2;
+                        }
+
                         if (!Visible) { observer.OnNext(Unit.Default); return; }
 
                         double ts, win;
