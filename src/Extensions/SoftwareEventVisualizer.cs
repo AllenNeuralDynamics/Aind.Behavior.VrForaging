@@ -121,6 +121,7 @@ namespace AllenNeuralDynamics.VrForaging
                 ImPlot.SetupAxisTicks(ImAxis.X1, latestTimestamp - windowSize, latestTimestamp, 2,
                     new string[] { "-" + windowSize.ToString(), "0" });
 
+                ethogramPlotter.SetLatestTimestamp(latestTimestamp);
                 ethogramPlotter.Plot();
                 foreach (var plotter in eventPlotters)
                     plotter.Plot();
