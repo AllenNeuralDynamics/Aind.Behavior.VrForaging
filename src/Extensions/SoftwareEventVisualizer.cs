@@ -13,7 +13,7 @@ using Hexa.NET.ImPlot;
 namespace AllenNeuralDynamics.VrForaging
 {
     [Combinator]
-    [WorkflowElementCategory(ElementCategory.Sink)]
+    [WorkflowElementCategory(ElementCategory.Combinator)]
     [Description("Renders a rolling ethogram of software events inside an ImPlot window on each frame. Source1 = Frame subject; Source2 = SoftwareEvent stream.")]
     public class SoftwareEventDisplay
     {

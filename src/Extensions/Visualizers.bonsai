@@ -4,6 +4,7 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:;assembly=Extensions"
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
+                 xmlns:imvizui="clr-namespace:Bonsai.ImGui.Visualizers;assembly=Bonsai.ImGui.Visualizers.Design"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:p2="clr-namespace:AllenNeuralDynamics.VrForaging;assembly=Extensions"
@@ -128,6 +129,16 @@
                     <Name>OnlineLabels</Name>
                     <Workflow>
                       <Nodes>
+                        <Expression xsi:type="imvizui:ImGuiVisualizerBuilder">
+                          <imvizui:Name>Diagnosis</imvizui:Name>
+                        </Expression>
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>tick</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>tick</Name>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>SubjectSchema</Name>
                         </Expression>
@@ -345,30 +356,68 @@ it.Item4 as TimeSinceStart,
 it.Item5 as TimeSinceLastChoice)
 </scr:Expression>
                         </Expression>
-                        <Expression xsi:type="p1:TableVisualizerBuilder">
-                          <p1:FontSize>24</p1:FontSize>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Item" />
+                          </PropertyMappings>
                         </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p1:TableVisualizer">
+                            <p1:Visible>true</p1:Visible>
+                            <p1:FontSize>16</p1:FontSize>
+                          </Combinator>
+                        </Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="7" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="7" Label="Source2" />
-                        <Edge From="4" To="7" Label="Source3" />
-                        <Edge From="5" To="7" Label="Source4" />
-                        <Edge From="6" To="7" Label="Source5" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="3" To="14" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="11" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="11" Label="Source2" />
+                        <Edge From="8" To="11" Label="Source3" />
+                        <Edge From="9" To="11" Label="Source4" />
+                        <Edge From="10" To="11" Label="Source5" />
+                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source1" />
+                        <Edge From="13" To="14" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>GlobalPatchState</Name>
+                  <Expression xsi:type="rx:Defer">
+                    <Name>PatchState</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="imvizui:ImPlotVisualizerBuilder">
+                          <imvizui:Name>PatchStateVisualizer</imvizui:Name>
+                        </Expression>
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>_UiTick</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>_UiTick</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>GlobalPatchState</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p2:PatchStateVisualizer">
+                            <p2:Visible>true</p2:Visible>
+                            <p2:FontSize>20</p2:FontSize>
+                          </Combinator>
+                        </Expression>
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="3" To="5" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source2" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
-                  <Expression xsi:type="p2:PatchStateVisualizerBuilder" />
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Enabled>true</gui:Enabled>
@@ -384,6 +433,16 @@ it.Item5 as TimeSinceLastChoice)
                     <Name>Ethogram</Name>
                     <Workflow>
                       <Nodes>
+                        <Expression xsi:type="imvizui:ImPlotVisualizerBuilder">
+                          <imvizui:Name>Ethogram</imvizui:Name>
+                        </Expression>
+                        <Expression xsi:type="rx:PublishSubject">
+                          <Name>_UiTick</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>_UiTick</Name>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>GlobalActiveSite</Name>
                         </Expression>
@@ -523,32 +582,37 @@ it.Item5 as TimeSinceLastChoice)
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p3:TimestampSoftwareEvent" />
                         </Expression>
-                        <Expression xsi:type="p2:SoftwareEventVisualizerBuilder">
-                          <p2:WindowSize>60</p2:WindowSize>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p2:SoftwareEventDisplay">
+                            <p2:Visible>true</p2:Visible>
+                            <p2:WindowSize>60</p2:WindowSize>
+                            <p2:FontSize>20</p2:FontSize>
+                          </Combinator>
                         </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="3" Label="Source1" />
+                        <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="14" Label="Source1" />
+                        <Edge From="3" To="23" Label="Source1" />
+                        <Edge From="4" To="7" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="14" Label="Source2" />
-                        <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="14" Label="Source3" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="18" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="14" Label="Source4" />
+                        <Edge From="11" To="18" Label="Source2" />
                         <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source5" />
-                        <Edge From="14" To="16" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source2" />
+                        <Edge From="13" To="18" Label="Source3" />
+                        <Edge From="14" To="15" Label="Source1" />
+                        <Edge From="15" To="18" Label="Source4" />
                         <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source1" />
-                        <Edge From="18" To="19" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source5" />
+                        <Edge From="18" To="20" Label="Source1" />
+                        <Edge From="19" To="20" Label="Source2" />
+                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
+                        <Edge From="22" To="23" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -812,29 +876,28 @@ it.Item5 as TimeSinceLastChoice)
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="5" Label="Source1" />
+                  <Edge From="1" To="4" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source2" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="23" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="23" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="22" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="22" Label="Source2" />
+                  <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="21" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="17" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
+                  <Edge From="11" To="20" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="16" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source2" />
-                  <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source3" />
-                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source2" />
+                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source3" />
+                  <Edge From="22" To="23" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>

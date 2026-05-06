@@ -437,6 +437,174 @@
         },
         "task_parameters": {
           "$ref": "#/$defs/AindVrForagingTaskParameters",
+          "default": {
+            "rng_seed": null,
+            "aind_behavior_services_pkg_version": "0.13.7",
+            "updaters": {},
+            "environment": {
+              "blocks": [
+                {
+                  "end_conditions": [],
+                  "environment_statistics": {
+                    "first_state_occupancy": null,
+                    "patches": [
+                      {
+                        "label": "",
+                        "odor_specification": [
+                          1.0,
+                          0.0,
+                          0.0
+                        ],
+                        "patch_terminators": [
+                          {
+                            "count": {
+                              "distribution_parameters": {
+                                "family": "Scalar",
+                                "value": 1.0
+                              },
+                              "family": "Scalar",
+                              "scaling_parameters": null,
+                              "truncation_parameters": null
+                            },
+                            "terminator_type": "OnRejection"
+                          }
+                        ],
+                        "patch_virtual_sites_generator": {
+                          "inter_patch": {
+                            "label": "InterPatch",
+                            "length_distribution": {
+                              "distribution_parameters": {
+                                "family": "Scalar",
+                                "value": 20.0
+                              },
+                              "family": "Scalar",
+                              "scaling_parameters": null,
+                              "truncation_parameters": null
+                            },
+                            "render_specification": {
+                              "contrast": null
+                            },
+                            "treadmill_specification": null
+                          },
+                          "inter_site": {
+                            "label": "InterSite",
+                            "length_distribution": {
+                              "distribution_parameters": {
+                                "family": "Scalar",
+                                "value": 20.0
+                              },
+                              "family": "Scalar",
+                              "scaling_parameters": null,
+                              "truncation_parameters": null
+                            },
+                            "render_specification": {
+                              "contrast": null
+                            },
+                            "treadmill_specification": null
+                          },
+                          "post_patch": null,
+                          "reward_site": {
+                            "label": "RewardSite",
+                            "length_distribution": {
+                              "distribution_parameters": {
+                                "family": "Scalar",
+                                "value": 20.0
+                              },
+                              "family": "Scalar",
+                              "scaling_parameters": null,
+                              "truncation_parameters": null
+                            },
+                            "render_specification": {
+                              "contrast": null
+                            },
+                            "treadmill_specification": null
+                          }
+                        },
+                        "reward_specification": {
+                          "amount": {
+                            "distribution_parameters": {
+                              "family": "Scalar",
+                              "value": 5.0
+                            },
+                            "family": "Scalar",
+                            "scaling_parameters": null,
+                            "truncation_parameters": null
+                          },
+                          "available": {
+                            "distribution_parameters": {
+                              "family": "Scalar",
+                              "value": 5.0
+                            },
+                            "family": "Scalar",
+                            "scaling_parameters": null,
+                            "truncation_parameters": null
+                          },
+                          "delay": {
+                            "distribution_parameters": {
+                              "family": "Scalar",
+                              "value": 0.0
+                            },
+                            "family": "Scalar",
+                            "scaling_parameters": null,
+                            "truncation_parameters": null
+                          },
+                          "operant_logic": null,
+                          "probability": {
+                            "distribution_parameters": {
+                              "family": "Scalar",
+                              "value": 1.0
+                            },
+                            "family": "Scalar",
+                            "scaling_parameters": null,
+                            "truncation_parameters": null
+                          },
+                          "reward_function": []
+                        },
+                        "state_index": 0
+                      }
+                    ],
+                    "transition_matrix": [
+                      [
+                        1.0
+                      ]
+                    ]
+                  }
+                }
+              ],
+              "sampling_mode": "Sequential"
+            },
+            "operation_control": {
+              "audio_control": {
+                "duration": 0.2,
+                "frequency": 1000.0
+              },
+              "movable_spout_control": {
+                "enabled": false,
+                "retracting_distance": 0.0,
+                "time_to_collect_after_reward": 1.0
+              },
+              "odor_control": {
+                "target_odor_flow": 100,
+                "target_total_flow": 1000
+              },
+              "position_control": {
+                "frequency_filter_cutoff": 0.5,
+                "gain": {
+                  "x": 1.0,
+                  "y": 1.0,
+                  "z": 1.0
+                },
+                "initial_position": {
+                  "x": 0.0,
+                  "y": 2.56,
+                  "z": 0.0
+                },
+                "velocity_threshold": 1.0
+              },
+              "wait_to_finish_duration": 0.0,
+              "wait_to_start_duration": 0.0
+            }
+          },
           "description": "Parameters of the task logic"
         },
         "version": {
@@ -459,9 +627,6 @@
           "title": "Stage Name"
         }
       },
-      "required": [
-        "task_parameters"
-      ],
       "title": "AindVrForagingTaskLogic",
       "type": "object"
     },
@@ -501,17 +666,176 @@
         },
         "environment": {
           "$ref": "#/$defs/BlockStructure",
+          "default": {
+            "blocks": [
+              {
+                "end_conditions": [],
+                "environment_statistics": {
+                  "first_state_occupancy": null,
+                  "patches": [
+                    {
+                      "label": "",
+                      "odor_specification": [
+                        1.0,
+                        0.0,
+                        0.0
+                      ],
+                      "patch_terminators": [
+                        {
+                          "count": {
+                            "distribution_parameters": {
+                              "family": "Scalar",
+                              "value": 1.0
+                            },
+                            "family": "Scalar",
+                            "scaling_parameters": null,
+                            "truncation_parameters": null
+                          },
+                          "terminator_type": "OnRejection"
+                        }
+                      ],
+                      "patch_virtual_sites_generator": {
+                        "inter_patch": {
+                          "label": "InterPatch",
+                          "length_distribution": {
+                            "distribution_parameters": {
+                              "family": "Scalar",
+                              "value": 20.0
+                            },
+                            "family": "Scalar",
+                            "scaling_parameters": null,
+                            "truncation_parameters": null
+                          },
+                          "render_specification": {
+                            "contrast": null
+                          },
+                          "treadmill_specification": null
+                        },
+                        "inter_site": {
+                          "label": "InterSite",
+                          "length_distribution": {
+                            "distribution_parameters": {
+                              "family": "Scalar",
+                              "value": 20.0
+                            },
+                            "family": "Scalar",
+                            "scaling_parameters": null,
+                            "truncation_parameters": null
+                          },
+                          "render_specification": {
+                            "contrast": null
+                          },
+                          "treadmill_specification": null
+                        },
+                        "post_patch": null,
+                        "reward_site": {
+                          "label": "RewardSite",
+                          "length_distribution": {
+                            "distribution_parameters": {
+                              "family": "Scalar",
+                              "value": 20.0
+                            },
+                            "family": "Scalar",
+                            "scaling_parameters": null,
+                            "truncation_parameters": null
+                          },
+                          "render_specification": {
+                            "contrast": null
+                          },
+                          "treadmill_specification": null
+                        }
+                      },
+                      "reward_specification": {
+                        "amount": {
+                          "distribution_parameters": {
+                            "family": "Scalar",
+                            "value": 5.0
+                          },
+                          "family": "Scalar",
+                          "scaling_parameters": null,
+                          "truncation_parameters": null
+                        },
+                        "available": {
+                          "distribution_parameters": {
+                            "family": "Scalar",
+                            "value": 5.0
+                          },
+                          "family": "Scalar",
+                          "scaling_parameters": null,
+                          "truncation_parameters": null
+                        },
+                        "delay": {
+                          "distribution_parameters": {
+                            "family": "Scalar",
+                            "value": 0.0
+                          },
+                          "family": "Scalar",
+                          "scaling_parameters": null,
+                          "truncation_parameters": null
+                        },
+                        "operant_logic": null,
+                        "probability": {
+                          "distribution_parameters": {
+                            "family": "Scalar",
+                            "value": 1.0
+                          },
+                          "family": "Scalar",
+                          "scaling_parameters": null,
+                          "truncation_parameters": null
+                        },
+                        "reward_function": []
+                      },
+                      "state_index": 0
+                    }
+                  ],
+                  "transition_matrix": [
+                    [
+                      1.0
+                    ]
+                  ]
+                }
+              }
+            ],
+            "sampling_mode": "Sequential"
+          },
           "description": "Statistics of the environment"
         },
         "operation_control": {
           "$ref": "#/$defs/OperationControl",
+          "default": {
+            "movable_spout_control": {
+              "enabled": false,
+              "retracting_distance": 0.0,
+              "time_to_collect_after_reward": 1.0
+            },
+            "odor_control": {
+              "target_odor_flow": 100,
+              "target_total_flow": 1000
+            },
+            "position_control": {
+              "frequency_filter_cutoff": 0.5,
+              "gain": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "initial_position": {
+                "x": 0.0,
+                "y": 2.56,
+                "z": 0.0
+              },
+              "velocity_threshold": 1.0
+            },
+            "audio_control": {
+              "duration": 0.2,
+              "frequency": 1000.0
+            },
+            "wait_to_start_duration": 0.0,
+            "wait_to_finish_duration": 0.0
+          },
           "description": "Control of the operation"
         }
       },
-      "required": [
-        "environment",
-        "operation_control"
-      ],
       "title": "AindVrForagingTaskParameters",
       "type": "object"
     },
@@ -776,6 +1100,130 @@
       "properties": {
         "environment_statistics": {
           "$ref": "#/$defs/EnvironmentStatistics",
+          "default": {
+            "patches": [
+              {
+                "label": "",
+                "odor_specification": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "patch_terminators": [
+                  {
+                    "count": {
+                      "distribution_parameters": {
+                        "family": "Scalar",
+                        "value": 1.0
+                      },
+                      "family": "Scalar",
+                      "scaling_parameters": null,
+                      "truncation_parameters": null
+                    },
+                    "terminator_type": "OnRejection"
+                  }
+                ],
+                "patch_virtual_sites_generator": {
+                  "inter_patch": {
+                    "label": "InterPatch",
+                    "length_distribution": {
+                      "distribution_parameters": {
+                        "family": "Scalar",
+                        "value": 20.0
+                      },
+                      "family": "Scalar",
+                      "scaling_parameters": null,
+                      "truncation_parameters": null
+                    },
+                    "render_specification": {
+                      "contrast": null
+                    },
+                    "treadmill_specification": null
+                  },
+                  "inter_site": {
+                    "label": "InterSite",
+                    "length_distribution": {
+                      "distribution_parameters": {
+                        "family": "Scalar",
+                        "value": 20.0
+                      },
+                      "family": "Scalar",
+                      "scaling_parameters": null,
+                      "truncation_parameters": null
+                    },
+                    "render_specification": {
+                      "contrast": null
+                    },
+                    "treadmill_specification": null
+                  },
+                  "post_patch": null,
+                  "reward_site": {
+                    "label": "RewardSite",
+                    "length_distribution": {
+                      "distribution_parameters": {
+                        "family": "Scalar",
+                        "value": 20.0
+                      },
+                      "family": "Scalar",
+                      "scaling_parameters": null,
+                      "truncation_parameters": null
+                    },
+                    "render_specification": {
+                      "contrast": null
+                    },
+                    "treadmill_specification": null
+                  }
+                },
+                "reward_specification": {
+                  "amount": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 5.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "available": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 5.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "delay": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 0.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "operant_logic": null,
+                  "probability": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 1.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "reward_function": []
+                },
+                "state_index": 0
+              }
+            ],
+            "transition_matrix": [
+              [
+                1.0
+              ]
+            ],
+            "first_state_occupancy": null
+          },
           "description": "Statistics of the environment"
         },
         "end_conditions": {
@@ -788,9 +1236,6 @@
           "type": "array"
         }
       },
-      "required": [
-        "environment_statistics"
-      ],
       "title": "Block",
       "type": "object"
     },
@@ -927,6 +1372,135 @@
       "description": "Structure defining the sequence and sampling of experimental blocks.\n\nThis class manages multiple experimental blocks and determines how they\nare presented during the experiment (sequentially or randomly).",
       "properties": {
         "blocks": {
+          "default": [
+            {
+              "environment_statistics": {
+                "first_state_occupancy": null,
+                "patches": [
+                  {
+                    "label": "",
+                    "odor_specification": [
+                      1.0,
+                      0.0,
+                      0.0
+                    ],
+                    "patch_terminators": [
+                      {
+                        "count": {
+                          "distribution_parameters": {
+                            "family": "Scalar",
+                            "value": 1.0
+                          },
+                          "family": "Scalar",
+                          "scaling_parameters": null,
+                          "truncation_parameters": null
+                        },
+                        "terminator_type": "OnRejection"
+                      }
+                    ],
+                    "patch_virtual_sites_generator": {
+                      "inter_patch": {
+                        "label": "InterPatch",
+                        "length_distribution": {
+                          "distribution_parameters": {
+                            "family": "Scalar",
+                            "value": 20.0
+                          },
+                          "family": "Scalar",
+                          "scaling_parameters": null,
+                          "truncation_parameters": null
+                        },
+                        "render_specification": {
+                          "contrast": null
+                        },
+                        "treadmill_specification": null
+                      },
+                      "inter_site": {
+                        "label": "InterSite",
+                        "length_distribution": {
+                          "distribution_parameters": {
+                            "family": "Scalar",
+                            "value": 20.0
+                          },
+                          "family": "Scalar",
+                          "scaling_parameters": null,
+                          "truncation_parameters": null
+                        },
+                        "render_specification": {
+                          "contrast": null
+                        },
+                        "treadmill_specification": null
+                      },
+                      "post_patch": null,
+                      "reward_site": {
+                        "label": "RewardSite",
+                        "length_distribution": {
+                          "distribution_parameters": {
+                            "family": "Scalar",
+                            "value": 20.0
+                          },
+                          "family": "Scalar",
+                          "scaling_parameters": null,
+                          "truncation_parameters": null
+                        },
+                        "render_specification": {
+                          "contrast": null
+                        },
+                        "treadmill_specification": null
+                      }
+                    },
+                    "reward_specification": {
+                      "amount": {
+                        "distribution_parameters": {
+                          "family": "Scalar",
+                          "value": 5.0
+                        },
+                        "family": "Scalar",
+                        "scaling_parameters": null,
+                        "truncation_parameters": null
+                      },
+                      "available": {
+                        "distribution_parameters": {
+                          "family": "Scalar",
+                          "value": 5.0
+                        },
+                        "family": "Scalar",
+                        "scaling_parameters": null,
+                        "truncation_parameters": null
+                      },
+                      "delay": {
+                        "distribution_parameters": {
+                          "family": "Scalar",
+                          "value": 0.0
+                        },
+                        "family": "Scalar",
+                        "scaling_parameters": null,
+                        "truncation_parameters": null
+                      },
+                      "operant_logic": null,
+                      "probability": {
+                        "distribution_parameters": {
+                          "family": "Scalar",
+                          "value": 1.0
+                        },
+                        "family": "Scalar",
+                        "scaling_parameters": null,
+                        "truncation_parameters": null
+                      },
+                      "reward_function": []
+                    },
+                    "state_index": 0
+                  }
+                ],
+                "transition_matrix": [
+                  [
+                    1.0
+                  ]
+                ]
+              },
+              "end_conditions": []
+            }
+          ],
           "description": "Statistics of the environment",
           "items": {
             "$ref": "#/$defs/Block"
@@ -946,9 +1520,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "blocks"
-      ],
       "title": "BlockStructure",
       "type": "object"
     },
@@ -1385,6 +1956,122 @@
       "description": "Defines the statistical properties of the foraging environment.\n\nThis class specifies the patches available in the environment, their transition\nprobabilities, and initial state occupancy. It forms the core specification\nfor the foraging environment structure.",
       "properties": {
         "patches": {
+          "default": [
+            {
+              "label": "",
+              "state_index": 0,
+              "odor_specification": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "reward_specification": {
+                "amount": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 5.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "available": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 5.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "delay": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 0.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "operant_logic": null,
+                "probability": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 1.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "reward_function": []
+              },
+              "patch_virtual_sites_generator": {
+                "inter_patch": {
+                  "label": "InterPatch",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                },
+                "inter_site": {
+                  "label": "InterSite",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                },
+                "post_patch": null,
+                "reward_site": {
+                  "label": "RewardSite",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                }
+              },
+              "patch_terminators": [
+                {
+                  "count": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 1.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "terminator_type": "OnRejection"
+                }
+              ]
+            }
+          ],
           "description": "List of patches",
           "items": {
             "$ref": "#/$defs/Patch"
@@ -2721,6 +3408,11 @@
           "type": "integer"
         },
         "odor_specification": {
+          "default": [
+            1.0,
+            0.0,
+            0.0
+          ],
           "description": "A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel",
           "items": {
             "minimum": 0,
@@ -2851,9 +3543,6 @@
           "type": "array"
         }
       },
-      "required": [
-        "odor_specification"
-      ],
       "title": "Patch",
       "type": "object"
     },
