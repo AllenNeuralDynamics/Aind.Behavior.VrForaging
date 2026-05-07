@@ -1,80 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
-using System.Windows.Forms;
-using AllenNeuralDynamics.Core.Design;
-using Bonsai.Design;
-using Bonsai.Expressions;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using Bonsai;
 using Hexa.NET.ImGui;
 using Hexa.NET.ImPlot;
 
 namespace AllenNeuralDynamics.VrForaging
 {
-
-    public class PatchStateVisualizer : BufferedVisualizer
+    [Combinator]
+    [WorkflowElementCategory(ElementCategory.Combinator)]
+    [Description("Renders patch-state bar charts inside an ImPlot window on each frame. Source1 = Frame subject; Source2 = PatchState stream.")]
+    public class PatchStateVisualizer
     {
-        ImGuiControl imGuiCanvas;
+        private bool visible = true;
+        public bool Visible { get { return visible; } set { visible = value; } }
 
-        private readonly Dictionary<int, PatchState> patchStateManager = new Dictionary<int, PatchState>();
+        private float fontSize = 20f;
+        public float FontSize { get { return fontSize; } set { fontSize = value; } }
 
-        /// <inheritdoc/>
-        public override void Show(object value)
+        public IObservable<Unit> Process<TTickSource>(IObservable<TTickSource> frames, IObservable<PatchState> data)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override void ShowBuffer(IList<System.Reactive.Timestamped<object>> values)
-        {
-            imGuiCanvas.Invalidate();
-            var casted = values.Select(v => (PatchState)v.Value);
-            foreach (var patchState in casted)
+            return Observable.Create<Unit>(observer =>
             {
-                patchStateManager[patchState.PatchId] = patchState;
-            }
-            base.ShowBuffer(values);
+                var patchStates = new Dictionary<int, PatchState>();
+                var stateLock = new object();
+
+                var dataSub = data.Subscribe(
+                    state => { lock (stateLock) patchStates[state.PatchId] = state; },
+                    observer.OnError);
+
+                var frameSub = frames.SubscribeSafe(Observer.Create<TTickSource>(
+                    _ =>
+                    {
+                        if (!Visible) { observer.OnNext(Unit.Default); return; }
+
+                        Dictionary<int, PatchState> snapshot;
+                        lock (stateLock)
+                            snapshot = new Dictionary<int, PatchState>(patchStates);
+
+                        ImGui.StyleColorsLight();
+                        Vector2 displaySize;
+                        unsafe { displaySize = ImGui.GetIO().Handle->DisplaySize; }
+                        ImGui.SetNextWindowPos(new Vector2(0, 0));
+                        ImGui.SetNextWindowSize(displaySize);
+                        var windowFlags = ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize |
+                                          ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar |
+                                          ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
+                        ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
+                        ImGui.Begin("##PatchStateVisualizer", windowFlags);
+                        if (ImGui.BeginTable("##PatchColumns", 3, ImGuiTableFlags.None, new Vector2(-1, -1)))
+                        {
+                            ImGui.TableNextColumn(); MakeAxis(snapshot, "Probability", 1.0, FontSize);
+                            ImGui.TableNextColumn(); MakeAxis(snapshot, "Amount", null, FontSize);
+                            ImGui.TableNextColumn(); MakeAxis(snapshot, "Available", null, FontSize);
+                            ImGui.EndTable();
+                        }
+                        ImGui.End();
+                        ImGui.PopStyleVar();
+                        observer.OnNext(Unit.Default);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted));
+
+                return new CompositeDisposable(dataSub, frameSub);
+            });
         }
 
-        void StyleColors()
+        static unsafe void MakeAxis(Dictionary<int, PatchState> patchStates, string fieldName, double? yMax, float fontSize)
         {
-            ImGui.StyleColorsLight();
-            ImPlot.StyleColorsLight(ImPlot.GetStyle());
-        }
-
-        unsafe void MakeProbabilityAxis(string fieldName, double? yMax = null)
-        {
-
-            if (patchStateManager.Count == 0) return;
+            if (patchStates.Count == 0) return;
             var axesFlags = ImPlotAxisFlags.NoHighlight | ImPlotAxisFlags.NoInitialFit | ImPlotAxisFlags.AutoFit;
-            ImPlot.PushStyleVar(ImPlotStyleVar.FitPadding, new Vector2(0, 0));
-            ImPlot.PushStyleVar(ImPlotStyleVar.Padding, new Vector2(40, 2));
-            ImPlot.PushStyleVar(ImPlotStyleVar.BorderSize, 0);
-            ImGui.PushFont(ImGui.GetFont(), 20f);
+            ImGui.PushFont(ImGui.GetFont(), fontSize);
 
             if (ImPlot.BeginPlot(fieldName, new Vector2(-1, -1), ImPlotFlags.NoLegend))
             {
-                var xxs = patchStateManager.Keys.ToList();
-                xxs.Sort();
-
+                var xxs = patchStates.Keys.OrderBy(k => k).ToList();
                 double[] yys;
                 switch (fieldName)
                 {
-                    case "Probability":
-                        yys = xxs.Select(patchIndex => patchStateManager[patchIndex].Probability).ToArray();
-                        break;
-                    case "Amount":
-                        yys = xxs.Select(patchIndex => patchStateManager[patchIndex].Amount).ToArray();
-                        break;
-                    case "Available":
-                        yys = xxs.Select(patchIndex => patchStateManager[patchIndex].Available).ToArray();
-                        break;
-                    default:
-                        throw new ArgumentException("Invalid field name for patch state visualization.");
+                    case "Probability": yys = xxs.Select(i => patchStates[i].Probability).ToArray(); break;
+                    case "Amount":      yys = xxs.Select(i => patchStates[i].Amount).ToArray();      break;
+                    case "Available":   yys = xxs.Select(i => patchStates[i].Available).ToArray();  break;
+                    default:            throw new ArgumentException("Invalid fieldName.", "fieldName");
                 }
 
-                ImPlot.SetupAxes("PatchId", "?", axesFlags | ImPlotAxisFlags.NoLabel, axesFlags | ImPlotAxisFlags.NoLabel);
-                var _yMax = yMax.HasValue ? yMax.Value : yys.Max() * 1.10;
-                ImPlot.SetupAxesLimits(0 - 0.5, xxs.Count - 0.5, 0, _yMax, ImPlotCond.Always);
+                ImPlot.SetupAxes("PatchId", (string)null, axesFlags | ImPlotAxisFlags.NoLabel, axesFlags | ImPlotAxisFlags.NoLabel);
+                double plotYMax = yMax ?? (yys.Length > 0 ? yys.Max() * 1.10 : 1.0);
+                ImPlot.SetupAxesLimits(-0.5, xxs.Count - 0.5, 0, plotYMax, ImPlotCond.Always);
                 fixed (double* x = xxs.Select(v => (double)v).ToArray())
                 {
                     ImPlot.SetupAxisTicks(ImAxis.X1, x, xxs.Count, xxs.Select(v => v.ToString()).ToArray());
@@ -86,9 +103,8 @@ namespace AllenNeuralDynamics.VrForaging
                     var color = ColorExtensions.PatchColors[patchIdx % ColorExtensions.PatchColors.Count];
                     ImPlot.SetNextLineStyle(color, 4.0f);
                     ImPlot.SetNextFillStyle(color, 0.95f);
-
-                    fixed (double* y = new double[1] { yys[i] })
-                    fixed (double* x = new double[1] { patchIdx })
+                    fixed (double* y = new double[] { yys[i] })
+                    fixed (double* x = new double[] { (double)patchIdx })
                     {
                         ImPlot.PlotBars(string.Format("Index_{0}", patchIdx), x, y, 1, 0.9f);
                     }
@@ -96,65 +112,7 @@ namespace AllenNeuralDynamics.VrForaging
                 ImPlot.EndPlot();
             }
             ImGui.PopFont();
-            ImPlot.PopStyleVar(3);
-        }
-
-        /// <inheritdoc/>
-        public override void Load(IServiceProvider provider)
-        {
-            var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
-            var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as SoftwareEventVisualizerBuilder;
-            imGuiCanvas = new ImGuiControl();
-            imGuiCanvas.Dock = DockStyle.Fill;
-            imGuiCanvas.Render += (sender, e) =>
-            {
-                var dockspaceId = ImGui.DockSpaceOverViewport(
-                    0,
-                    ImGui.GetMainViewport(),
-                    ImGuiDockNodeFlags.AutoHideTabBar | ImGuiDockNodeFlags.NoUndocking);
-
-                StyleColors();
-
-
-                if (ImGui.Begin("PatchStateVisualizer"))
-                {
-                    ImGui.BeginTable("##Table", 3, new Vector2(-1, -1));
-                    ImGui.TableNextColumn();
-                    MakeProbabilityAxis("Probability", 1);
-                    ImGui.TableNextColumn();
-                    MakeProbabilityAxis("Amount");
-                    ImGui.TableNextColumn();
-                    MakeProbabilityAxis("Available");
-                    ImGui.EndTable();
-                }
-
-                ImGui.End();
-                var centralNode = ImGuiP.DockBuilderGetCentralNode(dockspaceId);
-                if (!ImGui.IsWindowDocked() && !centralNode.IsNull)
-                {
-                    unsafe
-                    {
-                        var handle = centralNode.Handle;
-                        uint dockId = handle->ID;
-                        ImGuiP.DockBuilderDockWindow("PatchStateVisualizer", dockId);
-                    }
-                }
-            };
-
-            var visualizerService = (IDialogTypeVisualizerService)provider.GetService(typeof(IDialogTypeVisualizerService));
-            if (visualizerService != null)
-            {
-                visualizerService.AddControl(imGuiCanvas);
-            }
-        }
-
-        /// <inheritdoc/>
-        public override void Unload()
-        {
-            if (imGuiCanvas != null)
-            {
-                imGuiCanvas.Dispose();
-            }
         }
     }
 }
+

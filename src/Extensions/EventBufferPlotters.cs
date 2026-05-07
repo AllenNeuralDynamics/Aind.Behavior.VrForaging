@@ -244,6 +244,7 @@ namespace AllenNeuralDynamics.VrForaging
         public void TryAddEvent(SoftwareEvent softwareEvent)
         {
             if (softwareEvent == null) throw new ArgumentNullException("softwareEvent");
+            if (softwareEvent.Name != EVENT_NAME) return;
             var newEvent = new VirtualSiteEvent(softwareEvent);
             events.Add(newEvent);
             events.Sort((a, b) => a.Start.CompareTo(b.Start));

@@ -6,10 +6,21 @@ import warnings
 from pydantic import ValidationError
 
 from aind_behavior_vr_foraging.task_logic import (
+    AindVrForagingTaskLogic,
     VirtualSite,
     _odor_mixture_from_odor_specification,
     _OdorSpecification,
 )
+
+
+class TestDefaultTaskLogic(unittest.TestCase):
+    def test_default_constructor(self):
+        """Test that the default constructor for AindVrForagingTaskLogic works without errors."""
+        try:
+            logic = AindVrForagingTaskLogic()
+            self.assertIsInstance(logic, AindVrForagingTaskLogic)
+        except (ValidationError, ValueError) as e:
+            self.fail(f"Default constructor raised an exception: {e}")
 
 
 class TestOdorMixtureFromOdorSpecification(unittest.TestCase):
