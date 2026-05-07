@@ -32,7 +32,7 @@ data = ["contraqctor>=0.5.5, <0.6.0"]
 
 mappers = [
     "aind-clabe[aind-services]>=0.10.5",
-    "aind-data-schema>=2.6",
+    "aind-data-schema>=2.7",
     "aind-behavior-vr-foraging[data]",
     ]
 

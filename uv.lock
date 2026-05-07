@@ -102,7 +102,7 @@ requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.13.6" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'mappers'", editable = "src/packages/aind_behavior_vr_foraging" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", specifier = ">=0.10.5" },
-    { name = "aind-data-schema", marker = "extra == 'mappers'", specifier = ">=2.6" },
+    { name = "aind-data-schema", marker = "extra == 'mappers'", specifier = ">=2.7" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.5,<0.6.0" },
     { name = "pydantic-settings" },
 ]
@@ -185,16 +185,17 @@ aind-services = [
 
 [[package]]
 name = "aind-data-schema"
-version = "2.6.0"
+version = "2.7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-data-schema-models" },
     { name = "pydantic" },
     { name = "pydantic-extra-types" },
+    { name = "tzdata" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3e/04/fb661b20352d9768f1a777f5a26a4948ebeb40b49c6d0ddbe2004351aa97/aind_data_schema-2.6.0.tar.gz", hash = "sha256:921bf9e45a4d9671f883a79219119841de3d907928568c0f6f610d029ab2babf", size = 901339, upload-time = "2026-03-09T18:25:36.958Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5f/20/adea7aec869cdc84a820414988a32ed5b1fdc20e0ce7c6f145b1b4486275/aind_data_schema-2.7.1.tar.gz", hash = "sha256:ad21d009f801a33baa52f7d28f00be03698adf04502334f428670ccfacc1a48d", size = 912389, upload-time = "2026-05-07T01:48:41.855Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a5/71/905924fa2483bb4bcc08218cc43119a790a859e695a1c28253711b11ec0d/aind_data_schema-2.6.0-py3-none-any.whl", hash = "sha256:dfc868930c9e2ee2fe8ca40ef3dc2d0502db59e44bd76c577fdecde77d73ac48", size = 92081, upload-time = "2026-03-09T18:25:35.332Z" },
+    { url = "https://files.pythonhosted.org/packages/ba/5b/ea2ec6ff2a0e9258a4aa97075f30bb0040c4c875a421aa2837c314192773/aind_data_schema-2.7.1-py3-none-any.whl", hash = "sha256:e81fd92bcd4d479f9a6636b054f18635bd20fb20b6f82159af9b66beac2963fe", size = 93639, upload-time = "2026-05-07T01:48:40.236Z" },
 ]
 
 [[package]]

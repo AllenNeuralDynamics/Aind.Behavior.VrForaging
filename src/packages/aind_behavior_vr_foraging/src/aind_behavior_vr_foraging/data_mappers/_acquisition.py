@@ -21,6 +21,7 @@ from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
 from pydantic import AwareDatetime
 
+from aind_behavior_vr_foraging import __semver__
 from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
@@ -339,9 +340,8 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         return acquisition.Code(
             url=self.repository.remote().url,
             name="Aind.Behavior.VrForaging",
-            version=self.repository.head.commit.hexsha,
-            # version=__semver__,  # TODO slot this in when this is solved https://github.com/AllenNeuralDynamics/aind-data-schema/issues/1789
-            # sha=self.repository.head.commit.hexsha,
+            version=__semver__,
+            commit_hash=self.repository.head.commit.hexsha,
             language="Bonsai",
             language_version=bonsai_version,
             run_script=Path(self.bonsai_app.workflow),
@@ -357,7 +357,8 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         return acquisition.Code(
             url=self.repository.remote().url,
             name="aind-behavior-vr-foraging",
-            version=self.repository.head.commit.hexsha,
+            version=__semver__,
+            commit_hash=self.repository.head.commit.hexsha,
             language="Python",
             language_version=semver,
         )
@@ -372,7 +373,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             raise ValueError("Trainer state or curriculum is not set in the curriculum suggestion.")
         return acquisition.Code(
             url=self.repository.remote().url,
-            # sha=self.repository.head.commit.hexsha, #  TODO see https://github.com/AllenNeuralDynamics/aind-data-schema/issues/1789
+            commit_hash=self.repository.head.commit.hexsha,
             name=self.curriculum_suggestion.trainer_state.curriculum.pkg_location,
             version=self.curriculum_suggestion.trainer_state.curriculum.version,
             language="aind-behavior-curriculum",
