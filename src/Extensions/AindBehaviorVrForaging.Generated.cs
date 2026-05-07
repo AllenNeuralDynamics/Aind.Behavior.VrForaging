@@ -731,7 +731,7 @@ namespace AindVrForagingDataSchema
         /// Parameters of the task logic
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("task_parameters", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("task_parameters")]
         [System.ComponentModel.DescriptionAttribute("Parameters of the task logic")]
         public AindVrForagingTaskParameters TaskParameters
         {
@@ -906,7 +906,7 @@ namespace AindVrForagingDataSchema
         /// Statistics of the environment
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("environment", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("environment")]
         [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
         public BlockStructure Environment
         {
@@ -924,7 +924,7 @@ namespace AindVrForagingDataSchema
         /// Control of the operation
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("operation_control", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("operation_control")]
         [System.ComponentModel.DescriptionAttribute("Control of the operation")]
         public OperationControl OperationControl
         {
@@ -1151,7 +1151,7 @@ namespace AindVrForagingDataSchema
         /// Statistics of the environment
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("environment_statistics", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("environment_statistics")]
         [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
         public EnvironmentStatistics EnvironmentStatistics
         {
@@ -1636,7 +1636,7 @@ namespace AindVrForagingDataSchema
         /// Statistics of the environment
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("blocks", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("blocks")]
         [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
         public System.Collections.Generic.List<Block> Blocks
         {
@@ -5694,7 +5694,7 @@ namespace AindVrForagingDataSchema
         /// A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("odor_specification", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("odor_specification")]
         [System.ComponentModel.DescriptionAttribute("A list of odor concentrations for the patch, where the index of the list correspo" +
             "nds to the odor channel")]
         public System.Collections.Generic.List<double> OdorSpecification

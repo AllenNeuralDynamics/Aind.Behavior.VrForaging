@@ -808,7 +808,9 @@ class Patch(BaseModel):
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
     odor_specification: OdorMixture = Field(
-        description="A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel"
+        default=[1.0, 0.0, 0.0],
+        description="A list of odor concentrations for the patch, where the index of the list corresponds to the odor channel",
+        validate_default=True,
     )
     reward_specification: RewardSpecification = Field(
         default=RewardSpecification(),
@@ -837,7 +839,7 @@ class EnvironmentStatistics(BaseModel):
     for the foraging environment structure.
     """
 
-    patches: List[Patch] = Field(default_factory=list, description="List of patches", min_length=1)
+    patches: List[Patch] = Field(default=[Patch()], description="List of patches", min_length=1, validate_default=True)
     transition_matrix: List[List[NonNegativeFloat]] = Field(
         default=[[1]],
         description="Determines the transition probabilities between patches",
@@ -1060,7 +1062,9 @@ class Block(BaseModel):
     parameters and termination criteria for that experimental phase.
     """
 
-    environment_statistics: EnvironmentStatistics = Field(description="Statistics of the environment")
+    environment_statistics: EnvironmentStatistics = Field(
+        default=EnvironmentStatistics(), description="Statistics of the environment", validate_default=True
+    )
     end_conditions: List[BlockEndCondition] = Field(
         default=[], description="List of end conditions that must be true for the block to end."
     )
@@ -1074,7 +1078,9 @@ class BlockStructure(BaseModel):
     are presented during the experiment (sequentially or randomly).
     """
 
-    blocks: List[Block] = Field(description="Statistics of the environment", min_length=1)
+    blocks: List[Block] = Field(
+        default=[Block()], description="Statistics of the environment", min_length=1, validate_default=True
+    )
     sampling_mode: Literal["Random", "Sequential"] = Field(
         default="Sequential", description="Sampling mode of the blocks."
     )
@@ -1095,8 +1101,12 @@ class AindVrForagingTaskParameters(TaskParameters):
     updaters: Dict[UpdaterTarget, NumericalUpdater] = Field(
         default_factory=dict, description="Look-up table for numeric updaters"
     )
-    environment: BlockStructure = Field(description="Statistics of the environment")
-    operation_control: OperationControl = Field(description="Control of the operation")
+    environment: BlockStructure = Field(
+        default=BlockStructure(), description="Statistics of the environment", validate_default=True
+    )
+    operation_control: OperationControl = Field(
+        default=OperationControl(), description="Control of the operation", validate_default=True
+    )
 
 
 class AindVrForagingTaskLogic(Task):
@@ -1110,4 +1120,6 @@ class AindVrForagingTaskLogic(Task):
 
     version: Literal[__semver__] = __semver__
     name: Literal["AindVrForaging"] = Field(default="AindVrForaging", description="Name of the task logic", frozen=True)
-    task_parameters: AindVrForagingTaskParameters = Field(description="Parameters of the task logic")
+    task_parameters: AindVrForagingTaskParameters = Field(
+        default=AindVrForagingTaskParameters(), description="Parameters of the task logic", validate_default=True
+    )

@@ -181,18 +181,25 @@ async def calibration_protocol(launcher: Launcher) -> None:
     picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
 
     # Pick and register session
-    session = Session(subject="CALIBRATION", experiment="CALIBRATION", date=utcnow())
+    session = Session(
+        subject="CALIBRATION",
+        experiment="CALIBRATION",
+        date=utcnow(),
+        allow_dirty_repo=True,
+        notes="Session for rig calibration. No actual experiment data will be recorded.",
+    )
 
     # Fetch rig settings
     rig = picker.pick_rig(AindVrForagingRig)
-
     launcher.register_session(session, rig.data_directory)
 
     # Run the task via Bonsai
     bonsai_app = AindBehaviorServicesBonsaiApp(
         workflow=Path(r"./src/main.bonsai"),
         temp_directory=launcher.temp_dir,
+        task=AindVrForagingTaskLogic(),
         rig=rig,
+        session=session,
     )
     await bonsai_app.run_async()
     logger.info("Calibration protocol completed successfully.")
