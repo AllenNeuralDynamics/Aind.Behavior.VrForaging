@@ -114,9 +114,7 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
                 <Value>0</Value>
@@ -312,12 +310,10 @@ Item2 as TotalReward)</scr:Expression>
                                         <gl:Period>PT1S</gl:Period>
                                       </Combinator>
                                     </Expression>
-                                    <Expression xsi:type="rx:Accumulate" />
                                     <Expression xsi:type="WorkflowOutput" />
                                   </Nodes>
                                   <Edges>
                                     <Edge From="0" To="1" Label="Source1" />
-                                    <Edge From="1" To="2" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -365,7 +361,7 @@ it.Item5 as TimeSinceLastChoice)
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p1:TableVisualizer">
                             <p1:Visible>true</p1:Visible>
-                            <p1:FontSize>24</p1:FontSize>
+                            <p1:FontSize>28</p1:FontSize>
                           </Combinator>
                         </Expression>
                       </Nodes>
