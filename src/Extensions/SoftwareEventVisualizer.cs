@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Numerics;
 using System.Reactive;
 using System.Reactive.Disposables;
@@ -30,14 +31,13 @@ namespace AllenNeuralDynamics.VrForaging
         {
             return Observable.Create<Unit>(observer =>
             {
-                // Created per-subscription — fixes the original static shared-state bug
-                var eventPlotters = new List<ScatterSoftwareEventPlotter>
+                var series = new List<ScatterEventSeries>
                 {
-                    new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("GiveReward"),    new Vector4(0.12f, 0.56f, 1f, 1),                       yPoint: 0.45f),
-                    new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("ChoiceFeedback"), new Vector4(0.95f, 0.1f,  0.2f, 1),                    yPoint: 0.55f),
-                    new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("##Lick"),         new Vector4(0.05f, 0.05f, 0.05f, 1), marker: null, size: 0.05f, yPoint: 0.5f),
+                    new ScatterEventSeries(new SoftwareEventBuffer("GiveReward"),    new Vector4(0.12f, 0.56f, 1f, 1),                       yPoint: 0.45f),
+                    new ScatterEventSeries(new SoftwareEventBuffer("ChoiceFeedback"), new Vector4(0.95f, 0.1f,  0.2f, 1),                    yPoint: 0.55f),
+                    new ScatterEventSeries(new SoftwareEventBuffer("##Lick"),         new Vector4(0.05f, 0.05f, 0.05f, 1), marker: null, size: 0.05f, yPoint: 0.5f),
                 };
-                var ethogramPlotter = new EthogramPlotter(new VirtualSiteEventBuffer());
+                var ethogramBuffer = new VirtualSiteEventBuffer();
                 double latestTimestamp = 0;
                 var bufferLock = new object();
 
@@ -50,14 +50,13 @@ namespace AllenNeuralDynamics.VrForaging
                             var ts = evt.Timestamp ?? 0;
                             if (ts > latestTimestamp) latestTimestamp = ts;
                             var win = WindowSize;
-                            foreach (var p in eventPlotters)
+                            foreach (var s in series)
                             {
-                                p.Buffer.TryAddEvent(evt);
-                                p.Buffer.RemovePast(latestTimestamp - win);
+                                s.Buffer.TryAddEvent(evt);
+                                s.Buffer.RemovePast(latestTimestamp - win);
                             }
-                            ethogramPlotter.Buffer.TryAddEvent(evt);
-                            ethogramPlotter.Buffer.RemovePast(latestTimestamp - win);
-                            ethogramPlotter.SetLatestTimestamp(latestTimestamp);
+                            ethogramBuffer.TryAddEvent(evt);
+                            ethogramBuffer.RemovePast(latestTimestamp - win);
                         }
                     },
                     observer.OnError);
@@ -72,13 +71,18 @@ namespace AllenNeuralDynamics.VrForaging
 
                         if (!Visible) { observer.OnNext(Unit.Default); return; }
 
+                        // Snapshot all data inside the lock — copies the arrays so
+                        // the render path works on isolated data and cannot race
+                        // with the data subscription mutating the buffers.
                         double ts, win;
-                        List<ScatterSoftwareEventPlotter> plotterSnapshot;
+                        List<ScatterSnapshot> scatterSnaps;
+                        List<EthogramEventSnapshot> ethogramSnaps;
                         lock (bufferLock)
                         {
-                            ts  = latestTimestamp;
+                            ts = latestTimestamp;
                             win = WindowSize;
-                            plotterSnapshot = new List<ScatterSoftwareEventPlotter>(eventPlotters);
+                            scatterSnaps = series.Select(s => s.TakeSnapshot()).ToList();
+                            ethogramSnaps = EthogramEventSnapshot.FromBuffer(ethogramBuffer, latestTimestamp);
                         }
 
                         ImGui.StyleColorsLight();
@@ -91,7 +95,7 @@ namespace AllenNeuralDynamics.VrForaging
                                           ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
                         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
                         ImGui.Begin("##SoftwareEventVisualizer", windowFlags);
-                        RenderEthogram(plotterSnapshot, ethogramPlotter, ts, win, FontSize);
+                        RenderEthogram(scatterSnaps, ethogramSnaps, ts, win, FontSize);
                         ImGui.End();
                         ImGui.PopStyleVar();
                         observer.OnNext(Unit.Default);
@@ -104,8 +108,8 @@ namespace AllenNeuralDynamics.VrForaging
         }
 
         static unsafe void RenderEthogram(
-            List<ScatterSoftwareEventPlotter> eventPlotters,
-            EthogramPlotter ethogramPlotter,
+            List<ScatterSnapshot> scatterSnaps,
+            List<EthogramEventSnapshot> ethogramSnaps,
             double latestTimestamp,
             double windowSize,
             float fontSize)
@@ -121,15 +125,14 @@ namespace AllenNeuralDynamics.VrForaging
                 ImPlot.SetupAxisTicks(ImAxis.X1, latestTimestamp - windowSize, latestTimestamp, 2,
                     new string[] { "-" + windowSize.ToString(), "0" });
 
-                ethogramPlotter.SetLatestTimestamp(latestTimestamp);
-                ethogramPlotter.Plot();
-                foreach (var plotter in eventPlotters)
-                    plotter.Plot();
+                EthogramEventSnapshot.PlotAll(ethogramSnaps);
+                foreach (var snap in scatterSnaps)
+                    snap.Plot();
 
+                ImPlot.PopStyleVar();
                 ImPlot.EndPlot();
             }
             ImGui.PopFont();
         }
     }
 }
-

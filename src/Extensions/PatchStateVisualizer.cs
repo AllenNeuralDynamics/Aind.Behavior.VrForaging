@@ -115,4 +115,3 @@ namespace AllenNeuralDynamics.VrForaging
         }
     }
 }
-
