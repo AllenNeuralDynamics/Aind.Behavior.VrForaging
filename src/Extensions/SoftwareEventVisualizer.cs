@@ -69,6 +69,10 @@ namespace AllenNeuralDynamics.VrForaging
                             if (tick.Item2 > latestTimestamp) latestTimestamp = tick.Item2;
                         }
 
+                        // Disable native assertions for recoverable ImGui errors
+                        // (mirrors bonsai-rx/imgui PR #29, not yet in 0.1.0).
+                        unsafe { ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0; }
+
                         if (!Visible) { observer.OnNext(Unit.Default); return; }
 
                         // Snapshot all data inside the lock — copies the arrays so
