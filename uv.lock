@@ -103,7 +103,7 @@ requires-dist = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'mappers'", editable = "src/packages/aind_behavior_vr_foraging" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", specifier = ">=0.10.5" },
     { name = "aind-data-schema", marker = "extra == 'mappers'", specifier = ">=2.7" },
-    { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.5,<0.6.0" },
+    { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.7,<0.6.0" },
     { name = "pydantic-settings" },
 ]
 provides-extras = ["data", "mappers"]
@@ -200,16 +200,16 @@ wheels = [
 
 [[package]]
 name = "aind-data-schema-models"
-version = "5.4.5"
+version = "5.5.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "importlib-resources" },
     { name = "pydantic" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/38/72/7271bcf1053b771a9aa832a2026a9b7bb9ebbe9f618297dd21b93044e749/aind_data_schema_models-5.4.5.tar.gz", hash = "sha256:cb91300ed33f77f6ccb30c28bf1085a6ec856f0c99afa47cf66d48d918dc07de", size = 341353, upload-time = "2026-04-20T22:58:37.536Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8e/7c/389a8d4f17de32fe83b3259f77dbf78e117595554ffe61efc7167787d6d9/aind_data_schema_models-5.5.2.tar.gz", hash = "sha256:945d193111770ae59472ee92b0032b649dec4668008fcb4bff2f0cff3871ae72", size = 341524, upload-time = "2026-05-08T03:58:09.931Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0a/5d/892c2d9f94195828a11981ef2be2c5b05f49ff3d4cc93f79af6e67e5a716/aind_data_schema_models-5.4.5-py3-none-any.whl", hash = "sha256:f61275eb4145c3fb1e65374978f79e85a021a7e0dc9f05156c883037b0211660", size = 310151, upload-time = "2026-04-20T22:58:36.235Z" },
+    { url = "https://files.pythonhosted.org/packages/c6/06/8336be65450d232de8abaf6d3353a877de296dc303c4f4483d67c08cc907/aind_data_schema_models-5.5.2-py3-none-any.whl", hash = "sha256:6ec4aa02549b2ce0c21e8205dc470cdabddf1346c7cb2b6afd195334325e85f3", size = 310311, upload-time = "2026-05-08T03:58:08.486Z" },
 ]
 
 [[package]]
@@ -607,7 +607,7 @@ wheels = [
 
 [[package]]
 name = "contraqctor"
-version = "0.5.6"
+version = "0.5.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -624,9 +624,9 @@ dependencies = [
     { name = "scipy" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/92/ff/7a9539290e9272e91a83c396f9b944db2de93c85679b86bc8dc4d7b7ebf2/contraqctor-0.5.6.tar.gz", hash = "sha256:d7f9b9331f4ea7ba9b13d42a0a1f8101079dbbc41d832a8d94c051bbdff2b832", size = 54585, upload-time = "2026-05-05T22:00:38.406Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9f/db/462e9992cf98faf9b5a7eb8ff9906d7812266df377a0d4790c968610fd40/contraqctor-0.5.7.tar.gz", hash = "sha256:04c7540fb6d7f8c4f20d14e8e0f301cd80cff218254e1692b4bcfd8a13a48a7b", size = 55942, upload-time = "2026-05-08T19:58:29.611Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7d/de/7bf9adf0eacd7b77bbb645bc66e45db49ecdaee234fe5a7013a851ee44f0/contraqctor-0.5.6-py3-none-any.whl", hash = "sha256:103c27208a53c7d0d24a6ae035f3dc1aac720eb67a8ff09226f669886b023661", size = 67952, upload-time = "2026-05-05T22:00:39.502Z" },
+    { url = "https://files.pythonhosted.org/packages/da/ca/7037a0bcbf4431fcce48f6b1033df0c8172e047c35531c0b78438aecb2ff/contraqctor-0.5.7-py3-none-any.whl", hash = "sha256:78b40003a79f1bf8071f89af1c970e856ea2ad10d93baffc8e3a5cd078a2cc62", size = 69247, upload-time = "2026-05-08T19:58:30.692Z" },
 ]
 
 [[package]]
@@ -738,7 +738,7 @@ name = "cryptography"
 version = "48.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform == 'win32'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9f/a9/db8f313fdcd85d767d4973515e1db101f9c71f95fced83233de224673757/cryptography-48.0.0.tar.gz", hash = "sha256:5c3932f4436d1cccb036cb0eaef46e6e2db91035166f1ad6505c3c9d5a635920", size = 832984, upload-time = "2026-05-04T22:59:38.133Z" }
 wheels = [
@@ -1462,9 +1462,9 @@ name = "msal"
 version = "1.36.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography", marker = "sys_platform == 'win32'" },
-    { name = "pyjwt", extra = ["crypto"], marker = "sys_platform == 'win32'" },
-    { name = "requests", marker = "sys_platform == 'win32'" },
+    { name = "cryptography" },
+    { name = "pyjwt", extra = ["crypto"] },
+    { name = "requests" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/de/cb/b02b0f748ac668922364ccb3c3bff5b71628a05f5adfec2ba2a5c3031483/msal-1.36.0.tar.gz", hash = "sha256:3f6a4af2b036b476a4215111c4297b4e6e236ed186cd804faefba23e4990978b", size = 174217, upload-time = "2026-04-09T10:20:33.525Z" }
 wheels = [
@@ -1906,16 +1906,16 @@ wheels = [
 
 [[package]]
 name = "pydantic-settings"
-version = "2.14.0"
+version = "2.14.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
     { name = "python-dotenv" },
     { name = "typing-inspection" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/42/98/c8345dccdc31de4228c039a98f6467a941e39558da41c1744fbe29fa5666/pydantic_settings-2.14.0.tar.gz", hash = "sha256:24285fd4b0e0c06507dd9fdfd331ee23794305352aaec8fc4eb92d4047aeb67d", size = 235709, upload-time = "2026-04-20T13:37:40.293Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/07/60/1d1e59c9c90d54591469ada7d268251f71c24bdb765f1a8a832cee8c6653/pydantic_settings-2.14.1.tar.gz", hash = "sha256:e874d3bec7e787b0c9958277956ed9b4dd5de6a80e162188fdaff7c5e26fd5fa", size = 235551, upload-time = "2026-05-08T13:40:06.542Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/01/dd/bebff3040138f00ae8a102d426b27349b9a49acc310fcae7f92112d867e3/pydantic_settings-2.14.0-py3-none-any.whl", hash = "sha256:fc8d5d692eb7092e43c8647c1c35a3ecd00e040fcf02ed86f4cb5458ca62182e", size = 60940, upload-time = "2026-04-20T13:37:38.586Z" },
+    { url = "https://files.pythonhosted.org/packages/ae/8d/f1af3832f5e6eb13ba94ee809e72b8ecb5eef226d27ee0bef7d963d943c7/pydantic_settings-2.14.1-py3-none-any.whl", hash = "sha256:6e3c7edfd8277687cdc598f56e5cff0e9bfff0910a3749deaa8d4401c3a2b9de", size = 60964, upload-time = "2026-05-08T13:40:04.958Z" },
 ]
 
 [[package]]
@@ -1952,7 +1952,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography", marker = "sys_platform == 'win32'" },
+    { name = "cryptography" },
 ]
 
 [[package]]
@@ -2438,11 +2438,11 @@ wheels = [
 
 [[package]]
 name = "urllib3"
-version = "2.6.3"
+version = "2.7.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c7/24/5f1b3bdffd70275f6661c76461e25f024d5a38a46f04aaca912426a2b1d3/urllib3-2.6.3.tar.gz", hash = "sha256:1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed", size = 435556, upload-time = "2026-01-07T16:24:43.925Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/0c/06f8b233b8fd13b9e5ee11424ef85419ba0d8ba0b3138bf360be2ff56953/urllib3-2.7.0.tar.gz", hash = "sha256:231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c", size = 433602, upload-time = "2026-05-07T16:13:18.596Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/39/08/aaaad47bc4e9dc8c725e68f9d04865dbcb2052843ff09c97b08904852d84/urllib3-2.6.3-py3-none-any.whl", hash = "sha256:bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4", size = 131584, upload-time = "2026-01-07T16:24:42.685Z" },
+    { url = "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl", hash = "sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897", size = 131087, upload-time = "2026-05-07T16:13:17.151Z" },
 ]
 
 [[package]]
