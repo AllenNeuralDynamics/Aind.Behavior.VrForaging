@@ -29,4 +29,4 @@ class DataQcCli(BaseSettings, cli_kebab_case=True):
             from contraqctor.qc.reporters import HtmlReporter
 
             reporter = HtmlReporter(output_path=report_path)
-            reporter.report_results(results, serialize_context_exportable_obj=True)
+            reporter.report_results(results, serialize_context_exportable_obj=True, render_traceback=False)
