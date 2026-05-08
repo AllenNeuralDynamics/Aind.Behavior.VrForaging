@@ -37,6 +37,10 @@ namespace AllenNeuralDynamics.VrForaging
                 var frameSub = frames.SubscribeSafe(Observer.Create<TTickSource>(
                     _ =>
                     {
+                        // Disable native assertions for recoverable ImGui errors
+                        // (mirrors bonsai-rx/imgui PR #29, not yet in 0.1.0).
+                        unsafe { ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0; }
+
                         if (!Visible) { observer.OnNext(Unit.Default); return; }
 
                         Dictionary<int, PatchState> snapshot;
@@ -115,4 +119,3 @@ namespace AllenNeuralDynamics.VrForaging
         }
     }
 }
-

@@ -45,8 +45,9 @@ public class PlotStyle
                 observer.OnCompleted));
     }
 
-    private void PushStyle()
+    private unsafe void PushStyle()
     {
+        ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0;
         ImGui.PushFont(ImGui.GetFont(), FontSize);
         ImPlot.PushStyleVar(ImPlotStyleVar.LineWeight, LineWidth);
     }

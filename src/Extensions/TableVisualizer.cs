@@ -30,6 +30,10 @@ public class TableVisualizer
             var sourceObserver = Observer.Create<TSource>(
                 value =>
                 {
+                    // Disable native assertions for recoverable ImGui errors
+                    // (mirrors bonsai-rx/imgui PR #29, not yet in 0.1.0).
+                    unsafe { ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0; }
+
                     if (!Visible) return;
 
                     Vector2 displaySize;
@@ -101,4 +105,3 @@ public class TableVisualizer
         ImGui.PopFont();
     }
 }
-
