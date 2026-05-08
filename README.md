@@ -68,23 +68,19 @@ You may need to install optional dependencies depending on the sub-commands you 
 
 ## 🎮 Experiment launcher (CLABE)
 
-To manage experiments and input files, this repository contains a launcher script that can be used to run the VR Foraging task. This script is located at `./src/aind_behavior_vr_foraging/launcher.py`. It can be run from the command line as follows:
+To manage experiments and input files, this repository contains a collection of launcher scripts that can be used to run the VR Foraging task. These are located inside `./scripts` and can be run using the `clabe` tool:
 
 ```powershell
-uv run vr-foraging clabe
+uv run clabe run `./scripts/<script-name>.py`
 ```
 
 Additional arguments can be passed to the script as needed:
 
 ```powershell
-uv run vr-foraging clabe -h
+uv run clabe -h
 ```
 
 or via a `./local/clabe.yml` file. (An example can be found in `./Examples/clabe.yml`)
-
-In order to run the launcher script, optional dependencies should be installed via:
-
-Additional custom launcher scripts can be created and used as needed.
 
 ## 🔍 Primary data quality-control
 
@@ -116,4 +112,4 @@ uv run vr-foraging regenerate
 
 The VrForaging platform supports a curricula structure that allows for the organization and management of different learning paths and experiences. The implementation relies on the a common definition of "curriculum" progression provided by [`aind-behavior-curriculum`](https://github.com/AllenNeuralDynamics/aind-behavior-curriculum).
 
-Curricula are expected to be defined in `src/aind_behavior_vr_foraging/curricula/` by adding individual submodules that follow the structure of [`https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging.Curricula`](https://allenneuraldynamics.github.io/Aind.Behavior.VrForaging.Curricula/). Updates to the curriculum will therefore require, by design, explicitly updating the submodule reference via a reviewed pull request.
+Curricula are expected to be defined in `aind_behavior_vr_foraging_curricula` package.
