@@ -50,6 +50,16 @@ The workflow can thus be executed using the [Bonsai CLI](https://bonsai-rx.org/d
 
 However, for a better experiment management user experience, it is recommended to use the provided experiment launcher below.
 
+## 🔄 Regenerating schemas
+
+To regenerate all schemas (task logic, rig, and curricula), run the following from the repository root:
+
+```powershell
+uv run scripts/regenerate.py
+```
+
+This runs both `vr-foraging regenerate` and the curricula schema generation in sequence.
+
 ## [> ] CLI tools
 
 The platform exposes a few CLI tools to facilitate various tasks. Tools are available via:
@@ -96,16 +106,6 @@ Once an experiment is collected, data can be mapped to aind-data-schema using th
 
 ```powershell
 uv run vr-foraging data-mapper
-```
-
-## 🔄 Regenerating schemas
-
-DSL schemas can be modified in `./src/aind_behavior_vr_foraging/rig.py` (or `(...)/task_logic`.py`).
-
-Once modified, changes to the DSL must be propagated to `json-schema` and `csharp` API. This can be done by running:
-
-```powershell
-uv run vr-foraging regenerate
 ```
 
 ## 📖 Curricula
