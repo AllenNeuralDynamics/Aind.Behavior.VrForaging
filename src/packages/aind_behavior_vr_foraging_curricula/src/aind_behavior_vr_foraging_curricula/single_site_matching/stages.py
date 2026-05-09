@@ -6,7 +6,7 @@ from aind_behavior_curriculum import MetricsProvider, Policy, Stage
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
 
 from .metrics import metrics_from_dataset
-from .policies import p_learn_to_stop
+from .policies import p_drop_reward_probability, p_grow_environment, p_learn_to_stop
 
 
 def make_patch(
@@ -180,7 +180,7 @@ def make_s_learn_to_stop() -> Stage:
                     vr_task_logic.UpdaterTarget.STOP_DURATION_OFFSET: vr_task_logic.NumericalUpdater(
                         operation=vr_task_logic.NumericalUpdaterOperation.OFFSET,
                         parameters=vr_task_logic.NumericalUpdaterParameters(
-                            initial_value=0, on_success=0.003, minimum=0, maximum=0.6
+                            initial_value=0, on_success=0.003, minimum=0, maximum=1.5
                         ),
                     ),
                     vr_task_logic.UpdaterTarget.STOP_VELOCITY_THRESHOLD: vr_task_logic.NumericalUpdater(
@@ -196,13 +196,13 @@ def make_s_learn_to_stop() -> Stage:
                 environment=vr_task_logic.BlockStructure(
                     blocks=[
                         make_block(
-                            p_rew=(1, 1, None),
-                            p_replenish=(1, 1, None),
+                            p_rew=(1, 1, 0),
+                            p_replenish=(0, 0, 0),
                             n_min_patches=100000,
                             make_patch_kwargs={
-                                "inter_patch_min_length": 50,
-                                "inter_patch_mean_length": 120,
-                                "inter_patch_max_length": 150,
+                                "inter_patch_min_length": 25,
+                                "inter_patch_mean_length": 40,
+                                "inter_patch_max_length": 75,
                                 "inter_site_length": 15,
                                 "reward_site_length": 40,
                             },
@@ -213,7 +213,7 @@ def make_s_learn_to_stop() -> Stage:
                 operation_control=make_operation_control(velocity_threshold=60),
             ),
         ),
-        start_policies=[Policy(x) for x in [p_learn_to_stop]],
+        start_policies=[Policy(x) for x in [p_learn_to_stop, p_grow_environment, p_drop_reward_probability]],
         metrics_provider=MetricsProvider(metrics_from_dataset),
     )
 
@@ -226,7 +226,7 @@ def make_s_graduated_stage() -> Stage:
         "inter_site_length": 15,
         "reward_site_length": 50,
         "reward_amount": 7,
-        "stop_duration": 1.5,
+        "stop_duration": 2.5,
     }
 
     return Stage(
