@@ -120,19 +120,31 @@ def _make_metrics(
 
 
 def _inter_patch_dist(task: AindVrForagingTaskLogic) -> distributions.ExponentialDistribution:
-    dist = task.task_parameters.environment.blocks[0].environment_statistics.patches[0].patch_virtual_sites_generator.inter_patch.length_distribution
+    dist = (
+        task.task_parameters.environment.blocks[0]
+        .environment_statistics.patches[0]
+        .patch_virtual_sites_generator.inter_patch.length_distribution
+    )
     assert isinstance(dist, distributions.ExponentialDistribution)
     return dist
 
 
 def _reward_site_dist(task: AindVrForagingTaskLogic) -> distributions.Scalar:
-    dist = task.task_parameters.environment.blocks[0].environment_statistics.patches[0].patch_virtual_sites_generator.reward_site.length_distribution
+    dist = (
+        task.task_parameters.environment.blocks[0]
+        .environment_statistics.patches[0]
+        .patch_virtual_sites_generator.reward_site.length_distribution
+    )
     assert isinstance(dist, distributions.Scalar)
     return dist
 
 
 def _reward_spec_p(task: AindVrForagingTaskLogic, patch_idx: int = 0) -> float:
-    spec = task.task_parameters.environment.blocks[0].environment_statistics.patches[patch_idx].reward_specification.probability
+    spec = (
+        task.task_parameters.environment.blocks[0]
+        .environment_statistics.patches[patch_idx]
+        .reward_specification.probability
+    )
     assert isinstance(spec, distributions.Scalar)
     return spec.distribution_parameters.value
 
@@ -180,9 +192,15 @@ class TestPGrowEnvironment:
         ip_after = _inter_patch_dist(result)
         assert ip_after.truncation_parameters is not None
 
-        expected_min = min(start_min * _ENV_GROW_GAINS["inter_patch_min_length"], _ENV_GROW_TARGETS["inter_patch_min_length"])
-        expected_max = min(start_max * _ENV_GROW_GAINS["inter_patch_max_length"], _ENV_GROW_TARGETS["inter_patch_max_length"])
-        expected_mean = min(start_mean * _ENV_GROW_GAINS["inter_patch_mean_length"], _ENV_GROW_TARGETS["inter_patch_mean_length"])
+        expected_min = min(
+            start_min * _ENV_GROW_GAINS["inter_patch_min_length"], _ENV_GROW_TARGETS["inter_patch_min_length"]
+        )
+        expected_max = min(
+            start_max * _ENV_GROW_GAINS["inter_patch_max_length"], _ENV_GROW_TARGETS["inter_patch_max_length"]
+        )
+        expected_mean = min(
+            start_mean * _ENV_GROW_GAINS["inter_patch_mean_length"], _ENV_GROW_TARGETS["inter_patch_mean_length"]
+        )
         expected_rsl = min(start_rsl * _ENV_GROW_GAINS["reward_site_length"], _ENV_GROW_TARGETS["reward_site_length"])
 
         assert abs(ip_after.truncation_parameters.min - expected_min) < 1e-6
@@ -215,7 +233,9 @@ class TestPGrowEnvironment:
         assert abs(ip.truncation_parameters.min - _ENV_GROW_TARGETS["inter_patch_min_length"]) < 1e-6
         assert abs(ip.truncation_parameters.max - _ENV_GROW_TARGETS["inter_patch_max_length"]) < 1e-6
         assert abs(1.0 / ip.distribution_parameters.rate - _ENV_GROW_TARGETS["inter_patch_mean_length"]) < 1e-6
-        assert abs(_reward_site_dist(task).distribution_parameters.value - _ENV_GROW_TARGETS["reward_site_length"]) < 1e-6
+        assert (
+            abs(_reward_site_dist(task).distribution_parameters.value - _ENV_GROW_TARGETS["reward_site_length"]) < 1e-6
+        )
 
     def test_reaches_target_within_n_days(self):
         """Starting from the initial stage values, the target must be reached within
