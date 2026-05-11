@@ -62,6 +62,20 @@
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TriggeredCamerasStream</Name>
                   </Expression>
+                  <Expression xsi:type="gui:SliderBuilder">
+                    <gui:Name>Transparency</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:Minimum>0</gui:Minimum>
+                    <gui:Maximum>1</gui:Maximum>
+                    <gui:DecimalPlaces>2</gui:DecimalPlaces>
+                    <gui:Value>1</gui:Value>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="OverlayAlpha" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\SpinnakerCameraControllerVisualizer.bonsai">
                     <Minimum>1</Minimum>
                     <Maximum>254</Maximum>
@@ -70,9 +84,44 @@
                   <Expression xsi:type="VisualizerMapping">
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>CameraVisualizer</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>1</gui:ColumnCount>
+                    <gui:RowCount>2</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles>
+                      <gui:RowStyle>
+                        <gui:SizeType>Percent</gui:SizeType>
+                        <gui:Height>0.9</gui:Height>
+                      </gui:RowStyle>
+                      <gui:RowStyle>
+                        <gui:SizeType>Percent</gui:SizeType>
+                        <gui:Height>0.1</gui:Height>
+                      </gui:RowStyle>
+                    </gui:RowStyles>
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TriggeredCamerasStream</Name>
                   </Expression>
+                  <Expression xsi:type="gui:SliderBuilder">
+                    <gui:Name>Transparency</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:Minimum>0</gui:Minimum>
+                    <gui:Maximum>1</gui:Maximum>
+                    <gui:DecimalPlaces>2</gui:DecimalPlaces>
+                    <gui:Value>1</gui:Value>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="OverlayAlpha" />
+                    </PropertyMappings>
+                  </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\SpinnakerCameraControllerVisualizer.bonsai">
                     <Minimum>1</Minimum>
                     <Maximum>254</Maximum>
@@ -81,6 +130,27 @@
                   <Expression xsi:type="VisualizerMapping">
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>CameraVisualizer</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>1</gui:ColumnCount>
+                    <gui:RowCount>2</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles>
+                      <gui:RowStyle>
+                        <gui:SizeType>Percent</gui:SizeType>
+                        <gui:Height>0.9</gui:Height>
+                      </gui:RowStyle>
+                      <gui:RowStyle>
+                        <gui:SizeType>Percent</gui:SizeType>
+                        <gui:Height>0.1</gui:Height>
+                      </gui:RowStyle>
+                    </gui:RowStyles>
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="SubscribeSubject">
                     <Name>MonitoringCamerasStream</Name>
                   </Expression>
@@ -101,16 +171,28 @@
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="0" To="3" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="9" Label="Source1" />
+                  <Edge From="1" To="5" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source2" />
                   <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="9" Label="Source2" />
+                  <Edge From="4" To="6" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source3" />
+                  <Edge From="7" To="19" Label="Source1" />
+                  <Edge From="8" To="11" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="9" To="13" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="14" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source2" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="19" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source3" />
+                  <Edge From="19" To="20" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -339,6 +421,12 @@ Item2 as TotalReward)</scr:Expression>
                             </Edges>
                           </Workflow>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>SubjectSchema</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Notes</Selector>
+                        </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:CombineLatest" />
                         </Expression>
@@ -350,7 +438,8 @@ it.Item2.Item2 as Stage,
 it.Item3.Heartbeat as LastHeartbeat,
 it.Item3.TotalReward as TotalReward,
 it.Item4 as TimeSinceStart,
-it.Item5 as TimeSinceLastChoice)
+it.Item5 as TimeSinceLastChoice,
+it.Item6 as Notes)
 </scr:Expression>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
@@ -368,17 +457,19 @@ it.Item5 as TimeSinceLastChoice)
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="3" To="14" Label="Source1" />
+                        <Edge From="3" To="16" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="11" Label="Source1" />
+                        <Edge From="5" To="13" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="11" Label="Source2" />
-                        <Edge From="8" To="11" Label="Source3" />
-                        <Edge From="9" To="11" Label="Source4" />
-                        <Edge From="10" To="11" Label="Source5" />
+                        <Edge From="7" To="13" Label="Source2" />
+                        <Edge From="8" To="13" Label="Source3" />
+                        <Edge From="9" To="13" Label="Source4" />
+                        <Edge From="10" To="13" Label="Source5" />
                         <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source2" />
+                        <Edge From="12" To="13" Label="Source6" />
+                        <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source1" />
+                        <Edge From="15" To="16" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -642,14 +733,6 @@ it.Item5 as TimeSinceLastChoice)
                           <implot:LabelX>Time</implot:LabelX>
                           <implot:LabelY>Velocity</implot:LabelY>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:SetAxisLimits">
-                            <p1:MinX xsi:nil="true" />
-                            <p1:MaxX xsi:nil="true" />
-                            <p1:MinY>0</p1:MinY>
-                            <p1:MaxY xsi:nil="true" />
-                          </Combinator>
-                        </Expression>
                         <Expression xsi:type="rx:PublishSubject">
                           <Name>Plot</Name>
                         </Expression>
@@ -678,7 +761,7 @@ it.Item5 as TimeSinceLastChoice)
                           <scr:Expression>new (it.Item1.Item1 as Velocity, it.Item2 as Threshold, it.Item1.Item2 as Timestamp)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="imviz:RollingBufferBuilder">
-                          <imviz:Capacity>1000</imviz:Capacity>
+                          <imviz:Capacity>3500</imviz:Capacity>
                           <imviz:IndexSelector>Timestamp</imviz:IndexSelector>
                           <imviz:ValueSelector>Velocity,Threshold</imviz:ValueSelector>
                         </Expression>
@@ -696,17 +779,16 @@ it.Item5 as TimeSinceLastChoice)
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="8" To="14" Label="Source1" />
+                        <Edge From="7" To="13" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="13" Label="Source1" />
+                        <Edge From="10" To="12" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source2" />
                         <Edge From="12" To="13" Label="Source2" />
-                        <Edge From="13" To="14" Label="Source2" />
+                        <Edge From="13" To="14" Label="Source1" />
                         <Edge From="14" To="15" Label="Source1" />
                         <Edge From="15" To="16" Label="Source1" />
                         <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
