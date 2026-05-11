@@ -45,7 +45,9 @@ public class TableVisualizer
                                       ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
                     ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
                     ImGui.Begin("##TableVisualizer", windowFlags);
+                    ImGui.PushFont(ImGui.GetFont(), FontSize);
                     DrawTable(Item, FontSize);
+                    ImGui.PopFont();
                     ImGui.End();
                     ImGui.PopStyleVar();
                     observer.OnNext(value);
@@ -82,7 +84,6 @@ public class TableVisualizer
         }
 
         var avail = ImGui.GetContentRegionAvail();
-        ImGui.PushFont(ImGui.GetFont(), fontSize);
 
         var tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchSame | ImGuiTableFlags.ScrollY;
         if (ImGui.BeginTable("ItemPropertiesTable", 2, tableFlags, avail))
@@ -102,6 +103,5 @@ public class TableVisualizer
             }
             ImGui.EndTable();
         }
-        ImGui.PopFont();
     }
 }

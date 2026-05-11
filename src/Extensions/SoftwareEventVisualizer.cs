@@ -99,7 +99,9 @@ namespace AllenNeuralDynamics.VrForaging
                                           ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
                         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
                         ImGui.Begin("##SoftwareEventVisualizer", windowFlags);
+                        ImGui.PushFont(ImGui.GetFont(), FontSize);
                         RenderEthogram(scatterSnaps, ethogramSnaps, ts, win, FontSize);
+                        ImGui.PopFont();
                         ImGui.End();
                         ImGui.PopStyleVar();
                         observer.OnNext(Unit.Default);
@@ -119,7 +121,6 @@ namespace AllenNeuralDynamics.VrForaging
             float fontSize)
         {
             var axesFlags = ImPlotAxisFlags.NoHighlight | ImPlotAxisFlags.NoInitialFit | ImPlotAxisFlags.AutoFit;
-            ImGui.PushFont(ImGui.GetFont(), fontSize);
 
             if (ImPlot.BeginPlot("EthogramVisualizer", new Vector2(-1, -1), ImPlotFlags.NoTitle))
             {
@@ -136,7 +137,6 @@ namespace AllenNeuralDynamics.VrForaging
                 ImPlot.PopStyleVar();
                 ImPlot.EndPlot();
             }
-            ImGui.PopFont();
         }
     }
 }
