@@ -36,19 +36,15 @@ public class TableVisualizer
 
                     if (!Visible) return;
 
-                    Vector2 displaySize;
-                    unsafe { displaySize = ImGui.GetIO().Handle->DisplaySize; }
-                    ImGui.SetNextWindowPos(new Vector2(0, 0));
-                    ImGui.SetNextWindowSize(displaySize);
-                    var windowFlags = ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize |
-                                      ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar |
-                                      ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
                     ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
-                    ImGui.Begin("##TableVisualizer", windowFlags);
-                    ImGui.PushFont(ImGui.GetFont(), FontSize);
-                    DrawTable(Item, FontSize);
-                    ImGui.PopFont();
-                    ImGui.End();
+                    var childFlags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse;
+                    if (ImGui.BeginChild("##TableVisualizer", new Vector2(0, 0), ImGuiChildFlags.None, childFlags))
+                    {
+                        ImGui.PushFont(ImGui.GetFont(), FontSize);
+                        DrawTable(Item, FontSize);
+                        ImGui.PopFont();
+                    }
+                    ImGui.EndChild();
                     ImGui.PopStyleVar();
                     observer.OnNext(value);
                 },

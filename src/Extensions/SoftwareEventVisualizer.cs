@@ -90,19 +90,15 @@ namespace AllenNeuralDynamics.VrForaging
                         }
 
                         ImGui.StyleColorsLight();
-                        Vector2 displaySize;
-                        unsafe { displaySize = ImGui.GetIO().Handle->DisplaySize; }
-                        ImGui.SetNextWindowPos(new Vector2(0, 0));
-                        ImGui.SetNextWindowSize(displaySize);
-                        var windowFlags = ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize |
-                                          ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar |
-                                          ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
                         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
-                        ImGui.Begin("##SoftwareEventVisualizer", windowFlags);
-                        ImGui.PushFont(ImGui.GetFont(), FontSize);
-                        RenderEthogram(scatterSnaps, ethogramSnaps, ts, win, FontSize);
-                        ImGui.PopFont();
-                        ImGui.End();
+                        var childFlags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse;
+                        if (ImGui.BeginChild("##SoftwareEventVisualizer", new Vector2(0, 0), ImGuiChildFlags.None, childFlags))
+                        {
+                            ImGui.PushFont(ImGui.GetFont(), FontSize);
+                            RenderEthogram(scatterSnaps, ethogramSnaps, ts, win, FontSize);
+                            ImGui.PopFont();
+                        }
+                        ImGui.EndChild();
                         ImGui.PopStyleVar();
                         observer.OnNext(Unit.Default);
                     },
