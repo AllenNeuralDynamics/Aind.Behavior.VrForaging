@@ -4,14 +4,12 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:;assembly=Extensions"
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
-                 xmlns:imvizui="clr-namespace:Bonsai.ImGui.Visualizers;assembly=Bonsai.ImGui.Visualizers.Design"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:p2="clr-namespace:AllenNeuralDynamics.VrForaging;assembly=Extensions"
                  xmlns:p3="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:implot="clr-namespace:Bonsai.ImPlot;assembly=Bonsai.ImPlot"
-                 xmlns:imviz="clr-namespace:Bonsai.ImGui.Visualizers;assembly=Bonsai.ImGui.Visualizers"
+                 xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -210,16 +208,6 @@
                     <Name>OnlineLabels</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="imvizui:ImGuiVisualizerBuilder">
-                          <imvizui:Name>Diagnosis</imvizui:Name>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>tick</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>tick</Name>
-                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>SubjectSchema</Name>
                         </Expression>
@@ -442,70 +430,32 @@ it.Item5 as TimeSinceLastChoice,
 it.Item6 as Notes)
 </scr:Expression>
                         </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="Item" />
-                          </PropertyMappings>
+                        <Expression xsi:type="p1:TableVisualizerBuilder">
+                          <p1:FontSize>24</p1:FontSize>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:TableVisualizer">
-                            <p1:Visible>true</p1:Visible>
-                            <p1:FontSize>28</p1:FontSize>
-                          </Combinator>
-                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="3" To="16" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="13" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="13" Label="Source2" />
-                        <Edge From="8" To="13" Label="Source3" />
-                        <Edge From="9" To="13" Label="Source4" />
-                        <Edge From="10" To="13" Label="Source5" />
+                        <Edge From="1" To="9" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="9" Label="Source2" />
+                        <Edge From="4" To="9" Label="Source3" />
+                        <Edge From="5" To="9" Label="Source4" />
+                        <Edge From="6" To="9" Label="Source5" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source6" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
                         <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source6" />
-                        <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="rx:Defer">
-                    <Name>PatchState</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="imvizui:ImPlotVisualizerBuilder">
-                          <imvizui:Name>PatchStateVisualizer</imvizui:Name>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>_UiTick</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>_UiTick</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>GlobalPatchState</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p2:PatchStateVisualizer">
-                            <p2:Visible>true</p2:Visible>
-                            <p2:FontSize>20</p2:FontSize>
-                          </Combinator>
-                        </Expression>
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="3" To="5" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source2" />
-                      </Edges>
-                    </Workflow>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>GlobalPatchState</Name>
                   </Expression>
+                  <Expression xsi:type="p2:PatchStateVisualizerBuilder" />
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Enabled>true</gui:Enabled>
@@ -521,22 +471,6 @@ it.Item6 as Notes)
                     <Name>Ethogram</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="imvizui:ImPlotVisualizerBuilder">
-                          <imvizui:Name>Ethogram</imvizui:Name>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>_UiTick</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>_UiTick</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>HarpTimestampSource</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:WithLatestFrom" />
-                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>GlobalActiveSite</Name>
                         </Expression>
@@ -651,6 +585,17 @@ it.Item6 as Notes)
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:Timer">
+                            <gl:DueTime>PT0S</gl:DueTime>
+                            <gl:Period>PT0.1S</gl:Period>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p3:CreateSoftwareEvent">
+                            <p3:EventName>##UpdateTick</p3:EventName>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -665,37 +610,32 @@ it.Item6 as Notes)
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p3:TimestampSoftwareEvent" />
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p2:SoftwareEventDisplay">
-                            <p2:Visible>true</p2:Visible>
-                            <p2:WindowSize>60</p2:WindowSize>
-                            <p2:FontSize>20</p2:FontSize>
-                          </Combinator>
+                        <Expression xsi:type="p2:SoftwareEventVisualizerBuilder">
+                          <p2:WindowSize>60</p2:WindowSize>
                         </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="0" To="3" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="3" To="5" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source2" />
-                        <Edge From="5" To="23" Label="Source1" />
-                        <Edge From="6" To="9" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="9" Label="Source2" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="18" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="14" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="14" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="14" Label="Source3" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="14" Label="Source4" />
                         <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="18" Label="Source2" />
-                        <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="18" Label="Source3" />
+                        <Edge From="13" To="14" Label="Source5" />
+                        <Edge From="14" To="16" Label="Source1" />
+                        <Edge From="15" To="16" Label="Source2" />
                         <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source4" />
-                        <Edge From="18" To="20" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source2" />
-                        <Edge From="20" To="21" Label="Source1" />
-                        <Edge From="21" To="22" Label="Source1" />
-                        <Edge From="22" To="23" Label="Source2" />
+                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="19" To="20" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -704,40 +644,11 @@ it.Item6 as Notes)
                     <Name>Velocity</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="imvizui:ImPlotVisualizerBuilder">
-                          <imvizui:Name>Velocity</imvizui:Name>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>PlotTick</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>PlotTick</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:PlotStyle">
-                            <p1:FontSize>24</p1:FontSize>
-                            <p1:LineWidth>3</p1:LineWidth>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="implot:PlotBuilder">
-                          <implot:Name>Velocity</implot:Name>
-                          <implot:Visible>true</implot:Visible>
-                          <implot:Size>
-                            <implot:X>-1</implot:X>
-                            <implot:Y>-1</implot:Y>
-                          </implot:Size>
-                          <implot:Flags>None</implot:Flags>
-                          <implot:FlagsX>NoLabel NoTickLabels AutoFit</implot:FlagsX>
-                          <implot:FlagsY>AutoFit</implot:FlagsY>
-                          <implot:LabelX>Time</implot:LabelX>
-                          <implot:LabelY>Velocity</implot:LabelY>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>Plot</Name>
-                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>FilteredCurrentVelocity</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:SampleOnRenderFrame" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>TaskLogicParameters</Name>
@@ -755,40 +666,29 @@ it.Item6 as Notes)
                           <Combinator xsi:type="rx:Merge" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:WithLatestFrom" />
+                          <Combinator xsi:type="rx:CombineLatest" />
                         </Expression>
-                        <Expression xsi:type="scr:ExpressionTransform">
-                          <scr:Expression>new (it.Item1.Item1 as Velocity, it.Item2 as Threshold, it.Item1.Item2 as Timestamp)</scr:Expression>
+                        <Expression xsi:type="zg:RollingGraphBuilder">
+                          <zg:ValueSelector>Item1.Item1,Item2</zg:ValueSelector>
+                          <zg:SymbolType>None</zg:SymbolType>
+                          <zg:LineWidth>2</zg:LineWidth>
+                          <zg:CurveSettings />
+                          <zg:Capacity>2000</zg:Capacity>
+                          <zg:Min xsi:nil="true" />
+                          <zg:Max xsi:nil="true" />
                         </Expression>
-                        <Expression xsi:type="imviz:RollingBufferBuilder">
-                          <imviz:Capacity>3500</imviz:Capacity>
-                          <imviz:IndexSelector>Timestamp</imviz:IndexSelector>
-                          <imviz:ValueSelector>Velocity,Threshold</imviz:ValueSelector>
-                        </Expression>
-                        <Expression xsi:type="imviz:LatestOnNewFrame">
-                          <Name>Plot</Name>
-                        </Expression>
-                        <Expression xsi:type="imviz:PlotLineSeriesBuilder">
-                          <imviz:Visible>true</imviz:Visible>
-                          <imviz:Flags>None</imviz:Flags>
-                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="1" To="7" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="7" To="13" Label="Source1" />
+                        <Edge From="4" To="6" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="12" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source2" />
-                        <Edge From="12" To="13" Label="Source2" />
-                        <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -804,156 +704,73 @@ it.Item6 as Notes)
                     <Name>Thermistor</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="imvizui:ImPlotVisualizerBuilder">
-                          <imvizui:Name>Thermistor</imvizui:Name>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>PlotTick</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>PlotTick</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:PlotStyle">
-                            <p1:FontSize>20</p1:FontSize>
-                            <p1:LineWidth>2</p1:LineWidth>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="implot:PlotBuilder">
-                          <implot:Name>Thermistor</implot:Name>
-                          <implot:Visible>true</implot:Visible>
-                          <implot:Size>
-                            <implot:X>-1</implot:X>
-                            <implot:Y>-1</implot:Y>
-                          </implot:Size>
-                          <implot:Flags>None</implot:Flags>
-                          <implot:FlagsX>NoLabel NoTickLabels AutoFit</implot:FlagsX>
-                          <implot:FlagsY>AutoFit</implot:FlagsY>
-                          <implot:LabelX>Time</implot:LabelX>
-                          <implot:LabelY>Voltage</implot:LabelY>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>Plot</Name>
-                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>ThermistorData</Name>
                         </Expression>
-                        <Expression xsi:type="scr:ExpressionTransform">
-                          <scr:Expression>new(it.Seconds as Timestamp, it.Value as Thermistor)</scr:Expression>
+                        <Expression xsi:type="zg:RollingGraphBuilder">
+                          <zg:IndexSelector>Seconds</zg:IndexSelector>
+                          <zg:ValueSelector>Value</zg:ValueSelector>
+                          <zg:SymbolType>None</zg:SymbolType>
+                          <zg:LineWidth>2</zg:LineWidth>
+                          <zg:CurveSettings />
+                          <zg:Capacity>2000</zg:Capacity>
+                          <zg:Min xsi:nil="true" />
+                          <zg:Max xsi:nil="true" />
                         </Expression>
-                        <Expression xsi:type="imviz:RollingBufferBuilder">
-                          <imviz:Capacity>2000</imviz:Capacity>
-                          <imviz:IndexSelector>Timestamp</imviz:IndexSelector>
-                          <imviz:ValueSelector>Thermistor</imviz:ValueSelector>
+                        <Expression xsi:type="VisualizerMapping" />
+                        <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                          <gui:Name>Thermistor</gui:Name>
+                          <gui:Enabled>true</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:ColumnCount>1</gui:ColumnCount>
+                          <gui:RowCount>1</gui:RowCount>
+                          <gui:ColumnStyles />
+                          <gui:RowStyles />
+                          <gui:CellSpans />
                         </Expression>
-                        <Expression xsi:type="imviz:LatestOnNewFrame">
-                          <Name>Plot</Name>
-                        </Expression>
-                        <Expression xsi:type="imviz:PlotLineSeriesBuilder">
-                          <imviz:Visible>true</imviz:Visible>
-                          <imviz:Flags>None</imviz:Flags>
-                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
                       </Edges>
                     </Workflow>
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                    <gui:Name>Thermistor</gui:Name>
-                    <gui:Enabled>true</gui:Enabled>
-                    <gui:Visible>true</gui:Visible>
-                    <gui:ColumnCount>1</gui:ColumnCount>
-                    <gui:RowCount>1</gui:RowCount>
-                    <gui:ColumnStyles />
-                    <gui:RowStyles />
-                    <gui:CellSpans />
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="rx:Defer">
                     <Name>Photodiode</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="imvizui:ImPlotVisualizerBuilder">
-                          <imvizui:Name>Photodiode</imvizui:Name>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>PlotTick</Name>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>PlotTick</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:PlotStyle">
-                            <p1:FontSize>20</p1:FontSize>
-                            <p1:LineWidth>2</p1:LineWidth>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="implot:PlotBuilder">
-                          <implot:Name>Photodiode</implot:Name>
-                          <implot:Visible>true</implot:Visible>
-                          <implot:Size>
-                            <implot:X>-1</implot:X>
-                            <implot:Y>-1</implot:Y>
-                          </implot:Size>
-                          <implot:Flags>None</implot:Flags>
-                          <implot:FlagsX>NoLabel NoTickLabels AutoFit</implot:FlagsX>
-                          <implot:FlagsY>AutoFit</implot:FlagsY>
-                          <implot:LabelX>Time</implot:LabelX>
-                          <implot:LabelY />
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p1:SetAxisLimits">
-                            <p1:MinX xsi:nil="true" />
-                            <p1:MaxX xsi:nil="true" />
-                            <p1:MinY>-0.2</p1:MinY>
-                            <p1:MaxY>1.2</p1:MaxY>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="rx:PublishSubject">
-                          <Name>Plot</Name>
+                          <Name>SynchQuadColor</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>RendererSynchState</Name>
+                          <Name>HarpTimestampSource</Name>
                         </Expression>
-                        <Expression xsi:type="rx:Condition">
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>SyncQuadValue.HasValue,FrameTimestamp.HasValue</Selector>
-                              </Expression>
-                              <Expression xsi:type="BitwiseAnd" />
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source1" />
-                            </Edges>
-                          </Workflow>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>SyncQuadValue.Value</Selector>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:CreateTimestamped" />
                         </Expression>
-                        <Expression xsi:type="GreaterThan">
-                          <Operand xsi:type="DoubleProperty">
-                            <Value>0</Value>
-                          </Operand>
+                        <Expression xsi:type="zg:RollingGraphBuilder">
+                          <zg:IndexSelector>Seconds</zg:IndexSelector>
+                          <zg:ValueSelector>Value</zg:ValueSelector>
+                          <zg:SymbolType>None</zg:SymbolType>
+                          <zg:LineWidth>3</zg:LineWidth>
+                          <zg:CurveSettings>
+                            <zg:CurveConfiguration>
+                              <zg:Label>Quad</zg:Label>
+                              <zg:Color>Red</zg:Color>
+                            </zg:CurveConfiguration>
+                          </zg:CurveSettings>
+                          <zg:Capacity xsi:nil="true" />
+                          <zg:Min xsi:nil="true" />
+                          <zg:Max xsi:nil="true" />
                         </Expression>
+                        <Expression xsi:type="VisualizerMapping" />
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpBehaviorEvents</Name>
                         </Expression>
@@ -980,79 +797,69 @@ it.Item6 as Notes)
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="harp:CreateTimestamped" />
                         </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Value</Selector>
+                        <Expression xsi:type="zg:RollingGraphBuilder">
+                          <zg:IndexSelector>Seconds</zg:IndexSelector>
+                          <zg:ValueSelector>Value</zg:ValueSelector>
+                          <zg:SymbolType>None</zg:SymbolType>
+                          <zg:LineWidth>3</zg:LineWidth>
+                          <zg:CurveSettings>
+                            <zg:CurveConfiguration>
+                              <zg:Label>Photodiode</zg:Label>
+                              <zg:Color>Blue</zg:Color>
+                            </zg:CurveConfiguration>
+                          </zg:CurveSettings>
+                          <zg:Capacity xsi:nil="true" />
+                          <zg:Min xsi:nil="true" />
+                          <zg:Max xsi:nil="true" />
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:CombineLatest" />
+                        <Expression xsi:type="VisualizerMapping" />
+                        <Expression xsi:type="zg:RollingGraphPanelBuilder">
+                          <zg:Name>Photodiode</zg:Name>
+                          <zg:ReverseX>false</zg:ReverseX>
+                          <zg:ReverseY>false</zg:ReverseY>
+                          <zg:Span>20</zg:Span>
+                          <zg:Capacity xsi:nil="true" />
+                          <zg:BaseAxis>X</zg:BaseAxis>
+                          <zg:BarType>Cluster</zg:BarType>
+                          <zg:Min>-0.1</zg:Min>
+                          <zg:Max>1.1</zg:Max>
                         </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>HarpTimestampSource</Name>
+                        <Expression xsi:type="VisualizerMapping" />
+                        <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                          <gui:Name>Photodiode</gui:Name>
+                          <gui:Enabled>true</gui:Enabled>
+                          <gui:Visible>true</gui:Visible>
+                          <gui:ColumnCount>1</gui:ColumnCount>
+                          <gui:RowCount>1</gui:RowCount>
+                          <gui:ColumnStyles />
+                          <gui:RowStyles />
+                          <gui:CellSpans />
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:WithLatestFrom" />
-                        </Expression>
-                        <Expression xsi:type="scr:ExpressionTransform">
-                          <scr:Expression>new(it.Item1.Item1 as Quad, it.Item1.Item2 as Photodiode, it.Item2 as Timestamp)</scr:Expression>
-                        </Expression>
-                        <Expression xsi:type="imviz:RollingBufferBuilder">
-                          <imviz:Capacity>1000</imviz:Capacity>
-                          <imviz:IndexSelector>Timestamp</imviz:IndexSelector>
-                          <imviz:ValueSelector>Quad,Photodiode</imviz:ValueSelector>
-                        </Expression>
-                        <Expression xsi:type="imviz:LatestOnNewFrame">
-                          <Name>Plot</Name>
-                        </Expression>
-                        <Expression xsi:type="imviz:PlotStairsSeriesBuilder">
-                          <imviz:Visible>true</imviz:Visible>
-                          <imviz:Flags>None</imviz:Flags>
-                        </Expression>
-                        <Expression xsi:type="imviz:PlotDigitalSeriesBuilder">
-                          <imviz:Visible>true</imviz:Visible>
-                          <imviz:Flags>None</imviz:Flags>
-                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="5" To="16" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="7" To="11" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="21" Label="Source1" />
+                        <Edge From="10" To="12" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source2" />
                         <Edge From="12" To="13" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="13" To="17" Label="Source1" />
                         <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="18" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source2" />
+                        <Edge From="15" To="16" Label="Source2" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source1" />
                         <Edge From="18" To="19" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source1" />
-                        <Edge From="20" To="21" Label="Source2" />
-                        <Edge From="21" To="23" Label="Source1" />
-                        <Edge From="22" To="23" Label="Source2" />
-                        <Edge From="23" To="24" Label="Source1" />
-                        <Edge From="24" To="25" Label="Source1" />
-                        <Edge From="25" To="26" Label="Source1" />
-                        <Edge From="26" To="27" Label="Source1" />
-                        <Edge From="27" To="28" Label="Source1" />
                       </Edges>
                     </Workflow>
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                    <gui:Name>Photodiode</gui:Name>
-                    <gui:Enabled>true</gui:Enabled>
-                    <gui:Visible>true</gui:Visible>
-                    <gui:ColumnCount>1</gui:ColumnCount>
-                    <gui:RowCount>1</gui:RowCount>
-                    <gui:ColumnStyles />
-                    <gui:RowStyles />
-                    <gui:CellSpans />
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TabControlBuilder">
@@ -1092,32 +899,29 @@ it.Item6 as Notes)
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source1" />
+                  <Edge From="1" To="5" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="26" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="26" Label="Source2" />
-                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="23" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="23" Label="Source2" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="24" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="21" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="20" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="14" To="17" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source2" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source2" />
-                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source2" />
                   <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source2" />
-                  <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source3" />
-                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source3" />
+                  <Edge From="23" To="24" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1957,7 +1761,7 @@ it.Item6 as Notes)
                     <gui:Name>HwShortcuts</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 16.125pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 8.25pt</gui:Font>
                     <gui:ColumnCount>5</gui:ColumnCount>
                     <gui:RowCount>5</gui:RowCount>
                     <gui:ColumnStyles />

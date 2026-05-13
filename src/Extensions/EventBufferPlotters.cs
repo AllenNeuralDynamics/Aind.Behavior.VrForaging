@@ -11,6 +11,11 @@ namespace AllenNeuralDynamics.VrForaging
     interface ISoftwareEventBuffer
     {
         string Name { get; }
+        double[] Seconds { get; }
+
+        int Count();
+        IEnumerable<SoftwareEvent> GetEvents();
+        void TryAddEvents(IEnumerable<SoftwareEvent> softwareEvents);
         void TryAddEvent(SoftwareEvent softwareEvent);
         void RemovePast(double seconds);
         void Clear();
@@ -20,16 +25,33 @@ namespace AllenNeuralDynamics.VrForaging
     {
         public string Name { get; private set; }
 
-        private readonly List<SoftwareEvent> events = new List<SoftwareEvent>();
+        public double[] Seconds { get { return events.Select(e => e.Timestamp.HasValue ? e.Timestamp.Value : 0).ToArray(); } }
 
         public SoftwareEventBuffer(string name)
         {
             Name = name;
         }
 
-        public double[] GetSeconds()
+        private readonly List<SoftwareEvent> events = new List<SoftwareEvent>();
+
+        public int Count() { return events.Count(); }
+
+        public IEnumerable<SoftwareEvent> GetEvents()
         {
-            return events.Select(e => e.Timestamp.HasValue ? e.Timestamp.Value : 0).ToArray();
+            return events;
+        }
+
+        public void Clear()
+        {
+            events.Clear();
+        }
+
+        public void TryAddEvents(IEnumerable<SoftwareEvent> softwareEvents)
+        {
+            foreach (var softwareEvent in softwareEvents.Where(s => s != null && s.Name == this.Name))
+            {
+                TryAddEvent(softwareEvent);
+            }
         }
 
         public void TryAddEvent(SoftwareEvent softwareEvent)
@@ -43,46 +65,125 @@ namespace AllenNeuralDynamics.VrForaging
             events.RemoveAll(e => e.Timestamp < seconds);
         }
 
-        public void Clear()
+
+    }
+
+    abstract class SoftwareEventPlotter<T> where T : ISoftwareEventBuffer
+    {
+        public SoftwareEventPlotter(T buffer)
         {
-            events.Clear();
+            Buffer = buffer;
+        }
+
+        public T Buffer { get; set; }
+
+        public abstract void Plot();
+
+    }
+
+
+    class ScatterSoftwareEventPlotter : SoftwareEventPlotter<SoftwareEventBuffer>
+    {
+        private double yPoint { get; set; }
+        private Vector4 color { get; set; }
+        private ImPlotMarker? marker { get; set; }
+        private float size { get; set; }
+
+        public ScatterSoftwareEventPlotter(SoftwareEventBuffer buffer, Vector4 color, double yPoint = 0.5, ImPlotMarker? marker = ImPlotMarker.Circle, float size = 10f) :
+            base(buffer)
+        {
+            this.yPoint = yPoint;
+            this.color = color;
+            this.marker = marker;
+            this.size = size;
+        }
+
+        unsafe public override void Plot()
+        {
+            var buffer = Buffer.GetEvents().ToList();
+            var xxs = Buffer.Seconds;
+            if (xxs.Length == 0) return;
+            if (marker.HasValue)
+            {
+                var yys = Enumerable.Repeat(yPoint, xxs.Length).ToArray();
+                ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 1f);
+                ImPlot.SetNextMarkerStyle(marker.HasValue ? marker.Value : ImPlotMarker.Circle, size, color, 1.0f, color);
+                fixed (double* x = xxs)
+                fixed (double* y = yys)
+                {
+                    ImPlot.PlotScatter(Buffer.Name.Replace("#", ""), x, y, xxs.Length);
+                }
+                ImPlot.PopStyleVar(1);
+                return;
+            }
+            else
+            {
+                ImPlot.PushStyleVar(ImPlotStyleVar.LineWeight, 5f);
+                ImPlot.SetNextLineStyle(color, 5.0f);
+                foreach (var x in xxs)
+                {
+                    double[] _xx = new double[] { x, x };
+                    double[] _yy = new double[] { yPoint + size, yPoint - size };
+                    fixed (double* _x = _xx)
+                    fixed (double* _y = _yy)
+                    {
+                        ImPlot.PlotLine(Buffer.Name.Replace("#", ""), _x, _y, 2);
+                    }
+                }
+                ImPlot.PopStyleVar(1);
+                return;
+            }
         }
     }
 
-    class VirtualSiteEventBuffer : ISoftwareEventBuffer
+    class EthogramPlotter : SoftwareEventPlotter<VirtualSiteEventBuffer>
     {
-        private const string EVENT_NAME = "##PatchVirtualSite";
 
-        public string Name { get { return EVENT_NAME; } }
-
-        private readonly List<VirtualSiteEvent> events = new List<VirtualSiteEvent>();
-
-        public List<VirtualSiteEvent> GetEvents()
+        private double latestTimestamp = 0;
+        public EthogramPlotter(VirtualSiteEventBuffer buffer) : base(buffer)
         {
-            return events;
         }
 
-        public void TryAddEvent(SoftwareEvent softwareEvent)
+
+
+        private Vector4 getColor(VirtualSiteEvent virtualSite)
         {
-            if (softwareEvent == null) throw new ArgumentNullException("softwareEvent");
-            if (softwareEvent.Name != EVENT_NAME) return;
-            var newEvent = new VirtualSiteEvent(softwareEvent);
-            events.Add(newEvent);
-            events.Sort((a, b) => a.Start.CompareTo(b.Start));
-            if (events.Count > 1)
+            switch (virtualSite.Label)
             {
-                events[events.Count - 2].End = newEvent.Start;
+                case VirtualSiteLabels.RewardSite:
+                    return ColorExtensions.PatchColors[virtualSite.PatchIndex % ColorExtensions.PatchColors.Count];
+                default:
+                    return ColorExtensions.SiteColors[virtualSite.Label];
             }
         }
 
-        public void RemovePast(double seconds)
+        public void SetLatestTimestamp(double timestamp)
         {
-            events.RemoveAll(e => e.End.HasValue && e.End.Value < seconds);
+            latestTimestamp = timestamp;
         }
 
-        public void Clear()
+        public unsafe override void Plot()
         {
-            events.Clear();
+
+            var events = Buffer.GetEvents().ToList();
+            if (events.Count == 0) return;
+            for (int i = 0; i < events.Count(); i++)
+            {
+                var e1 = events[i];
+                var timestamps = new double[] { e1.Start, e1.End.HasValue ? e1.End.Value : latestTimestamp };
+                var color = getColor(e1);
+
+                ImPlot.SetNextFillStyle(color, 0.8f);
+                double[] yLow = new double[] { 0, 0 };
+                double[] yHigh = new double[] { 1, 1 };
+
+                fixed (double* x = timestamps)
+                fixed (double* y1 = yLow)
+                fixed (double* y2 = yHigh)
+                {
+                    ImPlot.PlotShaded(string.Format("##{0}_{1}", e1.Label.ToString().Replace("#", ""), i), x, y2, 2);
+                }
+            }
         }
     }
 
@@ -110,145 +211,56 @@ namespace AllenNeuralDynamics.VrForaging
         }
     }
 
-    /// <summary>
-    /// Immutable snapshot of scatter event data, safe to render outside a lock.
-    /// </summary>
-    struct ScatterSnapshot
+    class VirtualSiteEventBuffer : ISoftwareEventBuffer
     {
-        public readonly string Name;
-        public readonly double[] Seconds;
-        public readonly double YPoint;
-        public readonly Vector4 Color;
-        public readonly ImPlotMarker? Marker;
-        public readonly float Size;
+        private const string EVENT_NAME = "##PatchVirtualSite";
 
-        public ScatterSnapshot(string name, double[] seconds, double yPoint, Vector4 color, ImPlotMarker? marker, float size)
+        public string Name { get { return EVENT_NAME; } }
+
+        public double[] Seconds { get { return GetEvents().Select(e => e.Start).ToArray(); } }
+
+        public int Count() { return GetEvents().Count(); }
+
+        private readonly List<VirtualSiteEvent> events = new List<VirtualSiteEvent>();
+
+        public VirtualSiteEventBuffer() { }
+        public void Clear()
         {
-            Name = name;
-            Seconds = seconds;
-            YPoint = yPoint;
-            Color = color;
-            Marker = marker;
-            Size = size;
+            events.Clear();
         }
 
-        public unsafe void Plot()
+        public IEnumerable<VirtualSiteEvent> GetEvents()
         {
-            if (Seconds.Length == 0) return;
-            if (Marker.HasValue)
+            return events;
+        }
+
+        public void TryAddEvents(IEnumerable<SoftwareEvent> softwareEvents)
+        {
+            foreach (var eventItem in softwareEvents.Where(s => s != null && s.Name == EVENT_NAME))
             {
-                var yys = Enumerable.Repeat(YPoint, Seconds.Length).ToArray();
-                ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 1f);
-                ImPlot.SetNextMarkerStyle(Marker.Value, Size, Color, 1.0f, Color);
-                fixed (double* x = Seconds)
-                fixed (double* y = yys)
-                {
-                    ImPlot.PlotScatter(Name, x, y, Seconds.Length);
-                }
-                ImPlot.PopStyleVar();
-            }
-            else
-            {
-                ImPlot.PushStyleVar(ImPlotStyleVar.LineWeight, 5f);
-                ImPlot.SetNextLineStyle(Color, 5.0f);
-                foreach (var xv in Seconds)
-                {
-                    double[] _xx = new double[] { xv, xv };
-                    double[] _yy = new double[] { YPoint + Size, YPoint - Size };
-                    fixed (double* _x = _xx)
-                    fixed (double* _y = _yy)
-                    {
-                        ImPlot.PlotLine(Name, _x, _y, 2);
-                    }
-                }
-                ImPlot.PopStyleVar();
+                TryAddEvent(eventItem);
             }
         }
-    }
-
-    /// <summary>
-    /// Immutable snapshot of a single ethogram event, safe to render outside a lock.
-    /// </summary>
-    struct EthogramEventSnapshot
-    {
-        public readonly double Start;
-        public readonly double End;
-        public readonly VirtualSiteLabels Label;
-        public readonly int PatchIndex;
-
-        public EthogramEventSnapshot(double start, double end, VirtualSiteLabels label, int patchIndex)
+        public void TryAddEvent(SoftwareEvent softwareEvent)
         {
-            Start = start;
-            End = end;
-            Label = label;
-            PatchIndex = patchIndex;
-        }
-
-        public static List<EthogramEventSnapshot> FromBuffer(VirtualSiteEventBuffer buffer, double latestTimestamp)
-        {
-            var raw = buffer.GetEvents();
-            var snapshots = new List<EthogramEventSnapshot>(raw.Count);
-            foreach (var e in raw)
+            if (softwareEvent == null) throw new ArgumentNullException("softwareEvent");
+            var newEvent = new VirtualSiteEvent(softwareEvent);
+            events.Add(newEvent);
+            events.Sort((a, b) => a.Start.CompareTo(b.Start));
+            if (events.Count > 1)
             {
-                snapshots.Add(new EthogramEventSnapshot(
-                    e.Start,
-                    e.End.HasValue ? e.End.Value : latestTimestamp,
-                    e.Label,
-                    e.PatchIndex));
-            }
-            return snapshots;
-        }
-
-        public static unsafe void PlotAll(List<EthogramEventSnapshot> events)
-        {
-            for (int i = 0; i < events.Count; i++)
-            {
-                var e = events[i];
-                var timestamps = new double[] { e.Start, e.End };
-                var color = e.Label == VirtualSiteLabels.RewardSite
-                    ? ColorExtensions.PatchColors[e.PatchIndex % ColorExtensions.PatchColors.Count]
-                    : ColorExtensions.SiteColors[e.Label];
-
-                ImPlot.SetNextFillStyle(color, 0.8f);
-                double[] yHigh = new double[] { 1, 1 };
-
-                fixed (double* x = timestamps)
-                fixed (double* y2 = yHigh)
-                {
-                    ImPlot.PlotShaded(string.Format("##{0}_{1}", e.Label.ToString().Replace("#", ""), i), x, y2, 2);
-                }
+                events[events.Count - 2].End = newEvent.Start;
             }
         }
-    }
 
-    /// <summary>
-    /// Configuration for a scatter event series. Holds the mutable buffer and
-    /// style settings. Call <see cref="TakeSnapshot"/> inside a lock to get an
-    /// immutable copy for rendering.
-    /// </summary>
-    class ScatterEventSeries
-    {
-        public readonly SoftwareEventBuffer Buffer;
-        public readonly double YPoint;
-        public readonly Vector4 Color;
-        public readonly ImPlotMarker? Marker;
-        public readonly float Size;
-
-        public ScatterEventSeries(SoftwareEventBuffer buffer, Vector4 color, double yPoint = 0.5, ImPlotMarker? marker = ImPlotMarker.Circle, float size = 10f)
+        public void RemovePast(double seconds)
         {
-            Buffer = buffer;
-            YPoint = yPoint;
-            Color = color;
-            Marker = marker;
-            Size = size;
+            events.RemoveAll(e => e.End.HasValue && e.End.Value < seconds);
         }
 
-        public ScatterSnapshot TakeSnapshot()
+        IEnumerable<SoftwareEvent> ISoftwareEventBuffer.GetEvents()
         {
-            return new ScatterSnapshot(
-                Buffer.Name.Replace("#", ""),
-                Buffer.GetSeconds(),
-                YPoint, Color, Marker, Size);
+            return events.Select(e => e.SoftwareEvent);
         }
     }
 }

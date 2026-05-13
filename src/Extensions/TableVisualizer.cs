@@ -1,69 +1,55 @@
-﻿﻿using Bonsai;
+﻿﻿using Bonsai.Design;
+using Bonsai.Expressions;
 using Hexa.NET.ImGui;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Numerics;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Reflection;
-using System.Xml.Serialization;
+using System.Numerics;
+using System.Windows.Forms;
+using AllenNeuralDynamics.Core.Design;
 
-[Combinator]
-[WorkflowElementCategory(ElementCategory.Combinator)]
-[Description("Renders a property table for the latest item on each ImGui frame.")]
-public class TableVisualizer
+public class TableVisualizer : BufferedVisualizer
 {
-    private bool visible = true;
-    public bool Visible { get { return visible; } set { visible = value; } }
-
+    ImGuiControl imGuiCanvas;
     private float fontSize = 16.0f;
-    public float FontSize { get { return fontSize; } set { fontSize = value; } }
 
-    [XmlIgnore]
-    public object Item { get; set; }
+    private object currentItem;
+    private readonly object itemLock = new object();
 
-    public IObservable<TSource> Process<TSource>(IObservable<TSource> source)
+    /// <inheritdoc/>
+    public override void Show(object value)
     {
-        return Observable.Create<TSource>(observer =>
-        {
-            var sourceObserver = Observer.Create<TSource>(
-                value =>
-                {
-                    // Disable native assertions for recoverable ImGui errors
-                    // (mirrors bonsai-rx/imgui PR #29, not yet in 0.1.0).
-                    unsafe { ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0; }
-
-                    if (!Visible) return;
-
-                    Vector2 displaySize;
-                    unsafe { displaySize = ImGui.GetIO().Handle->DisplaySize; }
-                    ImGui.SetNextWindowPos(new Vector2(0, 0));
-                    ImGui.SetNextWindowSize(displaySize);
-                    var windowFlags = ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize |
-                                      ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar |
-                                      ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
-                    ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
-                    ImGui.Begin("##TableVisualizer", windowFlags);
-                    DrawTable(Item, FontSize);
-                    ImGui.End();
-                    ImGui.PopStyleVar();
-                    observer.OnNext(value);
-                },
-                observer.OnError,
-                observer.OnCompleted);
-            return source.SubscribeSafe(sourceObserver);
-        });
     }
 
-    static void DrawTable(object item, float fontSize)
+    /// <inheritdoc/>
+    protected override void ShowBuffer(IList<System.Reactive.Timestamped<object>> values)
+    {
+        if (values.Count > 0)
+        {
+            lock (itemLock)
+            {
+                currentItem = values[values.Count - 1].Value;
+            }
+        }
+        imGuiCanvas.Invalidate();
+        base.ShowBuffer(values);
+    }
+
+    void StyleColors()
+    {
+        ImGui.StyleColorsLight();
+    }
+
+    static void DrawItemPropertiesTable(object item, float fontSize)
     {
         if (item == null) return;
 
         var type = item.GetType();
         var headerColor = new Vector4(0.7f, 0.8f, 0.9f, 1.0f);
-        var rows = new List<KeyValuePair<string, object>>();
 
+        // Only members declared directly on the concrete type — filters out
+        // inherited properties from base classes (e.g. DynamicClass from LINQ Dynamic Core).
+        var rows = new List<KeyValuePair<string, object>>();
         foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
             if (prop.DeclaringType != type) continue;
@@ -72,6 +58,7 @@ public class TableVisualizer
             catch { value = "<error>"; }
             rows.Add(new KeyValuePair<string, object>(prop.Name, value));
         }
+        // Also include public fields declared on the type (covers ValueTuple, Bonsai Tuple wrappers, etc.)
         foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
         {
             if (field.DeclaringType != type) continue;
@@ -82,9 +69,11 @@ public class TableVisualizer
         }
 
         var avail = ImGui.GetContentRegionAvail();
+
         ImGui.PushFont(ImGui.GetFont(), fontSize);
 
         var tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchSame | ImGuiTableFlags.ScrollY;
+
         if (ImGui.BeginTable("ItemPropertiesTable", 2, tableFlags, avail))
         {
             ImGui.TableSetupColumn("Property", ImGuiTableColumnFlags.None);
@@ -100,8 +89,67 @@ public class TableVisualizer
                 ImGui.TableSetColumnIndex(1);
                 ImGui.TextUnformatted(row.Value != null ? row.Value.ToString() : "null");
             }
+
             ImGui.EndTable();
         }
+
         ImGui.PopFont();
+    }
+
+    /// <inheritdoc/>
+    public override void Load(IServiceProvider provider)
+    {
+        var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
+        var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as TableVisualizerBuilder;
+        if (visualizerBuilder != null)
+        {
+            fontSize = visualizerBuilder.FontSize;
+        }
+        imGuiCanvas = new ImGuiControl();
+        imGuiCanvas.Dock = DockStyle.Fill;
+        imGuiCanvas.Render += (sender, e) =>
+        {
+            var dockspaceId = ImGui.DockSpaceOverViewport(
+                0,
+                ImGui.GetMainViewport(),
+                ImGuiDockNodeFlags.AutoHideTabBar | ImGuiDockNodeFlags.NoUndocking);
+
+            StyleColors();
+
+
+            if (ImGui.Begin("TableVisualizer"))
+            {
+                object snapshot;
+                lock (itemLock) { snapshot = currentItem; }
+                DrawItemPropertiesTable(snapshot, fontSize);
+            }
+
+            ImGui.End();
+            var centralNode = ImGuiP.DockBuilderGetCentralNode(dockspaceId);
+            if (!ImGui.IsWindowDocked() && !centralNode.IsNull)
+            {
+                unsafe
+                {
+                    var handle = centralNode.Handle;
+                    uint dockId = handle->ID;
+                    ImGuiP.DockBuilderDockWindow("TableVisualizer", dockId);
+                }
+            }
+        };
+
+        var visualizerService = (IDialogTypeVisualizerService)provider.GetService(typeof(IDialogTypeVisualizerService));
+        if (visualizerService != null)
+        {
+            visualizerService.AddControl(imGuiCanvas);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Unload()
+    {
+        if (imGuiCanvas != null)
+        {
+            imGuiCanvas.Dispose();
+        }
     }
 }

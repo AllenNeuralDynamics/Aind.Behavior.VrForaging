@@ -1,142 +1,159 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
-using System.Reactive;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
+using System.Windows.Forms;
 using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
-using Bonsai;
+using AllenNeuralDynamics.Core.Design;
+using Bonsai.Design;
+using Bonsai.Expressions;
 using Hexa.NET.ImGui;
 using Hexa.NET.ImPlot;
 
 namespace AllenNeuralDynamics.VrForaging
 {
-    [Combinator]
-    [WorkflowElementCategory(ElementCategory.Combinator)]
-    [Description("Renders a rolling ethogram of software events inside an ImPlot window on each frame. Source1 = Tuple<Unit, double> (tick + current timestamp); Source2 = SoftwareEvent stream.")]
-    public class SoftwareEventDisplay
+    public class SoftwareEventVisualizer : BufferedVisualizer
     {
-        private bool visible = true;
-        public bool Visible { get { return visible; } set { visible = value; } }
-
         private double windowSize = 1000;
-        public double WindowSize { get { return windowSize; } set { windowSize = value; } }
-
-        private float fontSize = 20f;
-        public float FontSize { get { return fontSize; } set { fontSize = value; } }
-
-        public IObservable<Unit> Process(IObservable<Tuple<Unit, double>> frames, IObservable<SoftwareEvent> data)
+        public double WindowSize
         {
-            return Observable.Create<Unit>(observer =>
-            {
-                var series = new List<ScatterEventSeries>
-                {
-                    new ScatterEventSeries(new SoftwareEventBuffer("GiveReward"),    new Vector4(0.12f, 0.56f, 1f, 1),                       yPoint: 0.45f),
-                    new ScatterEventSeries(new SoftwareEventBuffer("ChoiceFeedback"), new Vector4(0.95f, 0.1f,  0.2f, 1),                    yPoint: 0.55f),
-                    new ScatterEventSeries(new SoftwareEventBuffer("##Lick"),         new Vector4(0.05f, 0.05f, 0.05f, 1), marker: null, size: 0.05f, yPoint: 0.5f),
-                };
-                var ethogramBuffer = new VirtualSiteEventBuffer();
-                double latestTimestamp = 0;
-                var bufferLock = new object();
-
-                var dataSub = data.Subscribe(
-                    evt =>
-                    {
-                        if (evt == null) return;
-                        lock (bufferLock)
-                        {
-                            var ts = evt.Timestamp ?? 0;
-                            if (ts > latestTimestamp) latestTimestamp = ts;
-                            var win = WindowSize;
-                            foreach (var s in series)
-                            {
-                                s.Buffer.TryAddEvent(evt);
-                                s.Buffer.RemovePast(latestTimestamp - win);
-                            }
-                            ethogramBuffer.TryAddEvent(evt);
-                            ethogramBuffer.RemovePast(latestTimestamp - win);
-                        }
-                    },
-                    observer.OnError);
-
-                var frameSub = frames.SubscribeSafe(Observer.Create<Tuple<Unit, double>>(
-                    tick =>
-                    {
-                        lock (bufferLock)
-                        {
-                            if (tick.Item2 > latestTimestamp) latestTimestamp = tick.Item2;
-                        }
-
-                        // Disable native assertions for recoverable ImGui errors
-                        // (mirrors bonsai-rx/imgui PR #29, not yet in 0.1.0).
-                        unsafe { ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0; }
-
-                        if (!Visible) { observer.OnNext(Unit.Default); return; }
-
-                        // Snapshot all data inside the lock — copies the arrays so
-                        // the render path works on isolated data and cannot race
-                        // with the data subscription mutating the buffers.
-                        double ts, win;
-                        List<ScatterSnapshot> scatterSnaps;
-                        List<EthogramEventSnapshot> ethogramSnaps;
-                        lock (bufferLock)
-                        {
-                            ts = latestTimestamp;
-                            win = WindowSize;
-                            scatterSnaps = series.Select(s => s.TakeSnapshot()).ToList();
-                            ethogramSnaps = EthogramEventSnapshot.FromBuffer(ethogramBuffer, latestTimestamp);
-                        }
-
-                        ImGui.StyleColorsLight();
-                        Vector2 displaySize;
-                        unsafe { displaySize = ImGui.GetIO().Handle->DisplaySize; }
-                        ImGui.SetNextWindowPos(new Vector2(0, 0));
-                        ImGui.SetNextWindowSize(displaySize);
-                        var windowFlags = ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize |
-                                          ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar |
-                                          ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
-                        ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
-                        ImGui.Begin("##SoftwareEventVisualizer", windowFlags);
-                        RenderEthogram(scatterSnaps, ethogramSnaps, ts, win, FontSize);
-                        ImGui.End();
-                        ImGui.PopStyleVar();
-                        observer.OnNext(Unit.Default);
-                    },
-                    observer.OnError,
-                    observer.OnCompleted));
-
-                return new CompositeDisposable(dataSub, frameSub);
-            });
+            get { return windowSize; }
+            set { windowSize = value; }
         }
 
-        static unsafe void RenderEthogram(
-            List<ScatterSnapshot> scatterSnaps,
-            List<EthogramEventSnapshot> ethogramSnaps,
-            double latestTimestamp,
-            double windowSize,
-            float fontSize)
-        {
-            var axesFlags = ImPlotAxisFlags.NoHighlight | ImPlotAxisFlags.NoInitialFit | ImPlotAxisFlags.AutoFit;
-            ImGui.PushFont(ImGui.GetFont(), fontSize);
+        private double latestTimestamp = 0;
 
+        ImGuiControl imGuiCanvas;
+
+        private static readonly List<ScatterSoftwareEventPlotter> eventPlotters = new List<ScatterSoftwareEventPlotter>()
+        {
+            new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("GiveReward"), new Vector4(0.12f, 0.56f, 1f, 1), yPoint: 0.45f),
+            new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("ChoiceFeedback"), new Vector4(0.95f, 0.1f, 0.2f, 1), yPoint: 0.55f),
+            new ScatterSoftwareEventPlotter(new SoftwareEventBuffer("##Lick"), new Vector4(0.05f, 0.05f, 0.05f, 1), marker: null, size: 0.05f, yPoint: 0.5f),
+        };
+
+        private readonly EthogramPlotter ethogramPlotter = new EthogramPlotter(new VirtualSiteEventBuffer());
+
+
+        /// <inheritdoc/>
+        public override void Show(object value)
+        {
+        }
+
+        /// <inheritdoc/>
+        protected override void ShowBuffer(IList<System.Reactive.Timestamped<object>> values)
+        {
+            imGuiCanvas.Invalidate();
+            var casted = values.Select(v => v.Value as SoftwareEvent).Where(v => v != null);
+            latestTimestamp = casted.Any() ? casted.Max(v => v.Timestamp.HasValue ? v.Timestamp.Value : 0) : latestTimestamp;
+            foreach (var plotter in eventPlotters)
+            {
+                plotter.Buffer.TryAddEvents(casted);
+                plotter.Buffer.RemovePast(latestTimestamp - WindowSize);
+            }
+            ethogramPlotter.Buffer.TryAddEvents(casted);
+            ethogramPlotter.Buffer.RemovePast(latestTimestamp - WindowSize);
+            ethogramPlotter.SetLatestTimestamp(latestTimestamp);
+            base.ShowBuffer(values);
+        }
+
+        void StyleColors()
+        {
+            ImGui.StyleColorsLight();
+            ImPlot.StyleColorsLight(ImPlot.GetStyle());
+        }
+
+        unsafe void MakeAxis()
+        {
+            ImPlot.PushStyleVar(ImPlotStyleVar.FitPadding, new Vector2(0, 0));
+            ImPlot.PushStyleVar(ImPlotStyleVar.Padding, new Vector2(40, 2));
+            ImPlot.PushStyleVar(ImPlotStyleVar.BorderSize, 0);
+            ImGui.PushFont(ImGui.GetFont(), 30f);
+
+            var axesFlags = ImPlotAxisFlags.NoHighlight | ImPlotAxisFlags.NoInitialFit | ImPlotAxisFlags.AutoFit;
             if (ImPlot.BeginPlot("EthogramVisualizer", new Vector2(-1, -1), ImPlotFlags.NoTitle))
             {
                 ImPlot.PushStyleVar(ImPlotStyleVar.FillAlpha, 0.5f);
                 ImPlot.SetupAxes("Seconds", "", axesFlags | ImPlotAxisFlags.NoLabel, axesFlags | ImPlotAxisFlags.NoDecorations);
                 ImPlot.SetupAxesLimits(latestTimestamp - windowSize, latestTimestamp, 0, 1, ImPlotCond.Always);
-                ImPlot.SetupAxisTicks(ImAxis.X1, latestTimestamp - windowSize, latestTimestamp, 2,
-                    new string[] { "-" + windowSize.ToString(), "0" });
+                ImPlot.SetupAxisTicks(ImAxis.X1, latestTimestamp - windowSize, latestTimestamp, 2, new string[] { "-" + windowSize.ToString(), "0" });
 
-                EthogramEventSnapshot.PlotAll(ethogramSnaps);
-                foreach (var snap in scatterSnaps)
-                    snap.Plot();
-
-                ImPlot.PopStyleVar();
+                ethogramPlotter.Plot();
+                foreach (var plotter in eventPlotters)
+                {
+                    plotter.Plot();
+                }
+                ImPlot.PopStyleVar(1);
                 ImPlot.EndPlot();
             }
             ImGui.PopFont();
+            ImPlot.PopStyleVar(3);
+        }
+
+        /// <inheritdoc/>
+        public override void Load(IServiceProvider provider)
+        {
+            var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
+            var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as SoftwareEventVisualizerBuilder;
+            if (visualizerBuilder != null)
+            {
+                WindowSize = visualizerBuilder.WindowSize;
+            }
+
+            imGuiCanvas = new ImGuiControl();
+            imGuiCanvas.Dock = DockStyle.Fill;
+            imGuiCanvas.Render += (sender, e) =>
+            {
+                var dockspaceId = ImGui.DockSpaceOverViewport(
+                    0,
+                    ImGui.GetMainViewport(),
+                    ImGuiDockNodeFlags.AutoHideTabBar | ImGuiDockNodeFlags.NoUndocking);
+
+                StyleColors();
+
+
+                if (ImGui.Begin("SiteVisualizer"))
+                {
+                    var avail = ImGui.GetContentRegionAvail();
+                    ImGui.BeginChild("..data", new Vector2(avail.X, avail.Y));
+                    MakeAxis();
+                    ImGui.EndChild();
+                }
+
+                ImGui.End();
+
+                var centralNode = ImGuiP.DockBuilderGetCentralNode(dockspaceId);
+                if (!ImGui.IsWindowDocked() && !centralNode.IsNull)
+                {
+                    unsafe
+                    {
+                        var handle = centralNode.Handle;
+                        uint dockId = handle->ID;
+                        ImGuiP.DockBuilderDockWindow("SiteVisualizer", dockId);
+                    }
+                }
+            };
+
+            var visualizerService = (IDialogTypeVisualizerService)provider.GetService(typeof(IDialogTypeVisualizerService));
+            if (visualizerService != null)
+            {
+                visualizerService.AddControl(imGuiCanvas);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void Unload()
+        {
+            foreach (var plotter in eventPlotters)
+            {
+                plotter.Buffer.Clear();
+            }
+            ethogramPlotter.Buffer.Clear();
+            if (imGuiCanvas != null)
+            {
+                imGuiCanvas.Dispose();
+            }
         }
     }
+
 }
