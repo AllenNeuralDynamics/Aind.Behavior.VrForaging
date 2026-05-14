@@ -74,7 +74,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self.repository = git.Repo(self._repo_path)
         assert self.repository.working_tree_dir is not None
         self.bonsai_app = BonsaiApp(
-            executable=Path(self.repository.working_tree_dir) / "bonsai" / "bonsai.exe",
+            executable=Path(self.repository.working_tree_dir) / ".bonsai" / "bonsai.exe",
             workflow=Path(self.repository.working_tree_dir) / "src" / "main.bonsai",
         )
 
