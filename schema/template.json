@@ -1,7 +1,7 @@
 {
     "pkg_location": "aind_behavior_vr_foraging_curricula.template",
     "name": "TemplateCurriculum",
-    "version": "1.0.0-rc2",
+    "version": "1.0.0-rc3",
     "graph": {
         "nodes": {
             "0": {
@@ -591,7 +591,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc2",
+                    "version": "1.0.0-rc3",
                     "stage_name": null
                 },
                 "graph": {
@@ -1194,7 +1194,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc2",
+                    "version": "1.0.0-rc3",
                     "stage_name": null
                 },
                 "graph": {

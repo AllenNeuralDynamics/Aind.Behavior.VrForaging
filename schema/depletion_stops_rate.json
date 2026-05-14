@@ -1,7 +1,7 @@
 {
     "pkg_location": "aind_behavior_vr_foraging_curricula.depletion_stops_rate",
     "name": "DepletionStopsRate",
-    "version": "1.0.0-rc2",
+    "version": "1.0.0-rc3",
     "graph": {
         "nodes": {
             "0": {
@@ -306,7 +306,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc2",
+                    "version": "1.0.0-rc3",
                     "stage_name": "one_odor_no_depletion"
                 },
                 "graph": {
@@ -660,7 +660,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc2",
+                    "version": "1.0.0-rc3",
                     "stage_name": "one_odor_w_depletion_day_0"
                 },
                 "graph": {
@@ -1002,7 +1002,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc2",
+                    "version": "1.0.0-rc3",
                     "stage_name": "one_odor_w_depletion_day_1"
                 },
                 "graph": {
@@ -1503,7 +1503,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc2",
+                    "version": "1.0.0-rc3",
                     "stage_name": "all_odors_rewarded_stops_rate"
                 },
                 "graph": {
@@ -2224,7 +2224,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc2",
+                    "version": "1.0.0-rc3",
                     "stage_name": "graduation_stops_rate"
                 },
                 "graph": {
