@@ -2012,11 +2012,8 @@ it.Item6 as Notes)
               <ui:Text>VrForaging</ui:Text>
               <ui:Visible>true</ui:Visible>
               <ui:Location xsi:nil="true" />
-              <ui:Size>
-                <ui:Width>640</ui:Width>
-                <ui:Height>480</ui:Height>
-              </ui:Size>
-              <ui:WindowState>Maximized</ui:WindowState>
+              <ui:Size xsi:nil="true" />
+              <ui:WindowState xsi:nil="true" />
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>

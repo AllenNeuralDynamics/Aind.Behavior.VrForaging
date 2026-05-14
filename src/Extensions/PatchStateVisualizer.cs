@@ -48,23 +48,21 @@ namespace AllenNeuralDynamics.VrForaging
                             snapshot = new Dictionary<int, PatchState>(patchStates);
 
                         ImGui.StyleColorsLight();
-                        Vector2 displaySize;
-                        unsafe { displaySize = ImGui.GetIO().Handle->DisplaySize; }
-                        ImGui.SetNextWindowPos(new Vector2(0, 0));
-                        ImGui.SetNextWindowSize(displaySize);
-                        var windowFlags = ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize |
-                                          ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar |
-                                          ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
                         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
-                        ImGui.Begin("##PatchStateVisualizer", windowFlags);
-                        if (ImGui.BeginTable("##PatchColumns", 3, ImGuiTableFlags.None, new Vector2(-1, -1)))
+                        var childFlags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse;
+                        if (ImGui.BeginChild("##PatchStateVisualizer", new Vector2(0, 0), ImGuiChildFlags.None, childFlags))
                         {
-                            ImGui.TableNextColumn(); MakeAxis(snapshot, "Probability", 1.0, FontSize);
-                            ImGui.TableNextColumn(); MakeAxis(snapshot, "Amount", null, FontSize);
-                            ImGui.TableNextColumn(); MakeAxis(snapshot, "Available", null, FontSize);
-                            ImGui.EndTable();
+                            ImGui.PushFont(ImGui.GetFont(), FontSize);
+                            if (ImGui.BeginTable("##PatchColumns", 3, ImGuiTableFlags.None, new Vector2(-1, -1)))
+                            {
+                                ImGui.TableNextColumn(); MakeAxis(snapshot, "Probability", 1.0, FontSize);
+                                ImGui.TableNextColumn(); MakeAxis(snapshot, "Amount", null, FontSize);
+                                ImGui.TableNextColumn(); MakeAxis(snapshot, "Available", null, FontSize);
+                                ImGui.EndTable();
+                            }
+                            ImGui.PopFont();
                         }
-                        ImGui.End();
+                        ImGui.EndChild();
                         ImGui.PopStyleVar();
                         observer.OnNext(Unit.Default);
                     },
@@ -79,7 +77,6 @@ namespace AllenNeuralDynamics.VrForaging
         {
             if (patchStates.Count == 0) return;
             var axesFlags = ImPlotAxisFlags.NoHighlight | ImPlotAxisFlags.NoInitialFit | ImPlotAxisFlags.AutoFit;
-            ImGui.PushFont(ImGui.GetFont(), fontSize);
 
             if (ImPlot.BeginPlot(fieldName, new Vector2(-1, -1), ImPlotFlags.NoLegend))
             {
@@ -115,7 +112,6 @@ namespace AllenNeuralDynamics.VrForaging
                 }
                 ImPlot.EndPlot();
             }
-            ImGui.PopFont();
         }
     }
 }

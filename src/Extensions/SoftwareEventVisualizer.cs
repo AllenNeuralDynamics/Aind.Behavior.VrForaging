@@ -90,17 +90,15 @@ namespace AllenNeuralDynamics.VrForaging
                         }
 
                         ImGui.StyleColorsLight();
-                        Vector2 displaySize;
-                        unsafe { displaySize = ImGui.GetIO().Handle->DisplaySize; }
-                        ImGui.SetNextWindowPos(new Vector2(0, 0));
-                        ImGui.SetNextWindowSize(displaySize);
-                        var windowFlags = ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize |
-                                          ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar |
-                                          ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings;
                         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
-                        ImGui.Begin("##SoftwareEventVisualizer", windowFlags);
-                        RenderEthogram(scatterSnaps, ethogramSnaps, ts, win, FontSize);
-                        ImGui.End();
+                        var childFlags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse;
+                        if (ImGui.BeginChild("##SoftwareEventVisualizer", new Vector2(0, 0), ImGuiChildFlags.None, childFlags))
+                        {
+                            ImGui.PushFont(ImGui.GetFont(), FontSize);
+                            RenderEthogram(scatterSnaps, ethogramSnaps, ts, win, FontSize);
+                            ImGui.PopFont();
+                        }
+                        ImGui.EndChild();
                         ImGui.PopStyleVar();
                         observer.OnNext(Unit.Default);
                     },
@@ -119,7 +117,6 @@ namespace AllenNeuralDynamics.VrForaging
             float fontSize)
         {
             var axesFlags = ImPlotAxisFlags.NoHighlight | ImPlotAxisFlags.NoInitialFit | ImPlotAxisFlags.AutoFit;
-            ImGui.PushFont(ImGui.GetFont(), fontSize);
 
             if (ImPlot.BeginPlot("EthogramVisualizer", new Vector2(-1, -1), ImPlotFlags.NoTitle))
             {
@@ -136,7 +133,6 @@ namespace AllenNeuralDynamics.VrForaging
                 ImPlot.PopStyleVar();
                 ImPlot.EndPlot();
             }
-            ImGui.PopFont();
         }
     }
 }
