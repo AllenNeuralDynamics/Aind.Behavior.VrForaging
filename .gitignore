@@ -11,9 +11,9 @@ docs/schema/
 .vscode
 bin
 obj
-bonsai/Packages
-Bonsai.exe.WebView2
-Bonsai/Settings/
+.bonsai/Packages
+.bonsai.exe.WebView2
+.bonsai/Settings/
 
 *.bin
 *.avi

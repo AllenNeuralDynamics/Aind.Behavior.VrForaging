@@ -139,6 +139,7 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
     # Run the task via Bonsai
     bonsai_app = AindBehaviorServicesBonsaiApp(
         workflow=Path(r"./src/main.bonsai"),
+        executable=Path("./.bonsai/bonsai.exe"),
         temp_directory=launcher.temp_dir,
         rig=rig,
         session=session,
@@ -196,6 +197,7 @@ async def calibration_protocol(launcher: Launcher) -> None:
     # Run the task via Bonsai
     bonsai_app = AindBehaviorServicesBonsaiApp(
         workflow=Path(r"./src/main.bonsai"),
+        executable=Path("./.bonsai/bonsai.exe"),
         temp_directory=launcher.temp_dir,
         task=AindVrForagingTaskLogic(),
         rig=rig,
