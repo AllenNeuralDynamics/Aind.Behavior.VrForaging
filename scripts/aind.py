@@ -1,6 +1,7 @@
 import logging
 from pathlib import Path
 from typing import Any, cast
+from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
 
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import Session
@@ -12,6 +13,7 @@ from clabe.apps import (
     CurriculumSettings,
     CurriculumSuggestion,
 )
+from clabe import aind_apps
 from clabe.data_transfer.aind_watchdog import (
     WatchdogDataTransferService,
     WatchdogSettings,
@@ -157,6 +159,19 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
     suggestion, suggestion_path = await _run_curriculum_if_applicable(
         picker, input_trainer_state_path, launcher
     )
+
+    # Waterlog
+    try:
+        consumed_water = calculate_consumed_water(launcher.session_directory)
+        aind_apps.WaterlogApp(
+            settings=aind_apps.WaterlogSettings(
+                username=session.experimenter[0] if session.experimenter else None,
+                mouse_id=session.subject,
+                earned_water=consumed_water,
+            )
+        ).run()
+    except Exception as e:
+        logger.error("Error while attempting to waterlog: %s", e)
 
     # Mappers
     assert launcher.repository.working_tree_dir is not None
