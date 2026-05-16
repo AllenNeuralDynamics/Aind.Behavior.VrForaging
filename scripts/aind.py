@@ -38,24 +38,23 @@ _DEFAULT_PICKER_SETTINGS = DefaultBehaviorPickerSettings(
 
 async def _run_curriculum_if_applicable(
     picker: DataversePicker, input_trainer_state_path: Path, launcher: Launcher
-) -> tuple[CurriculumSuggestion | None, Path | None]:
+) -> tuple[CurriculumSuggestion | None, Path | None, CurriculumSettings | None]:
     if (
         (picker.trainer_state is None)
         or (picker.trainer_state.is_on_curriculum is False)
         or (picker.trainer_state.stage is None)
     ):
-        return None, None
-    trainer = CurriculumApp(
-        settings=CurriculumSettings(
-            input_trainer_state=input_trainer_state_path.resolve(),
-            data_directory=launcher.session_directory,
-        )
+        return None, None, None
+    settings = CurriculumSettings(
+        input_trainer_state=input_trainer_state_path.resolve(),
+        data_directory=launcher.session_directory,
     )
-    await trainer.run_async()
-    suggestion = trainer.process_suggestion()
+    curriculum_app = CurriculumApp(settings=settings)
+    await curriculum_app.run_async()
+    suggestion = curriculum_app.process_suggestion()
     suggestion_path = _dump_suggestion(suggestion, launcher.session_directory)
     picker.push_new_suggestion(suggestion.trainer_state)
-    return suggestion, suggestion_path
+    return suggestion, suggestion_path, settings
 
 
 def _run_data_qc(picker: DataversePicker, launcher: Launcher) -> None:
@@ -156,9 +155,11 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         logger.error("Failed to update manipulator initial position: %s", e)
 
     # Curriculum
-    suggestion, suggestion_path = await _run_curriculum_if_applicable(
-        picker, input_trainer_state_path, launcher
-    )
+    (
+        suggestion,
+        suggestion_path,
+        curriculum_settings,
+    ) = await _run_curriculum_if_applicable(picker, input_trainer_state_path, launcher)
 
     # Waterlog
     try:
@@ -178,8 +179,11 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
 
     DataMapperCli(
         data_path=launcher.session_directory,
-        repo_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
+        repository_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
         curriculum_suggestion=suggestion_path,
+        curriculum_repository_path=curriculum_settings.project_directory
+        if curriculum_settings
+        else None,
         session_end_time=utcnow(),
     ).cli_cmd()
 
@@ -283,17 +287,22 @@ async def recover_session(launcher: Launcher) -> None:
     launcher.register_session(session_model, rig_model.data_directory)
 
     # Curriculum
-    suggestion, suggestion_path = await _run_curriculum_if_applicable(
-        picker, input_trainer_state_path, launcher
-    )
+    (
+        suggestion,
+        suggestion_path,
+        curriculum_settings,
+    ) = await _run_curriculum_if_applicable(picker, input_trainer_state_path, launcher)
 
     # Mappers
     assert launcher.repository.working_tree_dir is not None
 
     DataMapperCli(
         data_path=launcher.session_directory,
-        repo_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
+        repository_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
         curriculum_suggestion=suggestion_path,
+        curriculum_repository_path=curriculum_settings.project_directory
+        if curriculum_settings
+        else None,
         session_end_time=utcnow(),
     ).cli_cmd()
 
