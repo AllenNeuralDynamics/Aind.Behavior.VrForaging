@@ -11,11 +11,16 @@ logger = logging.getLogger(__name__)
 
 class DataMapperCli(BaseSettings, cli_kebab_case=True):
     data_path: os.PathLike = Field(description="Path to the session data directory.")
-    repo_path: os.PathLike = Field(
+    repository_path: os.PathLike = Field(
         default=Path("."), description="Path to the repository. By default it will use the current directory."
     )
     curriculum_suggestion: t.Optional[os.PathLike] = Field(
-        default=None, description="Path to curriculum suggestion file."
+        default=None,
+        description="Path to curriculum suggestion file. If not provided, will attempt to find a curriculum suggestion in the data path.",
+    )
+    curriculum_repository_path: t.Optional[os.PathLike] = Field(
+        default=None,
+        description="Path to the curriculum repository. If not provided, will use the repository path.",
     )
     session_end_time: AwareDatetime | None = Field(
         default=None,
@@ -30,8 +35,10 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
 
         session_mapper = AindAcquisitionDataMapper(
             data_path=Path(self.data_path),
-            repo_path=Path(self.repo_path),
+            repository_path=Path(self.repository_path),
             session_end_time=self.session_end_time,
+            curriculum_repository_path=self.curriculum_repository_path,
+            curriculum_suggestion=self.curriculum_suggestion,
         )
         session_mapper.map()
 

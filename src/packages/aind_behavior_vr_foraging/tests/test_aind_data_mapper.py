@@ -48,7 +48,7 @@ class TestAindDataMappers(unittest.TestCase):
 
         self.session_mapper = AindAcquisitionDataMapper(
             data_path=self.data_path,
-            repo_path=self.repo_path,
+            repository_path=self.repo_path,
             session_end_time=self.session_end_time,
         )
 
@@ -101,7 +101,7 @@ class TestAindDataMappers(unittest.TestCase):
     def test_mapper_cli(self):
         DataMapperCli(
             data_path=self.data_path,
-            repo_path=self.repo_path,
+            repository_path=self.repo_path,
             session_end_time=self.session_end_time,
         ).cli_cmd()
         instrument_path = self.data_path / "instrument_vrforaging.json"
@@ -178,7 +178,7 @@ class TestCurriculumIntegrationInDataMapper(unittest.TestCase):
     def _make_mapper(self, curriculum_suggestion=None) -> AindAcquisitionDataMapper:
         return AindAcquisitionDataMapper(
             data_path=self.data_path,
-            repo_path=self.repo_path,
+            repository_path=self.repo_path,
             session_end_time=self.session_end_time,
             curriculum_suggestion=curriculum_suggestion,
         )

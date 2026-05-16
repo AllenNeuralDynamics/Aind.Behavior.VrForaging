@@ -35,12 +35,14 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def __init__(
         self,
         data_path: os.PathLike,
-        repo_path: os.PathLike,
+        repository_path: os.PathLike,
         curriculum_suggestion: Optional[os.PathLike] | CurriculumSuggestion = None,
+        curriculum_repository_path: Optional[os.PathLike] = None,
         session_end_time: Optional[AwareDatetime] = None,
     ):
         self._data_path = data_path
-        self._repo_path = repo_path
+        self._repository_path = repository_path
+        self._curriculum_repository_path = curriculum_repository_path
         self._session_end_time = session_end_time
 
         abs_schemas_path = Path(self._data_path) / "Behavior" / "Logs"
@@ -71,7 +73,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 logger.warning("Curriculum suggestion file not found. Proceeding without it.")
                 curriculum_suggestion = None
         self.curriculum_suggestion = curriculum_suggestion
-        self.repository = git.Repo(self._repo_path)
+        self.repository = git.Repo(self._repository_path)
         assert self.repository.working_tree_dir is not None
         self.bonsai_app = BonsaiApp(
             executable=Path(self.repository.working_tree_dir) / ".bonsai" / "bonsai.exe",
@@ -371,9 +373,10 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             or self.curriculum_suggestion.trainer_state.curriculum is None
         ):
             raise ValueError("Trainer state or curriculum is not set in the curriculum suggestion.")
+        repository = git.Repo(self._curriculum_repository_path or self._repository_path)
         return acquisition.Code(
-            url=self.repository.remote().url,
-            commit_hash=self.repository.head.commit.hexsha,
+            url=repository.remote().url,
+            commit_hash=repository.head.commit.hexsha,
             name=self.curriculum_suggestion.trainer_state.curriculum.pkg_location,
             version=self.curriculum_suggestion.trainer_state.curriculum.version,
             language="aind-behavior-curriculum",
