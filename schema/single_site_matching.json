@@ -1,7 +1,7 @@
 {
     "pkg_location": "aind_behavior_vr_foraging_curricula.single_site_matching",
     "name": "SingleSiteMatching",
-    "version": "1.0.0-rc3",
+    "version": "1.0.0-rc4",
     "graph": {
         "nodes": {
             "0": {
@@ -498,7 +498,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc3",
+                    "version": "1.0.0-rc4",
                     "stage_name": "learn_to_stop"
                 },
                 "graph": {
@@ -1406,7 +1406,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.0.0-rc3",
+                    "version": "1.0.0-rc4",
                     "stage_name": "graduated_stage"
                 },
                 "graph": {
