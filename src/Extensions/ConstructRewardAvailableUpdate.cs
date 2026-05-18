@@ -21,7 +21,7 @@ public class ConstructRewardAvailableUpdate
                 return Tuple.Create(double.NaN, PatchId, (PatchUpdateFunction)null, (PatchUpdateFunction)null, (PatchUpdateFunction)null);
             }
             var updateFunction = new ClampedRateFunction() {
-                Rate = new Scalar() { DistributionParameters = new ScalarDistributionParameter() { Value = 1.0 } }, // We set value to "1" since the tick value is the amount of delivered reward
+                Rate = new Scalar() { DistributionParameters = new ScalarDistributionParameter() { Value = -1.0 } }, // We set value to "1" since the tick value is the amount of delivered reward
                 Minimum = 0.0,
                 Maximum = null
             };
