@@ -5,9 +5,9 @@
                  xmlns:p1="clr-namespace:AindVrForagingDataSchema;assembly=Extensions"
                  xmlns:p2="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:p3="clr-namespace:;assembly=Extensions"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -72,20 +72,6 @@
                   <Expression xsi:type="SubscribeSubject">
                     <Name>CurrentBlock</Name>
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>EnvironmentStatistics.TransitionMatrix</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p3:FormatTransitionMatrix">
-                      <p3:NormalizeRows>true</p3:NormalizeRows>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>TransitionMatrix</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>CurrentBlock</Name>
-                  </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>WithinBlockLogic</Name>
                     <Workflow>
@@ -94,13 +80,7 @@
                           <Name>CurrentBlock</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>EnvironmentStatistics.FirstStateOccupancy</Selector>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>TransitionMatrix</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Zip" />
+                          <Selector>Environment</Selector>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>RngSeed</Name>
@@ -111,12 +91,14 @@
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p3:DrawFirstState" />
+                          <Combinator xsi:type="p3:CreateEnvironmentSampler" />
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Take">
-                            <rx:Count>1</rx:Count>
-                          </Combinator>
+                        <Expression xsi:type="rx:ResourceSubject">
+                          <Name>EnvironmentSampler</Name>
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Name>it.SampleFirst()</scr:Name>
+                          <scr:Expression>it.SampleFirst()</scr:Expression>
                         </Expression>
                         <Expression xsi:type="rx:BehaviorSubject">
                           <Name>ActiveStateIndex</Name>
@@ -776,11 +758,11 @@ it.Item3 as SiteHasChoice)</scr:Expression>
                           <Name>EvaluateBlockEndConditions</Name>
                         </Expression>
                         <Expression xsi:type="rx:SelectMany">
-                          <Name>SampleFromTransitionMatrix</Name>
+                          <Name>SampleNextState</Name>
                           <Workflow>
                             <Nodes>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>TransitionMatrix</Name>
+                                <Name>EnvironmentSampler</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>ActiveStateIndex</Name>
@@ -788,16 +770,8 @@ it.Item3 as SiteHasChoice)</scr:Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Zip" />
                               </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>RngSeed</Name>
-                              </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Random" />
-                                </PropertyMappings>
-                              </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p3:DrawFromTransitionMatrix" />
+                                <Combinator xsi:type="p3:SampleNextState" />
                               </Expression>
                               <Expression xsi:type="MulticastSubject">
                                 <Name>ActiveStateIndex</Name>
@@ -812,12 +786,10 @@ it.Item3 as SiteHasChoice)</scr:Expression>
                             <Edges>
                               <Edge From="0" To="2" Label="Source1" />
                               <Edge From="1" To="2" Label="Source2" />
-                              <Edge From="2" To="5" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
                               <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source2" />
+                              <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -827,35 +799,34 @@ it.Item3 as SiteHasChoice)</scr:Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="6" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source2" />
                         <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="5" To="6" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source1" />
+                        <Edge From="15" To="16" Label="Source1" />
                         <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source1" />
                         <Edge From="19" To="20" Label="Source1" />
-                        <Edge From="20" To="21" Label="Source1" />
-                        <Edge From="22" To="23" Label="Source1" />
-                        <Edge From="23" To="27" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
+                        <Edge From="22" To="26" Label="Source1" />
+                        <Edge From="23" To="24" Label="Source1" />
                         <Edge From="24" To="25" Label="Source1" />
-                        <Edge From="25" To="26" Label="Source1" />
-                        <Edge From="26" To="27" Label="Source2" />
+                        <Edge From="25" To="26" Label="Source2" />
+                        <Edge From="26" To="27" Label="Source1" />
                         <Edge From="27" To="28" Label="Source1" />
+                        <Edge From="27" To="30" Label="Source1" />
                         <Edge From="28" To="29" Label="Source1" />
-                        <Edge From="28" To="31" Label="Source1" />
-                        <Edge From="29" To="30" Label="Source1" />
-                        <Edge From="30" To="32" Label="Source1" />
-                        <Edge From="31" To="32" Label="Source2" />
+                        <Edge From="29" To="31" Label="Source1" />
+                        <Edge From="30" To="31" Label="Source2" />
+                        <Edge From="31" To="32" Label="Source1" />
                         <Edge From="32" To="33" Label="Source1" />
                         <Edge From="33" To="34" Label="Source1" />
                         <Edge From="34" To="35" Label="Source1" />
-                        <Edge From="35" To="36" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -874,9 +845,6 @@ it.Item3 as SiteHasChoice)</scr:Expression>
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>

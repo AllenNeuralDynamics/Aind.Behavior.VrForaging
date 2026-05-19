@@ -32,7 +32,7 @@
               <Name>Source1</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>EnvironmentStatistics</Selector>
+              <Selector>Environment</Selector>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Patches</Selector>

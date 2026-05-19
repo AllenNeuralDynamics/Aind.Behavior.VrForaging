@@ -23,7 +23,8 @@ public class ValidateOlfactometerDefinition
             var perOdorFlow = taskLogic.TaskParameters.OperationControl.OdorControl.TargetOdorFlow;
             int maxTotalFlow = taskLogic.TaskParameters.OperationControl.OdorControl.TargetTotalFlow;
             var nChannels = 3 + 4 * rig.HarpOlfactometerExtension.Count; // 3 for the main olfactometer, 4 for each additional olfactometer
-            var patches = taskLogic.TaskParameters.Environment.Blocks.SelectMany(block => block.EnvironmentStatistics.Patches);
+            
+            var patches = taskLogic.TaskParameters.Environment.Blocks.SelectMany(block => GetPatches(block.Environment));
             int maxIdx = 0;
             foreach (var patch in patches)
             {
@@ -47,5 +48,24 @@ public class ValidateOlfactometerDefinition
             }
             return new Unit();
         });
+    }
+
+    static Patch[] GetPatches(AindVrForagingDataSchema.Environment environment)
+    {
+        if (environment == null)
+        {
+            throw new ArgumentNullException("environment");
+        }
+        var markov = environment as MarkovEnvironment;
+        if (markov != null)
+        {
+            return markov.Patches.ToArray();
+        }
+        var sequence = environment as SequenceEnvironment;
+        if (sequence != null)
+        {
+            return sequence.Patches.ToArray();
+        }
+        throw new NotSupportedException("Unsupported environment type: " + environment.GetType().Name);
     }
 }
