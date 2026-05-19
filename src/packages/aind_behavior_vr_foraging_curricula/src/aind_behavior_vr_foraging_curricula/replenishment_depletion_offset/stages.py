@@ -70,7 +70,7 @@ def make_s_mcm_final_stage() -> Stage:
         reward_amount=reward_amount,
     )
 
-    environment_statistics = vr_task_logic.EnvironmentStatistics(
+    environment_statistics = vr_task_logic.MarkovEnvironment(
         first_state_occupancy=[0.33, 0.33, 0.33],
         transition_matrix=[[0, 1, 0], [0, 0, 1], [1, 0, 0]],
         patches=[patch1, patch2, patch3],
@@ -80,7 +80,7 @@ def make_s_mcm_final_stage() -> Stage:
         task_parameters=AindVrForagingTaskParameters(
             rng_seed=None,
             environment=vr_task_logic.BlockStructure(
-                blocks=[vr_task_logic.Block(environment_statistics=environment_statistics, end_conditions=[])],
+                blocks=[vr_task_logic.Block(environment=environment_statistics, end_conditions=[])],
                 sampling_mode="Random",
             ),
             operation_control=helpers.make_default_operation_control(velocity_threshold=8),

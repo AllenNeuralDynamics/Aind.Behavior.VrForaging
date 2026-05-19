@@ -36,7 +36,7 @@ def p_update_replenishment_rate(
     )
 
     assert len(task.task_parameters.environment.blocks) == 1, "Only single block environments are supported."
-    patches = task.task_parameters.environment.blocks[0].environment_statistics.patches
+    patches = task.task_parameters.environment.blocks[0].environment.patches
     for patch in patches:
         reward_function_candidates = [
             f

@@ -171,7 +171,7 @@ patch2 = vr_task_logic.Patch(
     ),
 )
 
-environment_statistics = vr_task_logic.EnvironmentStatistics(
+environment_statistics = vr_task_logic.MarkovEnvironment(
     first_state_occupancy=[1, 0],
     transition_matrix=[[1, 0], [0, 1]],
     patches=[patch1, patch2],
@@ -184,7 +184,7 @@ task_logic = vr_task_logic.AindVrForagingTaskLogic(
         environment=vr_task_logic.BlockStructure(
             blocks=[
                 vr_task_logic.Block(
-                    environment_statistics=environment_statistics, end_conditions=[]
+                    environment=environment_statistics, end_conditions=[]
                 )
             ],
             sampling_mode="Random",

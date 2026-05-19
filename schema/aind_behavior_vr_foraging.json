@@ -445,7 +445,8 @@
               "blocks": [
                 {
                   "end_conditions": [],
-                  "environment_statistics": {
+                  "environment": {
+                    "environment_type": "Markov",
                     "first_state_occupancy": null,
                     "patches": [
                       {
@@ -670,7 +671,8 @@
             "blocks": [
               {
                 "end_conditions": [],
-                "environment_statistics": {
+                "environment": {
+                  "environment_type": "Markov",
                   "first_state_occupancy": null,
                   "patches": [
                     {
@@ -1098,9 +1100,10 @@
     "Block": {
       "description": "Configuration for a single experimental block.\n\nA block represents a period of the experiment with specific environment\nstatistics and ending conditions. Each block defines the environmental\nparameters and termination criteria for that experimental phase.",
       "properties": {
-        "environment_statistics": {
-          "$ref": "#/$defs/EnvironmentStatistics",
+        "environment": {
+          "$ref": "#/$defs/Environment",
           "default": {
+            "environment_type": "Markov",
             "patches": [
               {
                 "label": "",
@@ -1374,7 +1377,8 @@
         "blocks": {
           "default": [
             {
-              "environment_statistics": {
+              "environment": {
+                "environment_type": "Markov",
                 "first_state_occupancy": null,
                 "patches": [
                   {
@@ -1952,171 +1956,22 @@
       "title": "Distribution",
       "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution"
     },
-    "EnvironmentStatistics": {
-      "description": "Defines the statistical properties of the foraging environment.\n\nThis class specifies the patches available in the environment, their transition\nprobabilities, and initial state occupancy. It forms the core specification\nfor the foraging environment structure.",
-      "properties": {
-        "patches": {
-          "default": [
-            {
-              "label": "",
-              "state_index": 0,
-              "odor_specification": [
-                1.0,
-                0.0,
-                0.0
-              ],
-              "reward_specification": {
-                "amount": {
-                  "distribution_parameters": {
-                    "family": "Scalar",
-                    "value": 5.0
-                  },
-                  "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null
-                },
-                "available": {
-                  "distribution_parameters": {
-                    "family": "Scalar",
-                    "value": 5.0
-                  },
-                  "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null
-                },
-                "delay": {
-                  "distribution_parameters": {
-                    "family": "Scalar",
-                    "value": 0.0
-                  },
-                  "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null
-                },
-                "operant_logic": null,
-                "probability": {
-                  "distribution_parameters": {
-                    "family": "Scalar",
-                    "value": 1.0
-                  },
-                  "family": "Scalar",
-                  "scaling_parameters": null,
-                  "truncation_parameters": null
-                },
-                "reward_function": []
-              },
-              "patch_virtual_sites_generator": {
-                "inter_patch": {
-                  "label": "InterPatch",
-                  "length_distribution": {
-                    "distribution_parameters": {
-                      "family": "Scalar",
-                      "value": 20.0
-                    },
-                    "family": "Scalar",
-                    "scaling_parameters": null,
-                    "truncation_parameters": null
-                  },
-                  "render_specification": {
-                    "contrast": null
-                  },
-                  "treadmill_specification": null
-                },
-                "inter_site": {
-                  "label": "InterSite",
-                  "length_distribution": {
-                    "distribution_parameters": {
-                      "family": "Scalar",
-                      "value": 20.0
-                    },
-                    "family": "Scalar",
-                    "scaling_parameters": null,
-                    "truncation_parameters": null
-                  },
-                  "render_specification": {
-                    "contrast": null
-                  },
-                  "treadmill_specification": null
-                },
-                "post_patch": null,
-                "reward_site": {
-                  "label": "RewardSite",
-                  "length_distribution": {
-                    "distribution_parameters": {
-                      "family": "Scalar",
-                      "value": 20.0
-                    },
-                    "family": "Scalar",
-                    "scaling_parameters": null,
-                    "truncation_parameters": null
-                  },
-                  "render_specification": {
-                    "contrast": null
-                  },
-                  "treadmill_specification": null
-                }
-              },
-              "patch_terminators": [
-                {
-                  "count": {
-                    "distribution_parameters": {
-                      "family": "Scalar",
-                      "value": 1.0
-                    },
-                    "family": "Scalar",
-                    "scaling_parameters": null,
-                    "truncation_parameters": null
-                  },
-                  "terminator_type": "OnRejection"
-                }
-              ]
-            }
-          ],
-          "description": "List of patches",
-          "items": {
-            "$ref": "#/$defs/Patch"
-          },
-          "minItems": 1,
-          "title": "Patches",
-          "type": "array"
+    "Environment": {
+      "discriminator": {
+        "mapping": {
+          "Markov": "#/$defs/MarkovEnvironment",
+          "Sequence": "#/$defs/SequenceEnvironment"
         },
-        "transition_matrix": {
-          "default": [
-            [
-              1
-            ]
-          ],
-          "description": "Determines the transition probabilities between patches",
-          "items": {
-            "items": {
-              "minimum": 0,
-              "type": "number"
-            },
-            "type": "array"
-          },
-          "title": "Transition Matrix",
-          "type": "array"
-        },
-        "first_state_occupancy": {
-          "default": null,
-          "description": "Determines the first state the animal will be in. If null, it will be randomly drawn.",
-          "oneOf": [
-            {
-              "items": {
-                "minimum": 0,
-                "type": "number"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "First State Occupancy"
-        }
+        "propertyName": "environment_type"
       },
-      "title": "EnvironmentStatistics",
-      "type": "object"
+      "oneOf": [
+        {
+          "$ref": "#/$defs/MarkovEnvironment"
+        },
+        {
+          "$ref": "#/$defs/SequenceEnvironment"
+        }
+      ]
     },
     "ExponentialDistribution": {
       "description": "An exponential probability distribution.\n\nModels time between events in a Poisson process. Commonly used\nfor wait times and inter-event intervals.",
@@ -2712,6 +2567,178 @@
       "title": "ManipulatorPosition",
       "type": "object",
       "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.ManipulatorPosition"
+    },
+    "MarkovEnvironment": {
+      "description": "Defines the statistical properties of the foraging environment.\n\nThis class specifies the patches available in the environment, their transition\nprobabilities, and initial state occupancy. It forms the core specification\nfor the foraging environment structure.",
+      "properties": {
+        "environment_type": {
+          "const": "Markov",
+          "default": "Markov",
+          "title": "Environment Type",
+          "type": "string"
+        },
+        "patches": {
+          "default": [
+            {
+              "label": "",
+              "state_index": 0,
+              "odor_specification": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "reward_specification": {
+                "amount": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 5.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "available": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 5.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "delay": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 0.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "operant_logic": null,
+                "probability": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 1.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "reward_function": []
+              },
+              "patch_virtual_sites_generator": {
+                "inter_patch": {
+                  "label": "InterPatch",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                },
+                "inter_site": {
+                  "label": "InterSite",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                },
+                "post_patch": null,
+                "reward_site": {
+                  "label": "RewardSite",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                }
+              },
+              "patch_terminators": [
+                {
+                  "count": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 1.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "terminator_type": "OnRejection"
+                }
+              ]
+            }
+          ],
+          "description": "List of patches",
+          "items": {
+            "$ref": "#/$defs/Patch"
+          },
+          "minItems": 1,
+          "title": "Patches",
+          "type": "array"
+        },
+        "transition_matrix": {
+          "default": [
+            [
+              1
+            ]
+          ],
+          "description": "Determines the transition probabilities between patches",
+          "items": {
+            "items": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "type": "array"
+          },
+          "title": "Transition Matrix",
+          "type": "array"
+        },
+        "first_state_occupancy": {
+          "default": null,
+          "description": "Determines the first state the animal will be in. If null, it will be randomly drawn.",
+          "oneOf": [
+            {
+              "items": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "First State Occupancy"
+        }
+      },
+      "title": "MarkovEnvironment",
+      "type": "object"
     },
     "Measurement": {
       "description": "Input for water valve calibration class",
@@ -4610,6 +4637,167 @@
         }
       },
       "title": "ScreenAssemblyCalibration",
+      "type": "object"
+    },
+    "SequenceEnvironment": {
+      "description": "Defines a sequence-based foraging environment.\n\nThis class specifies a fixed sequence of patches that the animal will experience,\nwithout any probabilistic transitions. It is used for deterministic environment\nconfigurations where the order of patches is predefined.",
+      "properties": {
+        "environment_type": {
+          "const": "Sequence",
+          "default": "Sequence",
+          "title": "Environment Type",
+          "type": "string"
+        },
+        "patches": {
+          "default": [
+            {
+              "label": "",
+              "state_index": 0,
+              "odor_specification": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "reward_specification": {
+                "amount": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 5.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "available": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 5.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "delay": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 0.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "operant_logic": null,
+                "probability": {
+                  "distribution_parameters": {
+                    "family": "Scalar",
+                    "value": 1.0
+                  },
+                  "family": "Scalar",
+                  "scaling_parameters": null,
+                  "truncation_parameters": null
+                },
+                "reward_function": []
+              },
+              "patch_virtual_sites_generator": {
+                "inter_patch": {
+                  "label": "InterPatch",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                },
+                "inter_site": {
+                  "label": "InterSite",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                },
+                "post_patch": null,
+                "reward_site": {
+                  "label": "RewardSite",
+                  "length_distribution": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 20.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "render_specification": {
+                    "contrast": null
+                  },
+                  "treadmill_specification": null
+                }
+              },
+              "patch_terminators": [
+                {
+                  "count": {
+                    "distribution_parameters": {
+                      "family": "Scalar",
+                      "value": 1.0
+                    },
+                    "family": "Scalar",
+                    "scaling_parameters": null,
+                    "truncation_parameters": null
+                  },
+                  "terminator_type": "OnRejection"
+                }
+              ]
+            }
+          ],
+          "description": "List of patches",
+          "items": {
+            "$ref": "#/$defs/Patch"
+          },
+          "minItems": 1,
+          "title": "Patches",
+          "type": "array"
+        },
+        "patch_indices": {
+          "default": [
+            0
+          ],
+          "description": "Determines the sequence of patches the animal will experience. The index corresponds to Patch.state_index",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Patch Indices",
+          "type": "array"
+        },
+        "sampling_mode": {
+          "default": "RandomWithoutReplacement",
+          "description": "Determines how the sequence is sampled",
+          "enum": [
+            "RandomWithoutReplacement",
+            "Ordered",
+            "RandomWithReplacement"
+          ],
+          "title": "Sampling Mode",
+          "type": "string"
+        }
+      },
+      "title": "SequenceEnvironment",
       "type": "object"
     },
     "Session": {

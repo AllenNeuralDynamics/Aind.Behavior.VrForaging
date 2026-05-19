@@ -41,7 +41,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "OdorA",
@@ -526,7 +527,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "OdorA",
@@ -949,7 +951,8 @@
                                     ]
                                 },
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "OdorA",

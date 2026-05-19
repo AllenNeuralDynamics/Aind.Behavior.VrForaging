@@ -43,10 +43,7 @@ def metrics_from_dataset(data_directory: os.PathLike) -> SingleSiteMatchingMetri
 
     # we only care about the first block during the curriculum
     unique_patches_indices = list(
-        set(
-            cast(int, p.state_index)
-            for p in task_logic.task_parameters.environment.blocks[0].environment_statistics.patches
-        )
+        set(cast(int, p.state_index) for p in task_logic.task_parameters.environment.blocks[0].environment.patches)
     )
 
     total_water_consumed = _try_get_datastream_as_dataframe(dataset["Behavior"]["SoftwareEvents"]["GiveReward"])

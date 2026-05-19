@@ -46,7 +46,7 @@ def make_s_stage_one_odor_no_depletion() -> Stage:
                 environment=task_logic.BlockStructure(
                     blocks=[
                         task_logic.Block(
-                            environment_statistics=task_logic.EnvironmentStatistics(
+                            environment=task_logic.MarkovEnvironment(
                                 patches=[
                                     task_logic.Patch(
                                         label="PatchZA",
@@ -127,7 +127,7 @@ def _make_s_stage_one_odor_w_depletion_parameters() -> AindVrForagingTaskParamet
         environment=task_logic.BlockStructure(
             blocks=[
                 task_logic.Block(
-                    environment_statistics=task_logic.EnvironmentStatistics(
+                    environment=task_logic.MarkovEnvironment(
                         patches=[
                             task_logic.Patch(
                                 label="PatchZB",
@@ -179,7 +179,7 @@ def make_s_stage_all_odors_rewarded() -> Stage:
                 environment=task_logic.BlockStructure(
                     blocks=[
                         task_logic.Block(
-                            environment_statistics=task_logic.EnvironmentStatistics(
+                            environment=task_logic.MarkovEnvironment(
                                 first_state_occupancy=[0.5, 0.5],
                                 transition_matrix=[[0.5, 0.5], [0.5, 0.5]],
                                 patches=[
@@ -211,7 +211,7 @@ def make_s_stage_graduation() -> Stage:
                 environment=task_logic.BlockStructure(
                     blocks=[
                         task_logic.Block(
-                            environment_statistics=task_logic.EnvironmentStatistics(
+                            environment=task_logic.MarkovEnvironment(
                                 first_state_occupancy=[0.45, 0.45, 0.1],
                                 transition_matrix=[[0.45, 0.45, 0.1], [0.45, 0.45, 0.1], [0.45, 0.45, 0.1]],
                                 patches=[

@@ -1131,19 +1131,19 @@ namespace AindVrForagingDataSchema
     public partial class Block
     {
     
-        private EnvironmentStatistics _environmentStatistics;
+        private Environment _environment;
     
         private System.Collections.Generic.List<BlockEndCondition> _endConditions;
     
         public Block()
         {
-            _environmentStatistics = new EnvironmentStatistics();
+            _environment = new Environment();
             _endConditions = new System.Collections.Generic.List<BlockEndCondition>();
         }
     
         protected Block(Block other)
         {
-            _environmentStatistics = other._environmentStatistics;
+            _environment = other._environment;
             _endConditions = other._endConditions;
         }
     
@@ -1151,17 +1151,17 @@ namespace AindVrForagingDataSchema
         /// Statistics of the environment
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("environment_statistics")]
+        [Newtonsoft.Json.JsonPropertyAttribute("environment")]
         [System.ComponentModel.DescriptionAttribute("Statistics of the environment")]
-        public EnvironmentStatistics EnvironmentStatistics
+        public Environment Environment
         {
             get
             {
-                return _environmentStatistics;
+                return _environment;
             }
             set
             {
-                _environmentStatistics = value;
+                _environment = value;
             }
         }
     
@@ -1195,7 +1195,7 @@ namespace AindVrForagingDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("EnvironmentStatistics = " + _environmentStatistics + ", ");
+            stringBuilder.Append("Environment = " + _environment + ", ");
             stringBuilder.Append("EndConditions = " + _endConditions);
             return true;
         }
@@ -2779,114 +2779,36 @@ namespace AindVrForagingDataSchema
     }
 
 
-    /// <summary>
-    /// Defines the statistical properties of the foraging environment.
-    ///
-    ///This class specifies the patches available in the environment, their transition
-    ///probabilities, and initial state occupancy. It forms the core specification
-    ///for the foraging environment structure.
-    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute(@"Defines the statistical properties of the foraging environment.
-
-    This class specifies the patches available in the environment, their transition
-    probabilities, and initial state occupancy. It forms the core specification
-    for the foraging environment structure.")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "environment_type")]
+    [JsonInheritanceAttribute("Markov", typeof(MarkovEnvironment))]
+    [JsonInheritanceAttribute("Sequence", typeof(SequenceEnvironment))]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class EnvironmentStatistics
+    public partial class Environment
     {
     
-        private System.Collections.Generic.List<Patch> _patches;
-    
-        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _transitionMatrix;
-    
-        private System.Collections.Generic.List<double> _firstStateOccupancy;
-    
-        public EnvironmentStatistics()
+        public Environment()
         {
-            _patches = new System.Collections.Generic.List<Patch>();
-            _transitionMatrix = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
         }
     
-        protected EnvironmentStatistics(EnvironmentStatistics other)
+        protected Environment(Environment other)
         {
-            _patches = other._patches;
-            _transitionMatrix = other._transitionMatrix;
-            _firstStateOccupancy = other._firstStateOccupancy;
         }
     
-        /// <summary>
-        /// List of patches
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("patches")]
-        [System.ComponentModel.DescriptionAttribute("List of patches")]
-        public System.Collections.Generic.List<Patch> Patches
+        public System.IObservable<Environment> Generate()
         {
-            get
-            {
-                return _patches;
-            }
-            set
-            {
-                _patches = value;
-            }
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Environment(this)));
         }
     
-        /// <summary>
-        /// Determines the transition probabilities between patches
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("transition_matrix")]
-        [System.ComponentModel.DescriptionAttribute("Determines the transition probabilities between patches")]
-        public System.Collections.Generic.List<System.Collections.Generic.List<double>> TransitionMatrix
+        public System.IObservable<Environment> Generate<TSource>(System.IObservable<TSource> source)
         {
-            get
-            {
-                return _transitionMatrix;
-            }
-            set
-            {
-                _transitionMatrix = value;
-            }
-        }
-    
-        /// <summary>
-        /// Determines the first state the animal will be in. If null, it will be randomly drawn.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("first_state_occupancy")]
-        [System.ComponentModel.DescriptionAttribute("Determines the first state the animal will be in. If null, it will be randomly dr" +
-            "awn.")]
-        public System.Collections.Generic.List<double> FirstStateOccupancy
-        {
-            get
-            {
-                return _firstStateOccupancy;
-            }
-            set
-            {
-                _firstStateOccupancy = value;
-            }
-        }
-    
-        public System.IObservable<EnvironmentStatistics> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new EnvironmentStatistics(this)));
-        }
-    
-        public System.IObservable<EnvironmentStatistics> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new EnvironmentStatistics(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new Environment(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("Patches = " + _patches + ", ");
-            stringBuilder.Append("TransitionMatrix = " + _transitionMatrix + ", ");
-            stringBuilder.Append("FirstStateOccupancy = " + _firstStateOccupancy);
-            return true;
+            return false;
         }
     
         public override string ToString()
@@ -3882,6 +3804,123 @@ namespace AindVrForagingDataSchema
             }
             stringBuilder.Append("LutKeys = " + _lutKeys + ", ");
             stringBuilder.Append("LutValues = " + _lutValues);
+            return true;
+        }
+    }
+
+
+    /// <summary>
+    /// Defines the statistical properties of the foraging environment.
+    ///
+    ///This class specifies the patches available in the environment, their transition
+    ///probabilities, and initial state occupancy. It forms the core specification
+    ///for the foraging environment structure.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute(@"Defines the statistical properties of the foraging environment.
+
+    This class specifies the patches available in the environment, their transition
+    probabilities, and initial state occupancy. It forms the core specification
+    for the foraging environment structure.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class MarkovEnvironment : Environment
+    {
+    
+        private System.Collections.Generic.List<Patch> _patches;
+    
+        private System.Collections.Generic.List<System.Collections.Generic.List<double>> _transitionMatrix;
+    
+        private System.Collections.Generic.List<double> _firstStateOccupancy;
+    
+        public MarkovEnvironment()
+        {
+            _patches = new System.Collections.Generic.List<Patch>();
+            _transitionMatrix = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
+        }
+    
+        protected MarkovEnvironment(MarkovEnvironment other) : 
+                base(other)
+        {
+            _patches = other._patches;
+            _transitionMatrix = other._transitionMatrix;
+            _firstStateOccupancy = other._firstStateOccupancy;
+        }
+    
+        /// <summary>
+        /// List of patches
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("patches")]
+        [System.ComponentModel.DescriptionAttribute("List of patches")]
+        public System.Collections.Generic.List<Patch> Patches
+        {
+            get
+            {
+                return _patches;
+            }
+            set
+            {
+                _patches = value;
+            }
+        }
+    
+        /// <summary>
+        /// Determines the transition probabilities between patches
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("transition_matrix")]
+        [System.ComponentModel.DescriptionAttribute("Determines the transition probabilities between patches")]
+        public System.Collections.Generic.List<System.Collections.Generic.List<double>> TransitionMatrix
+        {
+            get
+            {
+                return _transitionMatrix;
+            }
+            set
+            {
+                _transitionMatrix = value;
+            }
+        }
+    
+        /// <summary>
+        /// Determines the first state the animal will be in. If null, it will be randomly drawn.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("first_state_occupancy")]
+        [System.ComponentModel.DescriptionAttribute("Determines the first state the animal will be in. If null, it will be randomly dr" +
+            "awn.")]
+        public System.Collections.Generic.List<double> FirstStateOccupancy
+        {
+            get
+            {
+                return _firstStateOccupancy;
+            }
+            set
+            {
+                _firstStateOccupancy = value;
+            }
+        }
+    
+        public System.IObservable<MarkovEnvironment> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MarkovEnvironment(this)));
+        }
+    
+        public System.IObservable<MarkovEnvironment> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new MarkovEnvironment(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Patches = " + _patches + ", ");
+            stringBuilder.Append("TransitionMatrix = " + _transitionMatrix + ", ");
+            stringBuilder.Append("FirstStateOccupancy = " + _firstStateOccupancy);
             return true;
         }
     }
@@ -7705,6 +7744,123 @@ namespace AindVrForagingDataSchema
     }
 
 
+    /// <summary>
+    /// Defines a sequence-based foraging environment.
+    ///
+    ///This class specifies a fixed sequence of patches that the animal will experience,
+    ///without any probabilistic transitions. It is used for deterministic environment
+    ///configurations where the order of patches is predefined.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute(@"Defines a sequence-based foraging environment.
+
+    This class specifies a fixed sequence of patches that the animal will experience,
+    without any probabilistic transitions. It is used for deterministic environment
+    configurations where the order of patches is predefined.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class SequenceEnvironment : Environment
+    {
+    
+        private System.Collections.Generic.List<Patch> _patches;
+    
+        private System.Collections.Generic.List<int> _patchIndices;
+    
+        private SequenceEnvironmentSamplingMode _samplingMode;
+    
+        public SequenceEnvironment()
+        {
+            _patches = new System.Collections.Generic.List<Patch>();
+            _patchIndices = new System.Collections.Generic.List<int>();
+            _samplingMode = SequenceEnvironmentSamplingMode.RandomWithoutReplacement;
+        }
+    
+        protected SequenceEnvironment(SequenceEnvironment other) : 
+                base(other)
+        {
+            _patches = other._patches;
+            _patchIndices = other._patchIndices;
+            _samplingMode = other._samplingMode;
+        }
+    
+        /// <summary>
+        /// List of patches
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("patches")]
+        [System.ComponentModel.DescriptionAttribute("List of patches")]
+        public System.Collections.Generic.List<Patch> Patches
+        {
+            get
+            {
+                return _patches;
+            }
+            set
+            {
+                _patches = value;
+            }
+        }
+    
+        /// <summary>
+        /// Determines the sequence of patches the animal will experience. The index corresponds to Patch.state_index
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("patch_indices")]
+        [System.ComponentModel.DescriptionAttribute("Determines the sequence of patches the animal will experience. The index correspo" +
+            "nds to Patch.state_index")]
+        public System.Collections.Generic.List<int> PatchIndices
+        {
+            get
+            {
+                return _patchIndices;
+            }
+            set
+            {
+                _patchIndices = value;
+            }
+        }
+    
+        /// <summary>
+        /// Determines how the sequence is sampled
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("sampling_mode")]
+        [System.ComponentModel.DescriptionAttribute("Determines how the sequence is sampled")]
+        public SequenceEnvironmentSamplingMode SamplingMode
+        {
+            get
+            {
+                return _samplingMode;
+            }
+            set
+            {
+                _samplingMode = value;
+            }
+        }
+    
+        public System.IObservable<SequenceEnvironment> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SequenceEnvironment(this)));
+        }
+    
+        public System.IObservable<SequenceEnvironment> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new SequenceEnvironment(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Patches = " + _patches + ", ");
+            stringBuilder.Append("PatchIndices = " + _patchIndices + ", ");
+            stringBuilder.Append("SamplingMode = " + _samplingMode);
+            return true;
+        }
+    }
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
@@ -11106,6 +11262,22 @@ namespace AindVrForagingDataSchema
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum SequenceEnvironmentSamplingMode
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="RandomWithoutReplacement")]
+        RandomWithoutReplacement = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Ordered")]
+        Ordered = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="RandomWithReplacement")]
+        RandomWithReplacement = 2,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SpinnakerCameraColorProcessing
     {
     
@@ -11285,6 +11457,47 @@ namespace AindVrForagingDataSchema
             return System.Reactive.Linq.Observable.Create<TResult>(observer =>
             {
                 var sourceObserver = System.Reactive.Observer.Create<BlockEndCondition>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MarkovEnvironment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SequenceEnvironment>))]
+    public partial class MatchEnvironment : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Environment);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchEnvironment),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Environment> source)
+            where TResult : Environment
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Environment>(
                     value =>
                     {
                         var match = value as TResult;
@@ -11604,9 +11817,9 @@ namespace AindVrForagingDataSchema
             return Process<DisplayIntrinsics>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<EnvironmentStatistics> source)
+        public System.IObservable<string> Process(System.IObservable<Environment> source)
         {
-            return Process<EnvironmentStatistics>(source);
+            return Process<Environment>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<HarpAnalogInput> source)
@@ -11642,6 +11855,11 @@ namespace AindVrForagingDataSchema
         public System.IObservable<string> Process(System.IObservable<LookupTableFunction> source)
         {
             return Process<LookupTableFunction>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<MarkovEnvironment> source)
+        {
+            return Process<MarkovEnvironment>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Measurement> source)
@@ -11804,6 +12022,11 @@ namespace AindVrForagingDataSchema
             return Process<ScreenAssemblyCalibration>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<SequenceEnvironment> source)
+        {
+            return Process<SequenceEnvironment>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Session> source)
         {
             return Process<Session>(source);
@@ -11931,7 +12154,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<EnvironmentStatistics>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Environment>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpEnvironmentSensor>))]
@@ -11939,6 +12162,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpSniffDetector>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpWhiteRabbit>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LookupTableFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MarkovEnvironment>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
@@ -11971,6 +12195,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScreenAssembly>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScreenAssemblyCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SequenceEnvironment>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Session>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SetValueFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Size>))]

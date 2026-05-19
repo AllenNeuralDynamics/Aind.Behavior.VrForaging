@@ -830,7 +830,7 @@ class Patch(BaseModel):
 # ==================== ENVIRONMENT AND PATCH CONFIGURATION ====================
 
 
-class EnvironmentStatistics(BaseModel):
+class _Environment(BaseModel):
     """
     Defines the statistical properties of the foraging environment.
 
@@ -839,7 +839,20 @@ class EnvironmentStatistics(BaseModel):
     for the foraging environment structure.
     """
 
+    environment_type: str
     patches: List[Patch] = Field(default=[Patch()], description="List of patches", min_length=1, validate_default=True)
+
+
+class MarkovEnvironment(_Environment):
+    """
+    Defines the statistical properties of the foraging environment.
+
+    This class specifies the patches available in the environment, their transition
+    probabilities, and initial state occupancy. It forms the core specification
+    for the foraging environment structure.
+    """
+
+    environment_type: Literal["Markov"] = "Markov"
     transition_matrix: List[List[NonNegativeFloat]] = Field(
         default=[[1]],
         description="Determines the transition probabilities between patches",
@@ -856,6 +869,47 @@ class EnvironmentStatistics(BaseModel):
         if any(len(row) != len(value) for row in value):
             raise ValueError("Transition matrix must be square.")
         return value
+
+
+class SequenceEnvironment(_Environment):
+    """
+    Defines a sequence-based foraging environment.
+
+    This class specifies a fixed sequence of patches that the animal will experience,
+    without any probabilistic transitions. It is used for deterministic environment
+    configurations where the order of patches is predefined.
+    """
+
+    environment_type: Literal["Sequence"] = "Sequence"
+    patch_indices: List[int] = Field(
+        default=[0],
+        description="Determines the sequence of patches the animal will experience. The index corresponds to Patch.state_index",
+        min_length=1,
+    )
+    sampling_mode: Literal["RandomWithoutReplacement", "Ordered", "RandomWithReplacement"] = Field(
+        default="RandomWithoutReplacement", description="Determines how the sequence is sampled"
+    )
+
+    @model_validator(mode="after")
+    def _validate_patch_indices(self) -> Self:
+        """Ensures that patch_indices correspond to valid Patch.state_index values."""
+        valid_state_indices = {patch.state_index for patch in self.patches}
+        invalid = [index for index in self.patch_indices if index not in valid_state_indices]
+        if invalid:
+            raise ValueError(
+                f"patch_indices {invalid} do not correspond to any patch.state_index "
+                f"(available: {sorted(valid_state_indices)})."
+            )
+        return self
+
+
+Environment = TypeAliasType(
+    "Environment",
+    Annotated[
+        Union[MarkovEnvironment, SequenceEnvironment],
+        Field(discriminator="environment_type"),
+    ],
+)
 
 
 # ==================== OP CONTROL SPECIFICATIONS ====================
@@ -1062,12 +1116,32 @@ class Block(BaseModel):
     parameters and termination criteria for that experimental phase.
     """
 
-    environment_statistics: EnvironmentStatistics = Field(
-        default=EnvironmentStatistics(), description="Statistics of the environment", validate_default=True
+    environment: Environment = Field(
+        default=MarkovEnvironment(), description="Statistics of the environment", validate_default=True
     )
     end_conditions: List[BlockEndCondition] = Field(
         default=[], description="List of end conditions that must be true for the block to end."
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _migrate_legacy_environment(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+        # Remap old field name "environment_statistics" -> "environment"
+        if "environment_statistics" in data and "environment" not in data:
+            data = dict(data)
+            data["environment"] = data.pop("environment_statistics")
+            logger.warning("Deprecated field 'environment_statistics' found in Block. Remapping to 'environment'.")
+        # Inject discriminator when missing (old EnvironmentStatistics = MarkovEnvironment)
+        env = data.get("environment")
+        if isinstance(env, dict) and "environment_type" not in env:
+            data = dict(data)
+            data["environment"] = dict(env, environment_type="Markov")
+            logger.warning(
+                "Field 'environment_type' missing in environment dict. Defaulting to 'Markov' for backwards compatibility."
+            )
+        return data
 
 
 class BlockStructure(BaseModel):

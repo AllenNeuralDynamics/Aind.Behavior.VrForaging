@@ -101,4 +101,27 @@ namespace AindVrForagingDataSchema
             return Math.Max(Math.Min(updatedValue, Maximum), Minimum);
         }
     }
+
+    partial class Environment
+    {
+        public IList<Patch> Patches
+        {
+            get { return _Patches(); }
+        }
+
+        public IList<Patch> _Patches()
+        {
+            var markov = this as MarkovEnvironment;
+            if (markov != null)
+            {
+                return markov.Patches;
+            }
+            var sequence = this as SequenceEnvironment;
+            if (sequence != null)
+            {
+                return sequence.Patches;
+            }
+            throw new NotSupportedException("Unsupported environment type: " + this.GetType().Name);
+        }
+    }
 }
