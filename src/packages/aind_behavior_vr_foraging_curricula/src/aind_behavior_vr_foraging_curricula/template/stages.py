@@ -158,7 +158,7 @@ patch2 = vr_task_logic.Patch(
     ),
 )
 
-environment_statistics = vr_task_logic.EnvironmentStatistics(
+environment_statistics = vr_task_logic.MarkovEnvironment(
     first_state_occupancy=[1, 0], transition_matrix=[[1, 0], [0, 1]], patches=[patch1, patch2]
 )
 
@@ -201,7 +201,7 @@ s_stage_a = Stage(
             rng_seed=1,
             updaters=updaters,
             environment=vr_task_logic.BlockStructure(
-                blocks=[vr_task_logic.Block(environment_statistics=environment_statistics, end_conditions=[])],
+                blocks=[vr_task_logic.Block(environment=environment_statistics, end_conditions=[])],
                 sampling_mode="Random",
             ),
             operation_control=operation_control,
@@ -218,7 +218,7 @@ s_stage_b = Stage(
             rng_seed=2,
             updaters=updaters,
             environment=vr_task_logic.BlockStructure(
-                blocks=[vr_task_logic.Block(environment_statistics=environment_statistics, end_conditions=[])],
+                blocks=[vr_task_logic.Block(environment=environment_statistics, end_conditions=[])],
                 sampling_mode="Random",
             ),
             operation_control=operation_control,

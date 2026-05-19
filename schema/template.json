@@ -53,7 +53,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "reset",
@@ -656,7 +657,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "reset",

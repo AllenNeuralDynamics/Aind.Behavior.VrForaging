@@ -93,7 +93,7 @@
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p3:CreateEnvironmentSampler" />
                         </Expression>
-                        <Expression xsi:type="rx:ResourceSubject">
+                        <Expression xsi:type="rx:AsyncSubject">
                           <Name>EnvironmentSampler</Name>
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">

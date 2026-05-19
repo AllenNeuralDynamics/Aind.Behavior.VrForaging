@@ -21,11 +21,11 @@ def p_stochastic_reward(metrics: DepletionCurriculumMetrics, task: AindVrForagin
     if metrics.total_water_consumed > 0.750:
         assert len(task.task_parameters.environment.blocks) > 0, "Expected at least one block in the task parameters"
         default_block = task.task_parameters.environment.blocks[0]
-        assert len(default_block.environment_statistics.patches) > 0, "Expected at least one patch in the default block"
+        assert len(default_block.environment.patches) > 0, "Expected at least one patch in the default block"
 
-        default_block.environment_statistics.patches[0].reward_specification.probability = task_logic.scalar_value(0.9)
+        default_block.environment.patches[0].reward_specification.probability = task_logic.scalar_value(0.9)
 
-        reward_functions_defined = default_block.environment_statistics.patches[0].reward_specification.reward_function
+        reward_functions_defined = default_block.environment.patches[0].reward_specification.reward_function
 
         for reward_function in reward_functions_defined:
             if isinstance(reward_function, task_logic.PatchRewardFunction):
@@ -38,8 +38,8 @@ def p_learn_to_run(metrics: DepletionCurriculumMetrics, task: AindVrForagingTask
     if metrics.n_reward_sites_traveled > 200:
         assert len(task.task_parameters.environment.blocks) > 0, "Expected at least one block in the task parameters"
         default_block = task.task_parameters.environment.blocks[0]
-        assert len(default_block.environment_statistics.patches) > 0, "Expected at least one patch in the default block"
-        patch_gen = default_block.environment_statistics.patches[0].patch_virtual_sites_generator
+        assert len(default_block.environment.patches) > 0, "Expected at least one patch in the default block"
+        patch_gen = default_block.environment.patches[0].patch_virtual_sites_generator
 
         gain = min(metrics.n_reward_sites_traveled / 200.0, 3.0)  # 1.0 for 200, 2.0 for 400, 3.0 for 600+
 

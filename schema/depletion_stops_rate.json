@@ -53,7 +53,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "PatchZA",
@@ -377,7 +378,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "PatchZB",
@@ -719,7 +721,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "PatchZB",
@@ -1024,7 +1027,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "odor_slow",
@@ -1525,7 +1529,8 @@
                         "environment": {
                             "blocks": [
                                 {
-                                    "environment_statistics": {
+                                    "environment": {
+                                        "environment_type": "Markov",
                                         "patches": [
                                             {
                                                 "label": "odor_0",

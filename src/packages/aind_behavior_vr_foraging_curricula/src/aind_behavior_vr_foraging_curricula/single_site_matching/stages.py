@@ -135,7 +135,7 @@ def make_block(
 
     per_p = 1.0 / len(patches)
     return vr_task_logic.Block(
-        environment_statistics=vr_task_logic.EnvironmentStatistics(
+        environment=vr_task_logic.MarkovEnvironment(
             first_state_occupancy=[per_p] * len(patches),
             transition_matrix=[[per_p] * len(patches) for _ in range(len(patches))],
             patches=patches,

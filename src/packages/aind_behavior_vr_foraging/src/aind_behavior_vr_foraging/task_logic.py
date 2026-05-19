@@ -1116,12 +1116,32 @@ class Block(BaseModel):
     parameters and termination criteria for that experimental phase.
     """
 
-    environment_statistics: Environment = Field(
+    environment: Environment = Field(
         default=MarkovEnvironment(), description="Statistics of the environment", validate_default=True
     )
     end_conditions: List[BlockEndCondition] = Field(
         default=[], description="List of end conditions that must be true for the block to end."
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _migrate_legacy_environment(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+        # Remap old field name "environment_statistics" -> "environment"
+        if "environment_statistics" in data and "environment" not in data:
+            data = dict(data)
+            data["environment"] = data.pop("environment_statistics")
+            logger.warning("Deprecated field 'environment_statistics' found in Block. Remapping to 'environment'.")
+        # Inject discriminator when missing (old EnvironmentStatistics = MarkovEnvironment)
+        env = data.get("environment")
+        if isinstance(env, dict) and "environment_type" not in env:
+            data = dict(data)
+            data["environment"] = dict(env, environment_type="Markov")
+            logger.warning(
+                "Field 'environment_type' missing in environment dict. Defaulting to 'Markov' for backwards compatibility."
+            )
+        return data
 
 
 class BlockStructure(BaseModel):
