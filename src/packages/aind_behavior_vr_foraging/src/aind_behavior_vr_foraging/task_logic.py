@@ -393,6 +393,7 @@ class RewardFunctionRule(str, Enum):
     """
 
     ON_REWARD = "OnReward"
+    ON_REWARD_AMOUNT = "OnRewardAmount"
     ON_CHOICE = "OnChoice"
     ON_TIME = "OnTime"
     ON_DISTANCE = "OnDistance"
@@ -433,6 +434,7 @@ class PatchRewardFunction(_RewardFunction):
     function_type: Literal["PatchRewardFunction"] = "PatchRewardFunction"
     rule: Literal[
         RewardFunctionRule.ON_REWARD,
+        RewardFunctionRule.ON_REWARD_AMOUNT,
         RewardFunctionRule.ON_CHOICE,
         RewardFunctionRule.ON_TIME,
         RewardFunctionRule.ON_DISTANCE,
@@ -528,7 +530,7 @@ class RewardSpecification(BaseModel):
         default=scalar_value(1), description="Initial probability of reward delivery", validate_default=True
     )
     available: distributions.Distribution = Field(
-        default=scalar_value(5),
+        default=scalar_value(9999),
         description="Initial amount of reward available in the patch in microliters",
         validate_default=True,
     )
