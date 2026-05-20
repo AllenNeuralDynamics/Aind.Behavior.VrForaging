@@ -75,9 +75,7 @@ def make_patch(
         amount=task_logic.scalar_value(value=reward_amount),
         probability=task_logic.scalar_value(first_p),
         available=task_logic.scalar_value(reward_available),
-        reward_function=deterministic_curves(
-            option=patch_type, reward_available=reward_available
-        ),
+        reward_function=deterministic_curves(option=patch_type, reward_available=reward_available),
     )
     return task_logic.Patch(
         label=label,
