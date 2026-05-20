@@ -26,15 +26,25 @@ def deterministic_curves(
         )
         if cap_delayed_rewards:
             reward_available = amount_drop * 3
-
+            available = task_logic.ClampedRateFunction(
+                rate=task_logic.scalar_value(-amount_drop), minimum=0, maximum=reward_available
+            )
+            reward_function_avail = task_logic.PatchRewardFunction(
+                available=available,
+                rule=task_logic.RewardFunctionRule.ON_REWARD,
+            )
+            reset_function = task_logic.OnThisPatchEntryRewardFunction(
+                probability=task_logic.SetValueFunction(value=task_logic.scalar_value(1)),
+                available=task_logic.SetValueFunction(value=task_logic.scalar_value(reward_available)),
+            )
+            return [reward_function_prob, reward_function_avail, reset_function]
         else:
             reward_available = 100
-            
-        reset_function = task_logic.OnThisPatchEntryRewardFunction(
-            probability=task_logic.SetValueFunction(value=task_logic.scalar_value(0.5)),
-            available=task_logic.SetValueFunction(value=task_logic.scalar_value(reward_available)),
-        )
-        return [reward_function_prob, reset_function]
+            reset_function = task_logic.OnThisPatchEntryRewardFunction(
+                probability=task_logic.SetValueFunction(value=task_logic.scalar_value(1)),
+                available=task_logic.SetValueFunction(value=task_logic.scalar_value(reward_available)),
+            )
+            return [reward_function_prob, reset_function]
 
     elif option == "single":
         lut_values = [1, 0]
