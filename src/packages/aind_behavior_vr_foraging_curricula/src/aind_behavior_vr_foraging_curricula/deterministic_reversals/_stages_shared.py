@@ -10,9 +10,10 @@ from ..depletion.metrics import metrics_from_dataset
 
 
 def deterministic_curves(
+    amount_drop: float = 5.0,
     option: Optional[Literal["single", "delayed"]] = "single",
     *,
-    reward_available: float = 9999,
+    cap_delayed_rewards: bool = False,
 ) -> list[task_logic.RewardFunction]:
     if option == "delayed":
         lut_values = [0.5, 1, 1, 1, 0]
@@ -23,6 +24,12 @@ def deterministic_curves(
             probability=probability,
             rule=task_logic.RewardFunctionRule.ON_CHOICE_ACCUMULATED,
         )
+        if cap_delayed_rewards:
+            reward_available = amount_drop * 3
+
+        else:
+            reward_available = 100
+            
         reset_function = task_logic.OnThisPatchEntryRewardFunction(
             probability=task_logic.SetValueFunction(value=task_logic.scalar_value(0.5)),
             available=task_logic.SetValueFunction(value=task_logic.scalar_value(reward_available)),
@@ -38,7 +45,7 @@ def deterministic_curves(
         )
         reset_function = task_logic.OnThisPatchEntryRewardFunction(
             probability=task_logic.SetValueFunction(value=task_logic.scalar_value(1)),
-            available=task_logic.SetValueFunction(value=task_logic.scalar_value(reward_available)),
+            available=task_logic.SetValueFunction(value=task_logic.scalar_value(100)),
         )
         return [reward_function, reset_function]
 
@@ -50,7 +57,7 @@ def deterministic_curves(
         )
         reset_function = task_logic.OnThisPatchEntryRewardFunction(
             probability=task_logic.SetValueFunction(value=task_logic.scalar_value(0)),
-            available=task_logic.SetValueFunction(value=task_logic.scalar_value(reward_available)),
+            available=task_logic.SetValueFunction(value=task_logic.scalar_value(0)),
         )
         return [reward_function, reset_function]
 
@@ -68,6 +75,7 @@ def make_patch(
     reward_available: float = 9999,
     stop_duration: float = 0.5,
     delay_mean: float = 0.5,
+    cap_delayed_rewards: bool = False,
 ) -> task_logic.Patch:
     agent = task_logic.RewardSpecification(
         operant_logic=helpers.make_operant_logic(stop_duration=stop_duration, is_operant=False),
@@ -76,7 +84,7 @@ def make_patch(
         probability=task_logic.scalar_value(first_p),
         available=task_logic.scalar_value(reward_available),
         reward_function=deterministic_curves(
-            option=patch_type, reward_available=reward_available
+            amount_drop=reward_amount, option=patch_type, cap_delayed_rewards=cap_delayed_rewards
         ),
     )
     return task_logic.Patch(
@@ -96,6 +104,7 @@ def make_patch(
 
 def make_s_stage_all_odors_rewarded(
     delayed_reward_available: float = 100,
+    cap_delayed_rewards: bool = False,
 ) -> Stage:
     return Stage(
         name="all_odors_rewarded",
@@ -118,6 +127,7 @@ def make_s_stage_all_odors_rewarded(
                                         reward_amount=5.0,
                                         first_p=1,
                                         reward_available=100,
+                                        cap_delayed_rewards=cap_delayed_rewards,
                                     ),
                                     make_patch(
                                         label="patch_delayed",
@@ -127,6 +137,7 @@ def make_s_stage_all_odors_rewarded(
                                         reward_amount=5.0,
                                         first_p=0.5,
                                         reward_available=delayed_reward_available,
+                                        cap_delayed_rewards=cap_delayed_rewards,
                                     ),
                                 ],
                             ),
@@ -142,6 +153,7 @@ def make_s_stage_all_odors_rewarded(
 
 def make_s_stage_graduation(
     delayed_reward_available: float = 100,
+    cap_delayed_rewards: bool = False,
 ) -> Stage:
     return Stage(
         name="graduation",
@@ -168,6 +180,7 @@ def make_s_stage_graduation(
                                         reward_amount=0.0,
                                         first_p=0,
                                         reward_available=0,
+                                        cap_delayed_rewards=cap_delayed_rewards,
                                     ),
                                     make_patch(
                                         label="patch_delayed",
@@ -177,6 +190,7 @@ def make_s_stage_graduation(
                                         reward_amount=5.0,
                                         first_p=0.5,
                                         reward_available=delayed_reward_available,
+                                        cap_delayed_rewards=cap_delayed_rewards,
                                     ),
                                     make_patch(
                                         label="patch_single",
@@ -186,6 +200,7 @@ def make_s_stage_graduation(
                                         reward_amount=5.0,
                                         first_p=1,
                                         reward_available=100,
+                                        cap_delayed_rewards=cap_delayed_rewards,
                                     ),
                                 ],
                             ),
