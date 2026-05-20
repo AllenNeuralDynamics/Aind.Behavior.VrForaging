@@ -545,7 +545,7 @@ class RewardSpecification(BaseModel):
         default=scalar_value(1), description="Initial probability of reward delivery", validate_default=True
     )
     available: distributions.Distribution = Field(
-        default=scalar_value(9999),
+        default=scalar_value(10),
         description="Initial amount of reward available in the patch in microliters",
         validate_default=True,
     )
