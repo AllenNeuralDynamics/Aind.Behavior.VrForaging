@@ -11203,26 +11203,29 @@ namespace AindVrForagingDataSchema
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnReward")]
         OnReward = 0,
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="OnRewardAmount")]
+        OnRewardAmount = 1,
+    
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnChoice")]
-        OnChoice = 1,
+        OnChoice = 2,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnTime")]
-        OnTime = 2,
+        OnTime = 3,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnDistance")]
-        OnDistance = 3,
+        OnDistance = 4,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnChoiceAccumulated")]
-        OnChoiceAccumulated = 4,
+        OnChoiceAccumulated = 5,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnRewardAccumulated")]
-        OnRewardAccumulated = 5,
+        OnRewardAccumulated = 6,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnTimeAccumulated")]
-        OnTimeAccumulated = 6,
+        OnTimeAccumulated = 7,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="OnDistanceAccumulated")]
-        OnDistanceAccumulated = 7,
+        OnDistanceAccumulated = 8,
     }
 
 

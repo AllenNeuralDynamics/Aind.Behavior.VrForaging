@@ -534,7 +534,7 @@
                           "available": {
                             "distribution_parameters": {
                               "family": "Scalar",
-                              "value": 5.0
+                              "value": 10.0
                             },
                             "family": "Scalar",
                             "scaling_parameters": null,
@@ -760,7 +760,7 @@
                         "available": {
                           "distribution_parameters": {
                             "family": "Scalar",
-                            "value": 5.0
+                            "value": 10.0
                           },
                           "family": "Scalar",
                           "scaling_parameters": null,
@@ -1190,7 +1190,7 @@
                   "available": {
                     "distribution_parameters": {
                       "family": "Scalar",
-                      "value": 5.0
+                      "value": 10.0
                     },
                     "family": "Scalar",
                     "scaling_parameters": null,
@@ -1466,7 +1466,7 @@
                       "available": {
                         "distribution_parameters": {
                           "family": "Scalar",
-                          "value": 5.0
+                          "value": 10.0
                         },
                         "family": "Scalar",
                         "scaling_parameters": null,
@@ -2600,7 +2600,7 @@
                 "available": {
                   "distribution_parameters": {
                     "family": "Scalar",
-                    "value": 5.0
+                    "value": 10.0
                   },
                   "family": "Scalar",
                   "scaling_parameters": null,
@@ -3482,7 +3482,7 @@
             "available": {
               "distribution_parameters": {
                 "family": "Scalar",
-                "value": 5.0
+                "value": 10.0
               },
               "family": "Scalar",
               "scaling_parameters": null,
@@ -3623,6 +3623,7 @@
           "description": "Rule to trigger reward function",
           "enum": [
             "OnReward",
+            "OnRewardAmount",
             "OnChoice",
             "OnTime",
             "OnDistance",
@@ -4321,7 +4322,7 @@
             "family": "Scalar",
             "distribution_parameters": {
               "family": "Scalar",
-              "value": 5.0
+              "value": 10.0
             },
             "truncation_parameters": null,
             "scaling_parameters": null
@@ -4671,7 +4672,7 @@
                 "available": {
                   "distribution_parameters": {
                     "family": "Scalar",
-                    "value": 5.0
+                    "value": 10.0
                   },
                   "family": "Scalar",
                   "scaling_parameters": null,
