@@ -46,9 +46,13 @@ class NumericalUpdaterOperation(str, Enum):
     """
 
     NONE = "None"
+    """Does not perform any update"""
     OFFSET = "Offset"
+    """Adds (or subtracts) the update value to the current value. The update value can be positive or negative."""
     GAIN = "Gain"
+    """Multiplies the current value by the update value. The update value can be greater or less than 1."""
     SET = "Set"
+    """Sets the current value to the update value."""
 
 
 class NumericalUpdaterParameters(BaseModel):
@@ -393,16 +397,27 @@ class RewardFunctionRule(str, Enum):
     """
 
     ON_REWARD = "OnReward"
+    """Triggers after a reward is delivered. The tick value is always 1."""
     ON_REWARD_AMOUNT = "OnRewardAmount"
+    """Triggers after a reward is delivered. The tick value is the amount of reward."""
     ON_CHOICE = "OnChoice"
+    """Triggers after a choice is made. The tick value is always 1."""
     ON_TIME = "OnTime"
+    """Triggers periodically. The tick value is the elapsed time since the last update (s)."""
     ON_DISTANCE = "OnDistance"
+    """Triggers periodically. The tick value is the distance traveled since the last update (cm)."""
     ON_THIS_PATCH_ENTRY = "OnThisPatchEntry"
+    """Triggers when the animal enters the patch. The tick value is always 1."""
     ON_PATCH_ENTRY = "OnPatchEntry"
+    """Triggers when the animal enters any patch. The tick value is always 1."""
     ON_CHOICE_ACCUMULATED = "OnChoiceAccumulated"
+    """Triggers after a choice is made. The tick value is the accumulated number of choices."""
     ON_REWARD_ACCUMULATED = "OnRewardAccumulated"
+    """Triggers after a reward is delivered. The tick value is the accumulated number of rewarded events."""
     ON_TIME_ACCUMULATED = "OnTimeAccumulated"
+    """Triggers periodically. The tick value is the accumulated elapsed time since patch creation (s)."""
     ON_DISTANCE_ACCUMULATED = "OnDistanceAccumulated"
+    """Triggers periodically. The tick value is the accumulated distance traveled since patch creation (cm)."""
 
 
 class _RewardFunction(BaseModel):
@@ -549,10 +564,15 @@ class VirtualSiteLabels(str, Enum):
     """
 
     UNSPECIFIED = "Unspecified"
+    """Placeholder"""
     INTERPATCH = "InterPatch"
+    """Region rendered before entering a patch"""
     POSTPATCH = "PostPatch"
+    """Region rendered after leaving a patch"""
     REWARDSITE = "RewardSite"
+    """Region where rewards are delivered"""
     INTERSITE = "InterSite"
+    """Region between sites within a patch"""
 
 
 class RenderSpecification(BaseModel):
