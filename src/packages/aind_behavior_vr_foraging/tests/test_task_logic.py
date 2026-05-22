@@ -1,5 +1,6 @@
 """Tests for task_logic validation helpers."""
 
+import json
 import unittest
 import warnings
 
@@ -11,6 +12,7 @@ from aind_behavior_vr_foraging.task_logic import (
     _odor_mixture_from_odor_specification,
     _OdorSpecification,
 )
+from tests.conftest import ASSETS_DIR
 
 
 class TestDefaultTaskLogic(unittest.TestCase):
@@ -132,6 +134,20 @@ class TestOdorMixtureBackwardsCompatibilityViaModel(unittest.TestCase):
     def test_virtual_site_none_odor_specification(self):
         site = VirtualSite(odor_specification=None)
         self.assertIsNone(site.odor_specification)
+
+
+class TestDatasetDeserialization(unittest.TestCase):
+    """Regression tests: ensure legacy dataset files deserialize without error."""
+
+    def test_tasklogic_output_deserializes(self):
+        """tasklogic_output.json (old schema) must deserialize into AindVrForagingTaskLogic."""
+        asset = ASSETS_DIR / "tasklogic_output.json"
+        raw = json.loads(asset.read_text(encoding="utf-8"))
+        try:
+            logic = AindVrForagingTaskLogic.model_validate(raw)
+        except (ValidationError, ValueError) as exc:
+            self.fail(f"Deserialization of tasklogic_output.json failed: {exc}")
+        self.assertIsInstance(logic, AindVrForagingTaskLogic)
 
 
 if __name__ == "__main__":

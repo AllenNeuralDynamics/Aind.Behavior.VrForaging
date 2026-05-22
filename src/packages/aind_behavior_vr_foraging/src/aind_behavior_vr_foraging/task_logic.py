@@ -90,7 +90,7 @@ class NumericalUpdaterParameters(BaseModel):
             for old_key, new_key in __map.items():
                 if old_key in data and new_key not in data:
                     data[new_key] = data.pop(old_key)
-                    logger.warning(f"'{old_key}' is deprecated. Please use '{new_key}' instead.")
+                    logger.warning("'%s' is deprecated. Please use '%s' instead.", old_key, new_key)
         return data
 
     @model_validator(mode="after")
@@ -827,6 +827,21 @@ class Patch(BaseModel):
     Represents statistics for a patch in the VR foraging task.
     """
 
+    @model_validator(mode="before")
+    @classmethod
+    def _ensure_backwards_compatibility(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            # Old schema had odor_specification: Optional[OdorSpecification] (nullable).
+            # New schema has odor_specification: OdorMixture (non-optional list).
+            # Treat explicit null as "use default" by removing the key.
+            if "odor_specification" in data and data["odor_specification"] is None:
+                data = dict(data)
+                del data["odor_specification"]
+                logger.warning(
+                    "'odor_specification' was null in Patch. Removing key so the field default is used instead."
+                )
+        return data
+
     label: str = Field(default="", description="Label of the patch")
     state_index: int = Field(default=0, ge=0, description="Index of the state")
     odor_specification: OdorMixture = Field(
@@ -998,12 +1013,10 @@ class OdorControl(BaseModel):
     and delivery timing for the behavioral task.
     """
 
-    target_total_flow: Literal[1000] = Field(
+    target_total_flow: int = Field(
         default=1000, ge=100, le=1000, description="Target total flow (ml/s) of the odor mixture"
     )
-    target_odor_flow: Literal[100] = Field(
-        default=100, ge=0, le=100, description="Target odor flow (ml/s) in the odor mixture"
-    )
+    target_odor_flow: int = Field(default=100, ge=0, le=100, description="Target odor flow (ml/s) in the odor mixture")
 
 
 class OperationControl(BaseModel):
