@@ -3004,20 +3004,18 @@
       "description": "Controls the odor delivery system parameters.\n\nThis class manages the olfactory stimulus delivery system, including flow rates,\nvalve timing, and carrier gas configuration. It ensures proper odor concentration\nand delivery timing for the behavioral task.",
       "properties": {
         "target_total_flow": {
-          "const": 1000,
           "default": 1000,
           "description": "Target total flow (ml/s) of the odor mixture",
-          "ge": 100,
-          "le": 1000,
+          "maximum": 1000,
+          "minimum": 100,
           "title": "Target Total Flow",
           "type": "integer"
         },
         "target_odor_flow": {
-          "const": 100,
           "default": 100,
           "description": "Target odor flow (ml/s) in the odor mixture",
-          "ge": 0,
-          "le": 100,
+          "maximum": 100,
+          "minimum": 0,
           "title": "Target Odor Flow",
           "type": "integer"
         }
