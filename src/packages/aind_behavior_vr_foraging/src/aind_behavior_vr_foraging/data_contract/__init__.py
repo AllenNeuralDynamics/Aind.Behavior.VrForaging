@@ -34,18 +34,46 @@ def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contr
     return partial(_dataset, version=version)
 
 
-def dataset(path: os.PathLike, version: str = __semver__) -> contraqctor.contract.Dataset:
+def _infer_dataset_version(path: os.PathLike) -> t.Optional[str]:
+    """Infers the dataset version from the given path.
+
+    Args:
+        path (os.PathLike): The path to infer the dataset version from.
+
+    Returns:
+        str: The inferred dataset version.
+    """
+    task_logic = Path(path) / "behavior/Logs/tasklogic_output.json"
+    version: t.Optional[str] = None
+    if task_logic.exists():
+        import json
+
+        with open(task_logic, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            version = data.get("version", None)
+    return version
+
+
+def dataset(path: os.PathLike, version: t.Optional[str] = None) -> contraqctor.contract.Dataset:
     """
     Loads the dataset for the Aind VR Foraging project from a specified version.
 
     Args:
         path (os.PathLike): The path to the dataset root directory.
-        version (str): The version of the dataset to load. By default, it uses the package version.
+        version (str, optional): The version of the dataset to load. If not provided, it will be inferred from the dataset or default to the package version.
 
     Returns:
         contraqctor.contract.Dataset: The loaded dataset.
     """
-    dataset_constructor = _dataset_lookup_helper(version)
+    if version is None:
+        version = _infer_dataset_version(path)
+        if version is None:
+            logger.warning(
+                "Could not infer dataset version from path: %s. Defaulting to package version: %s",
+                path,
+                __semver__,
+            )
+    dataset_constructor = _dataset_lookup_helper(version if version is not None else __semver__)
     return dataset_constructor(Path(path))
 
 
