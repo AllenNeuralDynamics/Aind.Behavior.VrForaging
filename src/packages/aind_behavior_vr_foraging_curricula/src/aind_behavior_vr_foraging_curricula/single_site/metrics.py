@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import cast
 
@@ -8,8 +9,10 @@ from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 from contraqctor.contract.json import SoftwareEvents
 from pydantic import Field, NonNegativeFloat, NonNegativeInt
 
+logger = logging.getLogger(__name__)
 
-class SingleSiteMatchingMetrics(Metrics):
+
+class SingleSiteMetrics(Metrics):
     total_water_consumed: NonNegativeFloat = Field(description="Total water (in milliliters) consumed in the session.")
 
     n_patches_visited: NonNegativeInt = Field(
@@ -21,8 +24,11 @@ class SingleSiteMatchingMetrics(Metrics):
     last_stop_threshold_updater: NonNegativeFloat | None = Field(
         description="The stop velocity threshold at the end of the session."
     )
-    last_stop_duration_offset_updater: NonNegativeFloat | None = Field(
-        description="The stop duration offset at the end of the session."
+    last_stop_duration_offset_updater: float | None = Field(
+        description="The stop duration offset at the end of the session. May be negative in S3 where stop is ramped down as reward delay grows."
+    )
+    last_reward_delay_offset_updater: NonNegativeFloat | None = Field(
+        description="The reward delay offset at the end of the session."
     )
 
 
@@ -34,7 +40,7 @@ def _try_get_datastream_as_dataframe(datastream: SoftwareEvents) -> pd.DataFrame
         return None
 
 
-def metrics_from_dataset(data_directory: os.PathLike) -> SingleSiteMatchingMetrics:
+def metrics_from_dataset(data_directory: os.PathLike) -> SingleSiteMetrics:
     dataset = vr_foraging_dataset(data_directory)
 
     task_logic = dataset["Behavior"]["InputSchemas"]["TaskLogic"].load().data
@@ -54,6 +60,9 @@ def metrics_from_dataset(data_directory: os.PathLike) -> SingleSiteMatchingMetri
     stop_duration_offset = _try_get_datastream_as_dataframe(
         dataset["Behavior"]["SoftwareEvents"]["UpdaterStopDurationOffset"]
     )
+    reward_delay_offset = _try_get_datastream_as_dataframe(
+        dataset["Behavior"]["SoftwareEvents"]["UpdaterRewardDelayOffset"]
+    )
 
     visited_patches = _try_get_datastream_as_dataframe(dataset["Behavior"]["SoftwareEvents"]["ActivePatch"])
 
@@ -69,7 +78,7 @@ def metrics_from_dataset(data_directory: os.PathLike) -> SingleSiteMatchingMetri
         else {index: 0 for index in unique_patches_indices}
     )
 
-    return SingleSiteMatchingMetrics(
+    return SingleSiteMetrics(
         total_water_consumed=(total_water_consumed["data"].sum() if total_water_consumed is not None else 0.0)
         * 1e-3,  # convert from uL to mL
         n_patches_visited=len(choices) if choices is not None else 0,
@@ -79,5 +88,8 @@ def metrics_from_dataset(data_directory: os.PathLike) -> SingleSiteMatchingMetri
         else None,
         last_stop_duration_offset_updater=stop_duration_offset["data"].iloc[-1]
         if stop_duration_offset is not None
+        else None,
+        last_reward_delay_offset_updater=reward_delay_offset["data"].iloc[-1]
+        if reward_delay_offset is not None
         else None,
     )
