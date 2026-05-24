@@ -217,8 +217,8 @@
           "type": "string"
         },
         "version": {
-          "const": "1.0.0-rc4",
-          "default": "1.0.0-rc4",
+          "const": "1.0.0-rc5",
+          "default": "1.0.0-rc5",
           "title": "Version",
           "type": "string"
         },
@@ -609,8 +609,8 @@
           "description": "Parameters of the task logic"
         },
         "version": {
-          "const": "1.0.0-rc4",
-          "default": "1.0.0-rc4",
+          "const": "1.0.0-rc5",
+          "default": "1.0.0-rc5",
           "title": "Version",
           "type": "string"
         },
