@@ -298,8 +298,8 @@ class CtcmFunction(_PatchUpdateFunction):
         default=None,
         description="Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only",
     )
-    minimum: float = Field(default=1, description="Maximum value after update")
-    maximum: float = Field(default=0, description="Minimum value after update")
+    minimum: float = Field(gt=0, description="Minimum value after update")
+    maximum: float = Field(description="Maximum value after update")
 
     @field_validator("transition_matrix", mode="after")
     @classmethod

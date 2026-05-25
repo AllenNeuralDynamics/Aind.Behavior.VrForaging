@@ -80,6 +80,7 @@ namespace AindVrForagingDataSchema
         public override double Invoke(double value, double tickValue, Random random = null)
         {
             if (random == null) random = defaultRandom;
+            value = Math.Max(Minimum, Math.Min(Maximum, value));
             int nStates = TransitionMatrix.Count();
             int i = nStates - 1 - (int)Math.Round(Math.Log(value / Maximum) / Math.Log(Rho));
             i = Math.Max(0, Math.Min(nStates - 1, i));
