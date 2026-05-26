@@ -31,6 +31,24 @@ def on_pre_build(config: Dict[str, Any]) -> None:
     log.info("Curricula regenerated successfully.")
 
 
+def get_module_readme_markdown(module_dir: Path) -> str | None:
+    """Returns README markdown content for a curriculum module directory."""
+    readme_path = next(
+        (
+            path
+            for path in sorted(module_dir.iterdir())
+            if path.is_file() and path.stem.lower() == "readme"
+        ),
+        None,
+    )
+
+    if readme_path is None:
+        return None
+
+    content = readme_path.read_text(encoding="utf-8").strip()
+    return content or None
+
+
 def render_curricula() -> Dict[str, List[Dict[str, str]]]:
     curricula_structure: Dict[str, List[Dict[str, str]]] = {CURRICULA_LABEL: []}
 
@@ -48,13 +66,16 @@ def render_curricula() -> Dict[str, List[Dict[str, str]]]:
         export_diagram(curriculum, diagrams_dir / f"{module_dir.stem}.svg")
 
         md_path = diagrams_dir / f"{module_dir.stem}.md"
-        with open(md_path, "w") as f:
+        with open(md_path, "w", encoding="utf-8") as f:
             f.write(f"# {module_dir.stem}\n\n")
             f.write(f"**Name**: {curriculum.name}\n\n")
             f.write(f"**Version**: {curriculum.version}\n\n")
             f.write(f"**Pkg-location**: {curriculum.pkg_location}\n\n")
             if class_docs := curriculum.__doc__:
                 f.write(f"{class_docs}\n\n")
+            if module_readme := get_module_readme_markdown(module_dir):
+                f.write("## Module README\n\n")
+                f.write(f"{module_readme}\n\n")
             f.write("## Diagram\n\n")
             svg_path = f"{module_dir.stem}.svg"
             f.write(f"![{module_dir.stem} diagram]({svg_path})\n\n")
