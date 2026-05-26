@@ -68,6 +68,7 @@ plugins:
           options:
             extensions:
               - griffe_typingdoc
+              - griffe_pydantic
             show_root_heading: true
             show_root_full_path: false
             show_if_no_docstring: true
@@ -79,6 +80,8 @@ plugins:
               - "!^_"
             merge_init_into_class: true
             docstring_section_style: spacy
+            show_docstring_attributes: true
+            show_docstring_parameters: true
             signature_crossrefs: true
             show_symbol_type_heading: true
             show_symbol_type_toc: true
