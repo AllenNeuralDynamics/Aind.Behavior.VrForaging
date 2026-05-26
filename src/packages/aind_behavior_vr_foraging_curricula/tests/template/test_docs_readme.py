@@ -4,12 +4,7 @@ from docs.curricula_build import get_module_readme_markdown
 
 
 def _template_module_dir() -> Path:
-    return (
-        Path(__file__).resolve().parents[2]
-        / "src"
-        / "aind_behavior_vr_foraging_curricula"
-        / "template"
-    )
+    return Path(__file__).resolve().parents[2] / "src" / "aind_behavior_vr_foraging_curricula" / "template"
 
 
 def test_template_readme_is_discoverable_for_docs():
