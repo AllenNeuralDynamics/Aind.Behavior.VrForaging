@@ -1,9 +1,9 @@
-﻿using Bonsai;
-using Hexa.NET.ImGui;
-using Hexa.NET.ImPlot;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
+using Bonsai;
+using Hexa.NET.ImGui;
+using Hexa.NET.ImPlot;
 
 /// <summary>
 /// Represents an operator that applies a style scope to a plot sequence, pushing

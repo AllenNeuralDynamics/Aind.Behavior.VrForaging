@@ -51,6 +51,27 @@ namespace AindVrForagingDataSchema
         }
     }
 
+    public partial class SaturatingMultiplicativeRateFunction
+    {
+        public override double Invoke(double value, double tickValue, Random random = null)
+        {
+            if (random == null) random = defaultRandom;
+            double newValue = value * Math.Pow(this.Rate.SampleDistribution(random), tickValue);
+
+            if (this.Minimum.HasValue && newValue <= this.Minimum.Value)
+            {
+                return this.BelowMinimumTo.HasValue ? this.BelowMinimumTo.Value : this.Minimum.Value;
+            }
+
+            if (this.Maximum.HasValue && newValue >= this.Maximum.Value)
+            {
+                return this.AboveMaximumTo.HasValue ? this.AboveMaximumTo.Value : this.Maximum.Value;
+            }
+
+            return newValue;
+        }
+    }
+
     public partial class LookupTableFunction
     {
         private Dictionary<double, double> ToLookupTable()
@@ -80,6 +101,7 @@ namespace AindVrForagingDataSchema
         public override double Invoke(double value, double tickValue, Random random = null)
         {
             if (random == null) random = defaultRandom;
+            value = Math.Max(Minimum, Math.Min(Maximum, value));
             int nStates = TransitionMatrix.Count();
             int i = nStates - 1 - (int)Math.Round(Math.Log(value / Maximum) / Math.Log(Rho));
             i = Math.Max(0, Math.Min(nStates - 1, i));

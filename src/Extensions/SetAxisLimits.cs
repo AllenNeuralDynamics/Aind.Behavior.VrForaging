@@ -1,8 +1,8 @@
-﻿using Bonsai;
-using Hexa.NET.ImPlot;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
+using Bonsai;
+using Hexa.NET.ImPlot;
 
 /// <summary>
 /// Represents an operator that constrains plot axis limits with optional auto-fitting

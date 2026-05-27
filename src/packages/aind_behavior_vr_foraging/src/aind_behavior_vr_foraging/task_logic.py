@@ -266,6 +266,29 @@ class ClampedMultiplicativeRateFunction(_PatchUpdateFunction):
     rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
 
 
+class SaturatingMultiplicativeRateFunction(_PatchUpdateFunction):
+    """
+    Multiplicative updater with configurable out-of-bounds rectification.
+
+    The raw update is computed as ``x_raw = x * rate ** tick_value``.
+    If ``x_raw`` is within bounds, it is returned unchanged.
+    If it falls below ``minimum`` or above ``maximum``, the output is rectified to
+    ``below_minimum_to`` or ``above_maximum_to`` respectively when provided;
+    otherwise it falls back to the corresponding bound.
+    """
+
+    function_type: Literal["SaturatingMultiplicativeRateFunction"] = "SaturatingMultiplicativeRateFunction"
+    minimum: Optional[float] = Field(default=0, description="Minimum value of the rate")
+    maximum: Optional[float] = Field(description="Maximum value of the rate")
+    below_minimum_to: Optional[float] = Field(
+        default=None, description="If the value is below minimum, it will be set to this value instead of the minimum"
+    )
+    above_maximum_to: Optional[float] = Field(
+        default=None, description="If the value is above maximum, it will be set to this value instead of the maximum"
+    )
+    rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
+
+
 class SetValueFunction(_PatchUpdateFunction):
     """
     A patch update function that sets the target to a specific value.
@@ -298,8 +321,8 @@ class CtcmFunction(_PatchUpdateFunction):
         default=None,
         description="Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only",
     )
-    minimum: float = Field(default=1, description="Maximum value after update")
-    maximum: float = Field(default=0, description="Minimum value after update")
+    minimum: float = Field(gt=0, description="Minimum value after update")
+    maximum: float = Field(description="Maximum value after update")
 
     @field_validator("transition_matrix", mode="after")
     @classmethod
@@ -368,6 +391,7 @@ if TYPE_CHECKING:
     PatchUpdateFunction = Union[
         ClampedRateFunction,
         ClampedMultiplicativeRateFunction,
+        SaturatingMultiplicativeRateFunction,
         SetValueFunction,
         LookupTableFunction,
         CtcmFunction,
@@ -379,6 +403,7 @@ else:
             Union[
                 ClampedRateFunction,
                 ClampedMultiplicativeRateFunction,
+                SaturatingMultiplicativeRateFunction,
                 SetValueFunction,
                 LookupTableFunction,
                 CtcmFunction,
