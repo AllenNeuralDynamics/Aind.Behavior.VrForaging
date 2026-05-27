@@ -1,6 +1,4 @@
-﻿﻿using Bonsai;
-using Hexa.NET.ImGui;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
@@ -8,6 +6,8 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
+using Bonsai;
+using Hexa.NET.ImGui;
 
 [Combinator]
 [WorkflowElementCategory(ElementCategory.Combinator)]

@@ -23,7 +23,7 @@ public class ValidateOlfactometerDefinition
             var perOdorFlow = taskLogic.TaskParameters.OperationControl.OdorControl.TargetOdorFlow;
             int maxTotalFlow = taskLogic.TaskParameters.OperationControl.OdorControl.TargetTotalFlow;
             var nChannels = 3 + 4 * rig.HarpOlfactometerExtension.Count; // 3 for the main olfactometer, 4 for each additional olfactometer
-            
+
             var patches = taskLogic.TaskParameters.Environment.Blocks.SelectMany(block => GetPatches(block.Environment));
             int maxIdx = 0;
             foreach (var patch in patches)

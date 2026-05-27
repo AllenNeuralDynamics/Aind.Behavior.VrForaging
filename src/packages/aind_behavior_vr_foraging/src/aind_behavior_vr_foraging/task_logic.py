@@ -280,8 +280,12 @@ class SaturatingMultiplicativeRateFunction(_PatchUpdateFunction):
     function_type: Literal["SaturatingMultiplicativeRateFunction"] = "SaturatingMultiplicativeRateFunction"
     minimum: Optional[float] = Field(default=0, description="Minimum value of the rate")
     maximum: Optional[float] = Field(description="Maximum value of the rate")
-    below_minimum_to: Optional[float] = Field(default=None, description="If the value is below minimum, it will be set to this value instead of the minimum")
-    above_maximum_to: Optional[float] = Field(default=None, description="If the value is above maximum, it will be set to this value instead of the maximum")
+    below_minimum_to: Optional[float] = Field(
+        default=None, description="If the value is below minimum, it will be set to this value instead of the minimum"
+    )
+    above_maximum_to: Optional[float] = Field(
+        default=None, description="If the value is above maximum, it will be set to this value instead of the maximum"
+    )
     rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
 
 

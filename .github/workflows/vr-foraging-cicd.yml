@@ -53,6 +53,9 @@ jobs:
         working-directory: ./.bonsai
         run: ./setup.ps1
 
+      - name: Run .NET extension tests
+        run: dotnet test ./tests/Extensions.Tests/Extensions.Tests.csproj
+
       - name: Run python unit tests
         run: uv run pytest
 

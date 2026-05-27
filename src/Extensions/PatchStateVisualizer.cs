@@ -85,9 +85,9 @@ namespace AllenNeuralDynamics.VrForaging
                 switch (fieldName)
                 {
                     case "Probability": yys = xxs.Select(i => patchStates[i].Probability).ToArray(); break;
-                    case "Amount":      yys = xxs.Select(i => patchStates[i].Amount).ToArray();      break;
-                    case "Available":   yys = xxs.Select(i => patchStates[i].Available).ToArray();  break;
-                    default:            throw new ArgumentException("Invalid fieldName.", "fieldName");
+                    case "Amount": yys = xxs.Select(i => patchStates[i].Amount).ToArray(); break;
+                    case "Available": yys = xxs.Select(i => patchStates[i].Available).ToArray(); break;
+                    default: throw new ArgumentException("Invalid fieldName.", "fieldName");
                 }
 
                 ImPlot.SetupAxes("PatchId", (string)null, axesFlags | ImPlotAxisFlags.NoLabel, axesFlags | ImPlotAxisFlags.NoLabel);

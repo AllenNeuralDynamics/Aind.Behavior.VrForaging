@@ -60,6 +60,24 @@ uv run scripts/regenerate.py
 
 This runs both `vr-foraging regenerate` and the curricula schema generation in sequence.
 
+## 🧪 Tests
+
+This repository includes both Python and .NET tests.
+
+Run Python tests:
+
+```powershell
+uv run pytest
+```
+
+Run .NET extension tests:
+
+```powershell
+dotnet test ./tests/Extensions.Tests/Extensions.Tests.csproj
+```
+
+The .NET test project references `./src/Extensions.csproj` directly and targets `net480`.
+
 ## [> ] CLI tools
 
 The platform exposes a few CLI tools to facilitate various tasks. Tools are available via:
