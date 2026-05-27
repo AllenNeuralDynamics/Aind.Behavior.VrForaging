@@ -112,10 +112,8 @@ def make_patch(
     inter_patch_time: float,
 ):
     depletion = vr_task_logic.PatchRewardFunction(
-        probability=vr_task_logic.LookupTableFunction(
-            lut_keys=[x for x in range(5)],  # reward states
-            lut_values=[p_max * (dep_rate**x) for x in range(5 - 1)]
-            + [0.0],  # reward probability for each reward state, with depletion
+        probability=vr_task_logic.SaturatingMultiplicativeRateFunction(
+            minimum=p_min, maximum=p_max, rate=vr_task_logic.scalar_value(dep_rate), below_minimum_to=0.0
         ),
         rule=vr_task_logic.RewardFunctionRule.ON_REWARD,
     )
