@@ -2309,8 +2309,6 @@ namespace AindVrForagingDataSchema
         {
             _transitionMatrix = new System.Collections.Generic.List<System.Collections.Generic.List<double>>();
             _dt = 0.1D;
-            _minimum = 1D;
-            _maximum = 0D;
         }
     
         protected CtcmFunction(CtcmFunction other) : 
@@ -2395,10 +2393,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Maximum value after update
+        /// Minimum value after update
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
-        [System.ComponentModel.DescriptionAttribute("Maximum value after update")]
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Minimum value after update")]
         public double Minimum
         {
             get
@@ -2412,10 +2410,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Minimum value after update
+        /// Maximum value after update
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("maximum")]
-        [System.ComponentModel.DescriptionAttribute("Minimum value after update")]
+        [Newtonsoft.Json.JsonPropertyAttribute("maximum", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Maximum value after update")]
         public double Maximum
         {
             get
@@ -6412,6 +6410,7 @@ namespace AindVrForagingDataSchema
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "function_type")]
     [JsonInheritanceAttribute("ClampedRateFunction", typeof(ClampedRateFunction))]
     [JsonInheritanceAttribute("ClampedMultiplicativeRateFunction", typeof(ClampedMultiplicativeRateFunction))]
+    [JsonInheritanceAttribute("SaturatingMultiplicativeRateFunction", typeof(SaturatingMultiplicativeRateFunction))]
     [JsonInheritanceAttribute("SetValueFunction", typeof(SetValueFunction))]
     [JsonInheritanceAttribute("LookupTableFunction", typeof(LookupTableFunction))]
     [JsonInheritanceAttribute("CtcmFunction", typeof(CtcmFunction))]
@@ -7401,6 +7400,167 @@ namespace AindVrForagingDataSchema
             }
             stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Multiplicative updater with configurable out-of-bounds rectification.
+    ///
+    ///The raw update is computed as ``x_raw = x * rate ** tick_value``.
+    ///If ``x_raw`` is within bounds, it is returned unchanged.
+    ///If it falls below ``minimum`` or above ``maximum``, the output is rectified to
+    ///``below_minimum_to`` or ``above_maximum_to`` respectively when provided;
+    ///otherwise it falls back to the corresponding bound.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute(@"Multiplicative updater with configurable out-of-bounds rectification.
+
+    The raw update is computed as ``x_raw = x * rate ** tick_value``.
+    If ``x_raw`` is within bounds, it is returned unchanged.
+    If it falls below ``minimum`` or above ``maximum``, the output is rectified to
+    ``below_minimum_to`` or ``above_maximum_to`` respectively when provided;
+    otherwise it falls back to the corresponding bound.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class SaturatingMultiplicativeRateFunction : PatchUpdateFunction
+    {
+    
+        private double? _minimum;
+    
+        private double? _maximum;
+    
+        private double? _belowMinimumTo;
+    
+        private double? _aboveMaximumTo;
+    
+        private AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution _rate;
+    
+        public SaturatingMultiplicativeRateFunction()
+        {
+            _minimum = 0;
+        }
+    
+        protected SaturatingMultiplicativeRateFunction(SaturatingMultiplicativeRateFunction other) : 
+                base(other)
+        {
+            _minimum = other._minimum;
+            _maximum = other._maximum;
+            _belowMinimumTo = other._belowMinimumTo;
+            _aboveMaximumTo = other._aboveMaximumTo;
+            _rate = other._rate;
+        }
+    
+        /// <summary>
+        /// Minimum value of the rate
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value of the rate")]
+        public double? Minimum
+        {
+            get
+            {
+                return _minimum;
+            }
+            set
+            {
+                _minimum = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum value of the rate
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("maximum", Required=Newtonsoft.Json.Required.AllowNull)]
+        [System.ComponentModel.DescriptionAttribute("Maximum value of the rate")]
+        public double? Maximum
+        {
+            get
+            {
+                return _maximum;
+            }
+            set
+            {
+                _maximum = value;
+            }
+        }
+    
+        /// <summary>
+        /// If the value is below minimum, it will be set to this value instead of the minimum
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("below_minimum_to")]
+        [System.ComponentModel.DescriptionAttribute("If the value is below minimum, it will be set to this value instead of the minimu" +
+            "m")]
+        public double? BelowMinimumTo
+        {
+            get
+            {
+                return _belowMinimumTo;
+            }
+            set
+            {
+                _belowMinimumTo = value;
+            }
+        }
+    
+        /// <summary>
+        /// If the value is above maximum, it will be set to this value instead of the maximum
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("above_maximum_to")]
+        [System.ComponentModel.DescriptionAttribute("If the value is above maximum, it will be set to this value instead of the maximu" +
+            "m")]
+        public double? AboveMaximumTo
+        {
+            get
+            {
+                return _aboveMaximumTo;
+            }
+            set
+            {
+                _aboveMaximumTo = value;
+            }
+        }
+    
+        /// <summary>
+        /// Rate of the replenishment, in value per rule unit.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rate", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment, in value per rule unit.")]
+        public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Rate
+        {
+            get
+            {
+                return _rate;
+            }
+            set
+            {
+                _rate = value;
+            }
+        }
+    
+        public System.IObservable<SaturatingMultiplicativeRateFunction> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SaturatingMultiplicativeRateFunction(this)));
+        }
+    
+        public System.IObservable<SaturatingMultiplicativeRateFunction> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new SaturatingMultiplicativeRateFunction(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Minimum = " + _minimum + ", ");
+            stringBuilder.Append("Maximum = " + _maximum + ", ");
+            stringBuilder.Append("BelowMinimumTo = " + _belowMinimumTo + ", ");
+            stringBuilder.Append("AboveMaximumTo = " + _aboveMaximumTo + ", ");
+            stringBuilder.Append("Rate = " + _rate);
+            return true;
         }
     }
 
@@ -11564,6 +11724,7 @@ namespace AindVrForagingDataSchema
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ClampedRateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ClampedMultiplicativeRateFunction>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SaturatingMultiplicativeRateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SetValueFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LookupTableFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CtcmFunction>))]
@@ -12015,6 +12176,11 @@ namespace AindVrForagingDataSchema
             return Process<RigCalibration>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<SaturatingMultiplicativeRateFunction> source)
+        {
+            return Process<SaturatingMultiplicativeRateFunction>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<ScreenAssembly> source)
         {
             return Process<ScreenAssembly>(source);
@@ -12196,6 +12362,7 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardSpecification>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SaturatingMultiplicativeRateFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScreenAssembly>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScreenAssemblyCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SequenceEnvironment>))]

@@ -1792,21 +1792,22 @@
           "title": "Rate"
         },
         "minimum": {
-          "default": 1,
-          "description": "Maximum value after update",
+          "description": "Minimum value after update",
+          "exclusiveMinimum": 0,
           "title": "Minimum",
           "type": "number"
         },
         "maximum": {
-          "default": 0,
-          "description": "Minimum value after update",
+          "description": "Maximum value after update",
           "title": "Maximum",
           "type": "number"
         }
       },
       "required": [
         "transition_matrix",
-        "rho"
+        "rho",
+        "minimum",
+        "maximum"
       ],
       "title": "CtcmFunction",
       "type": "object"
@@ -3815,6 +3816,7 @@
           "ClampedRateFunction": "#/$defs/ClampedRateFunction",
           "CtcmFunction": "#/$defs/CtcmFunction",
           "LookupTableFunction": "#/$defs/LookupTableFunction",
+          "SaturatingMultiplicativeRateFunction": "#/$defs/SaturatingMultiplicativeRateFunction",
           "SetValueFunction": "#/$defs/SetValueFunction"
         },
         "propertyName": "function_type"
@@ -3825,6 +3827,9 @@
         },
         {
           "$ref": "#/$defs/ClampedMultiplicativeRateFunction"
+        },
+        {
+          "$ref": "#/$defs/SaturatingMultiplicativeRateFunction"
         },
         {
           "$ref": "#/$defs/SetValueFunction"
@@ -4352,6 +4357,78 @@
         "water_valve"
       ],
       "title": "RigCalibration",
+      "type": "object"
+    },
+    "SaturatingMultiplicativeRateFunction": {
+      "description": "Multiplicative updater with configurable out-of-bounds rectification.\n\nThe raw update is computed as ``x_raw = x * rate ** tick_value``.\nIf ``x_raw`` is within bounds, it is returned unchanged.\nIf it falls below ``minimum`` or above ``maximum``, the output is rectified to\n``below_minimum_to`` or ``above_maximum_to`` respectively when provided;\notherwise it falls back to the corresponding bound.",
+      "properties": {
+        "function_type": {
+          "const": "SaturatingMultiplicativeRateFunction",
+          "default": "SaturatingMultiplicativeRateFunction",
+          "title": "Function Type",
+          "type": "string"
+        },
+        "minimum": {
+          "default": 0,
+          "description": "Minimum value of the rate",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Minimum"
+        },
+        "maximum": {
+          "description": "Maximum value of the rate",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Maximum"
+        },
+        "below_minimum_to": {
+          "default": null,
+          "description": "If the value is below minimum, it will be set to this value instead of the minimum",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Below Minimum To"
+        },
+        "above_maximum_to": {
+          "default": null,
+          "description": "If the value is above maximum, it will be set to this value instead of the maximum",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Above Maximum To"
+        },
+        "rate": {
+          "$ref": "#/$defs/Distribution",
+          "description": "Rate of the replenishment, in value per rule unit."
+        }
+      },
+      "required": [
+        "maximum",
+        "rate"
+      ],
+      "title": "SaturatingMultiplicativeRateFunction",
       "type": "object"
     },
     "Scalar": {
