@@ -8,6 +8,7 @@ from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,
     AindVrForagingTaskParameters,
 )
+from collections import deque
 
 MINIMUM_INTERPATCH_LENGTH = 50
 MEAN_INTERPATCH_LENGTH = 120
@@ -86,8 +87,6 @@ def make_patch(
 
 
 def get_odor_sequence(total_trials: int, n: int) -> list[tuple[int, int]]:
-    import random
-    from collections import deque
 
     ODORS = list(range(ODOR_COUNT))
 
@@ -114,8 +113,6 @@ def get_odor_sequence(total_trials: int, n: int) -> list[tuple[int, int]]:
         history.append((neg, pos))
 
     return patches
-
-
 
 
 def make_block(
