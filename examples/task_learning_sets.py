@@ -162,11 +162,11 @@ task_logic = AindVrForagingTaskLogic(
         ),
         operation_control=operation_control,
     ),
-    stage_name="OneShotReversals",
+    stage_name="LearningSets",
 )
 
 
-def main(path_seed: str = "./local/OneShotReversals_{schema}.json"):
+def main(path_seed: str = "./local/LearningSets_{schema}.json"):
     example_task_logic = task_logic
     example_trainer_state = TrainerState(
         stage=Stage(name="example_stage", task=example_task_logic),
