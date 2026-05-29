@@ -12,7 +12,7 @@ docs/schema/
 bin
 obj
 .bonsai/Packages
-.bonsai.exe.WebView2
+.bonsai/Bonsai.exe.WebView2/
 .bonsai/Settings/
 
 *.bin

@@ -823,10 +823,10 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p5:MessageBox">
-                <p5:Text />
-                <p5:Title>Critical error</p5:Title>
-                <p5:MessageBoxIcon>Hand</p5:MessageBoxIcon>
+              <Combinator xsi:type="p1:MessageBox">
+                <p1:Text />
+                <p1:Title>Error</p1:Title>
+                <p1:MessageBoxIcon>Hand</p1:MessageBoxIcon>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:SelectMany">
