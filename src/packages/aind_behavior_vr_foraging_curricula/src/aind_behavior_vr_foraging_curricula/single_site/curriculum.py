@@ -17,12 +17,10 @@ from ..cli import CurriculumCliArgs, CurriculumSuggestion
 from ..utils import model_from_json_file
 from .metrics import SingleSiteMetrics
 from .stages import (
-    make_s_graduated_narrow_delay,
-    make_s_graduated_stage,
     make_s_learn_to_choose,
     make_s_learn_to_stop,
-    make_s_learn_to_stop_low_p,
-    make_s_three_contrast,
+    make_s_probability_grid_long_delay,
+    make_s_probability_grid_short_delay,
 )
 
 CURRICULUM_NAME = "SingleSite"
@@ -37,13 +35,12 @@ TModel = TypeVar("TModel", bound=pydantic.BaseModel)
 
 
 def _learn_to_stop_saturation_met(metrics: SingleSiteMetrics) -> bool:
+    # Stop duration is fixed at 1.0 s now, so graduation is gated on the velocity
+    # threshold reaching its floor plus enough qualifying stops in a session.
     if metrics.last_stop_threshold_updater is None:
-        return False
-    if metrics.last_stop_duration_offset_updater is None:
         return False
     return (
         (metrics.last_stop_threshold_updater <= 8)
-        and (metrics.last_stop_duration_offset_updater >= 1.0)
         and (metrics.n_patches_seen >= 300)
         and (metrics.n_patches_visited >= 150)
     )
@@ -53,17 +50,7 @@ def st_s_learn_to_stop_to_s_learn_to_choose(metrics: SingleSiteMetrics) -> bool:
     return _learn_to_stop_saturation_met(metrics)
 
 
-def st_s_learn_to_stop_to_s_learn_to_stop_low_p(metrics: SingleSiteMetrics) -> bool:
-    # Unconditional fallback: any animal that doesn't pass straight to S2 ends up here
-    # after one session of high-p_reward shaping.
-    return True
-
-
-def st_s_learn_to_stop_low_p_to_s_learn_to_choose(metrics: SingleSiteMetrics) -> bool:
-    return _learn_to_stop_saturation_met(metrics)
-
-
-def st_s_learn_to_choose_to_s_three_contrast(metrics: SingleSiteMetrics) -> bool:
+def st_s_learn_to_choose_to_s_probability_grid_short_delay(metrics: SingleSiteMetrics) -> bool:
     if metrics.last_reward_delay_offset_updater is None:
         return False
     if metrics.n_patches_seen == 0:
@@ -80,32 +67,22 @@ def st_s_learn_to_choose_to_s_three_contrast(metrics: SingleSiteMetrics) -> bool
     return False
 
 
-def st_s_three_contrast_to_s_graduated_narrow_delay(metrics: SingleSiteMetrics) -> bool:
+def st_s_probability_grid_short_delay_to_s_probability_grid_long_delay(metrics: SingleSiteMetrics) -> bool:
+    # probability_grid_short ramps REWARD_DELAY_OFFSET 0 -> 1.5 (folded from the old
+    # three_contrast); graduate to the long-delay stage once delay is grown and the
+    # subject is harvesting in the 0.3-0.7 visit-ratio band.
     if metrics.last_reward_delay_offset_updater is None:
-        return False
-    if metrics.last_stop_duration_offset_updater is None:
         return False
     if metrics.n_patches_seen == 0:
         return False
 
     visit_ratio = metrics.n_patches_visited / metrics.n_patches_seen
     if (
-        (metrics.n_patches_seen >= 250)
-        and (metrics.n_patches_visited >= 80)
+        (metrics.n_patches_seen >= 300)
+        and (metrics.n_patches_visited >= 100)
         and (0.3 <= visit_ratio <= 0.7)
         and (metrics.last_reward_delay_offset_updater >= 1.3)
-        and (metrics.last_stop_duration_offset_updater <= -0.4)
     ):
-        return True
-    return False
-
-
-def st_s_graduated_narrow_delay_to_s_graduated_stage(metrics: SingleSiteMetrics) -> bool:
-    if metrics.n_patches_seen == 0:
-        return False
-
-    visit_ratio = metrics.n_patches_visited / metrics.n_patches_seen
-    if (metrics.n_patches_seen >= 300) and (metrics.n_patches_visited >= 100) and (0.3 <= visit_ratio <= 0.7):
         return True
     return False
 
@@ -124,31 +101,15 @@ CURRICULUM.add_stage_transition(
     make_s_learn_to_choose(),
     StageTransition(st_s_learn_to_stop_to_s_learn_to_choose),
 )
-# Lower-priority fallback for animals that didn't graduate S1 in one session.
-CURRICULUM.add_stage_transition(
-    make_s_learn_to_stop(),
-    make_s_learn_to_stop_low_p(),
-    StageTransition(st_s_learn_to_stop_to_s_learn_to_stop_low_p),
-)
-CURRICULUM.add_stage_transition(
-    make_s_learn_to_stop_low_p(),
-    make_s_learn_to_choose(),
-    StageTransition(st_s_learn_to_stop_low_p_to_s_learn_to_choose),
-)
 CURRICULUM.add_stage_transition(
     make_s_learn_to_choose(),
-    make_s_three_contrast(),
-    StageTransition(st_s_learn_to_choose_to_s_three_contrast),
+    make_s_probability_grid_short_delay(),
+    StageTransition(st_s_learn_to_choose_to_s_probability_grid_short_delay),
 )
 CURRICULUM.add_stage_transition(
-    make_s_three_contrast(),
-    make_s_graduated_narrow_delay(),
-    StageTransition(st_s_three_contrast_to_s_graduated_narrow_delay),
-)
-CURRICULUM.add_stage_transition(
-    make_s_graduated_narrow_delay(),
-    make_s_graduated_stage(),
-    StageTransition(st_s_graduated_narrow_delay_to_s_graduated_stage),
+    make_s_probability_grid_short_delay(),
+    make_s_probability_grid_long_delay(),
+    StageTransition(st_s_probability_grid_short_delay_to_s_probability_grid_long_delay),
 )
 
 # ==============================================================================
