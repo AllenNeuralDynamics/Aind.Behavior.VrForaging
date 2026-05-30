@@ -125,7 +125,10 @@ def make_s_learn_to_choose() -> Stage:
                             make_patch_kwargs=_POST_STOP_PATCH_KWARGS,
                         ),
                     ],
-                    sampling_mode="Random",
+                    # Two blocks only: Sequential gives clean A-rich -> B-rich
+                    # alternation. Reversal timing is still unpredictable because
+                    # each block's length is random (block_length_exp_mean).
+                    sampling_mode="Sequential",
                 ),
                 operation_control=helpers.make_default_operation_control(velocity_threshold=8),
             ),

@@ -17,7 +17,7 @@ learn_to_stop → learn_to_choose → probability_grid_short_delay → probabili
 | stage | goal | environment | within-session updater | stop / delay |
 |---|---|---|---|---|
 | `learn_to_stop` | a real stop in one session | 2 odors A,B, both `p_reward=1.0` | `STOP_VELOCITY_THRESHOLD` 60→8 (gain ×0.93) | stop **1.0 s** (fixed); delay 0.5 s |
-| `learn_to_choose` | high-contrast discrimination | alternating `(0.9, 0.1)` / `(0.1, 0.9)` blocks | `REWARD_DELAY_OFFSET` 0→0.3 (+0.002) | stop 1.0 s; delay 0.5→0.8 s |
+| `learn_to_choose` | high-contrast discrimination | 2 blocks `(0.9, 0.1)` / `(0.1, 0.9)`, sampled `Sequential` (clean alternation; random block length) | `REWARD_DELAY_OFFSET` 0→0.3 (+0.002) | stop 1.0 s; delay 0.5→0.8 s |
 | `probability_grid_short_delay` | grid + grow patience | 13-block band + distractor C (occ `0.475/0.475/0.05`) | `REWARD_DELAY_OFFSET` 0→1.5 (+0.01) | stop 1.0 s; delay `0.2 + Exp(0.4)`, [0.2, 2.5] s + the ramp |
 | `probability_grid_long_delay` | terminal / analysis | same 13-block band | none | stop 1.0 s; delay `0.2 + Exp(2.1)`, [0.2, 7.0] s (stationary) |
 
