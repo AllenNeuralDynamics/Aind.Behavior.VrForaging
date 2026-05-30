@@ -24,9 +24,6 @@ class SingleSiteMetrics(Metrics):
     last_stop_threshold_updater: NonNegativeFloat | None = Field(
         description="The stop velocity threshold at the end of the session."
     )
-    last_stop_duration_offset_updater: float | None = Field(
-        description="The stop duration offset at the end of the session. May be negative in S3 where stop is ramped down as reward delay grows."
-    )
     last_reward_delay_offset_updater: NonNegativeFloat | None = Field(
         description="The reward delay offset at the end of the session."
     )
@@ -57,9 +54,6 @@ def metrics_from_dataset(data_directory: os.PathLike) -> SingleSiteMetrics:
     stop_velocity_threshold = _try_get_datastream_as_dataframe(
         dataset["Behavior"]["SoftwareEvents"]["UpdaterStopVelocityThreshold"]
     )
-    stop_duration_offset = _try_get_datastream_as_dataframe(
-        dataset["Behavior"]["SoftwareEvents"]["UpdaterStopDurationOffset"]
-    )
     reward_delay_offset = _try_get_datastream_as_dataframe(
         dataset["Behavior"]["SoftwareEvents"]["UpdaterRewardDelayOffset"]
     )
@@ -85,9 +79,6 @@ def metrics_from_dataset(data_directory: os.PathLike) -> SingleSiteMetrics:
         n_patches_seen=sum(visited_patches_per_index.values()),
         last_stop_threshold_updater=stop_velocity_threshold["data"].iloc[-1]
         if stop_velocity_threshold is not None
-        else None,
-        last_stop_duration_offset_updater=stop_duration_offset["data"].iloc[-1]
-        if stop_duration_offset is not None
         else None,
         last_reward_delay_offset_updater=reward_delay_offset["data"].iloc[-1]
         if reward_delay_offset is not None

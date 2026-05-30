@@ -1,19 +1,11 @@
 from typing import Callable
 
-import aind_behavior_services.task.distributions as distributions
+from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging import task_logic
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
+from . import helpers
 from .metrics import SingleSiteMetrics
-
-
-def _clamp(value: float, minimum: float, maximum: float) -> float:
-    return max(minimum, min(value, maximum))
-
-
-def _lerp(a: float, b: float, frac: float) -> float:
-    return a + (b - a) * frac
-
 
 # ============================================================
 # learn_to_stop geometry easing
@@ -47,23 +39,28 @@ LEARN_TO_STOP_GEOMETRY_FULL: dict[str, float] = {
 WATER_GATE_ML: float = 0.6
 GATED_REWARD_PROBABILITY: float = 0.8
 
+# ============================================================
+# Cross-session seeding factors
+# ============================================================
+# An updater's prior-session end value is eased before re-use as the next session's
+# starting point, so the subject does not face a cliff between days.
+STOP_THRESHOLD_EASE_FACTOR: float = 1.2  # start a bit looser than where velocity floored
+REWARD_DELAY_SEED_FACTOR: float = 0.8  # re-ramp the reward delay a shorter distance
 
-# Useful type hints for generic policies
-PolicyType = Callable[
-    [SingleSiteMetrics, AindVrForagingTaskLogic], AindVrForagingTaskLogic
-]  # This should generally work for type hinting
+#: Signature shared by every policy in this module.
+PolicyType = Callable[[SingleSiteMetrics, AindVrForagingTaskLogic], AindVrForagingTaskLogic]
 
 
 def p_learn_to_stop(metrics: SingleSiteMetrics, task: AindVrForagingTaskLogic) -> AindVrForagingTaskLogic:
     """Seed the next session's stop-velocity threshold from the prior session's end
-    value, eased slightly (x1.2) so the subject is not dropped straight at the floor.
-    Stop duration is now fixed (no offset updater), so only the velocity threshold is
-    seeded."""
+    value, eased slightly (STOP_THRESHOLD_EASE_FACTOR) so the subject is not dropped
+    straight at the floor. Stop duration is fixed (no offset updater), so only the
+    velocity threshold is seeded."""
     if metrics.last_stop_threshold_updater is None:
         return task
     updater = task.task_parameters.updaters[task_logic.UpdaterTarget.STOP_VELOCITY_THRESHOLD]
-    updater.parameters.initial_value = _clamp(
-        metrics.last_stop_threshold_updater * 1.2,
+    updater.parameters.initial_value = helpers.clamp(
+        metrics.last_stop_threshold_updater * STOP_THRESHOLD_EASE_FACTOR,
         minimum=updater.parameters.minimum,
         maximum=updater.parameters.maximum,
     )
@@ -87,13 +84,15 @@ def p_learn_to_run(metrics: SingleSiteMetrics, task: AindVrForagingTaskLogic) ->
     reward-site lengths from the compressed start toward full spacing, scaled by
     prior locomotion (n_patches_seen / GEOMETRY_EASE_PATCHES, clamped to 1). On the
     first session (no prior metrics) the geometry stays compressed."""
-    ease_fraction = _clamp(metrics.n_patches_seen / GEOMETRY_EASE_PATCHES, 0.0, 1.0)
+    ease_fraction = helpers.clamp(metrics.n_patches_seen / GEOMETRY_EASE_PATCHES, 0.0, 1.0)
     compressed, full = LEARN_TO_STOP_GEOMETRY_COMPRESSED, LEARN_TO_STOP_GEOMETRY_FULL
-    inter_patch_min = _lerp(compressed["inter_patch_min_length"], full["inter_patch_min_length"], ease_fraction)
-    inter_patch_mean = _lerp(compressed["inter_patch_mean_length"], full["inter_patch_mean_length"], ease_fraction)
-    inter_patch_max = _lerp(compressed["inter_patch_max_length"], full["inter_patch_max_length"], ease_fraction)
-    inter_site_length = _lerp(compressed["inter_site_length"], full["inter_site_length"], ease_fraction)
-    reward_site_length = _lerp(compressed["reward_site_length"], full["reward_site_length"], ease_fraction)
+    inter_patch_min = helpers.lerp(compressed["inter_patch_min_length"], full["inter_patch_min_length"], ease_fraction)
+    inter_patch_mean = helpers.lerp(
+        compressed["inter_patch_mean_length"], full["inter_patch_mean_length"], ease_fraction
+    )
+    inter_patch_max = helpers.lerp(compressed["inter_patch_max_length"], full["inter_patch_max_length"], ease_fraction)
+    inter_site_length = helpers.lerp(compressed["inter_site_length"], full["inter_site_length"], ease_fraction)
+    reward_site_length = helpers.lerp(compressed["reward_site_length"], full["reward_site_length"], ease_fraction)
     for block in task.task_parameters.environment.blocks:
         for patch in block.environment.patches:
             patch_generator = patch.patch_virtual_sites_generator
@@ -113,13 +112,14 @@ def p_learn_to_run(metrics: SingleSiteMetrics, task: AindVrForagingTaskLogic) ->
 
 
 def p_seed_reward_delay(metrics: SingleSiteMetrics, task: AindVrForagingTaskLogic) -> AindVrForagingTaskLogic:
-    """Ease the reward-delay offset in from where the previous session ended (x0.8),
-    so each session re-ramps a shorter distance rather than starting from zero."""
+    """Ease the reward-delay offset in from where the previous session ended
+    (REWARD_DELAY_SEED_FACTOR), so each session re-ramps a shorter distance rather
+    than starting from zero."""
     if metrics.last_reward_delay_offset_updater is None:
         return task
     updater = task.task_parameters.updaters[task_logic.UpdaterTarget.REWARD_DELAY_OFFSET]
-    updater.parameters.initial_value = _clamp(
-        metrics.last_reward_delay_offset_updater * 0.8,
+    updater.parameters.initial_value = helpers.clamp(
+        metrics.last_reward_delay_offset_updater * REWARD_DELAY_SEED_FACTOR,
         minimum=updater.parameters.minimum,
         maximum=updater.parameters.maximum,
     )

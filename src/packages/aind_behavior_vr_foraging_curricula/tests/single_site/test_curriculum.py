@@ -48,7 +48,6 @@ def _make_metrics(**overrides: Any) -> SingleSiteMetrics:
         n_patches_visited=0,
         n_patches_seen=0,
         last_stop_threshold_updater=None,
-        last_stop_duration_offset_updater=None,
         last_reward_delay_offset_updater=None,
     )
     defaults.update(overrides)

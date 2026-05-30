@@ -1,9 +1,10 @@
 # Single Site curriculum
 
-A **single-site, non-baited** patch-foraging bandit. Each patch is one odor-marked
-reward site (a single accept/reject decision; no stored/baited reward). Two reward
-odors carry block-switching reward probabilities, so the animal must track relative
-action value. Code: `metrics.py`, `stages.py`, `policies.py`, `curriculum.py`.
+A **single-site, non-baited** patch-foraging bandit, similar to the dynamic
+foraging uncoupled, unbaited task. Each patch is one odor-marked reward site (a
+single accept/reject decision; no stored/baited reward). Two reward odors carry
+block-switching reward probabilities, so the animal must track relative action
+value. Code: `metrics.py`, `stages.py`, `policies.py`, `helpers.py`, `curriculum.py`.
 
 ## Stages
 
