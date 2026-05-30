@@ -93,6 +93,9 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
+          # PAT from an admin account so the version-bump commit and tag
+          # push below can bypass the branch ruleset protecting `main`.
+          token: ${{ secrets.RELEASE_PAT }}
 
       - uses: astral-sh/setup-uv@v8.1.0
         with:
