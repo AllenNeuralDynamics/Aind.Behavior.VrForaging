@@ -42,7 +42,7 @@ GATED_REWARD_PROBABILITY: float = 0.8
 # ============================================================
 # Cross-session seeding factors
 # ============================================================
-# An updater's prior-session end value is eased before re-use as the next session's
+# An updater's prior-session end value is eased before reuse as the next session's
 # starting point, so the subject does not face a cliff between days.
 STOP_THRESHOLD_EASE_FACTOR: float = 1.2  # start a bit looser than where velocity floored
 REWARD_DELAY_SEED_FACTOR: float = 0.8  # re-ramp the reward delay a shorter distance
