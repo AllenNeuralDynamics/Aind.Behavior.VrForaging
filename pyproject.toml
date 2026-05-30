@@ -24,7 +24,9 @@ docs = [
     'mkdocs-autorefs>=1.4.4',
     'griffe-typingdoc>=0.3.1',
     'pymdown-extensions',
+    'erdantic; sys_platform == "linux"',
     'aind-behavior-vr-foraging[data]',
+    'aind-behavior-vr-foraging-curricula',
 ]
 
 dev = [

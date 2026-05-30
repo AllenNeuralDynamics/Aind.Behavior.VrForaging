@@ -28,6 +28,8 @@ dev = [
 ]
 docs = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "aind-behavior-vr-foraging-curricula", editable = "src/packages/aind_behavior_vr_foraging_curricula" },
+    { name = "erdantic", marker = "sys_platform == 'linux'" },
     { name = "griffe-pydantic" },
     { name = "griffe-typingdoc", specifier = ">=0.3.1" },
     { name = "mkdocs" },
@@ -240,6 +242,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/15/4a/d42d8bc518260b195c5702146af3c5cf4e391ddd61abfe85dc7d48c90eaf/aind_watchdog_service-0.1.6.tar.gz", hash = "sha256:1b1679e37696bf269e646cf943f2a8255f7aaaacc779de0cce61abc3570dc169", size = 390289, upload-time = "2026-01-22T01:54:30.006Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/29/1a/8bcc17159e4eef205f4463d2422a66ad685b31717b6416a2b40d60ec0177/aind_watchdog_service-0.1.6-py3-none-any.whl", hash = "sha256:69571b4e50719c6cec38d7d901cdffdcdca296039ebebce8971ef4aef849dee9", size = 47801, upload-time = "2026-01-22T01:54:28.827Z" },
+]
+
+[[package]]
+name = "annotated-doc"
+version = "0.0.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/57/ba/046ceea27344560984e26a590f90bc7f4a75b06701f653222458922b558c/annotated_doc-0.0.4.tar.gz", hash = "sha256:fbcda96e87e9c92ad167c2e53839e57503ecfda18804ea28102353485033faa4", size = 7288, upload-time = "2025-11-10T22:07:42.062Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1e/d3/26bf1008eb3d2daa8ef4cacc7f3bfdc11818d111f7e2d0201bc6e3b49d45/annotated_doc-0.0.4-py3-none-any.whl", hash = "sha256:571ac1dc6991c450b25a9c2d84a3705e2ae7a53467b5d111c24fa8baabbed320", size = 5303, upload-time = "2025-11-10T22:07:40.673Z" },
 ]
 
 [[package]]
@@ -780,6 +791,24 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/f5/22/900cb125c76b7aaa450ce02fd727f452243f2e91a61af068b40adba60ea9/email_validator-2.3.0.tar.gz", hash = "sha256:9fc05c37f2f6cf439ff414f8fc46d917929974a82244c20eb10231ba60c54426", size = 51238, upload-time = "2025-08-26T13:09:06.831Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/de/15/545e2b6cf2e3be84bc1ed85613edd75b8aea69807a71c26f4ca6a9258e82/email_validator-2.3.0-py3-none-any.whl", hash = "sha256:80f13f623413e6b197ae73bb10bf4eb0908faf509ad8362c5edeb0be7fd450b4", size = 35604, upload-time = "2025-08-26T13:09:05.858Z" },
+]
+
+[[package]]
+name = "erdantic"
+version = "1.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pydantic-core", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pygraphviz", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "sortedcontainers-pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typenames", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typer", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/42/b3/d814074dc6076a97682dc8a62a3da672fd982a533cc1f29854b6a4433ef2/erdantic-1.2.1.tar.gz", hash = "sha256:9105fc51260ee58b531690d1ef87db81f849257e73e106cd8f2a7f8a26d8d9b0", size = 1152018, upload-time = "2026-02-15T23:56:00.294Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/84/39/c8982be2f72454ef135f247fd9c0fd800444d8e28767c9c6cb25e2df7c2e/erdantic-1.2.1-py3-none-any.whl", hash = "sha256:f548da3e9933e298f862eb33469ab375a372097ae289a4ca47a06ff69a1a6210", size = 34855, upload-time = "2026-02-15T23:55:58.536Z" },
 ]
 
 [[package]]
@@ -1942,6 +1971,12 @@ wheels = [
 ]
 
 [[package]]
+name = "pygraphviz"
+version = "1.14"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/66/ca/823d5c74a73d6b8b08e1f5aea12468ef334f0732c65cbb18df2a7f285c87/pygraphviz-1.14.tar.gz", hash = "sha256:c10df02377f4e39b00ae17c862f4ee7e5767317f1c6b2dfd04cea6acc7fc2bea", size = 106003, upload-time = "2024-09-29T18:31:12.471Z" }
+
+[[package]]
 name = "pyjwt"
 version = "2.12.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2335,6 +2370,15 @@ wheels = [
 ]
 
 [[package]]
+name = "shellingham"
+version = "1.5.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/15/8b3609fd3830ef7b27b655beb4b4e9c62313a4e8da8c676e142cc210d58e/shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de", size = 10310, upload-time = "2023-10-24T04:13:40.426Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686", size = 9755, upload-time = "2023-10-24T04:13:38.866Z" },
+]
+
+[[package]]
 name = "six"
 version = "1.17.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2350,6 +2394,29 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/1f/ea/49c993d6dfdd7338c9b1000a0f36817ed7ec84577ae2e52f890d1a4ff909/smmap-5.0.3.tar.gz", hash = "sha256:4d9debb8b99007ae47165abc08670bd74cb74b5227dda7f643eccc4e9eb5642c", size = 22506, upload-time = "2026-03-09T03:43:26.1Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c1/d4/59e74daffcb57a07668852eeeb6035af9f32cbfd7a1d2511f17d2fe6a738/smmap-5.0.3-py3-none-any.whl", hash = "sha256:c106e05d5a61449cf6ba9a1e650227ecfb141590d2a98412103ff35d89fc7b2f", size = 24390, upload-time = "2026-03-09T03:43:24.361Z" },
+]
+
+[[package]]
+name = "sortedcontainers"
+version = "2.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e8/c4/ba2f8066cceb6f23394729afe52f3bf7adec04bf9ed2c820b39e19299111/sortedcontainers-2.4.0.tar.gz", hash = "sha256:25caa5a06cc30b6b83d11423433f65d1f9d76c4c6a0c90e3379eaa43b9bfdb88", size = 30594, upload-time = "2021-05-16T22:03:42.897Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl", hash = "sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0", size = 29575, upload-time = "2021-05-16T22:03:41.177Z" },
+]
+
+[[package]]
+name = "sortedcontainers-pydantic"
+version = "2.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pydantic-core", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "sortedcontainers", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f5/39/c951f89cd289d207730d080ce24d973db18227ea09ba966e4fab9d75dab4/sortedcontainers_pydantic-2.0.0.tar.gz", hash = "sha256:0cb3abfbda64dc1fa2365b578ddc3a259c7d75daeae76d2f9087f5ebc1f8f1fe", size = 53829, upload-time = "2025-04-18T06:51:10.706Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/94/ef/a3a7cce565dcd624c5fd457709c0356038288eee1268d7efbb11376f6690/sortedcontainers_pydantic-2.0.0-py3-none-any.whl", hash = "sha256:1c38a05f1a8618189bdd8b87f0c3bc8cc1196e6c39f0e30f694b709ba3e2a508", size = 6446, upload-time = "2025-04-18T06:51:09.553Z" },
 ]
 
 [[package]]
@@ -2404,6 +2471,29 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/12/64/da524626d3b9cc40c168a13da8335fe1c51be12c0a63685cc6db7308daae/tomli-2.4.1-cp314-cp314t-win_amd64.whl", hash = "sha256:2c1c351919aca02858f740c6d33adea0c5deea37f9ecca1cc1ef9e884a619d26", size = 121196, upload-time = "2026-03-25T20:22:01.169Z" },
     { url = "https://files.pythonhosted.org/packages/5a/cd/e80b62269fc78fc36c9af5a6b89c835baa8af28ff5ad28c7028d60860320/tomli-2.4.1-cp314-cp314t-win_arm64.whl", hash = "sha256:eab21f45c7f66c13f2a9e0e1535309cee140182a9cdae1e041d02e47291e8396", size = 100393, upload-time = "2026-03-25T20:22:02.137Z" },
     { url = "https://files.pythonhosted.org/packages/7b/61/cceae43728b7de99d9b847560c262873a1f6c98202171fd5ed62640b494b/tomli-2.4.1-py3-none-any.whl", hash = "sha256:0d85819802132122da43cb86656f8d1f8c6587d54ae7dcaf30e90533028b49fe", size = 14583, upload-time = "2026-03-25T20:22:03.012Z" },
+]
+
+[[package]]
+name = "typenames"
+version = "2.1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ea/e3/43295dabe364f88d764be3595e942cb129469a99361a1af8fc77039912e2/typenames-2.1.0.tar.gz", hash = "sha256:af231a91e8c377a5497693944d604865164adaf8754d17f521e61b0fbb1f6bf9", size = 160235, upload-time = "2025-09-15T15:41:53.479Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5d/77/5a1219258adf0b217e8f3d1df84847073580d9d304e6fba77d03fb4fe733/typenames-2.1.0-py3-none-any.whl", hash = "sha256:34616136b4d6b92ef598fd5a2d2524506ef437489c71d1305e805046c41dd07d", size = 10958, upload-time = "2025-09-15T15:41:51.894Z" },
+]
+
+[[package]]
+name = "typer"
+version = "0.26.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "annotated-doc", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "rich", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "shellingham", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8e/d3/90c1ee19209cb59f6ad185883fd4ccfcf72f8f0bfd549d5a8b70474611d0/typer-0.26.4.tar.gz", hash = "sha256:25b128964de66c5ea36d5ac82adc579e5e113509b17469edf9f5a4a1864ff2a9", size = 201191, upload-time = "2026-05-30T17:05:04.213Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f0/6d/5a525c69df4a90892135e5d490b00e9e46402491f3416d4395fcb0d0201e/typer-0.26.4-py3-none-any.whl", hash = "sha256:11bfd7b43557137e373c2b10f6967a555f9678a61ed72c808968b011d95534d6", size = 122436, upload-time = "2026-05-30T17:05:05.812Z" },
 ]
 
 [[package]]
