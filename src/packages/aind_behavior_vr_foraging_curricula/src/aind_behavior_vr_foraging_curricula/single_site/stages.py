@@ -125,7 +125,7 @@ def make_block(
     if block_length_max is None:
         block_length_max = n_min_patches + 50
     return vr_task_logic.Block(
-        environment_statistics=vr_task_logic.EnvironmentStatistics(
+        environment=vr_task_logic.MarkovEnvironment(
             first_state_occupancy=list(first_state_occupancy),
             transition_matrix=[list(first_state_occupancy) for _ in range(len(patches))],
             patches=patches,

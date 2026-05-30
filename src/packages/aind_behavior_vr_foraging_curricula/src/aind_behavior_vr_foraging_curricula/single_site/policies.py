@@ -77,7 +77,7 @@ def p_reward_water_gate(metrics: SingleSiteMetrics, task: AindVrForagingTaskLogi
     1.0 so a struggling subject still gets water at every stop."""
     p = GATED_REWARD_PROBABILITY if metrics.total_water_consumed >= WATER_GATE_ML else 1.0
     for block in task.task_parameters.environment.blocks:
-        for patch in block.environment_statistics.patches:
+        for patch in block.environment.patches:
             patch.reward_specification.probability = task_logic.scalar_value(p)
     return task
 
@@ -95,7 +95,7 @@ def p_learn_to_run(metrics: SingleSiteMetrics, task: AindVrForagingTaskLogic) ->
     inter_site_length = _lerp(compressed["inter_site_length"], full["inter_site_length"], ease_fraction)
     reward_site_length = _lerp(compressed["reward_site_length"], full["reward_site_length"], ease_fraction)
     for block in task.task_parameters.environment.blocks:
-        for patch in block.environment_statistics.patches:
+        for patch in block.environment.patches:
             patch_generator = patch.patch_virtual_sites_generator
             inter_patch_distribution = patch_generator.inter_patch.length_distribution
             if isinstance(inter_patch_distribution, distributions.ExponentialDistribution):

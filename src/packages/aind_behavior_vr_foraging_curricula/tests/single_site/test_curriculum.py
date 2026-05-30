@@ -161,7 +161,7 @@ class TestPLearnToStop:
 
 class TestPRewardWaterGate:
     def _patches_probability(self, task: AindVrForagingTaskLogic) -> float:
-        patch = task.task_parameters.environment.blocks[0].environment_statistics.patches[0]
+        patch = task.task_parameters.environment.blocks[0].environment.patches[0]
         return patch.reward_specification.probability.distribution_parameters.value
 
     def test_drops_when_water_at_or_above_gate(self):
@@ -177,7 +177,7 @@ class TestPRewardWaterGate:
 
 class TestPLearnToRun:
     def _reward_site_len(self, task: AindVrForagingTaskLogic) -> float:
-        gen = task.task_parameters.environment.blocks[0].environment_statistics.patches[0].patch_virtual_sites_generator
+        gen = task.task_parameters.environment.blocks[0].environment.patches[0].patch_virtual_sites_generator
         return gen.reward_site.length_distribution.distribution_parameters.value
 
     def test_stays_compressed_on_first_session(self):
