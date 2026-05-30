@@ -34,20 +34,16 @@ TModel = TypeVar("TModel", bound=pydantic.BaseModel)
 # ============================================================
 
 
-def _learn_to_stop_saturation_met(metrics: SingleSiteMetrics) -> bool:
+def st_s_learn_to_stop_to_s_learn_to_choose(metrics: SingleSiteMetrics) -> bool:
     # Stop duration is fixed at 1.0 s now, so graduation is gated on the velocity
     # threshold reaching its floor plus enough qualifying stops in a session.
     if metrics.last_stop_threshold_updater is None:
         return False
     return (
         (metrics.last_stop_threshold_updater <= 8)
-        and (metrics.n_patches_seen >= 300)
+        and (metrics.n_patches_seen >= 250)
         and (metrics.n_patches_visited >= 150)
     )
-
-
-def st_s_learn_to_stop_to_s_learn_to_choose(metrics: SingleSiteMetrics) -> bool:
-    return _learn_to_stop_saturation_met(metrics)
 
 
 def st_s_learn_to_choose_to_s_probability_grid_short_delay(metrics: SingleSiteMetrics) -> bool:

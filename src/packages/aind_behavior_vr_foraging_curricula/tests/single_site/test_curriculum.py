@@ -61,22 +61,22 @@ def _make_metrics(**overrides: Any) -> SingleSiteMetrics:
 
 
 class TestLearnToStopToLearnToChoose:
-    def _ok(self) -> SingleSiteMetrics:
+    def _make_passing_metrics(self) -> SingleSiteMetrics:
         return _make_metrics(n_patches_visited=150, n_patches_seen=300, last_stop_threshold_updater=8)
 
     def test_pass_when_velocity_floored_and_enough_stops(self):
-        assert st_s_learn_to_stop_to_s_learn_to_choose(self._ok()) is True
+        assert st_s_learn_to_stop_to_s_learn_to_choose(self._make_passing_metrics()) is True
 
     def test_fail_when_threshold_too_high(self):
-        metrics = self._ok().model_copy(update=dict(last_stop_threshold_updater=9))
+        metrics = self._make_passing_metrics().model_copy(update=dict(last_stop_threshold_updater=9))
         assert st_s_learn_to_stop_to_s_learn_to_choose(metrics) is False
 
     def test_fail_when_insufficient_visits(self):
-        metrics = self._ok().model_copy(update=dict(n_patches_visited=100))
+        metrics = self._make_passing_metrics().model_copy(update=dict(n_patches_visited=100))
         assert st_s_learn_to_stop_to_s_learn_to_choose(metrics) is False
 
     def test_fail_when_insufficient_seen(self):
-        metrics = self._ok().model_copy(update=dict(n_patches_seen=200))
+        metrics = self._make_passing_metrics().model_copy(update=dict(n_patches_seen=200))
         assert st_s_learn_to_stop_to_s_learn_to_choose(metrics) is False
 
     def test_fail_when_threshold_metric_none(self):
@@ -85,44 +85,44 @@ class TestLearnToStopToLearnToChoose:
 
 
 class TestLearnToChooseToProbabilityGridShort:
-    def _ok(self) -> SingleSiteMetrics:
+    def _make_passing_metrics(self) -> SingleSiteMetrics:
         return _make_metrics(n_patches_visited=100, n_patches_seen=200, last_reward_delay_offset_updater=0.3)
 
     def test_pass(self):
-        assert st_s_learn_to_choose_to_s_probability_grid_short_delay(self._ok()) is True
+        assert st_s_learn_to_choose_to_s_probability_grid_short_delay(self._make_passing_metrics()) is True
 
     def test_fail_when_visit_ratio_too_high(self):
         # 190/200 = 0.95 > 0.7 -> not discriminating
-        metrics = self._ok().model_copy(update=dict(n_patches_visited=190))
+        metrics = self._make_passing_metrics().model_copy(update=dict(n_patches_visited=190))
         assert st_s_learn_to_choose_to_s_probability_grid_short_delay(metrics) is False
 
     def test_fail_when_delay_not_saturated(self):
-        metrics = self._ok().model_copy(update=dict(last_reward_delay_offset_updater=0.1))
+        metrics = self._make_passing_metrics().model_copy(update=dict(last_reward_delay_offset_updater=0.1))
         assert st_s_learn_to_choose_to_s_probability_grid_short_delay(metrics) is False
 
     def test_fail_when_delay_metric_missing(self):
-        metrics = self._ok().model_copy(update=dict(last_reward_delay_offset_updater=None))
+        metrics = self._make_passing_metrics().model_copy(update=dict(last_reward_delay_offset_updater=None))
         assert st_s_learn_to_choose_to_s_probability_grid_short_delay(metrics) is False
 
 
 class TestProbabilityGridShortToLong:
-    def _ok(self) -> SingleSiteMetrics:
+    def _make_passing_metrics(self) -> SingleSiteMetrics:
         return _make_metrics(n_patches_visited=150, n_patches_seen=300, last_reward_delay_offset_updater=1.4)
 
     def test_pass(self):
-        assert st_s_probability_grid_short_delay_to_s_probability_grid_long_delay(self._ok()) is True
+        assert st_s_probability_grid_short_delay_to_s_probability_grid_long_delay(self._make_passing_metrics()) is True
 
     def test_fail_when_insufficient_seen(self):
-        metrics = self._ok().model_copy(update=dict(n_patches_seen=200))
+        metrics = self._make_passing_metrics().model_copy(update=dict(n_patches_seen=200))
         assert st_s_probability_grid_short_delay_to_s_probability_grid_long_delay(metrics) is False
 
     def test_fail_when_visit_ratio_too_low(self):
         # 60/300 = 0.2 < 0.3 -> overly skipping
-        metrics = self._ok().model_copy(update=dict(n_patches_visited=60))
+        metrics = self._make_passing_metrics().model_copy(update=dict(n_patches_visited=60))
         assert st_s_probability_grid_short_delay_to_s_probability_grid_long_delay(metrics) is False
 
     def test_fail_when_delay_not_grown(self):
-        metrics = self._ok().model_copy(update=dict(last_reward_delay_offset_updater=1.0))
+        metrics = self._make_passing_metrics().model_copy(update=dict(last_reward_delay_offset_updater=1.0))
         assert st_s_probability_grid_short_delay_to_s_probability_grid_long_delay(metrics) is False
 
 
@@ -151,7 +151,9 @@ class TestPLearnToStop:
     def test_no_op_when_metric_none(self, init_state: TrainerState):
         assert init_state.stage is not None
         task = cast(AindVrForagingTaskLogic, init_state.stage.task).model_copy(deep=True)
-        original = task.task_parameters.updaters[task_logic.UpdaterTarget.STOP_VELOCITY_THRESHOLD].parameters.initial_value
+        original = task.task_parameters.updaters[
+            task_logic.UpdaterTarget.STOP_VELOCITY_THRESHOLD
+        ].parameters.initial_value
         updated = p_learn_to_stop(_make_metrics(), task)
         vel = updated.task_parameters.updaters[task_logic.UpdaterTarget.STOP_VELOCITY_THRESHOLD].parameters
         assert vel.initial_value == original

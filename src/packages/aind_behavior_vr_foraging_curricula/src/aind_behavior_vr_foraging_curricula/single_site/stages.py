@@ -333,7 +333,7 @@ def make_s_probability_grid_short_delay() -> Stage:
                     vr_task_logic.UpdaterTarget.REWARD_DELAY_OFFSET: vr_task_logic.NumericalUpdater(
                         operation=vr_task_logic.NumericalUpdaterOperation.OFFSET,
                         parameters=vr_task_logic.NumericalUpdaterParameters(
-                            initial_value=0, on_success=0.005, minimum=0, maximum=1.5
+                            initial_value=0, on_success=0.01, minimum=0, maximum=1.5
                         ),
                     ),
                 },

@@ -87,26 +87,28 @@ def p_learn_to_run(metrics: SingleSiteMetrics, task: AindVrForagingTaskLogic) ->
     reward-site lengths from the compressed start toward full spacing, scaled by
     prior locomotion (n_patches_seen / GEOMETRY_EASE_PATCHES, clamped to 1). On the
     first session (no prior metrics) the geometry stays compressed."""
-    frac = _clamp(metrics.n_patches_seen / GEOMETRY_EASE_PATCHES, 0.0, 1.0)
-    c, f = LEARN_TO_STOP_GEOMETRY_COMPRESSED, LEARN_TO_STOP_GEOMETRY_FULL
-    ip_min = _lerp(c["inter_patch_min_length"], f["inter_patch_min_length"], frac)
-    ip_mean = _lerp(c["inter_patch_mean_length"], f["inter_patch_mean_length"], frac)
-    ip_max = _lerp(c["inter_patch_max_length"], f["inter_patch_max_length"], frac)
-    is_len = _lerp(c["inter_site_length"], f["inter_site_length"], frac)
-    rs_len = _lerp(c["reward_site_length"], f["reward_site_length"], frac)
+    ease_fraction = _clamp(metrics.n_patches_seen / GEOMETRY_EASE_PATCHES, 0.0, 1.0)
+    compressed, full = LEARN_TO_STOP_GEOMETRY_COMPRESSED, LEARN_TO_STOP_GEOMETRY_FULL
+    inter_patch_min = _lerp(compressed["inter_patch_min_length"], full["inter_patch_min_length"], ease_fraction)
+    inter_patch_mean = _lerp(compressed["inter_patch_mean_length"], full["inter_patch_mean_length"], ease_fraction)
+    inter_patch_max = _lerp(compressed["inter_patch_max_length"], full["inter_patch_max_length"], ease_fraction)
+    inter_site_length = _lerp(compressed["inter_site_length"], full["inter_site_length"], ease_fraction)
+    reward_site_length = _lerp(compressed["reward_site_length"], full["reward_site_length"], ease_fraction)
     for block in task.task_parameters.environment.blocks:
         for patch in block.environment_statistics.patches:
-            gen = patch.patch_virtual_sites_generator
-            inter_patch = gen.inter_patch.length_distribution
-            if isinstance(inter_patch, distributions.ExponentialDistribution):
-                inter_patch.distribution_parameters.rate = 1.0 / ip_mean
-                if inter_patch.scaling_parameters is not None:
-                    inter_patch.scaling_parameters.offset = ip_min
-                if inter_patch.truncation_parameters is not None:
-                    inter_patch.truncation_parameters.min = ip_min
-                    inter_patch.truncation_parameters.max = ip_max
-            gen.inter_site.length_distribution.distribution_parameters.value = is_len
-            gen.reward_site.length_distribution.distribution_parameters.value = rs_len
+            patch_generator = patch.patch_virtual_sites_generator
+            inter_patch_distribution = patch_generator.inter_patch.length_distribution
+            if isinstance(inter_patch_distribution, distributions.ExponentialDistribution):
+                inter_patch_distribution.distribution_parameters.rate = 1.0 / inter_patch_mean
+                if inter_patch_distribution.scaling_parameters is not None:
+                    inter_patch_distribution.scaling_parameters.offset = inter_patch_min
+                if inter_patch_distribution.truncation_parameters is not None:
+                    inter_patch_distribution.truncation_parameters.min = inter_patch_min
+                    inter_patch_distribution.truncation_parameters.max = inter_patch_max
+            else:
+                raise ValueError(f"Unexpected inter-patch distribution type: {type(inter_patch_distribution)}")
+            patch_generator.inter_site.length_distribution.distribution_parameters.value = inter_site_length
+            patch_generator.reward_site.length_distribution.distribution_parameters.value = reward_site_length
     return task
 
 
