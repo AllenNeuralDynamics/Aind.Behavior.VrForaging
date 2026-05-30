@@ -1,0 +1,113 @@
+from typing import Any, Type, TypeVar
+
+import aind_behavior_curriculum
+import pydantic
+from aind_behavior_curriculum import (
+    StageTransition,
+    Trainer,
+    TrainerState,
+    create_curriculum,
+)
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
+
+from .. import __semver__
+from ..cli import CurriculumCliArgs, CurriculumSuggestion
+from ..utils import metrics_from_dataset_path, trainer_state_from_file
+from .metrics import SingleSiteMetrics
+from .stages import (
+    make_s_learn_to_choose,
+    make_s_learn_to_stop,
+    make_s_probability_grid_long_delay,
+    make_s_probability_grid_short_delay,
+)
+
+CURRICULUM_NAME = "SingleSite"
+PKG_LOCATION = ".".join(__name__.split(".")[:-1])
+
+TModel = TypeVar("TModel", bound=pydantic.BaseModel)
+
+
+# ============================================================
+# Stage transitions
+# ============================================================
+
+
+def st_s_learn_to_stop_to_s_learn_to_choose(metrics: SingleSiteMetrics) -> bool:
+    # Stop duration is fixed at 1.0 s now, so graduation is gated on the velocity
+    # threshold reaching its floor plus enough qualifying stops in a session.
+    if metrics.last_stop_threshold_updater is None:
+        return False
+    return (
+        (metrics.last_stop_threshold_updater <= 8)
+        and (metrics.n_patches_seen >= 250)
+        and (metrics.n_patches_visited >= 150)
+    )
+
+
+def st_s_learn_to_choose_to_s_probability_grid_short_delay(metrics: SingleSiteMetrics) -> bool:
+    # Graduate once the subject is discriminating (visiting <= 70% of patches seen)
+    # and the within-session reward delay has started to grow.
+    if metrics.last_reward_delay_offset_updater is None or metrics.n_patches_seen == 0:
+        return False
+    visit_ratio = metrics.n_patches_visited / metrics.n_patches_seen
+    return (
+        (metrics.n_patches_seen >= 200)
+        and (metrics.n_patches_visited >= 50)
+        and (visit_ratio <= 0.7)
+        and (metrics.last_reward_delay_offset_updater >= 0.25)
+    )
+
+
+def st_s_probability_grid_short_delay_to_s_probability_grid_long_delay(metrics: SingleSiteMetrics) -> bool:
+    # probability_grid_short ramps REWARD_DELAY_OFFSET 0 -> 1.5 (folded from the old
+    # three_contrast); graduate to the long-delay stage once delay is grown and the
+    # subject is harvesting in the 0.3-0.7 visit-ratio band.
+    if metrics.last_reward_delay_offset_updater is None or metrics.n_patches_seen == 0:
+        return False
+    visit_ratio = metrics.n_patches_visited / metrics.n_patches_seen
+    return (
+        (metrics.n_patches_seen >= 300)
+        and (metrics.n_patches_visited >= 100)
+        and (0.3 <= visit_ratio <= 0.7)
+        and (metrics.last_reward_delay_offset_updater >= 1.3)
+    )
+
+
+# ============================================================
+# Curriculum definition
+# ============================================================
+
+curriculum_class: Type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLogic]] = create_curriculum(
+    CURRICULUM_NAME, __semver__, (AindVrForagingTaskLogic,), pkg_location=PKG_LOCATION
+)
+CURRICULUM = curriculum_class()
+
+CURRICULUM.add_stage_transition(
+    make_s_learn_to_stop(),
+    make_s_learn_to_choose(),
+    StageTransition(st_s_learn_to_stop_to_s_learn_to_choose),
+)
+CURRICULUM.add_stage_transition(
+    make_s_learn_to_choose(),
+    make_s_probability_grid_short_delay(),
+    StageTransition(st_s_learn_to_choose_to_s_probability_grid_short_delay),
+)
+CURRICULUM.add_stage_transition(
+    make_s_probability_grid_short_delay(),
+    make_s_probability_grid_long_delay(),
+    StageTransition(st_s_probability_grid_short_delay_to_s_probability_grid_long_delay),
+)
+
+# ==============================================================================
+# Create a Trainer that uses the curriculum to bootstrap suggestions
+# ==============================================================================
+
+TRAINER = Trainer(CURRICULUM)
+
+
+def run_curriculum(args: CurriculumCliArgs) -> CurriculumSuggestion[TrainerState[Any], Any]:
+    metrics: aind_behavior_curriculum.Metrics
+    trainer_state = trainer_state_from_file(args.input_trainer_state, TRAINER)
+    metrics = metrics_from_dataset_path(args.data_directory, trainer_state)
+    trainer_state = TRAINER.evaluate(trainer_state, metrics)
+    return CurriculumSuggestion(trainer_state=trainer_state, metrics=metrics, version=__semver__)
