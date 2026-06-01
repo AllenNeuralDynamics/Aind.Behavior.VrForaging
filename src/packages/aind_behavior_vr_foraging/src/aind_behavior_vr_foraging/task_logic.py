@@ -200,6 +200,13 @@ class OperantLogic(BaseModel):
     grace_distance_threshold: float = Field(
         default=10, ge=0, description="Virtual distance (cm) the animal must be within to not abort the current choice"
     )
+    abort_velocity_threshold: Optional[float] = Field(
+        default=None,
+        ge=0,
+        description="Velocity (cm/s) above which an in-progress operant choice is aborted. This is an ADDITIONAL "
+        "abort source: the choice aborts if velocity exceeds this OR displacement exceeds grace_distance_threshold "
+        "OR the animal leaves the reward site. None disables only the velocity source (grace + leave-site still apply).",
+    )  # NOTE: in InstantiateSite.bonsai, add a velocity-abort branch ALONGSIDE the grace/leave-site sources (do not replace them).
 
 
 class _PatchUpdateFunction(BaseModel):

@@ -143,7 +143,21 @@ def _probability_grid_blocks(
 ) -> list[task_logic.Block]:
     """The 13-block band: every grid (p_A, p_B) whose sum is allowed, plus the 5%
     no-reward distractor odor C (occupancy 0.475 / 0.475 / 0.05)."""
-    make_patch_kwargs = {**_POST_STOP_PATCH_KWARGS, "delay": delay}
+    # is_operant=True: on the grid stages, abandoning a wait forfeits the reward, so the
+    # long delay is a real wait-or-abandon decision. The shaping stages stay non-operant.
+    # abort_velocity_threshold=15 cm/s adds a velocity abort ALONGSIDE grace distance +
+    # leaving the site. It catches slow-creepers who lick while drifting forward (e.g.
+    # 860900: velocity stays <15 while engaged, ramps to ~45-55 to leave).
+    # grace_distance_threshold raised to 50 cm (a full reward-site length, vs the 10 cm
+    # default) so the spatial source does not also clip that creep -- here velocity and
+    # leaving the site do the work, with grace only a far backstop.
+    make_patch_kwargs = {
+        **_POST_STOP_PATCH_KWARGS,
+        "delay": delay,
+        "is_operant": True,
+        "abort_velocity_threshold": 15,
+        "grace_distance_threshold": 50,
+    }
     return [
         helpers.make_block(
             p_rewards=(p_a, p_b, 0.0),
