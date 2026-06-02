@@ -143,19 +143,9 @@ def _probability_grid_blocks(
 ) -> list[task_logic.Block]:
     """The 13-block band: every grid (p_A, p_B) whose sum is allowed, plus the 5%
     no-reward distractor odor C (occupancy 0.475 / 0.475 / 0.05)."""
-    # is_operant=True: on the grid stages, abandoning a wait forfeits the reward, so the
-    # long delay is a real wait-or-abandon decision. The shaping stages stay non-operant.
-    # abort_velocity_threshold=15 cm/s adds a velocity abort ALONGSIDE grace distance +
-    # leaving the site. It catches slow-creepers who lick while drifting forward (e.g.
-    # 860900: velocity stays <15 while engaged, ramps to ~45-55 to leave).
-    # grace_distance_threshold raised to 50 cm (a full reward-site length, vs the 10 cm
-    # default) so the spatial source does not also clip that creep -- here velocity and
-    # leaving the site do the work, with grace only a far backstop.
-    # The 15 sits safely above this stage's stop velocity threshold (a static 8 -- the grid
-    # stages carry no STOP_VELOCITY_THRESHOLD updater, so the gate does not shape up into it).
-    # abort_velocity_threshold must stay >= the stop threshold or a locked stop would instantly
-    # abort; that is why the abort is off on learn_to_stop, where the gate is still shaping 60->8.
-    # See OperantLogic.abort_velocity_threshold for the full interaction.
+    # Grid stages are operant with a 15 cm/s velocity abort and grace raised to 50 cm (see
+    # make_patch). 15 stays above this stage's static stop threshold of 8 (no
+    # STOP_VELOCITY_THRESHOLD updater here) as OperantLogic.abort_velocity_threshold requires.
     make_patch_kwargs = {
         **_POST_STOP_PATCH_KWARGS,
         "delay": delay,

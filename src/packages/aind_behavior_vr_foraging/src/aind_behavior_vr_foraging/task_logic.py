@@ -216,9 +216,7 @@ class OperantLogic(BaseModel):
         "by a GAIN updater) whereas this is a fixed absolute, only enable the velocity abort on stages where the "
         "stop threshold is already floored below it (e.g. a static stop threshold of 8 with this set to 15); never "
         "pair a low fixed abort with an actively-shaped, still-high stop threshold.",
-    )  # Implemented in InstantiateSite.bonsai as a third input merged ALONGSIDE the grace-distance and leave-site
-    # sources (the CheckDistanceFromEntry groups under WaitDelay and WaitForLick), comparing
-    # FilteredCurrentVelocity.Item1 -- the same signal used for stop detection -- against this value.
+    )
 
 
 class _PatchUpdateFunction(BaseModel):
