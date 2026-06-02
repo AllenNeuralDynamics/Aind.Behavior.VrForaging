@@ -5190,6 +5190,8 @@ namespace AindVrForagingDataSchema
     
         private double _graceDistanceThreshold;
     
+        private double? _abortVelocityThreshold;
+    
         public OperantLogic()
         {
             _isOperant = true;
@@ -5204,6 +5206,7 @@ namespace AindVrForagingDataSchema
             _stopDuration = other._stopDuration;
             _timeToCollectReward = other._timeToCollectReward;
             _graceDistanceThreshold = other._graceDistanceThreshold;
+            _abortVelocityThreshold = other._abortVelocityThreshold;
         }
     
         /// <summary>
@@ -5275,6 +5278,23 @@ namespace AindVrForagingDataSchema
             }
         }
     
+        /// <summary>
+        /// Velocity (cm/s) above which an in-progress operant choice is aborted. This is an ADDITIONAL abort source: the choice aborts if velocity exceeds this OR displacement exceeds grace_distance_threshold OR the animal leaves the reward site. None disables only the velocity source (grace + leave-site still apply).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("abort_velocity_threshold")]
+        [System.ComponentModel.DescriptionAttribute(@"Velocity (cm/s) above which an in-progress operant choice is aborted. This is an ADDITIONAL abort source: the choice aborts if velocity exceeds this OR displacement exceeds grace_distance_threshold OR the animal leaves the reward site. None disables only the velocity source (grace + leave-site still apply).")]
+        public double? AbortVelocityThreshold
+        {
+            get
+            {
+                return _abortVelocityThreshold;
+            }
+            set
+            {
+                _abortVelocityThreshold = value;
+            }
+        }
+    
         public System.IObservable<OperantLogic> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OperantLogic(this)));
@@ -5290,7 +5310,8 @@ namespace AindVrForagingDataSchema
             stringBuilder.Append("IsOperant = " + _isOperant + ", ");
             stringBuilder.Append("StopDuration = " + _stopDuration + ", ");
             stringBuilder.Append("TimeToCollectReward = " + _timeToCollectReward + ", ");
-            stringBuilder.Append("GraceDistanceThreshold = " + _graceDistanceThreshold);
+            stringBuilder.Append("GraceDistanceThreshold = " + _graceDistanceThreshold + ", ");
+            stringBuilder.Append("AbortVelocityThreshold = " + _abortVelocityThreshold);
             return true;
         }
     

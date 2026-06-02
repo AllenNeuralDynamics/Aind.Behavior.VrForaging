@@ -3280,6 +3280,20 @@
           "minimum": 0,
           "title": "Grace Distance Threshold",
           "type": "number"
+        },
+        "abort_velocity_threshold": {
+          "default": null,
+          "description": "Velocity (cm/s) above which an in-progress operant choice is aborted. This is an ADDITIONAL abort source: the choice aborts if velocity exceeds this OR displacement exceeds grace_distance_threshold OR the animal leaves the reward site. None disables only the velocity source (grace + leave-site still apply).",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Abort Velocity Threshold"
         }
       },
       "title": "OperantLogic",
