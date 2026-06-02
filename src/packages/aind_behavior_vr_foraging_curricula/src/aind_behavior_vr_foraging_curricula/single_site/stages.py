@@ -151,6 +151,11 @@ def _probability_grid_blocks(
     # grace_distance_threshold raised to 50 cm (a full reward-site length, vs the 10 cm
     # default) so the spatial source does not also clip that creep -- here velocity and
     # leaving the site do the work, with grace only a far backstop.
+    # The 15 sits safely above this stage's stop velocity threshold (a static 8 -- the grid
+    # stages carry no STOP_VELOCITY_THRESHOLD updater, so the gate does not shape up into it).
+    # abort_velocity_threshold must stay >= the stop threshold or a locked stop would instantly
+    # abort; that is why the abort is off on learn_to_stop, where the gate is still shaping 60->8.
+    # See OperantLogic.abort_velocity_threshold for the full interaction.
     make_patch_kwargs = {
         **_POST_STOP_PATCH_KWARGS,
         "delay": delay,
