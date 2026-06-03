@@ -136,11 +136,6 @@ def make_block(
             sampling_mode="Ordered",
             patch_indices=trial_sequence,
         ),
-        end_conditions=[
-            vr_task_logic.BlockEndConditionPatchCount(
-                value=vr_task_logic.scalar_value(n_sites_each * 2)
-            )
-        ],
     )
 
 
