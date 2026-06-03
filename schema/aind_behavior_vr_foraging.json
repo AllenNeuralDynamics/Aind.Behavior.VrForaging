@@ -577,7 +577,7 @@
             "operation_control": {
               "audio_control": {
                 "duration": 0.2,
-                "frequency": 1000.0
+                "frequency": 9999.0
               },
               "movable_spout_control": {
                 "enabled": false,
@@ -830,7 +830,7 @@
             },
             "audio_control": {
               "duration": 0.2,
-              "frequency": 1000.0
+              "frequency": 9999.0
             },
             "wait_to_start_duration": 0.0,
             "wait_to_finish_duration": 0.0
@@ -852,7 +852,7 @@
           "type": "number"
         },
         "frequency": {
-          "default": 1000,
+          "default": 9999,
           "description": "Frequency (Hz) of the audio cue",
           "maximum": 9999,
           "minimum": 100,
@@ -3327,7 +3327,7 @@
           "$ref": "#/$defs/AudioControl",
           "default": {
             "duration": 0.2,
-            "frequency": 1000.0
+            "frequency": 9999.0
           },
           "description": "Control of the audio"
         },
