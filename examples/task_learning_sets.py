@@ -161,7 +161,7 @@ task_logic = AindVrForagingTaskLogic(
 def main(path_seed: str = "./local/LearningSets_{schema}.json"):
     example_task_logic = task_logic
     example_trainer_state = TrainerState(
-        stage=Stage(name="example_stage", task=example_task_logic),
+        stage=Stage(name="LearningSets", task=example_task_logic),
         curriculum=None,
         is_on_curriculum=False,
     )
