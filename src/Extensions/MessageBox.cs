@@ -55,4 +55,22 @@ public class MessageBox
             return value;
         });
     }
+
+    public IObservable<System.Exception> Process(IObservable<System.Exception> source)
+    {
+        var hwnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+        var owner = new Win32Window(hwnd);
+
+        var capturedText = text;
+        var capturedTitle = title;
+        var capturedIcon = messageBoxIcon;
+
+        return source.Select(ex =>
+        {
+            var task = new Task(() =>
+                System.Windows.Forms.MessageBox.Show(owner, ex.ToString(), capturedTitle, MessageBoxButtons.OK, capturedIcon));
+            task.Start();
+            return ex;
+        });
+    }
 }
