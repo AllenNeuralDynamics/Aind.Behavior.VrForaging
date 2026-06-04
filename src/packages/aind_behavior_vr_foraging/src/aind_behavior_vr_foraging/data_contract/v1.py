@@ -384,6 +384,20 @@ def dataset(
                                     root_path / "behavior/SoftwareEvents/EndSession.json"
                                 ),
                             ),
+                            SoftwareEvents(
+                                name="SessionStartTime",
+                                description="An event emitted at the start of the session. Data contains a UTC timestamp of the session start time.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/SessionStartTime.json"
+                                ),
+                            ),
+                            SoftwareEvents(
+                                name="SessionEndTime",
+                                description="An event emitted at the end of the session. Data contains a UTC timestamp of the session end time.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/SessionEndTime.json"
+                                ),
+                            ),
                         ],
                     ),
                     DataStreamCollection(

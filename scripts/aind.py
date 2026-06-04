@@ -264,6 +264,8 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
 
 @experiment()
 async def recover_session(launcher: Launcher) -> None:
+    import datetime
+
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
     session_path = Path(
@@ -296,6 +298,18 @@ async def recover_session(launcher: Launcher) -> None:
     # Mappers
     assert launcher.repository.working_tree_dir is not None
 
+    session_end_time: datetime.datetime | None = None
+    while session_end_time is None:
+        try:
+            s = launcher.ui_helper.input(
+                "Enter the session end time in ISO format (YYYY-MM-DDTHH:MM:SSz), e.g: 2024-01-01T12:00:00Z:"
+            )
+            session_end_time = datetime.datetime.fromisoformat(s)
+        except ValueError:
+            logger.error(
+                "Invalid date format. Please enter the date in ISO format (YYYY-MM-DDTHH:MM:SSz)."
+            )
+
     DataMapperCli(
         data_path=launcher.session_directory,
         repository_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
@@ -303,7 +317,7 @@ async def recover_session(launcher: Launcher) -> None:
         curriculum_repository_path=curriculum_settings.project_directory
         if curriculum_settings
         else None,
-        session_end_time=utcnow(),
+        session_end_time=session_end_time,
     ).cli_cmd()
 
     # Run data qc

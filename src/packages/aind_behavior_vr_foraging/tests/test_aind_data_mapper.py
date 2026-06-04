@@ -4,13 +4,16 @@ import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Sequence
 from unittest.mock import MagicMock, patch
 
 import aind_behavior_curriculum
 from aind_behavior_curriculum import Metrics, Stage, Trainer, create_curriculum
+from aind_behavior_services.data_types import SoftwareEvent
 from aind_data_schema.core import acquisition, instrument
 from aind_data_schema.utils import compatibility_check
 from clabe.apps import CurriculumSuggestion
+from pydantic import TypeAdapter
 
 from aind_behavior_vr_foraging.data_mappers._acquisition import AindAcquisitionDataMapper
 from aind_behavior_vr_foraging.data_mappers._instrument import AindInstrumentDataMapper
@@ -21,6 +24,53 @@ from examples.session import session
 from examples.task_patch_foraging import task_logic
 
 from aind_behavior_vr_foraging.cli import DataMapperCli
+
+MOCK_SESSION_START_TIME = datetime(2023, 1, 1, 11, 0, 0, tzinfo=timezone.utc)
+MOCK_SESSION_END_TIME = datetime(2023, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
+MOCK_REWARD_VOLUMES_UL = (5.0, 5.0)
+
+
+def _write_events(path: Path, adapter: TypeAdapter, events: Sequence) -> None:
+    """Serialize ``events`` as one-per-line JSON into ``path``."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(adapter.dump_json(event).decode("utf-8") + "\n" for event in events), encoding="utf-8")
+
+
+def write_mock_software_events(
+    data_path: Path,
+    start_time: datetime = MOCK_SESSION_START_TIME,
+    end_time: datetime = MOCK_SESSION_END_TIME,
+    reward_volumes_ul: Sequence[float] = MOCK_REWARD_VOLUMES_UL,
+) -> None:
+    time_event = TypeAdapter(SoftwareEvent[datetime])
+    reward_event = TypeAdapter(SoftwareEvent[float])
+
+    events_dir = data_path / "behavior" / "SoftwareEvents"
+    _write_events(
+        events_dir / "SessionStartTime.json",
+        time_event,
+        [SoftwareEvent[datetime](name="SessionStartTime", timestamp=0.0, timestamp_source="harp", data=start_time)],
+    )
+    _write_events(
+        events_dir / "SessionEndTime.json",
+        time_event,
+        [
+            SoftwareEvent[datetime](
+                name="SessionEndTime",
+                timestamp=(end_time - start_time).total_seconds(),
+                timestamp_source="harp",
+                data=end_time,
+            )
+        ],
+    )
+    _write_events(
+        events_dir / "GiveReward.json",
+        reward_event,
+        [
+            SoftwareEvent[float](name="GiveReward", timestamp=float(i), timestamp_source="harp", data=volume)
+            for i, volume in enumerate(reward_volumes_ul)
+        ],
+    )
 
 
 class TestAindDataMappers(unittest.TestCase):
@@ -44,7 +94,10 @@ class TestAindDataMappers(unittest.TestCase):
             json.dump(task_logic.model_dump(mode="json"), f, indent=2)
 
         self.repo_path = Path("./")
-        self.session_end_time = datetime(2023, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
+        self.session_start_time = MOCK_SESSION_START_TIME
+        self.session_end_time = MOCK_SESSION_END_TIME
+
+        write_mock_software_events(self.data_path)
 
         self.session_mapper = AindAcquisitionDataMapper(
             data_path=self.data_path,
@@ -72,6 +125,22 @@ class TestAindDataMappers(unittest.TestCase):
         mapped = self.session_mapper.map()
         assert mapped is not None
         acquisition.Acquisition.model_validate_json(mapped.model_dump_json())
+
+    def test_mock_software_events_drive_stream_bounds(self):
+        """Stream/stimulus bounds and consumed water come from the SoftwareEvents assets."""
+        mapped = self.session_mapper.map()
+        assert mapped is not None
+
+        stream = mapped.data_streams[0]
+        self.assertEqual(stream.stream_start_time, self.session_start_time)
+        self.assertEqual(stream.stream_end_time, self.session_end_time)
+
+        epoch = mapped.stimulus_epochs[0]
+        self.assertEqual(epoch.stimulus_start_time, self.session_start_time)
+        self.assertEqual(epoch.stimulus_end_time, self.session_end_time)
+
+        expected_consumed_ml = sum(MOCK_REWARD_VOLUMES_UL) * 1e-3
+        self.assertAlmostEqual(float(mapped.subject_details.reward_consumed_total), expected_consumed_ml)
 
     @patch("aind_behavior_vr_foraging.data_mappers._instrument.AindInstrumentDataMapper._map")
     def test_rig_mock_map(self, mock_map):
@@ -170,7 +239,10 @@ class TestCurriculumIntegrationInDataMapper(unittest.TestCase):
         trainer_state_path.write_text(self.curriculum_suggestion.trainer_state.model_dump_json(), encoding="utf-8")
 
         self.repo_path = Path("./")
-        self.session_end_time = datetime(2023, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
+        self.session_start_time = MOCK_SESSION_START_TIME
+        self.session_end_time = MOCK_SESSION_END_TIME
+
+        write_mock_software_events(self.data_path)
 
     def tearDown(self):
         self.temp_dir.cleanup()
