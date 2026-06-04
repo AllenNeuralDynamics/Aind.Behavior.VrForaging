@@ -18,6 +18,7 @@ from clabe.data_transfer.aind_watchdog import (
     WatchdogDataTransferService,
     WatchdogSettings,
 )
+from clabe.data_transfer.robocopy import RobocopySettings, RobocopyService
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
 from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
@@ -85,10 +86,22 @@ def _run_data_transfer(
     if not picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?"):
         logger.info("Data transfer skipped by user.")
         return
+
     watchdog_settings = WatchdogSettings()
     watchdog_settings.destination = (
-        Path(watchdog_settings.destination) / launcher.session.subject
+        Path(watchdog_settings.destination) / session.subject
     )
+
+    # We run an immediate transfer first to move the behavior data off the rig,
+    # we do not trigger the data-transfer-request yet and instead defer to later.
+    RobocopyService(
+        source=launcher.session_directory / "behavior",
+        settings=RobocopySettings(
+            delete_src=False,
+            destination=Path(watchdog_settings.destination) / "behavior",
+        ),
+    ).transfer()
+
     WatchdogDataTransferService(
         source=launcher.session_directory,
         settings=watchdog_settings,
