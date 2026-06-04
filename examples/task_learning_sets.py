@@ -136,11 +136,6 @@ def make_block(
             sampling_mode="Ordered",
             patch_indices=trial_sequence,
         ),
-        end_conditions=[
-            vr_task_logic.BlockEndConditionPatchCount(
-                value=vr_task_logic.scalar_value(n_sites_each * 2)
-            )
-        ],
     )
 
 
@@ -166,7 +161,7 @@ task_logic = AindVrForagingTaskLogic(
 def main(path_seed: str = "./local/LearningSets_{schema}.json"):
     example_task_logic = task_logic
     example_trainer_state = TrainerState(
-        stage=Stage(name="example_stage", task=example_task_logic),
+        stage=Stage(name="LearningSets", task=example_task_logic),
         curriculum=None,
         is_on_curriculum=False,
     )

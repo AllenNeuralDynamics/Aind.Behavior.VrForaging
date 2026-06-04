@@ -995,7 +995,7 @@ namespace AindVrForagingDataSchema
         public AudioControl()
         {
             _duration = 0.2D;
-            _frequency = 1000D;
+            _frequency = 9999D;
         }
     
         protected AudioControl(AudioControl other)

@@ -1026,7 +1026,7 @@ class AudioControl(BaseModel):
     """
 
     duration: float = Field(default=0.2, ge=0, description="Duration")
-    frequency: float = Field(default=1000, ge=100, le=9999, description="Frequency (Hz) of the audio cue")
+    frequency: float = Field(default=9999, ge=100, le=9999, description="Frequency (Hz) of the audio cue")
 
 
 class OdorControl(BaseModel):
