@@ -13,7 +13,7 @@ import pydantic
 from aind_behavior_curriculum import TrainerState
 from aind_behavior_services.rig import cameras, visual_stimulation
 from aind_behavior_services.session import Session
-from aind_behavior_services.utils import get_fields_of_type, model_from_json_file, utcnow
+from aind_behavior_services.utils import get_fields_of_type, model_from_json_file
 from aind_data_schema.components import configs
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
@@ -38,14 +38,14 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         self,
         data_path: os.PathLike,
         repository_path: os.PathLike,
+        session_end_time: AwareDatetime,
         curriculum_suggestion: Optional[os.PathLike] | CurriculumSuggestion = None,
         curriculum_repository_path: Optional[os.PathLike] = None,
-        session_end_time: Optional[AwareDatetime] = None,
     ):
         self._data_path = data_path
         self._repository_path = repository_path
         self._curriculum_repository_path = curriculum_repository_path
-        self._session_end_time = session_end_time
+        self.session_end_time = session_end_time
 
         abs_schemas_path = Path(self._data_path) / "Behavior" / "Logs"
         self.session_model = model_from_json_file(abs_schemas_path / "session_input.json", Session)
@@ -84,12 +84,6 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
         self._mapped: Optional[acquisition.Acquisition] = None
 
-    @property
-    def session_end_time(self) -> datetime.datetime:
-        if self._session_end_time is None:
-            raise ValueError("Session end time is not set.")
-        return self._session_end_time
-
     def session_schema(self):
         return self.mapped
 
@@ -119,16 +113,12 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             return self._mapped
 
     def _map(self) -> acquisition.Acquisition:
-        if self._session_end_time is None:
-            logger.warning("Session end time is not set. Using current time as end time.")
-            self._session_end_time = utcnow()
-
         # Construct aind-data-schema session
         aind_data_schema_session = acquisition.Acquisition(
             subject_id=self.session_model.subject,
             subject_details=self._get_subject_details(),
             instrument_id=self.rig_model.rig_name,
-            acquisition_end_time=utcnow(),
+            acquisition_end_time=self.session_end_time,
             acquisition_start_time=self.session_model.date,
             experimenters=self.session_model.experimenter,
             acquisition_type=self.task_model.name,
@@ -200,8 +190,6 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         return True
 
     def _get_data_streams(self) -> List[acquisition.DataStream]:
-        assert self.session_end_time is not None, "Session end time is not set."
-
         modalities: list[Modality] = [getattr(Modality, "BEHAVIOR")]
         if len(self._get_cameras_config()) > 0:
             modalities.append(getattr(Modality, "BEHAVIOR_VIDEOS"))
