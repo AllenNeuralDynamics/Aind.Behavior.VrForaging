@@ -22,9 +22,8 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
         default=None,
         description="Path to the curriculum repository. If not provided, will use the repository path.",
     )
-    session_end_time: AwareDatetime | None = Field(
-        default=None,
-        description="End time of the session in ISO format. If not provided, will use the time the data mapping is run.",
+    session_end_time: AwareDatetime = Field(
+        description="End time of the session in ISO format. If not provided, will use the time the data mapping is run."
     )
     suffix: t.Optional[str] = Field(default="vrforaging", description="Suffix to append to the output filenames.")
 

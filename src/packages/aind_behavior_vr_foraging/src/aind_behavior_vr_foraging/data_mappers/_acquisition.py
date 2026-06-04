@@ -1,7 +1,9 @@
 import datetime
+import json
 import logging
 import os
 import sys
+from functools import cached_property
 from pathlib import Path
 from typing import List, Optional, cast, get_args
 
@@ -137,6 +139,44 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
         return aind_data_schema_session
 
+    @cached_property
+    def _stream_bound_times(self) -> tuple[datetime.datetime, datetime.datetime]:
+        """Get the start and end times for the data stream. This is used to determine the duration of the session."""
+
+        stream_start_path = Path(self._data_path) / "behavior/SoftwareEvents/SessionStartTime.json"
+        stream_end_path = Path(self._data_path) / "behavior/SoftwareEvents/SessionEndTime.json"
+        stream_start_time: Optional[datetime.datetime] = None
+        stream_end_time: Optional[datetime.datetime] = None
+
+        if stream_start_path.exists():
+            lines = [json.loads(line) for line in stream_start_path.read_text().strip().splitlines() if line.strip()]
+            if lines:
+                stream_start_time = datetime.datetime.fromisoformat(lines[0]["data"])
+        if stream_end_path.exists():
+            lines = [json.loads(line) for line in stream_end_path.read_text().strip().splitlines() if line.strip()]
+            if lines:
+                stream_end_time = datetime.datetime.fromisoformat(lines[-1]["data"])
+
+        if stream_start_time is None:
+            logger.warning("Session start time not found. Using session model date as start time.")
+            stream_start_time = self.session_model.date
+        if stream_end_time is None:
+            logger.error("Session end time not found. Inferring from ActiveSite stream.")
+            json_active_site_path = Path(self._data_path) / "behavior/SoftwareEvents/ActiveSite.json"
+            if json_active_site_path.exists():
+                lines = json_active_site_path.read_text().strip().splitlines()
+                parsed = [json.loads(line) for line in lines if line.strip()]
+                if parsed:
+                    harp_timestamps = [event["timestamp"] for event in parsed]
+                    duration = datetime.timedelta(seconds=max(harp_timestamps) - min(harp_timestamps))
+                    stream_end_time = stream_start_time + duration
+                    logger.info("Inferred session end time from ActiveSite stream: %s", stream_end_time.isoformat())
+        if stream_end_time is None:
+            msg = "Session end time could not be determined. Pass a session end time explicitly to the mapper."
+            logger.error(msg)
+            raise ValueError(msg)
+        return stream_start_time, stream_end_time
+
     def _get_subject_details(self) -> acquisition.AcquisitionSubjectDetails:
         return acquisition.AcquisitionSubjectDetails(
             mouse_platform_name=TrackedDevices.WHEEL,
@@ -182,10 +222,11 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         ):
             code.append(self._get_curriculum_as_code())
 
+        stream_start_time, stream_end_time = self._stream_bound_times
         data_streams: list[acquisition.DataStream] = [
             acquisition.DataStream(
-                stream_start_time=self.session_model.date,
-                stream_end_time=self.session_end_time,
+                stream_start_time=stream_start_time,
+                stream_end_time=stream_end_time,
                 code=code,
                 active_devices=active_devices,
                 modalities=modalities,
@@ -286,12 +327,13 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             if self.trainer_state.curriculum is not None:
                 training_protocol_name = str(self.trainer_state.curriculum.name)
 
+        start_time, end_time = self._stream_bound_times
         stimulus_epochs: list[acquisition.StimulusEpoch] = [
             acquisition.StimulusEpoch(
                 active_devices=active_devices,
                 code=_stim_code,
-                stimulus_start_time=self.session_model.date,
-                stimulus_end_time=self.session_end_time,
+                stimulus_start_time=start_time,
+                stimulus_end_time=end_time,
                 configurations=stimulus_epoch_configurations,
                 stimulus_name=self.task_model.name,
                 stimulus_modalities=stimulus_modalities,
