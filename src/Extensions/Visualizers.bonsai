@@ -2011,8 +2011,14 @@ it.Item6 as Notes)
             <Expression xsi:type="ui:VisualizerWindow">
               <ui:Text>VrForaging</ui:Text>
               <ui:Visible>true</ui:Visible>
-              <ui:Location xsi:nil="true" />
-              <ui:Size xsi:nil="true" />
+              <ui:Location>
+                <ui:X>0</ui:X>
+                <ui:Y>0</ui:Y>
+              </ui:Location>
+              <ui:Size>
+                <ui:Width>1000</ui:Width>
+                <ui:Height>1000</ui:Height>
+              </ui:Size>
               <ui:WindowState>Maximized</ui:WindowState>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
