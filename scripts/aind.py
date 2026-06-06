@@ -94,13 +94,18 @@ def _run_data_transfer(
 
     # We run an immediate transfer first to move the behavior data off the rig,
     # we do not trigger the data-transfer-request yet and instead defer to later.
-    RobocopyService(
-        source=launcher.session_directory / "behavior",
-        settings=RobocopySettings(
-            delete_src=False,
-            destination=Path(watchdog_settings.destination) / "behavior",
-        ),
-    ).transfer()
+    try:
+        RobocopyService(
+            source=launcher.session_directory,
+            settings=RobocopySettings(
+                delete_src=False,
+                destination=Path(watchdog_settings.destination)
+                / launcher.session_directory.name,
+                exclude_dirs=["behavior-videos"],
+            ),
+        ).transfer()
+    except Exception as e:
+        logger.error("Initial data transfer failed: %s", e)
 
     WatchdogDataTransferService(
         source=launcher.session_directory,

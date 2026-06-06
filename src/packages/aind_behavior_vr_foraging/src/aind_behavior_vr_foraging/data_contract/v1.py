@@ -385,17 +385,17 @@ def dataset(
                                 ),
                             ),
                             SoftwareEvents(
-                                name="SessionStartTime",
+                                name="StartSessionTime",
                                 description="An event emitted at the start of the session. Data contains a UTC timestamp of the session start time.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/SoftwareEvents/SessionStartTime.json"
+                                    root_path / "behavior/SoftwareEvents/StartSessionTime.json"
                                 ),
                             ),
                             SoftwareEvents(
-                                name="SessionEndTime",
+                                name="EndSessionTime",
                                 description="An event emitted at the end of the session. Data contains a UTC timestamp of the session end time.",
                                 reader_params=SoftwareEvents.make_params(
-                                    root_path / "behavior/SoftwareEvents/SessionEndTime.json"
+                                    root_path / "behavior/SoftwareEvents/EndSessionTime.json"
                                 ),
                             ),
                         ],
