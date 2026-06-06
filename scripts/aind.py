@@ -99,7 +99,8 @@ def _run_data_transfer(
             source=launcher.session_directory,
             settings=RobocopySettings(
                 delete_src=False,
-                destination=Path(watchdog_settings.destination),
+                destination=Path(watchdog_settings.destination)
+                / launcher.session_directory.name,
                 exclude_dirs=["behavior-videos"],
             ),
         ).transfer()

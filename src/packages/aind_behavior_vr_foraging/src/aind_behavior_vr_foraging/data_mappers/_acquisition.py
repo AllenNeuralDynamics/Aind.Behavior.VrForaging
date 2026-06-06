@@ -133,8 +133,8 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
     def _stream_bound_times(self) -> tuple[datetime.datetime, datetime.datetime]:
         """Get the start and end times for the data stream. This is used to determine the duration of the session."""
 
-        stream_start_path = Path(self._data_path) / "behavior/SoftwareEvents/SessionStartTime.json"
-        stream_end_path = Path(self._data_path) / "behavior/SoftwareEvents/SessionEndTime.json"
+        stream_start_path = Path(self._data_path) / "behavior/SoftwareEvents/StartSessionTime.json"
+        stream_end_path = Path(self._data_path) / "behavior/SoftwareEvents/EndSessionTime.json"
         stream_start_time: Optional[datetime.datetime] = None
         stream_end_time: Optional[datetime.datetime] = None
 

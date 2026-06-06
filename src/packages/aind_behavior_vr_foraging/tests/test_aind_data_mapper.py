@@ -47,16 +47,16 @@ def write_mock_software_events(
 
     events_dir = data_path / "behavior" / "SoftwareEvents"
     _write_events(
-        events_dir / "SessionStartTime.json",
+        events_dir / "StartSessionTime.json",
         time_event,
-        [SoftwareEvent[datetime](name="SessionStartTime", timestamp=0.0, timestamp_source="harp", data=start_time)],
+        [SoftwareEvent[datetime](name="StartSessionTime", timestamp=0.0, timestamp_source="harp", data=start_time)],
     )
     _write_events(
-        events_dir / "SessionEndTime.json",
+        events_dir / "EndSessionTime.json",
         time_event,
         [
             SoftwareEvent[datetime](
-                name="SessionEndTime",
+                name="EndSessionTime",
                 timestamp=(end_time - start_time).total_seconds(),
                 timestamp_source="harp",
                 data=end_time,
