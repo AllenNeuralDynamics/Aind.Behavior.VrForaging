@@ -20,7 +20,7 @@ members = [
 dev = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
     { name = "aind-behavior-vr-foraging", extras = ["mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", git = "https://github.com/AllenNeuralDynamics/clabe?rev=feature%2Fexecutor-activity-indicator" },
+    { name = "aind-clabe", specifier = "==0.11.0rc0" },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -157,8 +157,8 @@ dev = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.10.7"
-source = { git = "https://github.com/AllenNeuralDynamics/clabe?rev=feature%2Fexecutor-activity-indicator#277267e6af5710cb5c075e7851bff1cad6459df9" }
+version = "0.11.0rc0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
@@ -168,6 +168,10 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
     { name = "textual" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/29/39/5aa7ee9c4e2aa19854961a46bee4f3b491798753e90a8dad8d511221a8ec/aind_clabe-0.11.0rc0.tar.gz", hash = "sha256:83f5dc44a72b5599b70f8086d0da5bf2e9e6d4fe92a87d4b509cc604c2b67851", size = 100708, upload-time = "2026-06-07T22:23:37.338Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1b/12/5f1bbe50663c3f5b33b842bc346313c021c2f2f4d7e186b3afe816d10f76/aind_clabe-0.11.0rc0-py3-none-any.whl", hash = "sha256:4db8912d7017dd2e921fc354aee3fd3b10780180cbca09b888771bf1c0a99d75", size = 130456, upload-time = "2026-06-07T22:23:38.394Z" },
 ]
 
 [package.optional-dependencies]
