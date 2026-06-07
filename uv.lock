@@ -18,8 +18,9 @@ members = [
 
 [manifest.dependency-groups]
 dev = [
-    { name = "aind-behavior-vr-foraging", extras = ["data", "mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", specifier = ">=0.11.0" },
+    { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "aind-behavior-vr-foraging", extras = ["mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "aind-clabe", git = "https://github.com/AllenNeuralDynamics/clabe?rev=feature%2Fexecutor-activity-indicator" },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -156,8 +157,8 @@ dev = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.11.0"
-source = { registry = "https://pypi.org/simple" }
+version = "0.10.7"
+source = { git = "https://github.com/AllenNeuralDynamics/clabe?rev=feature%2Fexecutor-activity-indicator#277267e6af5710cb5c075e7851bff1cad6459df9" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
@@ -167,10 +168,6 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
     { name = "textual" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/06/63/c1b804aded21a46740d985e2b3706b2bf629107c539e6aed409eccdb47af/aind_clabe-0.11.0.tar.gz", hash = "sha256:61d976927715d1ec5f05526323b3a96784e0f46c69626aafce2cf4050bd21883", size = 99168, upload-time = "2026-06-09T00:40:48.431Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/2e/89daf5c0a20ba4e1d54f0861ae30d743b85b3995a7417e520b44cc8d4789/aind_clabe-0.11.0-py3-none-any.whl", hash = "sha256:d3f607b3e7036a9e037d1b4b9bf814e2f8971d350f4a7d95b0be6ddd531a39a0", size = 128748, upload-time = "2026-06-09T00:40:49.498Z" },
 ]
 
 [package.optional-dependencies]
@@ -201,21 +198,21 @@ wheels = [
 
 [[package]]
 name = "aind-data-schema-models"
-version = "5.7.4"
+version = "5.7.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "importlib-resources" },
     { name = "pydantic" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d2/39/d5a91014fec598b56514deeba28d43eb1816dda28b48e0afeb9a54e96ba1/aind_data_schema_models-5.7.4.tar.gz", hash = "sha256:ab40a51b94515ffd83a3f743e6d2fb11a61e0eb625bd8245dc9fb12f37b2016b", size = 340051, upload-time = "2026-06-08T17:07:44.833Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2a/4f/9b3c124c7b43bc0318b247c933ad945d0613f3f6088290db3542bbdf97fa/aind_data_schema_models-5.7.3.tar.gz", hash = "sha256:d68db456c0ce0aafa9b7f4da2f2c0e0925c724d1a4f1a509ca43e3a5f945a92c", size = 342029, upload-time = "2026-06-04T03:59:01.784Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4a/14/24ec7818f126127373dbee0e6d9a09df694faedcf2fffa64a9901ce91576/aind_data_schema_models-5.7.4-py3-none-any.whl", hash = "sha256:48f59d22566f3a0be9e18c36ace50b97da29aad20210f9c38f2161bf6495c201", size = 308739, upload-time = "2026-06-08T17:07:43.545Z" },
+    { url = "https://files.pythonhosted.org/packages/45/1a/b4706006fb390d4e64e1df6e9137683aca082e754b79d91e488c756bbf59/aind_data_schema_models-5.7.3-py3-none-any.whl", hash = "sha256:cd7c1a311338aeecfc1463ac069ef34db67f15508be17daa47d6155a00f1cbe0", size = 310756, upload-time = "2026-06-04T03:59:00.492Z" },
 ]
 
 [[package]]
 name = "aind-data-transfer-service"
-version = "2.1.2"
+version = "2.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-data-schema-models" },
@@ -225,9 +222,9 @@ dependencies = [
     { name = "python-json-logger" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/86/68/315335293af856c38527ba97770d7ba5a60008454d897943db1be1922f5e/aind_data_transfer_service-2.1.2.tar.gz", hash = "sha256:45e1cb17245c18880d181d226bf728bae7fd4d520b30b7416ba2509cb8349433", size = 38186, upload-time = "2026-06-08T22:53:58.421Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0d/42/80706a868fcb86918aafd2f5ed3046552b5a9aacabb5f3c6698d91b60b65/aind_data_transfer_service-2.1.1.tar.gz", hash = "sha256:b6768bf26bdb5fc2ba1d192d06619d3baf85cccb20f3a432d2d2651778305b3d", size = 38016, upload-time = "2026-06-03T23:19:05.315Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b6/16/cbac01f7ccc228439b769643977fc594b9896b37dac9d737de574c71a965/aind_data_transfer_service-2.1.2-py3-none-any.whl", hash = "sha256:47f2ef82fff30e29bdb07278fd3a33ee537758e2380d116789c9c0ffa0a0fb51", size = 23866, upload-time = "2026-06-08T22:53:57.36Z" },
+    { url = "https://files.pythonhosted.org/packages/f6/30/9045908117784512989ffc7496c94505ece488d3e783b285ec8cab243118/aind_data_transfer_service-2.1.1-py3-none-any.whl", hash = "sha256:22f537b83978b99df59fac79990f5c7e2ce1a396949ca2161ff2fc00d52e5510", size = 23629, upload-time = "2026-06-03T23:19:04.249Z" },
 ]
 
 [[package]]
