@@ -6,7 +6,7 @@ from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_wat
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import utcnow
-from clabe import resource_monitor
+from clabe import resource_monitor, ui
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
     CurriculumApp,
@@ -46,6 +46,7 @@ async def _run_curriculum_if_applicable(
         or (picker.trainer_state.stage is None)
     ):
         return None, None, None
+    picker.frontend.notify("Running curriculum evaluation…", ui.MessageLevel.INFO)
     settings = CurriculumSettings(
         input_trainer_state=input_trainer_state_path.resolve(),
         data_directory=launcher.session_directory,
@@ -59,8 +60,8 @@ async def _run_curriculum_if_applicable(
 
 
 def _run_data_qc(picker: DataversePicker, launcher: Launcher) -> None:
-    if not picker.ui_helper.prompt_yes_no_question(
-        "Would you like to generate a qc report?"
+    if not picker.frontend.prompt_confirm(
+        ui.ConfirmRequest(label="Would you like to generate a qc report?")
     ):
         return
     try:
@@ -70,21 +71,26 @@ def _run_data_qc(picker: DataversePicker, launcher: Launcher) -> None:
 
         from aind_behavior_vr_foraging.data_qc.data_qc import make_qc_runner
 
+        picker.frontend.notify("Running data QC…", ui.MessageLevel.INFO)
         vr_dataset = data_contract.dataset(launcher.session_directory)
         runner = make_qc_runner(vr_dataset)
         qc_path = launcher.session_directory / "Behavior" / "Logs" / "qc_report.html"
         reporter = HtmlReporter(output_path=qc_path)
         runner.run_all_with_progress(reporter=reporter)
+        picker.frontend.notify(f"QC report saved to {qc_path}", ui.MessageLevel.SUCCESS)
         webbrowser.open(qc_path.as_uri(), new=2)
     except Exception as e:
         logger.error("Failed to run data QC: %s", e)
+        picker.frontend.notify(f"Failed to run data QC: {e}", ui.MessageLevel.ERROR)
 
 
 def _run_data_transfer(
     picker: DataversePicker, launcher: Launcher, session: Session
 ) -> None:
-    if not picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?"):
-        logger.info("Data transfer skipped by user.")
+    if not picker.frontend.prompt_confirm(
+        ui.ConfirmRequest(label="Would you like to transfer data?")
+    ):
+        picker.frontend.notify("Data transfer skipped.", ui.MessageLevel.WARNING)
         return
 
     watchdog_settings = WatchdogSettings()
@@ -106,6 +112,9 @@ def _run_data_transfer(
         ).transfer()
     except Exception as e:
         logger.error("Initial data transfer failed: %s", e)
+        picker.frontend.notify(
+            f"Initial data transfer failed: {e}", ui.MessageLevel.ERROR
+        )
 
     WatchdogDataTransferService(
         source=launcher.session_directory,
@@ -171,6 +180,9 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         manipulator_modifier.dump()
     except Exception as e:
         logger.error("Failed to update manipulator initial position: %s", e)
+        launcher.frontend.notify(
+            f"Failed to update manipulator position: {e}", ui.MessageLevel.WARNING
+        )
 
     # Curriculum
     (
@@ -195,6 +207,7 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
     # Mappers
     assert launcher.repository.working_tree_dir is not None
 
+    launcher.frontend.notify("Running data mappers…", ui.MessageLevel.INFO)
     DataMapperCli(
         data_path=launcher.session_directory,
         repository_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
@@ -204,6 +217,7 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         else None,
         session_end_time=utcnow(),
     ).cli_cmd()
+    launcher.frontend.notify("Data mapping complete.", ui.MessageLevel.SUCCESS)
 
     # Run data qc
     _run_data_qc(picker, launcher)
@@ -241,7 +255,9 @@ async def calibration_protocol(launcher: Launcher) -> None:
         session=session,
     )
     await bonsai_app.run_async()
-    logger.info("Calibration protocol completed successfully.")
+    launcher.frontend.notify(
+        "Calibration protocol completed successfully.", ui.MessageLevel.SUCCESS
+    )
 
 
 def _dump_suggestion(suggestion: CurriculumSuggestion, session_directory: Path) -> Path:
@@ -287,10 +303,15 @@ async def recover_session(launcher: Launcher) -> None:
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
     session_path = Path(
-        picker.ui_helper.input("Enter the path to the session you want to recover:")
+        picker.frontend.prompt_text(
+            ui.TextRequest(label="Enter the path to the session you want to recover:")
+        )
     )
     if not session_path.exists():
         logger.error("Session path does not exist: %s", session_path)
+        launcher.frontend.notify(
+            f"Session path does not exist: {session_path}", ui.MessageLevel.ERROR
+        )
         return
     session_model = Session.model_validate_json(
         (session_path / "behavior/Logs/session_input.json").read_text(encoding="utf-8")
@@ -319,15 +340,22 @@ async def recover_session(launcher: Launcher) -> None:
     session_end_time: datetime.datetime | None = None
     while session_end_time is None:
         try:
-            s = launcher.ui_helper.input(
-                "Enter the session end time in ISO format (YYYY-MM-DDTHH:MM:SSz), e.g: 2024-01-01T12:00:00Z:"
+            s = launcher.frontend.prompt_text(
+                ui.TextRequest(
+                    label="Enter the session end time in ISO format (YYYY-MM-DDTHH:MM:SSz), e.g: 2024-01-01T12:00:00Z:"
+                )
             )
             session_end_time = datetime.datetime.fromisoformat(s)
         except ValueError:
             logger.error(
                 "Invalid date format. Please enter the date in ISO format (YYYY-MM-DDTHH:MM:SSz)."
             )
+            launcher.frontend.notify(
+                "Invalid date format. Please use ISO format (YYYY-MM-DDTHH:MM:SSz).",
+                ui.MessageLevel.WARNING,
+            )
 
+    launcher.frontend.notify("Running data mappers…", ui.MessageLevel.INFO)
     DataMapperCli(
         data_path=launcher.session_directory,
         repository_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
@@ -337,6 +365,7 @@ async def recover_session(launcher: Launcher) -> None:
         else None,
         session_end_time=session_end_time,
     ).cli_cmd()
+    launcher.frontend.notify("Data mapping complete.", ui.MessageLevel.SUCCESS)
 
     # Run data qc
     _run_data_qc(picker, launcher)

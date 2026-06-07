@@ -36,7 +36,7 @@ dev = [
     "pytest-cov",
     'aind-behavior-vr-foraging[data]',
     'aind-behavior-vr-foraging[mappers]',
-    "aind-clabe >= 0.10.7",
+    "aind-clabe @git+https://github.com/AllenNeuralDynamics/clabe@feature/executor-activity-indicator",
 ]
 
 [tool.codespell]
