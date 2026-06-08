@@ -329,45 +329,60 @@ async def recover_session(launcher: Launcher) -> None:
 
     launcher.register_session(session_model, rig_model.data_directory)
 
-    # Curriculum
-    (
-        suggestion,
-        suggestion_path,
-        curriculum_settings,
-    ) = await _run_curriculum_if_applicable(picker, input_trainer_state_path, launcher)
+    # Curriculum + Mappers
+    suggestion: CurriculumSuggestion | None = None
+    suggestion_path: Path | None = None
+    curriculum_settings: CurriculumSettings | None = None
+    if picker.frontend.prompt_confirm(
+        ui.ConfirmRequest(
+            label="Would you like to run curriculum evaluation and metadata mapping?",
+            default=True,
+        )
+    ):
+        (
+            suggestion,
+            suggestion_path,
+            curriculum_settings,
+        ) = await _run_curriculum_if_applicable(
+            picker, input_trainer_state_path, launcher
+        )
 
-    # Mappers
-    assert launcher.repository.working_tree_dir is not None
+        assert launcher.repository.working_tree_dir is not None
 
-    session_end_time: datetime.datetime | None = None
-    while session_end_time is None:
-        try:
-            s = launcher.frontend.prompt_text(
-                ui.TextRequest(
-                    label="Enter the session end time in ISO format (YYYY-MM-DDTHH:MM:SSz), e.g: 2024-01-01T12:00:00Z:"
+        session_end_time: datetime.datetime | None = None
+        while session_end_time is None:
+            try:
+                s = launcher.frontend.prompt_text(
+                    ui.TextRequest(
+                        label="Enter the session end time in ISO format (YYYY-MM-DDTHH:MM:SSz), e.g: 2024-01-01T12:00:00Z:"
+                    )
                 )
-            )
-            session_end_time = datetime.datetime.fromisoformat(s)
-        except ValueError:
-            logger.error(
-                "Invalid date format. Please enter the date in ISO format (YYYY-MM-DDTHH:MM:SSz)."
-            )
-            launcher.frontend.notify(
-                "Invalid date format. Please use ISO format (YYYY-MM-DDTHH:MM:SSz).",
-                ui.MessageLevel.WARNING,
-            )
+                session_end_time = datetime.datetime.fromisoformat(s)
+            except ValueError:
+                logger.error(
+                    "Invalid date format. Please enter the date in ISO format (YYYY-MM-DDTHH:MM:SSz)."
+                )
+                launcher.frontend.notify(
+                    "Invalid date format. Please use ISO format (YYYY-MM-DDTHH:MM:SSz).",
+                    ui.MessageLevel.WARNING,
+                )
 
-    launcher.frontend.notify("Running data mappers…", ui.MessageLevel.INFO)
-    DataMapperCli(
-        data_path=launcher.session_directory,
-        repository_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
-        curriculum_suggestion=suggestion_path,
-        curriculum_repository_path=curriculum_settings.project_directory
-        if curriculum_settings
-        else None,
-        session_end_time=session_end_time,
-    ).cli_cmd()
-    launcher.frontend.notify("Data mapping complete.", ui.MessageLevel.SUCCESS)
+        launcher.frontend.notify("Running data mappers…", ui.MessageLevel.INFO)
+        DataMapperCli(
+            data_path=launcher.session_directory,
+            repository_path=launcher.repository.working_tree_dir,  # type: ignore[arg-type]
+            curriculum_suggestion=suggestion_path,
+            curriculum_repository_path=curriculum_settings.project_directory
+            if curriculum_settings
+            else None,
+            session_end_time=session_end_time,
+        ).cli_cmd()
+        launcher.frontend.notify("Data mapping complete.", ui.MessageLevel.SUCCESS)
+    else:
+        picker.frontend.notify(
+            "Curriculum evaluation and metadata mapping skipped.",
+            ui.MessageLevel.WARNING,
+        )
 
     # Run data qc
     _run_data_qc(picker, launcher)
