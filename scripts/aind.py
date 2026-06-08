@@ -61,7 +61,9 @@ async def _run_curriculum_if_applicable(
 
 def _run_data_qc(picker: DataversePicker, launcher: Launcher) -> None:
     if not picker.frontend.prompt_confirm(
-        ui.ConfirmRequest(label="Would you like to generate a qc report?")
+        ui.ConfirmRequest(
+            label="Would you like to generate a qc report?", default=False
+        )
     ):
         return
     try:
@@ -88,7 +90,7 @@ def _run_data_transfer(
     picker: DataversePicker, launcher: Launcher, session: Session
 ) -> None:
     if not picker.frontend.prompt_confirm(
-        ui.ConfirmRequest(label="Would you like to transfer data?")
+        ui.ConfirmRequest(label="Would you like to transfer data?", default=True)
     ):
         picker.frontend.notify("Data transfer skipped.", ui.MessageLevel.WARNING)
         return
