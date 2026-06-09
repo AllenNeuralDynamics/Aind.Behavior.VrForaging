@@ -34,9 +34,8 @@ dev = [
     "codespell",
     "pytest",
     "pytest-cov",
-    'aind-behavior-vr-foraging[data]',
-    'aind-behavior-vr-foraging[mappers]',
-    "aind-clabe==0.11.0rc1",
+    'aind-behavior-vr-foraging[data, mappers]',
+    "aind-clabe>=0.11.0",
 ]
 
 [tool.codespell]
