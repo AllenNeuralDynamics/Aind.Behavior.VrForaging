@@ -977,22 +977,6 @@ Environment = TypeAliasType(
 # ==================== OP CONTROL SPECIFICATIONS ====================
 
 
-class MovableSpoutControl(BaseModel):
-    """
-    Controls the movable water spout behavior for reward delivery.
-
-    This class configures how the movable spout operates, including when it's
-    enabled, timing for reward collection, and retraction distance for operant
-    conditioning protocols.
-    """
-
-    enabled: bool = Field(default=False, description="Whether the movable spout is enabled")
-    time_to_collect_after_reward: float = Field(default=1, ge=0, description="Time (s) to collect after reward")
-    retracting_distance: float = Field(
-        default=0, ge=0, description="The distance, relative to the default position, the spout will be retracted by"
-    )
-
-
 class PositionControl(BaseModel):
     """
     Controls the position tracking and movement detection parameters.
@@ -1049,13 +1033,10 @@ class OperationControl(BaseModel):
     Master control class for all operational hardware systems.
 
     This class aggregates all the hardware control specifications including
-    movable spout, odor delivery, position tracking, and audio systems.
+    odor delivery, position tracking, and audio systems.
     It provides a centralized configuration point for all task hardware.
     """
 
-    movable_spout_control: MovableSpoutControl = Field(
-        default=MovableSpoutControl(), description="Control of the movable spout"
-    )
     odor_control: OdorControl = Field(
         default=OdorControl(target_odor_flow=100, target_total_flow=1000),
         description="Control of the odor",
