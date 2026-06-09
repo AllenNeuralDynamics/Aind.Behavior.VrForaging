@@ -1151,6 +1151,45 @@ it.Value.SyncQuadValue.Value as SyncQuadValue)</scr:Expression>
                               <Expression xsi:type="MulticastSubject">
                                 <Name>SoftwareEvent</Name>
                               </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Manipulator.Calibration.InitialPosition</Selector>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>ExperimentCommand</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p11:FilterExperimentCommand">
+                                  <p11:ExperimentCommand>EndCommand</p11:ExperimentCommand>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>ManipulatorPosition</Name>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:ObserveOn">
+                                  <rx:Scheduler>ThreadPoolScheduler</rx:Scheduler>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:WithLatestFrom" />
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Merge" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p1:CreateSoftwareEvent">
+                                  <p1:EventName>SpoutParkingPositions</p1:EventName>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="MulticastSubject">
+                                <Name>SoftwareEvent</Name>
+                              </Expression>
                             </Nodes>
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
@@ -1171,6 +1210,16 @@ it.Value.SyncQuadValue.Value as SyncQuadValue)</scr:Expression>
                               <Edge From="16" To="17" Label="Source1" />
                               <Edge From="18" To="19" Label="Source1" />
                               <Edge From="19" To="20" Label="Source1" />
+                              <Edge From="21" To="22" Label="Source1" />
+                              <Edge From="22" To="29" Label="Source1" />
+                              <Edge From="23" To="24" Label="Source1" />
+                              <Edge From="24" To="27" Label="Source1" />
+                              <Edge From="25" To="26" Label="Source1" />
+                              <Edge From="26" To="27" Label="Source2" />
+                              <Edge From="27" To="28" Label="Source1" />
+                              <Edge From="28" To="29" Label="Source2" />
+                              <Edge From="29" To="30" Label="Source1" />
+                              <Edge From="30" To="31" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>

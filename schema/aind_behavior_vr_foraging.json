@@ -579,11 +579,6 @@
                 "duration": 0.2,
                 "frequency": 9999.0
               },
-              "movable_spout_control": {
-                "enabled": false,
-                "retracting_distance": 0.0,
-                "time_to_collect_after_reward": 1.0
-              },
               "odor_control": {
                 "target_odor_flow": 100,
                 "target_total_flow": 1000
@@ -805,11 +800,6 @@
         "operation_control": {
           "$ref": "#/$defs/OperationControl",
           "default": {
-            "movable_spout_control": {
-              "enabled": false,
-              "retracting_distance": 0.0,
-              "time_to_collect_after_reward": 1.0
-            },
             "odor_control": {
               "target_odor_flow": 100,
               "target_total_flow": 1000
@@ -2814,33 +2804,6 @@
       ],
       "x-sgen-typename": "AllenNeuralDynamics.AindManipulator.MotorOperationMode"
     },
-    "MovableSpoutControl": {
-      "description": "Controls the movable water spout behavior for reward delivery.\n\nThis class configures how the movable spout operates, including when it's\nenabled, timing for reward collection, and retraction distance for operant\nconditioning protocols.",
-      "properties": {
-        "enabled": {
-          "default": false,
-          "description": "Whether the movable spout is enabled",
-          "title": "Enabled",
-          "type": "boolean"
-        },
-        "time_to_collect_after_reward": {
-          "default": 1,
-          "description": "Time (s) to collect after reward",
-          "minimum": 0,
-          "title": "Time To Collect After Reward",
-          "type": "number"
-        },
-        "retracting_distance": {
-          "default": 0,
-          "description": "The distance, relative to the default position, the spout will be retracted by",
-          "minimum": 0,
-          "title": "Retracting Distance",
-          "type": "number"
-        }
-      },
-      "title": "MovableSpoutControl",
-      "type": "object"
-    },
     "NormalDistribution": {
       "description": "A normal (Gaussian) probability distribution.\n\nBell-shaped distribution symmetric around the mean, commonly used\nfor modeling naturally occurring random variables.",
       "properties": {
@@ -3286,17 +3249,8 @@
       "type": "object"
     },
     "OperationControl": {
-      "description": "Master control class for all operational hardware systems.\n\nThis class aggregates all the hardware control specifications including\nmovable spout, odor delivery, position tracking, and audio systems.\nIt provides a centralized configuration point for all task hardware.",
+      "description": "Master control class for all operational hardware systems.\n\nThis class aggregates all the hardware control specifications including\nodor delivery, position tracking, and audio systems.\nIt provides a centralized configuration point for all task hardware.",
       "properties": {
-        "movable_spout_control": {
-          "$ref": "#/$defs/MovableSpoutControl",
-          "default": {
-            "enabled": false,
-            "time_to_collect_after_reward": 1.0,
-            "retracting_distance": 0.0
-          },
-          "description": "Control of the movable spout"
-        },
         "odor_control": {
           "$ref": "#/$defs/OdorControl",
           "default": {

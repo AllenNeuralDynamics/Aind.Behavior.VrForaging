@@ -4,11 +4,8 @@ from aind_behavior_vr_foraging import task_logic
 
 def make_default_operation_control(velocity_threshold: float) -> task_logic.OperationControl:
     return task_logic.OperationControl(
-        movable_spout_control=task_logic.MovableSpoutControl(
-            enabled=False,
-        ),
         audio_control=task_logic.AudioControl(duration=0.2, frequency=9999),
-        odor_control=task_logic.OdorControl(valve_max_open_time=10),
+        odor_control=task_logic.OdorControl(),
         position_control=task_logic.PositionControl(
             frequency_filter_cutoff=5,
             velocity_threshold=velocity_threshold,
