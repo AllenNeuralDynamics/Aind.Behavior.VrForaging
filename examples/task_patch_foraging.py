@@ -34,11 +34,6 @@ updaters = {
 }
 
 operation_control = vr_task_logic.OperationControl(
-    movable_spout_control=vr_task_logic.MovableSpoutControl(
-        enabled=True,
-        time_to_collect_after_reward=1,
-        retracting_distance=2000,
-    ),
     audio_control=vr_task_logic.AudioControl(frequency=1000, duration=0.2),
     odor_control=vr_task_logic.OdorControl(
         target_odor_flow=100, target_total_flow=1000, use_channel_3_as_carrier=True
