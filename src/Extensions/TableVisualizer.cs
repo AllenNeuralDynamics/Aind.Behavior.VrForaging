@@ -20,6 +20,9 @@ public class TableVisualizer
     private float fontSize = 16.0f;
     public float FontSize { get { return fontSize; } set { fontSize = value; } }
 
+    private bool hideHeader = true;
+    public bool HideHeader { get { return hideHeader; } set { hideHeader = value; } }
+
     [XmlIgnore]
     public object Item { get; set; }
 
@@ -41,7 +44,7 @@ public class TableVisualizer
                     if (ImGui.BeginChild("##TableVisualizer", new Vector2(0, 0), ImGuiChildFlags.None, childFlags))
                     {
                         ImGui.PushFont(ImGui.GetFont(), FontSize);
-                        DrawTable(Item, FontSize);
+                        DrawTable(Item, FontSize, HideHeader);
                         ImGui.PopFont();
                     }
                     ImGui.EndChild();
@@ -54,7 +57,7 @@ public class TableVisualizer
         });
     }
 
-    static void DrawTable(object item, float fontSize)
+    static void DrawTable(object item, float fontSize, bool hideHeader = true)
     {
         if (item == null) return;
 
@@ -86,13 +89,16 @@ public class TableVisualizer
         {
             ImGui.TableSetupColumn("Property", ImGuiTableColumnFlags.None);
             ImGui.TableSetupColumn("Value", ImGuiTableColumnFlags.None);
-            ImGui.TableHeadersRow();
+            if (!hideHeader) ImGui.TableHeadersRow();
 
             foreach (var row in rows)
             {
                 ImGui.TableNextRow();
                 ImGui.TableSetColumnIndex(0);
                 ImGui.TableSetBgColor(ImGuiTableBgTarget.CellBg, ImGui.ColorConvertFloat4ToU32(headerColor));
+                var pos = ImGui.GetCursorPos();
+                ImGui.TextUnformatted(row.Key);
+                ImGui.SetCursorPos(new Vector2(pos.X + 1, pos.Y));
                 ImGui.TextUnformatted(row.Key);
                 ImGui.TableSetColumnIndex(1);
                 ImGui.TextUnformatted(row.Value != null ? row.Value.ToString() : "null");
