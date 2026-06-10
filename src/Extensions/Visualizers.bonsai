@@ -450,7 +450,7 @@ it.Item6 as Notes)
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p1:TableVisualizer">
                             <p1:Visible>true</p1:Visible>
-                            <p1:FontSize>28</p1:FontSize>
+                            <p1:FontSize>36</p1:FontSize>
                           </Combinator>
                         </Expression>
                       </Nodes>
