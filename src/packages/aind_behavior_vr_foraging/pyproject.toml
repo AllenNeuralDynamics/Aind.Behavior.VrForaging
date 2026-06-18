@@ -28,7 +28,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 
 [project.optional-dependencies]
 
-data = ["contraqctor>=0.5.7, <0.6.0"]
+data = ["contraqctor>=0.5.8, <0.6.0"]
 
 mappers = [
     "aind-clabe[aind-services]>=0.10.6",
