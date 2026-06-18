@@ -139,7 +139,7 @@
                           <Name>IsInSite</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:WithLatestFrom" />
+                          <Combinator xsi:type="rx:CombineLatest" />
                         </Expression>
                         <Expression xsi:type="rx:CreateObservable">
                           <Name>CheckStop</Name>
