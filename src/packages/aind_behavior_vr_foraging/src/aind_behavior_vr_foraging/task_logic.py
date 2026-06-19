@@ -200,6 +200,23 @@ class OperantLogic(BaseModel):
     grace_distance_threshold: float = Field(
         default=10, ge=0, description="Virtual distance (cm) the animal must be within to not abort the current choice"
     )
+    abort_velocity_threshold: Optional[float] = Field(
+        default=None,
+        ge=0,
+        description="Velocity (cm/s) above which an in-progress operant choice is aborted. This is an ADDITIONAL "
+        "abort source: the choice aborts if velocity exceeds this OR displacement exceeds grace_distance_threshold "
+        "OR the animal leaves the reward site. None disables only the velocity source (grace + leave-site still apply). "
+        "Interaction with the stop threshold: this is evaluated on the SAME filtered velocity signal as stop "
+        "detection, which locks a choice when velocity falls BELOW StopVelocityThreshold "
+        "(UpdaterTarget.STOP_VELOCITY_THRESHOLD, seeded from the position-control velocity_threshold and shaped "
+        "within/across sessions). The two gates partition the same velocity axis in opposite directions, so this "
+        "value must be >= the operative StopVelocityThreshold: if it is lower, the band "
+        "(abort_velocity_threshold, StopVelocityThreshold) lets the animal lock a stop while already too fast to "
+        "hold it, forfeiting every such choice. Because StopVelocityThreshold is dynamic (e.g. shaped 60 -> 8 cm/s "
+        "by a GAIN updater) whereas this is a fixed absolute, only enable the velocity abort on stages where the "
+        "stop threshold is already floored below it (e.g. a static stop threshold of 8 with this set to 15); never "
+        "pair a low fixed abort with an actively-shaped, still-high stop threshold.",
+    )
 
 
 class _PatchUpdateFunction(BaseModel):
