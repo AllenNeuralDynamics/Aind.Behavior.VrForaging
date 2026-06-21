@@ -38,9 +38,7 @@ def make_s_shaping() -> Stage:
                     blocks=[helpers.make_block(negative_probability=0.0, positive_probability=1.0, n_neg_each=0)],
                     sampling_mode="Sequential",
                 ),
-                operation_control=helpers.make_operation_control(
-                    velocity_threshold=helpers.VELOCITY_THRESHOLD_START
-                ),
+                operation_control=helpers.make_operation_control(velocity_threshold=helpers.VELOCITY_THRESHOLD_START),
             ),
         ),
         start_policies=[
@@ -75,9 +73,7 @@ def make_s_graduated() -> Stage:
                     ],
                     sampling_mode="Sequential",
                 ),
-                operation_control=helpers.make_operation_control(
-                    velocity_threshold=helpers.VELOCITY_THRESHOLD_FLOOR
-                ),
+                operation_control=helpers.make_operation_control(velocity_threshold=helpers.VELOCITY_THRESHOLD_FLOOR),
             ),
         ),
         start_policies=[Policy(p_introduce_negative_sites), Policy(p_water_cap)],

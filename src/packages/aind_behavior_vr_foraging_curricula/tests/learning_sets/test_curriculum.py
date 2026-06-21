@@ -146,9 +146,10 @@ class TestShapingToGraduated:
         assert st_shaping_to_graduated(self._passing().model_copy(update=dict(last_n_neg_sites_per_pair=3))) is False
 
     def test_fail_when_velocity_not_at_final_floor(self):
-        assert st_shaping_to_graduated(
-            self._passing().model_copy(update=dict(last_stop_velocity_threshold_updater=30.0))
-        ) is False
+        assert (
+            st_shaping_to_graduated(self._passing().model_copy(update=dict(last_stop_velocity_threshold_updater=30.0)))
+            is False
+        )
 
     def test_fail_when_not_discriminating(self):
         # 290/300 ~ 0.97 > 0.7 -> harvesting everything

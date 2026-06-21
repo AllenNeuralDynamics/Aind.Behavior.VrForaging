@@ -14,6 +14,7 @@ class CorridorGeometry:
     inter_patch_max_length: float
     reward_site_length: float
 
+
 #: Number of distinct odors available to the learning-set generator.
 ODOR_COUNT: int = 7
 

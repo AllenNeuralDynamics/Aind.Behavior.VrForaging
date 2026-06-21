@@ -16,9 +16,7 @@ def _iter_patches(task: AindVrForagingTaskLogic):
             yield patch
 
 
-def p_introduce_negative_sites(
-    metrics: LearningSetsMetrics, task: AindVrForagingTaskLogic
-) -> AindVrForagingTaskLogic:
+def p_introduce_negative_sites(metrics: LearningSetsMetrics, task: AindVrForagingTaskLogic) -> AindVrForagingTaskLogic:
     """Progress the negative-site proportion according to ``N_NEG_RAMP`` and regenerate
     the session sequence.
 
@@ -41,9 +39,7 @@ def p_introduce_negative_sites(
     for block in task.task_parameters.environment.blocks:
         environment = block.environment
         if isinstance(environment, task_logic.SequenceEnvironment):
-            environment.patch_indices = helpers.make_sequence(
-                n_pos_each=n_pos_each, n_neg_each=n_neg_each
-            )
+            environment.patch_indices = helpers.make_sequence(n_pos_each=n_pos_each, n_neg_each=n_neg_each)
         else:
             raise ValueError(f"Unexpected environment type {type(environment)}")
     return task
