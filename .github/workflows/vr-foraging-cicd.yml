@@ -24,9 +24,9 @@ jobs:
     runs-on: windows-latest
     name: VrForaging unit tests
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
-      - uses: astral-sh/setup-uv@v8.1.0
+      - uses: astral-sh/setup-uv@v8.2.0
         with:
           enable-cache: true
 
@@ -89,7 +89,7 @@ jobs:
     outputs:
       version: ${{ steps.get_version.outputs.version }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: main
@@ -97,7 +97,7 @@ jobs:
           # push below can bypass the branch ruleset protecting `main`.
           token: ${{ secrets.RELEASE_PAT }}
 
-      - uses: astral-sh/setup-uv@v8.1.0
+      - uses: astral-sh/setup-uv@v8.2.0
         with:
           enable-cache: true
 
@@ -130,7 +130,7 @@ jobs:
         run: uv build --all-packages
 
       - name: Upload wheels as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dist
           path: dist/
@@ -164,12 +164,12 @@ jobs:
     needs: prepare-release
     steps:
       - name: Download wheels artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: dist
           path: dist/
 
-      - uses: astral-sh/setup-uv@v8.1.0
+      - uses: astral-sh/setup-uv@v8.2.0
         with:
           enable-cache: true
 
@@ -177,8 +177,9 @@ jobs:
         run: uv publish --token ${{ secrets.AIND_PYPI_TOKEN }}
 
       - name: Upload wheels to GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
+          tag_name: ${{ github.event.release.tag_name }}
           files: dist/*
 
   # ╔─────────────────────────╗
@@ -203,12 +204,12 @@ jobs:
       )
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v8.1.0
+        uses: astral-sh/setup-uv@v8.2.0
         with:
           enable-cache: true
 
