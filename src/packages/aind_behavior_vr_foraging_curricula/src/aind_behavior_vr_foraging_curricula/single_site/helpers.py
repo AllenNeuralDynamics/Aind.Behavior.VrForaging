@@ -23,7 +23,6 @@ def make_default_operation_control(velocity_threshold: float) -> task_logic.Oper
     """Operation control shared by every stage: movable spout off, audio effectively
     silent, no odor flow, only the stop-velocity threshold varies."""
     return task_logic.OperationControl(
-        movable_spout_control=task_logic.MovableSpoutControl(enabled=False),
         audio_control=task_logic.AudioControl(duration=0.2, frequency=9999),
         odor_control=task_logic.OdorControl(),
         position_control=task_logic.PositionControl(
