@@ -3,7 +3,7 @@
 A two-stage curriculum for the **learning-set** task: every session is a single block of
 single-reward-site patches drawn from 7 odors. The odor ordering is regenerated each day
 under the same pairing rules as
-[`examples/task_learning_sets.py`](../../../../../../examples/task_learning_sets.py)
+[`examples/task_learning_sets.py`](https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/blob/main/examples/task_learning_sets.py)
 (each trial is a `(negative, positive)` pair; no odor that appeared in the last pair may
 reappear). Each odor has a *positive* variant (always rewarded, p=1) and a *negative*
 variant (always unrewarded, p=0). The curriculum shapes difficulty by gradually
