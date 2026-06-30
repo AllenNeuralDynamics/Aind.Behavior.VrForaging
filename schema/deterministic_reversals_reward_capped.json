@@ -77,7 +77,8 @@
                                                             "scaling_parameters": null
                                                         },
                                                         "time_to_collect_reward": 100000.0,
-                                                        "grace_distance_threshold": 10.0
+                                                        "grace_distance_threshold": 10.0,
+                                                        "abort_on_not_stop": false
                                                     },
                                                     "delay": {
                                                         "family": "Scalar",
@@ -397,7 +398,8 @@
                                                             "scaling_parameters": null
                                                         },
                                                         "time_to_collect_reward": 100000.0,
-                                                        "grace_distance_threshold": 10.0
+                                                        "grace_distance_threshold": 10.0,
+                                                        "abort_on_not_stop": false
                                                     },
                                                     "delay": {
                                                         "family": "Normal",
@@ -735,7 +737,8 @@
                                                             "scaling_parameters": null
                                                         },
                                                         "time_to_collect_reward": 100000.0,
-                                                        "grace_distance_threshold": 10.0
+                                                        "grace_distance_threshold": 10.0,
+                                                        "abort_on_not_stop": false
                                                     },
                                                     "delay": {
                                                         "family": "Normal",
@@ -1036,7 +1039,8 @@
                                                             "scaling_parameters": null
                                                         },
                                                         "time_to_collect_reward": 100000.0,
-                                                        "grace_distance_threshold": 10.0
+                                                        "grace_distance_threshold": 10.0,
+                                                        "abort_on_not_stop": false
                                                     },
                                                     "delay": {
                                                         "family": "Exponential",
@@ -1252,7 +1256,8 @@
                                                             "scaling_parameters": null
                                                         },
                                                         "time_to_collect_reward": 100000.0,
-                                                        "grace_distance_threshold": 10.0
+                                                        "grace_distance_threshold": 10.0,
+                                                        "abort_on_not_stop": false
                                                     },
                                                     "delay": {
                                                         "family": "Exponential",
@@ -1567,7 +1572,8 @@
                                                             "scaling_parameters": null
                                                         },
                                                         "time_to_collect_reward": 100000.0,
-                                                        "grace_distance_threshold": 10.0
+                                                        "grace_distance_threshold": 10.0,
+                                                        "abort_on_not_stop": false
                                                     },
                                                     "delay": {
                                                         "family": "Exponential",
@@ -1784,7 +1790,8 @@
                                                             "scaling_parameters": null
                                                         },
                                                         "time_to_collect_reward": 100000.0,
-                                                        "grace_distance_threshold": 10.0
+                                                        "grace_distance_threshold": 10.0,
+                                                        "abort_on_not_stop": false
                                                     },
                                                     "delay": {
                                                         "family": "Exponential",
@@ -2026,7 +2033,8 @@
                                                             "scaling_parameters": null
                                                         },
                                                         "time_to_collect_reward": 100000.0,
-                                                        "grace_distance_threshold": 10.0
+                                                        "grace_distance_threshold": 10.0,
+                                                        "abort_on_not_stop": false
                                                     },
                                                     "delay": {
                                                         "family": "Exponential",

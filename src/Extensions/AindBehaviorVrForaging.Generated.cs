@@ -5068,14 +5068,17 @@ namespace AindVrForagingDataSchema
     
         private double _timeToCollectReward;
     
-        private double _graceDistanceThreshold;
+        private double? _graceDistanceThreshold;
+    
+        private bool _abortOnNotStop;
     
         public OperantLogic()
         {
             _isOperant = true;
             _stopDuration = new AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution();
             _timeToCollectReward = 100000D;
-            _graceDistanceThreshold = 10D;
+            _graceDistanceThreshold = 10;
+            _abortOnNotStop = false;
         }
     
         protected OperantLogic(OperantLogic other)
@@ -5084,13 +5087,14 @@ namespace AindVrForagingDataSchema
             _stopDuration = other._stopDuration;
             _timeToCollectReward = other._timeToCollectReward;
             _graceDistanceThreshold = other._graceDistanceThreshold;
+            _abortOnNotStop = other._abortOnNotStop;
         }
     
         /// <summary>
-        /// Will the trial implement operant logic
+        /// Will the site implement operant logic
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("is_operant")]
-        [System.ComponentModel.DescriptionAttribute("Will the trial implement operant logic")]
+        [System.ComponentModel.DescriptionAttribute("Will the site implement operant logic")]
         public bool IsOperant
         {
             get
@@ -5143,7 +5147,7 @@ namespace AindVrForagingDataSchema
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("grace_distance_threshold")]
         [System.ComponentModel.DescriptionAttribute("Virtual distance (cm) the animal must be within to not abort the current choice")]
-        public double GraceDistanceThreshold
+        public double? GraceDistanceThreshold
         {
             get
             {
@@ -5152,6 +5156,23 @@ namespace AindVrForagingDataSchema
             set
             {
                 _graceDistanceThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// Whether to abort the waiting period if the animal leaves a stopped state.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("abort_on_not_stop")]
+        [System.ComponentModel.DescriptionAttribute("Whether to abort the waiting period if the animal leaves a stopped state.")]
+        public bool AbortOnNotStop
+        {
+            get
+            {
+                return _abortOnNotStop;
+            }
+            set
+            {
+                _abortOnNotStop = value;
             }
         }
     
@@ -5170,7 +5191,8 @@ namespace AindVrForagingDataSchema
             stringBuilder.Append("IsOperant = " + _isOperant + ", ");
             stringBuilder.Append("StopDuration = " + _stopDuration + ", ");
             stringBuilder.Append("TimeToCollectReward = " + _timeToCollectReward + ", ");
-            stringBuilder.Append("GraceDistanceThreshold = " + _graceDistanceThreshold);
+            stringBuilder.Append("GraceDistanceThreshold = " + _graceDistanceThreshold + ", ");
+            stringBuilder.Append("AbortOnNotStop = " + _abortOnNotStop);
             return true;
         }
     
