@@ -189,6 +189,26 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             return cast(cameras.CameraTypes, device).video_writer is not None
         return True
 
+    def _get_annotation_notes(self) -> Optional[str]:
+        annotations_path = Path(self._data_path) / "behavior" / "SoftwareEvents" / "Annotations.json"
+        if not annotations_path.exists():
+            return None
+        lines = []
+        with open(annotations_path, "r", encoding="utf-8") as f:
+            for raw in f:
+                raw = raw.strip()
+                if not raw:
+                    continue
+                try:
+                    lines.append(json.loads(raw)["data"])
+                except (json.JSONDecodeError, KeyError):
+                    continue
+        return "\n".join(lines) if lines else None
+
+    def _get_notes(self) -> Optional[str]:
+        parts = [p for p in [self.session_model.notes, self._get_annotation_notes()] if p]
+        return "\n".join(parts) if parts else None
+
     def _get_data_streams(self) -> List[acquisition.DataStream]:
         modalities: list[Modality] = [getattr(Modality, "BEHAVIOR")]
         if len(self._get_cameras_config()) > 0:
@@ -219,7 +239,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
                 active_devices=active_devices,
                 modalities=modalities,
                 configurations=self._get_cameras_config(),
-                notes=self.session_model.notes,
+                notes=self._get_notes(),
             )
         ]
         return data_streams
