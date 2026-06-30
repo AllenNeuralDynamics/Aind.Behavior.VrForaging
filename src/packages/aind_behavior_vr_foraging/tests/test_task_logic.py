@@ -8,6 +8,7 @@ from pydantic import ValidationError
 
 from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,
+    OperantLogic,
     VirtualSite,
     _odor_mixture_from_odor_specification,
     _OdorSpecification,
@@ -148,6 +149,32 @@ class TestDatasetDeserialization(unittest.TestCase):
         except (ValidationError, ValueError) as exc:
             self.fail(f"Deserialization of tasklogic_output.json failed: {exc}")
         self.assertIsInstance(logic, AindVrForagingTaskLogic)
+
+
+class TestOperantAbortVelocityThreshold(unittest.TestCase):
+    """The optional velocity-based operant abort field added alongside grace distance."""
+
+    def test_default_is_none(self):
+        """Defaults to None so existing (grace-distance) behavior is preserved."""
+        self.assertIsNone(OperantLogic().abort_velocity_threshold)
+
+    def test_accepts_value(self):
+        self.assertEqual(OperantLogic(abort_velocity_threshold=15).abort_velocity_threshold, 15.0)
+
+    def test_rejects_negative(self):
+        with self.assertRaises(ValidationError):
+            OperantLogic(abort_velocity_threshold=-1)
+
+    def test_backwards_compatible_deserialization(self):
+        """OperantLogic JSON written before this field (no key) still loads, as None."""
+        legacy = {
+            "is_operant": True,
+            "stop_duration": {"family": "Scalar", "distribution_parameters": {"family": "Scalar", "value": 1.0}},
+            "time_to_collect_reward": 100000.0,
+            "grace_distance_threshold": 10.0,
+        }
+        loaded = OperantLogic.model_validate(legacy)
+        self.assertIsNone(loaded.abort_velocity_threshold)
 
 
 if __name__ == "__main__":

@@ -54,9 +54,25 @@ def make_patch(
     inter_patch_mean_length: float = 150,
     inter_patch_max_length: float = 500,
     delay: Optional[distributions.Distribution] = None,
+    is_operant: bool = False,
+    abort_velocity_threshold: Optional[float] = None,
+    grace_distance_threshold: float = 10,
 ) -> task_logic.Patch:
     """A single odor-marked reward site. One accept/reject decision per patch
-    (``OnChoice``/``OnRejection`` count 1); reward is non-baited."""
+    (``OnChoice``/``OnRejection`` count 1); reward is non-baited.
+
+    ``is_operant`` gates collection: when False (shaping stages) the reward is
+    dispensed on the delay schedule regardless of where the animal is; when True
+    (probability-grid stages) the animal must stay engaged and collect, so abandoning
+    mid-delay forfeits the reward.
+
+    ``abort_velocity_threshold`` (cm/s) adds a velocity-based abort *alongside* the
+    spatial ``grace_distance_threshold`` and leaving-the-site: an operant choice aborts
+    if velocity exceeds it OR displacement exceeds grace OR the animal leaves the site.
+    It catches slow-creepers who lick while drifting forward (their velocity stays low
+    but they cover distance); None leaves only grace + leave-site active. When velocity
+    is the intended gate, raise ``grace_distance_threshold`` so the spatial source does
+    not also clip the creeper (leave-the-site stays as the spatial backstop)."""
     if delay is None:
         delay = task_logic.scalar_value(0.5)
     return task_logic.Patch(
@@ -73,10 +89,11 @@ def make_patch(
             available=task_logic.scalar_value(999999),
             delay=delay,
             operant_logic=task_logic.OperantLogic(
-                is_operant=False,
+                is_operant=is_operant,
                 stop_duration=stop_duration,
                 time_to_collect_reward=100000,
-                grace_distance_threshold=10,
+                grace_distance_threshold=grace_distance_threshold,
+                abort_velocity_threshold=abort_velocity_threshold,
             ),
         ),
         patch_virtual_sites_generator=task_logic.PatchVirtualSitesGenerator(

@@ -146,7 +146,16 @@ def _probability_grid_blocks(
 ) -> list[task_logic.Block]:
     """The 13-block band: every grid (p_A, p_B) whose sum is allowed, plus the 5%
     no-reward distractor odor C (occupancy 0.475 / 0.475 / 0.05)."""
-    make_patch_kwargs = {**_POST_STOP_PATCH_KWARGS, "delay": delay}
+    # Grid stages are operant with a 15 cm/s velocity abort and grace raised to 50 cm (see
+    # make_patch). 15 stays above this stage's static stop threshold of 8 (no
+    # STOP_VELOCITY_THRESHOLD updater here) as OperantLogic.abort_velocity_threshold requires.
+    make_patch_kwargs = {
+        **_POST_STOP_PATCH_KWARGS,
+        "delay": delay,
+        "is_operant": True,
+        "abort_velocity_threshold": 15,
+        "grace_distance_threshold": 50,
+    }
     return [
         helpers.make_block(
             p_rewards=(p_a, p_b, 0.0),
