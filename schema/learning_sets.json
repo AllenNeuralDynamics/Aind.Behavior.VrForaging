@@ -1,7 +1,7 @@
 {
     "pkg_location": "aind_behavior_vr_foraging_curricula.learning_sets",
     "name": "LearningSets",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "graph": {
         "nodes": {
             "0": {
@@ -12018,7 +12018,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.1.1",
+                    "version": "1.1.2",
                     "stage_name": "shaping"
                 },
                 "graph": {
@@ -24032,7 +24032,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.1.1",
+                    "version": "1.1.2",
                     "stage_name": "graduated"
                 },
                 "graph": {

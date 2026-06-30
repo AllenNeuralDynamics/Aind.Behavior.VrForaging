@@ -1,7 +1,7 @@
 {
     "pkg_location": "aind_behavior_vr_foraging_curricula.single_site",
     "name": "SingleSite",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "graph": {
         "nodes": {
             "0": {
@@ -397,7 +397,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.1.1",
+                    "version": "1.1.2",
                     "stage_name": "learn_to_stop"
                 },
                 "graph": {
@@ -1146,7 +1146,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.1.1",
+                    "version": "1.1.2",
                     "stage_name": "learn_to_choose"
                 },
                 "graph": {
@@ -7838,7 +7838,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.1.1",
+                    "version": "1.1.2",
                     "stage_name": "probability_grid_short_delay"
                 },
                 "graph": {
@@ -14517,7 +14517,7 @@
                             "wait_to_finish_duration": 0.0
                         }
                     },
-                    "version": "1.1.1",
+                    "version": "1.1.2",
                     "stage_name": "probability_grid_long_delay"
                 },
                 "graph": {
