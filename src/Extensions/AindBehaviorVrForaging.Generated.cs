@@ -4059,126 +4059,6 @@ namespace AindVrForagingDataSchema
 
 
     /// <summary>
-    /// Controls the movable water spout behavior for reward delivery.
-    ///
-    ///This class configures how the movable spout operates, including when it's
-    ///enabled, timing for reward collection, and retraction distance for operant
-    ///conditioning protocols.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Controls the movable water spout behavior for reward delivery.\n\nThis class config" +
-        "ures how the movable spout operates, including when it\'s\nenabled, timing for rew" +
-        "ard collection, and retraction distance for operant\nconditioning protocols.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class MovableSpoutControl
-    {
-    
-        private bool _enabled;
-    
-        private double _timeToCollectAfterReward;
-    
-        private double _retractingDistance;
-    
-        public MovableSpoutControl()
-        {
-            _enabled = false;
-            _timeToCollectAfterReward = 1D;
-            _retractingDistance = 0D;
-        }
-    
-        protected MovableSpoutControl(MovableSpoutControl other)
-        {
-            _enabled = other._enabled;
-            _timeToCollectAfterReward = other._timeToCollectAfterReward;
-            _retractingDistance = other._retractingDistance;
-        }
-    
-        /// <summary>
-        /// Whether the movable spout is enabled
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("enabled")]
-        [System.ComponentModel.DescriptionAttribute("Whether the movable spout is enabled")]
-        public bool Enabled
-        {
-            get
-            {
-                return _enabled;
-            }
-            set
-            {
-                _enabled = value;
-            }
-        }
-    
-        /// <summary>
-        /// Time (s) to collect after reward
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("time_to_collect_after_reward")]
-        [System.ComponentModel.DescriptionAttribute("Time (s) to collect after reward")]
-        public double TimeToCollectAfterReward
-        {
-            get
-            {
-                return _timeToCollectAfterReward;
-            }
-            set
-            {
-                _timeToCollectAfterReward = value;
-            }
-        }
-    
-        /// <summary>
-        /// The distance, relative to the default position, the spout will be retracted by
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("retracting_distance")]
-        [System.ComponentModel.DescriptionAttribute("The distance, relative to the default position, the spout will be retracted by")]
-        public double RetractingDistance
-        {
-            get
-            {
-                return _retractingDistance;
-            }
-            set
-            {
-                _retractingDistance = value;
-            }
-        }
-    
-        public System.IObservable<MovableSpoutControl> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MovableSpoutControl(this)));
-        }
-    
-        public System.IObservable<MovableSpoutControl> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new MovableSpoutControl(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Enabled = " + _enabled + ", ");
-            stringBuilder.Append("TimeToCollectAfterReward = " + _timeToCollectAfterReward + ", ");
-            stringBuilder.Append("RetractingDistance = " + _retractingDistance);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
     /// A numerical updater that modifies task parameters during execution.
     ///
     ///This class combines an operation type with parameters to define how values
@@ -5313,21 +5193,18 @@ namespace AindVrForagingDataSchema
     /// Master control class for all operational hardware systems.
     ///
     ///This class aggregates all the hardware control specifications including
-    ///movable spout, odor delivery, position tracking, and audio systems.
+    ///odor delivery, position tracking, and audio systems.
     ///It provides a centralized configuration point for all task hardware.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute(@"Master control class for all operational hardware systems.
-
-    This class aggregates all the hardware control specifications including
-    movable spout, odor delivery, position tracking, and audio systems.
-    It provides a centralized configuration point for all task hardware.")]
+    [System.ComponentModel.DescriptionAttribute("Master control class for all operational hardware systems.\n\nThis class aggregates" +
+        " all the hardware control specifications including\nodor delivery, position track" +
+        "ing, and audio systems.\nIt provides a centralized configuration point for all ta" +
+        "sk hardware.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OperationControl
     {
-    
-        private MovableSpoutControl _movableSpoutControl;
     
         private OdorControl _odorControl;
     
@@ -5341,7 +5218,6 @@ namespace AindVrForagingDataSchema
     
         public OperationControl()
         {
-            _movableSpoutControl = new MovableSpoutControl();
             _odorControl = new OdorControl();
             _positionControl = new PositionControl();
             _audioControl = new AudioControl();
@@ -5351,30 +5227,11 @@ namespace AindVrForagingDataSchema
     
         protected OperationControl(OperationControl other)
         {
-            _movableSpoutControl = other._movableSpoutControl;
             _odorControl = other._odorControl;
             _positionControl = other._positionControl;
             _audioControl = other._audioControl;
             _waitToStartDuration = other._waitToStartDuration;
             _waitToFinishDuration = other._waitToFinishDuration;
-        }
-    
-        /// <summary>
-        /// Control of the movable spout
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("movable_spout_control")]
-        [System.ComponentModel.DescriptionAttribute("Control of the movable spout")]
-        public MovableSpoutControl MovableSpoutControl
-        {
-            get
-            {
-                return _movableSpoutControl;
-            }
-            set
-            {
-                _movableSpoutControl = value;
-            }
         }
     
         /// <summary>
@@ -5477,7 +5334,6 @@ namespace AindVrForagingDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("MovableSpoutControl = " + _movableSpoutControl + ", ");
             stringBuilder.Append("OdorControl = " + _odorControl + ", ");
             stringBuilder.Append("PositionControl = " + _positionControl + ", ");
             stringBuilder.Append("AudioControl = " + _audioControl + ", ");
@@ -12031,11 +11887,6 @@ namespace AindVrForagingDataSchema
             return Process<Measurement>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<MovableSpoutControl> source)
-        {
-            return Process<MovableSpoutControl>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<NumericalUpdater> source)
         {
             return Process<NumericalUpdater>(source);
@@ -12333,7 +12184,6 @@ namespace AindVrForagingDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LookupTableFunction>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MarkovEnvironment>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MovableSpoutControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdater>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NumericalUpdaterParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OdorControl>))]

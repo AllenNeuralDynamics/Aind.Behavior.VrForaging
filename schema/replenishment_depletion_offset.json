@@ -276,11 +276,6 @@
                             "sampling_mode": "Sequential"
                         },
                         "operation_control": {
-                            "movable_spout_control": {
-                                "enabled": false,
-                                "time_to_collect_after_reward": 1.0,
-                                "retracting_distance": 0.0
-                            },
                             "odor_control": {
                                 "target_total_flow": 1000,
                                 "target_odor_flow": 100
@@ -631,11 +626,6 @@
                             "sampling_mode": "Sequential"
                         },
                         "operation_control": {
-                            "movable_spout_control": {
-                                "enabled": false,
-                                "time_to_collect_after_reward": 1.0,
-                                "retracting_distance": 0.0
-                            },
                             "odor_control": {
                                 "target_total_flow": 1000,
                                 "target_odor_flow": 100
@@ -974,11 +964,6 @@
                             "sampling_mode": "Sequential"
                         },
                         "operation_control": {
-                            "movable_spout_control": {
-                                "enabled": false,
-                                "time_to_collect_after_reward": 1.0,
-                                "retracting_distance": 0.0
-                            },
                             "odor_control": {
                                 "target_total_flow": 1000,
                                 "target_odor_flow": 100
@@ -2086,11 +2071,6 @@
                             "sampling_mode": "Random"
                         },
                         "operation_control": {
-                            "movable_spout_control": {
-                                "enabled": false,
-                                "time_to_collect_after_reward": 1.0,
-                                "retracting_distance": 0.0
-                            },
                             "odor_control": {
                                 "target_total_flow": 1000,
                                 "target_odor_flow": 100
