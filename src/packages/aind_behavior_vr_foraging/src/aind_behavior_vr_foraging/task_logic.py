@@ -188,7 +188,7 @@ class OperantLogic(BaseModel):
     implementing stopping requirements, collection timeouts, and spatial constraints.
     """
 
-    is_operant: bool = Field(default=True, description="Will the trial implement operant logic")
+    is_operant: bool = Field(default=True, description="Will the site implement operant logic")
     stop_duration: distributions.Distribution = Field(
         default=scalar_value(0),
         validate_default=True,
@@ -197,8 +197,11 @@ class OperantLogic(BaseModel):
     time_to_collect_reward: float = Field(
         default=100000, ge=0, description="Time(s) the animal has to collect the reward"
     )
-    grace_distance_threshold: float = Field(
+    grace_distance_threshold: Optional[float] = Field(
         default=10, ge=0, description="Virtual distance (cm) the animal must be within to not abort the current choice"
+    )
+    abort_on_not_stop: bool = Field(
+        default=False, description="Whether to abort the waiting period if the animal leaves a stopped state."
     )
 
 
