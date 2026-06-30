@@ -157,8 +157,17 @@ class Rendering(qc.Suite):
         axes[0, 0].set_ylabel("Timing Difference (s)")
 
         # Perform linear regression between GPU and photodiode timestamps
-        valid_mask = ~np.isnan(aligned_gpu_photodiode).any(axis=1)
+        valid_mask = np.isfinite(aligned_gpu_photodiode).all(axis=1)
         valid_data = aligned_gpu_photodiode[valid_mask]
+
+        if len(valid_data) < 2 or np.unique(valid_data[:, 0]).size < 2:
+            plt.close(fig)
+            return self.fail_test(
+                None,
+                f"Insufficient aligned GPU/photodiode pairs for regression ({len(valid_data)} valid rows). "
+                "The photodiode signal may not be aligned with the rendered frames.",
+            )
+
         diff_diff = np.diff(valid_data[:, 0]) - np.diff(valid_data[:, 1])
 
         axes[1, 0].plot(diff_diff)
@@ -244,9 +253,6 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
             _runner.add_suite(qc.harp.HarpDeviceTestSuite(stream, commands), stream.name)
 
     # Also add the HarpOlfactometerExtension if it exists, as it may not be present in all sessions and is not a HarpDevice itself but contains them
-    dataset["Behavior"]["HarpOlfactometerExtension"].load()
-    dataset["Behavior"]["HarpCommands"]["HarpOlfactometerExtension"].load()
-
     for stream in dataset["Behavior"]["HarpOlfactometerExtension"]:
         if isinstance(stream, HarpDevice):
             commands = t.cast(HarpDevice, dataset["Behavior"]["HarpCommands"]["HarpOlfactometerExtension"][stream.name])
