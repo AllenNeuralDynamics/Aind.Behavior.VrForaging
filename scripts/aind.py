@@ -291,7 +291,7 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
             SoftwareEvents,
             _dataset["Behavior"]["SoftwareEvents"]["SpoutParkingPositions"].load(),
         )
-        data: dict[str, Any] = manipulator_parking_position.data.iloc[0]["data"][
+        data: dict[str, Any] = manipulator_parking_position.data.iloc[-1]["data"][
             "ResetPosition"
         ]
         position = ManipulatorPosition.model_validate(data)
