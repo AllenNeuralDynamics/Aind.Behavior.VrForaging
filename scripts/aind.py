@@ -25,6 +25,7 @@ from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
+from aind_behavior_curriculum import TrainerState
 from aind_behavior_vr_foraging import data_contract
 from aind_behavior_vr_foraging.data_mappers import DataMapperCli
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
@@ -57,6 +58,30 @@ async def _run_curriculum_if_applicable(
     suggestion_path = _dump_suggestion(suggestion, launcher.session_directory)
     picker.push_new_suggestion(suggestion.trainer_state)
     return suggestion, suggestion_path, settings
+
+
+def _confirm_session_info(
+    launcher: Launcher, session: Session, trainer_state: TrainerState
+) -> bool:
+    summary = {
+        "Mouse": session.subject,
+        "Experimenter": ", ".join(session.experimenter)
+        if session.experimenter
+        else None,
+        "Curriculum": trainer_state.curriculum.name
+        if trainer_state and trainer_state.curriculum
+        else None,
+        "Stage": trainer_state.stage.name
+        if trainer_state and trainer_state.stage
+        else None,
+    }
+    return launcher.frontend.prompt_read_only_table(
+        ui.ReadOnlyTable.from_object(
+            summary,
+            title="Confirm Session Information",
+            prompt="Is this information correct?",
+        )
+    )
 
 
 def _run_data_qc(picker: DataversePicker, launcher: Launcher) -> None:
@@ -138,6 +163,12 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
 
     # Fetch rig settings
     rig = picker.pick_rig(AindVrForagingRig)
+
+    if not _confirm_session_info(launcher, session, trainer_state):
+        launcher.frontend.notify(
+            "Session information not confirmed. Aborting.", ui.MessageLevel.WARNING
+        )
+        return
 
     launcher.register_session(session, rig.data_directory)
 
