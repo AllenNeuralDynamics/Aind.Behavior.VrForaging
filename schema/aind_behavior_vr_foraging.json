@@ -3213,7 +3213,7 @@
       "properties": {
         "is_operant": {
           "default": true,
-          "description": "Will the trial implement operant logic",
+          "description": "Will the site implement operant logic",
           "title": "Is Operant",
           "type": "boolean"
         },
@@ -3240,9 +3240,22 @@
         "grace_distance_threshold": {
           "default": 10,
           "description": "Virtual distance (cm) the animal must be within to not abort the current choice",
-          "minimum": 0,
-          "title": "Grace Distance Threshold",
-          "type": "number"
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Grace Distance Threshold"
+        },
+        "abort_on_not_stop": {
+          "default": false,
+          "description": "Whether to abort the waiting period if the animal leaves a stopped state.",
+          "title": "Abort On Not Stop",
+          "type": "boolean"
         }
       },
       "title": "OperantLogic",
