@@ -50,7 +50,7 @@ def make_patch(
             delay=vr_task_logic.scalar_value(0.5),
             operant_logic=vr_task_logic.OperantLogic(
                 is_operant=False,
-                stop_duration=2.0,
+                stop_duration=2.8,
                 time_to_collect_reward=100000,
                 grace_distance_threshold=10,
             ),
@@ -116,14 +116,15 @@ def get_odor_sequence(total_trials: int, n: int) -> list[tuple[int, int]]:
 
 
 def make_block(
-    n_sites_each: int = 5,
+    n_rewarded_sites: int = 3,
+    n_nonrewarded_sites: int = 6,
     n_pairs: int = 500,
 ) -> vr_task_logic.Block:
 
     odor_sequence = get_odor_sequence(total_trials=n_pairs, n=1)
     trial_sequence: list[int] = []
-    for pair in odor_sequence:
-        this_block = [pair[0], pair[1] + ODOR_COUNT] * n_sites_each
+    for neg, pos in odor_sequence:
+        this_block = [neg] * n_nonrewarded_sites + [pos + ODOR_COUNT] * n_rewarded_sites
         random.shuffle(this_block)
         trial_sequence.extend(this_block)
 
@@ -150,7 +151,7 @@ task_logic = AindVrForagingTaskLogic(
     task_parameters=AindVrForagingTaskParameters(
         rng_seed=None,
         environment=vr_task_logic.BlockStructure(
-            blocks=[make_block(n_sites_each=5, n_pairs=100)],
+            blocks=[make_block(n_rewarded_sites=3, n_nonrewarded_sites=6, n_pairs=150)],
         ),
         operation_control=operation_control,
     ),
