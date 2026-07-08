@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Any, cast
+from typing import cast
 from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
 
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
@@ -322,10 +322,9 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindVrForagingRig]):
             SoftwareEvents,
             _dataset["Behavior"]["SoftwareEvents"]["SpoutParkingPositions"].load(),
         )
-        data: dict[str, Any] = manipulator_parking_position.data.iloc[-1]["data"][
-            "ResetPosition"
-        ]
-        position = ManipulatorPosition.model_validate(data)
+        position = ManipulatorPosition.model_validate(
+            manipulator_parking_position.data.iloc[-1]["data"]
+        )
         return position
 
 
