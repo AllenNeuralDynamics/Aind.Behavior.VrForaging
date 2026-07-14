@@ -39,12 +39,15 @@ _DEFAULT_PICKER_SETTINGS = DefaultBehaviorPickerSettings(
 
 
 async def _run_curriculum_if_applicable(
-    picker: DataversePicker, input_trainer_state_path: Path, launcher: Launcher
+    picker: DataversePicker,
+    trainer_state: TrainerState | None,
+    input_trainer_state_path: Path,
+    launcher: Launcher,
 ) -> tuple[CurriculumSuggestion | None, Path | None, CurriculumSettings | None]:
     if (
-        (picker.trainer_state is None)
-        or (picker.trainer_state.is_on_curriculum is False)
-        or (picker.trainer_state.stage is None)
+        (trainer_state is None)
+        or (trainer_state.is_on_curriculum is False)
+        or (trainer_state.stage is None)
     ):
         return None, None, None
     picker.frontend.notify("Running curriculum evaluation…", ui.MessageLevel.INFO)
@@ -222,7 +225,9 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         suggestion,
         suggestion_path,
         curriculum_settings,
-    ) = await _run_curriculum_if_applicable(picker, input_trainer_state_path, launcher)
+    ) = await _run_curriculum_if_applicable(
+        picker, trainer_state, input_trainer_state_path, launcher
+    )
 
     # Waterlog
     try:
@@ -357,8 +362,13 @@ async def recover_session(launcher: Launcher) -> None:
         input_trainer_state_path = trainer_state_files[0]
     else:
         raise FileNotFoundError("Trainer state file not found.")
+    trainer_state = TrainerState.model_validate_json(
+        input_trainer_state_path.read_text(encoding="utf-8")
+    )
 
     launcher.register_session(session_model, rig_model.data_directory)
+    # TODO we should fix this in the future to prevent us from accessing the private setter
+    picker._session = session_model
 
     # Curriculum + Mappers
     suggestion: CurriculumSuggestion | None = None
@@ -375,7 +385,7 @@ async def recover_session(launcher: Launcher) -> None:
             suggestion_path,
             curriculum_settings,
         ) = await _run_curriculum_if_applicable(
-            picker, input_trainer_state_path, launcher
+            picker, trainer_state, input_trainer_state_path, launcher
         )
 
         assert launcher.repository.working_tree_dir is not None
