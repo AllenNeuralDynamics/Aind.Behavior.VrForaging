@@ -73,7 +73,7 @@ wheels = [
 
 [[package]]
 name = "aind-behavior-vr-foraging"
-version = "1.2.0rc2"
+version = "1.2.0"
 source = { editable = "src/packages/aind_behavior_vr_foraging" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -126,7 +126,7 @@ dev = [
 
 [[package]]
 name = "aind-behavior-vr-foraging-curricula"
-version = "1.2.0rc2"
+version = "1.2.0"
 source = { editable = "src/packages/aind_behavior_vr_foraging_curricula" }
 dependencies = [
     { name = "aind-behavior-curriculum" },

@@ -11,7 +11,7 @@ authors = [
     {name = "Galen Lynch", email = "galen@galenlynch.com"},
 ]
 license = "MIT"
-version = "1.2.0rc2"
+version = "1.2.0"
 requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3.11",
