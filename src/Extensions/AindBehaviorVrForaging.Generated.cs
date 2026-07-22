@@ -232,7 +232,7 @@ namespace AindVrForagingDataSchema
         public AindVrForagingRig()
         {
             _aindBehaviorServicesPkgVersion = "0.13.7";
-            _version = "1.2.0";
+            _version = "1.2.1";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
             _harpOlfactometer = new Olfactometer();
@@ -681,7 +681,7 @@ namespace AindVrForagingDataSchema
             _name = "AindVrForaging";
             _description = "";
             _taskParameters = new AindVrForagingTaskParameters();
-            _version = "1.2.0";
+            _version = "1.2.1";
         }
     
         protected AindVrForagingTaskLogic(AindVrForagingTaskLogic other)
