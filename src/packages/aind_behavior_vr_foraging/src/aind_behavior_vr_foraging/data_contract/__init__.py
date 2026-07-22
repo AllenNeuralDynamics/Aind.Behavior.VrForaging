@@ -16,7 +16,14 @@ def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contr
     parsed_version = semver.Version.parse(version)
     # Ignore release candidate suffix for version comparison
     parsed_version = semver.Version(parsed_version.major, parsed_version.minor, parsed_version.patch)
-    if semver.Version.parse("0.4.0") <= parsed_version < semver.Version.parse("0.5.0"):
+    if semver.Version.parse("0.3.0") <= parsed_version < semver.Version.parse("0.4.0"):
+        logger.warning(
+            "Version %s does not have a dedicated data contract. Loading it with the v0.4 contract "
+            "as a best-effort attempt.",
+            version,
+        )
+        from .v0_4_0 import dataset as _dataset
+    elif semver.Version.parse("0.4.0") <= parsed_version < semver.Version.parse("0.5.0"):
         from .v0_4_0 import dataset as _dataset
     elif semver.Version.parse("0.5.0") <= parsed_version < semver.Version.parse("0.6.0"):
         from .v0_5_0 import dataset as _dataset
@@ -51,6 +58,10 @@ def _infer_dataset_version(path: os.PathLike) -> t.Optional[str]:
         with open(task_logic, "r", encoding="utf-8") as f:
             data = json.load(f)
             version = data.get("version", None)
+            if version is None:
+                # Fallback for older datasets (e.g. version 0.3) that store the
+                # version under "schema_version" instead of "version".
+                version = data.get("schema_version", None)
     return version
 
 
