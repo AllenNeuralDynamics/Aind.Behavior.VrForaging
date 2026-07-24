@@ -12,3 +12,12 @@ dataverse:
   tenant_id: "32669cd6-737f-4b39-8bdd-d6951120d3fc"
   client_id: "df37356e-3316-484a-b732-319b6b4ad464"
   org: "org5d93e08d"
+
+otel:
+  enabled: true
+  endpoint: "http://localhost:4318"  # local Alloy/OpenTelemetry collector
+  service_name: "aind-behavior-vr-foraging"
+  run_name: "experiment"
+  software_name: "aind-behavior-vr-foraging"
+  # rig_id: auto-resolved from aibs_comp_id env var; override here if needed
+  # headers: {}  # add Authorization headers for remote collectors (e.g. OpenObserve)

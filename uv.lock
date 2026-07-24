@@ -22,7 +22,7 @@ members = [
 [manifest.dependency-groups]
 dev = [
     { name = "aind-behavior-vr-foraging", extras = ["data", "mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", specifier = ">=0.11.2" },
+    { name = "aind-clabe", git = "https://github.com/AllenNeuralDynamics/clabe?branch=feat%2Fopentelemetry-instrumentation" },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -105,7 +105,7 @@ dev = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.13.6" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'mappers'", editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", specifier = ">=0.10.6" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", git = "https://github.com/AllenNeuralDynamics/clabe?branch=feat%2Fopentelemetry-instrumentation" },
     { name = "aind-data-schema", marker = "extra == 'mappers'", specifier = ">=2.7.1" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.8,<0.6.0" },
     { name = "pydantic-settings" },
@@ -160,20 +160,17 @@ dev = [
 [[package]]
 name = "aind-clabe"
 version = "0.11.2"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/AllenNeuralDynamics/clabe?branch=feat%2Fopentelemetry-instrumentation#7d0aa655d330ed4a80bce8fd051b55bf72e7c4ca" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
+    { name = "opentelemetry-api" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "requests" },
     { name = "rich" },
     { name = "semver" },
     { name = "textual" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/4f/83/6150ad46286259a2296f6281eaa439aec60cfa9730cf884f27ec9600c080/aind_clabe-0.11.2.tar.gz", hash = "sha256:dce48bef3796377a6ab8773497cba1f44a77e3d08eb6cb8490414c283b68ac50", size = 101974, upload-time = "2026-06-30T17:03:46.045Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c4/eb/5c23a6b19448e9392a49e9426e3e9115872661d65fac310313043aeb91bd/aind_clabe-0.11.2-py3-none-any.whl", hash = "sha256:1b538dd087003c4a4676168e74643e7d428bcd8dcb56b948dc27205263ede5ce", size = 131595, upload-time = "2026-06-30T17:03:44.886Z" },
 ]
 
 [package.optional-dependencies]
@@ -739,7 +736,7 @@ name = "cryptography"
 version = "49.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1f/99/d1c90d6041656cc6ee229dc99cd67fd0cd5aec3c5f7d72fffc27cc750054/cryptography-49.0.0.tar.gz", hash = "sha256:f89660a348f4f78a92366240a61404e337586ef7f5909a2fef59ca88ef505493", size = 854345, upload-time = "2026-06-12T20:02:30.512Z" }
 wheels = [
@@ -785,13 +782,13 @@ name = "erdantic"
 version = "1.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pydantic" },
-    { name = "pydantic-core" },
-    { name = "pygraphviz" },
-    { name = "sortedcontainers-pydantic" },
-    { name = "typenames" },
-    { name = "typer" },
-    { name = "typing-extensions", marker = "python_full_version < '3.12'" },
+    { name = "pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pydantic-core", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pygraphviz", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "sortedcontainers-pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typenames", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typer", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/b3/d814074dc6076a97682dc8a62a3da672fd982a533cc1f29854b6a4433ef2/erdantic-1.2.1.tar.gz", hash = "sha256:9105fc51260ee58b531690d1ef87db81f849257e73e106cd8f2a7f8a26d8d9b0", size = 1152018, upload-time = "2026-02-15T23:56:00.294Z" }
 wheels = [
@@ -1508,9 +1505,9 @@ name = "msal"
 version = "1.37.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography" },
-    { name = "pyjwt", extra = ["crypto"] },
-    { name = "requests" },
+    { name = "cryptography", marker = "sys_platform == 'win32'" },
+    { name = "pyjwt", extra = ["crypto"], marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9a/99/d840198ecf6e8057bbc937f129ae940404485d736cda73253bbff9537f01/msal-1.37.0.tar.gz", hash = "sha256:1b1672a33ee467c1d70b341bb16cafd51bb3c817147a95b93263794b03971bec", size = 182444, upload-time = "2026-05-29T19:49:05.561Z" }
 wheels = [
@@ -1677,6 +1674,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/fd/55/b3b49a1b97aabcfbbd6c7326df9cb0b6fa0c0aefa8e89d500939e04aa229/opencv_python-4.13.0.92-cp37-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:620d602b8f7d8b8dab5f4b99c6eb353e78d3fb8b0f53db1bd258bb1aa001c1d5", size = 72927042, upload-time = "2026-02-05T06:59:23.389Z" },
     { url = "https://files.pythonhosted.org/packages/fb/17/de5458312bcb07ddf434d7bfcb24bb52c59635ad58c6e7c751b48949b009/opencv_python-4.13.0.92-cp37-abi3-win32.whl", hash = "sha256:372fe164a3148ac1ca51e5f3ad0541a4a276452273f503441d718fab9c5e5f59", size = 30932638, upload-time = "2026-02-05T07:02:14.98Z" },
     { url = "https://files.pythonhosted.org/packages/e9/a5/1be1516390333ff9be3a9cb648c9f33df79d5096e5884b5df71a588af463/opencv_python-4.13.0.92-cp37-abi3-win_amd64.whl", hash = "sha256:423d934c9fafb91aad38edf26efb46da91ffbc05f3f59c4b0c72e699720706f5", size = 40212062, upload-time = "2026-02-05T07:02:12.724Z" },
+]
+
+[[package]]
+name = "opentelemetry-api"
+version = "1.44.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ee/8b/aa9e2d8b8dfa7c946f7dec5d1f8f6ba8eca062f43509a06bdb5ce93d26c0/opentelemetry_api-1.44.0.tar.gz", hash = "sha256:67647e5e9566edcf421166fdf022b3537f818635daa852b289e34604dc6fb33a", size = 72406, upload-time = "2026-07-16T15:25:32.678Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ca/6f/a04e900f465ff3221ccc395522503e2d10e79fa21f2723c8e177aae1e0d1/opentelemetry_api-1.44.0-py3-none-any.whl", hash = "sha256:94b98c893a91b88657eaac1e3ba89618cdb85be6918196705354f34728b2cdef", size = 60018, upload-time = "2026-07-16T15:25:11.657Z" },
 ]
 
 [[package]]
@@ -2068,7 +2077,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography" },
+    { name = "cryptography", marker = "sys_platform == 'win32'" },
 ]
 
 [[package]]
@@ -2317,7 +2326,7 @@ resolution-markers = [
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 dependencies = [
-    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" } },
+    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7a/97/5a3609c4f8d58b039179648e62dd220f89864f56f7357f5d4f45c29eb2cc/scipy-1.17.1.tar.gz", hash = "sha256:95d8e012d8cb8816c226aef832200b1d45109ed4464303e997c5b13122b297c0", size = 30573822, upload-time = "2026-02-23T00:26:24.851Z" }
 wheels = [
@@ -2396,7 +2405,7 @@ resolution-markers = [
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 dependencies = [
-    { name = "numpy", version = "2.5.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "numpy", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a7/25/c2700dfaf6442b4effaa91af24ebce5dc9d31bb4a69706313aae70d72cd0/scipy-1.18.0.tar.gz", hash = "sha256:67b2ad2ad54c72ca6d04975a9b2df8c3638c34ddd5b28738e94fc2b57929d378", size = 30774447, upload-time = "2026-06-19T15:01:43.456Z" }
 wheels = [
@@ -2492,9 +2501,9 @@ name = "sortedcontainers-pydantic"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pydantic" },
-    { name = "pydantic-core" },
-    { name = "sortedcontainers" },
+    { name = "pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pydantic-core", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "sortedcontainers", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f5/39/c951f89cd289d207730d080ce24d973db18227ea09ba966e4fab9d75dab4/sortedcontainers_pydantic-2.0.0.tar.gz", hash = "sha256:0cb3abfbda64dc1fa2365b578ddc3a259c7d75daeae76d2f9087f5ebc1f8f1fe", size = 53829, upload-time = "2025-04-18T06:51:10.706Z" }
 wheels = [
@@ -2586,9 +2595,9 @@ name = "typer"
 version = "0.26.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "annotated-doc" },
-    { name = "rich" },
-    { name = "shellingham" },
+    { name = "annotated-doc", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "rich", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "shellingham", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7c/f7/68adc395201b20b872d68e975386832e8005ffeacedd43a1d837a32815be/typer-0.26.8.tar.gz", hash = "sha256:c244a6bd558886fe3f8780efb6bdd28bb9aff005a94eedebaa5cb32926fe2f7e", size = 202097, upload-time = "2026-06-26T09:22:45.705Z" }
 wheels = [

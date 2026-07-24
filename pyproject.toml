@@ -14,6 +14,7 @@ members = [
 [tool.uv.sources]
 aind-behavior-vr-foraging = { workspace = true }
 aind-behavior-vr-foraging-curricula = { workspace = true }
+aind-clabe = { git = "https://github.com/AllenNeuralDynamics/clabe", branch = "feat/opentelemetry-instrumentation" }
 
 [dependency-groups]
 docs = [
