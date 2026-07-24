@@ -160,7 +160,7 @@ dev = [
 [[package]]
 name = "aind-clabe"
 version = "0.11.2"
-source = { git = "https://github.com/AllenNeuralDynamics/clabe?branch=feat%2Fopentelemetry-instrumentation#7d0aa655d330ed4a80bce8fd051b55bf72e7c4ca" }
+source = { git = "https://github.com/AllenNeuralDynamics/clabe?branch=feat%2Fopentelemetry-instrumentation#ae0851afca59103312fc92ba823b568b0dc4beca" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
