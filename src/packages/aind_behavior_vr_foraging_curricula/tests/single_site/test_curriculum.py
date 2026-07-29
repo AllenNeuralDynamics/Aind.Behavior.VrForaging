@@ -61,7 +61,7 @@ def _make_metrics(**overrides: Any) -> SingleSiteMetrics:
 
 class TestLearnToStopToLearnToChoose:
     def _make_passing_metrics(self) -> SingleSiteMetrics:
-        return _make_metrics(n_patches_visited=150, n_patches_seen=300, last_stop_threshold_updater=8)
+        return _make_metrics(n_patches_visited=150, n_patches_seen=300, last_stop_threshold_updater=4)
 
     def test_pass_when_velocity_floored_and_enough_stops(self):
         assert st_s_learn_to_stop_to_s_learn_to_choose(self._make_passing_metrics()) is True
@@ -243,7 +243,7 @@ class TestProgression:
 
         # learn_to_stop -> learn_to_choose
         state = trainer.evaluate(
-            state, _make_metrics(n_patches_visited=150, n_patches_seen=300, last_stop_threshold_updater=8)
+            state, _make_metrics(n_patches_visited=150, n_patches_seen=300, last_stop_threshold_updater=4)
         )
         assert state.stage is not None and state.stage.name == "learn_to_choose"
 
