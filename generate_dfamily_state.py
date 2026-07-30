@@ -48,6 +48,25 @@ def main() -> None:
         help="Override the stop-velocity threshold (cm/s). Omit to keep the stage default (4).",
     )
     parser.add_argument(
+        "--block-length",
+        nargs=3,
+        type=float,
+        metavar=("MIN", "EXP_MEAN", "MAX"),
+        default=None,
+        help=(
+            "Block length as n_min + Exp(EXP_MEAN) truncated at MAX. Omit to keep the stage "
+            "default (65 10 90, ~75 sites). Lengthen for a perseverating mouse -- but the engaged "
+            "window is ~250 sites, so MIN*n_blocks past that buries the ABA return in satiety."
+        ),
+    )
+    parser.add_argument(
+        "--n-blocks",
+        type=int,
+        default=None,
+        help="Number of alternating blocks. Omit to keep the stage default (5). Drop to 3 (ABA) "
+        "or 2 when blocks are long, so the return block stays inside the engaged window.",
+    )
+    parser.add_argument(
         "--output", required=True, help="Path to write the trainer state JSON"
     )
     args = parser.parse_args()
@@ -55,6 +74,11 @@ def main() -> None:
     kwargs = {"start_high": args.start_high}
     if args.reward_volume is not None:
         kwargs["reward_amount"] = args.reward_volume
+    if args.block_length is not None:
+        b_min, b_mean, b_max = args.block_length
+        kwargs["block_length"] = (int(b_min), b_mean, b_max)
+    if args.n_blocks is not None:
+        kwargs["n_blocks"] = args.n_blocks
     stage = ss_stages.make_s_probability_grid_dfamily(**kwargs)
     if args.velocity_threshold is not None:
         stage.task.task_parameters.operation_control.position_control.velocity_threshold = args.velocity_threshold
@@ -80,7 +104,12 @@ def main() -> None:
     with open(args.output, "w", encoding="utf-8") as f:
         f.write(state.model_dump_json(indent=2))
     reward = args.reward_volume if args.reward_volume is not None else "default(7)"
-    print(f"Wrote {args.output} (start_high={args.start_high}, reward_uL={reward})")
+    blocks = stage.task.task_parameters.environment.blocks
+    trunc = blocks[0].end_conditions[0].value.truncation_parameters
+    print(
+        f"Wrote {args.output} (start_high={args.start_high}, reward_uL={reward}, "
+        f"n_blocks={len(blocks)}, block_sites={trunc.min:.0f}-{trunc.max:.0f})"
+    )
 
 
 if __name__ == "__main__":
