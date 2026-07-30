@@ -459,6 +459,8 @@ def dfamily_plan(
 def make_s_probability_grid_dfamily(
     start_high: str = "A",
     reward_amount: float = helpers.REWARD_AMOUNT_UL,
+    block_length: tuple[int, float, float] = PROBABILITY_GRID_DFAMILY_LEN,
+    n_blocks: int = PROBABILITY_GRID_DFAMILY_N_BLOCKS,
 ) -> Stage:
     """D-family fixed-|D|=0.4 ABA diagnostic stage (off-curriculum), played Sequential.
 
@@ -467,10 +469,17 @@ def make_s_probability_grid_dfamily(
     ceiling-limited mouse (e.g. 860900 at 5 uL vs 860898 at the default 7). Odor C is held at the
     fixed mid-value reference (p_C=0.5, q_C=0.05); delay / stop / velocity match the terminal grid
     stage. See the constants block above for the design rationale.
+
+    ``block_length`` is ``(n_min_patches, exp_mean, max)`` -- sites are drawn as
+    ``n_min + Exp(exp_mean)`` truncated at ``max``. Lengthen it when a mouse perseverates and needs
+    more sites to overcome a standing odor bias before the block ends. ``n_blocks`` trades against
+    it: the engaged window is roughly a fixed ~250 sites regardless of how blocks are cut, so
+    ``n_min * 3`` above ~250 pushes the ABA return block past the satiety cliff -- drop ``n_blocks``
+    rather than let the return land in the disengaged tail.
     """
     p_c = PROBABILITY_GRID_ODOR_C_REWARD_PROBABILITY
     delay = helpers.make_reward_delay(offset=0.2, mean=1.0, max_delay=6.0)
-    n_min, exp_mean, b_max = PROBABILITY_GRID_DFAMILY_LEN
+    n_min, exp_mean, b_max = block_length
     make_patch_kwargs = {**_POST_STOP_PATCH_KWARGS, "delay": delay, "reward_amount": reward_amount}
     blocks = [
         helpers.make_block(
@@ -481,7 +490,7 @@ def make_s_probability_grid_dfamily(
             first_state_occupancy=[0.475, 0.475, 0.05],
             make_patch_kwargs=make_patch_kwargs,
         )
-        for (p_a, p_b) in dfamily_plan(start_high)
+        for (p_a, p_b) in dfamily_plan(start_high, n_blocks=n_blocks)
     ]
     return Stage(
         name="probability_grid_dfamily",
