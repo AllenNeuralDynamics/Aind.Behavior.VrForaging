@@ -21,16 +21,23 @@ Examples:
 Reproduce the current graduation config (set1, capped, no reversal):
     uv run python examples/task_reversal.py --group no_reversal --step set1 --reward capped
 
-One S↔D reversal (set1 -> set6) at the 20-patch mark, capped rewards:
-    uv run python examples/task_reversal.py --group single_reversal --step set1 --transition set6 --reward capped --patches-before-reversal 20
+One S↔D reversal (set1 -> set6) after 20 stops (default unit), capped rewards:
+    uv run python examples/task_reversal.py --group single_reversal --step set1 --transition set6 --reward capped --block-length 20
 
-Repeated S↔D reversals only, every 30 patches (blocks alternate set1 <-> set6; no-reward
+Repeated S↔D reversals only, every 30 stops (blocks alternate set1 <-> set6; no-reward
 odor stays pinned to one channel for the whole session), with a longer first block to
 absorb warm-up and carry-over from the previous session:
-    uv run python examples/task_reversal.py --group alternating --swap DS --step set1 --n-reversals 5 --patches-before-reversal 30 --first-block-patches 80
+    uv run python examples/task_reversal.py --group alternating --swap DS --step set1 --n-reversals 5 --block-length 30 --first-block-length 80
+
+Count blocks in PATCHES encountered instead of stops (the original behaviour -- predictable
+structure and N guaranteed odor presentations, but a skipping animal reaches the reversal
+barely having sampled). Add --patch-cap under the default stop-counting to bound how long a
+disengaged animal can stall in one block:
+    uv run python examples/task_reversal.py --group single_reversal --count-by patches --block-length 40
+    uv run python examples/task_reversal.py --group single_reversal --count-by stops --block-length 40 --patch-cap 80
 
 Infer the current set from a mouse's last uploaded session, then just pick the reversal:
-    uv run python examples/task_reversal.py --from-mouse 867424 --group single_reversal --transition set6 --reward capped --patches-before-reversal 20
+    uv run python examples/task_reversal.py --from-mouse 867424 --group single_reversal --transition set6 --reward capped --block-length 20
 
 Infer from the freshest session still staged on the NAS (not yet uploaded to S3):
     uv run python examples/task_reversal.py --from-session /path/to/nas/867424_2026-07-13_20-27-51 --group single_reversal --transition set6 --reward capped
@@ -62,6 +69,8 @@ RewardMode = Literal["full", "capped", "reduced"]
 Group = Literal["no_reversal", "single_reversal", "multiple_reversal", "alternating"]
 PatchType = Literal["single", "delayed", "no_reward"]
 SwapKind = Literal["DS", "DN", "SN"]
+CountBy = Literal["stops", "patches"]
+_DEFAULT_COUNT_BY: CountBy = "stops"
 
 # Which olfactometer channel index (0/1/2) carries each contingency, per set.
 ODOR_LABEL: dict[str, dict[str, int]] = {
@@ -83,7 +92,7 @@ _SET_BY_MAPPING: dict[tuple[int, int, int], str] = {
 _MULTI_REVERSAL_LOOP: list[SetName] = ["set1", "set6", "set2", "set5", "set3", "set4"]
 
 # Default steady-state block length; deviations are tagged into the stage name.
-_DEFAULT_BLOCK_PATCHES = 40
+_DEFAULT_BLOCK_LENGTH = 40
 
 
 @dataclass
@@ -116,13 +125,33 @@ class ReversalConfig:
     reward: RewardMode = "capped"
     """Delayed-patch payout: full/capped ≈ 3 drops (capped also hard-caps total volume at
     amount×3 and guarantees the first stop); reduced ≈ 2 drops."""
-    patches_before_reversal: int = _DEFAULT_BLOCK_PATCHES
-    """Patch count for every non-terminal block; the final block runs to session end."""
-    first_block_patches: Optional[int] = None
-    """Patch count for the FIRST block only; defaults to ``patches_before_reversal``. The
-    first block carries warm-up and whatever the animal brings over from the previous
-    session, so it usually wants to be longer than the steady-state blocks. Ignored when
-    the first block is also the last (no_reversal), since that one is unbounded."""
+    block_length: int = _DEFAULT_BLOCK_LENGTH
+    """Length of every non-terminal block, in units of ``count_by`` (stops or patches); the
+    final block runs to session end.
+
+    The two units are NOT interchangeable, but they happen to land close together here: this
+    is a depleting-patch task, so one patch hosts many stops -- measured on 867424
+    (2026-07-28): 253 patches, only 41% visited at all, ~3.0 stops per visited patch, 310
+    stops total. So 40 stops ~ 33 patches for that mouse, and a number tuned in one unit
+    roughly carries over to the other. Re-check the ratio per cohort before relying on it,
+    since it moves with both skip rate and exploitation depth."""
+    first_block_length: Optional[int] = None
+    """Length of the FIRST block only, in units of ``count_by``; defaults to
+    ``block_length``. The first block carries warm-up and whatever the animal brings over
+    from the previous session, so it usually wants to be longer than the steady-state
+    blocks. Ignored when the first block is also the last (no_reversal), since that one is
+    unbounded."""
+    count_by: CountBy = _DEFAULT_COUNT_BY
+    """Currency the block advances in: "stops" (``ChoiceFeedback``) or "patches"
+    (``ActivePatch``, i.e. every patch encountered, stopped at or not). "patches" is the
+    original behaviour -- predictable structure and N guaranteed odor presentations; "stops"
+    is robust to an animal that skips its way to the reversal. See ``make_end_condition``
+    for the trade-off. The choice is tagged into the stage name (``_pb``/``_sb``)."""
+    patch_cap: Optional[int] = None
+    """Optional upper bound in PATCHES on every non-terminal block. End conditions are merged
+    (first to fire wins), so this bounds how long a disengaged animal can sit in one block
+    without ever reaching ``block_length``. ``None`` means pure stop-gating. Only
+    meaningful when ``count_by="stops"``; ignored otherwise."""
 
     stop_duration: float = 1.0
     delay_mean: float = 0.5
@@ -350,54 +379,82 @@ def patch_options(cfg: ReversalConfig, select: SetName) -> task_logic.MarkovEnvi
     )
 
 
-def make_end_condition(value) -> list:
-    """Patch-count block end condition; ``[]`` means "run to session end"."""
+def _scalar(value) -> distributions.Scalar:
+    return distributions.Scalar(
+        distribution_parameters=distributions.ScalarDistributionParameter(value=value)
+    )
+
+
+def make_end_condition(
+    value, count_by: CountBy = "stops", patch_cap: Optional[int] = None
+) -> list:
+    """Block end condition; ``[]`` means "run to session end".
+
+    ``count_by`` picks the currency the block advances in:
+
+    - ``"patches"`` -- ``BlockEndConditionPatchCount`` counts ``ActivePatch``, i.e. every
+      patch ENCOUNTERED whether or not the animal stopped. Advances on a fixed schedule, so
+      session structure is predictable, and it guarantees N distinct odor presentations. But
+      a skipping animal reaches the reversal barely having sampled: ~59% of patches are run
+      past (867424), so a 40-patch block delivers only ~16 visited patches.
+    - ``"stops"`` -- ``BlockEndConditionChoice`` counts ``ChoiceFeedback``, i.e. stops. Robust
+      to skipping, since patches run past do not advance the block.
+
+    Two caveats on ``"stops"``, both from patches being multi-stop in this depleting task:
+
+    - Stops are NOT distinct odor experiences. ~3 stops land in one patch, so N stops buys
+      roughly N/3 odor-contingency samples, and that ratio moves with exploitation depth.
+      ``"patches"`` is the more direct guarantee of *distinct* sampling.
+    - Perseveration can accelerate the reversal: an animal still exploiting the pre-reversal
+      mapping racks up stops quickly, ending the block sooner. Watch for this after a flip.
+
+    Under ``"stops"`` a fully disengaged animal never advances at all. ``patch_cap`` guards
+    that: the rig merges end conditions, so whichever fires FIRST ends the block -- it is an
+    upper bound in patches, not an additional requirement. It is meaningless under
+    ``"patches"`` (the primary condition is already a patch count) and ignored there.
+    """
     if isinstance(value, list):
         return value
-    return [
-        task_logic.BlockEndConditionPatchCount(
-            value=distributions.Scalar(
-                distribution_parameters=distributions.ScalarDistributionParameter(
-                    value=value
-                )
-            )
+    if count_by == "patches":
+        return [task_logic.BlockEndConditionPatchCount(value=_scalar(value))]
+    conditions: list = [task_logic.BlockEndConditionChoice(value=_scalar(value))]
+    if patch_cap is not None:
+        conditions.append(
+            task_logic.BlockEndConditionPatchCount(value=_scalar(patch_cap))
         )
-    ]
+    return conditions
 
 
 def build_sequence(cfg: ReversalConfig) -> list[tuple[SetName, object]]:
     """Return ``[(set, end_condition_value), ...]`` for the chosen group.
 
     The final block always gets ``[]`` (runs to session end); earlier blocks end after
-    ``patches_before_reversal`` patches, except the first, which honours
-    ``first_block_patches`` when set. Uses a list (not a dict) so the multiple-reversal
+    ``block_length`` (in ``count_by`` units), except the first, which honours
+    ``first_block_length`` when set. Uses a list (not a dict) so the multiple-reversal
     loop can't be clobbered by duplicate keys.
     """
     seq: list[tuple[SetName, object]]
     if cfg.group == "no_reversal":
         seq = [(cfg.step, [])]
     elif cfg.group == "single_reversal":
-        seq = [(cfg.step, cfg.patches_before_reversal), (cfg.transition, [])]
+        seq = [(cfg.step, cfg.block_length), (cfg.transition, [])]
     elif cfg.group == "multiple_reversal":
-        seq = [(s, cfg.patches_before_reversal) for s in _MULTI_REVERSAL_LOOP]
+        seq = [(s, cfg.block_length) for s in _MULTI_REVERSAL_LOOP]
         seq[-1] = (seq[-1][0], [])
     elif cfg.group == "alternating":
         if cfg.n_reversals < 1:
             raise ValueError("--n-reversals must be >= 1 for group=alternating.")
         partner = partner_set(cfg.step, cfg.swap)
         pair: list[SetName] = [cfg.step, partner]
-        seq = [
-            (pair[i % 2], cfg.patches_before_reversal)
-            for i in range(cfg.n_reversals + 1)
-        ]
+        seq = [(pair[i % 2], cfg.block_length) for i in range(cfg.n_reversals + 1)]
         seq[-1] = (seq[-1][0], [])
     else:
         raise ValueError(f"Group '{cfg.group}' not recognized.")
 
     # The first block absorbs warm-up and carry-over from the previous session, so it is
     # sized independently. No-op when the first block is also the last (it is unbounded).
-    if cfg.first_block_patches is not None and not isinstance(seq[0][1], list):
-        seq[0] = (seq[0][0], cfg.first_block_patches)
+    if cfg.first_block_length is not None and not isinstance(seq[0][1], list):
+        seq[0] = (seq[0][0], cfg.first_block_length)
     return seq
 
 
@@ -453,7 +510,9 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
     blocks = [
         task_logic.Block(
             environment=patch_options(cfg, select),
-            end_conditions=make_end_condition(end_value),
+            end_conditions=make_end_condition(
+                end_value, count_by=cfg.count_by, patch_cap=cfg.patch_cap
+            ),
         )
         for select, end_value in sequence
     ]
@@ -476,12 +535,21 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
 
     # Block lengths enter the name only when they deviate from the defaults, so existing
     # stage names are unchanged; without this a sweep over block length would write every
-    # variant to the same file.
+    # variant to the same file. The tag also carries the UNIT (_sb stops / _pb patches) --
+    # a non-default count_by is always tagged, so a 40-stop and a 40-patch session cannot
+    # collide on one filename.
     first_end = sequence[0][1]
-    if cfg.patches_before_reversal != _DEFAULT_BLOCK_PATCHES and len(sequence) > 1:
-        stage_name += f"_pb{cfg.patches_before_reversal}"
-    if not isinstance(first_end, list) and first_end != cfg.patches_before_reversal:
+    unit_tag = "sb" if cfg.count_by == "stops" else "pb"
+    if len(sequence) > 1 and (
+        cfg.block_length != _DEFAULT_BLOCK_LENGTH or cfg.count_by != _DEFAULT_COUNT_BY
+    ):
+        stage_name += f"_{unit_tag}{cfg.block_length}"
+    if not isinstance(first_end, list) and first_end != cfg.block_length:
         stage_name += f"_fb{first_end}"
+    # The cap changes what the rig does, so it has to be in the name too -- otherwise a
+    # capped and an uncapped stop-gated session write to the same file.
+    if cfg.patch_cap is not None and cfg.count_by == "stops" and len(sequence) > 1:
+        stage_name += f"_cap{cfg.patch_cap}"
     weights = cfg.patch_weights()
     if len(set(weights)) > 1:
         stage_name += f"_wN{weights[0]:g}-D{weights[1]:g}-S{weights[2]:g}"
