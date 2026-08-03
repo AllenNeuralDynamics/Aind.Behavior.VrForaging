@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.0"
+<WorkflowBuilder Version="2.9.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -747,8 +747,8 @@
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>GiveReward</Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>ForceGiveReward</Name>
+            <Expression xsi:type="rx:PublishSubject" TypeArguments="sys:Nullable(sys:Single)">
+              <rx:Name>ForceGiveReward</rx:Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>GiveReward</Name>
@@ -891,7 +891,6 @@
           <Edges>
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="7" To="10" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
