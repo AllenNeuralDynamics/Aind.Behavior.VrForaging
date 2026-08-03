@@ -1083,9 +1083,11 @@
                                                             "function_type": "PatchRewardFunction",
                                                             "amount": null,
                                                             "probability": {
-                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "function_type": "SaturatingMultiplicativeRateFunction",
                                                                 "minimum": 0.15,
                                                                 "maximum": 0.7,
+                                                                "below_minimum_to": 0.0,
+                                                                "above_maximum_to": null,
                                                                 "rate": {
                                                                     "family": "Scalar",
                                                                     "distribution_parameters": {
@@ -1541,9 +1543,11 @@
                                                             "function_type": "PatchRewardFunction",
                                                             "amount": null,
                                                             "probability": {
-                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "function_type": "SaturatingMultiplicativeRateFunction",
                                                                 "minimum": 0.15,
                                                                 "maximum": 0.7,
+                                                                "below_minimum_to": 0.0,
+                                                                "above_maximum_to": null,
                                                                 "rate": {
                                                                     "family": "Scalar",
                                                                     "distribution_parameters": {
@@ -1879,9 +1883,11 @@
                                                             "function_type": "PatchRewardFunction",
                                                             "amount": null,
                                                             "probability": {
-                                                                "function_type": "ClampedMultiplicativeRateFunction",
+                                                                "function_type": "SaturatingMultiplicativeRateFunction",
                                                                 "minimum": 0.15,
                                                                 "maximum": 0.7,
+                                                                "below_minimum_to": 0.0,
+                                                                "above_maximum_to": null,
                                                                 "rate": {
                                                                     "family": "Scalar",
                                                                     "distribution_parameters": {
