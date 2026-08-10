@@ -1,3 +1,5 @@
+from typing import Optional
+
 from aind_behavior_curriculum import MetricsProvider, Policy, Stage
 from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging import task_logic
@@ -418,41 +420,114 @@ def make_s_probability_grid_reversal_pilot(rotation: int = 0) -> Stage:
 
 
 # ------------------------------------------------------------
-# D-family fixed-|D|=0.4 ABA diagnostic (off-curriculum)
+# D-family ABA diagnostic (off-curriculum)
 # ------------------------------------------------------------
 # Tests the ephys D-family (ephys_task_updates_since_upload.md): a strict A-high<->B-high
-# alternation at fixed |D|=0.4, T=1.0 -- an ABA perturb-and-return whose within-neuron control
-# is the return (blocks 1 & 3 same state). Purpose here is the Phase-2 readiness check: does a
-# DIRECT |D|=0.4 reversal SETTLE within a block? The 07-27/28 pilot could not clear this (898's
-# direct |D|=0.4 reversal did not settle by ~48 sites; 900 ceilinged), confounded by the ladder
-# changing |D| every block. Here |D| is FIXED so only the sign flips -- a simpler, learnable
-# structure that should settle faster.
+# alternation at fixed |D|, T=1.0 -- an ABA perturb-and-return whose within-neuron control
+# is the return (blocks 1 & 3 same state).
 #
-# Block length is DIAGNOSTIC-LONG (~75 sites, above the intended final 55-65) so we can locate
-# where the reversal settles rather than truncating it. Shrink toward 55-65 once n_adapt is known.
-PROBABILITY_GRID_DFAMILY_A_HIGH: tuple[float, float] = (0.7, 0.3)  # |D|=0.4 A-high
-PROBABILITY_GRID_DFAMILY_B_HIGH: tuple[float, float] = (0.3, 0.7)  # |D|=0.4 B-high
-PROBABILITY_GRID_DFAMILY_LEN: tuple[int, float, float] = (65, 10, 90)  # ~75 sites, jittered
-PROBABILITY_GRID_DFAMILY_N_BLOCKS: int = 5  # A,B,A,B,A -- blocks 0-2 are the primary ABA return
+# 2026-08-10 REDESIGN after 14 sessions (860898/860900, 07-29..08-07) at 0.7/0.3 failed to
+# produce an ABA return. The diagnosis is economic, not perceptual. Measured per-site time
+# budget (t_stop = extra seconds a stop costs, t_travel = seconds per site not spent stopped):
+# 898 (7.24, 4.08), 900 (5.54, 3.86). A stop is worth taking iff its reward probability exceeds
+#
+#     p* = t_stop * s * pbar / (t_travel + s * t_stop)
+#
+# (s = fraction of sites stopped at, pbar = mean reward prob over those sites; the reward AMOUNT
+# cancels, which is why the 7->5 uL manipulation was null). Solved as an equilibrium this gives
+# p* ~ 0.30 for both mice -- so at 0.7/0.3 the LOW odor sits essentially ON the indifference
+# point (margins +0.03 and -0.01) and stopping at both odors is correct. 900 sat at "stop at
+# everything" (P(stop|0.3) = 0.60), 898 just below it. The mice were right; the design was wrong.
+#
+# The pair must therefore straddle p*. What decides the choice is not the margin at the
+# destination but the GRADIENT from where each mouse currently sits: both policies can be locally
+# stable, and a better destination is worthless if nothing pushes the mouse out of the basin it is
+# in. Evaluated at each mouse's measured stopping rates, under the compressed corridor below:
+#
+#             gradient from current       margin at destination
+#   0.3/0.7   898 -0.110  900 -0.027      +0.06 / +0.03   both stuck (today)
+#   0.2/0.8   898 +0.000  900 +0.077      +0.21 / +0.17   898 on a knife edge
+#   0.1/0.9   898 +0.110  900 +0.181      +0.36 / +0.32   both move
+#
+# Hence 0.1/0.9. 898 gets no push at all from 0.2/0.8 -- its suppressed stopping drags its own
+# reward rate down, which drags p* below 0.2 -- so the wider pair is what makes the manipulation
+# work for BOTH mice rather than only the one the model fits well. It is also close to a regime
+# both mice have already demonstrated: the older probability_grid_long_delay ran 0.0/0.9 and both
+# correctly rejected the dead odor (P(stop|0.0) = 0.12 / 0.04).
+#
+# COST, and the intended ladder: |D|=0.8 is well above the 0.4 the ephys design wants, and the
+# value axis is close to categorical here. That is deliberate sequencing, not the endpoint --
+# establish that the ABA return works at all, then walk |D| back down (0.15/0.85, 0.2/0.8, ...)
+# re-checking the gradient at each step, since every step the mice actually complete raises their
+# reward rate and therefore p*, which makes the next narrower pair easier than it looks today.
+#
+# Odor C is OFF by default (q_c=0.0): at q_C=0.05 it was vestigial (its designed role is q_C=1/3
+# in the deferred richness family), too sparse to read, and the two mice did opposite things with
+# it (898 P(stop)=0.76-1.00 vs 900 0.00-0.13). Its channel assignment (odor_index=2) is positional
+# in ``helpers.make_block``, so re-enabling it later restores the same channel.
+PROBABILITY_GRID_DFAMILY_PAIR: tuple[float, float] = (0.9, 0.1)  # (p_high, p_low): |D|=0.8, T=1.0
+PROBABILITY_GRID_DFAMILY_Q_C: float = 0.0  # odor-C occupancy; 0.0 omits the patch entirely
+
+# Compressed corridor, D-FAMILY ONLY -- deliberately NOT folded into _POST_STOP_PATCH_KWARGS,
+# which is shared with learn_to_choose and the on-curriculum grid stages.
+#
+# Purpose is throughput: 860898 runs a near-constant stint every session (duration CV 0.057,
+# distance CV 0.071 -- 67.5 min / 1066 m) while its water varies 1.75x, so it is time/distance
+# limited, not satiety limited. Shortening the cycle therefore converts directly into more reward
+# sites, and a higher rate also widens 860900's gradient out of the stop-at-everything basin.
+#
+# What is NOT cut, and why:
+#  - reward_site_length stays 50. It is load-bearing for 898, which approaches fast and needs the
+#    distance to decelerate below the 4 cm/s stop threshold: its median stop is 34.8 cm into the
+#    site with p75 at the 50 cm cap, so a 35 cm site would drop ~half its stops. (900 is the
+#    opposite -- median 14.5 cm, 89% inside 35 -- but the corridor is kept common across mice.)
+#  - The inter-patch EXPONENTIAL is cut only modestly (60 -> 40). Its spread is the dominant
+#    source of inter-patch timing jitter (66-78% of Var(log duration); running speed supplies only
+#    16-18%), and that jitter is what lets the ephys analysis separate odor-onset responses from
+#    anticipatory ramping. SD 40 -> 33 cm keeps ~1.0 s of timing jitter, down from ~1.2 s.
+#    Collapsing the exponential instead (e.g. to mean 5) would leave only ~0.3 s -- too little.
+#  - The OFFSET is the efficient thing to cut: it adds to the mean while contributing no variance.
+#    30 -> 25 matches the floor LEARN_TO_STOP_GEOMETRY_COMPRESSED already uses. It also sets the
+#    worst-case odor-clearance gap, ~0.55 s at ~45 cm/s (was ~0.65 s) -- revisit if contamination
+#    is ever suspected, since learn_to_stop is not an odor-discrimination stage.
+#
+# Net: inter-patch mean 78 -> 62 cm (SD 40 -> 34), cycle 158 -> 132 cm (-16.3%), +19.4% reward
+# sites per unit distance. Clearance floor 0.67 -> 0.56 s at ~45 cm/s.
+PROBABILITY_GRID_DFAMILY_GEOMETRY: dict[str, float] = {
+    "inter_site_length": 10,  # was 15 (x2 per cycle); approach buffer, no decision cost
+    "inter_patch_min_length": 25,  # was 30; offset adds mean without variance
+    "inter_patch_mean_length": 40,  # was 60; the jitter-bearing term, cut conservatively
+}
+# Block length is set by the ENGAGED WINDOW, not by settling speed. Measured n_adapt is 8 (898)
+# and 13 (900) odor-presentations, i.e. 16-26 sites -- well below any block length considered. The
+# binding constraint is that the ABA return must land inside the ~140-site window over which the
+# mice still discriminate: 3 blocks must fit, so n_min <= 46. At 50 only TWO blocks fit and the
+# return falls outside the window, which is the failure being fixed. Re-derive both numbers after
+# a session on the new pair -- a discriminable task should lengthen the window and shorten n_adapt.
+PROBABILITY_GRID_DFAMILY_LEN: tuple[int, float, float] = (40, 5, 55)  # ~45 sites, jittered
+# EVEN by construction: the rig cycles the block list (plan = block_index % n_blocks), so an odd
+# count puts the last A-high block next to the first, producing a double-length A block at every
+# wrap and silently breaking the alternation. Sessions routinely run past n_blocks.
+PROBABILITY_GRID_DFAMILY_N_BLOCKS: int = 4  # A,B,A,B -- blocks 0-2 are the primary ABA return
 
 
 def dfamily_plan(
     start_high: str = "A",
     n_blocks: int = PROBABILITY_GRID_DFAMILY_N_BLOCKS,
+    pair: tuple[float, float] = PROBABILITY_GRID_DFAMILY_PAIR,
 ) -> list[tuple[float, float]]:
-    """Ordered ``(p_A, p_B)`` plan: strict A-high<->B-high alternation (fixed |D|=0.4, T=1.0).
+    """Ordered ``(p_A, p_B)`` plan: strict A-high<->B-high alternation at fixed |D|.
 
     ``start_high`` in {"A", "B"} sets the first block; balance it across sessions (do not tie to
-    a fixed calendar parity). With ``n_blocks=5`` the sequence is A,B,A,B,A (or B,A,B,A,B); blocks
-    0-2 are the primary ABA perturb-and-return, blocks 3-4 are bonus repeats if still engaged.
+    a fixed calendar parity). ``pair`` is ``(p_high, p_low)``. With ``n_blocks=4`` the sequence is
+    A,B,A,B (or B,A,B,A); blocks 0-2 are the primary ABA perturb-and-return. Keep ``n_blocks``
+    even so the rig's block-list cycling preserves the alternation past the end of the list.
     """
     if start_high not in ("A", "B"):
         raise ValueError(f"start_high must be 'A' or 'B', got {start_high!r}")
-    first, second = (
-        (PROBABILITY_GRID_DFAMILY_A_HIGH, PROBABILITY_GRID_DFAMILY_B_HIGH)
-        if start_high == "A"
-        else (PROBABILITY_GRID_DFAMILY_B_HIGH, PROBABILITY_GRID_DFAMILY_A_HIGH)
-    )
+    p_high, p_low = pair
+    a_high, b_high = (p_high, p_low), (p_low, p_high)
+    first, second = (a_high, b_high) if start_high == "A" else (b_high, a_high)
     return [first if i % 2 == 0 else second for i in range(n_blocks)]
 
 
@@ -461,36 +536,56 @@ def make_s_probability_grid_dfamily(
     reward_amount: float = helpers.REWARD_AMOUNT_UL,
     block_length: tuple[int, float, float] = PROBABILITY_GRID_DFAMILY_LEN,
     n_blocks: int = PROBABILITY_GRID_DFAMILY_N_BLOCKS,
+    prob_pair: tuple[float, float] = PROBABILITY_GRID_DFAMILY_PAIR,
+    q_c: float = PROBABILITY_GRID_DFAMILY_Q_C,
+    geometry: Optional[dict[str, float]] = None,
 ) -> Stage:
-    """D-family fixed-|D|=0.4 ABA diagnostic stage (off-curriculum), played Sequential.
+    """D-family fixed-|D| ABA diagnostic stage (off-curriculum), played Sequential.
 
-    ``start_high`` picks the opening state (balance across sessions). ``reward_amount`` (uL)
-    overrides the per-stop reward volume per mouse -- used to de-saturate the value axis for a
-    ceiling-limited mouse (e.g. 860900 at 5 uL vs 860898 at the default 7). Odor C is held at the
-    fixed mid-value reference (p_C=0.5, q_C=0.05); delay / stop / velocity match the terminal grid
-    stage. See the constants block above for the design rationale.
+    ``start_high`` picks the opening state -- balance it across sessions; leaving it fixed
+    confounds odor identity with block position (all 14 sessions of the 07-29..08-07 run opened
+    A-high). ``prob_pair`` is ``(p_high, p_low)``; it must straddle the indifference probability
+    p* (~0.30 for both pilot mice) or P(stop) cannot separate the odors -- see the constants block
+    above for the derivation. ``q_c`` is odor C's occupancy: 0.0 omits the patch, otherwise A and
+    B split the remainder evenly and C runs at ``PROBABILITY_GRID_ODOR_C_REWARD_PROBABILITY``.
+
+    ``reward_amount`` (uL) sets the per-stop volume. Note it does NOT affect selectivity: p* is
+    invariant to reward amount because the rate scales with it, so use this for total-water and
+    motivation only, never to de-saturate a ceilinged mouse.
 
     ``block_length`` is ``(n_min_patches, exp_mean, max)`` -- sites are drawn as
-    ``n_min + Exp(exp_mean)`` truncated at ``max``. Lengthen it when a mouse perseverates and needs
-    more sites to overcome a standing odor bias before the block ends. ``n_blocks`` trades against
-    it: the engaged window is roughly a fixed ~250 sites regardless of how blocks are cut, so
-    ``n_min * 3`` above ~250 pushes the ABA return block past the satiety cliff -- drop ``n_blocks``
-    rather than let the return land in the disengaged tail.
+    ``n_min + Exp(exp_mean)`` truncated at ``max``. Size it from the engaged window, not from
+    settling speed: three blocks must fit inside the window for the ABA return to land while the
+    mouse still discriminates. ``n_blocks`` should stay EVEN (see the constants block).
+
+    ``geometry`` overrides corridor lengths on top of ``_POST_STOP_PATCH_KWARGS``; it defaults to
+    the compressed :data:`PROBABILITY_GRID_DFAMILY_GEOMETRY`. Pass ``_POST_STOP_PATCH_KWARGS`` (or
+    ``{}``) to run the uncompressed corridor the on-curriculum grid stages use.
     """
-    p_c = PROBABILITY_GRID_ODOR_C_REWARD_PROBABILITY
     delay = helpers.make_reward_delay(offset=0.2, mean=1.0, max_delay=6.0)
     n_min, exp_mean, b_max = block_length
-    make_patch_kwargs = {**_POST_STOP_PATCH_KWARGS, "delay": delay, "reward_amount": reward_amount}
+    if not 0.0 <= q_c < 1.0:
+        raise ValueError(f"q_c must be in [0, 1), got {q_c}")
+    p_c = PROBABILITY_GRID_ODOR_C_REWARD_PROBABILITY if q_c > 0 else None
+    q_ab = (1.0 - q_c) / 2.0
+    occupancy = [q_ab, q_ab] + ([q_c] if q_c > 0 else [])
+    geom = PROBABILITY_GRID_DFAMILY_GEOMETRY if geometry is None else geometry
+    make_patch_kwargs = {
+        **_POST_STOP_PATCH_KWARGS,
+        **geom,
+        "delay": delay,
+        "reward_amount": reward_amount,
+    }
     blocks = [
         helpers.make_block(
             p_rewards=(p_a, p_b, p_c),
             n_min_patches=n_min,
             block_length_exp_mean=exp_mean,
             block_length_max=b_max,
-            first_state_occupancy=[0.475, 0.475, 0.05],
+            first_state_occupancy=occupancy,
             make_patch_kwargs=make_patch_kwargs,
         )
-        for (p_a, p_b) in dfamily_plan(start_high, n_blocks=n_blocks)
+        for (p_a, p_b) in dfamily_plan(start_high, n_blocks=n_blocks, pair=prob_pair)
     ]
     return Stage(
         name="probability_grid_dfamily",
