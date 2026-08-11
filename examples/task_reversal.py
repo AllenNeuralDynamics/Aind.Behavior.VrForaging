@@ -4,11 +4,25 @@ Builds an ``AindVrForagingTaskLogic`` for the batch-8 deterministic-reversal par
 writes a standalone ``TrainerState`` JSON for deployment via the launcher (not the
 curriculum system).
 
-Each block has three patch types:
+**The task comes from the curriculum, not from this file.** Each block is the vendored
+``graduation`` stage of ``deterministic_reversals`` (``--reward full``) or
+``deterministic_reversals_reward_capped`` (``--reward capped``), deep-copied and repointed at
+a different odor permutation. Corridor geometry, stop duration, reward delay, reward curves
+and operation control are all inherited, so a curriculum edit propagates here automatically
+and the two cannot drift apart. See :func:`baseline_block`.
+
+This matters because they did drift: an earlier version redeclared the whole task alongside
+the curriculum, and the copies diverged (corridor 150-400 vs 100-250 cm, stop duration 1.0 vs
+0.5 s, an exponential reward delay silently replaced by a normal one). Mice ran a measurably
+different task from the one the curriculum described, under stage names that looked like plain
+baselines. ``tests/test_task_reversal.py`` now pins ``no_reversal --step set1`` to be exactly
+the curriculum's ``graduation``, since set1 *is* graduation's permutation.
+
+Each block has three patch types (defined by the curriculum):
 
 - ``single``   – one guaranteed reward on the first stop, then depleted.
-- ``delayed``  – depleting/accumulating reward across stops (``reward`` mode picks the
-  schedule; see :class:`ReversalConfig`).
+- ``delayed``  – depleting/accumulating reward across stops (``--reward`` picks capped or
+  uncapped; both are ~3 drops).
 - ``no_reward``– never rewarded.
 
 The odor↔contingency assignment is chosen by a **set** permutation over the three
@@ -16,9 +30,15 @@ olfactometer **channel indices** (0/1/2); a *reversal* swaps the set between blo
 physical odorant on each channel lives in the **rig config** (``rig_input.json`` /
 instrument metadata), NOT here — this file only says "the odor on channel k".
 
+Every physical knob defaults to ``None`` = inherit. Passing one is an explicit deviation from
+the curriculum, and it is stamped into the stage name (``_sd1.5``, ``_ipmin150``, …) so a
+modified task can never share a name — or a ``trainer_state`` — with the baseline. Overrides
+retune values the curriculum already exposes; changing a distribution family, the patch count,
+or a reward curve's shape is a curriculum edit, not a flag.
+
 Examples:
 
-Reproduce the current graduation config (set1, capped, no reversal):
+Reproduce the graduation config exactly (set1, capped, no reversal, no overrides):
     uv run python examples/task_reversal.py --group no_reversal --step set1 --reward capped
 
 One S↔D reversal (set1 -> set6) after 20 stops (default unit), capped rewards:
@@ -41,6 +61,9 @@ Infer the current set from a mouse's last uploaded session, then just pick the r
 
 Infer from the freshest session still staged on the NAS (not yet uploaded to S3):
     uv run python examples/task_reversal.py --from-session /path/to/nas/867424_2026-07-13_20-27-51 --group single_reversal --transition set6 --reward capped
+
+Deviate from the curriculum on purpose (tagged _sd1 _ipmin150 _ipmax400 in the stage name):
+    uv run python examples/task_reversal.py --group no_reversal --step set1 --stop-duration 1.0 --minimum-interpatch-length 150 --maximum-interpatch-length 400
 """
 
 from __future__ import annotations
@@ -51,9 +74,8 @@ import re
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Literal, Optional, cast
+from typing import Callable, Literal, Optional, cast
 
-import numpy as np
 import tyro
 from aind_behavior_curriculum import Stage, TrainerState
 from aind_behavior_services.task import distributions
@@ -62,15 +84,42 @@ from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,
     AindVrForagingTaskParameters,
 )
-from aind_behavior_vr_foraging_curricula.depletion import helpers
+from aind_behavior_vr_foraging_curricula import __semver__
+from aind_behavior_vr_foraging_curricula.deterministic_reversals import (
+    _stages_shared,
+    stages as _stages_full,
+)
+from aind_behavior_vr_foraging_curricula.deterministic_reversals_reward_capped import (
+    stages as _stages_capped,
+)
 
 SetName = Literal["set1", "set2", "set3", "set4", "set5", "set6"]
-RewardMode = Literal["full", "capped", "reduced"]
+RewardMode = Literal["full", "capped"]
 Group = Literal["no_reversal", "single_reversal", "multiple_reversal", "alternating"]
 PatchType = Literal["single", "delayed", "no_reward"]
 SwapKind = Literal["DS", "DN", "SN"]
 CountBy = Literal["stops", "patches"]
 _DEFAULT_COUNT_BY: CountBy = "stops"
+
+#: The curriculum whose ``graduation`` stage each reward mode inherits from. Everything
+#: physical -- geometry, timings, reward curves, operation control -- comes from here, so a
+#: curriculum edit propagates and cannot silently diverge. See ``baseline_stage``.
+_BASELINE_STAGE = {
+    "capped": _stages_capped.make_s_stage_graduation,
+    "full": _stages_full.make_s_stage_graduation,
+}
+_BASELINE_CURRICULUM = {
+    "capped": "DeterministicReversalsRewardCapped",
+    "full": "DeterministicReversals",
+}
+#: The only structural assumption made about the vendored stage: three patches with these
+#: labels, carrying these contingencies. Checked on every build, so a curriculum reshape
+#: fails loudly here instead of silently emitting a stale task.
+BASELINE_PATCHES: dict[str, str] = {
+    "patch_null": "noreward",
+    "patch_delayed": "delayed",
+    "patch_single": "single",
+}
 
 # Which olfactometer channel index (0/1/2) carries each contingency, per set.
 ODOR_LABEL: dict[str, dict[str, int]] = {
@@ -123,8 +172,9 @@ class ReversalConfig:
     """S3 bucket searched by --from-mouse."""
 
     reward: RewardMode = "capped"
-    """Delayed-patch payout: full/capped ≈ 3 drops (capped also hard-caps total volume at
-    amount×3 and guarantees the first stop); reduced ≈ 2 drops."""
+    """Which vendored curriculum to inherit the task from. ``capped`` =
+    DeterministicReversalsRewardCapped (hard-caps delayed volume at amount×3 and guarantees
+    the first stop); ``full`` = DeterministicReversals (same ~3-drop curve, no volume cap)."""
     block_length: int = _DEFAULT_BLOCK_LENGTH
     """Length of every non-terminal block, in units of ``count_by`` (stops or patches); the
     final block runs to session end.
@@ -153,10 +203,34 @@ class ReversalConfig:
     without ever reaching ``block_length``. ``None`` means pure stop-gating. Only
     meaningful when ``count_by="stops"``; ignored otherwise."""
 
-    stop_duration: float = 1.0
-    delay_mean: float = 0.5
-    reward_amount: float = 5.0
-    velocity_threshold: float = 8.0
+    # --- Physical overrides -------------------------------------------------------------
+    # Every field below defaults to None, meaning "inherit from the vendored graduation
+    # stage". Passing one deviates from the curriculum, and any deviation is stamped into the
+    # stage name (see OVERRIDES) so a modified task can never share a filename -- or a
+    # trainer_state -- with the baseline. Overrides retune values the curriculum already
+    # exposes; they never change structure. Changing a distribution FAMILY, the patch count,
+    # or a reward curve's shape is a curriculum edit, not a flag.
+    stop_duration: Optional[float] = None
+    """Seconds the animal must hold still to register a choice. None inherits (0.5)."""
+    delay_mean: Optional[float] = None
+    """Mean of the curriculum's exponential reward delay, in seconds. None inherits (0.5).
+    Retunes the rate; it does not switch distribution family."""
+    reward_amount: Optional[float] = None
+    """Per-drop reward volume (uL) for the two rewarded patches. None inherits (5.0). The
+    delayed patch's payout curve is re-derived from the curriculum's own ``deterministic_curves``
+    so the volume cap stays consistent with the drop size."""
+    velocity_threshold: Optional[float] = None
+    """Stop-velocity threshold (cm/s). None inherits (8.0)."""
+    rewardsite_length: Optional[float] = None
+    """Reward-site length (cm). None inherits (50)."""
+    minimum_interpatch_length: Optional[float] = None
+    """Inter-patch floor (cm). None inherits (100)."""
+    maximum_interpatch_length: Optional[float] = None
+    """Inter-patch ceiling (cm). None inherits (250)."""
+    minimum_intersite_length: Optional[float] = None
+    """Inter-site floor (cm). None inherits (20)."""
+    maximum_intersite_length: Optional[float] = None
+    """Inter-site ceiling (cm). None inherits (80)."""
 
     weight_null: float = 1.0
     """Relative frequency of the no-reward patch. Under a DS-only reversal the null odor
@@ -167,12 +241,6 @@ class ReversalConfig:
     """Relative frequency of the delayed patch."""
     weight_single: float = 1.0
     """Relative frequency of the single patch."""
-
-    rewardsite_length: float = 50
-    minimum_interpatch_length: float = 150
-    maximum_interpatch_length: float = 400
-    minimum_intersite_length: float = 20
-    maximum_intersite_length: float = 80
 
     output: str = "./local/task_logic_schemas/{stage_name}.json"
     """Output path template for the TrainerState JSON ({stage_name} is substituted)."""
@@ -199,89 +267,6 @@ def occupancy_matrix(weights: list[float]) -> tuple[list[float], list[list[float
     return row, [list(row) for _ in weights]
 
 
-def make_reward_function(
-    option: Optional[PatchType],
-    first_stop: float = 0.5,
-    cap_delayed_rewards: RewardMode = "capped",
-    amount_drop: float = 5.0,
-) -> list:
-    """Build the reward-function list for a patch type (see module docstring)."""
-    if option == "delayed":
-        if cap_delayed_rewards == "capped":
-            lut_values = [0.5, 1, 1, 1, 0]
-            probability = task_logic.LookupTableFunction(
-                lut_keys=list(np.arange(len(lut_values)) + 1), lut_values=lut_values
-            )
-            reward_function_prob = task_logic.PatchRewardFunction(
-                probability=probability,
-                rule=task_logic.RewardFunctionRule.ON_CHOICE_ACCUMULATED,
-            )
-            reward_available = amount_drop * 3
-            available = task_logic.ClampedRateFunction(
-                rate=task_logic.scalar_value(-amount_drop),
-                minimum=0,
-                maximum=reward_available,
-            )
-            reward_function_avail = task_logic.PatchRewardFunction(
-                available=available,
-                rule=task_logic.RewardFunctionRule.ON_REWARD,
-            )
-            reset_function = task_logic.OnThisPatchEntryRewardFunction(
-                probability=task_logic.SetValueFunction(
-                    value=task_logic.scalar_value(1)
-                ),
-                available=task_logic.SetValueFunction(
-                    value=task_logic.scalar_value(reward_available)
-                ),
-            )
-            return [reward_function_prob, reward_function_avail, reset_function]
-        # "reduced" pays one fewer drop; "full" matches capped's LUT without the cap.
-        lut_values = (
-            [0.5, 1, 1, 0] if cap_delayed_rewards == "reduced" else [0.5, 1, 1, 1, 0]
-        )
-        probability = task_logic.LookupTableFunction(
-            lut_keys=list(np.arange(len(lut_values)) + 1), lut_values=lut_values
-        )
-        reward_function_prob = task_logic.PatchRewardFunction(
-            probability=probability,
-            rule=task_logic.RewardFunctionRule.ON_CHOICE_ACCUMULATED,
-        )
-        reset_function = task_logic.OnThisPatchEntryRewardFunction(
-            probability=task_logic.SetValueFunction(
-                value=task_logic.scalar_value(first_stop)
-            ),
-            available=task_logic.SetValueFunction(value=task_logic.scalar_value(100)),
-        )
-        return [reward_function_prob, reset_function]
-
-    if option == "single":
-        probability = task_logic.LookupTableFunction(lut_keys=[1, 2], lut_values=[1, 0])
-        reward_function = task_logic.PatchRewardFunction(
-            probability=probability,
-            rule=task_logic.RewardFunctionRule.ON_CHOICE_ACCUMULATED,
-        )
-        reset_function = task_logic.OnThisPatchEntryRewardFunction(
-            probability=task_logic.SetValueFunction(value=task_logic.scalar_value(1)),
-            available=task_logic.SetValueFunction(value=task_logic.scalar_value(100)),
-        )
-        return [reward_function, reset_function]
-
-    if option == "no_reward":
-        reward_function = task_logic.PatchRewardFunction(
-            probability=task_logic.SetValueFunction(value=task_logic.scalar_value(0)),
-            rule=task_logic.RewardFunctionRule.ON_CHOICE,
-        )
-        reset_function = task_logic.OnThisPatchEntryRewardFunction(
-            probability=task_logic.SetValueFunction(value=task_logic.scalar_value(0)),
-            available=task_logic.SetValueFunction(value=task_logic.scalar_value(0)),
-        )
-        return [reward_function, reset_function]
-
-    raise ValueError(
-        f"Option '{option}' not recognized. Valid: 'single', 'delayed', 'no_reward'."
-    )
-
-
 def make_odor_index(index: int, n_odors: int = 3) -> list[float]:
     """One-hot odor specification over ``n_odors`` channels."""
     odor = [0.0] * n_odors
@@ -289,94 +274,228 @@ def make_odor_index(index: int, n_odors: int = 3) -> list[float]:
     return odor
 
 
-def make_patch(
-    cfg: ReversalConfig,
-    label: str,
-    state_index: int,
-    odor_index: list[float],
-    patch_type: PatchType,
-    reward_amount: float,
-    first_p: float,
-    reward_available: float,
-    cap_delayed_rewards: RewardMode = "capped",
-) -> task_logic.Patch:
-    """Assemble one ``Patch`` (odor + reward spec + geometry) from ``cfg``."""
-    return task_logic.Patch(
-        label=label,
-        state_index=state_index,
-        odor_specification=odor_index,
-        reward_specification=task_logic.RewardSpecification(
-            operant_logic=helpers.make_operant_logic(stop_duration=cfg.stop_duration),
-            delay=helpers.make_normal_distribution(
-                mean=cfg.delay_mean, standard_deviation=0.15, minimum=0.0, maximum=1.0
-            ),
-            amount=task_logic.scalar_value(reward_amount),
-            probability=task_logic.scalar_value(first_p),
-            available=task_logic.scalar_value(reward_available),
-            reward_function=make_reward_function(
-                option=patch_type,
-                first_stop=first_p,
-                cap_delayed_rewards=cap_delayed_rewards,
-                amount_drop=reward_amount,
-            ),
-        ),
-        patch_virtual_sites_generator=helpers.make_patch_virtual_sites_generator(
-            rewardsite=cfg.rewardsite_length,
-            interpatch_min=cfg.minimum_interpatch_length,
-            interpatch_max=cfg.maximum_interpatch_length,
-            intersite_min=cfg.minimum_intersite_length,
-            intersite_max=cfg.maximum_intersite_length,
-        ),
+def baseline_block(reward: RewardMode) -> task_logic.Block:
+    """The vendored ``graduation`` block for ``reward`` -- the single source of task truth.
+
+    Everything physical lives here: corridor geometry, stop duration, reward delay, reward
+    curves, patch terminators. This generator only ever permutes odors, slices blocks, and
+    applies the explicit overrides in :data:`OVERRIDES` on top. Nothing about the task is
+    redeclared locally, so a curriculum edit propagates and the two cannot drift apart.
+
+    ``graduation`` is itself set1 (null=ch0, delayed=ch1, single=ch2), so a ``no_reversal``
+    set1 state is byte-identical to the curriculum's own stage apart from the ``_ch<n>``
+    label suffix. ``tests/test_task_reversal.py`` pins exactly that.
+    """
+    stage = _BASELINE_STAGE[reward]()
+    blocks = stage.task.task_parameters.environment.blocks
+    if len(blocks) != 1:
+        raise ValueError(
+            f"Vendored graduation for reward={reward!r} has {len(blocks)} blocks, expected 1. "
+            "The curriculum changed shape; this generator needs updating."
+        )
+    labels = {p.label for p in blocks[0].environment.patches}
+    if labels != set(BASELINE_PATCHES):
+        raise ValueError(
+            f"Vendored graduation for reward={reward!r} has patches {sorted(labels)}, expected "
+            f"{sorted(BASELINE_PATCHES)}. The curriculum changed shape; update BASELINE_PATCHES."
+        )
+    return blocks[0]
+
+
+def baseline_operation_control(reward: RewardMode):
+    """The vendored stage's operation control (velocity threshold and friends)."""
+    return _BASELINE_STAGE[reward]().task.task_parameters.operation_control
+
+
+# ---------------------------------------------------------------------------
+# Explicit overrides
+# ---------------------------------------------------------------------------
+# Each entry pairs a reader (the inherited value) with a writer, so "did this actually change
+# anything?" is mechanical rather than assumed. An override enters the stage name only when
+# its value DIFFERS from the inherited one -- passing --stop-duration 0.5 on a curriculum that
+# already uses 0.5 is a no-op and collapses to the baseline name, keeping name == task.
+
+
+@dataclass(frozen=True)
+class Override:
+    """One explicitly overridable scalar on the vendored baseline."""
+
+    tag: str
+    """Short stage-name tag, e.g. ``sd`` -> ``_sd1.5``. Must be unique across OVERRIDES."""
+    read: Callable[[task_logic.Patch], Optional[float]]
+    """Inherited value for a patch, or None where the field does not apply to it."""
+    write: Callable[[task_logic.Patch, float], None]
+    """Apply the new value to a patch."""
+
+
+def _sites(patch: task_logic.Patch):
+    return patch.patch_virtual_sites_generator
+
+
+def _set_reward_amount(patch: task_logic.Patch, value: float) -> None:
+    """Retune the drop size, re-deriving the payout curve from the curriculum's own builder.
+
+    The delayed patch's cap is a function of the drop size (``ClampedRateFunction`` rate
+    ``-amount`` and maximum ``amount x 3``), so setting ``amount`` alone would leave the cap
+    describing the old volume. Rebuilding via ``deterministic_curves`` keeps them consistent
+    by construction rather than by a local copy of the arithmetic.
+    """
+    old = patch.reward_specification.amount.distribution_parameters.value
+    if not old:
+        return  # the null patch pays nothing; a drop size is meaningless there
+    contingency = BASELINE_PATCHES[_base_label(patch)]
+    capped = (
+        patch.reward_specification.available.distribution_parameters.value == old * 3
     )
+    patch.reward_specification.amount = task_logic.scalar_value(value)
+    patch.reward_specification.reward_function = _stages_shared.deterministic_curves(
+        amount_drop=value,
+        option=cast(Literal["single", "delayed"], contingency),
+        cap_delayed_rewards=capped,
+    )
+    if capped:
+        patch.reward_specification.available = task_logic.scalar_value(value * 3)
+
+
+OVERRIDES: dict[str, Override] = {
+    "stop_duration": Override(
+        tag="sd",
+        read=lambda p: (
+            p.reward_specification.operant_logic.stop_duration.distribution_parameters.value
+        ),
+        write=lambda p, v: setattr(
+            p.reward_specification.operant_logic,
+            "stop_duration",
+            task_logic.scalar_value(v),
+        ),
+    ),
+    # The curriculum's delay is Exponential(rate=1/mean); an override retunes the rate. It does
+    # NOT switch family -- swapping Exponential for Normal is exactly the silent structural
+    # change that put the batch-8 cohort on a different task than the curriculum described.
+    "delay_mean": Override(
+        tag="dm",
+        read=lambda p: 1.0 / p.reward_specification.delay.distribution_parameters.rate,
+        write=lambda p, v: setattr(
+            p.reward_specification.delay.distribution_parameters, "rate", 1.0 / v
+        ),
+    ),
+    "reward_amount": Override(
+        tag="rw",
+        read=lambda p: (
+            p.reward_specification.amount.distribution_parameters.value or None
+        ),
+        write=_set_reward_amount,
+    ),
+    "rewardsite_length": Override(
+        tag="rs",
+        read=lambda p: (
+            _sites(p).reward_site.length_distribution.distribution_parameters.value
+        ),
+        write=lambda p, v: setattr(
+            _sites(p).reward_site.length_distribution.distribution_parameters,
+            "value",
+            v,
+        ),
+    ),
+    "minimum_interpatch_length": Override(
+        tag="ipmin",
+        read=lambda p: (
+            _sites(p).inter_patch.length_distribution.truncation_parameters.min
+        ),
+        write=lambda p, v: setattr(
+            _sites(p).inter_patch.length_distribution.truncation_parameters, "min", v
+        ),
+    ),
+    "maximum_interpatch_length": Override(
+        tag="ipmax",
+        read=lambda p: (
+            _sites(p).inter_patch.length_distribution.truncation_parameters.max
+        ),
+        write=lambda p, v: setattr(
+            _sites(p).inter_patch.length_distribution.truncation_parameters, "max", v
+        ),
+    ),
+    "minimum_intersite_length": Override(
+        tag="ismin",
+        read=lambda p: (
+            _sites(p).inter_site.length_distribution.truncation_parameters.min
+        ),
+        write=lambda p, v: setattr(
+            _sites(p).inter_site.length_distribution.truncation_parameters, "min", v
+        ),
+    ),
+    "maximum_intersite_length": Override(
+        tag="ismax",
+        read=lambda p: (
+            _sites(p).inter_site.length_distribution.truncation_parameters.max
+        ),
+        write=lambda p, v: setattr(
+            _sites(p).inter_site.length_distribution.truncation_parameters, "max", v
+        ),
+    ),
+}
+#: ``velocity_threshold`` lives on operation_control, not per-patch, so it is applied
+#: separately but tagged by the same rule.
+_VELOCITY_TAG = "vt"
+
+
+def _base_label(patch: task_logic.Patch) -> str:
+    """The patch's curriculum label, with any ``_ch<n>`` suffix stripped."""
+    return patch.label.rsplit("_ch", 1)[0]
+
+
+def applied_overrides(cfg: ReversalConfig) -> dict[str, float]:
+    """Overrides whose value actually DIFFERS from what the curriculum provides.
+
+    Comparing against the inherited value (rather than merely checking whether a flag was
+    passed) is what keeps the stage name faithful to the task: a redundant override collapses
+    to the baseline name, and a real deviation can never share a name with the baseline.
+    """
+    block = baseline_block(cfg.reward)
+    out: dict[str, float] = {}
+    for field, ov in OVERRIDES.items():
+        value = getattr(cfg, field)
+        if value is None:
+            continue
+        inherited = {ov.read(p) for p in block.environment.patches} - {None}
+        if inherited != {value}:
+            out[field] = value
+    if cfg.velocity_threshold is not None:
+        if (
+            cfg.velocity_threshold
+            != baseline_operation_control(
+                cfg.reward
+            ).position_control.velocity_threshold
+        ):
+            out["velocity_threshold"] = cfg.velocity_threshold
+    return out
 
 
 def patch_options(cfg: ReversalConfig, select: SetName) -> task_logic.MarkovEnvironment:
-    """Build the 3-patch (null/delayed/single) MarkovEnvironment for one set."""
+    """The vendored 3-patch environment, repointed at ``select``'s odor channels.
+
+    A reversal changes exactly two things per patch -- ``odor_specification`` and ``label`` --
+    plus the occupancy weights. Everything else is inherited from the baseline block.
+    """
+    block = baseline_block(cfg.reward).model_copy(deep=True)
     mapping = ODOR_LABEL[select]
-    # Labels are explicit about the odor CHANNEL each contingency sits on, e.g.
-    # "patch_delayed_ch1". The three labels of a block fully determine the set, and a
-    # reversal is visible directly as a contingency's channel changing between blocks.
-    patches_list = [
-        make_patch(
-            cfg,
-            label=f"patch_null_ch{mapping['noreward']}",
-            state_index=0,
-            odor_index=make_odor_index(mapping["noreward"]),
-            patch_type="no_reward",
-            reward_amount=0,
-            first_p=0,
-            reward_available=0,
-        ),
-        make_patch(
-            cfg,
-            label=f"patch_delayed_ch{mapping['delayed']}",
-            state_index=1,
-            odor_index=make_odor_index(mapping["delayed"]),
-            patch_type="delayed",
-            reward_amount=cfg.reward_amount,
-            first_p=0.5,
-            reward_available=50,
-            cap_delayed_rewards=cfg.reward,
-        ),
-        make_patch(
-            cfg,
-            label=f"patch_single_ch{mapping['single']}",
-            state_index=2,
-            odor_index=make_odor_index(mapping["single"]),
-            patch_type="single",
-            reward_amount=cfg.reward_amount,
-            first_p=1,
-            reward_available=50,
-        ),
-    ]
+    overrides = applied_overrides(cfg)
+    for patch in block.environment.patches:
+        # Labels stay explicit about the odor CHANNEL each contingency sits on, e.g.
+        # "patch_delayed_ch1", so a reversal is visible directly as a contingency's channel
+        # changing between blocks, and the three labels fully determine the set.
+        channel = mapping[BASELINE_PATCHES[patch.label]]
+        patch.odor_specification = make_odor_index(channel)
+        patch.label = f"{patch.label}_ch{channel}"
+        for field, value in overrides.items():
+            if field in OVERRIDES:
+                OVERRIDES[field].write(patch, value)
     # Weights are keyed to contingency (state_index), not odor channel, so the mix stays
     # attached to null/delayed/single as the channels swap across a reversal.
     occupancy, transition_matrix = occupancy_matrix(cfg.patch_weights())
-    return task_logic.MarkovEnvironment(
-        first_state_occupancy=occupancy,
-        transition_matrix=transition_matrix,
-        patches=patches_list,
-    )
+    block.environment.first_state_occupancy = occupancy
+    block.environment.transition_matrix = transition_matrix
+    return block.environment
 
 
 def _scalar(value) -> distributions.Scalar:
@@ -553,6 +672,19 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
     weights = cfg.patch_weights()
     if len(set(weights)) > 1:
         stage_name += f"_wN{weights[0]:g}-D{weights[1]:g}-S{weights[2]:g}"
+    # Any deviation from the vendored curriculum is stamped here, so a modified task can never
+    # share a stage name -- or a trainer_state -- with the baseline it was derived from. Sorted
+    # for a deterministic name regardless of flag order.
+    overrides = applied_overrides(cfg)
+    for field, value in sorted(overrides.items()):
+        tag = _VELOCITY_TAG if field == "velocity_threshold" else OVERRIDES[field].tag
+        stage_name += f"_{tag}{value:g}"
+
+    operation_control = baseline_operation_control(cfg.reward)
+    if "velocity_threshold" in overrides:
+        operation_control.position_control.velocity_threshold = overrides[
+            "velocity_threshold"
+        ]
 
     return AindVrForagingTaskLogic(
         stage_name=stage_name,
@@ -561,15 +693,38 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
             environment=task_logic.BlockStructure(
                 blocks=blocks, sampling_mode="Sequential"
             ),
-            operation_control=helpers.make_default_operation_control(
-                velocity_threshold=cfg.velocity_threshold
-            ),
+            operation_control=operation_control,
         ),
     )
 
 
 def _describe(cfg: ReversalConfig) -> None:
-    """Print the block sequence and each set's contingency→channel map (odorant is rig-defined)."""
+    """Print provenance, any overrides, and the block sequence with each set's channel map."""
+    # These states are off-curriculum (curriculum=None), so nothing in the trainer state
+    # records what the task was derived from. Print it: once the generator tracks the
+    # curriculum, a curriculum bump silently changes the output unless it is visible here.
+    print(f"  inherits: {_BASELINE_CURRICULUM[cfg.reward]} v{__semver__} (graduation)")
+    overrides = applied_overrides(cfg)
+    if overrides:
+        block = baseline_block(cfg.reward)
+        for field, value in sorted(overrides.items()):
+            if field == "velocity_threshold":
+                was = baseline_operation_control(
+                    cfg.reward
+                ).position_control.velocity_threshold
+            else:
+                was = next(
+                    v
+                    for v in (
+                        OVERRIDES[field].read(p) for p in block.environment.patches
+                    )
+                    if v is not None
+                )
+            print(
+                f"  OVERRIDE {field}: {was:g} -> {value:g}  (curriculum value not used)"
+            )
+    else:
+        print("  overrides: none (task matches the curriculum exactly)")
     occupancy, _ = occupancy_matrix(cfg.patch_weights())
     print(
         f"  patch mix: null={occupancy[0]:.0%}, delayed={occupancy[1]:.0%}, "
@@ -578,7 +733,9 @@ def _describe(cfg: ReversalConfig) -> None:
     for i, (select, end_value) in enumerate(build_sequence(cfg)):
         m = ODOR_LABEL[select]
         end = (
-            "to session end" if isinstance(end_value, list) else f"{end_value} patches"
+            "to session end"
+            if isinstance(end_value, list)
+            else f"{end_value} {cfg.count_by}"
         )
         print(
             f"  block {i}: {select} ({end}) — "
