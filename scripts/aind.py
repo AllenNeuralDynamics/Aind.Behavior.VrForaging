@@ -6,7 +6,7 @@ import aind_behavior_vr_foraging
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import utcnow
-from clabe import aind_apps, otel, resource_monitor, ui
+from clabe import aind_apps, resource_monitor, ui
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
     CurriculumApp,
@@ -19,7 +19,8 @@ from clabe.data_transfer.aind_watchdog import (
 )
 from clabe.data_transfer.robocopy import RobocopySettings, RobocopyService
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
-from clabe.otel import AindOtelSettings
+from clabe.logging import otel
+from clabe.logging.otel import AindOtelSettings
 from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
