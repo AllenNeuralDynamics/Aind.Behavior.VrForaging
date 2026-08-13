@@ -2,7 +2,6 @@ import logging
 from pathlib import Path
 from typing import Any, cast
 from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
-import aind_behavior_vr_foraging
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import utcnow
@@ -20,7 +19,6 @@ from clabe.data_transfer.aind_watchdog import (
 from clabe.data_transfer.robocopy import RobocopySettings, RobocopyService
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
 from clabe.logging import otel
-from clabe.logging.otel import AindOtelSettings
 from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
