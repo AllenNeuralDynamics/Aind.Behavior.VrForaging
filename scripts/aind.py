@@ -2,24 +2,23 @@ import logging
 from pathlib import Path
 from typing import Any, cast
 from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
-
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import utcnow
-from clabe import resource_monitor, ui
+from clabe import aind_apps, resource_monitor, ui
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
     CurriculumApp,
     CurriculumSettings,
     CurriculumSuggestion,
 )
-from clabe import aind_apps
 from clabe.data_transfer.aind_watchdog import (
     WatchdogDataTransferService,
     WatchdogSettings,
 )
 from clabe.data_transfer.robocopy import RobocopySettings, RobocopyService
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
+from clabe.logging import otel
 from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
 from clabe.pickers.dataverse import DataversePicker
 from contraqctor.contract.json import SoftwareEvents
@@ -153,7 +152,7 @@ def _run_data_transfer(
     ).transfer()
 
 
-@experiment()
+@experiment(name="aind-behavior-vr-foraging")
 async def aind_experiment_protocol(launcher: Launcher) -> None:
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
@@ -171,6 +170,7 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         launcher.frontend.notify(
             "Session information not confirmed. Aborting.", ui.MessageLevel.WARNING
         )
+        otel.event("session-aborted")
         return
 
     launcher.register_session(session, rig.data_directory)
@@ -219,10 +219,11 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         launcher.frontend.notify(
             f"Failed to update manipulator position: {e}", ui.MessageLevel.WARNING
         )
+        otel.record_exception(e)
 
     # Curriculum
     (
-        suggestion,
+        _,
         suggestion_path,
         curriculum_settings,
     ) = await _run_curriculum_if_applicable(
@@ -241,6 +242,7 @@ async def aind_experiment_protocol(launcher: Launcher) -> None:
         ).run()
     except Exception as e:
         logger.error("Error while attempting to waterlog: %s", e)
+        otel.record_exception(e)
 
     # Mappers
     assert launcher.repository.working_tree_dir is not None
