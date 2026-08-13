@@ -25,7 +25,7 @@ members = [
 [manifest.dependency-groups]
 dev = [
     { name = "aind-behavior-vr-foraging", extras = ["data", "mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", extras = ["aind-services", "otel"], git = "https://github.com/AllenNeuralDynamics/clabe?rev=119c7f0815047b871fdeef7b71f6ace28e88641a" },
+    { name = "aind-clabe", extras = ["aind-services", "otel"], specifier = ">=0.11.2" },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -108,7 +108,7 @@ dev = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.13.6" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'mappers'", editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", git = "https://github.com/AllenNeuralDynamics/clabe?rev=119c7f0815047b871fdeef7b71f6ace28e88641a" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", specifier = ">=0.12.1" },
     { name = "aind-data-schema", marker = "extra == 'mappers'", specifier = ">=2.7.1" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.8,<0.6.0" },
     { name = "pydantic-settings" },
@@ -162,8 +162,8 @@ dev = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.11.2"
-source = { git = "https://github.com/AllenNeuralDynamics/clabe?rev=119c7f0815047b871fdeef7b71f6ace28e88641a#119c7f0815047b871fdeef7b71f6ace28e88641a" }
+version = "0.12.1"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
     { name = "gitpython" },
@@ -174,6 +174,10 @@ dependencies = [
     { name = "rich" },
     { name = "semver" },
     { name = "textual" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cf/de/cce035c1a7c7e14435b234bd5216db1abda30602fb582cd44d6d3c33789f/aind_clabe-0.12.1.tar.gz", hash = "sha256:b868b726f32714a609d43a3e2a76c40b162bae2104556af894235c1c95644744", size = 107868, upload-time = "2026-08-13T16:15:58.866Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/aa/ad/507915fed6bc03c300ca64876cf6228c72f1d3e6df6d48114863d820bb16/aind_clabe-0.12.1-py3-none-any.whl", hash = "sha256:c8b4595a65bd087a6b76e57df772ad52ce18e7af0766da0996497f7b843ebb3d", size = 139089, upload-time = "2026-08-13T16:15:57.407Z" },
 ]
 
 [package.optional-dependencies]

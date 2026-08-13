@@ -14,7 +14,6 @@ members = [
 [tool.uv.sources]
 aind-behavior-vr-foraging = { workspace = true }
 aind-behavior-vr-foraging-curricula = { workspace = true }
-aind-clabe = { git = "https://github.com/AllenNeuralDynamics/clabe", rev = "119c7f0815047b871fdeef7b71f6ace28e88641a" }
 
 [dependency-groups]
 docs = [
