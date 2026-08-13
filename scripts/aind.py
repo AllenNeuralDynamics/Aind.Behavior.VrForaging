@@ -154,15 +154,8 @@ def _run_data_transfer(
     ).transfer()
 
 
-@experiment()
+@experiment(name="aind-behavior-vr-foraging")
 async def aind_experiment_protocol(launcher: Launcher) -> None:
-    AindOtelSettings(
-        service_name="aind-behavior-vr-foraging",
-        run_name="experiment",
-        software_name="aind-behavior-vr-foraging",
-        software_version=aind_behavior_vr_foraging.__semver__,
-    )
-
     # Start experiment setup
     picker = DataversePicker(launcher=launcher, settings=_DEFAULT_PICKER_SETTINGS)
 
