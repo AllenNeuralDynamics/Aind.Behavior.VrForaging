@@ -35,7 +35,16 @@ sys.modules[_SPEC.name] = tr
 _SPEC.loader.exec_module(tr)
 
 REWARD_MODES = ("capped", "full")
-GRADUATION = {"capped": stages_capped.make_s_stage_graduation, "full": stages_full.make_s_stage_graduation}
+BASELINES = ("reversal", "graduation")
+#: Every vendored stage the generator can inherit from. Both baselines are pinned by the same
+#: tests, so neither can drift -- ``reversal_baseline`` is the task the cohort actually runs and
+#: needs the guarantee at least as much as the on-curriculum stage does.
+VENDORED = {
+    ("reversal", "capped"): stages_capped.make_s_stage_reversal_baseline,
+    ("reversal", "full"): stages_full.make_s_stage_reversal_baseline,
+    ("graduation", "capped"): stages_capped.make_s_stage_graduation,
+    ("graduation", "full"): stages_full.make_s_stage_graduation,
+}
 _CH_SUFFIX = re.compile(r"_ch\d+$")
 
 
@@ -53,36 +62,38 @@ def strip_ch_suffix(params: dict) -> dict:
     return out
 
 
+@pytest.mark.parametrize("baseline", BASELINES)
 @pytest.mark.parametrize("reward", REWARD_MODES)
-def test_no_reversal_set1_is_exactly_graduation(reward):
-    """set1 IS graduation's permutation, so with no overrides this must be exact equality.
+def test_no_reversal_set1_is_exactly_the_vendored_stage(reward, baseline):
+    """set1 IS the vendored stage's permutation, so with no overrides this must be exact equality.
 
     This is the regression test for the original drift: it would have failed the day the
     generator was written, and it fails again for any future curriculum change the generator
     stops tracking.
     """
-    cfg = tr.ReversalConfig(group="no_reversal", step="set1", reward=reward)
+    cfg = tr.ReversalConfig(group="no_reversal", step="set1", reward=reward, baseline=baseline)
     generated = as_dict(tr.make_task_logic(cfg).task_parameters)
-    expected = as_dict(GRADUATION[reward]().task.task_parameters)
+    expected = as_dict(VENDORED[(baseline, reward)]().task.task_parameters)
     assert strip_ch_suffix(generated) == expected
 
 
+@pytest.mark.parametrize("baseline", BASELINES)
 @pytest.mark.parametrize("reward", REWARD_MODES)
 @pytest.mark.parametrize("set_name", sorted(tr.ODOR_LABEL))
-def test_permutation_touches_only_odor_and_label(reward, set_name):
+def test_permutation_touches_only_odor_and_label(reward, set_name, baseline):
     """Reversing to any set may change the odor channel and the label -- nothing else."""
-    cfg = tr.ReversalConfig(group="no_reversal", step=set_name, reward=reward)
+    cfg = tr.ReversalConfig(group="no_reversal", step=set_name, reward=reward, baseline=baseline)
     generated = as_dict(tr.make_task_logic(cfg).task_parameters)
-    baseline = as_dict(GRADUATION[reward]().task.task_parameters)
+    baseline_params = as_dict(VENDORED[(baseline, reward)]().task.task_parameters)
     for got, want in zip(
         generated["environment"]["blocks"][0]["environment"]["patches"],
-        baseline["environment"]["blocks"][0]["environment"]["patches"],
+        baseline_params["environment"]["blocks"][0]["environment"]["patches"],
     ):
         for field in ("odor_specification", "label"):
             got.pop(field)
             want.pop(field)
         assert got == want
-    assert generated["operation_control"] == baseline["operation_control"]
+    assert generated["operation_control"] == baseline_params["operation_control"]
 
 
 @pytest.mark.parametrize("reward", REWARD_MODES)
@@ -132,7 +143,38 @@ def test_redundant_override_is_not_tagged(field):
     """
     cfg = tr.ReversalConfig(group="no_reversal", step="set1", **{field: _baseline_value(field)})
     assert tr.applied_overrides(cfg) == {}
-    assert tr.make_task_logic(cfg).stage_name == "deterministic_set1_capped"
+    assert tr.make_task_logic(cfg).stage_name == "deterministic_set1_capped_blrev"
+
+
+@pytest.mark.parametrize("reward", REWARD_MODES)
+def test_baselines_are_different_tasks_with_different_names(reward):
+    """The two baselines must never be confusable -- not by task, and not by name.
+
+    ``reversal_baseline`` is ``graduation`` with a longer corridor, a doubled stop requirement
+    and a normal (rather than exponential) reward delay. Those are real differences, so the
+    stage name has to carry the baseline unconditionally: a bare name that could mean either is
+    how sessions from two different tasks end up pooled in analysis.
+    """
+    names = {}
+    for baseline in BASELINES:
+        cfg = tr.ReversalConfig(group="no_reversal", step="set1", reward=reward, baseline=baseline)
+        names[baseline] = tr.make_task_logic(cfg).stage_name
+        assert tr._BASELINE_TAG[baseline] in names[baseline]
+    assert names["reversal"] != names["graduation"]
+
+    rev, grad = (as_dict(VENDORED[(b, reward)]().task.task_parameters) for b in BASELINES)
+    rev_patch = rev["environment"]["blocks"][0]["environment"]["patches"][1]
+    grad_patch = grad["environment"]["blocks"][0]["environment"]["patches"][1]
+    assert (
+        rev_patch["reward_specification"]["operant_logic"]["stop_duration"]
+        != (grad_patch["reward_specification"]["operant_logic"]["stop_duration"])
+    )
+    assert rev_patch["reward_specification"]["delay"]["family"] == "Normal"
+    assert grad_patch["reward_specification"]["delay"]["family"] == "Exponential"
+    assert (
+        rev_patch["patch_virtual_sites_generator"]["inter_patch"]["length_distribution"]["truncation_parameters"]
+        != (grad_patch["patch_virtual_sites_generator"]["inter_patch"]["length_distribution"]["truncation_parameters"])
+    )
 
 
 def test_reward_amount_rescales_the_delayed_cap():
@@ -161,3 +203,38 @@ def test_reshaped_curriculum_fails_loudly(monkeypatch):
     monkeypatch.setitem(tr.BASELINE_PATCHES, "patch_renamed", "single")
     with pytest.raises(ValueError, match="changed shape"):
         tr.baseline_block("capped")
+
+
+def test_wrap_bounds_the_final_block():
+    """--wrap makes every block bounded, so the rig cycles instead of parking in the last one."""
+    cfg = tr.ReversalConfig(
+        group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=True
+    )
+    blocks = tr.make_task_logic(cfg).task_parameters.environment.blocks
+    assert len(blocks) == 4
+    assert all(b.end_conditions for b in blocks)
+
+
+def test_unwrapped_final_block_runs_to_session_end():
+    cfg = tr.ReversalConfig(
+        group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60
+    )
+    blocks = tr.make_task_logic(cfg).task_parameters.environment.blocks
+    assert not blocks[-1].end_conditions
+    assert all(b.end_conditions for b in blocks[:-1])
+
+
+def test_wrap_rejects_an_odd_block_count():
+    """Wrapping an odd alternation repeats the map across the seam -- a reversal that is not one."""
+    cfg = tr.ReversalConfig(
+        group="alternating", swap="DS", step="set1", n_reversals=2, wrap=True
+    )
+    with pytest.raises(ValueError, match="even block count"):
+        tr.build_sequence(cfg)
+
+
+def test_wrap_is_tagged_into_the_stage_name():
+    cfg = tr.ReversalConfig(
+        group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=True
+    )
+    assert tr.make_task_logic(cfg).stage_name.endswith("_wrap")

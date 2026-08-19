@@ -4,19 +4,25 @@ Builds an ``AindVrForagingTaskLogic`` for the batch-8 deterministic-reversal par
 writes a standalone ``TrainerState`` JSON for deployment via the launcher (not the
 curriculum system).
 
-**The task comes from the curriculum, not from this file.** Each block is the vendored
-``graduation`` stage of ``deterministic_reversals`` (``--reward full``) or
-``deterministic_reversals_reward_capped`` (``--reward capped``), deep-copied and repointed at
-a different odor permutation. Corridor geometry, stop duration, reward delay, reward curves
-and operation control are all inherited, so a curriculum edit propagates here automatically
-and the two cannot drift apart. See :func:`baseline_block`.
+**The task comes from the curriculum, not from this file.** Each block is a vendored stage --
+``reversal_baseline`` (``--baseline reversal``, the default and what this cohort runs) or
+``graduation`` (``--baseline graduation``), from ``deterministic_reversals`` (``--reward full``)
+or ``deterministic_reversals_reward_capped`` (``--reward capped``) -- deep-copied and repointed
+at a different odor permutation. Corridor geometry, stop duration, reward delay, reward curves
+and operation control are all inherited, so a curriculum edit propagates here automatically and
+the two cannot drift apart. See :func:`baseline_block`.
 
-This matters because they did drift: an earlier version redeclared the whole task alongside
-the curriculum, and the copies diverged (corridor 150-400 vs 100-250 cm, stop duration 1.0 vs
-0.5 s, an exponential reward delay silently replaced by a normal one). Mice ran a measurably
-different task from the one the curriculum described, under stage names that looked like plain
-baselines. ``tests/test_task_reversal.py`` now pins ``no_reversal --step set1`` to be exactly
-the curriculum's ``graduation``, since set1 *is* graduation's permutation.
+This matters because they did drift. An earlier version redeclared the whole task alongside the
+curriculum, and the copies diverged: corridor 150-400 vs 100-250 cm, stop duration 1.0 vs 0.5 s,
+an exponential reward delay replaced by a normal one. Those three values were *deliberate* --
+they are the task the reversal cohort is meant to run -- but they lived only in a hand-copied
+generator, under stage names that did not distinguish them from the curriculum's own. So they
+could not be reviewed, versioned, or told apart in analysis, and "fixing the drift" by inheriting
+graduation silently changed the task for three mice. They now live in the curriculum as
+``reversal_baseline``, and the baseline is stamped into every stage name.
+
+``tests/test_task_reversal.py`` pins ``no_reversal --step set1`` to be exactly the vendored stage
+for BOTH baselines, since set1 *is* their shared permutation.
 
 Each block has three patch types (defined by the curriculum):
 
@@ -95,23 +101,37 @@ from aind_behavior_vr_foraging_curricula.deterministic_reversals_reward_capped i
 
 SetName = Literal["set1", "set2", "set3", "set4", "set5", "set6"]
 RewardMode = Literal["full", "capped"]
+Baseline = Literal["reversal", "graduation"]
 Group = Literal["no_reversal", "single_reversal", "multiple_reversal", "alternating"]
 PatchType = Literal["single", "delayed", "no_reward"]
 SwapKind = Literal["DS", "DN", "SN"]
 CountBy = Literal["stops", "patches"]
 _DEFAULT_COUNT_BY: CountBy = "stops"
 
-#: The curriculum whose ``graduation`` stage each reward mode inherits from. Everything
-#: physical -- geometry, timings, reward curves, operation control -- comes from here, so a
-#: curriculum edit propagates and cannot silently diverge. See ``baseline_stage``.
+#: The vendored stage each (baseline, reward) pair inherits from. Everything physical --
+#: geometry, timings, reward curves, operation control -- comes from here, so a curriculum edit
+#: propagates and cannot silently diverge. See :func:`baseline_block`.
+#:
+#: ``reversal`` is the task this cohort actually runs: graduation adjusted for a longer corridor,
+#: a doubled stop requirement and a predictable normal delay. Those three differences are
+#: deliberate, and they live in the curriculum rather than in flags precisely so they cannot be
+#: half-applied. ``graduation`` selects the plain on-curriculum stage.
 _BASELINE_STAGE = {
-    "capped": _stages_capped.make_s_stage_graduation,
-    "full": _stages_full.make_s_stage_graduation,
+    ("reversal", "capped"): _stages_capped.make_s_stage_reversal_baseline,
+    ("reversal", "full"): _stages_full.make_s_stage_reversal_baseline,
+    ("graduation", "capped"): _stages_capped.make_s_stage_graduation,
+    ("graduation", "full"): _stages_full.make_s_stage_graduation,
 }
 _BASELINE_CURRICULUM = {
     "capped": "DeterministicReversalsRewardCapped",
     "full": "DeterministicReversals",
 }
+#: Stage-name tag per baseline. Always emitted: the bare name has already meant two different
+#: tasks (batch-8 geometry before 2026-08-11, curriculum geometry on it), and merging two tasks
+#: under one name is the failure this generator exists to prevent.
+_BASELINE_TAG = {"reversal": "blrev", "graduation": "blgrad"}
+#: Stage each baseline resolves to, for the provenance line.
+_BASELINE_STAGE_NAME = {"reversal": "reversal_baseline", "graduation": "graduation"}
 #: The only structural assumption made about the vendored stage: three patches with these
 #: labels, carrying these contingencies. Checked on every build, so a curriculum reshape
 #: fails loudly here instead of silently emitting a stale task.
@@ -171,6 +191,12 @@ class ReversalConfig:
     bucket: str = "aind-open-data"
     """S3 bucket searched by --from-mouse."""
 
+    baseline: Baseline = "reversal"
+    """Which vendored stage to inherit the task from. ``reversal`` = ``reversal_baseline``, the
+    task this cohort runs (150-400 cm inter-patch, 1.0 s stop, Normal(0.5, 0.15) reward delay);
+    ``graduation`` = the plain on-curriculum stage (100-250, 0.5 s, Exponential). Both are
+    defined in the curriculum, so neither can drift from what is deployed. Always tagged into
+    the stage name."""
     reward: RewardMode = "capped"
     """Which vendored curriculum to inherit the task from. ``capped`` =
     DeterministicReversalsRewardCapped (hard-caps delayed volume at amount×3 and guarantees
@@ -197,6 +223,20 @@ class ReversalConfig:
     original behaviour -- predictable structure and N guaranteed odor presentations; "stops"
     is robust to an animal that skips its way to the reversal. See ``make_end_condition``
     for the trade-off. The choice is tagged into the stage name (``_pb``/``_sb``)."""
+    wrap: bool = False
+    """Bound the FINAL block too, so the rig cycles the block list instead of parking in an
+    unbounded last block.
+
+    The task engine repeats the block list once it is exhausted -- measured on the bandit
+    pair, which declares 4 blocks and fires 8-12 ``Block`` events in a session. Leaving the
+    last block unbounded (the default) suppresses that: the session ends inside one giant
+    terminal block, which for these mice runs well past the engagement cliff and is not
+    analyzable. Wrapping instead keeps every block the same size, so blocks past the cliff
+    degrade gracefully rather than swallowing a third of the session.
+
+    Only safe when the block count is EVEN under an alternating map: wrapping an odd-length
+    alternation puts the same set either side of the seam, i.e. a scheduled reversal that
+    silently is not one. Validated in :func:`build_sequence`."""
     patch_cap: Optional[int] = None
     """Optional upper bound in PATCHES on every non-terminal block. End conditions are merged
     (first to fire wins), so this bounds how long a disengaged animal can sit in one block
@@ -274,37 +314,39 @@ def make_odor_index(index: int, n_odors: int = 3) -> list[float]:
     return odor
 
 
-def baseline_block(reward: RewardMode) -> task_logic.Block:
-    """The vendored ``graduation`` block for ``reward`` -- the single source of task truth.
+def baseline_block(
+    reward: RewardMode, baseline: Baseline = "reversal"
+) -> task_logic.Block:
+    """The vendored block for ``(baseline, reward)`` -- the single source of task truth.
 
     Everything physical lives here: corridor geometry, stop duration, reward delay, reward
     curves, patch terminators. This generator only ever permutes odors, slices blocks, and
     applies the explicit overrides in :data:`OVERRIDES` on top. Nothing about the task is
     redeclared locally, so a curriculum edit propagates and the two cannot drift apart.
 
-    ``graduation`` is itself set1 (null=ch0, delayed=ch1, single=ch2), so a ``no_reversal``
-    set1 state is byte-identical to the curriculum's own stage apart from the ``_ch<n>``
-    label suffix. ``tests/test_task_reversal.py`` pins exactly that.
+    Both baselines are set1 (null=ch0, delayed=ch1, single=ch2), so a ``no_reversal`` set1
+    state is byte-identical to the vendored stage apart from the ``_ch<n>`` label suffix.
+    ``tests/test_task_reversal.py`` pins exactly that, for every baseline.
     """
-    stage = _BASELINE_STAGE[reward]()
+    stage = _BASELINE_STAGE[(baseline, reward)]()
     blocks = stage.task.task_parameters.environment.blocks
     if len(blocks) != 1:
         raise ValueError(
-            f"Vendored graduation for reward={reward!r} has {len(blocks)} blocks, expected 1. "
+            f"Vendored {stage.name!r} for reward={reward!r} has {len(blocks)} blocks, expected 1. "
             "The curriculum changed shape; this generator needs updating."
         )
     labels = {p.label for p in blocks[0].environment.patches}
     if labels != set(BASELINE_PATCHES):
         raise ValueError(
-            f"Vendored graduation for reward={reward!r} has patches {sorted(labels)}, expected "
+            f"Vendored {stage.name!r} for reward={reward!r} has patches {sorted(labels)}, expected "
             f"{sorted(BASELINE_PATCHES)}. The curriculum changed shape; update BASELINE_PATCHES."
         )
     return blocks[0]
 
 
-def baseline_operation_control(reward: RewardMode):
+def baseline_operation_control(reward: RewardMode, baseline: Baseline = "reversal"):
     """The vendored stage's operation control (velocity threshold and friends)."""
-    return _BASELINE_STAGE[reward]().task.task_parameters.operation_control
+    return _BASELINE_STAGE[(baseline, reward)]().task.task_parameters.operation_control
 
 
 # ---------------------------------------------------------------------------
@@ -357,6 +399,27 @@ def _set_reward_amount(patch: task_logic.Patch, value: float) -> None:
         patch.reward_specification.available = task_logic.scalar_value(value * 3)
 
 
+def _delay_parameters(patch: task_logic.Patch):
+    """The delay distribution's parameter block, whatever its family."""
+    return patch.reward_specification.delay.distribution_parameters
+
+
+def _read_delay_mean(patch: task_logic.Patch) -> float:
+    """Mean delay in seconds, read out of either an exponential rate or a normal mean."""
+    params = _delay_parameters(patch)
+    rate = getattr(params, "rate", None)
+    return 1.0 / rate if rate is not None else params.mean
+
+
+def _write_delay_mean(patch: task_logic.Patch, value: float) -> None:
+    """Set the mean delay without touching the distribution family."""
+    params = _delay_parameters(patch)
+    if getattr(params, "rate", None) is not None:
+        params.rate = 1.0 / value
+    else:
+        params.mean = value
+
+
 OVERRIDES: dict[str, Override] = {
     "stop_duration": Override(
         tag="sd",
@@ -369,15 +432,15 @@ OVERRIDES: dict[str, Override] = {
             task_logic.scalar_value(v),
         ),
     ),
-    # The curriculum's delay is Exponential(rate=1/mean); an override retunes the rate. It does
-    # NOT switch family -- swapping Exponential for Normal is exactly the silent structural
-    # change that put the batch-8 cohort on a different task than the curriculum described.
+    # Retunes the MEAN of whichever delay family the baseline supplies -- Exponential(rate=1/mean)
+    # for graduation, Normal(mean, std) for reversal_baseline. It does NOT switch family: which
+    # family the delay has decides whether the animal can time its wait, and swapping one for the
+    # other silently is exactly what put the batch-8 cohort on a task the curriculum did not
+    # describe. Pick the family by choosing a baseline; pick the mean with this flag.
     "delay_mean": Override(
         tag="dm",
-        read=lambda p: 1.0 / p.reward_specification.delay.distribution_parameters.rate,
-        write=lambda p, v: setattr(
-            p.reward_specification.delay.distribution_parameters, "rate", 1.0 / v
-        ),
+        read=_read_delay_mean,
+        write=_write_delay_mean,
     ),
     "reward_amount": Override(
         tag="rw",
@@ -451,7 +514,7 @@ def applied_overrides(cfg: ReversalConfig) -> dict[str, float]:
     passed) is what keeps the stage name faithful to the task: a redundant override collapses
     to the baseline name, and a real deviation can never share a name with the baseline.
     """
-    block = baseline_block(cfg.reward)
+    block = baseline_block(cfg.reward, cfg.baseline)
     out: dict[str, float] = {}
     for field, ov in OVERRIDES.items():
         value = getattr(cfg, field)
@@ -477,7 +540,7 @@ def patch_options(cfg: ReversalConfig, select: SetName) -> task_logic.MarkovEnvi
     A reversal changes exactly two things per patch -- ``odor_specification`` and ``label`` --
     plus the occupancy weights. Everything else is inherited from the baseline block.
     """
-    block = baseline_block(cfg.reward).model_copy(deep=True)
+    block = baseline_block(cfg.reward, cfg.baseline).model_copy(deep=True)
     mapping = ODOR_LABEL[select]
     overrides = applied_overrides(cfg)
     for patch in block.environment.patches:
@@ -547,26 +610,29 @@ def make_end_condition(
 def build_sequence(cfg: ReversalConfig) -> list[tuple[SetName, object]]:
     """Return ``[(set, end_condition_value), ...]`` for the chosen group.
 
-    The final block always gets ``[]`` (runs to session end); earlier blocks end after
+    The final block gets ``[]`` (runs to session end) unless ``--wrap``, which bounds it
+    like the rest so the rig cycles back to block 0. Earlier blocks end after
     ``block_length`` (in ``count_by`` units), except the first, which honours
     ``first_block_length`` when set. Uses a list (not a dict) so the multiple-reversal
     loop can't be clobbered by duplicate keys.
     """
     seq: list[tuple[SetName, object]]
     if cfg.group == "no_reversal":
-        seq = [(cfg.step, [])]
+        seq = [(cfg.step, cfg.block_length if cfg.wrap else [])]
     elif cfg.group == "single_reversal":
         seq = [(cfg.step, cfg.block_length), (cfg.transition, [])]
     elif cfg.group == "multiple_reversal":
         seq = [(s, cfg.block_length) for s in _MULTI_REVERSAL_LOOP]
-        seq[-1] = (seq[-1][0], [])
+        if not cfg.wrap:
+            seq[-1] = (seq[-1][0], [])
     elif cfg.group == "alternating":
         if cfg.n_reversals < 1:
             raise ValueError("--n-reversals must be >= 1 for group=alternating.")
         partner = partner_set(cfg.step, cfg.swap)
         pair: list[SetName] = [cfg.step, partner]
         seq = [(pair[i % 2], cfg.block_length) for i in range(cfg.n_reversals + 1)]
-        seq[-1] = (seq[-1][0], [])
+        if not cfg.wrap:
+            seq[-1] = (seq[-1][0], [])
     else:
         raise ValueError(f"Group '{cfg.group}' not recognized.")
 
@@ -574,6 +640,15 @@ def build_sequence(cfg: ReversalConfig) -> list[tuple[SetName, object]]:
     # sized independently. No-op when the first block is also the last (it is unbounded).
     if cfg.first_block_length is not None and not isinstance(seq[0][1], list):
         seq[0] = (seq[0][0], cfg.first_block_length)
+
+    # A wrapped list repeats block 0 straight after block N, so that seam is a reversal like
+    # any other and has to obey the alternation. Only an even block count does.
+    if cfg.wrap and len(seq) > 1 and seq[0][0] == seq[-1][0]:
+        raise ValueError(
+            f"--wrap needs an even block count so the map alternates across the seam; "
+            f"got {len(seq)} blocks both starting and ending on {seq[0][0]}. "
+            "For --group alternating use an odd --n-reversals (blocks = n_reversals + 1)."
+        )
     return seq
 
 
@@ -652,6 +727,11 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
     else:  # multiple_reversal
         stage_name = f"deterministic_{cfg.step}_multi_reversal_{cfg.reward}"
 
+    # Which vendored stage the task came from. Always present, unlike the override tags: the
+    # bare name has already denoted two different tasks, and a name that silently covers both
+    # is exactly what lets analysis pool sessions that should never be pooled.
+    stage_name += f"_{_BASELINE_TAG[cfg.baseline]}"
+
     # Block lengths enter the name only when they deviate from the defaults, so existing
     # stage names are unchanged; without this a sweep over block length would write every
     # variant to the same file. The tag also carries the UNIT (_sb stops / _pb patches) --
@@ -669,6 +749,8 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
     # capped and an uncapped stop-gated session write to the same file.
     if cfg.patch_cap is not None and cfg.count_by == "stops" and len(sequence) > 1:
         stage_name += f"_cap{cfg.patch_cap}"
+    if cfg.wrap:
+        stage_name += "_wrap"
     weights = cfg.patch_weights()
     if len(set(weights)) > 1:
         stage_name += f"_wN{weights[0]:g}-D{weights[1]:g}-S{weights[2]:g}"
@@ -680,7 +762,7 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
         tag = _VELOCITY_TAG if field == "velocity_threshold" else OVERRIDES[field].tag
         stage_name += f"_{tag}{value:g}"
 
-    operation_control = baseline_operation_control(cfg.reward)
+    operation_control = baseline_operation_control(cfg.reward, cfg.baseline)
     if "velocity_threshold" in overrides:
         operation_control.position_control.velocity_threshold = overrides[
             "velocity_threshold"
@@ -703,10 +785,13 @@ def _describe(cfg: ReversalConfig) -> None:
     # These states are off-curriculum (curriculum=None), so nothing in the trainer state
     # records what the task was derived from. Print it: once the generator tracks the
     # curriculum, a curriculum bump silently changes the output unless it is visible here.
-    print(f"  inherits: {_BASELINE_CURRICULUM[cfg.reward]} v{__semver__} (graduation)")
+    print(
+        f"  inherits: {_BASELINE_CURRICULUM[cfg.reward]} v{__semver__} "
+        f"({_BASELINE_STAGE_NAME[cfg.baseline]})"
+    )
     overrides = applied_overrides(cfg)
     if overrides:
-        block = baseline_block(cfg.reward)
+        block = baseline_block(cfg.reward, cfg.baseline)
         for field, value in sorted(overrides.items()):
             if field == "velocity_threshold":
                 was = baseline_operation_control(
