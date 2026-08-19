@@ -1,8 +1,15 @@
 """Per-session OFF-CURRICULUM trainer state for the ephys D-family diagnostic.
 
-Emits ``probability_grid_dfamily`` (fixed |D| A-high<->B-high ABA alternation, T=1.0) as an
-off-curriculum trainer state (curriculum=null, is_on_curriculum=false) so the rig runs the stage's
-task exactly as stored.
+Emits ``probability_grid_dfamily_start{A,B}[...]`` (fixed |D| A-high<->B-high ABA alternation,
+T=1.0) as an off-curriculum trainer state (curriculum=null, is_on_curriculum=false) so the rig runs
+the stage's task exactly as stored.
+
+The stage name records the effective config: ``start_high`` always, and any knob that deviates from
+the stage default. This matters because the name is the only handle the session record and the
+analysis scripts have -- it is written to both ``trainer_state.json`` (``stage.name``) and
+``tasklogic_input.json`` (``stage_name``). While the name was the bare ``probability_grid_dfamily``
+for every variant, A-first and B-first sessions were indistinguishable without diffing the block
+probabilities, and analysis pooled them under one name.
 
 Defaults encode the 2026-08-10 redesign:
 
@@ -21,9 +28,14 @@ A-high, which confounds odor identity with block position.
 
 Examples:
     # 860898, opening B-high (the first B-start after 14 A-start sessions)
+    #   -> stage probability_grid_dfamily_startB
     uv run python generate_dfamily_state.py --start-high B --output dfamily_898_state.json
     # 860900, same design; alternate --start-high on the next session
-    uv run python generate_dfamily_state.py --start-high B --output dfamily_900_state.json
+    #   -> stage probability_grid_dfamily_startA
+    uv run python generate_dfamily_state.py --start-high A --output dfamily_900_state.json
+    # a deviation is tagged, so it cannot be confused with the standard config
+    #   -> stage probability_grid_dfamily_startA_p80-20
+    uv run python generate_dfamily_state.py --start-high A --prob-pair 0.8 0.2 --output probe.json
 """
 
 import argparse
@@ -140,9 +152,9 @@ def main() -> None:
             args.inter_patch
         )
     kwargs["geometry"] = geom
-    stage = ss_stages.make_s_probability_grid_dfamily(**kwargs)
     if args.velocity_threshold is not None:
-        stage.task.task_parameters.operation_control.position_control.velocity_threshold = args.velocity_threshold
+        kwargs["velocity_threshold"] = args.velocity_threshold
+    stage = ss_stages.make_s_probability_grid_dfamily(**kwargs)
 
     # Off-curriculum, manual one-off (cf. generate_reversal_pilot_state.py). The throwaway
     # curriculum only supplies a TrainerState model typed to AindVrForagingTaskLogic; it is NOT
@@ -190,6 +202,7 @@ def main() -> None:
     cycle = site_len + 2 * inter_site + ip_mean
     print(
         f"Wrote {args.output}\n"
+        f"  stage_name={stage.name}\n"
         f"  start_high={args.start_high}  sequence={seq}  n_blocks={len(blocks)}\n"
         f"  block_sites={trunc.min:.0f}-{trunc.max:.0f}  reward_uL={reward}\n"
         f"  p_reward={probs}  occupancy={blocks[0].environment.first_state_occupancy}\n"

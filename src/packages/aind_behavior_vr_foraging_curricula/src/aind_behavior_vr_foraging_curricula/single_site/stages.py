@@ -509,6 +509,58 @@ PROBABILITY_GRID_DFAMILY_LEN: tuple[int, float, float] = (40, 5, 55)  # ~45 site
 # count puts the last A-high block next to the first, producing a double-length A block at every
 # wrap and silently breaking the alternation. Sessions routinely run past n_blocks.
 PROBABILITY_GRID_DFAMILY_N_BLOCKS: int = 4  # A,B,A,B -- blocks 0-2 are the primary ABA return
+PROBABILITY_GRID_DFAMILY_VELOCITY_THRESHOLD: float = 4.0  # cm/s stop gate
+
+# Short tags for the corridor keys, used only when a caller deviates from the compressed default.
+_DFAMILY_GEOMETRY_TAGS: dict[str, str] = {
+    "inter_site_length": "is",
+    "inter_patch_min_length": "ipmin",
+    "inter_patch_mean_length": "ipmean",
+    "inter_patch_max_length": "ipmax",
+    "reward_site_length": "site",
+    "stop_duration": "stop",
+}
+
+
+def dfamily_stage_name(
+    start_high: str = "A",
+    reward_amount: float = helpers.REWARD_AMOUNT_UL,
+    block_length: tuple[int, float, float] = PROBABILITY_GRID_DFAMILY_LEN,
+    n_blocks: int = PROBABILITY_GRID_DFAMILY_N_BLOCKS,
+    prob_pair: tuple[float, float] = PROBABILITY_GRID_DFAMILY_PAIR,
+    q_c: float = PROBABILITY_GRID_DFAMILY_Q_C,
+    geometry: Optional[dict[str, float]] = None,
+    velocity_threshold: float = PROBABILITY_GRID_DFAMILY_VELOCITY_THRESHOLD,
+) -> str:
+    """Stage name encoding the effective D-family config, e.g. ``..._startB_p80-20``.
+
+    ``start_high`` is tagged UNCONDITIONALLY because it alternates session to session and is the
+    one knob that must never be inferred from a filename: every session of the 07-29..08-07 run
+    opened A-high, and because the name did not record it, analysis could not tell A-first from
+    B-first sessions apart and pooled them under one stage name. Every other knob is tagged only
+    when it deviates from the stage default, so the common case stays short and any name that
+    carries an extra tag is a genuine deviation.
+    """
+    tags = [f"start{start_high.upper()}"]
+    if tuple(prob_pair) != PROBABILITY_GRID_DFAMILY_PAIR:
+        tags.append(f"p{100 * prob_pair[0]:.0f}-{100 * prob_pair[1]:.0f}")
+    if q_c != PROBABILITY_GRID_DFAMILY_Q_C:
+        tags.append(f"qC{100 * q_c:.0f}")
+    if tuple(block_length) != PROBABILITY_GRID_DFAMILY_LEN:
+        tags.append(f"bl{block_length[0]:g}-{block_length[2]:g}")
+    if n_blocks != PROBABILITY_GRID_DFAMILY_N_BLOCKS:
+        tags.append(f"x{n_blocks}")
+    if reward_amount != helpers.REWARD_AMOUNT_UL:
+        tags.append(f"{reward_amount:g}uL")
+    if velocity_threshold != PROBABILITY_GRID_DFAMILY_VELOCITY_THRESHOLD:
+        tags.append(f"vel{velocity_threshold:g}")
+    # Resolve geometry exactly as the factory does, so the tag reflects what the rig will run.
+    default = {**_POST_STOP_PATCH_KWARGS, **PROBABILITY_GRID_DFAMILY_GEOMETRY}
+    geom = {**_POST_STOP_PATCH_KWARGS, **(PROBABILITY_GRID_DFAMILY_GEOMETRY if geometry is None else geometry)}
+    if geom != default:
+        diffs = [f"{_DFAMILY_GEOMETRY_TAGS.get(k, k)}{geom[k]:g}" for k in sorted(geom) if geom[k] != default.get(k)]
+        tags.append("geom" + "-".join(diffs))
+    return "_".join(["probability_grid_dfamily", *tags])
 
 
 def dfamily_plan(
@@ -539,6 +591,7 @@ def make_s_probability_grid_dfamily(
     prob_pair: tuple[float, float] = PROBABILITY_GRID_DFAMILY_PAIR,
     q_c: float = PROBABILITY_GRID_DFAMILY_Q_C,
     geometry: Optional[dict[str, float]] = None,
+    velocity_threshold: float = PROBABILITY_GRID_DFAMILY_VELOCITY_THRESHOLD,
 ) -> Stage:
     """D-family fixed-|D| ABA diagnostic stage (off-curriculum), played Sequential.
 
@@ -561,6 +614,11 @@ def make_s_probability_grid_dfamily(
     ``geometry`` overrides corridor lengths on top of ``_POST_STOP_PATCH_KWARGS``; it defaults to
     the compressed :data:`PROBABILITY_GRID_DFAMILY_GEOMETRY`. Pass ``_POST_STOP_PATCH_KWARGS`` (or
     ``{}``) to run the uncompressed corridor the on-curriculum grid stages use.
+
+    The stage name is derived from the effective config by :func:`dfamily_stage_name`, so it always
+    records ``start_high`` and any deviation from the defaults. Set ``velocity_threshold`` here
+    rather than patching ``operation_control`` on the returned stage, or the name will not reflect
+    what actually runs.
     """
     delay = helpers.make_reward_delay(offset=0.2, mean=1.0, max_delay=6.0)
     n_min, exp_mean, b_max = block_length
@@ -587,14 +645,24 @@ def make_s_probability_grid_dfamily(
         )
         for (p_a, p_b) in dfamily_plan(start_high, n_blocks=n_blocks, pair=prob_pair)
     ]
+    name = dfamily_stage_name(
+        start_high=start_high,
+        reward_amount=reward_amount,
+        block_length=block_length,
+        n_blocks=n_blocks,
+        prob_pair=prob_pair,
+        q_c=q_c,
+        geometry=geometry,
+        velocity_threshold=velocity_threshold,
+    )
     return Stage(
-        name="probability_grid_dfamily",
+        name=name,
         task=AindVrForagingTaskLogic(
-            stage_name="probability_grid_dfamily",
+            stage_name=name,
             task_parameters=AindVrForagingTaskParameters(
                 rng_seed=None,
                 environment=task_logic.BlockStructure(blocks=blocks, sampling_mode="Sequential"),
-                operation_control=helpers.make_default_operation_control(velocity_threshold=4),
+                operation_control=helpers.make_default_operation_control(velocity_threshold=velocity_threshold),
             ),
         ),
         metrics_provider=MetricsProvider(metrics_from_dataset),
