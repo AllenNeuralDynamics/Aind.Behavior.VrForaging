@@ -1,12 +1,69 @@
+import dataclasses
 from typing import Literal, Optional
 
 import numpy as np
 from aind_behavior_curriculum import MetricsProvider, Stage
+from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging import task_logic
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
 
 from ..depletion import helpers
 from ..depletion.metrics import metrics_from_dataset
+
+
+@dataclasses.dataclass(frozen=True)
+class DelaySpec:
+    """How long reward delivery is withheld after the animal commits to a choice.
+
+    The FAMILY matters behaviourally, not just the mean: an exponential delay is memoryless, so
+    the animal cannot time its wait, whereas a tight normal is nearly deterministic and can be
+    anticipated. That is why the delay lives here rather than in a generator flag -- swapping
+    families is a change of task, not a retune.
+    """
+
+    family: Literal["exponential", "normal"] = "exponential"
+    mean: float = 0.5
+    std: float = 0.15
+    """Only used when ``family="normal"``."""
+    minimum: float = 0.0
+    maximum: float = 1.0
+
+    def build(self) -> distributions.Distribution:
+        """Construct a fresh distribution instance (never share one across patches)."""
+        if self.family == "normal":
+            return helpers.make_normal_distribution(
+                mean=self.mean,
+                standard_deviation=self.std,
+                minimum=self.minimum,
+                maximum=self.maximum,
+            )
+        return helpers.make_exponential_distribution(rate=1 / self.mean, minimum=self.minimum, maximum=self.maximum)
+
+
+@dataclasses.dataclass(frozen=True)
+class CorridorGeometry:
+    """Lengths, in cm, of the virtual corridor a patch is embedded in."""
+
+    rewardsite: float = 50
+    interpatch_min: float = 100
+    interpatch_max: float = 250
+    intersite_min: float = 20
+    intersite_max: float = 80
+
+
+#: Corridor and delay used by the on-curriculum stages.
+GRADUATION_GEOMETRY = CorridorGeometry()
+GRADUATION_DELAY = DelaySpec()
+GRADUATION_STOP_DURATION = 0.5
+
+#: The task the batch-8 reversal cohort actually runs. It differs from graduation in exactly
+#: three deliberate ways -- a longer inter-patch corridor, a doubled stop requirement, and a
+#: predictable (normal) reward delay -- chosen to slow the animals down and make the delayed
+#: contingency timeable. Every other parameter is inherited, so the two stages cannot drift
+#: apart in any respect nobody chose.
+REVERSAL_GEOMETRY = CorridorGeometry(interpatch_min=150, interpatch_max=400)
+REVERSAL_DELAY = DelaySpec(family="normal", mean=0.5, std=0.15)
+REVERSAL_STOP_DURATION = 1.0
 
 
 def deterministic_curves(
@@ -83,13 +140,16 @@ def make_patch(
     reward_amount: float = 5.0,
     first_p: float = 0.5,
     reward_available: float = 9999,
-    stop_duration: float = 0.5,
-    delay_mean: float = 0.5,
+    stop_duration: float = GRADUATION_STOP_DURATION,
+    delay: Optional[DelaySpec] = None,
+    geometry: Optional[CorridorGeometry] = None,
     cap_delayed_rewards: bool = False,
 ) -> task_logic.Patch:
+    delay = delay if delay is not None else GRADUATION_DELAY
+    geometry = geometry if geometry is not None else GRADUATION_GEOMETRY
     agent = task_logic.RewardSpecification(
         operant_logic=helpers.make_operant_logic(stop_duration=stop_duration, is_operant=False),
-        delay=helpers.make_exponential_distribution(rate=1 / delay_mean, minimum=0.0, maximum=1.0),
+        delay=delay.build(),
         amount=task_logic.scalar_value(value=reward_amount),
         probability=task_logic.scalar_value(first_p),
         available=task_logic.scalar_value(reward_available),
@@ -103,11 +163,11 @@ def make_patch(
         odor_specification=odor_index,
         reward_specification=agent,
         patch_virtual_sites_generator=helpers.make_patch_virtual_sites_generator(
-            rewardsite=50,
-            interpatch_min=100,
-            interpatch_max=250,
-            intersite_min=20,
-            intersite_max=80,
+            rewardsite=geometry.rewardsite,
+            interpatch_min=geometry.interpatch_min,
+            interpatch_max=geometry.interpatch_max,
+            intersite_min=geometry.intersite_min,
+            intersite_max=geometry.intersite_max,
         ),
     )
 
@@ -161,14 +221,24 @@ def make_s_stage_all_odors_rewarded(
     )
 
 
-def make_s_stage_graduation(
-    delayed_reward_available: float = 100,
-    cap_delayed_rewards: bool = False,
+def _make_three_patch_stage(
+    name: str,
+    *,
+    stop_duration: float,
+    delay: DelaySpec,
+    geometry: CorridorGeometry,
+    delayed_reward_available: float,
+    cap_delayed_rewards: bool,
 ) -> Stage:
+    """Build the three-contingency stage (null / delayed / single) shared by the reversal task.
+
+    ``graduation`` and ``reversal_baseline`` differ ONLY in the keyword arguments above, so a
+    change to the contingency structure necessarily lands on both.
+    """
     return Stage(
-        name="graduation",
+        name=name,
         task=AindVrForagingTaskLogic(
-            stage_name="graduation",
+            stage_name=name,
             task_parameters=AindVrForagingTaskParameters(
                 operation_control=helpers.make_default_operation_control(velocity_threshold=8),
                 environment=task_logic.BlockStructure(
@@ -190,6 +260,9 @@ def make_s_stage_graduation(
                                         reward_amount=0.0,
                                         first_p=0,
                                         reward_available=0,
+                                        stop_duration=stop_duration,
+                                        delay=delay,
+                                        geometry=geometry,
                                         cap_delayed_rewards=cap_delayed_rewards,
                                     ),
                                     make_patch(
@@ -200,6 +273,9 @@ def make_s_stage_graduation(
                                         reward_amount=5.0,
                                         first_p=0.5,
                                         reward_available=delayed_reward_available,
+                                        stop_duration=stop_duration,
+                                        delay=delay,
+                                        geometry=geometry,
                                         cap_delayed_rewards=cap_delayed_rewards,
                                     ),
                                     make_patch(
@@ -210,6 +286,9 @@ def make_s_stage_graduation(
                                         reward_amount=5.0,
                                         first_p=1,
                                         reward_available=100,
+                                        stop_duration=stop_duration,
+                                        delay=delay,
+                                        geometry=geometry,
                                         cap_delayed_rewards=cap_delayed_rewards,
                                     ),
                                 ],
@@ -221,4 +300,40 @@ def make_s_stage_graduation(
             ),
         ),
         metrics_provider=MetricsProvider(metrics_from_dataset),
+    )
+
+
+def make_s_stage_graduation(
+    delayed_reward_available: float = 100,
+    cap_delayed_rewards: bool = False,
+) -> Stage:
+    """Terminal on-curriculum stage: all three contingencies, curriculum geometry."""
+    return _make_three_patch_stage(
+        "graduation",
+        stop_duration=GRADUATION_STOP_DURATION,
+        delay=GRADUATION_DELAY,
+        geometry=GRADUATION_GEOMETRY,
+        delayed_reward_available=delayed_reward_available,
+        cap_delayed_rewards=cap_delayed_rewards,
+    )
+
+
+def make_s_stage_reversal_baseline(
+    delayed_reward_available: float = 100,
+    cap_delayed_rewards: bool = False,
+) -> Stage:
+    """``graduation`` adjusted for the reversal cohort -- longer corridor, longer stop, normal delay.
+
+    Not wired into the curriculum graph: reversal sessions are generated off-curriculum by
+    ``examples/task_reversal.py``, which selects this stage with ``--baseline reversal``. It lives
+    here so the task the animals actually run is a versioned, reviewable object rather than a set
+    of flags that must be retyped identically every day.
+    """
+    return _make_three_patch_stage(
+        "reversal_baseline",
+        stop_duration=REVERSAL_STOP_DURATION,
+        delay=REVERSAL_DELAY,
+        geometry=REVERSAL_GEOMETRY,
+        delayed_reward_available=delayed_reward_available,
+        cap_delayed_rewards=cap_delayed_rewards,
     )
