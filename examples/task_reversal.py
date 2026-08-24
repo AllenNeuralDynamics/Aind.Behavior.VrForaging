@@ -74,13 +74,14 @@ Deviate from the curriculum on purpose (tagged _sd1 _ipmin150 _ipmax400 in the s
 
 from __future__ import annotations
 
+import bisect
 import json
 import os
 import re
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Literal, Optional, cast
+from typing import Any, Callable, Literal, Optional, cast
 
 import tyro
 from aind_behavior_curriculum import Stage, TrainerState
@@ -156,6 +157,14 @@ ODOR_LABEL: dict[str, dict[str, int]] = {
 _SET_BY_MAPPING: dict[tuple[int, int, int], str] = {
     (m["single"], m["delayed"], m["noreward"]): name for name, m in ODOR_LABEL.items()
 }
+
+# Contingency of each patch ``state_index``, as both the task logic and the rig's
+# ``ActivePatch`` stream encode it.
+_CONTINGENCY: dict[int, str] = {0: "noreward", 1: "delayed", 2: "single"}
+
+# Visit rate below which an executed block holds too little behaviour to have taught the
+# animal its mapping: the mouse quit inside it rather than ran it.
+_ENGAGED_VISIT_RATE = 0.3
 
 # Fixed loop order for the multiple-reversal group (single-swap reversals, S-D-N).
 _MULTI_REVERSAL_LOOP: list[SetName] = ["set1", "set6", "set2", "set5", "set3", "set4"]
@@ -894,39 +903,127 @@ def _latest_session_uri(subject_id: str, bucket: str) -> str:
     return f"s3://{bucket}/{sorted(set(folders))[-1]}"
 
 
-def infer_baseline_set(session: str) -> str:
-    """Infer the current baseline set from a session's LAST block channel mapping.
+def _resolve_stream(session: str, stream: str) -> str:
+    """Resolve a session reference to one of its software-event streams.
 
-    Reads the session's ``tasklogic_input.json`` (S3 or local), reads the final block's
-    per-contingency odor channel, and reverse-maps it to a set name. The last block is
-    "where the mouse currently is" (the transition set of a reversal, or the sole block).
+    Mirrors :func:`_resolve_tasklogic`; raises for a reference that names the task logic
+    directly, since a bare JSON carries no record of what was executed.
     """
-    task_logic_json = json.loads(_read_source_text(_resolve_tasklogic(session)))
-    patches = task_logic_json["task_parameters"]["environment"]["blocks"][-1][
-        "environment"
-    ]["patches"]
-    channel: dict[str, int] = {}
+    if session.endswith(".json"):
+        raise FileNotFoundError(f"{session!r} is a task logic, not a session tree")
+    if session.startswith("s3://"):
+        return session.rstrip("/") + f"/behavior/SoftwareEvents/{stream}.json"
+    root = Path(session)
+    for sub in ("behavior", "Behavior"):
+        candidate = root / sub / "SoftwareEvents" / f"{stream}.json"
+        if candidate.exists():
+            return str(candidate)
+    raise FileNotFoundError(f"No {stream} stream under {session!r}")
+
+
+def _read_stream(session: str, stream: str) -> list[dict[str, Any]]:
+    """Parse one software-event stream (JSON lines); empty if the session did not emit it."""
+    try:
+        text = _read_source_text(_resolve_stream(session, stream))
+    except (FileNotFoundError, OSError, subprocess.CalledProcessError):
+        return []
+    return [json.loads(line) for line in text.splitlines() if line.strip()]
+
+
+def _frame_time(event: dict[str, Any]) -> float:
+    """Behaviour-clock timestamp of a software event."""
+    return float(event["frame_timestamp"])
+
+
+def _channel_map(patches: list[dict[str, Any]]) -> dict[str, int]:
+    """Map ``contingency -> odour channel`` from one-hot patch definitions.
+
+    Keyed on ``state_index``, which is pinned to contingency and never moves; the channel is
+    exactly what a reversal swaps. Labels encode the same thing but are free text.
+    """
+    out: dict[str, int] = {}
     for patch in patches:
-        label = patch.get("label", "")
-        odor = patch.get("odor_specification")
-        ch = odor.index(1.0) if isinstance(odor, list) and 1.0 in odor else None
-        if ch is None:
-            continue
-        for prefix, key in (
-            ("patch_single", "single"),
-            ("patch_delayed", "delayed"),
-            ("patch_null", "noreward"),
-        ):
-            if label.startswith(prefix):
-                channel[key] = ch
+        spec = patch.get("odor_specification")
+        if isinstance(spec, list) and spec:
+            out[_CONTINGENCY[int(patch["state_index"])]] = spec.index(max(spec))
+    return out
+
+
+def _executed_channel_map(session: str) -> dict[str, int] | None:
+    """Channel map of the last block the mouse actually engaged with, from the rig's log.
+
+    Blocks it entered but abandoned are skipped: a block run at a collapsed visit rate
+    taught the animal nothing, so it cannot be the state to stay continuous with.
+
+    Returns ``None`` when the session logged no patches, leaving the caller to fall back.
+    """
+    patches = sorted(_read_stream(session, "ActivePatch"), key=_frame_time)
+    if not patches:
+        return None
+    onsets = sorted(_frame_time(e) for e in _read_stream(session, "Block"))
+    stops = sorted(_frame_time(e) for e in _read_stream(session, "ChoiceFeedback"))
+    edges = [_frame_time(e) for e in patches] + [float("inf")]
+
+    blocks: dict[int, list[tuple[dict[str, Any], bool]]] = {}
+    for i, event in enumerate(patches):
+        lo, hi = edges[i], edges[i + 1]
+        index = max(bisect.bisect_right(onsets, lo) - 1, 0)
+        visited = bisect.bisect_left(stops, hi) > bisect.bisect_left(stops, lo)
+        blocks.setdefault(index, []).append((event["data"], visited))
+
+    for index in sorted(blocks, reverse=True):
+        entries = blocks[index]
+        rewarded = [
+            visited for data, visited in entries if int(data["state_index"]) in (1, 2)
+        ]
+        if rewarded and sum(rewarded) / len(rewarded) >= _ENGAGED_VISIT_RATE:
+            return _channel_map([data for data, _ in entries])
+    return None
+
+
+def _declared_channel_map(session: str) -> dict[str, int]:
+    """Channel map of a session's final *declared* block, from its ``tasklogic_input.json``."""
+    task_logic_json = json.loads(_read_source_text(_resolve_tasklogic(session)))
+    return _channel_map(
+        task_logic_json["task_parameters"]["environment"]["blocks"][-1]["environment"][
+            "patches"
+        ]
+    )
+
+
+def infer_baseline_set(session: str) -> tuple[str, str]:
+    """Infer the set a mouse *ended* a session in, so the next one can open continuously.
+
+    Reads the last block the animal actually engaged with, from the rig's ``ActivePatch``
+    log. The declared block list cannot answer this once blocks are bounded at both ends
+    (``--wrap``): the rig then cycles that list and the session stops wherever the animal
+    quits, mid-list, so the final declared block is usually not the one it ran. Trusting the
+    declaration reports a set the mouse never reached and opens the next session on an
+    uncued reversal — the exact failure this inference exists to prevent.
+
+    Falls back to the final declared block when nothing was logged (a bare
+    ``tasklogic_input.json``, or a session that emitted no patches).
+
+    Returns
+    -------
+    tuple of (str, str)
+        The set name and how it was read, for the caller to report.
+    """
+    channel = _executed_channel_map(session)
+    source = "last engaged block"
+    if channel is None:
+        channel, source = (
+            _declared_channel_map(session),
+            "declared last block (nothing logged)",
+        )
     triple = (channel.get("single"), channel.get("delayed"), channel.get("noreward"))
     set_name = _SET_BY_MAPPING.get(triple)  # type: ignore[arg-type]
     if set_name is None:
         raise ValueError(
-            f"Last-block mapping single={triple[0]}, delayed={triple[1]}, null={triple[2]} "
-            "matches no known set — pass --step explicitly."
+            f"{source.capitalize()} mapping single={triple[0]}, delayed={triple[1]}, "
+            f"null={triple[2]} matches no known set — pass --step explicitly."
         )
-    return set_name
+    return set_name, source
 
 
 def main(cfg: ReversalConfig) -> None:
@@ -939,8 +1036,10 @@ def main(cfg: ReversalConfig) -> None:
             assert cfg.from_mouse is not None  # guaranteed by the enclosing condition
             source = _latest_session_uri(cfg.from_mouse, cfg.bucket)
             print(f"latest uploaded session for {cfg.from_mouse}: {source}")
-        inferred = infer_baseline_set(source)
-        print(f"inferred current baseline set: {inferred}  (--step was {cfg.step})")
+        inferred, read_from = infer_baseline_set(source)
+        print(
+            f"inferred current baseline set: {inferred} from the {read_from}  (--step was {cfg.step})"
+        )
         cfg.step = inferred  # type: ignore[assignment]
 
     task_logic_instance = make_task_logic(cfg)
