@@ -207,18 +207,14 @@ def test_reshaped_curriculum_fails_loudly(monkeypatch):
 
 def test_wrap_bounds_the_final_block():
     """--wrap makes every block bounded, so the rig cycles instead of parking in the last one."""
-    cfg = tr.ReversalConfig(
-        group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=True
-    )
+    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=True)
     blocks = tr.make_task_logic(cfg).task_parameters.environment.blocks
     assert len(blocks) == 4
     assert all(b.end_conditions for b in blocks)
 
 
 def test_unwrapped_final_block_runs_to_session_end():
-    cfg = tr.ReversalConfig(
-        group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60
-    )
+    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60)
     blocks = tr.make_task_logic(cfg).task_parameters.environment.blocks
     assert not blocks[-1].end_conditions
     assert all(b.end_conditions for b in blocks[:-1])
@@ -226,15 +222,94 @@ def test_unwrapped_final_block_runs_to_session_end():
 
 def test_wrap_rejects_an_odd_block_count():
     """Wrapping an odd alternation repeats the map across the seam -- a reversal that is not one."""
-    cfg = tr.ReversalConfig(
-        group="alternating", swap="DS", step="set1", n_reversals=2, wrap=True
-    )
+    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=2, wrap=True)
     with pytest.raises(ValueError, match="even block count"):
         tr.build_sequence(cfg)
 
 
 def test_wrap_is_tagged_into_the_stage_name():
-    cfg = tr.ReversalConfig(
-        group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=True
-    )
+    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=True)
     assert tr.make_task_logic(cfg).stage_name.endswith("_wrap")
+
+
+def _onehot(channel: int) -> list[float]:
+    spec = [0.0, 0.0, 0.0]
+    spec[channel] = 1.0
+    return spec
+
+
+def _declared(delayed_ch: int) -> dict:
+    return {
+        "environment": {
+            "patches": [
+                {"state_index": 0, "odor_specification": _onehot(0)},
+                {"state_index": 1, "odor_specification": _onehot(delayed_ch)},
+                {"state_index": 2, "odor_specification": _onehot(3 - delayed_ch)},
+            ]
+        }
+    }
+
+
+def write_session(root: Path, blocks: list[dict], executed: list[tuple[int, int, bool]] | None = None) -> Path:
+    """A session tree declaring ``blocks``, having run ``executed`` as (delayed_ch, single_ch, engaged)."""
+    session = root / "867999_2026-08-21T120000Z"
+    logs, events = session / "behavior" / "Logs", session / "behavior" / "SoftwareEvents"
+    logs.mkdir(parents=True)
+    events.mkdir(parents=True)
+    (logs / "tasklogic_input.json").write_text(json.dumps({"task_parameters": {"environment": {"blocks": blocks}}}))
+    if executed is None:
+        return session
+    onsets, patches, stops, clock = [], [], [], 0.0
+    for delayed_ch, single_ch, engaged in executed:
+        onsets.append({"frame_timestamp": clock})
+        for state_index, channel in ((0, 0), (1, delayed_ch), (2, single_ch)):
+            patches.append(
+                {
+                    "frame_timestamp": clock,
+                    "data": {"state_index": state_index, "odor_specification": _onehot(channel)},
+                }
+            )
+            if engaged and state_index:
+                stops.append({"frame_timestamp": clock + 0.5})
+            clock += 1.0
+    for name, stream in (("Block", onsets), ("ActivePatch", patches), ("ChoiceFeedback", stops)):
+        (events / f"{name}.json").write_text("\n".join(json.dumps(e) for e in stream))
+    return session
+
+
+def test_inference_reads_the_block_the_mouse_ran_not_the_one_declared_last(tmp_path):
+    """A wrapped block list cycles, so a session stops mid-list and its declaration lies.
+
+    Believing the declaration opens the next session on an uncued reversal, which reads in
+    the data as perseveration and is indistinguishable from the real thing.
+    """
+    session = write_session(
+        tmp_path,
+        blocks=[_declared(1), _declared(2), _declared(1), _declared(2)],
+        executed=[(1, 2, True), (2, 1, True), (1, 2, True)],
+    )
+    assert tr.infer_baseline_set(str(session)) == ("set1", "last engaged block")
+
+
+def test_inference_skips_a_block_the_mouse_abandoned(tmp_path):
+    """A block run at a collapsed visit rate taught the animal nothing about its mapping."""
+    session = write_session(
+        tmp_path,
+        blocks=[_declared(1), _declared(2)],
+        executed=[(1, 2, True), (2, 1, False)],
+    )
+    assert tr.infer_baseline_set(str(session))[0] == "set1"
+
+
+def test_inference_falls_back_to_the_declaration_when_nothing_was_logged(tmp_path):
+    session = write_session(tmp_path, blocks=[_declared(1), _declared(2)], executed=None)
+    set_name, source = tr.infer_baseline_set(str(session))
+    assert set_name == "set6"
+    assert "declared" in source
+
+
+def test_unrecognised_mapping_is_refused_rather_than_guessed(tmp_path):
+    """A mapping the set table does not contain is a corrupt read, not a set to open in."""
+    session = write_session(tmp_path, blocks=[_declared(1)], executed=[(0, 0, True)])
+    with pytest.raises(ValueError, match="matches no known set"):
+        tr.infer_baseline_set(str(session))
