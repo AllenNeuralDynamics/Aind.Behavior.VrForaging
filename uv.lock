@@ -25,7 +25,7 @@ members = [
 [manifest.dependency-groups]
 dev = [
     { name = "aind-behavior-vr-foraging", extras = ["data", "mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", extras = ["aind-services", "otel"], specifier = ">=0.11.2" },
+    { name = "aind-clabe", extras = ["aind-services", "otel"], specifier = ">=0.12.2" },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -108,7 +108,7 @@ dev = [
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.13.6" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'mappers'", editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", specifier = ">=0.12.1" },
+    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", specifier = ">=0.12.2" },
     { name = "aind-data-schema", marker = "extra == 'mappers'", specifier = ">=2.7.1" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.8,<0.6.0" },
     { name = "pydantic-settings" },
@@ -162,7 +162,7 @@ dev = [
 
 [[package]]
 name = "aind-clabe"
-version = "0.12.1"
+version = "0.12.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-services" },
@@ -175,9 +175,9 @@ dependencies = [
     { name = "semver" },
     { name = "textual" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cf/de/cce035c1a7c7e14435b234bd5216db1abda30602fb582cd44d6d3c33789f/aind_clabe-0.12.1.tar.gz", hash = "sha256:b868b726f32714a609d43a3e2a76c40b162bae2104556af894235c1c95644744", size = 107868, upload-time = "2026-08-13T16:15:58.866Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/89/4c/a0605c1a8bd3791b6141dc19316538a71e89fb4dc1bbc6946c06349db827/aind_clabe-0.12.2.tar.gz", hash = "sha256:40c28bbf728f5d2d579267a2329fa0ba57ededc11fdbf7d7129e0e1de2ecdb16", size = 108911, upload-time = "2026-08-25T18:23:15.693Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/ad/507915fed6bc03c300ca64876cf6228c72f1d3e6df6d48114863d820bb16/aind_clabe-0.12.1-py3-none-any.whl", hash = "sha256:c8b4595a65bd087a6b76e57df772ad52ce18e7af0766da0996497f7b843ebb3d", size = 139089, upload-time = "2026-08-13T16:15:57.407Z" },
+    { url = "https://files.pythonhosted.org/packages/8f/56/f6806cfc40ca6ca41ad3c8da1eddb41e601ab4c3f4d435ba91a901e442eb/aind_clabe-0.12.2-py3-none-any.whl", hash = "sha256:22b924cebb43bb7ad3dc8a0b9d691d9f28a779b1ce3347406c69d4b85254a34d", size = 140093, upload-time = "2026-08-25T18:23:14.455Z" },
 ]
 
 [package.optional-dependencies]
@@ -749,7 +749,7 @@ name = "cryptography"
 version = "49.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1f/99/d1c90d6041656cc6ee229dc99cd67fd0cd5aec3c5f7d72fffc27cc750054/cryptography-49.0.0.tar.gz", hash = "sha256:f89660a348f4f78a92366240a61404e337586ef7f5909a2fef59ca88ef505493", size = 854345, upload-time = "2026-06-12T20:02:30.512Z" }
 wheels = [
@@ -795,13 +795,13 @@ name = "erdantic"
 version = "1.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pydantic" },
-    { name = "pydantic-core" },
-    { name = "pygraphviz" },
-    { name = "sortedcontainers-pydantic" },
-    { name = "typenames" },
-    { name = "typer" },
-    { name = "typing-extensions", marker = "python_full_version < '3.12'" },
+    { name = "pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pydantic-core", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pygraphviz", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "sortedcontainers-pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typenames", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typer", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/b3/d814074dc6076a97682dc8a62a3da672fd982a533cc1f29854b6a4433ef2/erdantic-1.2.1.tar.gz", hash = "sha256:9105fc51260ee58b531690d1ef87db81f849257e73e106cd8f2a7f8a26d8d9b0", size = 1152018, upload-time = "2026-02-15T23:56:00.294Z" }
 wheels = [
@@ -1581,9 +1581,9 @@ name = "msal"
 version = "1.37.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography" },
-    { name = "pyjwt", extra = ["crypto"] },
-    { name = "requests" },
+    { name = "cryptography", marker = "sys_platform == 'win32'" },
+    { name = "pyjwt", extra = ["crypto"], marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9a/99/d840198ecf6e8057bbc937f129ae940404485d736cda73253bbff9537f01/msal-1.37.0.tar.gz", hash = "sha256:1b1672a33ee467c1d70b341bb16cafd51bb3c817147a95b93263794b03971bec", size = 182444, upload-time = "2026-05-29T19:49:05.561Z" }
 wheels = [
@@ -2258,7 +2258,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography" },
+    { name = "cryptography", marker = "sys_platform == 'win32'" },
 ]
 
 [[package]]
@@ -2507,7 +2507,7 @@ resolution-markers = [
     "python_full_version < '3.12' and sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 dependencies = [
-    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" } },
+    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7a/97/5a3609c4f8d58b039179648e62dd220f89864f56f7357f5d4f45c29eb2cc/scipy-1.17.1.tar.gz", hash = "sha256:95d8e012d8cb8816c226aef832200b1d45109ed4464303e997c5b13122b297c0", size = 30573822, upload-time = "2026-02-23T00:26:24.851Z" }
 wheels = [
@@ -2589,7 +2589,7 @@ resolution-markers = [
     "python_full_version == '3.12.*' and sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 dependencies = [
-    { name = "numpy", version = "2.5.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "numpy", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a7/25/c2700dfaf6442b4effaa91af24ebce5dc9d31bb4a69706313aae70d72cd0/scipy-1.18.0.tar.gz", hash = "sha256:67b2ad2ad54c72ca6d04975a9b2df8c3638c34ddd5b28738e94fc2b57929d378", size = 30774447, upload-time = "2026-06-19T15:01:43.456Z" }
 wheels = [
@@ -2685,9 +2685,9 @@ name = "sortedcontainers-pydantic"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pydantic" },
-    { name = "pydantic-core" },
-    { name = "sortedcontainers" },
+    { name = "pydantic", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "pydantic-core", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "sortedcontainers", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f5/39/c951f89cd289d207730d080ce24d973db18227ea09ba966e4fab9d75dab4/sortedcontainers_pydantic-2.0.0.tar.gz", hash = "sha256:0cb3abfbda64dc1fa2365b578ddc3a259c7d75daeae76d2f9087f5ebc1f8f1fe", size = 53829, upload-time = "2025-04-18T06:51:10.706Z" }
 wheels = [
@@ -2779,9 +2779,9 @@ name = "typer"
 version = "0.26.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "annotated-doc" },
-    { name = "rich" },
-    { name = "shellingham" },
+    { name = "annotated-doc", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "rich", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "shellingham", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7c/f7/68adc395201b20b872d68e975386832e8005ffeacedd43a1d837a32815be/typer-0.26.8.tar.gz", hash = "sha256:c244a6bd558886fe3f8780efb6bdd28bb9aff005a94eedebaa5cb32926fe2f7e", size = 202097, upload-time = "2026-06-26T09:22:45.705Z" }
 wheels = [
