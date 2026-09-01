@@ -10,18 +10,14 @@ from .utils import make_patch
 # ============================================================
 # Stage definition
 # ============================================================
-p_maxs = [
-    1.0,
-    0.8,
-    0.4,
-]  # maximum reward probability of each patch, in order for patch A, B and C (they come in order A, B, C, A, ...)
-p_min = [0.3, 0.3, 0.3]  # minimum reward probability only used for stopping depletion
-dep_rates = [0.9, 0.9, 0.9]  # depletion rate of each patch
-replenishment_delay = [5, 5, 5]  # delay (in seconds) before replenishment starts for each patch
+p_maxs = [0.7, 0.7, 0.7]  # maximum reward probability of each patch (A, B, C)
+p_min = [0.15, 0.15, 0.15]  # minimum reward probability only used for stopping depletion
+dep_rates = [0.9, 0.9**3, 0.9**5]  # depletion rate of each patch ([0.9, 0.729, 0.59])
+replenishment_delay = [3, 3, 3]  # delay (in seconds) before replenishment starts for each patch
 # Define the patch statistics for the distance
-interpatch_length = [140.0, 140.0, 140.0]  # inter-patch distance in cm
-reward_amount = 5  # microliters
-rep_rates = [0.1, 0.1, 0.1]  # replenishment rate of each patch (already scaled)
+interpatch_length = [140.0, 140.0, 140.0]  # inter-patch distance in cm (~5s at typical running speed)
+reward_amount = 4  # microliters
+rep_rates = [0.08, 0.08, 0.08]  # replenishment rate of each patch (already scaled)
 num_ps_states = [16, 12, 7]  # number of discrete reward states within each patch
 rhos = [0.9, 0.9, 0.9]
 
