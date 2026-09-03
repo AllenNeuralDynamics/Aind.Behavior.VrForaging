@@ -119,7 +119,7 @@ namespace AindVrForagingDataSchema
                 }
             }
             j = Math.Min(nStates - 1, j);
-            updatedValue = value / Math.Pow(Rho, j - i);
+            updatedValue = Maximum * Math.Pow(Rho, nStates - 1 - j);
             return Math.Max(Math.Min(updatedValue, Maximum), Minimum);
         }
     }
