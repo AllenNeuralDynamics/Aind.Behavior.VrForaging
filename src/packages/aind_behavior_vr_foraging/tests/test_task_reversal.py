@@ -16,6 +16,7 @@ effect and be stamped into the stage name so a modified task cannot masquerade a
 import copy
 import importlib.util
 import json
+import random
 import re
 import sys
 from pathlib import Path
@@ -205,31 +206,112 @@ def test_reshaped_curriculum_fails_loudly(monkeypatch):
         tr.baseline_block("capped")
 
 
-def test_wrap_bounds_the_final_block():
-    """--wrap makes every block bounded, so the rig cycles instead of parking in the last one."""
-    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=True)
+def test_an_alternating_design_closes_its_cycle_by_default():
+    """No flag needed: the analysis target is a prefix of the cycle, not the whole list."""
+    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60)
     blocks = tr.make_task_logic(cfg).task_parameters.environment.blocks
     assert len(blocks) == 4
     assert all(b.end_conditions for b in blocks)
 
 
-def test_unwrapped_final_block_runs_to_session_end():
-    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60)
+def test_an_odd_alternation_rounds_up_rather_than_being_refused():
+    """How many reversals the animal sees is set by how long it works, not by the list length.
+
+    So the declaration can be padded to the even count a closed seam needs, instead of making
+    the caller solve a parity puzzle to get sane wrap-around.
+    """
+    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=2, block_length=60)
+    seq = tr.build_sequence(cfg)
+    assert len(seq) == 4
+    assert seq[0][0] != seq[-1][0]  # the seam is a real reversal
+    assert all(not isinstance(end, list) for _, end in seq)
+
+
+def test_single_reversal_holds_its_new_state_instead_of_cycling():
+    """It exists to move a mouse into a state it keeps -- across this session and the next."""
+    cfg = tr.ReversalConfig(group="single_reversal", swap="DS", step="set1", block_length=60)
+    seq = tr.build_sequence(cfg)
+    assert isinstance(seq[-1][1], list)
+
+
+def test_asking_a_single_reversal_to_cycle_is_refused_not_ignored():
+    cfg = tr.ReversalConfig(group="single_reversal", swap="DS", step="set1", wrap=True)
+    with pytest.raises(ValueError, match="does not apply"):
+        tr.build_sequence(cfg)
+
+
+def test_no_wrap_reopens_the_final_block():
+    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=False)
     blocks = tr.make_task_logic(cfg).task_parameters.environment.blocks
     assert not blocks[-1].end_conditions
     assert all(b.end_conditions for b in blocks[:-1])
 
 
-def test_wrap_rejects_an_odd_block_count():
-    """Wrapping an odd alternation repeats the map across the seam -- a reversal that is not one."""
-    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=2, wrap=True)
-    with pytest.raises(ValueError, match="even block count"):
-        tr.build_sequence(cfg)
+class TestJitteredBlockLength:
+    """A fixed block length is a schedule the animal can learn; an exponential one is not."""
+
+    def test_no_jitter_leaves_the_block_exactly_as_declared(self):
+        """The default has to stay byte-identical, or every existing state file changes."""
+        conditions = tr.make_end_condition(85, count_by="stops")
+        assert conditions[0].value.model_dump() == tr._scalar(85).model_dump()
+
+    def test_jitter_keeps_the_mean_rather_than_raising_the_floor(self):
+        """Block lengths are budget-tuned per animal, so jitter must not lengthen the session.
+
+        The floor therefore sits below the declared length by exactly the amount truncation
+        shifts an exponential's mean, and the declared number stays the mean realized length.
+        """
+        length = tr.block_length_distribution(85, 12)
+        floor = length.truncation_parameters.min
+        assert floor < 85 < length.truncation_parameters.max
+        # Monte-Carlo the rig's own "exclude" truncation: resample rather than clamp.
+        rng = random.Random(0)
+        draws = []
+        while len(draws) < 40_000:
+            draw = floor + rng.expovariate(length.distribution_parameters.rate)
+            if draw <= length.truncation_parameters.max:
+                draws.append(draw)
+        assert sum(draws) / len(draws) == pytest.approx(85, abs=0.5)
+
+    def test_the_window_is_a_fixed_multiple_of_the_jitter(self):
+        """So a session budget can still be planned against a hard ceiling."""
+        length = tr.block_length_distribution(85, 12)
+        span = length.truncation_parameters.max - length.truncation_parameters.min
+        assert span == pytest.approx(tr._JITTER_SPAN * 12)
+
+    def test_the_patch_cap_stays_fixed_when_the_block_is_jittered(self):
+        """The cap bounds a disengaged animal; it is a ceiling, not a target to spread."""
+        conditions = tr.make_end_condition(85, count_by="stops", patch_cap=90, jitter=12)
+        assert conditions[0].value.distribution_parameters.rate == pytest.approx(1 / 12)
+        assert conditions[1].value.model_dump() == tr._scalar(90).model_dump()
+
+    def test_jitter_is_stamped_into_the_stage_name(self):
+        """Two sessions with the same mean block are not the same task if one is predictable."""
+        shape = {"group": "alternating", "swap": "DS", "step": "set1", "n_reversals": 3}
+        fixed = tr.make_task_logic(tr.ReversalConfig(**shape, block_length=85)).stage_name
+        jittered = tr.make_task_logic(tr.ReversalConfig(**shape, block_length=85, block_jitter=12)).stage_name
+        assert "_jit" not in fixed
+        assert "_jit12" in jittered
+
+    def test_an_unbounded_block_is_not_labelled_jittered(self):
+        """There is nothing to jitter in a block that runs to session end."""
+        cfg = tr.ReversalConfig(group="no_reversal", step="set1", block_jitter=12)
+        assert "_jit" not in tr.make_task_logic(cfg).stage_name
+
+    def test_a_jitter_wider_than_the_block_is_refused(self):
+        """Silently flooring at 1 would hand the rig blocks that end on the first stop."""
+        with pytest.raises(ValueError, match="too wide"):
+            tr.block_length_distribution(40, 200)
+        with pytest.raises(ValueError, match=">= 0"):
+            tr.block_length_distribution(40, -1)
 
 
-def test_wrap_is_tagged_into_the_stage_name():
-    cfg = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60, wrap=True)
-    assert tr.make_task_logic(cfg).stage_name.endswith("_wrap")
+def test_the_wrap_tag_reports_the_sequence_not_the_request():
+    """A design that cannot cycle must not be labelled as though it had; analysis groups on this."""
+    closed = tr.ReversalConfig(group="alternating", swap="DS", step="set1", n_reversals=3, block_length=60)
+    assert tr.make_task_logic(closed).stage_name.endswith("_wrap")
+    held = tr.ReversalConfig(group="single_reversal", swap="DS", step="set1", block_length=60)
+    assert "_wrap" not in tr.make_task_logic(held).stage_name
 
 
 def _onehot(channel: int) -> list[float]:
