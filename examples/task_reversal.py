@@ -57,10 +57,13 @@ absorb warm-up and carry-over from the previous session:
 
 Count blocks in PATCHES encountered instead of stops (the original behaviour -- predictable
 structure and N guaranteed odor presentations, but a skipping animal reaches the reversal
-barely having sampled). Add --patch-cap under the default stop-counting to bound how long a
-disengaged animal can stall in one block:
+barely having sampled):
     uv run python examples/task_reversal.py --group single_reversal --count-by patches --block-length 40
-    uv run python examples/task_reversal.py --group single_reversal --count-by stops --block-length 40 --patch-cap 80
+
+Jitter the block length so the reversal is not on a schedule the animal can learn. The
+number given stays the MEAN, so the session budget is unchanged; --block-jitter is the mean
+of the exponential spread around it:
+    uv run python examples/task_reversal.py --group alternating --swap DS --step set1 --n-reversals 5 --block-length 85 --block-jitter 12
 
 Infer the current set from a mouse's last uploaded session, then just pick the reversal:
     uv run python examples/task_reversal.py --from-mouse 867424 --group single_reversal --transition set6 --reward capped --block-length 20
@@ -76,6 +79,7 @@ from __future__ import annotations
 
 import bisect
 import json
+import math
 import os
 import re
 import subprocess
@@ -172,6 +176,17 @@ _MULTI_REVERSAL_LOOP: list[SetName] = ["set1", "set6", "set2", "set5", "set3", "
 # Default steady-state block length; deviations are tagged into the stage name.
 _DEFAULT_BLOCK_LENGTH = 40
 
+# Width of a jittered block's window, in units of the jitter mean. At 3 the exponential keeps
+# 95% of its mass inside the window, so the shape is still recognisably exponential, while the
+# block keeps a hard ceiling a session budget can be planned against.
+_JITTER_SPAN = 3.0
+# Mean of a unit exponential truncated to [0, _JITTER_SPAN], in units of its own mean.
+# Truncation pulls the mean below 1; the floor is lowered by exactly this much so that turning
+# jitter on does not lengthen the block.
+_JITTER_MEAN = 1.0 - _JITTER_SPAN * math.exp(-_JITTER_SPAN) / (
+    1.0 - math.exp(-_JITTER_SPAN)
+)
+
 
 @dataclass
 class ReversalConfig:
@@ -222,34 +237,58 @@ class ReversalConfig:
     since it moves with both skip rate and exploitation depth."""
     first_block_length: Optional[int] = None
     """Length of the FIRST block only, in units of ``count_by``; defaults to
-    ``block_length``. The first block carries warm-up and whatever the animal brings over
-    from the previous session, so it usually wants to be longer than the steady-state
-    blocks. Ignored when the first block is also the last (no_reversal), since that one is
-    unbounded."""
+    ``block_length``. The first block is the pre-reversal baseline -- the A of an ABA -- and
+    it opens on the mapping the animal ended the previous session on, so it starts
+    part-settled and wants to be SHORTER than a block that follows a reversal: about its own
+    settling time plus one analysis window. Ignored when the first block is also the last
+    (no_reversal), since that one is unbounded.
+
+    Note this sizes DECLARED block 1, not "the opener": a closed cycle comes back round to it,
+    and every later visit is a reversal needing a full-length block. Give the cycle enough
+    blocks that the short one lands once per session, or leave this unset and size every block
+    alike."""
+    block_jitter: float = 0.0
+    """Mean of an exponential spread applied to every bounded block's length, in ``count_by``
+    units. 0 gives every block exactly its declared length.
+
+    A fixed block length is itself learnable: the reversal always lands on the same stop, so an
+    animal that has learned the schedule can switch before the odors change rather than because
+    they did. An exponential has a flat hazard -- how much of a block has already elapsed says
+    nothing about how much is left -- so there is no schedule to learn.
+
+    ``block_length`` and ``first_block_length`` keep meaning the MEAN realized length rather
+    than becoming floors, so turning jitter on rejitters the schedule without spending more of
+    a session. These lengths are budget-tuned per animal; silently lengthening them is the one
+    thing this flag must not do. See :func:`block_length_distribution`."""
     count_by: CountBy = _DEFAULT_COUNT_BY
     """Currency the block advances in: "stops" (``ChoiceFeedback``) or "patches"
     (``ActivePatch``, i.e. every patch encountered, stopped at or not). "patches" is the
     original behaviour -- predictable structure and N guaranteed odor presentations; "stops"
     is robust to an animal that skips its way to the reversal. See ``make_end_condition``
     for the trade-off. The choice is tagged into the stage name (``_pb``/``_sb``)."""
-    wrap: bool = False
+    wrap: Optional[bool] = None
     """Bound the FINAL block too, so the rig cycles the block list instead of parking in an
-    unbounded last block.
+    unbounded last block. Defaults to closing the cycle for any design that cycles.
 
-    The task engine repeats the block list once it is exhausted -- measured on the bandit
-    pair, which declares 4 blocks and fires 8-12 ``Block`` events in a session. Leaving the
-    last block unbounded (the default) suppresses that: the session ends inside one giant
-    terminal block, which for these mice runs well past the engagement cliff and is not
-    analyzable. Wrapping instead keeps every block the same size, so blocks past the cliff
-    degrade gracefully rather than swallowing a third of the session.
+    The task engine repeats the block list once it is exhausted. Leaving the last block
+    unbounded suppresses that: the session ends inside one giant terminal block that runs
+    well past the engagement cliff and is not analyzable. A closed cycle keeps every block
+    the same size, so blocks past the cliff degrade gracefully instead of swallowing most of
+    the session, and the analysis target can simply be a prefix of the cycle -- an ABA is the
+    first three blocks of a repeating A,B.
 
-    Only safe when the block count is EVEN under an alternating map: wrapping an odd-length
-    alternation puts the same set either side of the seam, i.e. a scheduled reversal that
-    silently is not one. Validated in :func:`build_sequence`."""
+    ``None`` resolves per group: closed for ``alternating`` and ``multiple_reversal``, open
+    for ``single_reversal``, whose whole point is a one-way transition into a state the mouse
+    then holds, within the session and across the sessions that follow. Asking for ``--wrap``
+    there is refused rather than ignored."""
     patch_cap: Optional[int] = None
-    """Optional upper bound in PATCHES on every non-terminal block. End conditions are merged
-    (first to fire wins), so this bounds how long a disengaged animal can sit in one block
-    without ever reaching ``block_length``. ``None`` means pure stop-gating. Only
+    """Optional upper bound in PATCHES on every non-terminal block, merged with the stop
+    condition so that whichever fires first ends the block.
+
+    Leave it unset. It exists for a design that deliberately wants a patch ceiling, not as a
+    remedy for an animal that stops working: it can only bind once the visit rate has
+    collapsed, so it hands a reversal to a mouse that is not sampling — the exact failure
+    ``count_by="stops"`` was adopted to prevent. See :func:`make_end_condition`. Only
     meaningful when ``count_by="stops"``; ignored otherwise."""
 
     # --- Physical overrides -------------------------------------------------------------
@@ -293,6 +332,25 @@ class ReversalConfig:
 
     output: str = "./local/task_logic_schemas/{stage_name}.json"
     """Output path template for the TrainerState JSON ({stage_name} is substituted)."""
+
+    def resolved_wrap(self) -> bool:
+        """Whether the block list closes into a cycle, resolving the ``None`` default.
+
+        Closed by default wherever the design cycles. ``single_reversal`` never does: it is a
+        one-way transition into a state the animal then holds, through the rest of the
+        session and into the ones after it, which is how it learns to reverse at all. Asking
+        for a cycle there is refused rather than quietly ignored.
+        """
+        cycles = self.group in ("alternating", "multiple_reversal")
+        if self.wrap is None:
+            return cycles
+        if self.wrap and self.group == "single_reversal":
+            raise ValueError(
+                "--wrap does not apply to --group single_reversal: it reverses into a state "
+                "the animal holds across sessions, rather than cycling. Use --group "
+                "alternating for a closed cycle."
+            )
+        return self.wrap
 
     def patch_weights(self) -> list[float]:
         """Relative patch frequencies in ``state_index`` order: null, delayed, single."""
@@ -576,8 +634,44 @@ def _scalar(value) -> distributions.Scalar:
     )
 
 
+def block_length_distribution(mean: float, jitter: float):
+    """A block's length: fixed at ``mean``, or exponentially spread around it.
+
+    ``jitter`` is the exponential's own mean, not the width of the window. The floor sits
+    *below* ``mean`` by exactly the amount truncation shifts an exponential's mean, so the
+    realized mean is ``mean`` whether jitter is on or off — see
+    :attr:`ReversalConfig.block_jitter` for why that has to hold.
+
+    Truncation to ``[floor, floor + _JITTER_SPAN * jitter]`` uses the schema default mode,
+    ``exclude``: an out-of-range draw is resampled rather than clamped, so no block sits
+    exactly on the ceiling and the hazard stays flat right up to it.
+    """
+    if jitter < 0:
+        raise ValueError(f"--block-jitter must be >= 0, got {jitter:g}.")
+    if jitter == 0:
+        return _scalar(mean)
+    floor = round(mean - jitter * _JITTER_MEAN)
+    if floor < 1:
+        raise ValueError(
+            f"--block-jitter {jitter:g} is too wide for a block of {mean:g}: it puts the floor "
+            f"at {floor}. Keep the jitter under {mean / _JITTER_MEAN:.0f}."
+        )
+    return distributions.ExponentialDistribution(
+        distribution_parameters=distributions.ExponentialDistributionParameters(
+            rate=1 / jitter
+        ),
+        scaling_parameters=distributions.ScalingParameters(offset=floor),
+        truncation_parameters=distributions.TruncationParameters(
+            min=floor, max=floor + round(_JITTER_SPAN * jitter)
+        ),
+    )
+
+
 def make_end_condition(
-    value, count_by: CountBy = "stops", patch_cap: Optional[int] = None
+    value,
+    count_by: CountBy = "stops",
+    patch_cap: Optional[int] = None,
+    jitter: float = 0.0,
 ) -> list:
     """Block end condition; ``[]`` means "run to session end".
 
@@ -599,16 +693,29 @@ def make_end_condition(
     - Perseveration can accelerate the reversal: an animal still exploiting the pre-reversal
       mapping racks up stops quickly, ending the block sooner. Watch for this after a flip.
 
-    Under ``"stops"`` a fully disengaged animal never advances at all. ``patch_cap`` guards
-    that: the rig merges end conditions, so whichever fires FIRST ends the block -- it is an
-    upper bound in patches, not an additional requirement. It is meaningless under
-    ``"patches"`` (the primary condition is already a patch count) and ignored there.
+    Under ``"stops"`` a block does not advance while the animal is skipping. That is the
+    point, not a defect: a reversal delivered to a mouse that is not sampling is one it cannot
+    learn, and the block it lands in was never taught either.
+
+    ``patch_cap`` overrides that -- the rig merges end conditions, so whichever fires FIRST
+    ends the block, making it an upper bound in patches rather than an additional requirement.
+    Prefer to leave it unset. It binds precisely when the visit rate has collapsed, so every
+    reversal it triggers goes to an animal that cannot use it, which is the failure counting
+    stops exists to avoid; and it buys nothing analysis cannot get after the fact by finding
+    the engagement cliff. A long dead block at the end of a session costs neither water nor
+    welfare, and it is excluded cleanly. Meaningless under ``"patches"`` (the primary condition
+    is already a patch count) and ignored there.
+
+    ``jitter`` spreads the length exponentially about ``value`` instead of fixing it; see
+    :func:`block_length_distribution`. It applies to the primary condition only — the cap is a
+    ceiling on a disengaged animal, not a target, so it stays fixed.
     """
     if isinstance(value, list):
         return value
+    length = block_length_distribution(value, jitter)
     if count_by == "patches":
-        return [task_logic.BlockEndConditionPatchCount(value=_scalar(value))]
-    conditions: list = [task_logic.BlockEndConditionChoice(value=_scalar(value))]
+        return [task_logic.BlockEndConditionPatchCount(value=length)]
+    conditions: list = [task_logic.BlockEndConditionChoice(value=length)]
     if patch_cap is not None:
         conditions.append(
             task_logic.BlockEndConditionPatchCount(value=_scalar(patch_cap))
@@ -625,22 +732,30 @@ def build_sequence(cfg: ReversalConfig) -> list[tuple[SetName, object]]:
     ``first_block_length`` when set. Uses a list (not a dict) so the multiple-reversal
     loop can't be clobbered by duplicate keys.
     """
+    wrap = cfg.resolved_wrap()
     seq: list[tuple[SetName, object]]
     if cfg.group == "no_reversal":
-        seq = [(cfg.step, cfg.block_length if cfg.wrap else [])]
+        seq = [(cfg.step, cfg.block_length if wrap else [])]
     elif cfg.group == "single_reversal":
         seq = [(cfg.step, cfg.block_length), (cfg.transition, [])]
     elif cfg.group == "multiple_reversal":
         seq = [(s, cfg.block_length) for s in _MULTI_REVERSAL_LOOP]
-        if not cfg.wrap:
+        if not wrap:
             seq[-1] = (seq[-1][0], [])
     elif cfg.group == "alternating":
         if cfg.n_reversals < 1:
             raise ValueError("--n-reversals must be >= 1 for group=alternating.")
         partner = partner_set(cfg.step, cfg.swap)
         pair: list[SetName] = [cfg.step, partner]
-        seq = [(pair[i % 2], cfg.block_length) for i in range(cfg.n_reversals + 1)]
-        if not cfg.wrap:
+        # A closed alternation needs an even declaration, else the seam puts the same set on
+        # both sides -- a scheduled reversal that silently is not one. Round up rather than
+        # refuse: how many reversals the animal actually sees is set by how long it works,
+        # not by the length of the list the rig cycles.
+        n_blocks = cfg.n_reversals + 1
+        if wrap and n_blocks % 2:
+            n_blocks += 1
+        seq = [(pair[i % 2], cfg.block_length) for i in range(n_blocks)]
+        if not wrap:
             seq[-1] = (seq[-1][0], [])
     else:
         raise ValueError(f"Group '{cfg.group}' not recognized.")
@@ -650,13 +765,13 @@ def build_sequence(cfg: ReversalConfig) -> list[tuple[SetName, object]]:
     if cfg.first_block_length is not None and not isinstance(seq[0][1], list):
         seq[0] = (seq[0][0], cfg.first_block_length)
 
-    # A wrapped list repeats block 0 straight after block N, so that seam is a reversal like
-    # any other and has to obey the alternation. Only an even block count does.
-    if cfg.wrap and len(seq) > 1 and seq[0][0] == seq[-1][0]:
+    # Backstop: a closed list repeats block 0 straight after block N, so that seam is a
+    # reversal like any other and has to obey the alternation. `alternating` rounds up to
+    # reach this; a hand-built loop can still trip it.
+    if wrap and len(seq) > 1 and seq[0][0] == seq[-1][0]:
         raise ValueError(
-            f"--wrap needs an even block count so the map alternates across the seam; "
-            f"got {len(seq)} blocks both starting and ending on {seq[0][0]}. "
-            "For --group alternating use an odd --n-reversals (blocks = n_reversals + 1)."
+            f"a closed cycle needs the map to alternate across the seam; got {len(seq)} "
+            f"blocks both starting and ending on {seq[0][0]}."
         )
     return seq
 
@@ -714,7 +829,10 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
         task_logic.Block(
             environment=patch_options(cfg, select),
             end_conditions=make_end_condition(
-                end_value, count_by=cfg.count_by, patch_cap=cfg.patch_cap
+                end_value,
+                count_by=cfg.count_by,
+                patch_cap=cfg.patch_cap,
+                jitter=cfg.block_jitter,
             ),
         )
         for select, end_value in sequence
@@ -754,11 +872,20 @@ def make_task_logic(cfg: ReversalConfig) -> AindVrForagingTaskLogic:
         stage_name += f"_{unit_tag}{cfg.block_length}"
     if not isinstance(first_end, list) and first_end != cfg.block_length:
         stage_name += f"_fb{first_end}"
+    # Two sessions with the same mean block length are not the same task if one of them is
+    # predictable, so jitter is tagged whenever any block is actually bounded by it. Read off
+    # the sequence rather than the flag: on an unbounded single block there is nothing to
+    # jitter, and a tag there would claim a difference the rig never saw.
+    if cfg.block_jitter and any(not isinstance(end, list) for _, end in sequence):
+        stage_name += f"_jit{cfg.block_jitter:g}"
     # The cap changes what the rig does, so it has to be in the name too -- otherwise a
     # capped and an uncapped stop-gated session write to the same file.
     if cfg.patch_cap is not None and cfg.count_by == "stops" and len(sequence) > 1:
         stage_name += f"_cap{cfg.patch_cap}"
-    if cfg.wrap:
+    # Read off the built sequence, not the flag: a design that cannot cycle would otherwise
+    # be labelled wrapped while its last block still runs to session end, and the label is
+    # what analysis groups sessions by.
+    if len(sequence) > 1 and not any(isinstance(end, list) for _, end in sequence):
         stage_name += "_wrap"
     weights = cfg.patch_weights()
     if len(set(weights)) > 1:
@@ -826,13 +953,19 @@ def _describe(cfg: ReversalConfig) -> None:
     )
     for i, (select, end_value) in enumerate(build_sequence(cfg)):
         m = ODOR_LABEL[select]
-        end = (
-            "to session end"
-            if isinstance(end_value, list)
-            else f"{end_value} {cfg.count_by}"
-        )
+        if isinstance(end_value, list):
+            end = "to session end"
+        elif cfg.block_jitter:
+            # Read the bounds back off the built distribution so the printed range cannot
+            # drift from the one the rig is handed.
+            bounds = block_length_distribution(
+                end_value, cfg.block_jitter
+            ).truncation_parameters
+            end = f"{bounds.min:g}-{bounds.max:g} {cfg.count_by}, mean {end_value:g}"
+        else:
+            end = f"{end_value} {cfg.count_by}"
         print(
-            f"  block {i}: {select} ({end}) — "
+            f"  block {i + 1}: {select} ({end}) — "
             f"single=ch{m['single']}, delayed=ch{m['delayed']}, null=ch{m['noreward']}"
         )
     if cfg.group == "single_reversal":
