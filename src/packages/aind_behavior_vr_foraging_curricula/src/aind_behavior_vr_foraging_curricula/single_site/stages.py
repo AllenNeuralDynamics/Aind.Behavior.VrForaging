@@ -505,6 +505,19 @@ PROBABILITY_GRID_DFAMILY_GEOMETRY: dict[str, float] = {
 # return falls outside the window, which is the failure being fixed. Re-derive both numbers after
 # a session on the new pair -- a discriminable task should lengthen the window and shorten n_adapt.
 PROBABILITY_GRID_DFAMILY_LEN: tuple[int, float, float] = (40, 5, 55)  # ~45 sites, jittered
+# The same block measured in stops, for a caller that wants the stop currency. Both mice stop
+# at ~0.55 of presentations while engaged, so ~45 sites is ~24 stops.
+PROBABILITY_GRID_DFAMILY_LEN_STOPS: tuple[int, float, float] = (21, 3, 29)  # ~24 stops, jittered
+# Upper bound in patches when counting stops, so a disengaged animal cannot sit in one block for
+# the rest of the session. Twice the sites an engaged block takes.
+PROBABILITY_GRID_DFAMILY_PATCH_CAP: int = 90
+# Sites, not stops. In a task where every site is one accept/skip decision, a skip is a choice
+# rather than a refusal to sample, and skipping the poor odour outright is optimal play -- so a
+# stop-counted block gets SHORTER the less an animal discriminates (a 24-stop block spans ~34
+# sites at a 0.7 stop rate and ~64 at 0.38), handing least exposure to the animal that needs
+# most. Counting sites instead guarantees each odour ~22 presentations per block whatever the
+# strategy, which is what the design needs; the animal's response to them is the readout.
+PROBABILITY_GRID_DFAMILY_COUNT_BY: str = "patches"
 # EVEN by construction: the rig cycles the block list (plan = block_index % n_blocks), so an odd
 # count puts the last A-high block next to the first, producing a double-length A block at every
 # wrap and silently breaking the alternation. Sessions routinely run past n_blocks.
@@ -522,32 +535,57 @@ _DFAMILY_GEOMETRY_TAGS: dict[str, str] = {
 }
 
 
+def dfamily_block_length(
+    count_by: str, block_length: Optional[tuple[int, float, float]] = None
+) -> tuple[int, float, float]:
+    """Block length for a currency: the caller's if given, else that currency's own default.
+
+    The two defaults describe the same block, so a caller switching currency and not touching
+    the length keeps the block it had rather than inheriting a site count as a stop count.
+    """
+    if block_length is not None:
+        return tuple(block_length)  # type: ignore[return-value]
+    return PROBABILITY_GRID_DFAMILY_LEN_STOPS if count_by == "stops" else PROBABILITY_GRID_DFAMILY_LEN
+
+
 def dfamily_stage_name(
     start_high: str = "A",
     reward_amount: float = helpers.REWARD_AMOUNT_UL,
-    block_length: tuple[int, float, float] = PROBABILITY_GRID_DFAMILY_LEN,
+    block_length: Optional[tuple[int, float, float]] = None,
     n_blocks: int = PROBABILITY_GRID_DFAMILY_N_BLOCKS,
     prob_pair: tuple[float, float] = PROBABILITY_GRID_DFAMILY_PAIR,
     q_c: float = PROBABILITY_GRID_DFAMILY_Q_C,
     geometry: Optional[dict[str, float]] = None,
     velocity_threshold: float = PROBABILITY_GRID_DFAMILY_VELOCITY_THRESHOLD,
+    count_by: str = PROBABILITY_GRID_DFAMILY_COUNT_BY,
+    patch_cap: Optional[int] = PROBABILITY_GRID_DFAMILY_PATCH_CAP,
 ) -> str:
     """Stage name encoding the effective D-family config, e.g. ``..._startB_p80-20``.
 
-    ``start_high`` is tagged UNCONDITIONALLY because it alternates session to session and is the
-    one knob that must never be inferred from a filename: every session of the 07-29..08-07 run
-    opened A-high, and because the name did not record it, analysis could not tell A-first from
-    B-first sessions apart and pooled them under one stage name. Every other knob is tagged only
-    when it deviates from the stage default, so the common case stays short and any name that
-    carries an extra tag is a genuine deviation.
+    ``start_high`` is tagged UNCONDITIONALLY: it alternates session to session and must never be
+    inferred from a filename. Every session of the 07-29..08-07 run opened A-high, and because
+    the name did not record it, analysis could not tell A-first from B-first sessions apart and
+    pooled them under one stage name. Every other knob is tagged only when it deviates from the
+    stage default, so the common case stays short and any name that carries an extra tag is a
+    genuine deviation.
     """
     tags = [f"start{start_high.upper()}"]
     if tuple(prob_pair) != PROBABILITY_GRID_DFAMILY_PAIR:
         tags.append(f"p{100 * prob_pair[0]:.0f}-{100 * prob_pair[1]:.0f}")
     if q_c != PROBABILITY_GRID_DFAMILY_Q_C:
         tags.append(f"qC{100 * q_c:.0f}")
-    if tuple(block_length) != PROBABILITY_GRID_DFAMILY_LEN:
-        tags.append(f"bl{block_length[0]:g}-{block_length[2]:g}")
+    # Tagged against the default for the currency in force, so "the standard block" reads the
+    # same either way and only a real deviation shows up.
+    resolved = dfamily_block_length(count_by, block_length)
+    if resolved != dfamily_block_length(count_by):
+        tags.append(f"bl{resolved[0]:g}-{resolved[2]:g}")
+    # Tagged only when it deviates: the currency changes what a block is, so a stop-counted
+    # session must never share a name with a site-counted one -- but the default IS what every
+    # historical session ran, and giving those a new tag would split one task across two names.
+    if count_by != PROBABILITY_GRID_DFAMILY_COUNT_BY:
+        tags.append(f"by{count_by}")
+    if count_by == "stops" and patch_cap != PROBABILITY_GRID_DFAMILY_PATCH_CAP:
+        tags.append("nocap" if patch_cap is None else f"cap{patch_cap:g}")
     if n_blocks != PROBABILITY_GRID_DFAMILY_N_BLOCKS:
         tags.append(f"x{n_blocks}")
     if reward_amount != helpers.REWARD_AMOUNT_UL:
@@ -586,12 +624,14 @@ def dfamily_plan(
 def make_s_probability_grid_dfamily(
     start_high: str = "A",
     reward_amount: float = helpers.REWARD_AMOUNT_UL,
-    block_length: tuple[int, float, float] = PROBABILITY_GRID_DFAMILY_LEN,
+    block_length: Optional[tuple[int, float, float]] = None,
     n_blocks: int = PROBABILITY_GRID_DFAMILY_N_BLOCKS,
     prob_pair: tuple[float, float] = PROBABILITY_GRID_DFAMILY_PAIR,
     q_c: float = PROBABILITY_GRID_DFAMILY_Q_C,
     geometry: Optional[dict[str, float]] = None,
     velocity_threshold: float = PROBABILITY_GRID_DFAMILY_VELOCITY_THRESHOLD,
+    count_by: str = PROBABILITY_GRID_DFAMILY_COUNT_BY,
+    patch_cap: Optional[int] = PROBABILITY_GRID_DFAMILY_PATCH_CAP,
 ) -> Stage:
     """D-family fixed-|D| ABA diagnostic stage (off-curriculum), played Sequential.
 
@@ -606,10 +646,19 @@ def make_s_probability_grid_dfamily(
     invariant to reward amount because the rate scales with it, so use this for total-water and
     motivation only, never to de-saturate a ceilinged mouse.
 
-    ``block_length`` is ``(n_min_patches, exp_mean, max)`` -- sites are drawn as
-    ``n_min + Exp(exp_mean)`` truncated at ``max``. Size it from the engaged window, not from
-    settling speed: three blocks must fit inside the window for the ABA return to land while the
-    mouse still discriminates. ``n_blocks`` should stay EVEN (see the constants block).
+    ``block_length`` is ``(n_min, exp_mean, max)`` in ``count_by`` units -- drawn as
+    ``n_min + Exp(exp_mean)`` truncated at ``max``, and defaulting to that currency's own
+    standard block. Size it from the engaged window, not from settling speed: three blocks must
+    fit inside the window for the ABA return to land while the mouse still discriminates.
+    ``n_blocks`` should stay EVEN (see the constants block).
+
+    ``count_by`` defaults to ``"patches"`` -- sites, not stops. Every site here is one
+    accept/skip decision, so a skip is a choice rather than a refusal to sample, and skipping the
+    poor odour outright is optimal play. A stop-counted block therefore runs SHORTER the less an
+    animal discriminates, giving least exposure to the animal that needs most, while a
+    site-counted one offers each odour a fixed number of times whatever the strategy.
+    ``patch_cap`` bounds a stops-counted block in sites so a disengaged animal cannot hold one
+    open for the rest of the session; it is ignored when counting patches.
 
     ``geometry`` overrides corridor lengths on top of ``_POST_STOP_PATCH_KWARGS``; it defaults to
     the compressed :data:`PROBABILITY_GRID_DFAMILY_GEOMETRY`. Pass ``_POST_STOP_PATCH_KWARGS`` (or
@@ -621,7 +670,7 @@ def make_s_probability_grid_dfamily(
     what actually runs.
     """
     delay = helpers.make_reward_delay(offset=0.2, mean=1.0, max_delay=6.0)
-    n_min, exp_mean, b_max = block_length
+    n_min, exp_mean, b_max = dfamily_block_length(count_by, block_length)
     if not 0.0 <= q_c < 1.0:
         raise ValueError(f"q_c must be in [0, 1), got {q_c}")
     p_c = PROBABILITY_GRID_ODOR_C_REWARD_PROBABILITY if q_c > 0 else None
@@ -642,6 +691,8 @@ def make_s_probability_grid_dfamily(
             block_length_max=b_max,
             first_state_occupancy=occupancy,
             make_patch_kwargs=make_patch_kwargs,
+            count_by=count_by,
+            patch_cap=patch_cap,
         )
         for (p_a, p_b) in dfamily_plan(start_high, n_blocks=n_blocks, pair=prob_pair)
     ]
@@ -654,6 +705,8 @@ def make_s_probability_grid_dfamily(
         q_c=q_c,
         geometry=geometry,
         velocity_threshold=velocity_threshold,
+        count_by=count_by,
+        patch_cap=patch_cap,
     )
     return Stage(
         name=name,

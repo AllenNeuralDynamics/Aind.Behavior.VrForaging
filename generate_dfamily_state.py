@@ -17,8 +17,13 @@ Defaults encode the 2026-08-10 redesign:
     stopping at BOTH odors was correct and P(stop) could not separate them. 0.8/0.2 clears it for
     860900 but leaves 860898 on a knife edge, hence the wider pair. |D|=0.8 is above the 0.4 the
     ephys design wants; the intent is to walk it back down once the ABA return is established.
-  * odor C off, ~45-site blocks, and an EVEN block count so the rig's block-list cycling keeps
-    alternating instead of emitting two same-state blocks at the wrap.
+  * odor C off, ~24-stop blocks (~45 sites for an engaged animal), and an EVEN block count so
+    the rig's block-list cycling keeps alternating instead of emitting two same-state blocks at
+    the wrap.
+  * blocks advance on STOPS, not sites, so a skipped patch does not carry the animal toward the
+    next contingency -- a site-counted block can be run through entirely without being sampled,
+    which is what every block past disengagement was. A patch cap bounds the block in sites so a
+    disengaged animal cannot hold one open to session end.
   * compressed corridor (cycle 158 -> 132 cm, +19% reward sites) for throughput.
 
 See ``single_site/stages.py`` for the derivation of each.
@@ -126,7 +131,28 @@ def main() -> None:
         "the rig cycles the block list, so an odd count yields two same-state blocks at the wrap.",
     )
     parser.add_argument(
-        "--output", required=True, help="Path to write the trainer state JSON"
+        "--count-by",
+        choices=("stops", "patches"),
+        default=None,
+        help="Currency a block advances in. Omit to keep the stage default (patches, i.e. "
+        "sites), which offers each odor a fixed number of times per block whatever the animal "
+        "does with them. Counting stops shortens a block for an animal that discriminates "
+        "poorly, since it stops at everything.",
+    )
+    parser.add_argument(
+        "--patch-cap",
+        type=int,
+        default=None,
+        help="Upper bound in sites on a stop-counted block, so a disengaged animal cannot hold "
+        "one open to session end. Omit to keep the stage default (90); pass 0 for no cap. "
+        "Ignored when counting patches.",
+    )
+    parser.add_argument(
+        "--output",
+        required=True,
+        help="Path to write the trainer state JSON. A '{stage_name}' placeholder is replaced "
+        "with the stage name this configuration produces, as in task_reversal.py, so the "
+        "filename records the configuration without being retyped.",
     )
     args = parser.parse_args()
 
@@ -138,6 +164,10 @@ def main() -> None:
         kwargs["block_length"] = (int(b_min), b_mean, b_max)
     if args.n_blocks is not None:
         kwargs["n_blocks"] = args.n_blocks
+    if args.count_by is not None:
+        kwargs["count_by"] = args.count_by
+    if args.patch_cap is not None:
+        kwargs["patch_cap"] = args.patch_cap or None
     if args.prob_pair is not None:
         kwargs["prob_pair"] = (args.prob_pair[0], args.prob_pair[1])
     if args.q_c is not None:
@@ -174,10 +204,19 @@ def main() -> None:
         active_policies=None,
     )
 
-    with open(args.output, "w", encoding="utf-8") as f:
+    output = args.output.replace("{stage_name}", stage.name)
+    with open(output, "w", encoding="utf-8") as f:
         f.write(state.model_dump_json(indent=2))
     blocks = stage.task.task_parameters.environment.blocks
-    trunc = blocks[0].end_conditions[0].value.truncation_parameters
+    ends = blocks[0].end_conditions
+    trunc = ends[0].value.truncation_parameters
+    unit = "stops" if ends[0].condition_type == "Choice" else "sites"
+    capped = [c for c in ends[1:] if c.condition_type == "PatchCount"]
+    cap = (
+        f" (cap {capped[0].value.distribution_parameters.value:.0f} sites)"
+        if capped
+        else ""
+    )
     patches = blocks[0].environment.patches
     reward = patches[0].reward_specification.amount.distribution_parameters.value
     probs = {
@@ -201,10 +240,10 @@ def main() -> None:
     inter_site = gen.inter_site.length_distribution.distribution_parameters.value
     cycle = site_len + 2 * inter_site + ip_mean
     print(
-        f"Wrote {args.output}\n"
+        f"Wrote {output}\n"
         f"  stage_name={stage.name}\n"
         f"  start_high={args.start_high}  sequence={seq}  n_blocks={len(blocks)}\n"
-        f"  block_sites={trunc.min:.0f}-{trunc.max:.0f}  reward_uL={reward}\n"
+        f"  block_{unit}={trunc.min:.0f}-{trunc.max:.0f}{cap}  reward_uL={reward}\n"
         f"  p_reward={probs}  occupancy={blocks[0].environment.first_state_occupancy}\n"
         f"  geometry={args.geometry}: site={site_len:.0f} inter_site={inter_site:.0f} "
         f"inter_patch={ip_min:.0f}+Exp({1.0 / ip.distribution_parameters.rate:.0f})"

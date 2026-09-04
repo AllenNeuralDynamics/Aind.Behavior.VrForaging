@@ -23,6 +23,7 @@ from aind_behavior_vr_foraging_curricula.single_site.policies import (
 from aind_behavior_vr_foraging_curricula.single_site.stages import (
     make_s_learn_to_choose,
     make_s_learn_to_stop,
+    make_s_probability_grid_dfamily,
     make_s_probability_grid_short_delay,
 )
 
@@ -264,3 +265,52 @@ class TestProgression:
         metrics = _make_metrics(n_patches_visited=0, n_patches_seen=0, last_stop_threshold_updater=60)
         state = trainer.evaluate(init_state, metrics)
         assert state.stage is not None and state.stage.name == "learn_to_stop"
+
+
+class TestDfamilyBlockCurrency:
+    """Blocks advance on sites, so each odour is offered a fixed number of times per block."""
+
+    def _blocks(self, **kwargs: Any) -> list[Any]:
+        stage = make_s_probability_grid_dfamily(**kwargs)
+        return list(stage.task.task_parameters.environment.blocks)
+
+    def test_default_blocks_end_on_sites(self):
+        """A skip here is a decision, not a refusal to sample, so it must still advance the block.
+
+        Counting stops would shorten a block for an animal that discriminates poorly -- it stops
+        at everything -- handing the least exposure to the animal that needs the most.
+        """
+        for block in self._blocks():
+            assert [c.condition_type for c in block.end_conditions] == ["PatchCount"]
+
+    def test_stop_counting_is_available_and_capped_in_sites(self):
+        blocks = self._blocks(count_by="stops")
+        for block in blocks:
+            assert [c.condition_type for c in block.end_conditions] == ["Choice", "PatchCount"]
+            assert block.end_conditions[1].value.distribution_parameters.value == 90
+
+    def test_the_stop_block_matches_the_site_block_it_replaces(self):
+        # ~0.55 stops per presentation while engaged, so ~24 stops is the ~45-site block.
+        stops = self._blocks(count_by="stops")[0].end_conditions[0].value.truncation_parameters
+        sites = self._blocks()[0].end_conditions[0].value.truncation_parameters
+        assert stops.min / sites.min == pytest.approx(0.53, abs=0.03)
+        assert stops.max / sites.max == pytest.approx(0.53, abs=0.03)
+
+    def test_the_cap_can_be_removed_but_patch_counting_ignores_it(self):
+        assert len(self._blocks(count_by="stops", patch_cap=None)[0].end_conditions) == 1
+        assert [c.condition_type for c in self._blocks(patch_cap=90)[0].end_conditions] == ["PatchCount"]
+
+    def test_only_a_non_default_currency_is_tagged(self):
+        """Every historical session ran site-counted blocks, so the default must keep the bare
+        name; a stop-counted session must never share one with them."""
+        assert not make_s_probability_grid_dfamily().name.endswith("_bypatches")
+        assert make_s_probability_grid_dfamily(count_by="stops").name.endswith("_bystops")
+
+    def test_an_explicit_block_length_is_read_in_the_currency_in_force(self):
+        length = self._blocks(block_length=(30, 4, 40))[0].end_conditions[0]
+        assert length.condition_type == "PatchCount"
+        assert length.value.truncation_parameters.max == 40
+
+    def test_an_unknown_currency_is_refused(self):
+        with pytest.raises(ValueError, match="count_by"):
+            make_s_probability_grid_dfamily(count_by="rewards")
