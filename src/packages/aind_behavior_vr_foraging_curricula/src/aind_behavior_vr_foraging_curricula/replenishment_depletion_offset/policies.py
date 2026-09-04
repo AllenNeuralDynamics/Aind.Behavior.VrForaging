@@ -26,7 +26,7 @@ def p_update_replenishment_rate(
 ) -> AindVrForagingTaskLogic:
     """Update replenishment rate based on water consumed in the session."""
 
-    MAX_RATE_DROP_PER_SESSION = 0.01  # (0.10 - 0.05) / 5 sessions
+    MAX_RATE_DROP_PER_SESSION = 0.01  # (0.10 - 0.08) / 2 sessions
     TARGET_MAX_WATER = 1000
     TARGET_MIN_WATER = 700
     water_consumed = clamp(metrics.total_water_consumed, TARGET_MIN_WATER, TARGET_MAX_WATER)
@@ -53,7 +53,7 @@ def p_update_replenishment_rate(
         # We assume a dt = 0.1, and an approximately poisson replenishment process
         dt = 0.1
         estimated_rate = -np.log(np.array(reward_function_candidates[0].probability.transition_matrix)[0, 0]) / dt
-        updated_rate = clamp(estimated_rate - gain_from_water, 0.05, 0.10)
+        updated_rate = clamp(estimated_rate - gain_from_water, 0.08, 0.10)
         reward_function_candidates[0].probability.transition_matrix = compute_cmc_transition_probability(
             len(reward_function_candidates[0].probability.transition_matrix), updated_rate, dt
         ).tolist()
