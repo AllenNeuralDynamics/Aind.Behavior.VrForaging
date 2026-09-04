@@ -115,11 +115,31 @@ def make_block(
     block_length_max: Optional[float] = None,
     first_state_occupancy: Optional[list[float]] = None,
     make_patch_kwargs: Optional[dict[str, Any]] = None,
+    count_by: str = "patches",
+    patch_cap: Optional[int] = None,
 ) -> task_logic.Block:
     """A block of OdorA/B/C patches. ``p_rewards`` gives each odor's reward
     probability; a ``None`` entry omits that odor (so ``(1.0, 1.0, None)`` is a
     two-odor block). Block length is ``n_min_patches + Exp(block_length_exp_mean)``
-    truncated to ``[n_min_patches, block_length_max]`` patches."""
+    truncated to ``[n_min_patches, block_length_max]``, counted in ``count_by`` units.
+
+    ``count_by`` picks the currency the block advances in:
+
+    - ``"patches"`` -- ``BlockEndConditionPatchCount`` counts every patch ENCOUNTERED,
+      stopped at or not. Session structure is predictable, but an animal that skips
+      everything still advances, so it can run through a whole contingency without ever
+      sampling it -- which is exactly what a disengaged animal does.
+    - ``"stops"`` -- ``BlockEndConditionChoice`` counts stops, so a patch run past does not
+      advance the block and the animal cannot reach the next contingency without sampling
+      this one. In a single-stop task a stop is one patch, so N stops is N distinct odor
+      experiences; in a depleting task it is not.
+
+    Under ``"stops"`` a fully disengaged animal never advances. ``patch_cap`` guards that:
+    the rig merges end conditions, so whichever fires FIRST ends the block -- it is an upper
+    bound in patches, not an additional requirement. It is meaningless under ``"patches"``
+    (the primary condition is already a patch count) and ignored there."""
+    if count_by not in ("patches", "stops"):
+        raise ValueError(f"count_by must be 'patches' or 'stops', got {count_by!r}")
     make_patch_kwargs = make_patch_kwargs or {}
     patches = [make_patch(label="OdorA", state_index=0, odor_index=0, p_reward=p_rewards[0], **make_patch_kwargs)]
     if p_rewards[1] is not None:
@@ -141,15 +161,28 @@ def make_block(
             transition_matrix=[list(first_state_occupancy) for _ in range(len(patches))],
             patches=patches,
         ),
-        end_conditions=[
-            task_logic.BlockEndConditionPatchCount(
-                value=distributions.ExponentialDistribution(
-                    distribution_parameters=distributions.ExponentialDistributionParameters(
-                        rate=1 / block_length_exp_mean
-                    ),
-                    scaling_parameters=distributions.ScalingParameters(offset=n_min_patches),
-                    truncation_parameters=distributions.TruncationParameters(min=n_min_patches, max=block_length_max),
-                )
-            )
-        ],
+        end_conditions=_make_end_conditions(
+            n_min_patches, block_length_exp_mean, block_length_max, count_by, patch_cap
+        ),
     )
+
+
+def _make_end_conditions(
+    n_min: int,
+    exp_mean: float,
+    maximum: float,
+    count_by: str,
+    patch_cap: Optional[int],
+) -> list[task_logic.BlockEndCondition]:
+    """Block end conditions for one block; see :func:`make_block` for the currencies."""
+    length = distributions.ExponentialDistribution(
+        distribution_parameters=distributions.ExponentialDistributionParameters(rate=1 / exp_mean),
+        scaling_parameters=distributions.ScalingParameters(offset=n_min),
+        truncation_parameters=distributions.TruncationParameters(min=n_min, max=maximum),
+    )
+    if count_by == "patches":
+        return [task_logic.BlockEndConditionPatchCount(value=length)]
+    conditions: list[task_logic.BlockEndCondition] = [task_logic.BlockEndConditionChoice(value=length)]
+    if patch_cap is not None:
+        conditions.append(task_logic.BlockEndConditionPatchCount(value=task_logic.scalar_value(patch_cap)))
+    return conditions
