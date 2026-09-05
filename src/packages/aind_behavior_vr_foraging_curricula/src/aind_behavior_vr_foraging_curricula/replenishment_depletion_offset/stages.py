@@ -1,3 +1,4 @@
+import numpy as np
 from aind_behavior_curriculum import Stage
 from aind_behavior_vr_foraging import task_logic as vr_task_logic
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
@@ -17,9 +18,15 @@ replenishment_delay = [3, 3, 3]  # delay (in seconds) before replenishment start
 # Define the patch statistics for the distance
 interpatch_length = [140.0, 140.0, 140.0]  # inter-patch distance in cm (~5s at typical running speed)
 reward_amount = 4  # microliters
-rep_rates = [0.08, 0.08, 0.08]  # replenishment rate of each patch (already scaled)
-num_ps_states = [16, 12, 7]  # number of discrete reward states within each patch
+rep_rates = [0.1, 0.1, 0.1]  # starting replenishment rate of each patch (already scaled)
 rhos = [0.9, 0.9, 0.9]
+
+_NUM_STATES_MAX = 30  # arbitrarily large upper bound;
+num_ps_states = np.zeros(len(p_maxs), dtype=int)
+for _k in range(len(p_maxs)):
+    _patch_states = p_maxs[_k] * (rhos[_k] ** np.arange(_NUM_STATES_MAX))
+    _patch_states = _patch_states[_patch_states >= p_min[_k]]
+    num_ps_states[_k] = len(_patch_states)
 
 
 def make_s_mcm_final_stage() -> Stage:

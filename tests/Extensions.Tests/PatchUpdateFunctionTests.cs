@@ -79,6 +79,45 @@ namespace Extensions.Tests
             Assert.Equal(4.0, result, 10);
         }
 
+        [Fact(DisplayName = "Ctcm update snaps replenishment back onto the state grid when starting from an off-grid value")]
+        public void CtcmFunction_SnapsOffGridInputBackOntoStateGrid()
+        {
+            // Mirrors a fully depleted patch: value has been clamped to BelowMinimumTo (0.0), which is
+            // below Minimum but not itself a valid grid state. nStates = 15, Maximum = 0.7, Rho = 0.9
+            // reproduces the reported bug configuration (lambda_max=0.7, rho=0.9, lambda_min=0.15).
+            const double maximum = 0.7;
+            const double rho = 0.9;
+            const int nStates = 15;
+
+            var transitionMatrix = new List<List<double>>();
+            for (int row = 0; row < nStates; row++)
+            {
+                var rowValues = new List<double>(new double[nStates]);
+                // Deterministically jump two states up from wherever the input resolves to.
+                rowValues[Math.Min(row + 2, nStates - 1)] = 1.0;
+                transitionMatrix.Add(rowValues);
+            }
+
+            var updateFunction = new CtcmFunction
+            {
+                Minimum = 0.15,
+                Maximum = maximum,
+                Rho = rho,
+                TransitionMatrix = transitionMatrix,
+            };
+
+            var result = updateFunction.Invoke(value: 0.0, tickValue: 1.0, random: new FixedRandom(0.5));
+
+            // Off-grid input (value clamped to Minimum = 0.15) resolves to state index i = 0, then jumps
+            // to j = 2. The correct on-grid result is Maximum * Rho^(nStates - 1 - j), not
+            // 0.15 / Rho^(j - i), which is the off-grid value the bug used to produce.
+            var expected = maximum * Math.Pow(rho, nStates - 1 - 2);
+            var buggyOffGridValue = 0.15 / Math.Pow(rho, 2);
+
+            Assert.Equal(expected, result, 10);
+            Assert.NotEqual(buggyOffGridValue, result, 10);
+        }
+
         [Fact(DisplayName = "Environment.Patches returns underlying patch collection for Markov environments")]
         public void EnvironmentPatches_ReturnsUnderlyingMarkovPatches()
         {
