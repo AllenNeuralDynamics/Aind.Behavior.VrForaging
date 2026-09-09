@@ -16,7 +16,7 @@ def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contr
     parsed_version = semver.Version.parse(version)
     # Ignore release candidate suffix for version comparison
     parsed_version = semver.Version(parsed_version.major, parsed_version.minor, parsed_version.patch)
-    if semver.Version.parse("0.3.0") <= parsed_version < semver.Version.parse("0.4.0"):
+    if parsed_version < semver.Version.parse("0.4.0"):
         logger.warning(
             "Version %s does not have a dedicated data contract. Loading it with the v0.4 contract "
             "as a best-effort attempt.",
