@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.0"
+<WorkflowBuilder Version="2.9.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:;assembly=Extensions"
@@ -451,6 +451,7 @@ it.Item6 as Notes)
                           <Combinator xsi:type="p1:TableVisualizer">
                             <p1:Visible>true</p1:Visible>
                             <p1:FontSize>36</p1:FontSize>
+                            <p1:HideHeader>true</p1:HideHeader>
                           </Combinator>
                         </Expression>
                       </Nodes>
@@ -1989,21 +1990,84 @@ it.Item6 as Notes)
               <gui:Font>Microsoft Sans Serif, 12pt</gui:Font>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="rx:Defer">
+              <Name>Footer</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="imvizui:ImGuiVisualizerBuilder" />
+                  <Expression xsi:type="rx:PublishSubject">
+                    <Name>draw</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>draw</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SubjectSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Experimenter</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Experimenters" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SubjectSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Subject</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Subject" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:SessionInfoFooterVisualizer">
+                      <p1:Visible>true</p1:Visible>
+                      <p1:FontSize>28</p1:FontSize>
+                      <p1:Subject />
+                      <p1:Experimenters>
+                        <p1:string>bruno.cruz</p1:string>
+                      </p1:Experimenters>
+                    </Combinator>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="10" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="10" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source3" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Name>VrForaging</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:ColumnCount>1</gui:ColumnCount>
-              <gui:RowCount>2</gui:RowCount>
+              <gui:RowCount>3</gui:RowCount>
               <gui:ColumnStyles />
               <gui:RowStyles>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.4</gui:Height>
+                  <gui:Height>0.37</gui:Height>
                 </gui:RowStyle>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.6</gui:Height>
+                  <gui:Height>0.56</gui:Height>
+                </gui:RowStyle>
+                <gui:RowStyle>
+                  <gui:SizeType>Percent</gui:SizeType>
+                  <gui:Height>0.07</gui:Height>
                 </gui:RowStyle>
               </gui:RowStyles>
               <gui:CellSpans />
@@ -2031,7 +2095,7 @@ it.Item6 as Notes)
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="23" Label="Source1" />
+            <Edge From="9" To="25" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="21" Label="Source1" />
@@ -2044,9 +2108,11 @@ it.Item6 as Notes)
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source5" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source2" />
+            <Edge From="22" To="25" Label="Source2" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="24" To="25" Label="Source3" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
