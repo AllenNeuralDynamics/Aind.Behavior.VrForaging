@@ -2041,7 +2041,7 @@ it.Item6 as Notes)
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p1:SessionInfoFooterVisualizer">
                       <p1:Visible>true</p1:Visible>
-                      <p1:FontSize>28</p1:FontSize>
+                      <p1:FontSize>40</p1:FontSize>
                       <p1:Subject />
                       <p1:Experimenters>
                         <p1:string>bruno.cruz</p1:string>
@@ -2073,15 +2073,15 @@ it.Item6 as Notes)
               <gui:RowStyles>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.37</gui:Height>
+                  <gui:Height>0.38</gui:Height>
                 </gui:RowStyle>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.56</gui:Height>
+                  <gui:Height>0.57</gui:Height>
                 </gui:RowStyle>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.07</gui:Height>
+                  <gui:Height>0.05</gui:Height>
                 </gui:RowStyle>
               </gui:RowStyles>
               <gui:CellSpans />
