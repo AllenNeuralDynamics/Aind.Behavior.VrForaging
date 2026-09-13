@@ -50,7 +50,7 @@ You may need to install optional dependencies depending on the sub-commands you 
 
 ## 🔍 Primary data quality-control
 
-Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launcher using:
+Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launched using:
 
 ```powershell
 uv run vr-foraging data-qc <path-to-data-dir>
