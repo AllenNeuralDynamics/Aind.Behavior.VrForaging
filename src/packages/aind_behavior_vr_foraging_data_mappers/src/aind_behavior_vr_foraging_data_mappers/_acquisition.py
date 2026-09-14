@@ -14,6 +14,10 @@ from aind_behavior_curriculum import TrainerState
 from aind_behavior_services.rig import cameras, visual_stimulation
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import get_fields_of_type, model_from_json_file
+from aind_behavior_vr_foraging import __semver__
+from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
+from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 from aind_data_schema.components import configs
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
@@ -22,11 +26,6 @@ from clabe.apps import BonsaiApp, CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.data_mapper import helpers as data_mapper_helpers
 from pydantic import AwareDatetime
-
-from aind_behavior_vr_foraging import __semver__
-from aind_behavior_vr_foraging.data_contract.utils import calculate_consumed_water
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
-from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
 from ._utils import TrackedDevices, _get_water_calibration
 

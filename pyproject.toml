@@ -3,17 +3,20 @@ addopts = "--import-mode=importlib"
 testpaths = [
     "src/packages/aind_behavior_vr_foraging/tests",
     "src/packages/aind_behavior_vr_foraging_curricula/tests",
+    "src/packages/aind_behavior_vr_foraging_data_mappers/tests",
 ]
 
 [tool.uv.workspace]
 members = [
     "src/packages/aind_behavior_vr_foraging",
     "src/packages/aind_behavior_vr_foraging_curricula",
+    "src/packages/aind_behavior_vr_foraging_data_mappers",
 ]
 
 [tool.uv.sources]
 aind-behavior-vr-foraging = { workspace = true }
 aind-behavior-vr-foraging-curricula = { workspace = true }
+aind-behavior-vr-foraging-data-mappers = { workspace = true }
 
 [dependency-groups]
 docs = [
@@ -34,7 +37,8 @@ dev = [
     "codespell",
     "pytest",
     "pytest-cov",
-    'aind-behavior-vr-foraging[data, mappers]',
+    'aind-behavior-vr-foraging[data]',
+    'aind-behavior-vr-foraging-data-mappers',
 ]
 
 [tool.codespell]

@@ -102,11 +102,13 @@ uv run vr-foraging data-qc <path-to-data-dir>
 
 ## 🌉 Mapping to aind-data-schema
 
-Once an experiment is collected, data can be mapped to aind-data-schema using the `data-mapper` sub-command:
+Data mapping is provided by the internal `aind-behavior-vr-foraging-data-mappers` workspace package. Once an experiment is collected, run:
 
 ```powershell
-uv run vr-foraging data-mapper
+uv run vr-foraging-data-mapper --help
 ```
+
+See the [data mapper package README](src/packages/aind_behavior_vr_foraging_data_mappers/README.md) for installation details.
 
 ## 📖 Curricula
 

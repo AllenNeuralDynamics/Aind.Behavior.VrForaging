@@ -126,8 +126,11 @@ jobs:
       - name: Regenerate all schemas
         run: uv run scripts/regenerate.py
 
-      - name: Build all packages
-        run: uv build --all-packages
+      # The data-mappers package is internal-only and must not be added to dist/.
+      - name: Build publishable packages
+        run: |
+          uv build --package aind-behavior-vr-foraging
+          uv build --package aind-behavior-vr-foraging-curricula
 
       - name: Upload wheels as artifact
         uses: actions/upload-artifact@v5

@@ -20,11 +20,13 @@ resolution-markers = [
 members = [
     "aind-behavior-vr-foraging",
     "aind-behavior-vr-foraging-curricula",
+    "aind-behavior-vr-foraging-data-mappers",
 ]
 
 [manifest.dependency-groups]
 dev = [
-    { name = "aind-behavior-vr-foraging", extras = ["data", "mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "aind-behavior-vr-foraging-data-mappers", editable = "src/packages/aind_behavior_vr_foraging_data_mappers" },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -86,17 +88,10 @@ dependencies = [
 data = [
     { name = "contraqctor" },
 ]
-mappers = [
-    { name = "aind-clabe", extra = ["aind-services"] },
-    { name = "aind-data-schema" },
-    { name = "contraqctor" },
-]
 
 [package.dev-dependencies]
 dev = [
-    { name = "aind-behavior-vr-foraging", extra = ["data", "mappers"] },
-    { name = "aind-data-schema" },
-    { name = "aind-data-schema-models" },
+    { name = "aind-behavior-vr-foraging", extra = ["data"] },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -106,20 +101,14 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "aind-behavior-services", specifier = ">=0.13.6" },
-    { name = "aind-behavior-vr-foraging", extras = ["data"], marker = "extra == 'mappers'", editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'mappers'", specifier = ">=0.12.2" },
-    { name = "aind-data-schema", marker = "extra == 'mappers'", specifier = ">=2.7.1" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.8,<0.6.0" },
     { name = "pydantic-settings" },
 ]
-provides-extras = ["data", "mappers"]
+provides-extras = ["data"]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-behavior-vr-foraging", extras = ["mappers"], editable = "src/packages/aind_behavior_vr_foraging" },
-    { name = "aind-data-schema" },
-    { name = "aind-data-schema-models" },
     { name = "codespell" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -148,6 +137,49 @@ dev = [
 requires-dist = [
     { name = "aind-behavior-curriculum", specifier = ">=0.0.37" },
     { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "pydantic-settings" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "codespell" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "ruff" },
+]
+
+[[package]]
+name = "aind-behavior-vr-foraging-data-mappers"
+version = "0.1.0"
+source = { editable = "src/packages/aind_behavior_vr_foraging_data_mappers" }
+dependencies = [
+    { name = "aind-behavior-curriculum" },
+    { name = "aind-behavior-vr-foraging", extra = ["data"] },
+    { name = "aind-clabe", extra = ["aind-services"] },
+    { name = "aind-data-schema" },
+    { name = "aind-data-schema-models" },
+    { name = "gitpython" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "codespell" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "aind-behavior-curriculum", specifier = ">=0.0.37" },
+    { name = "aind-behavior-vr-foraging", extras = ["data"], editable = "src/packages/aind_behavior_vr_foraging" },
+    { name = "aind-clabe", extras = ["aind-services"], specifier = ">=0.12.2" },
+    { name = "aind-data-schema", specifier = ">=2.7.1" },
+    { name = "aind-data-schema-models" },
+    { name = "gitpython" },
+    { name = "pydantic" },
     { name = "pydantic-settings" },
 ]
 

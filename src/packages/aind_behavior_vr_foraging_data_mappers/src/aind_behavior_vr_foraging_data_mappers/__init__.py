@@ -4,7 +4,7 @@ import typing as t
 from pathlib import Path
 
 from pydantic import AwareDatetime, Field
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, CliApp
 
 logger = logging.getLogger(__name__)
 
@@ -54,3 +54,8 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
             "Mapping completed! Saved acquisition.json and instrument.json to %s",
             self.data_path,
         )
+
+
+def main() -> None:
+    """Run the VR Foraging data mapper command-line interface."""
+    CliApp().run(DataMapperCli)
