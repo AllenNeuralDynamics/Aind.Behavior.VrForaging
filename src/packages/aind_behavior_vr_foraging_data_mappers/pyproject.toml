@@ -1,0 +1,68 @@
+[build-system]
+requires = ["uv_build>=0.8.4,<0.9"]
+build-backend = "uv_build"
+
+[project]
+name = "aind-behavior-vr-foraging-data-mappers"
+description = "Internal data mappers for the AIND Behavior VR Foraging experiment."
+authors = [{name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"}]
+license = "MIT"
+version = "0.1.0"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: Microsoft :: Windows",
+    "Private :: Do Not Upload",
+]
+readme = {file = "README.md", content-type = "text/markdown"}
+
+dependencies = [
+    "aind-behavior-curriculum>=0.0.37",
+    "aind-behavior-vr-foraging[data]",
+    "aind-clabe[aind-services]>=0.12.2",
+    "aind-data-schema>=2.7.1",
+    "aind-data-schema-models",
+    "GitPython",
+    "pydantic",
+    "pydantic-settings",
+]
+
+[project.scripts]
+vr-foraging-data-mapper = "aind_behavior_vr_foraging_data_mappers:main"
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.uv.sources]
+aind-behavior-vr-foraging = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "codespell",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+extend-select = ["Q", "RUF100", "C90", "I"]
+extend-ignore = []
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = "google" }
+
+[tool.codespell]
+skip = ".git,*.pdf,*.svg,uv.lock"
+ignore-words-list = "nd"
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --tb=short"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

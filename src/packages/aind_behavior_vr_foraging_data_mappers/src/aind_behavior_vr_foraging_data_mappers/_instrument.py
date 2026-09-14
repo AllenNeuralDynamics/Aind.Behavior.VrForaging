@@ -9,14 +9,13 @@ from typing import Optional, cast
 from aind_behavior_services.common import Vector3
 from aind_behavior_services.rig import cameras, olfactometer, visual_stimulation
 from aind_behavior_services.utils import model_from_json_file
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_data_schema.base import GenericModel
 from aind_data_schema.components import connections, coordinates, devices, measurements
 from aind_data_schema.core import instrument
 from aind_data_schema_models import coordinates as aind_schema_model_coordinates
 from aind_data_schema_models import modalities, units
 from clabe.data_mapper import aind_data_schema as ads
-
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
 from ._utils import TrackedDevices, _make_origin_coordinate_system, utcnow
 

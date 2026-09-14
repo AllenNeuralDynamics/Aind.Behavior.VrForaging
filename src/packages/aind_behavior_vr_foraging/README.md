@@ -56,14 +56,6 @@ Once an experiment is collected, the primary data quality-control script can be 
 uv run vr-foraging data-qc <path-to-data-dir>
 ```
 
-## 🌉 Mapping to aind-data-schema
-
-Once an experiment is collected, data can be mapped to aind-data-schema using the `data-mapper` sub-command:
-
-```powershell
-uv run vr-foraging data-mapper
-```
-
 ## 🔄 Regenerating schemas
 
 DSL schemas can be modified in `./src/aind_behavior_vr_foraging/rig.py` (or `(...)/task_logic`.py`).

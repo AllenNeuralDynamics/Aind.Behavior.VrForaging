@@ -5,11 +5,10 @@ from typing import List, Type, TypeVar, Union
 import aind_behavior_services.rig.water_valve as water_valve
 import pydantic
 from aind_behavior_services.utils import get_fields_of_type, utcnow
+from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_data_schema.components import coordinates, measurements
 from aind_data_schema.core import acquisition
 from aind_data_schema_models import units
-
-from aind_behavior_vr_foraging.rig import AindVrForagingRig
 
 TTo = TypeVar("TTo", bound=pydantic.BaseModel)
 

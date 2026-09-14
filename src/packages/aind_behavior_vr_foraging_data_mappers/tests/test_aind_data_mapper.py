@@ -15,15 +15,14 @@ from aind_data_schema.utils import compatibility_check
 from clabe.apps import CurriculumSuggestion
 from pydantic import TypeAdapter
 
-from aind_behavior_vr_foraging.data_mappers._acquisition import AindAcquisitionDataMapper
-from aind_behavior_vr_foraging.data_mappers._instrument import AindInstrumentDataMapper
+from aind_behavior_vr_foraging_data_mappers import DataMapperCli
+from aind_behavior_vr_foraging_data_mappers._acquisition import AindAcquisitionDataMapper
+from aind_behavior_vr_foraging_data_mappers._instrument import AindInstrumentDataMapper
 
 sys.path.append(".")
 from examples.rig import rig
 from examples.session import session
 from examples.task_patch_foraging import task_logic
-
-from aind_behavior_vr_foraging.cli import DataMapperCli
 
 MOCK_SESSION_START_TIME = datetime(2023, 1, 1, 11, 0, 0, tzinfo=timezone.utc)
 MOCK_SESSION_END_TIME = datetime(2023, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
@@ -110,7 +109,7 @@ class TestAindDataMappers(unittest.TestCase):
     def tearDown(self):
         self.temp_dir.cleanup()
 
-    @patch("aind_behavior_vr_foraging.data_mappers._acquisition.AindAcquisitionDataMapper._map")
+    @patch("aind_behavior_vr_foraging_data_mappers._acquisition.AindAcquisitionDataMapper._map")
     def test_session_mock_map(self, mock_map):
         mock_map.return_value = MagicMock()
         result = self.session_mapper.map()
@@ -142,7 +141,7 @@ class TestAindDataMappers(unittest.TestCase):
         expected_consumed_ml = sum(MOCK_REWARD_VOLUMES_UL) * 1e-3
         self.assertAlmostEqual(float(mapped.subject_details.reward_consumed_total), expected_consumed_ml)
 
-    @patch("aind_behavior_vr_foraging.data_mappers._instrument.AindInstrumentDataMapper._map")
+    @patch("aind_behavior_vr_foraging_data_mappers._instrument.AindInstrumentDataMapper._map")
     def test_rig_mock_map(self, mock_map):
         mock_map.return_value = MagicMock()
         result = self.rig_mapper.map()

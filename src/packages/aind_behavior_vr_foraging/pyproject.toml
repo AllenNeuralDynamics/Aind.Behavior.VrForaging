@@ -30,12 +30,6 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/rel
 
 data = ["contraqctor>=0.5.8, <0.6.0"]
 
-mappers = [
-    "aind-clabe[aind-services]>=0.12.2",
-    "aind-data-schema>=2.7.1",
-    "aind-behavior-vr-foraging[data]",
-    ]
-
 [project.scripts]
 vr-foraging = "aind_behavior_vr_foraging.cli:main"
 
@@ -45,10 +39,7 @@ default-groups = ["dev"]
 [dependency-groups]
 
 dev = [
-    "aind-behavior-vr-foraging[mappers]",
     "aind-behavior-vr-foraging[data]",
-    "aind-data-schema",
-    "aind-data-schema-models",
     "ruff",
     "codespell",
     "pytest",
