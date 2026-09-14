@@ -48,8 +48,6 @@ The workflow can thus be executed using the [Bonsai CLI](https://bonsai-rx.org/d
 "./.bonsai/bonsai.exe" "./src/main.bonsai" -p SessionPath=<path-to-session.json> -p RigPath=<path-to-rig.json> -p TaskPath=<path-to-task.json>
 ```
 
-However, for a better experiment management user experience, it is recommended to use the provided experiment launcher below.
-
 ## 🔄 Regenerating schemas
 
 To regenerate all schemas (task logic, rig, and curricula), run the following from the repository root:
@@ -94,25 +92,9 @@ uv run vr-foraging -h
 
 You may need to install optional dependencies depending on the sub-commands you run.
 
-## 🎮 Experiment launcher (CLABE)
-
-To manage experiments and input files, this repository contains a collection of launcher scripts that can be used to run the VR Foraging task. These are located inside `./scripts` and can be run using the `clabe` tool:
-
-```powershell
-uv run clabe run `./scripts/<script-name>.py`
-```
-
-Additional arguments can be passed to the script as needed:
-
-```powershell
-uv run clabe -h
-```
-
-or via a `./local/clabe.yml` file. (An example can be found in `./Examples/clabe.yml`)
-
 ## 🔍 Primary data quality-control
 
-Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launcher using:
+Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launched using:
 
 ```powershell
 uv run vr-foraging data-qc <path-to-data-dir>
