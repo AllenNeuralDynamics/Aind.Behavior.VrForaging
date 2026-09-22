@@ -108,7 +108,7 @@ Data mapping is provided by the internal `aind-behavior-vr-foraging-data-mappers
 uv run vr-foraging-data-mapper --help
 ```
 
-See the [data mapper package README](src/packages/aind_behavior_vr_foraging_data_mappers/README.md) for installation details.
+See the [data mapper package README](https://github.com/AllenNeuralDynamics/Aind.Behavior.VrForaging/blob/main/src/packages/aind_behavior_vr_foraging_data_mappers/README.md) for installation details.
 
 ## 📖 Curricula
 
