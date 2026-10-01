@@ -15,14 +15,14 @@ def make_s_stage_one_odor_no_depletion() -> Stage:
     _updaters = {
         task_logic.UpdaterTarget.STOP_DURATION_OFFSET: task_logic.NumericalUpdater(
             operation=task_logic.NumericalUpdaterOperation.OFFSET,
-            parameters=task_logic.NumericalUpdaterParameters(initial_value=0, on_success=0.003, minimum=0, maximum=0.5),
+            parameters=task_logic.NumericalUpdaterParameters(initial_value=0, on_success=0.003, minimum=0.1, maximum=0.5),
         ),
         task_logic.UpdaterTarget.REWARD_DELAY_OFFSET: task_logic.NumericalUpdater(
             operation=task_logic.NumericalUpdaterOperation.OFFSET,
             parameters=task_logic.NumericalUpdaterParameters(
                 initial_value=0,
                 on_success=0.0005,
-                minimum=0,
+                minimum=0.0,
                 maximum=0.5,
             ),
         ),
@@ -31,7 +31,7 @@ def make_s_stage_one_odor_no_depletion() -> Stage:
             parameters=task_logic.NumericalUpdaterParameters(
                 initial_value=60,
                 on_success=0.96,
-                minimum=10,
+                minimum=8,
                 maximum=60,
             ),
         ),
@@ -75,11 +75,11 @@ def make_s_stage_one_odor_no_depletion() -> Stage:
                                             ],
                                         ),
                                         patch_virtual_sites_generator=helpers.make_patch_virtual_sites_generator(
-                                            rewardsite=20,
-                                            interpatch_min=25,
-                                            interpatch_max=75,
-                                            intersite_min=10,
-                                            intersite_max=30,
+                                            rewardsite=30,
+                                            interpatch_min=50,
+                                            interpatch_max=100,
+                                            intersite_min=20,
+                                            intersite_max=50,
                                         ),
                                     )
                                 ]
@@ -152,17 +152,6 @@ def make_s_stage_one_odor_w_depletion_day_0() -> Stage:
         name="one_odor_w_depletion_day_0",
         task=AindVrForagingTaskLogic(
             stage_name="one_odor_w_depletion_day_0",
-            task_parameters=_make_s_stage_one_odor_w_depletion_parameters(),
-        ),
-        metrics_provider=MetricsProvider(metrics_from_dataset),
-    )
-
-
-def make_s_stage_one_odor_w_depletion_day_1() -> Stage:
-    return Stage(
-        name="one_odor_w_depletion_day_1",
-        task=AindVrForagingTaskLogic(
-            stage_name="one_odor_w_depletion_day_1",
             task_parameters=_make_s_stage_one_odor_w_depletion_parameters(),
         ),
         metrics_provider=MetricsProvider(metrics_from_dataset),
