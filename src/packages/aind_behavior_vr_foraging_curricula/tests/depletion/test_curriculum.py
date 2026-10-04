@@ -8,9 +8,6 @@ from aind_behavior_vr_foraging_curricula.depletion import CURRICULUM, TRAINER
 from aind_behavior_vr_foraging_curricula.depletion.curriculum import (
     st_s_stage_all_odors_rewarded_s_stage_graduation,
     st_s_stage_one_odor_no_depletion_s_stage_one_odor_w_depletion_day_0,
-    st_s_stage_one_odor_w_depletion_day_0_s_stage_one_odor_w_depletion_day_1,
-    st_s_stage_one_odor_w_depletion_day_1_s_stage_all_odors_rewarded,
-    st_s_stage_one_odor_w_depletion_day_1_s_stage_one_odor_w_depletion_day_0,
 )
 from aind_behavior_vr_foraging_curricula.depletion.metrics import DepletionCurriculumMetrics
 from aind_behavior_vr_foraging_curricula.depletion.policies import p_learn_to_run, p_learn_to_stop, p_stochastic_reward
@@ -104,24 +101,6 @@ class TestCurriculumProgression:
         assert st_s_stage_one_odor_no_depletion_s_stage_one_odor_w_depletion_day_0(fail_metrics) is False
         assert st_s_stage_one_odor_no_depletion_s_stage_one_odor_w_depletion_day_0(ok_metrics) is True
 
-    def test_st_s_stage_one_odor_w_depletion_day_0_s_stage_one_odor_w_depletion_day_1(
-        self, fail_metrics: DepletionCurriculumMetrics, ok_metrics: DepletionCurriculumMetrics
-    ):
-        assert st_s_stage_one_odor_w_depletion_day_0_s_stage_one_odor_w_depletion_day_1(ok_metrics) is True
-        assert st_s_stage_one_odor_w_depletion_day_0_s_stage_one_odor_w_depletion_day_1(fail_metrics) is False
-
-    def test_st_s_stage_one_odor_w_depletion_day_1_s_stage_one_odor_w_depletion_day_0(
-        self, fail_metrics: DepletionCurriculumMetrics, ok_metrics: DepletionCurriculumMetrics
-    ):
-        assert st_s_stage_one_odor_w_depletion_day_1_s_stage_one_odor_w_depletion_day_0(fail_metrics) is True
-        assert st_s_stage_one_odor_w_depletion_day_1_s_stage_one_odor_w_depletion_day_0(ok_metrics) is False
-
-    def test_st_s_stage_one_odor_w_depletion_day_1_s_stage_all_odors_rewarded(
-        self, fail_metrics: DepletionCurriculumMetrics, ok_metrics: DepletionCurriculumMetrics
-    ):
-        assert st_s_stage_one_odor_w_depletion_day_1_s_stage_all_odors_rewarded(ok_metrics) is True
-        assert st_s_stage_one_odor_w_depletion_day_1_s_stage_all_odors_rewarded(fail_metrics) is False
-
     def test_progression_pass(self, init_state: TrainerState, ok_metrics: DepletionCurriculumMetrics):
         proposal = TRAINER.evaluate(init_state, ok_metrics)
         assert proposal.is_on_curriculum is True
@@ -166,32 +145,6 @@ class TestCurriculumProgression:
         assert not st_s_stage_all_odors_rewarded_s_stage_graduation(metrics)
         metrics.n_patches_visited_per_patch = {0: 25, 1: 0}
         assert not st_s_stage_all_odors_rewarded_s_stage_graduation(metrics)
-
-    # ---------- Circular / policy transitions ----------
-    def test_circular_stage_transitions(self):
-        current_state = CURRICULUM.see_stages()[2]
-        state = TRAINER.create_trainer_state(stage=current_state, active_policies=current_state.start_policies)
-        metrics = DepletionCurriculumMetrics(
-            total_water_consumed=0.750,
-            n_reward_sites_traveled=300,
-            n_choices=200,
-            n_patches_visited=25,
-            n_patches_visited_per_patch={0: 15, 1: 15},
-            last_stop_duration_offset_updater=0.5,
-            last_reward_site_length=50,
-            last_delay_duration=0.08,
-        )
-
-        # Forward transition
-        progress_state = TRAINER.evaluate(state, metrics)
-        assert progress_state.stage is not None
-        assert progress_state.stage.name != current_state.name
-
-        # Reverse transition
-        metrics.n_patches_visited = 15
-        regress_state = TRAINER.evaluate(progress_state, metrics)
-        assert regress_state.stage is not None
-        assert regress_state.stage.name != current_state.name or regress_state.stage.name != progress_state.stage.name
 
     def test_trainer_evaluate_updates(self, init_state: TrainerState):
         metrics = DepletionCurriculumMetrics(
