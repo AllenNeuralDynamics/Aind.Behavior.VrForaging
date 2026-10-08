@@ -45,14 +45,9 @@ def p_learn_to_run(metrics: DepletionCurriculumMetrics, task: AindVrForagingTask
 
         assert isinstance(patch_gen.inter_site.length_distribution, distributions.ExponentialDistribution)
         assert patch_gen.inter_site.length_distribution.truncation_parameters is not None
-        patch_gen.inter_site.length_distribution.truncation_parameters.min = helpers.clamp(
-            patch_gen.inter_site.length_distribution.truncation_parameters.min * (1.5**gain),
-            minimum=10,
-            maximum=20,
-        )
         patch_gen.inter_site.length_distribution.truncation_parameters.max = helpers.clamp(
             patch_gen.inter_site.length_distribution.truncation_parameters.max * (1.5**gain),
-            minimum=30,
+            minimum=50,
             maximum=100,
         )
 
@@ -60,19 +55,19 @@ def p_learn_to_run(metrics: DepletionCurriculumMetrics, task: AindVrForagingTask
         assert patch_gen.inter_patch.length_distribution.truncation_parameters is not None
         patch_gen.inter_patch.length_distribution.truncation_parameters.min = helpers.clamp(
             patch_gen.inter_patch.length_distribution.truncation_parameters.min * (2**gain),
-            minimum=25,
+            minimum=50,
             maximum=200,
         )
         patch_gen.inter_patch.length_distribution.truncation_parameters.max = helpers.clamp(
             patch_gen.inter_patch.length_distribution.truncation_parameters.max * (2**gain),
-            minimum=75,
+            minimum=100,
             maximum=600,
         )
 
         assert isinstance(patch_gen.reward_site.length_distribution, distributions.Scalar)
         patch_gen.reward_site.length_distribution.distribution_parameters.value = helpers.clamp(
             patch_gen.reward_site.length_distribution.distribution_parameters.value + (10 * gain),
-            minimum=20,
+            minimum=30,
             maximum=50,
         )
 
