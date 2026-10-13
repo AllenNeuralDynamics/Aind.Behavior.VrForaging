@@ -597,7 +597,6 @@
                 },
                 "velocity_threshold": 1.0
               },
-              "wait_to_finish_duration": 0.0,
               "wait_to_start_duration": 0.0
             }
           },
@@ -822,8 +821,7 @@
               "duration": 0.2,
               "frequency": 9999.0
             },
-            "wait_to_start_duration": 0.0,
-            "wait_to_finish_duration": 0.0
+            "wait_to_start_duration": 0.0
           },
           "description": "Control of the operation"
         }
@@ -3303,13 +3301,6 @@
           "description": "Duration to wait before starting the task",
           "minimum": 0,
           "title": "Wait To Start Duration",
-          "type": "number"
-        },
-        "wait_to_finish_duration": {
-          "default": 0,
-          "description": "Duration to wait after finishing the task",
-          "minimum": 0,
-          "title": "Wait To Finish Duration",
           "type": "number"
         }
       },
