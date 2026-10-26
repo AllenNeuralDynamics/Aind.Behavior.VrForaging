@@ -211,7 +211,7 @@
       "description": "Represents the schema, and concrete instantiation, of a rig configuration to run the VrForaging behavior task.",
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.7",
+          "default": "0.13.9",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -439,7 +439,7 @@
           "$ref": "#/$defs/AindVrForagingTaskParameters",
           "default": {
             "rng_seed": null,
-            "aind_behavior_services_pkg_version": "0.13.7",
+            "aind_behavior_services_pkg_version": "0.13.9",
             "updaters": {},
             "environment": {
               "blocks": [
@@ -643,7 +643,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.7",
+          "default": "0.13.9",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -834,7 +834,7 @@
       "properties": {
         "duration": {
           "default": 0.2,
-          "description": "Duration",
+          "description": "Duration (s) of the audio cue",
           "minimum": 0,
           "title": "Duration",
           "type": "number"
@@ -1290,7 +1290,7 @@
         },
         "value": {
           "$ref": "#/$defs/Distribution",
-          "description": "Distance after which the block ends."
+          "description": "Distance (cm) after which the block ends."
         }
       },
       "required": [
@@ -1310,7 +1310,7 @@
         },
         "value": {
           "$ref": "#/$defs/Distribution",
-          "description": "Time after which the block ends."
+          "description": "Time (s) after which the block ends."
         }
       },
       "required": [
@@ -1624,7 +1624,7 @@
         },
         "minimum": {
           "default": 0,
-          "description": "Minimum value of the rate",
+          "description": "Minimum value of the updated parameter (same units as the parameter)",
           "oneOf": [
             {
               "type": "number"
@@ -1636,7 +1636,7 @@
           "title": "Minimum"
         },
         "maximum": {
-          "description": "Maximum value of the rate",
+          "description": "Maximum value of the updated parameter (same units as the parameter)",
           "oneOf": [
             {
               "type": "number"
@@ -1649,7 +1649,7 @@
         },
         "rate": {
           "$ref": "#/$defs/Distribution",
-          "description": "Rate of the replenishment, in value per rule unit."
+          "description": "Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule)."
         }
       },
       "required": [
@@ -1670,7 +1670,7 @@
         },
         "minimum": {
           "default": 0,
-          "description": "Minimum value of the rate",
+          "description": "Minimum value of the updated parameter (same units as the parameter)",
           "oneOf": [
             {
               "type": "number"
@@ -1682,7 +1682,7 @@
           "title": "Minimum"
         },
         "maximum": {
-          "description": "Maximum value of the rate",
+          "description": "Maximum value of the updated parameter (same units as the parameter)",
           "oneOf": [
             {
               "type": "number"
@@ -1695,7 +1695,7 @@
         },
         "rate": {
           "$ref": "#/$defs/Distribution",
-          "description": "Rate of the replenishment, in value per rule unit."
+          "description": "Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule)."
         }
       },
       "required": [
@@ -1755,7 +1755,7 @@
           "type": "array"
         },
         "rho": {
-          "description": "The underlying value governing the stochastic process",
+          "description": "The underlying value governing the stochastic process (same units as the updated parameter)",
           "title": "Rho",
           "type": "number"
         },
@@ -1768,7 +1768,7 @@
         },
         "rate": {
           "default": null,
-          "description": "Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only",
+          "description": "Rate of the replenishment (per s) used to generate the matrix. This value is used for metadata keep sake only",
           "oneOf": [
             {
               "type": "number"
@@ -1780,13 +1780,13 @@
           "title": "Rate"
         },
         "minimum": {
-          "description": "Minimum value after update",
+          "description": "Minimum value after update (same units as the updated parameter)",
           "exclusiveMinimum": 0,
           "title": "Minimum",
           "type": "number"
         },
         "maximum": {
-          "description": "Maximum value after update",
+          "description": "Maximum value after update (same units as the updated parameter)",
           "title": "Maximum",
           "type": "number"
         }
@@ -2502,7 +2502,7 @@
           "type": "string"
         },
         "lut_keys": {
-          "description": "List of keys of the lookup table",
+          "description": "List of keys of the lookup table (in rule tick units: s, cm, or count, depending on the rule)",
           "items": {
             "type": "number"
           },
@@ -2511,7 +2511,7 @@
           "type": "array"
         },
         "lut_values": {
-          "description": "List of values of the lookup table",
+          "description": "List of values of the lookup table (same units as the updated parameter)",
           "items": {
             "type": "number"
           },
@@ -2916,45 +2916,45 @@
       "properties": {
         "initial_value": {
           "default": 0.0,
-          "description": "Initial value of the parameter",
+          "description": "Initial value of the parameter (same units as the updated target: s, cm, or cm/s)",
           "title": "Initial Value",
           "type": "number"
         },
         "on_success": {
           "default": 0.0,
-          "description": "Value used to update the parameter by on success",
+          "description": "Value used to update the parameter by on success (same units as the updated target)",
           "title": "On Success",
           "type": "number"
         },
         "on_failure": {
           "default": 0.0,
-          "description": "Value used to update the parameter by on failure",
+          "description": "Value used to update the parameter by on failure (same units as the updated target)",
           "title": "On Failure",
           "type": "number"
         },
         "increment": {
           "default": 0.0,
           "deprecated": true,
-          "description": "Value to increment the parameter by",
+          "description": "Value to increment the parameter by (same units as the updated target)",
           "title": "Increment",
           "type": "number"
         },
         "decrement": {
           "default": 0.0,
           "deprecated": true,
-          "description": "Value to decrement the parameter by",
+          "description": "Value to decrement the parameter by (same units as the updated target)",
           "title": "Decrement",
           "type": "number"
         },
         "minimum": {
           "default": 0.0,
-          "description": "Minimum value of the parameter",
+          "description": "Minimum value of the parameter (same units as the updated target)",
           "title": "Minimum",
           "type": "number"
         },
         "maximum": {
           "default": 0.0,
-          "description": "Minimum value of the parameter",
+          "description": "Maximum value of the parameter (same units as the updated target)",
           "title": "Maximum",
           "type": "number"
         }
@@ -3161,7 +3161,7 @@
         },
         "amount": {
           "default": null,
-          "description": "Defines the amount of reward replenished per rule unit.",
+          "description": "Defines the amount of reward (uL) replenished per rule unit.",
           "oneOf": [
             {
               "$ref": "#/$defs/PatchUpdateFunction"
@@ -3185,7 +3185,7 @@
         },
         "available": {
           "default": null,
-          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
+          "description": "Defines the amount of reward available (uL) replenished in the patch per rule unit.",
           "oneOf": [
             {
               "$ref": "#/$defs/PatchUpdateFunction"
@@ -3298,7 +3298,7 @@
         },
         "wait_to_start_duration": {
           "default": 0,
-          "description": "Duration to wait before starting the task",
+          "description": "Duration (s) to wait before starting the task",
           "minimum": 0,
           "title": "Wait To Start Duration",
           "type": "number"
@@ -3318,7 +3318,7 @@
         },
         "amount": {
           "default": null,
-          "description": "Defines the amount of reward replenished per rule unit.",
+          "description": "Defines the amount of reward (uL) replenished per rule unit.",
           "oneOf": [
             {
               "$ref": "#/$defs/PatchUpdateFunction"
@@ -3342,7 +3342,7 @@
         },
         "available": {
           "default": null,
-          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
+          "description": "Defines the amount of reward available (uL) replenished in the patch per rule unit.",
           "oneOf": [
             {
               "$ref": "#/$defs/PatchUpdateFunction"
@@ -3541,7 +3541,7 @@
         },
         "amount": {
           "default": null,
-          "description": "Defines the amount of reward replenished per rule unit.",
+          "description": "Defines the amount of reward (uL) replenished per rule unit.",
           "oneOf": [
             {
               "$ref": "#/$defs/PatchUpdateFunction"
@@ -3565,7 +3565,7 @@
         },
         "available": {
           "default": null,
-          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
+          "description": "Defines the amount of reward available (uL) replenished in the patch per rule unit.",
           "oneOf": [
             {
               "$ref": "#/$defs/PatchUpdateFunction"
@@ -3666,7 +3666,7 @@
         },
         "count": {
           "$ref": "#/$defs/Distribution",
-          "description": "Number of distance units to wait before terminating the patch"
+          "description": "Distance (cm) to travel before terminating the patch"
         }
       },
       "required": [
@@ -3758,7 +3758,7 @@
         },
         "count": {
           "$ref": "#/$defs/Distribution",
-          "description": "Number of seconds to wait before terminating the patch"
+          "description": "Time (s) to wait before terminating the patch"
         }
       },
       "required": [
@@ -3978,7 +3978,7 @@
         },
         "amount": {
           "default": null,
-          "description": "Defines the amount of reward replenished per rule unit.",
+          "description": "Defines the amount of reward (uL) replenished per rule unit.",
           "oneOf": [
             {
               "$ref": "#/$defs/PatchUpdateFunction"
@@ -4002,7 +4002,7 @@
         },
         "available": {
           "default": null,
-          "description": "Defines the amount of reward available replenished in the patch per rule unit.",
+          "description": "Defines the amount of reward available (uL) replenished in the patch per rule unit.",
           "oneOf": [
             {
               "$ref": "#/$defs/PatchUpdateFunction"
@@ -4111,7 +4111,7 @@
             "y": 1.0,
             "z": 1.0
           },
-          "description": "Gain of the position control."
+          "description": "Gain of the position control (unitless)."
         },
         "initial_position": {
           "$ref": "#/$defs/Vector3",
@@ -4120,7 +4120,7 @@
             "y": 2.56,
             "z": 0.0
           },
-          "description": "Initial position of the subject in the VR world."
+          "description": "Initial position (cm) of the subject in the VR world."
         },
         "frequency_filter_cutoff": {
           "default": 0.5,
@@ -4181,7 +4181,7 @@
       "properties": {
         "contrast": {
           "default": null,
-          "description": "Contrast of the texture",
+          "description": "Contrast of the texture (unitless, 0-1)",
           "oneOf": [
             {
               "maximum": 1,
@@ -4249,7 +4249,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "The optional distribution where the delay to reward will be drawn from"
+          "description": "The optional distribution where the delay (s) to reward will be drawn from"
         },
         "amount": {
           "$ref": "#/$defs/Distribution",
@@ -4262,7 +4262,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "Initial amount of reward in microliters"
+          "description": "Initial amount of reward (uL)"
         },
         "probability": {
           "$ref": "#/$defs/Distribution",
@@ -4288,7 +4288,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "Initial amount of reward available in the patch in microliters"
+          "description": "Initial amount of reward available in the patch (uL)"
         },
         "reward_function": {
           "default": [],
@@ -4328,7 +4328,7 @@
         },
         "minimum": {
           "default": 0,
-          "description": "Minimum value of the rate",
+          "description": "Minimum value of the updated parameter (same units as the parameter)",
           "oneOf": [
             {
               "type": "number"
@@ -4340,7 +4340,7 @@
           "title": "Minimum"
         },
         "maximum": {
-          "description": "Maximum value of the rate",
+          "description": "Maximum value of the updated parameter (same units as the parameter)",
           "oneOf": [
             {
               "type": "number"
@@ -4353,7 +4353,7 @@
         },
         "below_minimum_to": {
           "default": null,
-          "description": "If the value is below minimum, it will be set to this value instead of the minimum",
+          "description": "If the value is below minimum, it will be set to this value instead of the minimum (same units as the parameter)",
           "oneOf": [
             {
               "type": "number"
@@ -4366,7 +4366,7 @@
         },
         "above_maximum_to": {
           "default": null,
-          "description": "If the value is above maximum, it will be set to this value instead of the maximum",
+          "description": "If the value is above maximum, it will be set to this value instead of the maximum (same units as the parameter)",
           "oneOf": [
             {
               "type": "number"
@@ -4379,7 +4379,7 @@
         },
         "rate": {
           "$ref": "#/$defs/Distribution",
-          "description": "Rate of the replenishment, in value per rule unit."
+          "description": "Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule)."
         }
       },
       "required": [
@@ -4837,14 +4837,14 @@
     "Session": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.7",
+          "default": "0.13.9",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.13.7",
-          "default": "0.13.7",
+          "const": "0.13.9",
+          "default": "0.13.9",
           "title": "Version",
           "type": "string"
         },
@@ -4950,7 +4950,7 @@
         },
         "value": {
           "$ref": "#/$defs/Distribution",
-          "description": "Sets the value of the target to this value."
+          "description": "Sets the value of the target to this value (same units as the target)."
         }
       },
       "required": [
@@ -5023,7 +5023,7 @@
         },
         "exposure": {
           "default": 1000,
-          "description": "Exposure time",
+          "description": "Exposure time (microseconds)",
           "minimum": 100,
           "title": "Exposure",
           "type": "integer"
@@ -5429,7 +5429,7 @@
             "width": 40.0,
             "height": 40.0
           },
-          "description": "Size of the texture"
+          "description": "Size of the texture (cm)"
         }
       },
       "title": "Texture",
@@ -5911,7 +5911,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "Distribution of the length of the virtual site"
+          "description": "Distribution of the length (cm) of the virtual site"
         },
         "treadmill_specification": {
           "default": null,
@@ -5959,7 +5959,7 @@
             "truncation_parameters": null,
             "scaling_parameters": null
           },
-          "description": "The optional distribution where the delay to reward will be drawn from"
+          "description": "The optional distribution where the delay (s) to reward will be drawn from"
         }
       },
       "required": [

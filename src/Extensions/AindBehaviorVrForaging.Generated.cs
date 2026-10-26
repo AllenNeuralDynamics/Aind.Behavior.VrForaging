@@ -231,7 +231,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.7";
+            _aindBehaviorServicesPkgVersion = "0.13.9";
             _version = "1.3.1";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -840,7 +840,7 @@ namespace AindVrForagingDataSchema
     
         public AindVrForagingTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.7";
+            _aindBehaviorServicesPkgVersion = "0.13.9";
             _environment = new BlockStructure();
             _operationControl = new OperationControl();
         }
@@ -1005,10 +1005,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Duration
+        /// Duration (s) of the audio cue
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("duration")]
-        [System.ComponentModel.DescriptionAttribute("Duration")]
+        [System.ComponentModel.DescriptionAttribute("Duration (s) of the audio cue")]
         public double Duration
         {
             get
@@ -1365,11 +1365,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Distance after which the block ends.
+        /// Distance (cm) after which the block ends.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Distance after which the block ends.")]
+        [System.ComponentModel.DescriptionAttribute("Distance (cm) after which the block ends.")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Value
         {
             get
@@ -1430,11 +1430,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Time after which the block ends.
+        /// Time (s) after which the block ends.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Time after which the block ends.")]
+        [System.ComponentModel.DescriptionAttribute("Time (s) after which the block ends.")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Value
         {
             get
@@ -1997,10 +1997,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Minimum value of the rate
+        /// Minimum value of the updated parameter (same units as the parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
-        [System.ComponentModel.DescriptionAttribute("Minimum value of the rate")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value of the updated parameter (same units as the parameter)")]
         public double? Minimum
         {
             get
@@ -2014,10 +2014,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Maximum value of the rate
+        /// Maximum value of the updated parameter (same units as the parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("maximum", Required=Newtonsoft.Json.Required.AllowNull)]
-        [System.ComponentModel.DescriptionAttribute("Maximum value of the rate")]
+        [System.ComponentModel.DescriptionAttribute("Maximum value of the updated parameter (same units as the parameter)")]
         public double? Maximum
         {
             get
@@ -2031,11 +2031,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Rate of the replenishment, in value per rule unit.
+        /// Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rate", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment, in value per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment, in parameter units per rule unit (s, cm, or count, dep" +
+            "ending on the rule).")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Rate
         {
             get
@@ -2112,10 +2113,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Minimum value of the rate
+        /// Minimum value of the updated parameter (same units as the parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
-        [System.ComponentModel.DescriptionAttribute("Minimum value of the rate")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value of the updated parameter (same units as the parameter)")]
         public double? Minimum
         {
             get
@@ -2129,10 +2130,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Maximum value of the rate
+        /// Maximum value of the updated parameter (same units as the parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("maximum", Required=Newtonsoft.Json.Required.AllowNull)]
-        [System.ComponentModel.DescriptionAttribute("Maximum value of the rate")]
+        [System.ComponentModel.DescriptionAttribute("Maximum value of the updated parameter (same units as the parameter)")]
         public double? Maximum
         {
             get
@@ -2146,11 +2147,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Rate of the replenishment, in value per rule unit.
+        /// Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rate", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment, in value per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment, in parameter units per rule unit (s, cm, or count, dep" +
+            "ending on the rule).")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Rate
         {
             get
@@ -2341,10 +2343,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// The underlying value governing the stochastic process
+        /// The underlying value governing the stochastic process (same units as the updated parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("rho", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The underlying value governing the stochastic process")]
+        [System.ComponentModel.DescriptionAttribute("The underlying value governing the stochastic process (same units as the updated " +
+            "parameter)")]
         public double Rho
         {
             get
@@ -2375,11 +2378,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only
+        /// Rate of the replenishment (per s) used to generate the matrix. This value is used for metadata keep sake only
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("rate")]
-        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment used to generate the matrix. This value is used for met" +
-            "adata keep sake only")]
+        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment (per s) used to generate the matrix. This value is used" +
+            " for metadata keep sake only")]
         public double? Rate
         {
             get
@@ -2393,10 +2396,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Minimum value after update
+        /// Minimum value after update (same units as the updated parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("minimum", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Minimum value after update")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value after update (same units as the updated parameter)")]
         public double Minimum
         {
             get
@@ -2410,10 +2413,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Maximum value after update
+        /// Maximum value after update (same units as the updated parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("maximum", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Maximum value after update")]
+        [System.ComponentModel.DescriptionAttribute("Maximum value after update (same units as the updated parameter)")]
         public double Maximum
         {
             get
@@ -3749,11 +3752,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// List of keys of the lookup table
+        /// List of keys of the lookup table (in rule tick units: s, cm, or count, depending on the rule)
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("lut_keys", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("List of keys of the lookup table")]
+        [System.ComponentModel.DescriptionAttribute("List of keys of the lookup table (in rule tick units: s, cm, or count, depending " +
+            "on the rule)")]
         public System.Collections.Generic.List<double> LutKeys
         {
             get
@@ -3767,11 +3771,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// List of values of the lookup table
+        /// List of values of the lookup table (same units as the updated parameter)
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("lut_values", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("List of values of the lookup table")]
+        [System.ComponentModel.DescriptionAttribute("List of values of the lookup table (same units as the updated parameter)")]
         public System.Collections.Generic.List<double> LutValues
         {
             get
@@ -4236,10 +4240,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Initial value of the parameter
+        /// Initial value of the parameter (same units as the updated target: s, cm, or cm/s)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("initial_value")]
-        [System.ComponentModel.DescriptionAttribute("Initial value of the parameter")]
+        [System.ComponentModel.DescriptionAttribute("Initial value of the parameter (same units as the updated target: s, cm, or cm/s)" +
+            "")]
         public double InitialValue
         {
             get
@@ -4253,10 +4258,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Value used to update the parameter by on success
+        /// Value used to update the parameter by on success (same units as the updated target)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("on_success")]
-        [System.ComponentModel.DescriptionAttribute("Value used to update the parameter by on success")]
+        [System.ComponentModel.DescriptionAttribute("Value used to update the parameter by on success (same units as the updated targe" +
+            "t)")]
         public double OnSuccess
         {
             get
@@ -4270,10 +4276,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Value used to update the parameter by on failure
+        /// Value used to update the parameter by on failure (same units as the updated target)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("on_failure")]
-        [System.ComponentModel.DescriptionAttribute("Value used to update the parameter by on failure")]
+        [System.ComponentModel.DescriptionAttribute("Value used to update the parameter by on failure (same units as the updated targe" +
+            "t)")]
         public double OnFailure
         {
             get
@@ -4287,10 +4294,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Value to increment the parameter by
+        /// Value to increment the parameter by (same units as the updated target)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("increment")]
-        [System.ComponentModel.DescriptionAttribute("Value to increment the parameter by")]
+        [System.ComponentModel.DescriptionAttribute("Value to increment the parameter by (same units as the updated target)")]
         public double Increment
         {
             get
@@ -4304,10 +4311,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Value to decrement the parameter by
+        /// Value to decrement the parameter by (same units as the updated target)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("decrement")]
-        [System.ComponentModel.DescriptionAttribute("Value to decrement the parameter by")]
+        [System.ComponentModel.DescriptionAttribute("Value to decrement the parameter by (same units as the updated target)")]
         public double Decrement
         {
             get
@@ -4321,10 +4328,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Minimum value of the parameter
+        /// Minimum value of the parameter (same units as the updated target)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
-        [System.ComponentModel.DescriptionAttribute("Minimum value of the parameter")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value of the parameter (same units as the updated target)")]
         public double Minimum
         {
             get
@@ -4338,10 +4345,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Minimum value of the parameter
+        /// Maximum value of the parameter (same units as the updated target)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("maximum")]
-        [System.ComponentModel.DescriptionAttribute("Minimum value of the parameter")]
+        [System.ComponentModel.DescriptionAttribute("Maximum value of the parameter (same units as the updated target)")]
         public double Maximum
         {
             get
@@ -4951,11 +4958,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Defines the amount of reward replenished per rule unit.
+        /// Defines the amount of reward (uL) replenished per rule unit.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("amount")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward replenished per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward (uL) replenished per rule unit.")]
         public PatchUpdateFunction Amount
         {
             get
@@ -4987,11 +4994,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Defines the amount of reward available replenished in the patch per rule unit.
+        /// Defines the amount of reward available (uL) replenished in the patch per rule unit.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("available")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available replenished in the patch per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available (uL) replenished in the patch per rule uni" +
+            "t.")]
         public PatchUpdateFunction Available
         {
             get
@@ -5307,10 +5315,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Duration to wait before starting the task
+        /// Duration (s) to wait before starting the task
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("wait_to_start_duration")]
-        [System.ComponentModel.DescriptionAttribute("Duration to wait before starting the task")]
+        [System.ComponentModel.DescriptionAttribute("Duration (s) to wait before starting the task")]
         public double WaitToStartDuration
         {
             get
@@ -5394,11 +5402,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Defines the amount of reward replenished per rule unit.
+        /// Defines the amount of reward (uL) replenished per rule unit.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("amount")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward replenished per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward (uL) replenished per rule unit.")]
         public PatchUpdateFunction Amount
         {
             get
@@ -5430,11 +5438,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Defines the amount of reward available replenished in the patch per rule unit.
+        /// Defines the amount of reward available (uL) replenished in the patch per rule unit.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("available")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available replenished in the patch per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available (uL) replenished in the patch per rule uni" +
+            "t.")]
         public PatchUpdateFunction Available
         {
             get
@@ -5727,11 +5736,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Defines the amount of reward replenished per rule unit.
+        /// Defines the amount of reward (uL) replenished per rule unit.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("amount")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward replenished per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward (uL) replenished per rule unit.")]
         public PatchUpdateFunction Amount
         {
             get
@@ -5763,11 +5772,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Defines the amount of reward available replenished in the patch per rule unit.
+        /// Defines the amount of reward available (uL) replenished in the patch per rule unit.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("available")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available replenished in the patch per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available (uL) replenished in the patch per rule uni" +
+            "t.")]
         public PatchUpdateFunction Available
         {
             get
@@ -5964,11 +5974,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Number of distance units to wait before terminating the patch
+        /// Distance (cm) to travel before terminating the patch
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("count", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Number of distance units to wait before terminating the patch")]
+        [System.ComponentModel.DescriptionAttribute("Distance (cm) to travel before terminating the patch")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Count
         {
             get
@@ -6215,11 +6225,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Number of seconds to wait before terminating the patch
+        /// Time (s) to wait before terminating the patch
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("count", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Number of seconds to wait before terminating the patch")]
+        [System.ComponentModel.DescriptionAttribute("Time (s) to wait before terminating the patch")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Count
         {
             get
@@ -6498,11 +6508,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Defines the amount of reward replenished per rule unit.
+        /// Defines the amount of reward (uL) replenished per rule unit.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("amount")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward replenished per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward (uL) replenished per rule unit.")]
         public PatchUpdateFunction Amount
         {
             get
@@ -6534,11 +6544,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Defines the amount of reward available replenished in the patch per rule unit.
+        /// Defines the amount of reward available (uL) replenished in the patch per rule unit.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("available")]
-        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available replenished in the patch per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Defines the amount of reward available (uL) replenished in the patch per rule uni" +
+            "t.")]
         public PatchUpdateFunction Available
         {
             get
@@ -6632,11 +6643,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Gain of the position control.
+        /// Gain of the position control (unitless).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("gain")]
-        [System.ComponentModel.DescriptionAttribute("Gain of the position control.")]
+        [System.ComponentModel.DescriptionAttribute("Gain of the position control (unitless).")]
         public Vector3 Gain
         {
             get
@@ -6650,11 +6661,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Initial position of the subject in the VR world.
+        /// Initial position (cm) of the subject in the VR world.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("initial_position")]
-        [System.ComponentModel.DescriptionAttribute("Initial position of the subject in the VR world.")]
+        [System.ComponentModel.DescriptionAttribute("Initial position (cm) of the subject in the VR world.")]
         public Vector3 InitialPosition
         {
             get
@@ -6900,10 +6911,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Contrast of the texture
+        /// Contrast of the texture (unitless, 0-1)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
-        [System.ComponentModel.DescriptionAttribute("Contrast of the texture")]
+        [System.ComponentModel.DescriptionAttribute("Contrast of the texture (unitless, 0-1)")]
         public double? Contrast
         {
             get
@@ -7064,11 +7075,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// The optional distribution where the delay to reward will be drawn from
+        /// The optional distribution where the delay (s) to reward will be drawn from
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("delay")]
-        [System.ComponentModel.DescriptionAttribute("The optional distribution where the delay to reward will be drawn from")]
+        [System.ComponentModel.DescriptionAttribute("The optional distribution where the delay (s) to reward will be drawn from")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Delay
         {
             get
@@ -7082,11 +7093,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Initial amount of reward in microliters
+        /// Initial amount of reward (uL)
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("amount")]
-        [System.ComponentModel.DescriptionAttribute("Initial amount of reward in microliters")]
+        [System.ComponentModel.DescriptionAttribute("Initial amount of reward (uL)")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Amount
         {
             get
@@ -7118,11 +7129,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Initial amount of reward available in the patch in microliters
+        /// Initial amount of reward available in the patch (uL)
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("available")]
-        [System.ComponentModel.DescriptionAttribute("Initial amount of reward available in the patch in microliters")]
+        [System.ComponentModel.DescriptionAttribute("Initial amount of reward available in the patch (uL)")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Available
         {
             get
@@ -7308,10 +7319,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Minimum value of the rate
+        /// Minimum value of the updated parameter (same units as the parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("minimum")]
-        [System.ComponentModel.DescriptionAttribute("Minimum value of the rate")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value of the updated parameter (same units as the parameter)")]
         public double? Minimum
         {
             get
@@ -7325,10 +7336,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Maximum value of the rate
+        /// Maximum value of the updated parameter (same units as the parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("maximum", Required=Newtonsoft.Json.Required.AllowNull)]
-        [System.ComponentModel.DescriptionAttribute("Maximum value of the rate")]
+        [System.ComponentModel.DescriptionAttribute("Maximum value of the updated parameter (same units as the parameter)")]
         public double? Maximum
         {
             get
@@ -7342,11 +7353,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// If the value is below minimum, it will be set to this value instead of the minimum
+        /// If the value is below minimum, it will be set to this value instead of the minimum (same units as the parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("below_minimum_to")]
         [System.ComponentModel.DescriptionAttribute("If the value is below minimum, it will be set to this value instead of the minimu" +
-            "m")]
+            "m (same units as the parameter)")]
         public double? BelowMinimumTo
         {
             get
@@ -7360,11 +7371,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// If the value is above maximum, it will be set to this value instead of the maximum
+        /// If the value is above maximum, it will be set to this value instead of the maximum (same units as the parameter)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("above_maximum_to")]
         [System.ComponentModel.DescriptionAttribute("If the value is above maximum, it will be set to this value instead of the maximu" +
-            "m")]
+            "m (same units as the parameter)")]
         public double? AboveMaximumTo
         {
             get
@@ -7378,11 +7389,12 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Rate of the replenishment, in value per rule unit.
+        /// Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rate", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment, in value per rule unit.")]
+        [System.ComponentModel.DescriptionAttribute("Rate of the replenishment, in parameter units per rule unit (s, cm, or count, dep" +
+            "ending on the rule).")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Rate
         {
             get
@@ -7907,8 +7919,8 @@ namespace AindVrForagingDataSchema
     
         public Session()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.7";
-            _version = "0.13.7";
+            _aindBehaviorServicesPkgVersion = "0.13.9";
+            _version = "0.13.9";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
@@ -8201,11 +8213,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Sets the value of the target to this value.
+        /// Sets the value of the target to this value (same units as the target).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("value", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Sets the value of the target to this value.")]
+        [System.ComponentModel.DescriptionAttribute("Sets the value of the target to this value (same units as the target).")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Value
         {
             get
@@ -8477,10 +8489,10 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Exposure time
+        /// Exposure time (microseconds)
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("exposure")]
-        [System.ComponentModel.DescriptionAttribute("Exposure time")]
+        [System.ComponentModel.DescriptionAttribute("Exposure time (microseconds)")]
         public int Exposure
         {
             get
@@ -9152,11 +9164,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Size of the texture
+        /// Size of the texture (cm)
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("size")]
-        [System.ComponentModel.DescriptionAttribute("Size of the texture")]
+        [System.ComponentModel.DescriptionAttribute("Size of the texture (cm)")]
         public Size Size
         {
             get
@@ -10322,11 +10334,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// Distribution of the length of the virtual site
+        /// Distribution of the length (cm) of the virtual site
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("length_distribution")]
-        [System.ComponentModel.DescriptionAttribute("Distribution of the length of the virtual site")]
+        [System.ComponentModel.DescriptionAttribute("Distribution of the length (cm) of the virtual site")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution LengthDistribution
         {
             get
@@ -10472,11 +10484,11 @@ namespace AindVrForagingDataSchema
         }
     
         /// <summary>
-        /// The optional distribution where the delay to reward will be drawn from
+        /// The optional distribution where the delay (s) to reward will be drawn from
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("delay")]
-        [System.ComponentModel.DescriptionAttribute("The optional distribution where the delay to reward will be drawn from")]
+        [System.ComponentModel.DescriptionAttribute("The optional distribution where the delay (s) to reward will be drawn from")]
         public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Delay
         {
             get
