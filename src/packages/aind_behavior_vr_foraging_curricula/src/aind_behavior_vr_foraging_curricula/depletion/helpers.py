@@ -132,7 +132,7 @@ def make_graduated_patch(
     state_index: int,
     odor_index: int,
     max_reward_probability: float = 0.9,
-    rate_reward_probability: float = 0.8795015081718721,
+    rate_reward_probability: float = 0.87358,
     reward_amount: float = 5.0,
     reward_available: float = 9999,
     stop_duration: float = 0.5,
