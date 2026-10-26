@@ -62,21 +62,27 @@ class NumericalUpdaterParameters(BaseModel):
     during task execution, ensuring values stay within acceptable ranges.
     """
 
-    initial_value: float = Field(default=0.0, description="Initial value of the parameter")
-    on_success: float = Field(default=0.0, description="Value used to update the parameter by on success")
-    on_failure: float = Field(default=0.0, description="Value used to update the parameter by on failure")
+    initial_value: float = Field(
+        default=0.0, description="Initial value of the parameter (same units as the updated target: s, cm, or cm/s)"
+    )
+    on_success: float = Field(
+        default=0.0, description="Value used to update the parameter by on success (same units as the updated target)"
+    )
+    on_failure: float = Field(
+        default=0.0, description="Value used to update the parameter by on failure (same units as the updated target)"
+    )
     increment: float = Field(
         default=0.0,
-        description="Value to increment the parameter by",
+        description="Value to increment the parameter by (same units as the updated target)",
         deprecated="This field is deprecated, use on_success instead",
     )
     decrement: float = Field(
         default=0.0,
-        description="Value to decrement the parameter by",
+        description="Value to decrement the parameter by (same units as the updated target)",
         deprecated="This field is deprecated, use on_failure instead",
     )
-    minimum: float = Field(default=0.0, description="Minimum value of the parameter")
-    maximum: float = Field(default=0.0, description="Minimum value of the parameter")
+    minimum: float = Field(default=0.0, description="Minimum value of the parameter (same units as the updated target)")
+    maximum: float = Field(default=0.0, description="Maximum value of the parameter (same units as the updated target)")
 
     @model_validator(mode="before")
     @classmethod
@@ -125,8 +131,11 @@ class UpdaterTarget(str, Enum):
     """
 
     STOP_DURATION_OFFSET = "StopDurationOffset"
+    """Offset (s) added to the stop duration"""
     STOP_VELOCITY_THRESHOLD = "StopVelocityThreshold"
+    """Velocity threshold (cm/s) below which the animal is considered stopped"""
     REWARD_DELAY_OFFSET = "RewardDelayOffset"
+    """Offset (s) added to the reward delay"""
 
 
 # ==================== SENSORY STIMULUS SPECIFICATIONS ====================
@@ -143,7 +152,7 @@ class Texture(BaseModel):
     """
 
     name: str = Field(default="default", description="Name of the texture")
-    size: Size = Field(default=Size(width=40, height=40), description="Size of the texture")
+    size: Size = Field(default=Size(width=40, height=40), description="Size of the texture (cm)")
 
 
 class WallTextures(BaseModel):
@@ -226,8 +235,13 @@ class LookupTableFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["LookupTableFunction"] = "LookupTableFunction"
-    lut_keys: list[float] = Field(description="List of keys of the lookup table", min_length=1)
-    lut_values: list[float] = Field(description="List of values of the lookup table", min_length=1)
+    lut_keys: list[float] = Field(
+        description="List of keys of the lookup table (in rule tick units: s, cm, or count, depending on the rule)",
+        min_length=1,
+    )
+    lut_values: list[float] = Field(
+        description="List of values of the lookup table (same units as the updated parameter)", min_length=1
+    )
 
     @model_validator(mode="after")
     def _validate_lut(self) -> Self:
@@ -247,9 +261,13 @@ class ClampedRateFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["ClampedRateFunction"] = "ClampedRateFunction"
-    minimum: float | None = Field(default=0, description="Minimum value of the rate")
-    maximum: float | None = Field(description="Maximum value of the rate")
-    rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
+    minimum: float | None = Field(
+        default=0, description="Minimum value of the updated parameter (same units as the parameter)"
+    )
+    maximum: float | None = Field(description="Maximum value of the updated parameter (same units as the parameter)")
+    rate: distributions.Distribution = Field(
+        description="Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule)."
+    )
 
 
 class ClampedMultiplicativeRateFunction(_PatchUpdateFunction):
@@ -263,9 +281,13 @@ class ClampedMultiplicativeRateFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["ClampedMultiplicativeRateFunction"] = "ClampedMultiplicativeRateFunction"
-    minimum: float | None = Field(default=0, description="Minimum value of the rate")
-    maximum: float | None = Field(description="Maximum value of the rate")
-    rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
+    minimum: float | None = Field(
+        default=0, description="Minimum value of the updated parameter (same units as the parameter)"
+    )
+    maximum: float | None = Field(description="Maximum value of the updated parameter (same units as the parameter)")
+    rate: distributions.Distribution = Field(
+        description="Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule)."
+    )
 
 
 class SaturatingMultiplicativeRateFunction(_PatchUpdateFunction):
@@ -280,15 +302,21 @@ class SaturatingMultiplicativeRateFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["SaturatingMultiplicativeRateFunction"] = "SaturatingMultiplicativeRateFunction"
-    minimum: float | None = Field(default=0, description="Minimum value of the rate")
-    maximum: float | None = Field(description="Maximum value of the rate")
+    minimum: float | None = Field(
+        default=0, description="Minimum value of the updated parameter (same units as the parameter)"
+    )
+    maximum: float | None = Field(description="Maximum value of the updated parameter (same units as the parameter)")
     below_minimum_to: float | None = Field(
-        default=None, description="If the value is below minimum, it will be set to this value instead of the minimum"
+        default=None,
+        description="If the value is below minimum, it will be set to this value instead of the minimum (same units as the parameter)",
     )
     above_maximum_to: float | None = Field(
-        default=None, description="If the value is above maximum, it will be set to this value instead of the maximum"
+        default=None,
+        description="If the value is above maximum, it will be set to this value instead of the maximum (same units as the parameter)",
     )
-    rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
+    rate: distributions.Distribution = Field(
+        description="Rate of the replenishment, in parameter units per rule unit (s, cm, or count, depending on the rule)."
+    )
 
 
 class SetValueFunction(_PatchUpdateFunction):
@@ -302,7 +330,9 @@ class SetValueFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["SetValueFunction"] = "SetValueFunction"
-    value: distributions.Distribution = Field(description="Sets the value of the target to this value.")
+    value: distributions.Distribution = Field(
+        description="Sets the value of the target to this value (same units as the target)."
+    )
 
 
 class CtcmFunction(_PatchUpdateFunction):
@@ -317,14 +347,16 @@ class CtcmFunction(_PatchUpdateFunction):
 
     function_type: Literal["CtcmFunction"] = "CtcmFunction"
     transition_matrix: list[list[NonNegativeFloat]] = Field(description="Transition matrix between states")
-    rho: float = Field(description="The underlying value governing the stochastic process")
+    rho: float = Field(
+        description="The underlying value governing the stochastic process (same units as the updated parameter)"
+    )
     dt: Literal[0.1] = Field(default=0.1, description="Sampling time step (s)")
     rate: float | None = Field(
         default=None,
-        description="Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only",
+        description="Rate of the replenishment (per s) used to generate the matrix. This value is used for metadata keep sake only",
     )
-    minimum: float = Field(gt=0, description="Minimum value after update")
-    maximum: float = Field(description="Maximum value after update")
+    minimum: float = Field(gt=0, description="Minimum value after update (same units as the updated parameter)")
+    maximum: float = Field(description="Maximum value after update (same units as the updated parameter)")
 
     @field_validator("transition_matrix", mode="after")
     @classmethod
@@ -455,13 +487,13 @@ class _RewardFunction(BaseModel):
 
     function_type: str
     amount: PatchUpdateFunction | None = Field(
-        default=None, description="Defines the amount of reward replenished per rule unit."
+        default=None, description="Defines the amount of reward (uL) replenished per rule unit."
     )
     probability: PatchUpdateFunction | None = Field(
         default=None, description="Defines the probability of reward replenished per rule unit."
     )
     available: PatchUpdateFunction | None = Field(
-        default=None, description="Defines the amount of reward available replenished in the patch per rule unit."
+        default=None, description="Defines the amount of reward available (uL) replenished in the patch per rule unit."
     )
 
 
@@ -560,18 +592,18 @@ class RewardSpecification(BaseModel):
     operant_logic: OperantLogic | None = Field(default=None, description="The optional operant logic of the reward")
     delay: distributions.Distribution = Field(
         default=scalar_value(0),
-        description="The optional distribution where the delay to reward will be drawn from",
+        description="The optional distribution where the delay (s) to reward will be drawn from",
         validate_default=True,
     )
     amount: distributions.Distribution = Field(
-        default=scalar_value(5), description="Initial amount of reward in microliters", validate_default=True
+        default=scalar_value(5), description="Initial amount of reward (uL)", validate_default=True
     )
     probability: distributions.Distribution = Field(
         default=scalar_value(1), description="Initial probability of reward delivery", validate_default=True
     )
     available: distributions.Distribution = Field(
         default=scalar_value(10),
-        description="Initial amount of reward available in the patch in microliters",
+        description="Initial amount of reward available in the patch (uL)",
         validate_default=True,
     )
     reward_function: list[RewardFunction] = Field(default=[], description="Reward function of the patch")
@@ -609,7 +641,7 @@ class RenderSpecification(BaseModel):
     in the VR environment.
     """
 
-    contrast: float | None = Field(default=None, ge=0, le=1, description="Contrast of the texture")
+    contrast: float | None = Field(default=None, ge=0, le=1, description="Contrast of the texture (unitless, 0-1)")
 
 
 class TreadmillSpecification(BaseModel):
@@ -641,7 +673,9 @@ class VirtualSiteGenerator(BaseModel):
     )
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length_distribution: distributions.Distribution = Field(
-        default=scalar_value(20), description="Distribution of the length of the virtual site", validate_default=True
+        default=scalar_value(20),
+        description="Distribution of the length (cm) of the virtual site",
+        validate_default=True,
     )
     treadmill_specification: TreadmillSpecification | None = Field(
         default=None, description="Treadmill specification", validate_default=True
@@ -691,7 +725,7 @@ class VirtualSiteRewardSpecification(BaseModel):
     operant_logic: OperantLogic = Field(description="The optional operant logic of the reward")
     delay: distributions.Distribution = Field(
         default=scalar_value(0),
-        description="The optional distribution where the delay to reward will be drawn from",
+        description="The optional distribution where the delay (s) to reward will be drawn from",
         validate_default=True,
     )
 
@@ -725,7 +759,9 @@ class _OdorSpecification(BaseModel):
     """
 
     index: int = Field(ge=0, le=3, description="Index of the odor to be used")
-    concentration: float = Field(default=1, ge=0, le=1, description="Concentration of the odor")
+    concentration: float = Field(
+        default=1, ge=0, le=1, description="Concentration of the odor (fraction of the maximum, 0-1)"
+    )
 
 
 class VirtualSite(BaseModel):
@@ -798,16 +834,14 @@ class PatchTerminatorOnTime(_PatchTerminator):
     """Terminates the patch after a "count" seconds."""
 
     terminator_type: Literal["OnTime"] = "OnTime"
-    count: distributions.Distribution = Field(description="Number of seconds to wait before terminating the patch")
+    count: distributions.Distribution = Field(description="Time (s) to wait before terminating the patch")
 
 
 class PatchTerminatorOnDistance(_PatchTerminator):
     """Terminates the patch after a "count" distance."""
 
     terminator_type: Literal["OnDistance"] = "OnDistance"
-    count: distributions.Distribution = Field(
-        description="Number of distance units to wait before terminating the patch"
-    )
+    count: distributions.Distribution = Field(description="Distance (cm) to travel before terminating the patch")
 
 
 class PatchTerminatorOnRewardSite(_PatchTerminator):
@@ -982,9 +1016,9 @@ class PositionControl(BaseModel):
     virtual reality foraging task.
     """
 
-    gain: Vector3 = Field(default=Vector3(x=1, y=1, z=1), description="Gain of the position control.")
+    gain: Vector3 = Field(default=Vector3(x=1, y=1, z=1), description="Gain of the position control (unitless).")
     initial_position: Vector3 = Field(
-        default=Vector3(x=0, y=2.56, z=0), description="Initial position of the subject in the VR world."
+        default=Vector3(x=0, y=2.56, z=0), description="Initial position (cm) of the subject in the VR world."
     )
     frequency_filter_cutoff: float = Field(
         default=0.5,
@@ -1005,7 +1039,7 @@ class AudioControl(BaseModel):
     for auditory feedback during the behavioral task.
     """
 
-    duration: float = Field(default=0.2, ge=0, description="Duration")
+    duration: float = Field(default=0.2, ge=0, description="Duration (s) of the audio cue")
     frequency: float = Field(default=9999, ge=100, le=9999, description="Frequency (Hz) of the audio cue")
 
 
@@ -1044,7 +1078,7 @@ class OperationControl(BaseModel):
     audio_control: AudioControl = Field(
         default=AudioControl(), description="Control of the audio", validate_default=True
     )
-    wait_to_start_duration: float = Field(default=0, ge=0, description="Duration to wait before starting the task")
+    wait_to_start_duration: float = Field(default=0, ge=0, description="Duration (s) to wait before starting the task")
 
 
 # ==================== BLOCK END CONDITIONS ====================
@@ -1069,7 +1103,7 @@ class BlockEndConditionDuration(_BlockEndConditionBase):
     """
 
     condition_type: Literal["Duration"] = "Duration"
-    value: distributions.Distribution = Field(description="Time after which the block ends.")
+    value: distributions.Distribution = Field(description="Time (s) after which the block ends.")
 
 
 class BlockEndConditionDistance(_BlockEndConditionBase):
@@ -1080,7 +1114,7 @@ class BlockEndConditionDistance(_BlockEndConditionBase):
     """
 
     condition_type: Literal["Distance"] = "Distance"
-    value: distributions.Distribution = Field(description="Distance after which the block ends.")
+    value: distributions.Distribution = Field(description="Distance (cm) after which the block ends.")
 
 
 class BlockEndConditionChoice(_BlockEndConditionBase):

@@ -11,7 +11,7 @@
                     "description": "",
                     "task_parameters": {
                         "rng_seed": null,
-                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "aind_behavior_services_pkg_version": "0.13.9",
                         "updaters": {
                             "StopVelocityThreshold": {
                                 "operation": "Gain",
@@ -422,7 +422,7 @@
                     "description": "",
                     "task_parameters": {
                         "rng_seed": null,
-                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "aind_behavior_services_pkg_version": "0.13.9",
                         "updaters": {
                             "RewardDelayOffset": {
                                 "operation": "Offset",
@@ -1163,7 +1163,7 @@
                     "description": "",
                     "task_parameters": {
                         "rng_seed": null,
-                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "aind_behavior_services_pkg_version": "0.13.9",
                         "updaters": {
                             "RewardDelayOffset": {
                                 "operation": "Offset",
@@ -7888,7 +7888,7 @@
                     "description": "",
                     "task_parameters": {
                         "rng_seed": null,
-                        "aind_behavior_services_pkg_version": "0.13.7",
+                        "aind_behavior_services_pkg_version": "0.13.9",
                         "updaters": {},
                         "environment": {
                             "blocks": [
