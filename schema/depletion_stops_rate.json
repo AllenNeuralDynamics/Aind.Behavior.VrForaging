@@ -16,7 +16,7 @@
                             "StopDurationOffset": {
                                 "operation": "Offset",
                                 "parameters": {
-                                    "initial_value": 0.0,
+                                    "initial_value": 0.1,
                                     "on_success": 0.003,
                                     "on_failure": 0.0,
                                     "increment": 0.003,
