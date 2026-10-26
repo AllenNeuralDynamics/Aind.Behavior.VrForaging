@@ -1,6 +1,5 @@
 import logging
 import os
-from typing import Optional
 
 import pandas as pd
 from aind_behavior_curriculum import Metrics
@@ -18,16 +17,16 @@ class LearningSetsMetrics(Metrics):
     total_water_consumed: NonNegativeFloat = Field(description="Total water (mL) consumed in the session.")
     n_patches_visited: NonNegativeInt = Field(description="Number of harvest attempts (choices) made.")
     n_patches_seen: NonNegativeInt = Field(description="Number of patches encountered during the session.")
-    last_stop_duration_offset_updater: Optional[NonNegativeFloat] = Field(
+    last_stop_duration_offset_updater: NonNegativeFloat | None = Field(
         default=None, description="Stop-duration offset at the end of the session."
     )
-    last_stop_velocity_threshold_updater: Optional[NonNegativeFloat] = Field(
+    last_stop_velocity_threshold_updater: NonNegativeFloat | None = Field(
         default=None, description="Stop-velocity threshold at the end of the session."
     )
-    last_n_neg_sites_per_pair: Optional[int] = Field(
+    last_n_neg_sites_per_pair: int | None = Field(
         default=None, description="Number of negative-variant sites per odor pair in the prior session's sequence."
     )
-    last_reward_amount: Optional[NonNegativeFloat] = Field(
+    last_reward_amount: NonNegativeFloat | None = Field(
         default=None, description="Reward amount (uL) in the prior session's task logic."
     )
 
@@ -40,7 +39,7 @@ def _try_get_datastream_as_dataframe(datastream: SoftwareEvents) -> pd.DataFrame
         return None
 
 
-def _scalar(value) -> Optional[float]:
+def _scalar(value) -> float | None:
     """Best-effort extraction of a scalar from a (possibly ``Scalar``-distribution) field."""
     try:
         return float(value.distribution_parameters.value)

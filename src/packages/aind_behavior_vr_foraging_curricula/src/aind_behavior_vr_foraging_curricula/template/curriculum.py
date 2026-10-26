@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 import aind_behavior_curriculum
 import pydantic
@@ -55,11 +55,11 @@ CURRICULUM.add_stage_transition(s_stage_a, s_stage_b, StageTransition(st_s_stage
 TRAINER = Trainer(CURRICULUM)
 
 
-def trainer_state_from_file(path: Union[str, os.PathLike], trainer: Trainer = TRAINER) -> TrainerState:
+def trainer_state_from_file(path: str | os.PathLike, trainer: Trainer = TRAINER) -> TrainerState:
     return model_from_json_file(path, trainer.trainer_state_model)
 
 
-def metrics_from_dataset_path(dataset_path: Union[str, os.PathLike], trainer_state: TrainerState) -> Metrics:
+def metrics_from_dataset_path(dataset_path: str | os.PathLike, trainer_state: TrainerState) -> Metrics:
     stage = trainer_state.stage
     if stage is None:
         raise ValueError("Trainer state does not have a stage")

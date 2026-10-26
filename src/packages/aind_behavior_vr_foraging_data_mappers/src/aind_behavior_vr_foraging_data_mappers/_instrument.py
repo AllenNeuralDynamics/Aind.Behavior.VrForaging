@@ -4,7 +4,7 @@ import os
 import platform
 from decimal import Decimal
 from pathlib import Path
-from typing import Optional, cast
+from typing import cast
 
 from aind_behavior_services.common import Vector3
 from aind_behavior_services.rig import cameras, olfactometer, visual_stimulation
@@ -45,7 +45,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
     ):
         super().__init__()
         self._data_path = Path(data_path)
-        self._mapped: Optional[instrument.Instrument] = None
+        self._mapped: instrument.Instrument | None = None
 
     def rig_schema(self):
         return self.mapped
@@ -110,8 +110,8 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
         computer: devices.Computer,
         types: list[type[devices.Device]],
         devices: list[devices.Device],
-        source_port: Optional[str] = None,
-        target_port: Optional[str] = None,
+        source_port: str | None = None,
+        target_port: str | None = None,
         send_and_receive: bool = True,
     ) -> list[connections.Connection]:
         result_connections = []
@@ -452,7 +452,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
         def _get_monitors(display_name: str):
             display = cast(visual_stimulation.DisplayCalibration, getattr(rig.screen.calibration, display_name))
             return devices.Monitor(
-                name=f"{str(TrackedDevices.SCREEN)}_{display_name}",
+                name=f"{TrackedDevices.SCREEN!s}_{display_name}",
                 manufacturer=devices.Organization.LG,
                 relative_position=pos[display_name],
                 model="LG LP097QX1",
@@ -498,7 +498,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
             name=TrackedDevices.MOTORIZED_STAGE,
             manufacturer=devices.Organization.AIND,
             model="328-300-00",
-            travel=Decimal("30"),
+            travel=Decimal(30),
             travel_unit=units.SizeUnit.CM,
             notes="This stage is driven by the manipulator device.",
         )
@@ -590,7 +590,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
 def _get_channel_type(connection: connections.Connection) -> devices.DaqChannelType:
     source_port = connection.source_port
     if source_port is None:
-        raise ValueError("Source port is not set for connection {}".format(connection))
+        raise ValueError(f"Source port is not set for connection {connection}")
     if any(s in source_port for s in ["DO", "DigitalOutput", "SupplyPort"]):
         return devices.DaqChannelType.DO
     if any(s in source_port for s in ["DI", "DigitalInput"]):
@@ -599,7 +599,7 @@ def _get_channel_type(connection: connections.Connection) -> devices.DaqChannelT
         return devices.DaqChannelType.AO
     if any(s in source_port for s in ["AI", "AnalogInput"]):
         return devices.DaqChannelType.AI
-    raise ValueError("Cannot determine channel type from source port {}".format(source_port))
+    raise ValueError(f"Cannot determine channel type from source port {source_port}")
 
 
 @dataclasses.dataclass(frozen=True)

@@ -1,4 +1,4 @@
-from typing import Any, Type, TypeVar
+from typing import Any, TypeVar
 
 import aind_behavior_curriculum
 import pydantic
@@ -77,7 +77,7 @@ def st_s_probability_grid_short_delay_to_s_probability_grid_long_delay(metrics: 
 # Curriculum definition
 # ============================================================
 
-curriculum_class: Type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLogic]] = create_curriculum(
+curriculum_class: type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLogic]] = create_curriculum(
     CURRICULUM_NAME, __semver__, (AindVrForagingTaskLogic,), pkg_location=PKG_LOCATION
 )
 CURRICULUM = curriculum_class()

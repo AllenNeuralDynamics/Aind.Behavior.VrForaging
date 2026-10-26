@@ -2,7 +2,7 @@
 plus numeric helpers. Stage definitions live in ``stages.py``; this module is only
 construction plumbing."""
 
-from typing import Any, Optional
+from typing import Any
 
 from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging import task_logic
@@ -53,7 +53,7 @@ def make_patch(
     inter_patch_min_length: float = 50,
     inter_patch_mean_length: float = 150,
     inter_patch_max_length: float = 500,
-    delay: Optional[distributions.Distribution] = None,
+    delay: distributions.Distribution | None = None,
 ) -> task_logic.Patch:
     """A single odor-marked reward site. One accept/reject decision per patch
     (``OnChoice``/``OnRejection`` count 1); reward is non-baited."""
@@ -109,12 +109,12 @@ def make_patch(
 
 
 def make_block(
-    p_rewards: tuple[float, Optional[float], Optional[float]],
+    p_rewards: tuple[float, float | None, float | None],
     n_min_patches: int = 100,
     block_length_exp_mean: float = 25,
-    block_length_max: Optional[float] = None,
-    first_state_occupancy: Optional[list[float]] = None,
-    make_patch_kwargs: Optional[dict[str, Any]] = None,
+    block_length_max: float | None = None,
+    first_state_occupancy: list[float] | None = None,
+    make_patch_kwargs: dict[str, Any] | None = None,
 ) -> task_logic.Block:
     """A block of OdorA/B/C patches. ``p_rewards`` gives each odor's reward
     probability; a ``None`` entry omits that odor (so ``(1.0, 1.0, None)`` is a

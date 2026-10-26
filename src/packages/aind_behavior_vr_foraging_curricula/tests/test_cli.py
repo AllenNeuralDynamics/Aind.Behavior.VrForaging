@@ -35,7 +35,7 @@ def test_dsl_version(capsys):
 def test_known_curricula_implement_runner():
     for curriculum in _KNOWN_CURRICULA:
         module = importlib.import_module(f"aind_behavior_vr_foraging_curricula.{curriculum}")
-        runner = getattr(module, "run_curriculum")
+        runner = module.run_curriculum
         del module, runner
 
 

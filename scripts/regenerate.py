@@ -16,7 +16,7 @@ def main() -> int:
 
     print(f"Running curricula schema generation (seed={RANDOM_SEED})")
     random.seed(RANDOM_SEED)
-    from aind_behavior_vr_foraging_curricula._schema import main as curricula_main  # noqa: PLC0415
+    from aind_behavior_vr_foraging_curricula._schema import main as curricula_main
 
     curricula_main()
     return 0

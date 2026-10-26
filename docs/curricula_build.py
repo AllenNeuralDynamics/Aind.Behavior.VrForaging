@@ -1,7 +1,7 @@
 import importlib
 import logging
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from aind_behavior_curriculum import Curriculum
@@ -18,11 +18,11 @@ CURRICULA_LABEL = "Curricula"
 log = logging.getLogger("mkdocs")
 
 
-def on_pre_build(config: Dict[str, Any]) -> None:
+def on_pre_build(config: dict[str, Any]) -> None:
     """MkDocs pre-build hook."""
     log.info("Regenerating Curricula diagrams...")
     curricula_structure = render_curricula()
-    nav: List[Dict[str, Any]] = config.get("nav") or []
+    nav: list[dict[str, Any]] = config.get("nav") or []
     nav = [
         item for item in nav if not (isinstance(item, dict) and CURRICULA_LABEL in item)
     ]
@@ -49,8 +49,8 @@ def get_module_readme_markdown(module_dir: Path) -> str | None:
     return content or None
 
 
-def render_curricula() -> Dict[str, List[Dict[str, str]]]:
-    curricula_structure: Dict[str, List[Dict[str, str]]] = {CURRICULA_LABEL: []}
+def render_curricula() -> dict[str, list[dict[str, str]]]:
+    curricula_structure: dict[str, list[dict[str, str]]] = {CURRICULA_LABEL: []}
 
     diagrams_dir = DOCS_DIR / "curricula_diagrams"
     diagrams_dir.mkdir(exist_ok=True)
@@ -59,7 +59,7 @@ def render_curricula() -> Dict[str, List[Dict[str, str]]]:
         p for p in SRC_DIR.iterdir() if p.is_dir() and not p.name.startswith("_")
     ):
         module = importlib.import_module(f"{PACKAGE_NAME}.{module_dir.stem}")
-        curriculum: Curriculum = getattr(module, "CURRICULUM")
+        curriculum: Curriculum = module.CURRICULUM
 
         from aind_behavior_curriculum.curriculum_utils import export_diagram
 

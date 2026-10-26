@@ -1,10 +1,8 @@
 import os
-from typing import Optional
-
-import aind_behavior_services.task.distributions as distributions
-from aind_behavior_curriculum import Stage, TrainerState
 
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
+from aind_behavior_curriculum import Stage, TrainerState
+from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,
     AindVrForagingTaskParameters,
@@ -18,7 +16,7 @@ REWARDSITE_LENGTH = 50
 REWARD_AMOUNT = 3
 VELOCITY_THRESHOLD = 15  # cm/s
 
-P_REWARD_BLOCK: list[tuple[float, Optional[float], Optional[float]]] = [
+P_REWARD_BLOCK: list[tuple[float, float | None, float | None]] = [
     (1.0, 1.0, None),
     (0.8, 0.8, None),
     (0.8, 0.2, None),
@@ -119,8 +117,8 @@ def make_patch(
 
 
 def make_block(
-    p_rew: tuple[float, Optional[float], Optional[float]],
-    p_replenish: tuple[float, Optional[float], Optional[float]],
+    p_rew: tuple[float, float | None, float | None],
+    p_replenish: tuple[float, float | None, float | None],
     n_min_trials: int = 100,
 ) -> vr_task_logic.Block:
     patches = [

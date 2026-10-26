@@ -1,7 +1,6 @@
 import random
 from collections import deque
 from dataclasses import dataclass
-from typing import Optional
 
 from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging import task_logic
@@ -158,7 +157,7 @@ def make_patch(
     p_reward: float,
     reward_amount: float = REWARD_AMOUNT_UL_DEFAULT,
     stop_duration: float = STOP_DURATION_BASE,
-    geometry: Optional[CorridorGeometry] = None,
+    geometry: CorridorGeometry | None = None,
     inter_site_length: float = INTERSITE_LENGTH,
 ) -> task_logic.Patch:
     """A single odor-marked reward site (one reward site per patch).
@@ -220,7 +219,7 @@ def make_block(
     positive_probability: float = 1.0,
     reward_amount: float = REWARD_AMOUNT_UL_DEFAULT,
     stop_duration: float = STOP_DURATION_BASE,
-    geometry: Optional[CorridorGeometry] = None,
+    geometry: CorridorGeometry | None = None,
     n_pairs: int = N_PAIRS,
     n_neg_each: int = 0,
 ) -> task_logic.Block:

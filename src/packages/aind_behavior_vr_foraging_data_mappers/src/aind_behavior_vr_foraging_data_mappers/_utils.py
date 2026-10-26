@@ -1,9 +1,9 @@
 import enum
 import logging
-from typing import List, Type, TypeVar, Union
+from typing import TypeVar
 
-import aind_behavior_services.rig.water_valve as water_valve
 import pydantic
+from aind_behavior_services.rig import water_valve
 from aind_behavior_services.utils import get_fields_of_type, utcnow
 from aind_behavior_vr_foraging.rig import AindVrForagingRig
 from aind_data_schema.components import coordinates, measurements
@@ -17,7 +17,7 @@ T = TypeVar("T")
 logger = logging.getLogger(__name__)
 
 
-def coerce_to_aind_data_schema(value: Union[pydantic.BaseModel, dict], target_type: Type[TTo]) -> TTo:
+def coerce_to_aind_data_schema(value: pydantic.BaseModel | dict, target_type: type[TTo]) -> TTo:
     if isinstance(value, pydantic.BaseModel):
         _normalized_input = value.model_dump()
     elif isinstance(value, dict):
@@ -29,7 +29,7 @@ def coerce_to_aind_data_schema(value: Union[pydantic.BaseModel, dict], target_ty
     return target_type(**_normalized_input)
 
 
-def _get_water_calibration(rig_model: AindVrForagingRig) -> List[measurements.VolumeCalibration]:
+def _get_water_calibration(rig_model: AindVrForagingRig) -> list[measurements.VolumeCalibration]:
     def _mapper(
         device_name: str, water_calibration: water_valve.WaterValveCalibration
     ) -> measurements.VolumeCalibration:
@@ -58,7 +58,7 @@ def _get_water_calibration(rig_model: AindVrForagingRig) -> List[measurements.Vo
     )
 
 
-def _get_treadmill_brake_calibration(rig_model: AindVrForagingRig) -> List[measurements.Calibration]:
+def _get_treadmill_brake_calibration(rig_model: AindVrForagingRig) -> list[measurements.Calibration]:
     treadmill = rig_model.harp_treadmill
     if treadmill.calibration is None:
         raise ValueError("Treadmill calibration is not set.")

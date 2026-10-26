@@ -4,7 +4,7 @@ import os
 from aind_behavior_services.session import Session
 
 session = Session(
-    date=datetime.datetime.now(tz=datetime.timezone.utc),
+    date=datetime.datetime.now(tz=datetime.UTC),
     experiment="AindVrForaging",
     subject="test",
     notes="test session",

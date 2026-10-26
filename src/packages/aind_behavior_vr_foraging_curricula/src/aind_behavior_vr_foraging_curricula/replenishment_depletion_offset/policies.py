@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 import numpy as np
 from aind_behavior_vr_foraging import task_logic as vr_task_logic
