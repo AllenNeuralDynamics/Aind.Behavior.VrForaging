@@ -402,7 +402,12 @@ else:
     PatchUpdateFunction = TypeAliasType(
         "PatchUpdateFunction",
         Annotated[
-            ClampedRateFunction | ClampedMultiplicativeRateFunction | SaturatingMultiplicativeRateFunction | SetValueFunction | LookupTableFunction | CtcmFunction,
+            ClampedRateFunction
+            | ClampedMultiplicativeRateFunction
+            | SaturatingMultiplicativeRateFunction
+            | SetValueFunction
+            | LookupTableFunction
+            | CtcmFunction,
             Field(discriminator="function_type"),
         ],
     )
@@ -749,9 +754,7 @@ class VirtualSite(BaseModel):
     render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="The optional render specification of the virtual site"
     )
-    treadmill_specification: TreadmillSpecification | None = Field(
-        default=None, description="Treadmill specification"
-    )
+    treadmill_specification: TreadmillSpecification | None = Field(default=None, description="Treadmill specification")
 
 
 class _PatchTerminator(BaseModel):
@@ -829,7 +832,12 @@ else:
     PatchTerminator = TypeAliasType(
         "PatchTerminator",
         Annotated[
-            PatchTerminatorOnRejection | PatchTerminatorOnChoice | PatchTerminatorOnReward | PatchTerminatorOnTime | PatchTerminatorOnDistance | PatchTerminatorOnRewardSite,
+            PatchTerminatorOnRejection
+            | PatchTerminatorOnChoice
+            | PatchTerminatorOnReward
+            | PatchTerminatorOnTime
+            | PatchTerminatorOnDistance
+            | PatchTerminatorOnRewardSite,
             Field(discriminator="terminator_type"),
         ],
     )
@@ -1123,7 +1131,11 @@ else:
     BlockEndCondition = TypeAliasType(
         "BlockEndCondition",
         Annotated[
-            BlockEndConditionDuration | BlockEndConditionDistance | BlockEndConditionChoice | BlockEndConditionReward | BlockEndConditionPatchCount,
+            BlockEndConditionDuration
+            | BlockEndConditionDistance
+            | BlockEndConditionChoice
+            | BlockEndConditionReward
+            | BlockEndConditionPatchCount,
             Field(discriminator="condition_type"),
         ],
     )

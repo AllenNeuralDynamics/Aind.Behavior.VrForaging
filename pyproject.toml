@@ -41,6 +41,9 @@ dev = [
     'aind-behavior-vr-foraging-data-mappers',
 ]
 
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+
 [tool.codespell]
 skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock,*Generated.cs'
 ignore-words-list = 'nd'

@@ -43,9 +43,7 @@ class AindVrForagingRig(rig.Rig):
     harp_analog_input: harp.HarpAnalogInput | None = Field(default=None, description="Harp analog input")
     harp_treadmill: treadmill.Treadmill = Field(description="Harp treadmill")
     harp_sniff_detector: harp.HarpSniffDetector | None = Field(default=None, description="Sniff detector settings")
-    harp_environment_sensor: harp.HarpEnvironmentSensor | None = Field(
-        default=None, description="Environment sensor"
-    )
+    harp_environment_sensor: harp.HarpEnvironmentSensor | None = Field(default=None, description="Environment sensor")
     manipulator: AindManipulatorDevice = Field(description="Manipulator")
     screen: visual_stimulation.ScreenAssembly = Field(
         default=visual_stimulation.ScreenAssembly(), description="Screen settings", validate_default=True
