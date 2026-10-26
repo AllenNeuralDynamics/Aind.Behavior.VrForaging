@@ -1,14 +1,14 @@
 import os
 import random
+from collections import deque
 
-import aind_behavior_services.task.distributions as distributions
 import aind_behavior_vr_foraging.task_logic as vr_task_logic
 from aind_behavior_curriculum import Stage, TrainerState
+from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,
     AindVrForagingTaskParameters,
 )
-from collections import deque
 
 MINIMUM_INTERPATCH_LENGTH = 50
 MEAN_INTERPATCH_LENGTH = 120

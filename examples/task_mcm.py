@@ -1,16 +1,15 @@
 import os
 from typing import cast
 
-import aind_behavior_services.task.distributions as distributions
+import aind_behavior_vr_foraging.task_logic as vr_task_logic
 import numpy as np
 from aind_behavior_curriculum import Stage, TrainerState
-from scipy.linalg import expm
-
-import aind_behavior_vr_foraging.task_logic as vr_task_logic
+from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,
     AindVrForagingTaskParameters,
 )
+from scipy.linalg import expm
 
 
 def ExponentialDistributionHelper(rate=1.0, minimum=0.0, maximum=1000.0):

@@ -1,6 +1,5 @@
 import logging
 import os
-import typing as t
 from pathlib import Path
 
 from pydantic import AwareDatetime, Field
@@ -14,18 +13,18 @@ class DataMapperCli(BaseSettings, cli_kebab_case=True):
     repository_path: os.PathLike = Field(
         default=Path("."), description="Path to the repository. By default it will use the current directory."
     )
-    curriculum_suggestion: t.Optional[os.PathLike] = Field(
+    curriculum_suggestion: os.PathLike | None = Field(
         default=None,
         description="Path to curriculum suggestion file. If not provided, will attempt to find a curriculum suggestion in the data path.",
     )
-    curriculum_repository_path: t.Optional[os.PathLike] = Field(
+    curriculum_repository_path: os.PathLike | None = Field(
         default=None,
         description="Path to the curriculum repository. If not provided, will use the repository path.",
     )
     session_end_time: AwareDatetime = Field(
         description="End time of the session in ISO format. If not provided, will use the time the data mapping is run."
     )
-    suffix: t.Optional[str] = Field(default="vrforaging", description="Suffix to append to the output filenames.")
+    suffix: str | None = Field(default="vrforaging", description="Suffix to append to the output filenames.")
 
     def cli_cmd(self):
         """Generate aind-data-schema metadata for the VR Foraging dataset located at the specified path."""

@@ -5,7 +5,7 @@ import os
 import sys
 from functools import cached_property
 from pathlib import Path
-from typing import List, Optional, cast, get_args
+from typing import cast, get_args
 
 import aind_behavior_services.rig as AbsRig
 import git
@@ -38,8 +38,8 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         data_path: os.PathLike,
         repository_path: os.PathLike,
         session_end_time: AwareDatetime,
-        curriculum_suggestion: Optional[os.PathLike] | CurriculumSuggestion = None,
-        curriculum_repository_path: Optional[os.PathLike] = None,
+        curriculum_suggestion: os.PathLike | None | CurriculumSuggestion = None,
+        curriculum_repository_path: os.PathLike | None = None,
     ):
         self._data_path = data_path
         self._repository_path = repository_path
@@ -81,7 +81,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             workflow=Path(self.repository.working_tree_dir) / "src" / "main.bonsai",
         )
 
-        self._mapped: Optional[acquisition.Acquisition] = None
+        self._mapped: acquisition.Acquisition | None = None
 
     def session_schema(self):
         return self.mapped
@@ -105,7 +105,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         logger.info("Mapping aind-data-schema Session.")
         try:
             self._mapped = self._map()
-        except (pydantic.ValidationError, ValueError, IOError) as e:
+        except (OSError, pydantic.ValidationError, ValueError) as e:
             logger.error("Failed to map to aind-data-schema Session. %s", e)
             raise e
         else:
@@ -134,8 +134,8 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
         stream_start_path = Path(self._data_path) / "behavior/SoftwareEvents/StartSessionTime.json"
         stream_end_path = Path(self._data_path) / "behavior/SoftwareEvents/EndSessionTime.json"
-        stream_start_time: Optional[datetime.datetime] = None
-        stream_end_time: Optional[datetime.datetime] = None
+        stream_start_time: datetime.datetime | None = None
+        stream_end_time: datetime.datetime | None = None
 
         if stream_start_path.exists():
             lines = [json.loads(line) for line in stream_start_path.read_text().strip().splitlines() if line.strip()]
@@ -173,7 +173,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             reward_consumed_unit=units.VolumeUnit.ML,
         )
 
-    def _get_calibrations(self) -> List[acquisition.CALIBRATIONS]:
+    def _get_calibrations(self) -> list[acquisition.CALIBRATIONS]:
         calibrations = []
         calibrations += _get_water_calibration(self.rig_model)
         return calibrations
@@ -188,7 +188,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
             return cast(cameras.CameraTypes, device).video_writer is not None
         return True
 
-    def _get_annotation_notes(self) -> Optional[str]:
+    def _get_annotation_notes(self) -> str | None:
         annotations_path = Path(self._data_path) / "behavior" / "SoftwareEvents" / "Annotations.json"
         if not annotations_path.exists():
             return None
@@ -204,14 +204,14 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
                     continue
         return "\n".join(lines) if lines else None
 
-    def _get_notes(self) -> Optional[str]:
+    def _get_notes(self) -> str | None:
         parts = [p for p in [self.session_model.notes, self._get_annotation_notes()] if p]
         return "\n".join(parts) if parts else None
 
-    def _get_data_streams(self) -> List[acquisition.DataStream]:
-        modalities: list[Modality] = [getattr(Modality, "BEHAVIOR")]
+    def _get_data_streams(self) -> list[acquisition.DataStream]:
+        modalities: list[Modality] = [Modality.BEHAVIOR]
         if len(self._get_cameras_config()) > 0:
-            modalities.append(getattr(Modality, "BEHAVIOR_VIDEOS"))
+            modalities.append(Modality.BEHAVIOR_VIDEOS)
         modalities = list(set(modalities))
 
         active_devices = [
@@ -243,10 +243,10 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         ]
         return data_streams
 
-    def _get_stimulus_epochs(self) -> List[acquisition.StimulusEpoch]:
+    def _get_stimulus_epochs(self) -> list[acquisition.StimulusEpoch]:
         stimulus_modalities: list[acquisition.StimulusModality] = []
-        active_devices: List[str] = []
-        stimulus_epoch_configurations: List = []
+        active_devices: list[str] = []
+        stimulus_epoch_configurations: list = []
 
         # Auditory Stimulation
         stimulus_modalities.append(acquisition.StimulusModality.AUDITORY)
@@ -288,7 +288,7 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         from aind_behavior_services.rig.olfactometer import OlfactometerChannelType
 
         stimulus_modalities.append(acquisition.StimulusModality.OLFACTORY)
-        olfactory_stimulus_channel_info: List[aind_data_schema.components.configs.OlfactometerChannelInfo] = []
+        olfactory_stimulus_channel_info: list[aind_data_schema.components.configs.OlfactometerChannelInfo] = []
         olf_calibration = self.rig_model.harp_olfactometer.calibration
         if olf_calibration is None:
             raise ValueError("Olfactometer calibration is not set in the rig model.")
@@ -316,9 +316,9 @@ class AindAcquisitionDataMapper(ads.AindDataSchemaSessionDataMapper):
         )
 
         # Animal performance, curriculum, and metrics
-        performance_metrics: Optional[acquisition.PerformanceMetrics] = None
-        curriculum_status: Optional[str] = None
-        training_protocol_name: Optional[str] = None
+        performance_metrics: acquisition.PerformanceMetrics | None = None
+        curriculum_status: str | None = None
+        training_protocol_name: str | None = None
 
         if self.curriculum_suggestion is not None:
             logger.debug("Curriculum suggestion found. Setting performance metrics based on curriculum suggestion.")

@@ -1,8 +1,7 @@
 import os
-from typing import Optional
 
 
-def calculate_consumed_water(session_path: os.PathLike) -> Optional[float]:
+def calculate_consumed_water(session_path: os.PathLike) -> float | None:
     """Calculate the total volume of water consumed during a session.
 
     Args:

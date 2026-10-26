@@ -1,7 +1,7 @@
-from typing import Callable
+from collections.abc import Callable
 
-import aind_behavior_services.task.distributions as distributions
 from aind_behavior_curriculum import MetricsProvider, Policy, Stage
+from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging import task_logic as vr_task_logic
 from aind_behavior_vr_foraging.task_logic import (
     AindVrForagingTaskLogic,

@@ -1,4 +1,4 @@
-from typing import Any, Type, TypeVar
+from typing import Any, TypeVar
 
 import aind_behavior_curriculum
 import pydantic
@@ -57,7 +57,7 @@ def st_s_stage_all_odors_rewarded_s_stage_graduation(metrics: DepletionCurriculu
 # Curriculum definition
 # ============================================================
 
-curriculum_class: Type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLogic]] = create_curriculum(
+curriculum_class: type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLogic]] = create_curriculum(
     CURRICULUM_NAME, __semver__, (AindVrForagingTaskLogic,), pkg_location=PKG_LOCATION
 )
 CURRICULUM = curriculum_class()

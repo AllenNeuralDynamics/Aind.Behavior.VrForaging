@@ -4,7 +4,7 @@ import sys
 import unittest
 import warnings
 from pathlib import Path
-from typing import Generic, List, Optional, Type, TypeVar, Union
+from typing import Generic, TypeVar
 
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import run_bonsai_process
@@ -17,7 +17,7 @@ sys.path.append(".")
 from examples import rig, session, task_patch_foraging  # isort:skip # pylint: disable=wrong-import-position
 from tests import JSON_ROOT  # isort:skip # pylint: disable=wrong-import-position
 
-TModel = TypeVar("TModel", bound=Union[AindVrForagingRig, AindVrForagingTaskLogic, Session])
+TModel = TypeVar("TModel", bound=AindVrForagingRig | AindVrForagingTaskLogic | Session)
 
 
 @unittest.skipUnless(platform.system() == "Windows", "Bonsai tests only run on Windows")
@@ -60,13 +60,13 @@ class BonsaiTests(unittest.TestCase):
 
 
 class TestModel(Generic[TModel]):
-    def __init__(self, bonsai_property: str, json_root: Path, model: Type[TModel]):
+    def __init__(self, bonsai_property: str, json_root: Path, model: type[TModel]):
         self.bonsai_property: str = bonsai_property
         self.json_path: Path = json_root / f"{model.__name__}.json"
         if not os.path.exists(self.json_path):
             raise FileNotFoundError(f"File {self.json_path} does not exist")
         self.input_model: TModel = model.model_validate_json(self.read_json(self.json_path))
-        self.deserialized_model: Optional[TModel] = None
+        self.deserialized_model: TModel | None = None
 
     def validate_deserialization(self) -> bool:
         if not self.input_model:
@@ -76,8 +76,8 @@ class TestModel(Generic[TModel]):
         _round_trip = self.input_model.model_validate_json(self.input_model.model_dump_json())
         return _round_trip == self.deserialized_model
 
-    def try_deserialization(self, json_str: Union[str, List[str]]) -> TModel:
-        _deserialized: Optional[TModel] = None
+    def try_deserialization(self, json_str: str | list[str]) -> TModel:
+        _deserialized: TModel | None = None
         if isinstance(json_str, list):
             for json_file in json_str:
                 _deserialized = self._deserialize(self.input_model, json_file)
@@ -98,7 +98,7 @@ class TestModel(Generic[TModel]):
             return json_file.read()
 
     @staticmethod
-    def _deserialize(model: TModel, json_str: str) -> Optional[TModel]:
+    def _deserialize(model: TModel, json_str: str) -> TModel | None:
         try:
             return model.model_validate_json(json_str, strict=True)
         except ValidationError:

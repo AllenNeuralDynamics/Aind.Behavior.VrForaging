@@ -2,9 +2,9 @@ import json
 import sys
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from collections.abc import Sequence
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Sequence
 from unittest.mock import MagicMock, patch
 
 import aind_behavior_curriculum
@@ -24,8 +24,8 @@ from examples.rig import rig
 from examples.session import session
 from examples.task_patch_foraging import task_logic
 
-MOCK_SESSION_START_TIME = datetime(2023, 1, 1, 11, 0, 0, tzinfo=timezone.utc)
-MOCK_SESSION_END_TIME = datetime(2023, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
+MOCK_SESSION_START_TIME = datetime(2023, 1, 1, 11, 0, 0, tzinfo=UTC)
+MOCK_SESSION_END_TIME = datetime(2023, 1, 1, 12, 0, 0, tzinfo=UTC)
 MOCK_REWARD_VOLUMES_UL = (5.0, 5.0)
 
 

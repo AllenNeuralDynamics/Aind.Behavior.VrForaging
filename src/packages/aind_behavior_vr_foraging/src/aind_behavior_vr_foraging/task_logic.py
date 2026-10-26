@@ -1,10 +1,9 @@
 import logging
 from enum import Enum
-from typing import TYPE_CHECKING, Annotated, Any, Dict, List, Literal, Optional, Self, TypeAlias, Union, cast
+from typing import TYPE_CHECKING, Annotated, Any, Literal, Self, TypeAlias, Union, cast
 
-import aind_behavior_services.task.distributions as distributions
 from aind_behavior_services.common import Size, Vector3
-from aind_behavior_services.task import Task, TaskParameters
+from aind_behavior_services.task import Task, TaskParameters, distributions
 from pydantic import (
     BaseModel,
     BeforeValidator,
@@ -197,7 +196,7 @@ class OperantLogic(BaseModel):
     time_to_collect_reward: float = Field(
         default=100000, ge=0, description="Time(s) the animal has to collect the reward"
     )
-    grace_distance_threshold: Optional[float] = Field(
+    grace_distance_threshold: float | None = Field(
         default=10, ge=0, description="Virtual distance (cm) the animal must be within to not abort the current choice"
     )
     abort_on_not_stop: bool = Field(
@@ -227,8 +226,8 @@ class LookupTableFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["LookupTableFunction"] = "LookupTableFunction"
-    lut_keys: List[float] = Field(description="List of keys of the lookup table", min_length=1)
-    lut_values: List[float] = Field(description="List of values of the lookup table", min_length=1)
+    lut_keys: list[float] = Field(description="List of keys of the lookup table", min_length=1)
+    lut_values: list[float] = Field(description="List of values of the lookup table", min_length=1)
 
     @model_validator(mode="after")
     def _validate_lut(self) -> Self:
@@ -248,8 +247,8 @@ class ClampedRateFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["ClampedRateFunction"] = "ClampedRateFunction"
-    minimum: Optional[float] = Field(default=0, description="Minimum value of the rate")
-    maximum: Optional[float] = Field(description="Maximum value of the rate")
+    minimum: float | None = Field(default=0, description="Minimum value of the rate")
+    maximum: float | None = Field(description="Maximum value of the rate")
     rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
 
 
@@ -264,8 +263,8 @@ class ClampedMultiplicativeRateFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["ClampedMultiplicativeRateFunction"] = "ClampedMultiplicativeRateFunction"
-    minimum: Optional[float] = Field(default=0, description="Minimum value of the rate")
-    maximum: Optional[float] = Field(description="Maximum value of the rate")
+    minimum: float | None = Field(default=0, description="Minimum value of the rate")
+    maximum: float | None = Field(description="Maximum value of the rate")
     rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
 
 
@@ -281,12 +280,12 @@ class SaturatingMultiplicativeRateFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["SaturatingMultiplicativeRateFunction"] = "SaturatingMultiplicativeRateFunction"
-    minimum: Optional[float] = Field(default=0, description="Minimum value of the rate")
-    maximum: Optional[float] = Field(description="Maximum value of the rate")
-    below_minimum_to: Optional[float] = Field(
+    minimum: float | None = Field(default=0, description="Minimum value of the rate")
+    maximum: float | None = Field(description="Maximum value of the rate")
+    below_minimum_to: float | None = Field(
         default=None, description="If the value is below minimum, it will be set to this value instead of the minimum"
     )
-    above_maximum_to: Optional[float] = Field(
+    above_maximum_to: float | None = Field(
         default=None, description="If the value is above maximum, it will be set to this value instead of the maximum"
     )
     rate: distributions.Distribution = Field(description="Rate of the replenishment, in value per rule unit.")
@@ -317,10 +316,10 @@ class CtcmFunction(_PatchUpdateFunction):
     """
 
     function_type: Literal["CtcmFunction"] = "CtcmFunction"
-    transition_matrix: List[List[NonNegativeFloat]] = Field(description="Transition matrix between states")
+    transition_matrix: list[list[NonNegativeFloat]] = Field(description="Transition matrix between states")
     rho: float = Field(description="The underlying value governing the stochastic process")
     dt: Literal[0.1] = Field(default=0.1, description="Sampling time step (s)")
-    rate: Optional[float] = Field(
+    rate: float | None = Field(
         default=None,
         description="Rate of the replenishment used to generate the matrix. This value is used for metadata keep sake only",
     )
@@ -342,13 +341,13 @@ class CtcmFunction(_PatchUpdateFunction):
         return value
 
     @field_serializer("transition_matrix")
-    def serialize_transition_matrix(self, value: List[List[NonNegativeFloat]]) -> List[List[NonNegativeFloat]]:
+    def serialize_transition_matrix(self, value: list[list[NonNegativeFloat]]) -> list[list[NonNegativeFloat]]:
         """Round to 15 significant digits for deterministic serialization across platforms."""
         return [[round(v, 15) for v in row] for row in value]
 
     @classmethod
     def from_replenishment_rate(
-        cls, n_states: int, replenishment_rate: float, rho: float, dt: Optional[float] = 0.1
+        cls, n_states: int, replenishment_rate: float, rho: float, dt: float | None = 0.1
     ) -> "CtcmFunction":
         """
         Computes the replenishment transition probability matrix for each patch
@@ -403,14 +402,12 @@ else:
     PatchUpdateFunction = TypeAliasType(
         "PatchUpdateFunction",
         Annotated[
-            Union[
-                ClampedRateFunction,
-                ClampedMultiplicativeRateFunction,
-                SaturatingMultiplicativeRateFunction,
-                SetValueFunction,
-                LookupTableFunction,
-                CtcmFunction,
-            ],
+            ClampedRateFunction
+            | ClampedMultiplicativeRateFunction
+            | SaturatingMultiplicativeRateFunction
+            | SetValueFunction
+            | LookupTableFunction
+            | CtcmFunction,
             Field(discriminator="function_type"),
         ],
     )
@@ -457,13 +454,13 @@ class _RewardFunction(BaseModel):
     """
 
     function_type: str
-    amount: Optional[PatchUpdateFunction] = Field(
+    amount: PatchUpdateFunction | None = Field(
         default=None, description="Defines the amount of reward replenished per rule unit."
     )
-    probability: Optional[PatchUpdateFunction] = Field(
+    probability: PatchUpdateFunction | None = Field(
         default=None, description="Defines the probability of reward replenished per rule unit."
     )
-    available: Optional[PatchUpdateFunction] = Field(
+    available: PatchUpdateFunction | None = Field(
         default=None, description="Defines the amount of reward available replenished in the patch per rule unit."
     )
 
@@ -545,7 +542,7 @@ else:
     RewardFunction = TypeAliasType(
         "RewardFunction",
         Annotated[
-            Union[PatchRewardFunction, OutsideRewardFunction, OnThisPatchEntryRewardFunction, PersistentRewardFunction],
+            PatchRewardFunction | OutsideRewardFunction | OnThisPatchEntryRewardFunction | PersistentRewardFunction,
             Field(discriminator="function_type"),
         ],
     )
@@ -560,7 +557,7 @@ class RewardSpecification(BaseModel):
     specification for how rewards are managed in a given Patch.
     """
 
-    operant_logic: Optional[OperantLogic] = Field(default=None, description="The optional operant logic of the reward")
+    operant_logic: OperantLogic | None = Field(default=None, description="The optional operant logic of the reward")
     delay: distributions.Distribution = Field(
         default=scalar_value(0),
         description="The optional distribution where the delay to reward will be drawn from",
@@ -577,7 +574,7 @@ class RewardSpecification(BaseModel):
         description="Initial amount of reward available in the patch in microliters",
         validate_default=True,
     )
-    reward_function: List[RewardFunction] = Field(default=[], description="Reward function of the patch")
+    reward_function: list[RewardFunction] = Field(default=[], description="Reward function of the patch")
 
 
 # ==================== VIRTUAL SITE LOGIC ====================
@@ -612,7 +609,7 @@ class RenderSpecification(BaseModel):
     in the VR environment.
     """
 
-    contrast: Optional[float] = Field(default=None, ge=0, le=1, description="Contrast of the texture")
+    contrast: float | None = Field(default=None, ge=0, le=1, description="Contrast of the texture")
 
 
 class TreadmillSpecification(BaseModel):
@@ -624,7 +621,7 @@ class TreadmillSpecification(BaseModel):
     across different regions of the environment.
     """
 
-    friction: Optional[distributions.Distribution] = Field(
+    friction: distributions.Distribution | None = Field(
         default=None,
         description="Friction of the treadmill (0-1). The drawn value must be between 0 and 1",
     )
@@ -646,7 +643,7 @@ class VirtualSiteGenerator(BaseModel):
     length_distribution: distributions.Distribution = Field(
         default=scalar_value(20), description="Distribution of the length of the virtual site", validate_default=True
     )
-    treadmill_specification: Optional[TreadmillSpecification] = Field(
+    treadmill_specification: TreadmillSpecification | None = Field(
         default=None, description="Treadmill specification", validate_default=True
     )
 
@@ -670,7 +667,7 @@ class PatchVirtualSitesGenerator(BaseModel):
         validate_default=True,
         description="Generator of the inter-patch virtual sites",
     )
-    post_patch: Optional[VirtualSiteGenerator] = Field(
+    post_patch: VirtualSiteGenerator | None = Field(
         default=None,
         validate_default=True,
         description="Generator of the post-patch virtual sites",
@@ -712,7 +709,7 @@ def _odor_mixture_from_odor_specification(value: Any):
 
 
 OdorMixture: TypeAlias = Annotated[
-    List[NonNegativeFloat],
+    list[NonNegativeFloat],
     Field(description="The optional odor specification of the virtual site"),
     BeforeValidator(_odor_mixture_from_odor_specification),
 ]
@@ -748,18 +745,16 @@ class VirtualSite(BaseModel):
     label: VirtualSiteLabels = Field(default=VirtualSiteLabels.UNSPECIFIED, description="Label of the virtual site")
     length: float = Field(default=20, description="Length of the virtual site (cm)")
     start_position: float = Field(default=0, ge=0, description="Start position of the virtual site (cm)")
-    odor_specification: Optional[OdorMixture] = Field(
+    odor_specification: OdorMixture | None = Field(
         default=None, description="The optional odor specification of the virtual site"
     )
-    reward_specification: Optional[VirtualSiteRewardSpecification] = Field(
+    reward_specification: VirtualSiteRewardSpecification | None = Field(
         default=None, description="The optional reward specification of the virtual site"
     )
     render_specification: RenderSpecification = Field(
         default=RenderSpecification(), description="The optional render specification of the virtual site"
     )
-    treadmill_specification: Optional[TreadmillSpecification] = Field(
-        default=None, description="Treadmill specification"
-    )
+    treadmill_specification: TreadmillSpecification | None = Field(default=None, description="Treadmill specification")
 
 
 class _PatchTerminator(BaseModel):
@@ -837,14 +832,12 @@ else:
     PatchTerminator = TypeAliasType(
         "PatchTerminator",
         Annotated[
-            Union[
-                PatchTerminatorOnRejection,
-                PatchTerminatorOnChoice,
-                PatchTerminatorOnReward,
-                PatchTerminatorOnTime,
-                PatchTerminatorOnDistance,
-                PatchTerminatorOnRewardSite,
-            ],
+            PatchTerminatorOnRejection
+            | PatchTerminatorOnChoice
+            | PatchTerminatorOnReward
+            | PatchTerminatorOnTime
+            | PatchTerminatorOnDistance
+            | PatchTerminatorOnRewardSite,
             Field(discriminator="terminator_type"),
         ],
     )
@@ -885,7 +878,7 @@ class Patch(BaseModel):
     patch_virtual_sites_generator: PatchVirtualSitesGenerator = Field(
         default=PatchVirtualSitesGenerator(), validate_default=True, description="Virtual site generation specification"
     )
-    patch_terminators: List[PatchTerminator] = Field(
+    patch_terminators: list[PatchTerminator] = Field(
         default=[PatchTerminatorOnRejection()],
         validate_default=True,
         description="The optional termination specification of the patch",
@@ -905,7 +898,7 @@ class _Environment(BaseModel):
     """
 
     environment_type: str
-    patches: List[Patch] = Field(default=[Patch()], description="List of patches", min_length=1, validate_default=True)
+    patches: list[Patch] = Field(default=[Patch()], description="List of patches", min_length=1, validate_default=True)
 
 
 class MarkovEnvironment(_Environment):
@@ -918,19 +911,19 @@ class MarkovEnvironment(_Environment):
     """
 
     environment_type: Literal["Markov"] = "Markov"
-    transition_matrix: List[List[NonNegativeFloat]] = Field(
+    transition_matrix: list[list[NonNegativeFloat]] = Field(
         default=[[1]],
         description="Determines the transition probabilities between patches",
         validate_default=True,
     )
-    first_state_occupancy: Optional[List[NonNegativeFloat]] = Field(
+    first_state_occupancy: list[NonNegativeFloat] | None = Field(
         default=None,
         description="Determines the first state the animal will be in. If null, it will be randomly drawn.",
     )
 
     @field_validator("transition_matrix", mode="after")
     @classmethod
-    def _validate_transition_matrix(cls, value: List[List[NonNegativeFloat]]) -> List[List[NonNegativeFloat]]:
+    def _validate_transition_matrix(cls, value: list[list[NonNegativeFloat]]) -> list[list[NonNegativeFloat]]:
         if any(len(row) != len(value) for row in value):
             raise ValueError("Transition matrix must be square.")
         return value
@@ -946,7 +939,7 @@ class SequenceEnvironment(_Environment):
     """
 
     environment_type: Literal["Sequence"] = "Sequence"
-    patch_indices: List[int] = Field(
+    patch_indices: list[int] = Field(
         default=[0],
         description="Determines the sequence of patches the animal will experience. The index corresponds to Patch.state_index",
         min_length=1,
@@ -971,7 +964,7 @@ class SequenceEnvironment(_Environment):
 Environment = TypeAliasType(
     "Environment",
     Annotated[
-        Union[MarkovEnvironment, SequenceEnvironment],
+        MarkovEnvironment | SequenceEnvironment,
         Field(discriminator="environment_type"),
     ],
 )
@@ -1138,13 +1131,11 @@ else:
     BlockEndCondition = TypeAliasType(
         "BlockEndCondition",
         Annotated[
-            Union[
-                BlockEndConditionDuration,
-                BlockEndConditionDistance,
-                BlockEndConditionChoice,
-                BlockEndConditionReward,
-                BlockEndConditionPatchCount,
-            ],
+            BlockEndConditionDuration
+            | BlockEndConditionDistance
+            | BlockEndConditionChoice
+            | BlockEndConditionReward
+            | BlockEndConditionPatchCount,
             Field(discriminator="condition_type"),
         ],
     )
@@ -1162,7 +1153,7 @@ class Block(BaseModel):
     environment: Environment = Field(
         default=MarkovEnvironment(), description="Statistics of the environment", validate_default=True
     )
-    end_conditions: List[BlockEndCondition] = Field(
+    end_conditions: list[BlockEndCondition] = Field(
         default=[], description="List of end conditions that must be true for the block to end."
     )
 
@@ -1195,7 +1186,7 @@ class BlockStructure(BaseModel):
     are presented during the experiment (sequentially or randomly).
     """
 
-    blocks: List[Block] = Field(
+    blocks: list[Block] = Field(
         default=[Block()], description="Statistics of the environment", min_length=1, validate_default=True
     )
     sampling_mode: Literal["Random", "Sequential"] = Field(
@@ -1215,7 +1206,7 @@ class AindVrForagingTaskParameters(TaskParameters):
     and numerical updaters for dynamic parameter modification.
     """
 
-    updaters: Dict[UpdaterTarget, NumericalUpdater] = Field(
+    updaters: dict[UpdaterTarget, NumericalUpdater] = Field(
         default_factory=dict, description="Look-up table for numeric updaters"
     )
     environment: BlockStructure = Field(

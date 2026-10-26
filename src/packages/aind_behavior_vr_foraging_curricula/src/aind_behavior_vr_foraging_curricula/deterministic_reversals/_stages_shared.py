@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import Literal
 
 import numpy as np
 from aind_behavior_curriculum import MetricsProvider, Stage
@@ -11,7 +11,7 @@ from ..depletion.metrics import metrics_from_dataset
 
 def deterministic_curves(
     amount_drop: float = 5.0,
-    option: Optional[Literal["single", "delayed"]] = "single",
+    option: Literal["single", "delayed"] | None = "single",
     *,
     cap_delayed_rewards: bool = False,
 ) -> list[task_logic.RewardFunction]:
@@ -79,7 +79,7 @@ def make_patch(
     label: str,
     state_index: int,
     odor_index: list[float],
-    patch_type: Optional[Literal["single", "delayed"]],
+    patch_type: Literal["single", "delayed"] | None,
     reward_amount: float = 5.0,
     first_p: float = 0.5,
     reward_available: float = 9999,

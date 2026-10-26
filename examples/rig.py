@@ -26,7 +26,6 @@ from aind_behavior_services.rig.treadmill import (
     TreadmillCalibration,
 )
 from aind_behavior_services.rig.water_valve import Measurement, calibrate_water_valves
-
 from aind_behavior_vr_foraging.rig import (
     AindManipulatorDevice,
     AindVrForagingRig,

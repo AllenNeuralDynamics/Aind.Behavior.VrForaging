@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 from aind_behavior_services.task import distributions
 from aind_behavior_vr_foraging import task_logic

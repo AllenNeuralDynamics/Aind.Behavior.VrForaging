@@ -47,11 +47,11 @@ class CurriculumCliArgs(BaseSettings):
     data_directory: os.PathLike = Field(description="Path to the session data directory.")
     input_trainer_state: os.PathLike = Field(description="Path to a deserialized trainer state.")
     mute_suggestion: CliImplicitFlag[bool] = Field(default=False, description="Disables the suggestion output")
-    output_suggestion: t.Optional[os.PathLike] = Field(
+    output_suggestion: os.PathLike | None = Field(
         default=None,
         description="A path to save the suggestion. If not provided, the suggestion will not be serialized to a file.",
     )
-    curriculum: t.Optional[str] = Field(
+    curriculum: str | None = Field(
         default=None, description="Forces the use of a specific curriculum, bypassing any automatic detection."
     )
 
@@ -76,7 +76,7 @@ class CurriculumCliArgs(BaseSettings):
 
             else:
                 module = importlib.import_module(f"{__package__}.{curriculum_name}")
-                runner: t.Callable[[CurriculumCliArgs], CurriculumSuggestion] = getattr(module, "run_curriculum")
+                runner: t.Callable[[CurriculumCliArgs], CurriculumSuggestion] = module.run_curriculum
 
             suggestion = runner(self)
             suggestion.dsl_version = aind_behavior_curriculum.__version__
@@ -95,11 +95,11 @@ class CurriculumCliArgs(BaseSettings):
 
 class CurriculumInitCliArgs(BaseSettings):
     curriculum: str = Field(description="The curriculum to enroll the model in.")
-    output: t.Optional[os.PathLike] = Field(
+    output: os.PathLike | None = Field(
         default=None,
         description="Path to save the enrollment curriculum. If not provided, the curriculum will not be serialized to a file.",
     )
-    stage: t.Optional[str] = Field(
+    stage: str | None = Field(
         default=None,
         description="If provided, the enrollment will be for a specific stage in the curriculum.",
     )
@@ -110,7 +110,7 @@ class CurriculumInitCliArgs(BaseSettings):
             raise ValueError(f"Unknown curriculum: {self.curriculum}. Available: {list(_KNOWN_CURRICULA)}")
 
         module = importlib.import_module(f"{__package__}.{self.curriculum}")
-        trainer: aind_behavior_curriculum.Trainer = getattr(module, "TRAINER")
+        trainer: aind_behavior_curriculum.Trainer = module.TRAINER
         if self.stage is None:
             init_state = trainer.create_enrollment()
         else:

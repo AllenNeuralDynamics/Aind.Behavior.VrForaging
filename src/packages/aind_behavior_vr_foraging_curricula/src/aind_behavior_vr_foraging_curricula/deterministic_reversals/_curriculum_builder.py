@@ -1,4 +1,5 @@
-from typing import Any, Callable, Type
+from collections.abc import Callable
+from typing import Any
 
 import aind_behavior_curriculum
 from aind_behavior_curriculum import Stage, StageTransition, Trainer, TrainerState, create_curriculum
@@ -29,7 +30,7 @@ def build_deterministic_reversal_curriculum(
     Trainer,
     Callable[[CurriculumCliArgs], CurriculumSuggestion[TrainerState[Any], Any]],
 ]:
-    curriculum_class: Type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLogic]] = create_curriculum(
+    curriculum_class: type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLogic]] = create_curriculum(
         curriculum_name, __semver__, (AindVrForagingTaskLogic,), pkg_location=pkg_location
     )
     curriculum = curriculum_class()

@@ -41,7 +41,7 @@ def _dataset_lookup_helper(version: str) -> t.Callable[[Path], contraqctor.contr
     return partial(_dataset, version=version)
 
 
-def _infer_dataset_version(path: os.PathLike) -> t.Optional[str]:
+def _infer_dataset_version(path: os.PathLike) -> str | None:
     """Infers the dataset version from the given path.
 
     Args:
@@ -51,7 +51,7 @@ def _infer_dataset_version(path: os.PathLike) -> t.Optional[str]:
         str: The inferred dataset version.
     """
     task_logic = Path(path) / "behavior/Logs/tasklogic_output.json"
-    version: t.Optional[str] = None
+    version: str | None = None
     if task_logic.exists():
         import json
 
@@ -65,7 +65,7 @@ def _infer_dataset_version(path: os.PathLike) -> t.Optional[str]:
     return version
 
 
-def dataset(path: os.PathLike, version: t.Optional[str] = None) -> contraqctor.contract.Dataset:
+def dataset(path: os.PathLike, version: str | None = None) -> contraqctor.contract.Dataset:
     """
     Loads the dataset for the Aind VR Foraging project from a specified version.
 

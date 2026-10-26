@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 from aind_behavior_curriculum import Metrics
 from pydantic import Field
@@ -7,7 +6,7 @@ from pydantic import Field
 
 class VrForagingTemplateMetrics(Metrics):
     metric1: float
-    metric2_history: List[float] = Field(default_factory=list)
+    metric2_history: list[float] = Field(default_factory=list)
 
 
 def metrics_from_dataset(data_directory: os.PathLike) -> VrForagingTemplateMetrics:

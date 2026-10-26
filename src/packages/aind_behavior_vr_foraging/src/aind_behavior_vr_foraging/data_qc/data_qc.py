@@ -90,7 +90,7 @@ class Rendering(qc.Suite):
         else:
             return self.fail_test(metrics, "FPS metrics are not within expected bounds.", context=metrics)
 
-    def test_render_latency(self, max_latency: t.Optional[float] = None):
+    def test_render_latency(self, max_latency: float | None = None):
         """Tests if the render latency is within acceptable bounds."""
         _render_sync_state = self.render_sync_state.copy()
         max_latency = max_latency or (1.0 / self.expected_fps) * 5

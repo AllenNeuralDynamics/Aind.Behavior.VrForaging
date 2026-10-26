@@ -41,9 +41,8 @@ def _copy_readme() -> None:
 
 def _generate_erdantic_diagrams() -> None:
     try:
-        import erdantic as erd
-
         import aind_behavior_vr_foraging.task_logic
+        import erdantic as erd
 
         model = aind_behavior_vr_foraging.task_logic.AindVrForagingTaskLogic
         diagram = erd.create(model)
