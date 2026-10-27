@@ -4,21 +4,21 @@ from aind_behavior_vr_foraging import task_logic as vr_task_logic
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic, AindVrForagingTaskParameters
 
 from ..depletion import helpers
-from ..depletion.metrics import metrics_from_dataset
-from .policies import p_update_replenishment_rate
+from .metrics import metrics_from_dataset
+from .policies import p_update_replenishment_rate, p_update_reward_amount
 from .utils import make_patch
 
 # ============================================================
 # Stage definition
 # ============================================================
-p_maxs = [0.7, 0.7, 0.7]  # maximum reward probability of each patch (A, B, C)
+p_maxs = [0.8, 0.8, 0.8]  # maximum reward probability of each patch (A, B, C)
 p_min = [0.15, 0.15, 0.15]  # minimum reward probability only used for stopping depletion
 dep_rates = [0.9, 0.9**3, 0.9**5]  # depletion rate of each patch ([0.9, 0.729, 0.59])
 replenishment_delay = [3, 3, 3]  # delay (in seconds) before replenishment starts for each patch
 # Define the patch statistics for the distance
 interpatch_length = [140.0, 140.0, 140.0]  # inter-patch distance in cm (~5s at typical running speed)
-reward_amount = 4  # microliters
-rep_rates = [0.1, 0.1, 0.1]  # starting replenishment rate of each patch (already scaled)
+reward_amount = 5  # microliters
+rep_rates = [100.0, 100.0, 100.0]  # starting replenishment rate of each patch; effectively immediate
 rhos = [0.9, 0.9, 0.9]
 
 _NUM_STATES_MAX = 30  # arbitrarily large upper bound;
@@ -94,6 +94,6 @@ def make_s_mcm_final_stage() -> Stage:
     return Stage(
         name="mcm_final_stage",
         task=task_logic,
-        start_policies=[p_update_replenishment_rate],
+        start_policies=[p_update_replenishment_rate, p_update_reward_amount],
         metrics_provider=metrics_from_dataset,
     )

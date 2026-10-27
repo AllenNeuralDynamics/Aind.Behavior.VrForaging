@@ -126,3 +126,24 @@ def make_patch(
             ),
         ),
     )
+
+
+def get_replenishment_function(patch: vr_task_logic.Patch) -> vr_task_logic.OutsideRewardFunction:
+    """Returns the single CTCM replenishment function of a patch."""
+    candidates = [
+        f
+        for f in patch.reward_specification.reward_function
+        if (
+            isinstance(f, vr_task_logic.OutsideRewardFunction) and isinstance(f.probability, vr_task_logic.CtcmFunction)
+        )
+    ]
+    if len(candidates) != 1:
+        raise ValueError(
+            f"Expected exactly one CtcmFunction in OutsideRewardFunction for patch {patch.label}, found {candidates}"
+        )
+    return candidates[0]
+
+
+def estimate_replenishment_rate(transition_matrix: list[list[float]], dt: float = 0.1) -> float:
+    """Recovers the (approximately poisson) replenishment rate from a CTCM transition matrix."""
+    return float(-np.log(np.array(transition_matrix)[0, 0]) / dt)
