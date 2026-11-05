@@ -3,7 +3,7 @@ from collections.abc import Callable
 from aind_behavior_vr_foraging import task_logic as vr_task_logic
 from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 
-from .metrics import ReplenishmentCurriculumMetrics, ReplenishmentSessionMetrics
+from .metrics import ReplenishmentCurriculumMetrics
 from .utils import compute_cmc_transition_probability, estimate_replenishment_rate, get_replenishment_function
 
 # ============================================================
@@ -23,8 +23,10 @@ MAX_RATE = 0.10
 MIN_RATE = 0.08
 RATE_TOLERANCE = 1e-6
 
-# Reductions that are not scaled by the water consumed require the target water to be consumed
-# in this many consecutive sessions of the current stage (including the one that was just run).
+# Only the first reduction (immediate replenishment -> MAX_RATE) is gated on history: the target water
+# must be consumed in this many consecutive sessions of the current stage (including the one just run).
+# Sessions are counted by what is available in the history, not by date, so sessions that are uploaded
+# late all count once they show up. Later reductions only look at the session that was just run.
 TARGET_WATER = 1.0  # mL
 N_SESSIONS_AT_TARGET = 2
 REDUCED_REWARD_AMOUNT = 4.0  # microliters
@@ -37,15 +39,12 @@ def clamp(value: float, minimum: float, maximum: float) -> float:
 def _met_target_for_recent_sessions(
     today_metrics: ReplenishmentCurriculumMetrics,
     today_task: AindVrForagingTaskLogic,
-    session_filter: Callable[[ReplenishmentSessionMetrics], bool] = lambda _: True,
 ) -> bool:
     """Checks that the last `N_SESSIONS_AT_TARGET` consecutive sessions of the current stage,
-    the one just run included, consumed `TARGET_WATER` and passed `session_filter`."""
+    the one just run included, consumed `TARGET_WATER`."""
     past = [s for s in today_metrics.past_sessions if s.stage_name == today_task.stage_name]
     recent = [*past, today_metrics][-N_SESSIONS_AT_TARGET:]
-    return len(recent) == N_SESSIONS_AT_TARGET and all(
-        m.total_water_consumed >= TARGET_WATER and session_filter(m) for m in recent
-    )
+    return len(recent) == N_SESSIONS_AT_TARGET and all(m.total_water_consumed >= TARGET_WATER for m in recent)
 
 
 def _set_replenishment_rate(today_task: AindVrForagingTaskLogic, rate: float) -> None:
@@ -58,8 +57,8 @@ def p_update_replenishment_rate(
     today_metrics: ReplenishmentCurriculumMetrics, today_task: AindVrForagingTaskLogic
 ) -> AindVrForagingTaskLogic:
     """Reduces the replenishment rate: first from the initial (effectively immediate) rate to `MAX_RATE`
-    once the water target has been met for enough sessions, then gradually down to `MIN_RATE` based on the
-    water consumed."""
+    once the water target has been met for enough sessions, then gradually down to `MIN_RATE`, where each
+    step is scaled by the water consumed in the session just run."""
 
     assert len(today_task.task_parameters.environment.blocks) == 1, "Only single block environments are supported."
     patches = today_task.task_parameters.environment.blocks[0].environment.patches
@@ -89,12 +88,10 @@ def p_update_replenishment_rate(
 def p_update_reward_amount(
     today_metrics: ReplenishmentCurriculumMetrics, today_task: AindVrForagingTaskLogic
 ) -> AindVrForagingTaskLogic:
-    """Reduces the reward amount once enough sessions have met the water target at `MIN_RATE`."""
+    """Reduces the reward amount once the session just run met the water target at `MIN_RATE`."""
 
-    def _ran_at_min_rate(m: ReplenishmentSessionMetrics) -> bool:
-        return m.replenishment_rate <= MIN_RATE + RATE_TOLERANCE
-
-    if _met_target_for_recent_sessions(today_metrics, today_task, _ran_at_min_rate):
+    ran_at_min_rate = today_metrics.replenishment_rate <= MIN_RATE + RATE_TOLERANCE
+    if ran_at_min_rate and today_metrics.total_water_consumed >= TARGET_WATER:
         for patch in today_task.task_parameters.environment.blocks[0].environment.patches:
             patch.reward_specification.amount = vr_task_logic.scalar_value(REDUCED_REWARD_AMOUNT)
     return today_task
