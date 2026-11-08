@@ -119,24 +119,29 @@ class TestInitialRateReduction:
         assert _extract_rate(updated) == pytest.approx(100.0, rel=1e-6)
 
     def test_holds_if_a_recent_session_missed_target(self):
-        metrics = _make_metrics(1.0, rate=100.0, past=[_past(0.9, 100.0)])
+        metrics = _make_metrics(1.0, rate=100.0, past=[_past(1.0, 100.0), _past(0.79, 100.0)])
         updated = p_update_replenishment_rate(metrics, self._initial_task())
         assert _extract_rate(updated) == pytest.approx(100.0, rel=1e-6)
 
     def test_ignores_sessions_from_other_stages(self):
-        metrics = _make_metrics(1.0, rate=100.0, past=[_past(1.0, 100.0, stage="other_stage")])
+        metrics = _make_metrics(1.0, rate=100.0, past=[_past(1.0, 100.0, stage="other_stage"), _past(1.0, 100.0)])
+        updated = p_update_replenishment_rate(metrics, self._initial_task())
+        assert _extract_rate(updated) == pytest.approx(100.0, rel=1e-6)
+
+    def test_holds_with_only_two_sessions(self):
+        metrics = _make_metrics(1.0, rate=100.0, past=[_past(1.0, 100.0)])
         updated = p_update_replenishment_rate(metrics, self._initial_task())
         assert _extract_rate(updated) == pytest.approx(100.0, rel=1e-6)
 
     def test_drops_to_graduation_rate_after_enough_sessions(self):
-        metrics = _make_metrics(1.0, rate=100.0, past=[_past(1.0, 100.0)])
+        metrics = _make_metrics(1.0, rate=100.0, past=[_past(1.0, 100.0), _past(1.0, 100.0)])
         updated = p_update_replenishment_rate(metrics, self._initial_task())
         assert _extract_rate(updated) == pytest.approx(0.1, abs=1e-6)
 
     def test_late_uploaded_sessions_all_count(self):
         # History is session-based, not date-based: sessions that show up late are all counted,
         # and only the most recent N_SESSIONS_AT_TARGET are checked.
-        past = [_past(0.5, 100.0), _past(1.0, 100.0), _past(1.0, 100.0)]
+        past = [_past(0.5, 100.0), _past(1.0, 100.0), _past(1.0, 100.0), _past(1.0, 100.0)]
         metrics = _make_metrics(1.0, rate=100.0, past=past)
         updated = p_update_replenishment_rate(metrics, self._initial_task())
         assert _extract_rate(updated) == pytest.approx(0.1, abs=1e-6)
@@ -149,15 +154,42 @@ class TestUpdateRewardAmount:
         return patch.reward_specification.amount.distribution_parameters.value
 
     def test_holds_before_reaching_min_rate(self, base_task: AindVrForagingTaskLogic):
-        metrics = _make_metrics(1.0, rate=0.09, past=[_past(1.0, 0.09)])
+        past = [_past(1.0, 0.09), _past(1.0, 0.09)]
+        metrics = _make_metrics(1.0, rate=0.09, past=past)
         assert self._amount(p_update_reward_amount(metrics, base_task)) == 5.0
 
-    def test_holds_if_target_water_missed_at_min_rate(self, base_task: AindVrForagingTaskLogic):
-        metrics = _make_metrics(0.9, rate=0.08, past=[_past(1.0, 0.08)])
+    def test_holds_without_enough_history(self, base_task: AindVrForagingTaskLogic):
+        metrics = _make_metrics(1.0, rate=0.08, past=[_past(1.0, 0.08)])
         assert self._amount(p_update_reward_amount(metrics, base_task)) == 5.0
 
-    def test_drops_after_single_session_at_min_rate(self, base_task: AindVrForagingTaskLogic):
-        metrics = _make_metrics(1.0, rate=0.08, past=[_past(1.0, 0.09)])
+    def test_holds_if_a_session_is_below_target_water(self, base_task: AindVrForagingTaskLogic):
+        past = [_past(0.79, 0.08), _past(1.0, 0.08)]
+        metrics = _make_metrics(1.0, rate=0.08, past=past)
+        assert self._amount(p_update_reward_amount(metrics, base_task)) == 5.0
+
+    def test_holds_if_today_is_below_target_water(self, base_task: AindVrForagingTaskLogic):
+        past = [_past(1.0, 0.08), _past(1.0, 0.08)]
+        metrics = _make_metrics(0.79, rate=0.08, past=past)
+        assert self._amount(p_update_reward_amount(metrics, base_task)) == 5.0
+
+    def test_holds_if_a_session_was_not_at_min_rate(self, base_task: AindVrForagingTaskLogic):
+        past = [_past(1.0, 0.09), _past(1.0, 0.08)]
+        metrics = _make_metrics(1.0, rate=0.08, past=past)
+        assert self._amount(p_update_reward_amount(metrics, base_task)) == 5.0
+
+    def test_ignores_sessions_from_other_stages(self, base_task: AindVrForagingTaskLogic):
+        past = [_past(1.0, 0.08, stage="other_stage"), _past(1.0, 0.08)]
+        metrics = _make_metrics(1.0, rate=0.08, past=past)
+        assert self._amount(p_update_reward_amount(metrics, base_task)) == 5.0
+
+    def test_drops_after_three_sessions_at_min_rate_and_target_water(self, base_task: AindVrForagingTaskLogic):
+        past = [_past(0.8, 0.08), _past(0.9, 0.08)]
+        metrics = _make_metrics(0.8, rate=0.08, past=past)
+        assert self._amount(p_update_reward_amount(metrics, base_task)) == 4.0
+
+    def test_older_sessions_do_not_matter(self, base_task: AindVrForagingTaskLogic):
+        past = [_past(0.1, 0.1), _past(0.8, 0.08), _past(0.8, 0.08)]
+        metrics = _make_metrics(0.8, rate=0.08, past=past)
         assert self._amount(p_update_reward_amount(metrics, base_task)) == 4.0
 
 
