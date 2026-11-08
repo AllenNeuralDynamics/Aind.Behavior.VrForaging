@@ -23,12 +23,11 @@ MAX_RATE = 0.10
 MIN_RATE = 0.08
 RATE_TOLERANCE = 1e-6
 
-# Only the first reduction (immediate replenishment -> MAX_RATE) is gated on history: the target water
-# must be consumed in this many consecutive sessions of the current stage (including the one just run).
-# Sessions are counted by what is available in the history, not by date, so sessions that are uploaded
-# late all count once they show up. Later reductions only look at the session that was just run.
-TARGET_WATER = 1.0  # mL
-N_SESSIONS_AT_TARGET = 2
+# History-gated steps (first rate drop, reward drop):
+# - Need `TARGET_WATER` in the last `N_SESSIONS_AT_TARGET` sessions of the current stage, today included.
+# - The gradual rate drop only looks at today's session.
+TARGET_WATER = 0.8  # mL
+N_SESSIONS_AT_TARGET = 3
 REDUCED_REWARD_AMOUNT = 4.0  # microliters
 
 
@@ -39,12 +38,20 @@ def clamp(value: float, minimum: float, maximum: float) -> float:
 def _met_target_for_recent_sessions(
     today_metrics: ReplenishmentCurriculumMetrics,
     today_task: AindVrForagingTaskLogic,
+    *,
+    at_min_rate: bool = False,
 ) -> bool:
-    """Checks that the last `N_SESSIONS_AT_TARGET` consecutive sessions of the current stage,
-    the one just run included, consumed `TARGET_WATER`."""
+    """True if the last `N_SESSIONS_AT_TARGET` sessions of the current stage:
+    - consumed at least `TARGET_WATER`
+    - ran at `MIN_RATE` (only if `at_min_rate`)
+    """
     past = [s for s in today_metrics.past_sessions if s.stage_name == today_task.stage_name]
     recent = [*past, today_metrics][-N_SESSIONS_AT_TARGET:]
-    return len(recent) == N_SESSIONS_AT_TARGET and all(m.total_water_consumed >= TARGET_WATER for m in recent)
+    return len(recent) == N_SESSIONS_AT_TARGET and all(
+        m.total_water_consumed >= TARGET_WATER
+        and (not at_min_rate or m.replenishment_rate <= MIN_RATE + RATE_TOLERANCE)
+        for m in recent
+    )
 
 
 def _set_replenishment_rate(today_task: AindVrForagingTaskLogic, rate: float) -> None:
@@ -56,9 +63,10 @@ def _set_replenishment_rate(today_task: AindVrForagingTaskLogic, rate: float) ->
 def p_update_replenishment_rate(
     today_metrics: ReplenishmentCurriculumMetrics, today_task: AindVrForagingTaskLogic
 ) -> AindVrForagingTaskLogic:
-    """Reduces the replenishment rate: first from the initial (effectively immediate) rate to `MAX_RATE`
-    once the water target has been met for enough sessions, then gradually down to `MIN_RATE`, where each
-    step is scaled by the water consumed in the session just run."""
+    """Reduces the replenishment rate:
+    - Initial rate -> `MAX_RATE`: once the water target is met for `N_SESSIONS_AT_TARGET` sessions.
+    - `MAX_RATE` -> `MIN_RATE`: gradually, each step scaled by today's water.
+    """
 
     assert len(today_task.task_parameters.environment.blocks) == 1, "Only single block environments are supported."
     patches = today_task.task_parameters.environment.blocks[0].environment.patches
@@ -88,10 +96,11 @@ def p_update_replenishment_rate(
 def p_update_reward_amount(
     today_metrics: ReplenishmentCurriculumMetrics, today_task: AindVrForagingTaskLogic
 ) -> AindVrForagingTaskLogic:
-    """Reduces the reward amount once the session just run met the water target at `MIN_RATE`."""
+    """Reduces the reward amount once the last `N_SESSIONS_AT_TARGET` sessions
+    all ran at `MIN_RATE` and met the water target.
+    """
 
-    ran_at_min_rate = today_metrics.replenishment_rate <= MIN_RATE + RATE_TOLERANCE
-    if ran_at_min_rate and today_metrics.total_water_consumed >= TARGET_WATER:
+    if _met_target_for_recent_sessions(today_metrics, today_task, at_min_rate=True):
         for patch in today_task.task_parameters.environment.blocks[0].environment.patches:
             patch.reward_specification.amount = vr_task_logic.scalar_value(REDUCED_REWARD_AMOUNT)
     return today_task
