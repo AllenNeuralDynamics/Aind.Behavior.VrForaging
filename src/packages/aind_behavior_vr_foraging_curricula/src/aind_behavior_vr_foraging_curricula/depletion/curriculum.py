@@ -3,6 +3,7 @@ from typing import Any, TypeVar
 import aind_behavior_curriculum
 import pydantic
 from aind_behavior_curriculum import (
+    Stage,
     StageTransition,
     Trainer,
     TrainerState,
@@ -15,6 +16,7 @@ from ..cli import CurriculumCliArgs, CurriculumSuggestion
 from ..utils import metrics_from_dataset_path, trainer_state_from_file
 from .metrics import DepletionCurriculumMetrics
 from .stages import (
+    SHAPING_ODOR_INDICES,
     make_s_stage_all_odors_rewarded,
     make_s_stage_graduation,
     make_s_stage_one_odor_no_depletion,
@@ -54,6 +56,40 @@ def st_s_stage_all_odors_rewarded_s_stage_graduation(metrics: DepletionCurriculu
 
 
 # ============================================================
+# Parallel shaping tracks
+# ============================================================
+
+
+def add_shaping_tracks(
+    curriculum: aind_behavior_curriculum.Curriculum,
+    next_stage: Stage,
+    odor_indices: tuple[int, ...] = SHAPING_ODOR_INDICES,
+) -> None:
+    """Add one shaping track per odor, all converging into ``next_stage``.
+
+    Each track is ``one_odor_no_depletion -> one_odor_w_depletion_day_0`` using a single
+    odor (see ``stages.shaping_stage_name`` for the naming). Tracks never cross: a subject
+    stays on the odor it was enrolled with until it leaves shaping. Enroll a subject on a
+    track by naming its first stage explicitly; the default enrollment (the first stage
+    added to the graph) is the odor-0 track, so this must be called before any other
+    stage is added to ``curriculum``.
+    """
+    for odor_index in odor_indices:
+        no_depletion = make_s_stage_one_odor_no_depletion(odor_index)
+        w_depletion = make_s_stage_one_odor_w_depletion_day_0(odor_index)
+        curriculum.add_stage_transition(
+            no_depletion,
+            w_depletion,
+            StageTransition(st_s_stage_one_odor_no_depletion_s_stage_one_odor_w_depletion_day_0),
+        )
+        curriculum.add_stage_transition(
+            w_depletion,
+            next_stage,
+            StageTransition(st_s_stage_one_odor_w_depletion_day_0_s_stage_all_odors_rewarded),
+        )
+
+
+# ============================================================
 # Curriculum definition
 # ============================================================
 
@@ -63,17 +99,7 @@ curriculum_class: type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLog
 CURRICULUM = curriculum_class()
 
 
-CURRICULUM.add_stage_transition(
-    make_s_stage_one_odor_no_depletion(),
-    make_s_stage_one_odor_w_depletion_day_0(),
-    StageTransition(st_s_stage_one_odor_no_depletion_s_stage_one_odor_w_depletion_day_0),
-)
-
-CURRICULUM.add_stage_transition(
-    make_s_stage_one_odor_w_depletion_day_0(),
-    make_s_stage_all_odors_rewarded(),
-    StageTransition(st_s_stage_one_odor_w_depletion_day_0_s_stage_all_odors_rewarded),
-)
+add_shaping_tracks(CURRICULUM, make_s_stage_all_odors_rewarded())
 
 CURRICULUM.add_stage_transition(
     make_s_stage_all_odors_rewarded(),

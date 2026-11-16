@@ -7,11 +7,41 @@ from .metrics import metrics_from_dataset
 from .policies import p_learn_to_run, p_learn_to_stop, p_stochastic_reward
 
 # ============================================================
+# Shaping tracks
+# ============================================================
+
+#: Odor indices that each get their own parallel shaping track. A subject is enrolled
+#: on one track (by naming its first shaping stage) and stays on it until shaping ends.
+SHAPING_ODOR_INDICES: tuple[int, ...] = (0, 1, 2)
+
+N_ODORS = 3
+
+S_ONE_ODOR_NO_DEPLETION = "one_odor_no_depletion"
+S_ONE_ODOR_W_DEPLETION_DAY_0 = "one_odor_w_depletion_day_0"
+
+
+def shaping_stage_name(base_name: str, odor_index: int) -> str:
+    """Name of a shaping stage on the track of ``odor_index``.
+
+    The odor-0 track keeps the original (unsuffixed) names so trainer states that were
+    created before the parallel tracks existed keep resolving to the same stages. Other
+    tracks are suffixed ``" [odor_<index>]"``.
+    """
+    if odor_index not in range(N_ODORS):
+        raise ValueError(f"odor_index must be in [0, {N_ODORS}), got {odor_index}")
+    return base_name if odor_index == 0 else f"{base_name} [odor_{odor_index}]"
+
+
+def _odor_specification(odor_index: int) -> list[float]:
+    return [1 if i == odor_index else 0 for i in range(N_ODORS)]
+
+
+# ============================================================
 # Stage definition
 # ============================================================
 
 
-def make_s_stage_one_odor_no_depletion() -> Stage:
+def make_s_stage_one_odor_no_depletion(odor_index: int = 0) -> Stage:
     _updaters = {
         task_logic.UpdaterTarget.STOP_DURATION_OFFSET: task_logic.NumericalUpdater(
             operation=task_logic.NumericalUpdaterOperation.OFFSET,
@@ -38,10 +68,11 @@ def make_s_stage_one_odor_no_depletion() -> Stage:
             ),
         ),
     }
+    name = shaping_stage_name(S_ONE_ODOR_NO_DEPLETION, odor_index)
     return Stage(
-        name="one_odor_no_depletion",
+        name=name,
         task=AindVrForagingTaskLogic(
-            stage_name="one_odor_no_depletion",
+            stage_name=name,
             task_parameters=AindVrForagingTaskParameters(
                 updaters=_updaters,
                 operation_control=helpers.make_default_operation_control(velocity_threshold=60),
@@ -53,7 +84,7 @@ def make_s_stage_one_odor_no_depletion() -> Stage:
                                     task_logic.Patch(
                                         label="PatchZA",
                                         state_index=0,
-                                        odor_specification=[1, 0, 0],
+                                        odor_specification=_odor_specification(odor_index),
                                         reward_specification=task_logic.RewardSpecification(
                                             operant_logic=helpers.make_operant_logic(
                                                 stop_duration=0.0, is_operant=False
@@ -97,7 +128,7 @@ def make_s_stage_one_odor_no_depletion() -> Stage:
     )
 
 
-def _make_s_stage_one_odor_w_depletion_parameters() -> AindVrForagingTaskParameters:
+def _make_s_stage_one_odor_w_depletion_parameters(odor_index: int = 0) -> AindVrForagingTaskParameters:
     return AindVrForagingTaskParameters(
         updaters={
             task_logic.UpdaterTarget.STOP_DURATION_OFFSET: task_logic.NumericalUpdater(
@@ -134,7 +165,7 @@ def _make_s_stage_one_odor_w_depletion_parameters() -> AindVrForagingTaskParamet
                             task_logic.Patch(
                                 label="PatchZB",
                                 state_index=0,
-                                odor_specification=[1, 0, 0],
+                                odor_specification=_odor_specification(odor_index),
                                 reward_specification=helpers.exponential_probability_reward_count(
                                     available_water=50, amount_drop=5, maximum_p=0.9, c=0.9752, stop_duration=0.0
                                 ),
@@ -149,12 +180,13 @@ def _make_s_stage_one_odor_w_depletion_parameters() -> AindVrForagingTaskParamet
     )
 
 
-def make_s_stage_one_odor_w_depletion_day_0() -> Stage:
+def make_s_stage_one_odor_w_depletion_day_0(odor_index: int = 0) -> Stage:
+    name = shaping_stage_name(S_ONE_ODOR_W_DEPLETION_DAY_0, odor_index)
     return Stage(
-        name="one_odor_w_depletion_day_0",
+        name=name,
         task=AindVrForagingTaskLogic(
-            stage_name="one_odor_w_depletion_day_0",
-            task_parameters=_make_s_stage_one_odor_w_depletion_parameters(),
+            stage_name=name,
+            task_parameters=_make_s_stage_one_odor_w_depletion_parameters(odor_index),
         ),
         metrics_provider=MetricsProvider(metrics_from_dataset),
     )

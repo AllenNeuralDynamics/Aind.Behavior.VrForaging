@@ -13,15 +13,10 @@ from aind_behavior_vr_foraging.task_logic import AindVrForagingTaskLogic
 from .. import __semver__
 from ..cli import CurriculumCliArgs, CurriculumSuggestion
 from ..depletion.curriculum import (
+    add_shaping_tracks,
     metrics_from_dataset_path,
     st_s_stage_all_odors_rewarded_s_stage_graduation,
-    st_s_stage_one_odor_no_depletion_s_stage_one_odor_w_depletion_day_0,
-    st_s_stage_one_odor_w_depletion_day_0_s_stage_all_odors_rewarded,
     trainer_state_from_file,
-)
-from ..depletion.stages import (
-    make_s_stage_one_odor_no_depletion,
-    make_s_stage_one_odor_w_depletion_day_0,
 )
 from .stages import s_stage_all_odors_rewarded, s_stage_graduation
 
@@ -41,17 +36,7 @@ curriculum_class: type[aind_behavior_curriculum.Curriculum[AindVrForagingTaskLog
 CURRICULUM = curriculum_class()
 
 
-CURRICULUM.add_stage_transition(
-    make_s_stage_one_odor_no_depletion(),
-    make_s_stage_one_odor_w_depletion_day_0(),
-    StageTransition(st_s_stage_one_odor_no_depletion_s_stage_one_odor_w_depletion_day_0),
-)
-
-CURRICULUM.add_stage_transition(
-    make_s_stage_one_odor_w_depletion_day_0(),
-    s_stage_all_odors_rewarded(),
-    StageTransition(st_s_stage_one_odor_w_depletion_day_0_s_stage_all_odors_rewarded),
-)
+add_shaping_tracks(CURRICULUM, s_stage_all_odors_rewarded())
 
 CURRICULUM.add_stage_transition(
     s_stage_all_odors_rewarded(),
