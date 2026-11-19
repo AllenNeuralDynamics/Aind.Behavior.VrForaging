@@ -234,21 +234,38 @@ class Rendering(qc.Suite):
                 )
 
 
+def _disabled_harp_devices(rig: AindVrForagingRig) -> set[str]:
+    """Names of optional Harp devices disabled in the rig.
+
+    Disabled devices (e.g. the sniff detector for animals without a thermistor) are not logged,
+    so their streams fail to load and must be skipped.
+    """
+    optional_devices = {
+        "HarpSniffDetector": rig.harp_sniff_detector,
+        "HarpEnvironmentSensor": rig.harp_environment_sensor,
+    }
+    return {name for name, device in optional_devices.items() if device is None}
+
+
 def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     _runner = qc.Runner()
     dataset.load_all(strict=False)
     exclude: list[contract.DataStream] = []
     rig: AindVrForagingRig = dataset["Behavior"]["InputSchemas"]["Rig"].data
 
+    disabled_devices = _disabled_harp_devices(rig)
+
     # Exclude commands to Harp boards as these are tested separately
     for cmd in dataset["Behavior"]["HarpCommands"]:
+        if cmd.name in disabled_devices:
+            continue
         for stream in cmd:
             if isinstance(stream, contract.harp.HarpRegister):
                 exclude.append(stream)
 
     # Add Harp tests for ALL Harp devices in the dataset
     for stream in (_r := dataset["Behavior"]):
-        if isinstance(stream, HarpDevice):
+        if isinstance(stream, HarpDevice) and stream.name not in disabled_devices:
             commands = t.cast(HarpDevice, _r["HarpCommands"][stream.name])
             _runner.add_suite(qc.harp.HarpDeviceTestSuite(stream, commands), stream.name)
 
@@ -259,7 +276,11 @@ def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
             _runner.add_suite(qc.harp.HarpDeviceTestSuite(stream, commands), stream.name)
 
     # Add Harp Hub tests
-    all_harp_devices = [harp_device for harp_device in dataset["Behavior"] if isinstance(harp_device, HarpDevice)]
+    all_harp_devices = [
+        harp_device
+        for harp_device in dataset["Behavior"]
+        if isinstance(harp_device, HarpDevice) and harp_device.name not in disabled_devices
+    ]
     # Extend from the HarpOlfactometerExtension in case there are additional devices
     all_harp_devices.extend(
         [
