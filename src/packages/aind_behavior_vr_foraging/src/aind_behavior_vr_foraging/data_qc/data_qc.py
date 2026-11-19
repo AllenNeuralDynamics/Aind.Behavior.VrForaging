@@ -234,19 +234,26 @@ class Rendering(qc.Suite):
                 )
 
 
+def _disabled_harp_devices(rig: AindVrForagingRig) -> set[str]:
+    """Names of optional Harp devices disabled in the rig.
+
+    Disabled devices (e.g. the sniff detector for animals without a thermistor) are not logged,
+    so their streams fail to load and must be skipped.
+    """
+    optional_devices = {
+        "HarpSniffDetector": rig.harp_sniff_detector,
+        "HarpEnvironmentSensor": rig.harp_environment_sensor,
+    }
+    return {name for name, device in optional_devices.items() if device is None}
+
+
 def make_qc_runner(dataset: contract.Dataset) -> qc.Runner:
     _runner = qc.Runner()
     dataset.load_all(strict=False)
     exclude: list[contract.DataStream] = []
     rig: AindVrForagingRig = dataset["Behavior"]["InputSchemas"]["Rig"].data
 
-    # Optional Harp devices that are disabled in the rig (e.g. the sniff detector for animals
-    # without a thermistor) are not logged, so their streams fail to load and must be skipped.
-    disabled_devices: set[str] = set()
-    if rig.harp_sniff_detector is None:
-        disabled_devices.add("HarpSniffDetector")
-    if rig.harp_environment_sensor is None:
-        disabled_devices.add("HarpEnvironmentSensor")
+    disabled_devices = _disabled_harp_devices(rig)
 
     # Exclude commands to Harp boards as these are tested separately
     for cmd in dataset["Behavior"]["HarpCommands"]:
