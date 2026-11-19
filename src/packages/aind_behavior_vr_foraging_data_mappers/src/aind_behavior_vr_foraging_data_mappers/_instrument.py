@@ -99,7 +99,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
             instrument_id=rig.rig_name,
             modalities=_modalities,
             modification_date=utcnow().date(),
-            coordinate_system=_make_origin_coordinate_system(),
+            global_coordinate_system=_make_origin_coordinate_system(),
             components=_components,  # type: ignore [arg-type]
             connections=_connections,
             calibrations=_calibrations,
@@ -464,7 +464,7 @@ class AindInstrumentDataMapper(ads.AindDataSchemaRigDataMapper):
                 viewing_distance_unit=units.SizeUnit.CM,
                 brightness=100,
                 brightness_unit=units.UnitlessUnit.PERCENT,
-                coordinate_system=coordinates.CoordinateSystemLibrary.SIPE_MONITOR_RTF,
+                local_coordinate_system=coordinates.CoordinateSystemLibrary.SIPE_MONITOR_RTF,
                 transform=[
                     coordinates.Translation(
                         translation=[
