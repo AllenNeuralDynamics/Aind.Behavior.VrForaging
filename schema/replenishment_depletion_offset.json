@@ -1,7 +1,7 @@
 {
     "pkg_location": "aind_behavior_vr_foraging_curricula.replenishment_depletion_offset",
     "name": "ReplenishmentDepletionOffset",
-    "version": "1.3.5",
+    "version": "1.3.6",
     "graph": {
         "nodes": {
             "0": {
@@ -302,7 +302,7 @@
                             "wait_to_start_duration": 0.0
                         }
                     },
-                    "version": "1.3.5",
+                    "version": "1.3.6",
                     "stage_name": "one_odor_no_depletion"
                 },
                 "graph": {
@@ -652,7 +652,7 @@
                             "wait_to_start_duration": 0.0
                         }
                     },
-                    "version": "1.3.5",
+                    "version": "1.3.6",
                     "stage_name": "one_odor_w_depletion_day_0"
                 },
                 "graph": {
@@ -2112,7 +2112,7 @@
                             "wait_to_start_duration": 0.0
                         }
                     },
-                    "version": "1.3.5",
+                    "version": "1.3.6",
                     "stage_name": "mcm_final_stage"
                 },
                 "graph": {
@@ -2429,7 +2429,7 @@
                             "wait_to_start_duration": 0.0
                         }
                     },
-                    "version": "1.3.5",
+                    "version": "1.3.6",
                     "stage_name": "one_odor_no_depletion [odor_1]"
                 },
                 "graph": {
@@ -2779,7 +2779,7 @@
                             "wait_to_start_duration": 0.0
                         }
                     },
-                    "version": "1.3.5",
+                    "version": "1.3.6",
                     "stage_name": "one_odor_w_depletion_day_0 [odor_1]"
                 },
                 "graph": {
@@ -3087,7 +3087,7 @@
                             "wait_to_start_duration": 0.0
                         }
                     },
-                    "version": "1.3.5",
+                    "version": "1.3.6",
                     "stage_name": "one_odor_no_depletion [odor_2]"
                 },
                 "graph": {
@@ -3437,7 +3437,7 @@
                             "wait_to_start_duration": 0.0
                         }
                     },
-                    "version": "1.3.5",
+                    "version": "1.3.6",
                     "stage_name": "one_odor_w_depletion_day_0 [odor_2]"
                 },
                 "graph": {
