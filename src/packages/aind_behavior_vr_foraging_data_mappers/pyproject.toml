@@ -22,7 +22,7 @@ dependencies = [
     "aind-behavior-curriculum>=0.0.37",
     "aind-behavior-vr-foraging[data]",
     "aind-clabe[aind-services]>=0.13",
-    "aind-data-schema>=2.8.1",
+    "aind-data-schema>=2.9.0",
     "aind-data-schema-models",
     "GitPython",
     "pydantic",
